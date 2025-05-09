@@ -35,7 +35,6 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.props.Properties;
 import walkingkooka.props.PropertiesPath;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
@@ -46,6 +45,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
@@ -126,7 +126,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
-            SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY
+            SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
     );
 
     SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();

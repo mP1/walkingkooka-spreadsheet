@@ -35,7 +35,6 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
@@ -45,6 +44,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -811,7 +811,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
                         ExpressionFunctionName.with("function1")
-                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                 );
             }
 

@@ -33,11 +33,11 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
@@ -248,22 +248,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/xyz"),
                                     ExpressionFunctionName.with("xyz")
-                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                             ),
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
                                     ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
-                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                             ),
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
                                     ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
-                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                             ),
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
                                     ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
-                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                             )
                     )
             );
@@ -271,7 +271,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         @Override
         public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-            return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
+            return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
         }
     };
 
@@ -640,7 +640,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with("xyz")
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                         ),
                         Lists.of(
                                 this.expression(1),
@@ -661,7 +661,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                         ),
                         Lists.of(
                                 Expression.reference(
@@ -680,7 +680,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                         ),
                         Lists.empty()
                 ),
@@ -694,7 +694,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                         ),
                         Lists.empty()
                 ),

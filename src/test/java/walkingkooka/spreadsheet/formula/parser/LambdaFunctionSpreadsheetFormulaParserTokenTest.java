@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.formula.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -97,7 +97,7 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
                         Expression.call(
                                 Expression.namedFunction(
                                         ExpressionFunctionName.with(FUNCTION)
-                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                                 ),
                                 Lists.of(
                                         Expression.reference(

@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
@@ -45,6 +44,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -497,13 +497,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         private ExpressionFunctionInfo info(final String name) {
             return ExpressionFunctionInfo.with(
                     Url.parseAbsolute("https://example.com/" + name),
-                    ExpressionFunctionName.with(name).setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                    ExpressionFunctionName.with(name).setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
             );
         }
 
         @Override
         public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-            return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
+            return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
         }
     };
 
@@ -621,7 +621,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=unknownFunction()",
                 SpreadsheetError.functionNotFound(
                         ExpressionFunctionName.with("unknownFunction")
-                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                 )
         );
     }
@@ -15408,7 +15408,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_FILTER_CELLS_PREDICATE)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                         ),
                         Expression.NO_CHILDREN
                 ),

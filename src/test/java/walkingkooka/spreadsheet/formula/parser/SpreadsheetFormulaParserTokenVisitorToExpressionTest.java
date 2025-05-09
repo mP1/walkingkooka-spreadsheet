@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -157,7 +156,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                             public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
                                 Objects.requireNonNull(
                                         ExpressionFunctionName.with("error")
-                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY),
+                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY),
                                         "name"
                                 );
                                 return Cast.to(

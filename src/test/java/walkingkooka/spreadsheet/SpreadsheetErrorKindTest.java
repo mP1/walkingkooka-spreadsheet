@@ -22,6 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.MissingStoreException;
@@ -284,7 +285,7 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     @Test
     public void testTranslateUnknownExpressionFunctionException() {
         final ExpressionFunctionName badFunction = ExpressionFunctionName.with("badFunction")
-                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY);
+                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY);
 
         this.translateAndCheck(
                 new UnknownExpressionFunctionException(badFunction),
