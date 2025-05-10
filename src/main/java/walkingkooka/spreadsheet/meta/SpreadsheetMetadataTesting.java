@@ -302,7 +302,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ValidatorAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
-                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
                     FormHandlerSelector.parse("non-null")
