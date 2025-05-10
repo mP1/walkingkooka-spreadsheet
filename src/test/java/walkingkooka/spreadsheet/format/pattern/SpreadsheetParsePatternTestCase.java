@@ -832,9 +832,11 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetConverterContexts.basic(
+                        SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                         Converters.fake(),
                         SpreadsheetLabelNameResolvers.fake(),
                         ExpressionNumberConverterContexts.basic(

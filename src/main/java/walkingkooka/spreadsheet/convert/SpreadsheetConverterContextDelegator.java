@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -43,6 +44,11 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetConverterContext()
                 .resolveLabel(labelName);
+    }
+
+    @Override
+    default SpreadsheetExpressionReference validationReference() {
+        return this.validationReference();
     }
 
     SpreadsheetConverterContext spreadsheetConverterContext();

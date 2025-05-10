@@ -153,6 +153,11 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         return this.context.serverUrl();
     }
 
+    @Override
+    public SpreadsheetExpressionReference validationReference() {
+        return this.context.validationReference();
+    }
+
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override

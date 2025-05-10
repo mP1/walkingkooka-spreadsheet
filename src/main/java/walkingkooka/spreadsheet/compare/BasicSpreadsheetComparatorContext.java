@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.Objects;
 
@@ -33,6 +34,13 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
 
     private BasicSpreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
         this.converterContext = converterContext;
+    }
+
+    // SpreadsheetConverterContextDelegator.............................................................................
+
+    @Override
+    public SpreadsheetExpressionReference validationReference() {
+        return SpreadsheetComparatorContext.super.validationReference();
     }
 
     @Override

@@ -537,6 +537,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                             private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
                         },
                         METADATA.spreadsheetConverterContext(
+                                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,

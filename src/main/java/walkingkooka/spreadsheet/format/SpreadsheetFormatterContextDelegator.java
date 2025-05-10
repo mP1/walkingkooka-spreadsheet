@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
@@ -69,6 +70,11 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     default int generalFormatNumberDigitCount() {
         return this.spreadsheetFormatterContext()
                 .generalFormatNumberDigitCount();
+    }
+
+    @Override
+    default SpreadsheetExpressionReference validationReference() {
+        return SpreadsheetFormatterContext.super.validationReference();
     }
 
     SpreadsheetFormatterContext spreadsheetFormatterContext();

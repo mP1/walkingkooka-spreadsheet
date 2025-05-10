@@ -1393,6 +1393,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
 
     private SpreadsheetConverterContext createContext(final SpreadsheetLabelNameResolver labelNameResolver) {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.basic(),
                 labelNameResolver,
                 ExpressionNumberConverterContexts.basic(

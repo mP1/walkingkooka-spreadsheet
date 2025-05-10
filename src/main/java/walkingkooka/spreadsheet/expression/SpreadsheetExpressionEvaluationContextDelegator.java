@@ -116,6 +116,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default SpreadsheetExpressionReference validationReference() {
+        return this.spreadsheetExpressionEvaluationContext()
+                .validationReference();
+    }
+
+    @Override
     default SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
                 .validatorContext(reference);

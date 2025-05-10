@@ -185,6 +185,7 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
         );
 
         return metadata.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(

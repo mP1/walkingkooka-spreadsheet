@@ -669,10 +669,25 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // spreadsheetConverterContext......................................................................................
 
     @Test
+    public void testSpreadsheetConverterContextWithNullValidationReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        null,
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetConverterContextWithNullPropertyNameFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         null,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
@@ -686,6 +701,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         null,
                         ConverterProviders.fake(),
@@ -699,6 +715,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         null,
@@ -712,6 +729,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
@@ -725,6 +743,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),

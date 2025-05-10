@@ -134,6 +134,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(), // not used
                 SpreadsheetLabelNameResolvers.fake(), // not required
                 ExpressionNumberConverterContexts.basic(
@@ -216,6 +217,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext expressionNumberSpreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(), // not used
                 SpreadsheetLabelNameResolvers.fake(), // not required
                 ExpressionNumberConverterContexts.basic(

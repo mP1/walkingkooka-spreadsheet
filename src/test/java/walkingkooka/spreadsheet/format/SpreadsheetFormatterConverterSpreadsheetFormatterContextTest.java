@@ -151,6 +151,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.basic(),
                 (s) -> {
                     throw new UnsupportedOperationException();

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -36,4 +37,10 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
         return this.expressionNumberKind()
                 .zero();
     }
+
+    /**
+     * Returns the {@link SpreadsheetExpressionReference} being validated. This is useful for converters within a
+     * validation.
+     */
+    SpreadsheetExpressionReference validationReference();
 }

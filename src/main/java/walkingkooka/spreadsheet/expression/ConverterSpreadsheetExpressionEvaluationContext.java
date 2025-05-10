@@ -247,6 +247,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
+    public SpreadsheetExpressionReference validationReference() {
+        return this.context.validationReference();
+    }
+
+    @Override
     public Optional<Object> validationValue() {
         return this.context.validationValue();
     }

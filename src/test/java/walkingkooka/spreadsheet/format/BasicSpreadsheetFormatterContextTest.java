@@ -329,6 +329,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.collection(
                         Cast.to(
                                 Lists.of(

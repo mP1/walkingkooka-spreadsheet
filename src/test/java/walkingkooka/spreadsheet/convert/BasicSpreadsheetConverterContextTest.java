@@ -26,6 +26,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -35,12 +36,15 @@ import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
+
+    private final static Optional<SpreadsheetExpressionReference> VALIDATION_REFERENCE = Optional.empty();
 
     private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberToNumber();
 
@@ -53,6 +57,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        VALIDATION_REFERENCE,
                         null,
                         LABEL_RESOLVER,
                         ExpressionNumberConverterContexts.fake()
@@ -65,6 +70,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        VALIDATION_REFERENCE,
                         CONVERTER,
                         null,
                         ExpressionNumberConverterContexts.fake()
@@ -77,6 +83,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        VALIDATION_REFERENCE,
                         CONVERTER,
                         LABEL_RESOLVER,
                         null
@@ -98,6 +105,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
+                VALIDATION_REFERENCE,
                 CONVERTER,
                 LABEL_RESOLVER,
                 ExpressionNumberConverterContexts.basic(
