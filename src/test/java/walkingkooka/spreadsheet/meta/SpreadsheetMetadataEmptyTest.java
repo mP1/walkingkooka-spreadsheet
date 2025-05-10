@@ -151,7 +151,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadata.EMPTY::expressionNumberContext
         );
         this.checkEquals(
-                "Metadata missing: expressionNumberKind, precision, roundingMode",
+                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -199,7 +199,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
+                "Metadata missing: currencySymbol, decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -214,7 +214,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                         .spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: decimalSeparator, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
+                "Metadata missing: decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -241,7 +241,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Metadata missing: validatorConverter",
+                "Metadata missing: currencySymbol, dateTimeOffset, decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, validatorConverter",
                 thrown.getMessage(),
                 "message"
         );

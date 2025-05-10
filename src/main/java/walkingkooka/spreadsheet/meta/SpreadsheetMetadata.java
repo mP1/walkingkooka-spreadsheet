@@ -594,11 +594,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    static final List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR
-    );
-
     // HasDecimalNumberContext..........................................................................................
 
     /**
@@ -675,17 +670,25 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public abstract ExpressionNumberContext expressionNumberContext();
 
     final ExpressionNumberContext expressionNumberContext0() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
 
-        final ExpressionNumberKind kind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
-        components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        final ExpressionNumberKind kind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
-        components.reportIfMissing();
+        DecimalNumberContext decimalNumberContext;
+        try {
+            decimalNumberContext = this.decimalNumberContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            decimalNumberContext = null;
+        }
+
+        missing.reportIfMissing();
 
         return ExpressionNumberContexts.basic(
                 kind,
-                this.decimalNumberContext()
+                decimalNumberContext
         );
     }
 
@@ -778,21 +781,23 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
 
     final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
 
-        final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
 
-        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        MathContext mathContext;
+        try {
+            mathContext = this.mathContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            mathContext = null;
+        }
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return JsonNodeUnmarshallContexts.basic(
                 expressionNumberKind,
-                new MathContext(
-                        precision,
-                        roundingMode
-                )
+                mathContext
         );
     }
 
@@ -959,28 +964,51 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
 
-        final ConverterSelector converterSelector = components.getOrNull(converterSelectorPropertyName);
-        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
-        final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        Converter<SpreadsheetConverterContext> converter;
+        try {
+            converter = this.converter(
+                    converterSelectorPropertyName,
+                    converterProvider,
+                    providerContext
+            );
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            converter = null;
+        }
 
-        components.reportIfMissing();
+        DateTimeContext dateTimeContext;
+        try {
+            dateTimeContext = this.dateTimeContext(providerContext);
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            dateTimeContext = null;
+        }
+
+        DecimalNumberContext decimalNumberContext;
+        try {
+            decimalNumberContext = this.decimalNumberContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            decimalNumberContext = null;
+            missing.addMissing(cause);
+        }
+
+        final Long dateOffset = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
+        final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+
+        missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-                this.converter(
-                        converterSelectorPropertyName,
-                        converterProvider,
-                        providerContext
-                ),
+                converter,
                 labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
                                 dateOffset,
                                 Converters.fake(),
-                                this.dateTimeContext(providerContext),
-                                this.decimalNumberContext()
+                                dateTimeContext,
+                                decimalNumberContext
                         ),
                         expressionNumberKind
                 )
@@ -1030,27 +1058,43 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
 
-        final Integer characterWidth = components.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
-        final Integer generalNumberFormatDigitCount = components.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+        SpreadsheetFormatter spreadsheetFormatter;
+        try {
+            spreadsheetFormatter = this.spreadsheetFormatter(
+                    spreadsheetFormatterProvider,
+                    providerContext
+            );
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            spreadsheetFormatter = null;
+        }
 
-        components.reportIfMissing();
+        SpreadsheetConverterContext formatSpreadsheetConverterContext;
+        try {
+            formatSpreadsheetConverterContext = this.formatSpreadsheetConverterContext(
+                    labelNameResolver,
+                    converterProvider,
+                    providerContext
+            );
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            formatSpreadsheetConverterContext = null;
+        }
+
+        final Integer characterWidth = missing.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
+        final Integer generalNumberFormatDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+
+        missing.reportIfMissing();
 
         return SpreadsheetFormatterContexts.basic(
                 this.numberToColor(),
                 this.nameToColor(),
                 characterWidth,
                 generalNumberFormatDigitCount,
-                this.spreadsheetFormatter(
-                        spreadsheetFormatterProvider,
-                        providerContext
-                ),
-                this.formatSpreadsheetConverterContext(
-                        labelNameResolver,
-                        converterProvider,
-                        providerContext
-                )
+                spreadsheetFormatter,
+                formatSpreadsheetConverterContext
         );
     }
 
@@ -1111,26 +1155,35 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link SpreadsheetParserContext}.
      */
     public final SpreadsheetParserContext spreadsheetParserContext(final HasNow now) {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
 
         // DateTimeContext
-        DATE_TIME_CONTEXT_REQUIRED.forEach(components::getOrNull);
+        DateTimeContext dateTimeContext;
+        try {
+            dateTimeContext = this.dateTimeContext(now);
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            dateTimeContext = null;
+        }
 
-        // DecimalNumberContext
-        SpreadsheetMetadataDecimalNumberContextComponents.REQUIRED.forEach(components::getOrNull);
-
-        // ExpressionNumberKind
-        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        // ExpressionNumberContext
+        ExpressionNumberContext expressionNumberContext;
+        try {
+            expressionNumberContext = this.expressionNumberContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            expressionNumberContext = null;
+        }
 
         // valueSeparator
-        final Character valueSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR);
+        final Character valueSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
-                this.dateTimeContext(now),
-                this.expressionNumberContext(),
+                dateTimeContext,
+                expressionNumberContext,
                 valueSeparator
         );
     }
@@ -1153,25 +1206,29 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetMetadataPropertyName<ConverterSelector> converter = SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER;
+        SpreadsheetConverterContext spreadsheetConverterContext;
+        try {
+            spreadsheetConverterContext = this.spreadsheetConverterContext(
+                    SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                    labelNameResolver,
+                    converterProvider,
+                    providerContext
+            );
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            spreadsheetConverterContext = null;
+        }
 
-        components.getOrNull(converter);
-
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return SpreadsheetValidatorContexts.basic(
                 ValidatorContexts.basic(
                         cellOrLabel,
                         Cast.to(validatorSelectorToValidator),
                         Cast.to(referenceToExpressionEvaluationContext),
-                        this.spreadsheetConverterContext(
-                                converter,
-                                labelNameResolver,
-                                converterProvider, // ConverterProvider
-                                providerContext // ProviderContext
-                        ),
+                        spreadsheetConverterContext,
                         providerContext // EnvironmentContext
                 )
         );

@@ -34,8 +34,8 @@ public final class SpreadsheetMetadataDecimalNumberContextComponentsTest impleme
     @Test
     public void testToString() {
         final SpreadsheetMetadataDecimalNumberContextComponents components = SpreadsheetMetadataDecimalNumberContextComponents.with(SpreadsheetMetadata.EMPTY);
-        components.components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
-        components.components.getOrNull(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES);
+        components.missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
+        components.missing.getOrNull(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES);
 
         this.toStringAndCheck(
                 components,
