@@ -46,6 +46,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullConverterFails() {
         assertThrows(
@@ -82,26 +84,14 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         );
     }
 
+    // convert..........................................................................................................
+
     @Test
     public void testConvert() {
         this.convertAndCheck(
                 123,
                 Float.class,
                 123f
-        );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createContext(),
-                CONVERTER +
-                        " " +
-                        LABEL_RESOLVER +
-                        " " +
-                        this.converterContext() +
-                        " " +
-                        KIND
         );
     }
 
@@ -178,6 +168,24 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     public char positiveSign() {
         return this.decimalNumberContext().positiveSign();
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createContext(),
+                CONVERTER +
+                        " " +
+                        LABEL_RESOLVER +
+                        " " +
+                        this.converterContext() +
+                        " " +
+                        KIND
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetConverterContext> type() {
