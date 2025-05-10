@@ -55,6 +55,10 @@ final class SpreadsheetMetadataComponents {
         }
     }
 
+    void addMissing(final MissingMetadataPropertiesException missing) {
+        this.missing.addAll(missing.missing);
+    }
+
     final Set<SpreadsheetMetadataPropertyName<?>> missing = SortedSets.tree();
 
     @Override

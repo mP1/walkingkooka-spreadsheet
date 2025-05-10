@@ -17,14 +17,12 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -38,26 +36,26 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
 
     private SpreadsheetMetadataDecimalNumberContextComponents(final SpreadsheetMetadata metadata) {
         super();
-        this.components = SpreadsheetMetadataComponents.with(metadata);
+        this.missing = SpreadsheetMetadataComponents.with(metadata);
     }
 
     DecimalNumberContext decimalNumberContext() {
-        final SpreadsheetMetadataComponents components = this.components;
+        final SpreadsheetMetadataComponents missing = this.missing;
 
-        final String currencySymbol = components.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);
-        final Character decimalSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
-        final String exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
-        final Character groupSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR);
-        final Character negativeSign = components.getOrNull(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN);
-        final Character percentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL);
-        final Character positiveSign = components.getOrNull(SpreadsheetMetadataPropertyName.POSITIVE_SIGN);
+        final String currencySymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);
+        final Character decimalSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
+        final String exponentSymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
+        final Character groupSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR);
+        final Character negativeSign = missing.getOrNull(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN);
+        final Character percentSymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL);
+        final Character positiveSign = missing.getOrNull(SpreadsheetMetadataPropertyName.POSITIVE_SIGN);
 
-        final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+        final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
-        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        final Integer precision = missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return DecimalNumberContexts.basic(
                 DecimalNumberSymbols.with(
@@ -77,25 +75,10 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         );
     }
 
-    // this list should match the properties used in the method above.
-    static final List<SpreadsheetMetadataPropertyName<?>> REQUIRED = Lists.of(
-            SpreadsheetMetadataPropertyName.LOCALE,
-
-            SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
-            SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-            SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
-            SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
-            SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
-            SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
-            SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
-            SpreadsheetMetadataPropertyName.PRECISION,
-            SpreadsheetMetadataPropertyName.ROUNDING_MODE
-    );
-
-    final SpreadsheetMetadataComponents components;
+    final SpreadsheetMetadataComponents missing;
 
     @Override
     public String toString() {
-        return this.components.toString();
+        return this.missing.toString();
     }
 }

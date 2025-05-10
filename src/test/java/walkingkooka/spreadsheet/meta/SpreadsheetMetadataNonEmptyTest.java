@@ -2153,7 +2153,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .expressionNumberContext());
         this.checkEquals(
-                "Metadata missing: roundingMode",
+                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -2166,7 +2166,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .expressionNumberContext());
         this.checkEquals(
-                "Metadata missing: precision",
+                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision",
                 thrown.getMessage(),
                 "message"
         );
