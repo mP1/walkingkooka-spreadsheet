@@ -36,11 +36,11 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
 
     private SpreadsheetMetadataDecimalNumberContextComponents(final SpreadsheetMetadata metadata) {
         super();
-        this.missing = SpreadsheetMetadataComponents.with(metadata);
+        this.missing = SpreadsheetMetadataMissingComponents.with(metadata);
     }
 
     DecimalNumberContext decimalNumberContext() {
-        final SpreadsheetMetadataComponents missing = this.missing;
+        final SpreadsheetMetadataMissingComponents missing = this.missing;
 
         final String currencySymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);
         final Character decimalSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
@@ -75,7 +75,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         );
     }
 
-    final SpreadsheetMetadataComponents missing;
+    final SpreadsheetMetadataMissingComponents missing;
 
     @Override
     public String toString() {

@@ -25,13 +25,13 @@ import java.util.Set;
  * Used to aggregate that all the required properties are present, tracking those that are missing.
  * This is used only by {@link SpreadsheetMetadata} methods such as getting a {@link walkingkooka.convert.Converter}.
  */
-final class SpreadsheetMetadataComponents {
+final class SpreadsheetMetadataMissingComponents {
 
-    static SpreadsheetMetadataComponents with(final SpreadsheetMetadata metadata) {
-        return new SpreadsheetMetadataComponents(metadata);
+    static SpreadsheetMetadataMissingComponents with(final SpreadsheetMetadata metadata) {
+        return new SpreadsheetMetadataMissingComponents(metadata);
     }
 
-    private SpreadsheetMetadataComponents(final SpreadsheetMetadata metadata) {
+    private SpreadsheetMetadataMissingComponents(final SpreadsheetMetadata metadata) {
         super();
         this.metadata = metadata;
     }

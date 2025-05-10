@@ -33,15 +33,15 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<SpreadsheetMetadataComponents>,
-        ToStringTesting<SpreadsheetMetadataComponents>,
-        TypeNameTesting<SpreadsheetMetadataComponents> {
+public final class SpreadsheetMetadataMissingComponentsTest implements ClassTesting2<SpreadsheetMetadataMissingComponents>,
+        ToStringTesting<SpreadsheetMetadataMissingComponents>,
+        TypeNameTesting<SpreadsheetMetadataMissingComponents> {
 
     // getOrNull........................................................................................................
 
     @Test
     public void testGetOrNullAbsent() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         this.checkEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES));
         this.checkMissing(components, SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES);
     }
@@ -51,7 +51,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
         final SpreadsheetMetadataPropertyName<Boolean> property = SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES;
         final boolean value = true;
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(
                 SpreadsheetMetadata.EMPTY.set(
                         property,
                         value
@@ -65,7 +65,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testReportIfMissingMissingOne() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
@@ -81,7 +81,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testReportIfMissingMissingTwo() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
@@ -98,7 +98,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testReportIfMissingMissingSorted() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
 
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
@@ -118,7 +118,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testReportIfMissingMissingDuplicates() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
@@ -144,7 +144,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 LocalDateTime.MAX
         );
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(
                 SpreadsheetMetadata.EMPTY.set(
                         property,
                         value
@@ -154,7 +154,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
         components.reportIfMissing();
     }
 
-    private void checkMissing(final SpreadsheetMetadataComponents components,
+    private void checkMissing(final SpreadsheetMetadataMissingComponents components,
                               final SpreadsheetMetadataPropertyName<?>... missings) {
         final Set<SpreadsheetMetadataPropertyName<?>> set = SortedSets.tree();
         set.addAll(Arrays.asList(missings));
@@ -165,7 +165,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testToString() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
@@ -181,8 +181,8 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataComponents> type() {
-        return SpreadsheetMetadataComponents.class;
+    public Class<SpreadsheetMetadataMissingComponents> type() {
+        return SpreadsheetMetadataMissingComponents.class;
     }
 
     @Override
