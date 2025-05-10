@@ -129,6 +129,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public SpreadsheetExpressionReference validationReference() {
+        throw new UnsupportedOperationException();
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Override

@@ -1192,6 +1192,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
                 ExpressionNumberConverterContexts.basic(

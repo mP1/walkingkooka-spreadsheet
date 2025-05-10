@@ -239,6 +239,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 }
 
                 this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         converterSelector,
                         this, // SpreadsheetLabelNameResolver,
                         spreadsheetProvider, // SpreadsheetConverterProvider

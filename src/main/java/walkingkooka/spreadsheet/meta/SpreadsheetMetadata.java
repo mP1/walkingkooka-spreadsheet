@@ -707,6 +707,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                           final ConverterProvider converterProvider,
                                                                           final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
+                NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 labelNameResolver,
                 converterProvider,
@@ -932,6 +933,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                         final ConverterProvider converterProvider,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
+                NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                 labelNameResolver,
                 converterProvider,
@@ -955,10 +957,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetConverterContext}
      */
-    public final SpreadsheetConverterContext spreadsheetConverterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
+    public final SpreadsheetConverterContext spreadsheetConverterContext(final Optional<SpreadsheetExpressionReference> validationReference,
+                                                                         final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final ProviderContext providerContext) {
+        Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
@@ -1000,6 +1004,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
+                validationReference,
                 converter,
                 labelNameResolver,
                 ExpressionNumberConverterContexts.basic(
@@ -1014,6 +1019,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 )
         );
     }
+
+    public final static Optional<SpreadsheetExpressionReference> NO_VALIDATION_REFERENCE = SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE;
 
     // SpreadsheetFormatter.............................................................................................
 
@@ -1211,6 +1218,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetConverterContext spreadsheetConverterContext;
         try {
             spreadsheetConverterContext = this.spreadsheetConverterContext(
+                    Optional.of(cellOrLabel), // validationReference
                     SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
                     labelNameResolver,
                     converterProvider,

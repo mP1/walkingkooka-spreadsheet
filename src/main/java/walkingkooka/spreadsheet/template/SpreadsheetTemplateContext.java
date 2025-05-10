@@ -118,6 +118,16 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
         throw new UnsupportedOperationException();
     }
 
+    // Validation.......................................................................................................
+
+    /**
+     * A template never needs the {@link SpreadsheetExpressionReference}.
+     */
+    @Override
+    default SpreadsheetExpressionReference validationReference() {
+        throw new UnsupportedOperationException();
+    }
+
     // ValidationExpressionEvaluationContext............................................................................
 
     @Override

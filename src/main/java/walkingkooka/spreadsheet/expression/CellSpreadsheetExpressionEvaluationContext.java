@@ -36,7 +36,7 @@ import java.util.Set;
 final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContextDelegator {
 
     static SpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
-                                                           final SpreadsheetExpressionEvaluationContext context) {
+                                                       final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 

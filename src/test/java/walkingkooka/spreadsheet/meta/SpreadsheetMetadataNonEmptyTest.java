@@ -1884,6 +1884,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 expected,
                 converter,
                 SpreadsheetConverterContexts.basic(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         converter,
                         LABEL_NAME_RESOLVER,
                         ExpressionNumberConverterContexts.basic(
@@ -1953,6 +1954,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         PROVIDER_CONTEXT
                 ),
                 metadata.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(

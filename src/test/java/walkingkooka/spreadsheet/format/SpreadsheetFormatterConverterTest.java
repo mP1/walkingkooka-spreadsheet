@@ -121,6 +121,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.basic(),
                 (s) -> {
                     throw new UnsupportedOperationException();

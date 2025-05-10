@@ -22,6 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
@@ -146,6 +147,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private final int generalFormatNumberDigitCount;
 
     // SpreadsheetConverterContextDelegator.............................................................................
+
+    @Override
+    public SpreadsheetExpressionReference validationReference() {
+        return SpreadsheetFormatterContext.super.validationReference();
+    }
 
     @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {

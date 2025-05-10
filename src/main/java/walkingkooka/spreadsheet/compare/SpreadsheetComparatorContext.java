@@ -19,10 +19,19 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 /**
  * A {@link Context} that accompanies comparisons between two values. This might require converting values to a type
  * compatible with the actual {@link java.util.Comparator}.
  */
 public interface SpreadsheetComparatorContext extends SpreadsheetConverterContext {
+
+    /**
+     * A {@link SpreadsheetComparatorContext} is not executed within validation and will never need the validation reference.
+     */
+    @Override
+    default SpreadsheetExpressionReference validationReference() {
+        throw new UnsupportedOperationException();
+    }
 }

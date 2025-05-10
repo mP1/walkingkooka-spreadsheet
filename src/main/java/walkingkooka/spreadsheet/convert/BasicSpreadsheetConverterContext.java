@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -34,28 +35,45 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         ExpressionNumberConverterContextDelegator,
         UsesToStringBuilder {
 
-    static BasicSpreadsheetConverterContext with(final Converter<SpreadsheetConverterContext> converter,
+    static BasicSpreadsheetConverterContext with(final Optional<SpreadsheetExpressionReference> validationReference,
+                                                 final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final ExpressionNumberConverterContext context) {
+        Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "createSpreadsheetLabelNameResolver");
         Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetConverterContext(
+                validationReference,
                 converter,
                 spreadsheetLabelNameResolver,
                 context
         );
     }
 
-    private BasicSpreadsheetConverterContext(final Converter<SpreadsheetConverterContext> converter,
+    private BasicSpreadsheetConverterContext(final Optional<SpreadsheetExpressionReference> validationReference,
+                                             final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final ExpressionNumberConverterContext context) {
+        this.validationReference = validationReference;
         this.converter = converter;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.context = context;
     }
 
+    // ValidationReference..............................................................................................
+
+    @Override
+    public SpreadsheetExpressionReference validationReference() {
+        return this.validationReference.orElseThrow(
+                () -> new IllegalStateException("Missing validation reference")
+        );
+    }
+
+    private final Optional<SpreadsheetExpressionReference> validationReference;
+
+    // CanConvert.......................................................................................................
 
     @Override
     public boolean canConvert(final Object value,
