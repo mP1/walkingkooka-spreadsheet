@@ -554,11 +554,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final ConverterSelector converter = components.getOrNull(converterSelector);
+        final ConverterSelector converter = missing.getOrNull(converterSelector);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return converter.evaluateValueText(
                 converterProvider,
@@ -575,13 +575,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * </ul>
      */
     public final DateTimeContext dateTimeContext(final HasNow now) {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
-        final Integer defaultYear = components.getOrNull(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
-        final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
+        final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+        final Integer defaultYear = missing.getOrNull(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
+        final Integer twoYearDigit = missing.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return DateTimeContexts.basic(
                 DateTimeSymbols.fromDateFormatSymbols(
@@ -645,11 +645,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(propertyName, "propertyName");
         Objects.requireNonNull(provider, "provider");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(propertyName);
+        final ExpressionFunctionAliasSet functionsAliases = missing.getOrNull(propertyName);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return ExpressionFunctionProviders.aliases(
                 functionsAliases,
@@ -670,7 +670,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public abstract ExpressionNumberContext expressionNumberContext();
 
     final ExpressionNumberContext expressionNumberContext0() {
-        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         final ExpressionNumberKind kind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
         missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
@@ -736,23 +736,23 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final SpreadsheetFormatterSelector dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
-        final SpreadsheetParserSelector dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
+        final SpreadsheetFormatterSelector dateFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
+        final SpreadsheetParserSelector dateParser = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
 
-        final SpreadsheetFormatterSelector dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
-        final SpreadsheetParserSelector dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
+        final SpreadsheetFormatterSelector dateTimeFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+        final SpreadsheetParserSelector dateTimeParser = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
 
-        final SpreadsheetFormatterSelector numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
-        final SpreadsheetParserSelector numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
+        final SpreadsheetFormatterSelector numberFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
+        final SpreadsheetParserSelector numberParser = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
 
-        final SpreadsheetFormatterSelector textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
+        final SpreadsheetFormatterSelector textFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
 
-        final SpreadsheetFormatterSelector timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
-        final SpreadsheetParserSelector timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
+        final SpreadsheetFormatterSelector timeFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
+        final SpreadsheetParserSelector timeParser = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return SpreadsheetConverters.general(
                 spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
@@ -781,7 +781,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
 
     final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
-        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
 
@@ -847,12 +847,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public abstract MathContext mathContext();
 
     final MathContext mathContext0() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        final Integer precision = missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return new MathContext(precision, roundingMode);
     }
@@ -964,7 +964,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         Converter<SpreadsheetConverterContext> converter;
         try {
@@ -1025,15 +1025,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final SpreadsheetFormatterSelector date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
-        final SpreadsheetFormatterSelector dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
-        final SpreadsheetFormatterSelector number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
-        final SpreadsheetFormatterSelector text = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
-        final SpreadsheetFormatterSelector time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
+        final SpreadsheetFormatterSelector date = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
+        final SpreadsheetFormatterSelector dateTime = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+        final SpreadsheetFormatterSelector number = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
+        final SpreadsheetFormatterSelector text = missing.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
+        final SpreadsheetFormatterSelector time = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return SpreadsheetFormatters.automatic(
                 spreadsheetFormatterProvider.spreadsheetFormatter(date, context),
@@ -1058,7 +1058,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         SpreadsheetFormatter spreadsheetFormatter;
         try {
@@ -1127,14 +1127,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final SpreadsheetParserSelector date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
-        final SpreadsheetParserSelector dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
-        final SpreadsheetParserSelector number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
-        final SpreadsheetParserSelector time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
+        final SpreadsheetParserSelector date = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
+        final SpreadsheetParserSelector dateTime = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
+        final SpreadsheetParserSelector number = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
+        final SpreadsheetParserSelector time = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return SpreadsheetFormulaParsers.valueOrExpression(
                 Parsers.alternatives(
@@ -1155,7 +1155,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link SpreadsheetParserContext}.
      */
     public final SpreadsheetParserContext spreadsheetParserContext(final HasNow now) {
-        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         // DateTimeContext
         DateTimeContext dateTimeContext;
@@ -1206,7 +1206,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        final SpreadsheetMetadataComponents missing = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         SpreadsheetConverterContext spreadsheetConverterContext;
         try {
@@ -1242,19 +1242,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetProvider spreadsheetProvider(final SpreadsheetProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final ConverterAliasSet converters = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
-        final ExpressionFunctionAliasSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
-        final SpreadsheetComparatorAliasSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
-        final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
-        final SpreadsheetFormatterAliasSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
-        final FormHandlerAliasSet formHandlers = components.getOrNull(SpreadsheetMetadataPropertyName.FORM_HANDLERS);
-        final SpreadsheetImporterAliasSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
-        final SpreadsheetParserAliasSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
-        final ValidatorAliasSet validators = components.getOrNull(SpreadsheetMetadataPropertyName.VALIDATORS);
+        final ConverterAliasSet converters = missing.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
+        final ExpressionFunctionAliasSet functions = missing.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
+        final SpreadsheetComparatorAliasSet comparators = missing.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
+        final SpreadsheetExporterAliasSet exporters = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
+        final SpreadsheetFormatterAliasSet formatters = missing.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
+        final FormHandlerAliasSet formHandlers = missing.getOrNull(SpreadsheetMetadataPropertyName.FORM_HANDLERS);
+        final SpreadsheetImporterAliasSet importers = missing.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
+        final SpreadsheetParserAliasSet parsers = missing.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
+        final ValidatorAliasSet validators = missing.getOrNull(SpreadsheetMetadataPropertyName.VALIDATORS);
 
-        components.reportIfMissing();
+        missing.reportIfMissing();
 
         return SpreadsheetProviders.basic(
                 ConverterProviders.aliases(
