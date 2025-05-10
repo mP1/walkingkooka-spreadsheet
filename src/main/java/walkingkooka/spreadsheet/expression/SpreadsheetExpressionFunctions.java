@@ -50,9 +50,9 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     public static ExpressionFunctionAliasSet EMPTY_ALIAS_SET = ExpressionFunctionAliasSet.empty(NAME_CASE_SENSITIVITY);
 
     /**
-     * {@link ExpressionFunctionInfoSet#EMPTY}.
+     * {@link ExpressionFunctionInfoSet#empty(CaseSensitivity)}.
      */
-    public static final ExpressionFunctionInfoSet EMPTY_INFO_SET = ExpressionFunctionInfoSet.EMPTY;
+    public static final ExpressionFunctionInfoSet EMPTY_INFO_SET = ExpressionFunctionInfoSet.empty(NAME_CASE_SENSITIVITY);
 
     /**
      * {@link ExpressionFunctionAlias#with(ExpressionFunctionName, Optional, Optional)}
@@ -79,10 +79,10 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     }
 
     /**
-     * {@link ExpressionFunctionInfoSet#with(Set)}
+     * {@link ExpressionFunctionInfoSet#setElements(Set)}
      */
     public static ExpressionFunctionInfoSet infoSet(final Set<ExpressionFunctionInfo> infos) {
-        return ExpressionFunctionInfoSet.with(infos);
+        return EMPTY_INFO_SET.setElements(infos);
     }
 
     /**
@@ -104,7 +104,7 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     }
 
     /**
-     * {@link ExpressionFunctionAliasSet#parse(String, CaseSensitivity)}.
+     * {@link ExpressionFunctionAliasSet#parse(String,CaseSensitivity)}
      */
     public static ExpressionFunctionAliasSet parseAliasSet(final String text) {
         return ExpressionFunctionAliasSet.parse(
@@ -114,17 +114,23 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     }
 
     /**
-     * {@link ExpressionFunctionInfo#parse(String)
+     * {@link ExpressionFunctionInfo#parse(String,CaseSensitivity)
      */
     public static ExpressionFunctionInfo parseInfo(final String text) {
-        return ExpressionFunctionInfo.parse(text);
+        return ExpressionFunctionInfo.parse(
+                text,
+                NAME_CASE_SENSITIVITY
+        );
     }
 
     /**
-     * {@link ExpressionFunctionInfoSet#parse(String)
+     * {@link ExpressionFunctionInfoSet#parse(String,CaseSensitivity)
      */
     public static ExpressionFunctionInfoSet parseInfoSet(final String text) {
-        return ExpressionFunctionInfoSet.parse(text);
+        return ExpressionFunctionInfoSet.parse(
+                text,
+                NAME_CASE_SENSITIVITY
+        );
     }
 
     /**
