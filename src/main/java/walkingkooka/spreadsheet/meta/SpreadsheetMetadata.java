@@ -1140,13 +1140,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
      */
-    public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetCellReference cell,
+    public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetExpressionReference cellOrLabel,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final ProviderContext providerContext) {
-        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
@@ -1163,7 +1163,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return SpreadsheetValidatorContexts.basic(
                 ValidatorContexts.basic(
-                        cell,
+                        cellOrLabel,
                         Cast.to(validatorSelectorToValidator),
                         Cast.to(referenceToExpressionEvaluationContext),
                         this.spreadsheetConverterContext(
