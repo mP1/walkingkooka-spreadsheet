@@ -906,7 +906,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                         "  \"findConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"findFunctions\": \"\",\n" +
+                        "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
                         "  \"formatConverter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
@@ -972,7 +972,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validatorConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"validatorFormHandler\": \"non-null\",\n" +
-                        "  \"validatorFunctions\": \"\",\n" +
+                        "  \"validatorFunctions\": \"@\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
@@ -1079,7 +1079,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                         "  \"findConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"findFunctions\": \"\",\n" +
+                        "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
                         "  \"formatConverter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
@@ -1145,7 +1145,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validatorConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"validatorFormHandler\": \"non-null\",\n" +
-                        "  \"validatorFunctions\": \"\",\n" +
+                        "  \"validatorFunctions\": \"@\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
