@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -29,7 +31,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
-        ExpressionNumberConverterContextDelegator {
+        ExpressionNumberConverterContextDelegator,
+        UsesToStringBuilder {
 
     static BasicSpreadsheetConverterContext with(final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
@@ -99,12 +102,19 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private final ExpressionNumberConverterContext context;
 
+    // toString.........................................................................................................
+
     @Override
     public String toString() {
-        return this.converter +
-                " " +
-                this.spreadsheetLabelNameResolver +
-                " " +
-                this.context;
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    // UsesToStringBuilder..............................................................................................
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.value(this.converter);
+        builder.value(this.spreadsheetLabelNameResolver);
+        builder.value(this.context);
     }
 }
