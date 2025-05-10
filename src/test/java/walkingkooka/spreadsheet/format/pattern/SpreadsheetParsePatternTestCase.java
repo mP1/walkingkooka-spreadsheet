@@ -835,20 +835,15 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
-                SpreadsheetConverterContexts.basic(
-                        SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+                ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
-                        SpreadsheetLabelNameResolvers.fake(),
-                        ExpressionNumberConverterContexts.basic(
+                        ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        this.dateTimeContext(),
-                                        this.decimalNumberContext()
-                                ),
-                                EXPRESSION_NUMBER_KIND
-                        )
+                                this.dateTimeContext(),
+                                this.decimalNumberContext()
+                        ),
+                        EXPRESSION_NUMBER_KIND
                 )
         );
     }
