@@ -19,9 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.SortedSets;
 
-import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Used to aggregate that all the required properties are present, tracking those that are missing.
@@ -51,18 +49,9 @@ final class SpreadsheetMetadataComponents {
     }
 
     void reportIfMissing() {
-        final Collection<SpreadsheetMetadataPropertyName<?>> missing = this.missing;
-        if (!missing.isEmpty()) {
-            throw new IllegalStateException(missing.stream()
-                    .map(Object::toString)
-                    .collect(
-                            Collectors.joining(
-                                    ", ",
-                                    "Metadata missing: ",
-                                    ""
-                            )
-                    )
-            );
+        final Set<SpreadsheetMetadataPropertyName<?>> missing = this.missing;
+        if (false == missing.isEmpty()) {
+            throw new MissingMetadataPropertiesException(missing);
         }
     }
 
