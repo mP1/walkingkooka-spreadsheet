@@ -73,6 +73,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -2606,71 +2607,85 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // SpreadsheetValidatorContext......................................................................................
 
     @Test
-    public void testSpreadsheetValidatorContext() {
-        this.checkNotEquals(
-                null,
-                this.createSpreadsheetMetadata()
-                        .set(
-                                SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
-                                CURRENCY
-                        ).set(
-                                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
-                                Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
-                        ).set(
-                                SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-                                DECIMAL_SEPARATOR
-                        ).set(
-                                SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
-                                1950
-                        ).set(
-                                SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
-                                EXPONENT_SYMBOL
-                        ).set(
-                                SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
-                                EXPRESSION_NUMBER_KIND
-                        ).set(
-                                SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
-                                GROUP_SEPARATOR
-                        ).set(
-                                SpreadsheetMetadataPropertyName.LOCALE,
-                                Locale.ENGLISH
-                        ).set(
-                                SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
-                                NEGATIVE_SIGN
-                        ).set(
-                                SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
-                                PERCENT
-                        ).set(
-                                SpreadsheetMetadataPropertyName.PRECISION,
-                                10
-                        ).set(
-                                SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
-                                POSITIVE_SIGN
-                        ).set(
-                                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
-                                RoundingMode.HALF_UP
-                        ).set(
-                                SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
-                                50
-                        ).set(
-                                SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
-                                ConverterSelector.parse("never")
-                        ).set(
-                                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
-                                ValidatorAliasSet.EMPTY
-                        ).spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                (final ValidatorSelector validatorSelector) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                (final Object value,
-                                 final SpreadsheetExpressionReference cellOrLabel) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                LABEL_NAME_RESOLVER,
-                                ConverterProviders.converters(),
-                                PROVIDER_CONTEXT
-                        )
+    public void testSpreadsheetValidatorContextWithCell() {
+        this.spreadsheetValidatorContextAndCheck(SpreadsheetSelection.A1);
+    }
+
+    @Test
+    public void testSpreadsheetValidatorContextWithLabel() {
+        this.spreadsheetValidatorContextAndCheck(
+                SpreadsheetSelection.labelName("Label123")
+        );
+    }
+
+    private void spreadsheetValidatorContextAndCheck(final SpreadsheetExpressionReference cellOrLabel) {
+        final SpreadsheetValidatorContext context = this.createSpreadsheetMetadata()
+                .set(
+                        SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
+                        CURRENCY
+                ).set(
+                        SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+                        Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+                ).set(
+                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+                        DECIMAL_SEPARATOR
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+                        1950
+                ).set(
+                        SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
+                        EXPONENT_SYMBOL
+                ).set(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
+                        EXPRESSION_NUMBER_KIND
+                ).set(
+                        SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
+                        GROUP_SEPARATOR
+                ).set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.ENGLISH
+                ).set(
+                        SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
+                        NEGATIVE_SIGN
+                ).set(
+                        SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
+                        PERCENT
+                ).set(
+                        SpreadsheetMetadataPropertyName.PRECISION,
+                        10
+                ).set(
+                        SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
+                        POSITIVE_SIGN
+                ).set(
+                        SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                        RoundingMode.HALF_UP
+                ).set(
+                        SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
+                        50
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                        ConverterSelector.parse("never")
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        ValidatorAliasSet.EMPTY
+                ).spreadsheetValidatorContext(
+                        cellOrLabel,
+                        (final ValidatorSelector validatorSelector) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        (final Object value,
+                         final SpreadsheetExpressionReference c) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        LABEL_NAME_RESOLVER,
+                        ConverterProviders.converters(),
+                        PROVIDER_CONTEXT
+                );
+
+        this.checkEquals(
+                cellOrLabel,
+                context.validationReference(),
+                "validationReference"
         );
     }
 
