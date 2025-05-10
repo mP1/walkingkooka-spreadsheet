@@ -275,6 +275,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterStringToValidationError}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToValidationError() {
+        return SpreadsheetConverterStringToValidationError.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterUnformattedNumber}
      */
     public static Converter<SpreadsheetConverterContext> unformattedNumber() {

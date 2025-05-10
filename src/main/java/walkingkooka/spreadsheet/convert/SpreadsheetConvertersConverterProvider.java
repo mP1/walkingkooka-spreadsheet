@@ -171,6 +171,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.stringToSpreadsheetName();
                 break;
+            case STRING_TO_VALIDATION_ERROR_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.stringToValidationError();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown converter " + name);
         }
@@ -265,6 +270,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STRING_TO_SPREADSHEET_NAME = ConverterName.with(STRING_TO_SPREADSHEET_NAME_STRING);
 
+    private final static String STRING_TO_VALIDATION_ERROR_STRING = "string-to-validation-error";
+
+    final static ConverterName STRING_TO_VALIDATION_ERROR = ConverterName.with(STRING_TO_VALIDATION_ERROR_STRING);
+
     @Override
     public ConverterInfoSet converterInfos() {
         return INFOS;
@@ -287,7 +296,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(STRING_TO_SELECTION),
                     converterInfo(STRING_TO_SPREADSHEET_ID),
                     converterInfo(STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
-                    converterInfo(STRING_TO_SPREADSHEET_NAME)
+                    converterInfo(STRING_TO_SPREADSHEET_NAME),
+                    converterInfo(STRING_TO_VALIDATION_ERROR)
             )
     );
 
