@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -102,7 +103,12 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
         return Arrays.toString(this.ranges);
     }
 
-    // ImmutableSet.....................................................................................................
+    // ImmutableSetDefaults.............................................................................................
+
+    @Override
+    public void elementCheck(final SpreadsheetCellRangeReference cellRange) {
+        Objects.requireNonNull(cellRange, "cellRange");
+    }
 
     @Override
     public SpreadsheetDeltaWindowSet setElements(final Set<SpreadsheetCellRangeReference> elements) {
