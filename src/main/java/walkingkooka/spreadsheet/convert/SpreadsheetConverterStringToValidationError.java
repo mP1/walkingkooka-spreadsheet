@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -53,7 +54,7 @@ final class SpreadsheetConverterStringToValidationError extends SpreadsheetConve
         try {
             result = this.successfulConversion(
                     SpreadsheetError.parse(
-                            String.class.cast(value)
+                            Cast.to(value)
                     ).toValidationError(context.validationReference()),
                     type
             );
