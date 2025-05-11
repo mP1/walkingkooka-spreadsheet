@@ -31,6 +31,7 @@ import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
@@ -45,6 +46,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CaseKind;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
@@ -88,6 +90,11 @@ public abstract class SpreadsheetSelection implements HasText,
         Predicate<SpreadsheetSelection>,
         TreePrintable,
         UsesToStringBuilder {
+
+    /**
+     * All columns and labels are case-insensitive
+     */
+    public final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
 
     /**
      * A {@link SpreadsheetCellReference} with A1.
