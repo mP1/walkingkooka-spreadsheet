@@ -61,31 +61,31 @@ import java.util.Objects;
 public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<SpreadsheetFormatterSelectorToken>
         implements ImmutableListDefaults<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken> {
 
-    public static SpreadsheetFormatterSelectorTokenList with(final List<SpreadsheetFormatterSelectorToken> components) {
-        Objects.requireNonNull(components, "components");
+    public static SpreadsheetFormatterSelectorTokenList with(final List<SpreadsheetFormatterSelectorToken> tokens) {
+        Objects.requireNonNull(tokens, "tokens");
 
-        return components instanceof SpreadsheetFormatterSelectorTokenList ?
-                (SpreadsheetFormatterSelectorTokenList) components :
+        return tokens instanceof SpreadsheetFormatterSelectorTokenList ?
+                (SpreadsheetFormatterSelectorTokenList) tokens :
                 new SpreadsheetFormatterSelectorTokenList(
-                        Lists.immutable(components)
+                        Lists.immutable(tokens)
                 );
     }
 
-    private SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> components) {
-        this.components = components;
+    private SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> tokens) {
+        this.tokens = tokens;
     }
 
     @Override
     public SpreadsheetFormatterSelectorToken get(int index) {
-        return this.components.get(index);
+        return this.tokens.get(index);
     }
 
     @Override
     public int size() {
-        return this.components.size();
+        return this.tokens.size();
     }
 
-    private final List<SpreadsheetFormatterSelectorToken> components;
+    private final List<SpreadsheetFormatterSelectorToken> tokens;
 
     @Override
     public void elementCheck(final SpreadsheetFormatterSelectorToken token) {
@@ -93,8 +93,8 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTokenList setElements(final List<SpreadsheetFormatterSelectorToken> components) {
-        final SpreadsheetFormatterSelectorTokenList copy = with(components);
+    public SpreadsheetFormatterSelectorTokenList setElements(final List<SpreadsheetFormatterSelectorToken> tokens) {
+        final SpreadsheetFormatterSelectorTokenList copy = with(tokens);
         return this.equals(copy) ?
                 this :
                 copy;
