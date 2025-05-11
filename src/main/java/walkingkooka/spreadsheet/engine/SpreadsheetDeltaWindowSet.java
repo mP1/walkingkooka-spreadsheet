@@ -40,7 +40,10 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
         return window instanceof SpreadsheetDeltaWindowSet ?
                 (SpreadsheetDeltaWindowSet) window :
                 new SpreadsheetDeltaWindowSet(
-                        window.toArray(new SpreadsheetCellRangeReference[window.size()]) // TODO Array.clone.
+                        Objects.requireNonNull(window, "window")
+                                .toArray(
+                                        new SpreadsheetCellRangeReference[window.size()]
+                                ) // TODO Array.clone.
                 );
     }
 
