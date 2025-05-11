@@ -106,6 +106,11 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     private final List<SpreadsheetComparatorName> names;
 
     @Override
+    public void elementCheck(final SpreadsheetComparatorName names) {
+        Objects.requireNonNull(names, "names");
+    }
+
+    @Override
     public SpreadsheetComparatorNameList setElements(final List<SpreadsheetComparatorName> names) {
         final SpreadsheetComparatorNameList copy = with(names);
         return this.equals(copy) ?

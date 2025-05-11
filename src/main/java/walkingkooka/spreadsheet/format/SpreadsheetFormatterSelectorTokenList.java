@@ -88,6 +88,11 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
     private final List<SpreadsheetFormatterSelectorToken> components;
 
     @Override
+    public void elementCheck(final SpreadsheetFormatterSelectorToken token) {
+        Objects.requireNonNull(token, "token");
+    }
+
+    @Override
     public SpreadsheetFormatterSelectorTokenList setElements(final List<SpreadsheetFormatterSelectorToken> components) {
         final SpreadsheetFormatterSelectorTokenList copy = with(components);
         return this.equals(copy) ?

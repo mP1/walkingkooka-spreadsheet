@@ -84,6 +84,11 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     private final List<SpreadsheetFormatterSample> samples;
 
     @Override
+    public void elementCheck(final SpreadsheetFormatterSample sample) {
+        Objects.requireNonNull(sample, "sample");
+    }
+
+    @Override
     public SpreadsheetFormatterSampleList setElements(final List<SpreadsheetFormatterSample> samples) {
         final SpreadsheetFormatterSampleList copy = with(samples);
         return this.equals(copy) ?

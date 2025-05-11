@@ -87,6 +87,11 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     private final List<SpreadsheetParserSelectorToken> components;
 
     @Override
+    public void elementCheck(final SpreadsheetParserSelectorToken token) {
+        Objects.requireNonNull(token, "token");
+    }
+
+    @Override
     public SpreadsheetParserSelectorTokenList setElements(final List<SpreadsheetParserSelectorToken> components) {
         final SpreadsheetParserSelectorTokenList copy = with(components);
         return this.equals(copy) ?

@@ -161,6 +161,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     // ImmutableListDefaults............................................................................................
 
     @Override
+    public void elementCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames names) {
+        Objects.requireNonNull(names, "names");
+    }
+
+    @Override
     public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copy = with(names);
         return this.equals(copy) ?
