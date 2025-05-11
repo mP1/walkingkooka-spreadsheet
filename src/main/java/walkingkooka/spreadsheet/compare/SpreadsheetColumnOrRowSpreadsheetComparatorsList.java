@@ -93,7 +93,12 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
 
     private final SpreadsheetColumnOrRowSpreadsheetComparators[] comparators;
 
-    // ImmutableList....................................................................................................
+    // ImmutableListDefaults............................................................................................
+
+    @Override
+    public void elementCheck(final SpreadsheetColumnOrRowSpreadsheetComparators comparators) {
+        Objects.requireNonNull(comparators, "comparators");
+    }
 
     @Override
     public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {

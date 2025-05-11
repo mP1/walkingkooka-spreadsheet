@@ -114,6 +114,11 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     @Override
+    public void elementCheck(final SpreadsheetViewportNavigation navigation) {
+        Objects.requireNonNull(navigation, "navigation");
+    }
+
+    @Override
     public SpreadsheetViewportNavigationList setElements(final List<SpreadsheetViewportNavigation> list) {
         final SpreadsheetViewportNavigationList copy = with(list);
         return this.equals(copy) ?
