@@ -81,6 +81,9 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
 
     private static void failIfOverlaps(final SpreadsheetCellRangeReference left,
                                        final SpreadsheetCellRangeReference right) {
+        if(null == left || null == right) {
+            throw new NullPointerException("Window includes null cell-range");
+        }
         if (left.testCellRange(right)) {
             throw new IllegalArgumentException("Window contains overlapping ranges " + left + " and " + right);
         }

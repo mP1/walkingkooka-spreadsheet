@@ -174,6 +174,63 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         );
     }
 
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDeltaWindowSet.with(
+                        Sets.of(
+                                this.a1b2(),
+                                null
+                        )
+                )
+        );
+
+        this.checkEquals(
+                "Window includes null cell-range",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testSetElementsIncludesNullFails2() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDeltaWindowSet.with(
+                        Sets.of(
+                                this.a1b2(),
+                                this.a3b5(),
+                                null
+                        )
+                )
+        );
+
+        this.checkEquals(
+                "Window includes null cell-range",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testSetElementsIncludesNullFails3() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDeltaWindowSet.with(
+                        Sets.of(
+                                this.a1b2(),
+                                this.a3b5(),
+                                this.c1e2(),
+                                null
+                        )
+                )
+        );
+
+        this.checkEquals(
+                "Window includes null cell-range",
+                thrown.getMessage()
+        );
+    }
+
     private SpreadsheetCellRangeReference a1b2() {
         return SpreadsheetSelection.parseCellRange("a1:b2");
     }
