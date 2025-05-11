@@ -63,7 +63,7 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     @Override
     public final boolean testParameterName(final ExpressionFunctionParameterName parameterName) {
         return this.isLabelName() &&
-                SpreadsheetLabelName.CASE_SENSITIVITY.equals(
+                CASE_SENSITIVITY.equals(
                         this.toString(),
                         parameterName.value()
                 );

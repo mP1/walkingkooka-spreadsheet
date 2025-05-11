@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
 import walkingkooka.watch.Watchers;
 
@@ -206,7 +207,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
                              final SpreadsheetLabelMapping possible) {
         final String value = possible.label()
                 .value();
-        return value.length() != text.length() && SpreadsheetLabelName.CASE_SENSITIVITY.contains(value, text);
+        return value.length() != text.length() && SpreadsheetSelection.CASE_SENSITIVITY.contains(value, text);
     }
 
     @Override

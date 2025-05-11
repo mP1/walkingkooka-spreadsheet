@@ -80,7 +80,7 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
                     );
                     break;
                 case LABEL:
-                    compare = SpreadsheetLabelName.CASE_SENSITIVITY.comparator()
+                    compare = SpreadsheetSelection.CASE_SENSITIVITY.comparator()
                             .compare(
                                     left.toLabelName()
                                             .value(),
