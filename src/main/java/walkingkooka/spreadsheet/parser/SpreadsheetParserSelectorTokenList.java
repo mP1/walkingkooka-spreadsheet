@@ -34,7 +34,7 @@ import java.util.Objects;
  * <pre>
  * [
  *   {
- *     "type": "spreadsheet-parser-selector-text-component",
+ *     "type": "spreadsheet-parser-selector-text-token",
  *     "value": {
  *       "label": "label1",
  *       "text": "text1",
@@ -47,7 +47,7 @@ import java.util.Objects;
  *     }
  *   },
  *   {
- *     "type": "spreadsheet-parser-selector-text-component",
+ *     "type": "spreadsheet-parser-selector-text-token",
  *     "value": {
  *       "label": "label1",
  *       "text": "text1",
@@ -60,31 +60,31 @@ import java.util.Objects;
 public final class SpreadsheetParserSelectorTokenList extends AbstractList<SpreadsheetParserSelectorToken>
         implements ImmutableListDefaults<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken> {
 
-    public static SpreadsheetParserSelectorTokenList with(final List<SpreadsheetParserSelectorToken> components) {
-        Objects.requireNonNull(components, "components");
+    public static SpreadsheetParserSelectorTokenList with(final List<SpreadsheetParserSelectorToken> tokens) {
+        Objects.requireNonNull(tokens, "tokens");
 
-        return components instanceof SpreadsheetParserSelectorTokenList ?
-                (SpreadsheetParserSelectorTokenList) components :
+        return tokens instanceof SpreadsheetParserSelectorTokenList ?
+                (SpreadsheetParserSelectorTokenList) tokens :
                 new SpreadsheetParserSelectorTokenList(
-                        Lists.immutable(components)
+                        Lists.immutable(tokens)
                 );
     }
 
-    private SpreadsheetParserSelectorTokenList(final List<SpreadsheetParserSelectorToken> components) {
-        this.components = components;
+    private SpreadsheetParserSelectorTokenList(final List<SpreadsheetParserSelectorToken> tokens) {
+        this.tokens = tokens;
     }
 
     @Override
     public SpreadsheetParserSelectorToken get(int index) {
-        return this.components.get(index);
+        return this.tokens.get(index);
     }
 
     @Override
     public int size() {
-        return this.components.size();
+        return this.tokens.size();
     }
 
-    private final List<SpreadsheetParserSelectorToken> components;
+    private final List<SpreadsheetParserSelectorToken> tokens;
 
     @Override
     public void elementCheck(final SpreadsheetParserSelectorToken token) {
@@ -92,8 +92,8 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     }
 
     @Override
-    public SpreadsheetParserSelectorTokenList setElements(final List<SpreadsheetParserSelectorToken> components) {
-        final SpreadsheetParserSelectorTokenList copy = with(components);
+    public SpreadsheetParserSelectorTokenList setElements(final List<SpreadsheetParserSelectorToken> tokens) {
+        final SpreadsheetParserSelectorTokenList copy = with(tokens);
         return this.equals(copy) ?
                 this :
                 copy;
