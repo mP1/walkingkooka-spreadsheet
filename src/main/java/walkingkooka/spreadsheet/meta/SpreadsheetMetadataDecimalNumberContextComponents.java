@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.NumberContext;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -61,6 +62,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
                 DecimalNumberSymbols.with(
                         negativeSign,
                         positiveSign,
+                        NumberContext.ZERO_DIGIT,
                         currencySymbol,
                         decimalSeparator,
                         exponentSymbol,
