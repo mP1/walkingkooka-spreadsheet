@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasTextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
         ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList>,
@@ -112,6 +113,29 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                                 SpreadsheetComparatorProviders.spreadsheetComparators(),
                                 PROVIDER_CONTEXT
                         )
+        );
+    }
+
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                                                SpreadsheetSelection.parseColumn("A"),
+                                                Lists.of(
+                                                        SpreadsheetComparators.text()
+                                                )
+                                        ),
+                                        null
+                                )
+                        )
+        );
+        this.checkEquals(
+                "Includes null comparator",
+                thrown.getMessage()
         );
     }
 

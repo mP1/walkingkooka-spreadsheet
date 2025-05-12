@@ -55,6 +55,8 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
         int i = 0;
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators : columnOrRows) {
+            Objects.requireNonNull(columnOrRowComparators, "Includes null comparator");
+
             final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
             if (null == first) {
                 first = columnOrRow.columnOrRowReferenceKind();
