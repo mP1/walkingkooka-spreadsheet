@@ -113,6 +113,25 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
         );
     }
 
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        SAMPLE1,
+                                        SAMPLE2,
+                                        null
+                                )
+                        )
+        );
+        this.checkEquals(
+                "includes null sample",
+                thrown.getMessage()
+        );
+    }
+
     @Override
     public SpreadsheetFormatterSampleList createList() {
         return SpreadsheetFormatterSampleList.with(
