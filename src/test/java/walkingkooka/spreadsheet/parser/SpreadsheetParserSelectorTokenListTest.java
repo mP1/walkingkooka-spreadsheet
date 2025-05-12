@@ -116,6 +116,24 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         );
     }
 
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        COMPONENT1,
+                                        null
+                                )
+                        )
+        );
+        this.checkEquals(
+                "Includes null token",
+                thrown.getMessage()
+        );
+    }
+
     @Override
     public SpreadsheetParserSelectorTokenList createList() {
         return SpreadsheetParserSelectorTokenList.with(
