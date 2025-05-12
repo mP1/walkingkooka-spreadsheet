@@ -949,8 +949,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertAllNumberTypesTrueToString() {
         this.convertAndCheck(
-                12.5,
-                "N 12D5"
+                -12.5,
+                "N :12*5"
         );
     }
 
@@ -1412,13 +1412,14 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                 ),
                                 DecimalNumberContexts.basic(
                                         DecimalNumberSymbols.with(
-                                                'M',
-                                                'P',
-                                                "C",
-                                                'D',
-                                                "E",
-                                                'G',
-                                                'L'
+                                                ':', // negativeSign
+                                                ';', // positiveSign
+                                                '0',
+                                                "CC",
+                                                '*', // decimalSeparator
+                                                "EE",
+                                                '/', // groupSeparator
+                                                '^' // percentageSymbol
                                         ),
                                         Locale.ENGLISH,
                                         MathContext.DECIMAL32

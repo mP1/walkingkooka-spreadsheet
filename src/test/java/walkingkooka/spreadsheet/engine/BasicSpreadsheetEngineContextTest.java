@@ -106,6 +106,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static char MINUS = '!';
     private final static char PERCENT = '#';
     private final static char PLUS = '@';
+    private final static char ZERO_DIGIT = '0';
 
     private final static char VALUE_SEPARATOR = ',';
     private final static int WIDTH = 1;
@@ -1280,6 +1281,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 DecimalNumberSymbols.with(
                         MINUS,
                         PLUS,
+                        ZERO_DIGIT,
                         CURRENCY,
                         DECIMAL,
                         EXPONENT,

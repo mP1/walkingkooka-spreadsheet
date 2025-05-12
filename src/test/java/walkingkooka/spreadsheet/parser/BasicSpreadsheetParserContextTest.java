@@ -55,6 +55,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static char NEGATIVE = '!';
     private final static char PERCENTAGE = '#';
     private final static char POSITIVE = '@';
+    private final static char ZERO_DIGIT = '0';
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
@@ -64,6 +65,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
                     DecimalNumberSymbols.with(
                             NEGATIVE,
                             POSITIVE,
+                            ZERO_DIGIT,
                             CURRENCY,
                             DECIMAL,
                             EXPONENT,
