@@ -116,6 +116,24 @@ public class SpreadsheetFormatterSelectorTokenListTest implements ListTesting2<S
         );
     }
 
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        COMPONENT1,
+                                        null
+                                )
+                        )
+        );
+        this.checkEquals(
+                "Includes null token",
+                thrown.getMessage()
+        );
+    }
+
     @Override
     public SpreadsheetFormatterSelectorTokenList createList() {
         return SpreadsheetFormatterSelectorTokenList.with(
