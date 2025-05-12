@@ -57,14 +57,34 @@ import java.util.Objects;
 public final class SpreadsheetFormatterSampleList extends AbstractList<SpreadsheetFormatterSample>
         implements ImmutableListDefaults<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample> {
 
+    public final static SpreadsheetFormatterSampleList EMPTY = new SpreadsheetFormatterSampleList(Lists.empty());
+
     public static SpreadsheetFormatterSampleList with(final List<SpreadsheetFormatterSample> samples) {
         Objects.requireNonNull(samples, "samples");
 
-        return samples instanceof SpreadsheetFormatterSampleList ?
-                (SpreadsheetFormatterSampleList) samples :
-                new SpreadsheetFormatterSampleList(
-                        Lists.immutable(samples)
+        SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
+
+        if (samples instanceof SpreadsheetFormatterSampleList) {
+            spreadsheetFormatterSampleList = (SpreadsheetFormatterSampleList) samples;
+        } else {
+            final List<SpreadsheetFormatterSample> copy = Lists.array();
+            for (final SpreadsheetFormatterSample sample : samples) {
+                copy.add(
+                        Objects.requireNonNull(sample, "includes null sample")
                 );
+            }
+
+            switch (samples.size()) {
+                case 0:
+                    spreadsheetFormatterSampleList = EMPTY;
+                    break;
+                default:
+                    spreadsheetFormatterSampleList = new SpreadsheetFormatterSampleList(copy);
+                    break;
+            }
+        }
+
+        return spreadsheetFormatterSampleList;
     }
 
     private SpreadsheetFormatterSampleList(final List<SpreadsheetFormatterSample> samples) {
