@@ -61,14 +61,30 @@ import java.util.Objects;
 public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<SpreadsheetFormatterSelectorToken>
         implements ImmutableListDefaults<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken> {
 
+    public final static SpreadsheetFormatterSelectorTokenList EMPTY = new SpreadsheetFormatterSelectorTokenList(Lists.empty());
+
     public static SpreadsheetFormatterSelectorTokenList with(final List<SpreadsheetFormatterSelectorToken> tokens) {
         Objects.requireNonNull(tokens, "tokens");
 
-        return tokens instanceof SpreadsheetFormatterSelectorTokenList ?
-                (SpreadsheetFormatterSelectorTokenList) tokens :
-                new SpreadsheetFormatterSelectorTokenList(
-                        Lists.immutable(tokens)
+        SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokens;
+
+        if (tokens instanceof SpreadsheetFormatterSelectorTokenList) {
+            spreadsheetFormatterSelectorTokens = (SpreadsheetFormatterSelectorTokenList) tokens;
+        } else {
+            final List<SpreadsheetFormatterSelectorToken> copy = Lists.array();
+            for (final SpreadsheetFormatterSelectorToken token : tokens) {
+                copy.add(
+                        Objects.requireNonNull(token, "Includes null token")
                 );
+            }
+
+            spreadsheetFormatterSelectorTokens =
+                    copy.isEmpty() ?
+                            EMPTY :
+                            new SpreadsheetFormatterSelectorTokenList(copy);
+        }
+
+        return spreadsheetFormatterSelectorTokens;
     }
 
     private SpreadsheetFormatterSelectorTokenList(final List<SpreadsheetFormatterSelectorToken> tokens) {
