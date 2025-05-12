@@ -60,14 +60,30 @@ import java.util.Objects;
 public final class SpreadsheetParserSelectorTokenList extends AbstractList<SpreadsheetParserSelectorToken>
         implements ImmutableListDefaults<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken> {
 
+    public final static SpreadsheetParserSelectorTokenList EMPTY = new SpreadsheetParserSelectorTokenList(Lists.empty());
+
     public static SpreadsheetParserSelectorTokenList with(final List<SpreadsheetParserSelectorToken> tokens) {
         Objects.requireNonNull(tokens, "tokens");
 
-        return tokens instanceof SpreadsheetParserSelectorTokenList ?
-                (SpreadsheetParserSelectorTokenList) tokens :
-                new SpreadsheetParserSelectorTokenList(
-                        Lists.immutable(tokens)
+        SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokens;
+
+        if (tokens instanceof SpreadsheetParserSelectorTokenList) {
+            spreadsheetParserSelectorTokens = (SpreadsheetParserSelectorTokenList) tokens;
+        } else {
+            final List<SpreadsheetParserSelectorToken> copy = Lists.array();
+            for (final SpreadsheetParserSelectorToken token : tokens) {
+                copy.add(
+                        Objects.requireNonNull(token, "Includes null token")
                 );
+            }
+
+            spreadsheetParserSelectorTokens =
+                    copy.isEmpty() ?
+                            EMPTY :
+                            new SpreadsheetParserSelectorTokenList(copy);
+        }
+
+        return spreadsheetParserSelectorTokens;
     }
 
     private SpreadsheetParserSelectorTokenList(final List<SpreadsheetParserSelectorToken> tokens) {
