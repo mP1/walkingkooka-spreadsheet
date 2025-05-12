@@ -35,6 +35,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportNavigationListTest implements ImmutableListTesting<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
         ParseStringTesting<SpreadsheetViewportNavigationList>,
@@ -42,6 +43,20 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         ClassTesting<SpreadsheetViewportNavigationList>,
         HasTextTesting,
         JsonNodeMarshallingTesting<SpreadsheetViewportNavigationList> {
+
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        null,
+                                        SpreadsheetViewportNavigation.rightColumn()
+                                )
+                        )
+        );
+    }
 
     @Test
     public void testSetElementsDoesntDoubleWrap() {
