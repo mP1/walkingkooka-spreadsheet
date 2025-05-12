@@ -84,7 +84,11 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
         final int size = list.size();
         final SpreadsheetViewportNavigation[] copy = new SpreadsheetViewportNavigation[list.size()];
-        list.toArray(copy);
+
+        int i = 0;
+        for(final SpreadsheetViewportNavigation navigation : list) {
+            copy[i++] = Objects.requireNonNull(navigation, "includes null navigation");
+        }
 
         final SpreadsheetViewportNavigationList result;
         switch (size) {
