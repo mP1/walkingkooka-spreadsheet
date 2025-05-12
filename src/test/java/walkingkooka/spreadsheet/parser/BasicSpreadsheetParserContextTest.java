@@ -48,13 +48,13 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.fake();
 
     private final static String CURRENCY = "$$";
-    private final static char DECIMAL = 'D';
-    private final static String EXPONENT = "X";
+    private final static char DECIMAL = ':';
+    private final static String EXPONENT = "^";
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-    private final static char GROUP_SEPARATOR = 'G';
-    private final static char NEGATIVE = 'N';
-    private final static char PERCENTAGE = 'R';
-    private final static char POSITIVE = 'P';
+    private final static char GROUP_SEPARATOR = '/';
+    private final static char NEGATIVE = '!';
+    private final static char PERCENTAGE = '#';
+    private final static char POSITIVE = '@';
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
