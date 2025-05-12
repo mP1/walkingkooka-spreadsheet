@@ -70,6 +70,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         final Set<SpreadsheetSelection> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
+            if(null == columnOrRowComparators) {
+                throw new NullPointerException("Includes null names");
+            }
+
             final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
 
             if (false == duplicates.isEmpty()) {

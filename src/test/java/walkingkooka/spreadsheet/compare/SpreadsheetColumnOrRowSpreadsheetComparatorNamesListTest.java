@@ -325,6 +325,29 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         );
     }
 
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                                SpreadsheetSelection.parseRow("1"),
+                                                Lists.of(
+                                                        SpreadsheetComparatorNameAndDirection.parse("text UP")
+                                                )
+                                        ),
+                                        null
+                                )
+                        )
+        );
+        this.checkEquals(
+                "Includes null names",
+                thrown.getMessage()
+        );
+    }
+
     @Override
     public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList createList() {
         return Cast.to(
