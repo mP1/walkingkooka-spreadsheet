@@ -102,6 +102,11 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
         return new SpreadsheetLabelNameSet(labels);
     }
 
+    @Override
+    public void elementCheck(final SpreadsheetLabelName label) {
+        Objects.requireNonNull(label, "label");
+    }
+
     // Json.............................................................................................................
 
     static void register() {

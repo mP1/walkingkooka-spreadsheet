@@ -102,6 +102,11 @@ public final class SpreadsheetRowReferenceSet extends SpreadsheetSelectionSet<Sp
         return new SpreadsheetRowReferenceSet(rows);
     }
 
+    @Override
+    public void elementCheck(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
+    }
+
     // Json.............................................................................................................
 
     static void register() {

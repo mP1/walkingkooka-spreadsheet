@@ -32,6 +32,7 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 
@@ -237,6 +238,11 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     @Override
     public SpreadsheetExporterAlias last() {
         return this.pluginAliasSet.last();
+    }
+
+    @Override
+    public void elementCheck(final SpreadsheetExporterAlias alias) {
+        Objects.requireNonNull(alias, "alias");
     }
 
     @Override
