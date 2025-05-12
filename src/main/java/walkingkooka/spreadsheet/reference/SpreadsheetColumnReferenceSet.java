@@ -102,6 +102,11 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
         return new SpreadsheetColumnReferenceSet(columns);
     }
 
+    @Override
+    public void elementCheck(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+    }
+
     // Json.............................................................................................................
 
     static void register() {
