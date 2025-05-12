@@ -62,13 +62,6 @@ public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTe
     }
 
     @Test
-    public void testConvertPositiveSign() {
-        this.convertStringAndCheck(
-                SpreadsheetMetadataPropertyName.POSITIVE_SIGN
-        );
-    }
-
-    @Test
     public void testConvertRoundingMode() {
         this.convertStringAndCheck(
                 SpreadsheetMetadataPropertyName.ROUNDING_MODE

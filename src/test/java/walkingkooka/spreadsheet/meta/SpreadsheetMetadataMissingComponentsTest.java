@@ -83,14 +83,14 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
     public void testReportIfMissingMissingTwo() {
         final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
-        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: auditInfo, decimalSeparator",
+                "Metadata missing: auditInfo, decimalNumberSymbols",
                 thrown.getMessage(),
                 "message"
         );
@@ -100,7 +100,7 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
     public void testReportIfMissingMissingSorted() {
         final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
@@ -110,7 +110,7 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: auditInfo, decimalSeparator, locale, roundingMode",
+                "Metadata missing: auditInfo, decimalNumberSymbols, locale, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -167,13 +167,13 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
     public void testToString() {
         final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
-        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
 
         this.toStringAndCheck(
                 components,
                 Lists.of(
                         SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
                 ).toString()
         );
     }

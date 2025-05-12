@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -128,10 +129,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitCurrencySymbol(final String currencySymbol) {
-        // nop
-    }
-
     protected void visitDateFormatter(final SpreadsheetFormatterSelector selector) {
         // nop
     }
@@ -152,15 +149,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDecimalSeparator(final char decimalSeparator) {
+    protected void visitDecimalNumberSymbols(final DecimalNumberSymbols symbols) {
         // nop
     }
 
     protected void visitDefaultYear(final int defaultYear) {
-        // nop
-    }
-
-    protected void visitExponentSymbol(final String exponentSymbol) {
         // nop
     }
 
@@ -224,10 +217,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitGroupSeparator(final char groupSeparator) {
-        // nop
-    }
-
     protected void visitHideZeroValues(final boolean value) {
         // nop
     }
@@ -237,10 +226,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitLocale(final Locale locale) {
-        // nop
-    }
-
-    protected void visitNegativeSign(final char negativeSign) {
         // nop
     }
 
@@ -265,15 +250,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitPercentageSymbol(final char percentageSymbol) {
-        // nop
-    }
-
     protected void visitPlugins(final PluginNameSet names) {
-        // nop
-    }
-
-    protected void visitPositiveSign(final char positiveSign) {
         // nop
     }
 

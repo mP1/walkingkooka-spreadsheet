@@ -27,6 +27,8 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
@@ -518,14 +520,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
         METADATA = METADATA_EN_AU
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY_SYMBOL)
-                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
-                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
-                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
-                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENTAGE_SYMBOL)
-                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
+                .set(
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                        DecimalNumberSymbols.with(
+                                NEGATIVE_SIGN,
+                                POSITIVE_SIGN,
+                                DecimalNumberContext.ZERO_DIGIT,
+                                CURRENCY_SYMBOL,
+                                DECIMAL_SEPARATOR,
+                                EXPONENT_SYMBOL,
+                                GROUP_SEPARATOR,
+                                PERCENTAGE_SYMBOL
+                        )
+                ).set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)

@@ -83,11 +83,13 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
 
     @Test
     public void testEnvironmentValue() {
+        final SpreadsheetMetadataPropertyName<Integer> property = SpreadsheetMetadataPropertyName.PRECISION;
+
         this.environmentValueAndCheck(
                 EnvironmentValueName.with(
-                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()
+                        property.value()
                 ),
-                '.'
+                SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(property)
         );
     }
 

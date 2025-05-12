@@ -627,12 +627,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
         store.save(requires);
 
-        final char decimalSeparator2 = ';';
+        final char newDecimalSeparator = '*';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
                 METADATA.set(
-                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-                        decimalSeparator2
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                        DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator(newDecimalSeparator)
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
@@ -640,60 +640,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         this.checkEquals(
                 requires.setFormula(
-                        formula.setText(text.replace(DECIMAL_SEPARATOR, decimalSeparator2))
+                        formula.setText(text.replace(DECIMAL_SEPARATOR, newDecimalSeparator))
                                 .setToken(
                                         Optional.of(
-                                                this.numberParserToken(decimalSeparator2)
+                                                this.numberParserToken(newDecimalSeparator)
                                         )
                                 ).setExpression(
                                         Optional.of(
                                                 number(3.5)
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
-        );
-    }
-
-    @Test
-    public void testSaveFormulaWithTokenTextUpdateRequiredPercet() {
-        final String text = "=150" + PERCENT;
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                this.expressionNumberWithPercentParserToken(PERCENT)
-                        )
-                );
-
-        final SpreadsheetCell requires = this.cell(formula);
-
-        final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
-        store.save(requires);
-
-        final char percent2 = ';';
-        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
-                        percent2
-                ),
-                SPREADSHEET_PARSER_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-
-        final String text2 = text.replace(PERCENT, percent2);
-        this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                this.expressionNumberWithPercentParserToken(percent2)
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                number(1.5)
                                         )
                                 )
                 ),
@@ -738,12 +692,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
         store.save(requires);
 
-        final char decimalSeparator2 = ';';
+        final char newDecimalSeparator = '*';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
                 METADATA.set(
-                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-                        decimalSeparator2
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                        DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator(newDecimalSeparator)
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
@@ -751,72 +705,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         this.checkEquals(
                 requires.setFormula(
-                        formula.setText(text.replace(DECIMAL_SEPARATOR, decimalSeparator2))
+                        formula.setText(text.replace(DECIMAL_SEPARATOR, newDecimalSeparator))
                                 .setToken(
                                         Optional.of(
-                                                this.numberParserToken(decimalSeparator2)
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                number(3.5)
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
-        );
-    }
-
-    @Test
-    public void testSaveFormulaWithTokenAndExpressionTextUpdateRequired2() {
-        final String text = "=3" + DECIMAL_SEPARATOR + "5";
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.expression(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                                                this.numberParserToken(DECIMAL_SEPARATOR)
-                                        ),
-                                        text
-                                )
-                        )
-                ).setExpression(
-                        Optional.of(
-                                number(3.5)
-                        )
-                );
-
-        final SpreadsheetCell requires = this.cell(formula);
-
-        final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
-        store.save(requires);
-
-        final char decimalSeparator2 = ';';
-        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-                        decimalSeparator2
-                ),
-                SPREADSHEET_PARSER_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-
-        final String text2 = text.replace(DECIMAL_SEPARATOR, decimalSeparator2);
-        this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                SpreadsheetFormulaParserToken.expression(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                                                                this.numberParserToken(decimalSeparator2)
-                                                        ),
-                                                        text2
-                                                )
+                                                this.numberParserToken(newDecimalSeparator)
                                         )
                                 ).setExpression(
                                         Optional.of(

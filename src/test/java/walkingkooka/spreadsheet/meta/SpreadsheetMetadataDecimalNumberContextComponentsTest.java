@@ -34,13 +34,13 @@ public final class SpreadsheetMetadataDecimalNumberContextComponentsTest impleme
     @Test
     public void testToString() {
         final SpreadsheetMetadataDecimalNumberContextComponents components = SpreadsheetMetadataDecimalNumberContextComponents.with(SpreadsheetMetadata.EMPTY);
-        components.missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
+        components.missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
         components.missing.getOrNull(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES);
 
         this.toStringAndCheck(
                 components,
                 Lists.of(
-                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                         SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES
                 ).toString()
         );

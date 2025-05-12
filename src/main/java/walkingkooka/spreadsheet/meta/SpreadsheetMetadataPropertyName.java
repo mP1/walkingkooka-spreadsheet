@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -141,11 +142,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterAliasSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNameConverterAliasSetConverters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the default {@link SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance());
@@ -171,19 +167,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DecimalNumberSymbols}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.instance());
+    public static final SpreadsheetMetadataPropertyName<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = registerConstant(SpreadsheetMetadataPropertyNameDecimalNumberSymbols.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameStringExponentSymbol.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterAliasSet}</code>
@@ -261,11 +252,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Character> GROUP_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>hide-zero-values {@link boolean}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> HIDE_ZERO_VALUES = registerConstant(SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance());
@@ -279,11 +265,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant(SpreadsheetMetadataPropertyNameLocale.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
@@ -301,19 +282,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserAliasSet> PARSERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetParsers.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link PluginNameSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<PluginNameSet> PLUGINS = registerConstant(SpreadsheetMetadataPropertyNamePluginNameSet.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>positive-sign {@link Character}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Character> POSITIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameCharacterPositiveSign.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
@@ -485,30 +456,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         this.urlFragment = UrlFragment.parse(finalName);
     }
 
-    /**
-     * Setting a {@link Character} property that is a duplicate value of another {@link Character} should result
-     * in the duplicate value being replaced with the value of the property being set.<br>
-     * <pre>
-     * BEFORE
-     * decimal=dot
-     * group=comma
-     * SET
-     * decimal=comma
-     * AFTER
-     * decimal=comma
-     * group=dot
-     * </pre>
-     * Because group held the new value, it actually gains the old value of decimal, aka values were swapped.
-     * Note that grouping and value separator may have the same value and not be considered duplicates.
-     */
-    final boolean swapIfDuplicateValue() {
-        return this instanceof SpreadsheetMetadataPropertyNameCharacter;
-    }
-
-    final boolean isGroupSeparatorOrValueSeparator() {
-        return this instanceof SpreadsheetMetadataPropertyNameCharacterGroupSeparator || this instanceof SpreadsheetMetadataPropertyNameCharacterValueSeparator;
-    }
-
     @Override
     public final String value() {
         return this.name;
@@ -648,13 +595,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 action = SpreadsheetCellStoreAction.NONE;
                 break;
             // number parsing characters.
-            case "currencySymbol":
-            case "decimalSeparator":
-            case "exponentSymbol":
-            case "groupSeparator":
-            case "negativeSign":
-            case "percentageSymbol":
-            case "positiveSign":
+            case "decimalNumberSymbols":
             case "valueSeparator":
                 action = SpreadsheetCellStoreAction.PARSE_FORMULA;
                 break;
@@ -815,6 +756,16 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         );
         Color.BLACK.alpha();
         ConverterSelector.parse("Dummy");
+        DecimalNumberSymbols.with(
+                '-',
+                '+',
+                '0',
+                "$",
+                '.',
+                "E",
+                ',',
+                ';'
+        );
         ExpressionNumberKind.DEFAULT.name();
         SpreadsheetExpressionFunctions.parseAliasSet("hello");
         FontFamily.with("MS Sans Serif");

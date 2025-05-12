@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.math.NumberContext;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -43,14 +42,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
     DecimalNumberContext decimalNumberContext() {
         final SpreadsheetMetadataMissingComponents missing = this.missing;
 
-        final String currencySymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);
-        final Character decimalSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
-        final String exponentSymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
-        final Character groupSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR);
-        final Character negativeSign = missing.getOrNull(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN);
-        final Character percentSymbol = missing.getOrNull(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL);
-        final Character positiveSign = missing.getOrNull(SpreadsheetMetadataPropertyName.POSITIVE_SIGN);
-
+        final DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
         final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
         final Integer precision = missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
@@ -59,16 +51,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         missing.reportIfMissing();
 
         return DecimalNumberContexts.basic(
-                DecimalNumberSymbols.with(
-                        negativeSign,
-                        positiveSign,
-                        NumberContext.ZERO_DIGIT,
-                        currencySymbol,
-                        decimalSeparator,
-                        exponentSymbol,
-                        groupSeparator,
-                        percentSymbol
-                ),
+                decimalNumberSymbols,
                 locale,
                 new MathContext(
                         precision,

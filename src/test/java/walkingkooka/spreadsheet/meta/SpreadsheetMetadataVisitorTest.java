@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.reflect.JavaVisibility;
@@ -53,6 +54,7 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -200,16 +202,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitCurrencySymbol() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitCurrencySymbol(final String c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$$");
-    }
-
-    @Test
     public void testVisitDateFormatter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -275,13 +267,18 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDecimalSeparator() {
+    public void testVisitDecimalNumberSymbols() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDecimalSeparator(final char c) {
-                this.visited = c;
+            protected void visitDecimalNumberSymbols(final DecimalNumberSymbols s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
+        }.accept(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.ENGLISH)
+                ));
     }
 
     @Test
@@ -292,16 +289,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
-    }
-
-    @Test
-    public void testVisitExponentSymbol() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitExponentSymbol(final String s) {
-                this.visited = s;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, ".");
     }
 
     @Test
@@ -455,16 +442,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitGroupSeparator() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitGroupSeparator(final char c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',');
-    }
-
-    @Test
     public void testVisitLocale() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -472,16 +449,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = l;
             }
         }.accept(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-    }
-
-    @Test
-    public void testVisitNegativeSign() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitNegativeSign(final char c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-');
     }
 
     @Test
@@ -543,16 +510,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitPercentageSymbol() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitPercentageSymbol(final char c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '.');
-    }
-
-    @Test
     public void testVisitPlugins() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -563,16 +520,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 SpreadsheetMetadataPropertyName.PLUGINS,
                 PluginNameSet.parse("TestPlugin111, TestPlugin222")
         );
-    }
-
-    @Test
-    public void testVisitPositiveSign() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitPositiveSign(final char c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+');
     }
 
     @Test
