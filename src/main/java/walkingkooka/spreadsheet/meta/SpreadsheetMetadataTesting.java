@@ -28,6 +28,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
@@ -86,6 +87,7 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
@@ -157,6 +159,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_PARSER_PROVIDER
     );
 
+    DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
+            '+',
+            new DecimalFormatSymbols(LOCALE)
+    );
+
     StorageStoreContext STORAGE_STORE_CONTEXT = new FakeStorageStoreContext() {
         @Override
         public LocalDateTime now() {
@@ -213,6 +220,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
                     SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                    DECIMAL_NUMBER_SYMBOLS
             ).set(
                     SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
                     2000

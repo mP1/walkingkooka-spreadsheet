@@ -27,6 +27,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -96,6 +97,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -103,7 +105,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -115,17 +116,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         ToStringTesting<SpreadsheetMetadata> {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
-
-    @Test
-    public void testSwappablePropertiesConstants() {
-        assertArrayEquals(
-                SpreadsheetMetadataPropertyName.CONSTANTS.values()
-                        .stream()
-                        .filter(c -> c instanceof SpreadsheetMetadataPropertyNameCharacter)
-                        .toArray(),
-                SpreadsheetMetadata.SWAPPABLE_PROPERTIES
-        );
-    }
 
     // NON_LOCALE_DEFAULTS..............................................................................................
 
@@ -245,24 +235,33 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testLoadFromLocale() {
         this.checkEquals(
                 SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "¤")
                         .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("dddd, mmmm d, yyyy").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d").spreadsheetParserSelector())
                         .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss;dddd, mmmm d, yy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0;dddd, mmmm d, yyyy \\a\\t h:mm:ss;dddd, mmmm d, yyyy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss;mmmm d, yy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0;mmmm d, yyyy \\a\\t h:mm:ss;mmmm d, yyyy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm").spreadsheetParserSelector())
-                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
-                        .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
-                        .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',')
+                        .set(
+                                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                                DecimalNumberSymbols.with(
+                                        '-', // negativeSign
+                                        '+', // positiveSign
+                                        '0', // zeroDigit
+                                        "¤", // currencySymbol
+                                        '.', // decimalSeparator
+                                        "E", // exponent
+                                        ',', // groupSeparator
+                                        '%' // percentageSymbols
+                                )
+                        )
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                        .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
                         .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#,##0.###").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#,##0.###;#,##0").spreadsheetParserSelector())
-                        .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
-                        .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
                         .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("h:mm:ss AM/PM").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm").spreadsheetParserSelector())
                         .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ','),
-                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH).loadFromLocale()
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        Locale.ENGLISH
+                ).loadFromLocale()
         );
     }
 
@@ -286,23 +285,23 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testSetOrRemoveNullValue() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
 
         this.checkEquals(
                 metadata,
-                metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
-                        .setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, null)
+                metadata.setOrRemove(SpreadsheetMetadataPropertyName.ROUNDING_MODE, null)
+                        .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
         );
     }
 
     @Test
     public void testSetOrRemoveNonNullValue() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD");
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
 
         this.checkEquals(
-                metadata.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.'),
-                metadata.setOrRemove(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+                metadata.set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_DOWN),
+                metadata.setOrRemove(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_DOWN)
         );
     }
 
@@ -404,7 +403,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testShouldViewsRefreshSameIdPresentDifferentCurrencySymbol() {
+    public void testShouldViewsRefreshSameIdPresentDifferentDecimalNumberSymbol() {
         final SpreadsheetMetadata metadata = this.metadata()
                 .set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
@@ -412,7 +411,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 );
 
         this.shouldViewRefreshAndCheck(
-                metadata.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "Diff"),
+                metadata.set(
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                        DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                '+',
+                                new DecimalFormatSymbols(Locale.FRANCE)
+                        )
+                ),
                 metadata,
                 true
         );
@@ -752,7 +757,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Metadata missing: currencySymbol, dateTimeOffset, decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, findConverter, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear",
+                "Metadata missing: dateTimeOffset, decimalNumberSymbols, defaultYear, expressionNumberKind, findConverter, locale, precision, roundingMode, twoDigitYear",
                 thrown.getMessage(),
                 "message"
         );
@@ -926,7 +931,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.patchAndCheck(
                 SpreadsheetMetadata.EMPTY,
                 JsonNode.object()
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), JsonNode.nullNode())
+                        .set(JsonPropertyName.with(
+                                        SpreadsheetMetadataPropertyName.ROUNDING_MODE.value()
+                                ),
+                                JsonNode.nullNode()
+                        )
         );
     }
 
@@ -934,41 +943,43 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testPatchRemoveUnknownProperty2() {
         this.patchAndCheck(
                 SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD"),
+                        .set(
+                                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                                RoundingMode.HALF_UP
+                        ),
                 JsonNode.object()
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()), JsonNode.nullNode())
+                        .set(
+                                JsonPropertyName.with(
+                                        SpreadsheetMetadataPropertyName.PRECISION.value()
+                                ),
+                                JsonNode.nullNode()
+                        )
         );
     }
 
     @Test
     public void testPatchSetProperty() {
+        final SpreadsheetMetadataPropertyName<RoundingMode> property = SpreadsheetMetadataPropertyName.ROUNDING_MODE;
+        final RoundingMode roundingMode = RoundingMode.HALF_UP;
+
         final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+                .set(property, roundingMode);
 
         this.patchAndCheck(
                 before,
                 JsonNode.object()
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), marshall("AUD")),
-                before
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
-        );
-    }
-
-    @Test
-    public void testPatchSetProperty2() {
-        final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
-
-        this.patchAndCheck(
-                before.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD"),
-                JsonNode.object()
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()), marshall('.')),
-                before.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
-                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+                        .set(
+                                JsonPropertyName.with(
+                                        property.value()
+                                ),
+                                marshall(roundingMode)
+                        ),
+                before.set(
+                        property,
+                        roundingMode
+                )
         );
     }
 
@@ -1018,18 +1029,26 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testPatchReplaceProperty() {
+        final SpreadsheetMetadataPropertyName<RoundingMode> property = SpreadsheetMetadataPropertyName.ROUNDING_MODE;
+        final RoundingMode roundingMode = RoundingMode.HALF_UP;
+
         final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+                .set(property, RoundingMode.HALF_DOWN);
 
         this.patchAndCheck(
-                before
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD"),
+                before,
                 JsonNode.object()
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), marshall("NZD")),
-                before
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "NZD")
+                        .set(
+                                JsonPropertyName.with(
+                                        property.value()
+                                ),
+                                marshall(roundingMode)),
+                before.set(
+                        property,
+                        roundingMode
+                )
         );
     }
 
@@ -1038,21 +1057,23 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetMetadata before = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 1)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
-                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
-                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%');
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
 
         this.patchAndCheck(
                 before,
                 JsonNode.object()
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()), marshall("NZD"))
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()), marshall('/'))
-                        .set(JsonPropertyName.with(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL.value()), JsonNode.nullNode()),
-                before
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "NZD")
-                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '/')
-                        .remove(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL)
+                        .set(JsonPropertyName.with(
+                                        SpreadsheetMetadataPropertyName.PRECISION.value()
+                                ),
+                                marshall(2)
+                        ).set(
+                                JsonPropertyName.with(
+                                        SpreadsheetMetadataPropertyName.ROUNDING_MODE.value()
+                                ),
+                                JsonNode.nullNode()
+                        ),
+                before.set(SpreadsheetMetadataPropertyName.PRECISION, 2)
+                        .remove(SpreadsheetMetadataPropertyName.ROUNDING_MODE)
         );
     }
 

@@ -90,7 +90,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -368,60 +367,17 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     private <V> SpreadsheetMetadata setDifferentValue(final SpreadsheetMetadataPropertyName<V> propertyName,
                                                       final V value) {
-        final Object previousValue = this.get(propertyName).orElse(null);
-
-        // property is different or new
-        final boolean swapIfDuplicateValue = propertyName.swapIfDuplicateValue();
-
         final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
         copy.putAll(this.value());
-        copy.put(propertyName, value);
+        copy.put(
+                propertyName,
+                value
+        );
 
-        final boolean groupOrValue = propertyName.isGroupSeparatorOrValueSeparator();
-
-        if (swapIfDuplicateValue) {
-            for (final SpreadsheetMetadataPropertyName<Character> duplicate : SWAPPABLE_PROPERTIES) {
-                if (propertyName.equals(duplicate)) {
-                    continue;
-                }
-                final boolean duplicateIsGroupSeparatorOrValue = duplicate.isGroupSeparatorOrValueSeparator();
-                if (groupOrValue && duplicateIsGroupSeparatorOrValue) {
-                    continue;
-                }
-
-                final Character duplicateValue = this.get(duplicate).orElse(null);
-                if (null != duplicateValue) {
-                    if (value.equals(duplicateValue)) {
-                        if (null == previousValue) {
-                            if (!duplicateIsGroupSeparatorOrValue) {
-                                reportDuplicateProperty(propertyName, value, duplicate);
-                            }
-                        } else {
-                            copy.put(duplicate, previousValue);
-                        }
-                    }
-                }
-            }
-        }
-
-        // update and possibly swap of character properties
-        return SpreadsheetMetadataNonEmpty.with(Maps.immutable(copy), this.defaults);
-    }
-
-    // @VisibleForTesting
-    static final SpreadsheetMetadataPropertyName<Character>[] SWAPPABLE_PROPERTIES = new SpreadsheetMetadataPropertyName[]{
-            SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-            SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
-            SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
-            SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
-            SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
-            SpreadsheetMetadataPropertyName.VALUE_SEPARATOR
-    };
-
-    private static void reportDuplicateProperty(final SpreadsheetMetadataPropertyName<?> property,
-                                                final Object value,
-                                                final SpreadsheetMetadataPropertyName<?> original) {
-        throw new IllegalArgumentException("Cannot set " + property + "=" + CharSequences.quoteIfChars(value) + " duplicate of " + original);
+        return SpreadsheetMetadataNonEmpty.with(
+                Maps.immutable(copy),
+                this.defaults
+        );
     }
 
     // remove...........................................................................................................

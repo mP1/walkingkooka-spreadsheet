@@ -29,6 +29,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.plugin.ProviderContext;
@@ -125,11 +126,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetUnknownDefaultsToDefault() {
-        final String value = "!!!";
+        final Integer value = 123;
 
         final SpreadsheetMetadata metadata = this.createObject();
 
-        final SpreadsheetMetadataPropertyName<String> unknown = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
+        final SpreadsheetMetadataPropertyName<Integer> unknown = SpreadsheetMetadataPropertyName.PRECISION;
         this.getAndCheck(
                 metadata,
                 unknown
@@ -137,7 +138,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
         this.getAndCheck(
                 metadata.setDefaults(
-                        SpreadsheetMetadata.EMPTY.set(unknown, value)
+                        SpreadsheetMetadata.EMPTY.set(
+                                unknown,
+                                value
+                        )
                 ),
                 unknown,
                 value
@@ -177,16 +181,28 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetOrFailFails() {
-        final SpreadsheetMetadataPropertyName<String> propertyName = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
+        final SpreadsheetMetadataPropertyName<DecimalNumberSymbols> propertyName = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS;
 
-        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().getOrFail(propertyName));
+        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(
+                SpreadsheetMetadataPropertyValueException.class,
+                () -> this.createObject()
+                        .getOrFail(propertyName)
+        );
 
         this.checkMessage(
                 thrown,
                 "Metadata " + propertyName.value() + "=null, Missing"
         );
-        this.checkEquals(propertyName, thrown.name(), "property name");
-        this.checkEquals(null, thrown.value(), "property value");
+        this.checkEquals(
+                propertyName,
+                thrown.name(),
+                "property name"
+        );
+        this.checkEquals(
+                null,
+                thrown.value(),
+                "property value"
+        );
     }
 
     // getIgnoringDefaults..............................................................................................
@@ -589,7 +605,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().decimalNumberContext());
         checkMessage(
                 thrown,
-                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode"
+                "Metadata missing: decimalNumberSymbols, locale, precision, roundingMode"
         );
     }
 

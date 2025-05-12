@@ -195,12 +195,15 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
         repository.metadatas()
                 .save(
-                        METADATA.set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '$')
+                        METADATA.set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator('*'))
                 );
 
         final SpreadsheetCell reloaded = repository.cells().loadOrFail(cell.reference());
-        final SpreadsheetFormula formula = reloaded.formula();
-        this.checkEquals("1$5", reloaded.formula().text());
+        this.checkEquals(
+                "1*5",
+                reloaded.formula()
+                        .text()
+        );
     }
 
     @Test

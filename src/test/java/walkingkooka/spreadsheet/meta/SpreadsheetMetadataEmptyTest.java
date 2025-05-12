@@ -33,6 +33,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -118,7 +119,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testMissingPropertiesIgnoresDefaults() {
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$");
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
 
         this.missingRequiredPropertiesAndCheck(
                 SpreadsheetMetadata.EMPTY.setDefaults(defaults),
@@ -151,7 +152,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadata.EMPTY::expressionNumberContext
         );
         this.checkEquals(
-                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode",
+                "Metadata missing: decimalNumberSymbols, expressionNumberKind, locale, precision, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -199,7 +200,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: currencySymbol, decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
+                "Metadata missing: decimalNumberSymbols, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -210,11 +211,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
                         .spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
+                "Metadata missing: decimalNumberSymbols, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -241,7 +241,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Metadata missing: currencySymbol, dateTimeOffset, decimalSeparator, defaultYear, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, validatorConverter",
+                "Metadata missing: dateTimeOffset, decimalNumberSymbols, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validatorConverter",
                 thrown.getMessage(),
                 "message"
         );

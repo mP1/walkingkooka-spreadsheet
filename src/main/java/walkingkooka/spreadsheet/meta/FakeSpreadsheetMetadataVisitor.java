@@ -21,6 +21,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -105,11 +106,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitCurrencySymbol(final String currencySymbol) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitDateFormatter(final SpreadsheetFormatterSelector selector) {
         throw new UnsupportedOperationException();
     }
@@ -135,17 +131,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDecimalSeparator(final char decimalSeparator) {
+    protected void visitDecimalNumberSymbols(final DecimalNumberSymbols symbols) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitDefaultYear(final int defaultYear) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitExponentSymbol(final String exponentSymbol) {
         throw new UnsupportedOperationException();
     }
 
@@ -225,11 +216,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitGroupSeparator(final char groupSeparator) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitHideZeroValues(final boolean value) {
         throw new UnsupportedOperationException();
     }
@@ -241,11 +227,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitNegativeSign(final char negativeSign) {
         throw new UnsupportedOperationException();
     }
 
@@ -276,17 +257,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitPercentageSymbol(final char percentageSymbol) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitPlugins(final PluginNameSet names) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitPositiveSign(final char positiveSign) {
         throw new UnsupportedOperationException();
     }
 

@@ -22,6 +22,7 @@ import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.formula.parser.AdditionSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.AmPmSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.ApostropheSymbolSpreadsheetFormulaParserToken;
@@ -109,6 +110,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetFormulaParserTokenVisitor} that replaces tokens that are {@link Locale} sensitive, such as decimal-separator.
@@ -473,8 +475,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final CurrencySymbolSpreadsheetFormulaParserToken token) {
-        this.leafString(
-                SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::currencySymbol,
                 SpreadsheetFormulaParserToken::currencySymbol
         );
     }
@@ -512,8 +514,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final DecimalSeparatorSymbolSpreadsheetFormulaParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::decimalSeparator,
                 SpreadsheetFormulaParserToken::decimalSeparatorSymbol
         );
     }
@@ -545,8 +547,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final ExponentSymbolSpreadsheetFormulaParserToken token) {
-        this.leafString(
-                SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::exponentSymbol,
                 SpreadsheetFormulaParserToken::exponentSymbol
         );
     }
@@ -568,8 +570,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final GroupSeparatorSymbolSpreadsheetFormulaParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::groupSeparator,
                 SpreadsheetFormulaParserToken::groupSeparatorSymbol
         );
     }
@@ -601,8 +603,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final MinusSymbolSpreadsheetFormulaParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::negativeSign,
                 SpreadsheetFormulaParserToken::minusSymbol
         );
     }
@@ -678,16 +680,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final PercentSymbolSpreadsheetFormulaParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::percentageSymbol,
                 SpreadsheetFormulaParserToken::percentSymbol
         );
     }
 
     @Override
     protected void visit(final PlusSymbolSpreadsheetFormulaParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
+        this.decimalNumberSymbols(
+                DecimalNumberSymbols::positiveSign,
                 SpreadsheetFormulaParserToken::plusSymbol
         );
     }
@@ -719,9 +721,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final ValueSeparatorSymbolSpreadsheetFormulaParserToken token) {
-        this.leafCharacter(
-                SpreadsheetMetadataPropertyName.VALUE_SEPARATOR,
-                SpreadsheetFormulaParserToken::valueSeparatorSymbol
+        final String text = Character.toString(
+                this.metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
+        );
+        this.leaf(
+                SpreadsheetFormulaParserToken.valueSeparatorSymbol(
+                        text,
+                        text
+                )
         );
     }
 
@@ -753,23 +760,24 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         this.add(factory.apply(children, ParserToken.text(children)));
     }
 
-    /**
-     * Creates the {@link SpreadsheetFormulaParserToken} using the {@link Character} for the {@link SpreadsheetMetadataPropertyName}.
-     */
-    private void leafString(final SpreadsheetMetadataPropertyName<String> property,
-                            final BiFunction<String, String, SpreadsheetFormulaParserToken> factory) {
-        final String text = this.metadata.getOrFail(property);
-        this.leaf(factory.apply(text, text));
+    private void decimalNumberSymbols(final Function<DecimalNumberSymbols, ?> decimalNumberSymbolsGetter,
+                                      final BiFunction<String, String, SpreadsheetFormulaParserToken> parserTokenFactory) {
+        if(null == this.decimalNumberSymbols) {
+            this.decimalNumberSymbols = this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
+        }
+
+        final String text = decimalNumberSymbolsGetter.apply(this.decimalNumberSymbols)
+                .toString();
+
+        this.leaf(
+            parserTokenFactory.apply(
+                    text,
+                    text
+            )
+        );
     }
 
-    /**
-     * Creates the {@link SpreadsheetFormulaParserToken} using the {@link Character} for the {@link SpreadsheetMetadataPropertyName}.
-     */
-    private void leafCharacter(final SpreadsheetMetadataPropertyName<Character> property,
-                               final BiFunction<String, String, SpreadsheetFormulaParserToken> factory) {
-        final String text = Character.toString(this.metadata.getOrFail(property));
-        this.leaf(factory.apply(text, text));
-    }
+    private DecimalNumberSymbols decimalNumberSymbols;
 
     private void leaf(final ParserToken token) {
         this.add(token);

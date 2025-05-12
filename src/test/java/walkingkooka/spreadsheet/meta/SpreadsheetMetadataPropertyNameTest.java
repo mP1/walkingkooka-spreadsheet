@@ -453,57 +453,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionCurrencySymbol() {
+    public void testSpreadsheetCellStoreActionDecimalNumberSymbols() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionDecimalSeparator() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionExponentSymbol() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionGroupSeparator() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionNegativeSign() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionPercentageSymbol() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionPositiveSign() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                 SpreadsheetCellStoreAction.PARSE_FORMULA
         );
     }

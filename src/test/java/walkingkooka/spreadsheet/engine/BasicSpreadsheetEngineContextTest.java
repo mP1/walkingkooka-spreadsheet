@@ -276,13 +276,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             .loadFromLocale()
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
-            .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
-            .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
-            .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
-            .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
-            .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
+            .set(
+                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                    DecimalNumberSymbols.with(
+                            MINUS,
+                            PLUS,
+                            DecimalNumberContext.ZERO_DIGIT,
+                            CURRENCY,
+                            DECIMAL,
+                            EXPONENT,
+                            GROUP_SEPARATOR,
+                            PERCENT
+                    )
+            ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
             .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, SpreadsheetExpressionFunctions.parseAliasSet("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
@@ -895,15 +901,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"colorYellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
                         "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-error, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name, string-to-validation-error\",\n" +
-                        "  \"currencySymbol\": \"CURR\",\n" +
                         "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"dateTimeOffset\": \"-25569\",\n" +
                         "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                        "  \"decimalSeparator\": \".\",\n" +
+                        "  \"decimalNumberSymbols\": {\n" +
+                        "    \"negativeSign\": \"!\",\n" +
+                        "    \"positiveSign\": \"@\",\n" +
+                        "    \"zeroDigit\": \"0\",\n" +
+                        "    \"currencySymbol\": \"CURR\",\n" +
+                        "    \"decimalSeparator\": \".\",\n" +
+                        "    \"exponentSymbol\": \"e\",\n" +
+                        "    \"groupSeparator\": \",\",\n" +
+                        "    \"percentageSymbol\": \"#\"\n" +
+                        "  },\n" +
                         "  \"defaultYear\": 1900,\n" +
-                        "  \"exponentSymbol\": \"e\",\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                         "  \"findConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
@@ -916,17 +929,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
-                        "  \"groupSeparator\": \",\",\n" +
                         "  \"hideZeroValues\": false,\n" +
                         "  \"importers\": \"collection, empty, json\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
-                        "  \"negativeSign\": \"!\",\n" +
                         "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
                         "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                        "  \"percentageSymbol\": \"%\",\n" +
                         "  \"plugins\": \"\",\n" +
-                        "  \"positiveSign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"roundingMode\": \"HALF_UP\",\n" +
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
@@ -1068,15 +1077,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"colorYellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
                         "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-error, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name, string-to-validation-error\",\n" +
-                        "  \"currencySymbol\": \"CURR\",\n" +
                         "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"dateTimeOffset\": \"-25569\",\n" +
                         "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                        "  \"decimalSeparator\": \".\",\n" +
+                        "  \"decimalNumberSymbols\": {\n" +
+                        "    \"negativeSign\": \"!\",\n" +
+                        "    \"positiveSign\": \"@\",\n" +
+                        "    \"zeroDigit\": \"0\",\n" +
+                        "    \"currencySymbol\": \"CURR\",\n" +
+                        "    \"decimalSeparator\": \".\",\n" +
+                        "    \"exponentSymbol\": \"e\",\n" +
+                        "    \"groupSeparator\": \",\",\n" +
+                        "    \"percentageSymbol\": \"#\"\n" +
+                        "  },\n" +
                         "  \"defaultYear\": 1900,\n" +
-                        "  \"exponentSymbol\": \"e\",\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                         "  \"findConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
@@ -1089,17 +1105,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
-                        "  \"groupSeparator\": \",\",\n" +
                         "  \"hideZeroValues\": false,\n" +
                         "  \"importers\": \"collection, empty, json\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
-                        "  \"negativeSign\": \"!\",\n" +
                         "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
                         "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                        "  \"percentageSymbol\": \"%\",\n" +
                         "  \"plugins\": \"\",\n" +
-                        "  \"positiveSign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"roundingMode\": \"HALF_UP\",\n" +
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
