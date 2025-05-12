@@ -67,26 +67,29 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     public static SpreadsheetComparatorNameList with(final List<SpreadsheetComparatorName> names) {
         Objects.requireNonNull(names, "names");
 
-        return names instanceof SpreadsheetComparatorNameList ?
-                (SpreadsheetComparatorNameList) names :
-                with0(
-                        Lists.immutable(names)
+        SpreadsheetComparatorNameList spreadsheetComparatorNameList;
+
+        if(names instanceof SpreadsheetComparatorNameList) {
+            spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) names;
+        } else {
+            final List<SpreadsheetComparatorName> copy = Lists.array();
+            for(final SpreadsheetComparatorName name : names) {
+                copy.add(
+                        Objects.requireNonNull(name, "includes null name")
                 );
-    }
+            }
 
-    private static SpreadsheetComparatorNameList with0(final List<SpreadsheetComparatorName> names) {
-        final SpreadsheetComparatorNameList list;
-
-        switch (names.size()) {
-            case 0:
-                list = EMPTY;
-                break;
-            default:
-                list = new SpreadsheetComparatorNameList(names);
-                break;
+            switch (names.size()) {
+                case 0:
+                    spreadsheetComparatorNameList = EMPTY;
+                    break;
+                default:
+                    spreadsheetComparatorNameList = new SpreadsheetComparatorNameList(copy);
+                    break;
+            }
         }
 
-        return list;
+        return spreadsheetComparatorNameList;
     }
 
     private SpreadsheetComparatorNameList(final List<SpreadsheetComparatorName> names) {

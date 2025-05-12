@@ -119,6 +119,24 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         );
     }
 
+    @Test
+    public void testSetElementsIncludesNullFails() {
+        final NullPointerException thrown = assertThrows(
+                NullPointerException.class,
+                () -> this.createList()
+                        .setElements(
+                                Lists.of(
+                                        SpreadsheetComparatorName.DATE,
+                                        null
+                                )
+                        )
+        );
+        this.checkEquals(
+                "includes null name",
+                thrown.getMessage()
+        );
+    }
+
     @Override
     public SpreadsheetComparatorNameList createList() {
         return SpreadsheetComparatorNameList.with(
