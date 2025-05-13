@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.formula;
 
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
@@ -34,9 +36,10 @@ import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting<SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator> {
-    @
-            Override
+public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting<SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator>,
+        DecimalNumberContextDelegator {
+
+    @Override
     public TestSpreadsheetParserContextDelegator createContext() {
         return new TestSpreadsheetParserContextDelegator();
     }
@@ -46,25 +49,7 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
             DecimalNumberContexts.american(MathContext.DECIMAL32)
     );
 
-    @Override
-    public String currencySymbol() {
-        return EXPRESSION_NUMBER_CONTEXT.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return EXPRESSION_NUMBER_CONTEXT.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return EXPRESSION_NUMBER_CONTEXT.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return EXPRESSION_NUMBER_CONTEXT.groupSeparator();
-    }
+    // DecimalNumberContextDelegator....................................................................................
 
     @Override
     public MathContext mathContext() {
@@ -72,18 +57,8 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
     }
 
     @Override
-    public char negativeSign() {
-        return EXPRESSION_NUMBER_CONTEXT.negativeSign();
-    }
-
-    @Override
-    public char percentSymbol() {
-        return EXPRESSION_NUMBER_CONTEXT.percentSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return EXPRESSION_NUMBER_CONTEXT.positiveSign();
+    public DecimalNumberContext decimalNumberContext() {
+        return EXPRESSION_NUMBER_CONTEXT;
     }
 
     static final class TestSpreadsheetParserContextDelegator implements SpreadsheetParserContextDelegator {

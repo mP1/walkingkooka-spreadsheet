@@ -60,15 +60,20 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
 
     private final static String LOCAL_VALUE = "abc123";
 
+    private final static MathContext MATH_CONTEXT = MathContext.DECIMAL128;
+
     private final static String CURRENCY_SYMBOL = "AUD";
     private final static char DECIMAL_SEPARATOR = '/';
     private final static String EXPONENT_SYMBOL = "HELLO";
     private final static char GROUP_SEPARATOR = '/';
-    private final static MathContext MATH_CONTEXT = MathContext.DECIMAL128;
-
+    private final static String INFINITY_SYMBOL = "Infinity!";
+    private final static char MONETARY_DECIMAL_SEPARATOR = '/';
+    private final static String NAN_SYMBOL = "Nan!";
     private final static char NEGATIVE_SYMBOL = 'N';
     private final static char PERCENT_SYMBOL = 'R';
+    private final static char PERMILL_SYMBOL = '^';
     private final static char POSITIVE_SYMBOL = 'P';
+    private final static char ZERO = '0';
 
     private final Function<SpreadsheetLabelName, Optional<Optional<Object>>> LABEL_TO_VALUES = new Function<>() {
         @Override
@@ -368,8 +373,23 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                     }
 
                     @Override
+                    public String infinitySymbol() {
+                        return INFINITY_SYMBOL;
+                    }
+
+                    @Override
                     public MathContext mathContext() {
                         return MATH_CONTEXT;
+                    }
+
+                    @Override
+                    public char monetaryDecimalSeparator() {
+                        return MONETARY_DECIMAL_SEPARATOR;
+                    }
+
+                    @Override
+                    public String nanSymbol() {
+                        return NAN_SYMBOL;
                     }
 
                     @Override
@@ -380,6 +400,11 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                     @Override
                     public char percentSymbol() {
                         return PERCENT_SYMBOL;
+                    }
+
+                    @Override
+                    public char permillSymbol() {
+                        return PERMILL_SYMBOL;
                     }
 
                     @Override
@@ -441,8 +466,23 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
+    public String infinitySymbol() {
+        return INFINITY_SYMBOL;
+    }
+
+    @Override
     public MathContext mathContext() {
         return MATH_CONTEXT;
+    }
+
+    @Override
+    public char monetaryDecimalSeparator() {
+        return MONETARY_DECIMAL_SEPARATOR;
+    }
+
+    @Override
+    public String nanSymbol() {
+        return NAN_SYMBOL;
     }
 
     @Override
@@ -456,8 +496,18 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
+    public char permillSymbol() {
+        return PERMILL_SYMBOL;
+    }
+
+    @Override
     public char positiveSign() {
         return POSITIVE_SYMBOL;
+    }
+
+    @Override
+    public char zeroDigit() {
+        return ZERO;
     }
 
     @Override
@@ -468,6 +518,8 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     public void testSetSpreadsheetMetadataWithDifferentIdFails() {
         throw new UnsupportedOperationException();
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<LocalLabelsSpreadsheetExpressionEvaluationContext> type() {

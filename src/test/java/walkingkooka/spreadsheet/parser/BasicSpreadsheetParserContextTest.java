@@ -22,6 +22,8 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
@@ -41,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
         SpreadsheetParserContextTesting<BasicSpreadsheetParserContext>,
+        DecimalNumberContextDelegator,
         ToStringTesting<BasicSpreadsheetParserContext> {
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY = InvalidCharacterExceptionFactory.POSITION;
@@ -152,25 +155,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
         );
     }
 
-    @Override
-    public String currencySymbol() {
-        return CURRENCY;
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return DECIMAL;
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return EXPONENT;
-    }
-
-    @Override
-    public char groupSeparator() {
-        return GROUP_SEPARATOR;
-    }
+    // DecimalNumberContextDelegator....................................................................................
 
     @Override
     public MathContext mathContext() {
@@ -178,19 +163,11 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public char negativeSign() {
-        return NEGATIVE;
+    public DecimalNumberContext decimalNumberContext() {
+        return EXPRESSION_NUMBER_CONTEXT;
     }
 
-    @Override
-    public char percentSymbol() {
-        return PERCENTAGE;
-    }
-
-    @Override
-    public char positiveSign() {
-        return POSITIVE;
-    }
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetParserContext> type() {

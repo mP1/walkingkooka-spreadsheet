@@ -30,7 +30,6 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -215,7 +214,7 @@ public class J2clTest {
                             DecimalNumberSymbols.with(
                                     '-',
                                     '+',
-                                    DecimalNumberContext.ZERO_DIGIT,
+                                    '0',
                                     "$AUD",
                                     '.',
                                     "E",

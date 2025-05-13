@@ -285,7 +285,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     DecimalNumberSymbols.with(
                             MINUS,
                             PLUS,
-                            DecimalNumberContext.ZERO_DIGIT,
+                            ZERO_DIGIT,
                             CURRENCY,
                             DECIMAL,
                             EXPONENT,

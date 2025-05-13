@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -43,7 +45,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContextDelegatorTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator>,
-        SpreadsheetMetadataTesting {
+        SpreadsheetMetadataTesting,
+        DecimalNumberContextDelegator{
 
     @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
@@ -90,29 +93,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         return new TestSpreadsheetExpressionEvaluationContextDelegator();
     }
 
-    @Override
-    public String currencySymbol() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .groupSeparator();
-    }
+    // DecimalNumberContext.............................................................................................
 
     @Override
     public MathContext mathContext() {
@@ -120,22 +101,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                 .mathContext();
     }
 
-    @Override
-    public char negativeSign() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .negativeSign();
-    }
+    // DecimalNumberContextDelegator....................................................................................
 
     @Override
-    public char percentSymbol() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .percentSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .positiveSign();
+    public DecimalNumberContext decimalNumberContext() {
+        return new TestSpreadsheetExpressionEvaluationContextDelegator();
     }
 
     // class............................................................................................................

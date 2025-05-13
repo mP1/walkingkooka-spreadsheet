@@ -405,6 +405,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return '/';
     }
 
+    @Override
     public String infinitySymbol() {
         return "Infinity!";
     }
@@ -414,10 +415,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return MathContext.DECIMAL32;
     }
 
+    @Override
     public char monetaryDecimalSeparator() {
         return '*';
     }
 
+    @Override
     public String nanSymbol() {
         return "Nan!";
     }
@@ -432,6 +435,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return ':';
     }
 
+    @Override
     public char permillSymbol() {
         return '>';
     }
@@ -441,6 +445,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return '^';
     }
 
+    @Override
+    public char zeroDigit() {
+        return '0';
+    }
     // ClassTesting.....................................................................................................
 
     @Override

@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -32,7 +34,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext {
+final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
+        DecimalNumberContextDelegator {
 
     static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
@@ -108,28 +111,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
     public int defaultYear() {
         return this.context.defaultYear();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
     }
 
     @Override
@@ -163,23 +146,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
     public LocalDateTime now() {
         return this.context.now();
-    }
-
-    @Override
-    public char percentSymbol() {
-        return this.context.percentSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
     }
 
     @Override
@@ -217,7 +185,16 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         return this.context.expressionNumberKind();
     }
 
+    // DecimalNumberContext.............................................................................................
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return this.context;
+    }
+
     private final SpreadsheetConverterContext context;
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
