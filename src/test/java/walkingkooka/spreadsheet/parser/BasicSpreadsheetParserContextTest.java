@@ -52,8 +52,12 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static String EXPONENT = "^";
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static char GROUP_SEPARATOR = '/';
+    private final static String INFINITY = "Infinity!";
+    private final static char MONETARY_DECIMAL = ';';
+    private final static String NAN = "Nan!";
     private final static char NEGATIVE = '!';
     private final static char PERCENTAGE = '#';
+    private final static char PERMILL = '?';
     private final static char POSITIVE = '@';
     private final static char ZERO_DIGIT = '0';
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
@@ -70,7 +74,11 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
                             DECIMAL,
                             EXPONENT,
                             GROUP_SEPARATOR,
-                            PERCENTAGE
+                            INFINITY,
+                            MONETARY_DECIMAL,
+                            NAN,
+                            PERCENTAGE,
+                            PERMILL
                     ),
                     LOCALE,
                     MATH_CONTEXT

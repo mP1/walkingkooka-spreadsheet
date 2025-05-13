@@ -218,7 +218,11 @@ public final class Sample {
                                     '.',
                                     "E",
                                     ',',
-                                    '%'
+                                    "Infinity!",
+                                    ':',
+                                    "Nan!",
+                                    '%',
+                                    '^'
                             )
                     ).set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())

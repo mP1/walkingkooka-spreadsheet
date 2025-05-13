@@ -249,7 +249,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                                         '.', // decimalSeparator
                                         "E", // exponent
                                         ',', // groupSeparator
-                                        '%' // percentageSymbols
+                                        "\u221e",
+                                        '.',
+                                        "NaN",
+                                        '%', // percentageSymbols
+                                        '\u2030' // permillSymbol
                                 )
                         )
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)

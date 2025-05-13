@@ -1419,7 +1419,11 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                                 '*', // decimalSeparator
                                                 "EE",
                                                 '/', // groupSeparator
-                                                '^' // percentageSymbol
+                                                "Infinity!",
+                                                '*',
+                                                "Nan!",
+                                                '^', // percentageSymbol,
+                                                '&'
                                         ),
                                         Locale.ENGLISH,
                                         MathContext.DECIMAL32
