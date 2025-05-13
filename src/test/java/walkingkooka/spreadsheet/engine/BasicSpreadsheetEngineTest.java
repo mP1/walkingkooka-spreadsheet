@@ -174,8 +174,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static char DECIMAL_SEPARATOR = '.';
     private final static String EXPONENT_SYMBOL = "E";
     private final static char GROUP_SEPARATOR = ',';
+    private final static String INFINITY_SYMBOL = "Infinity!";
+    private final static char MONETARY_DECIMAL_SEPARATOR = ':';
+    private final static String NAN_SYMBOL = "Nan!";
     private final static char NEGATIVE_SIGN = '-';
     private final static char PERCENTAGE_SYMBOL = '%';
+    private final static char PERMILL_SYMBOL = '^';
     private final static char POSITIVE_SIGN = '+';
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
@@ -530,7 +534,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 DECIMAL_SEPARATOR,
                                 EXPONENT_SYMBOL,
                                 GROUP_SEPARATOR,
-                                PERCENTAGE_SYMBOL
+                                INFINITY_SYMBOL,
+                                MONETARY_DECIMAL_SEPARATOR,
+                                NAN_SYMBOL,
+                                PERCENTAGE_SYMBOL,
+                                PERMILL_SYMBOL
                         )
                 ).set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)

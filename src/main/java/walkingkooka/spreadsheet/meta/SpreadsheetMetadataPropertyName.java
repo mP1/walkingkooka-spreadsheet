@@ -764,7 +764,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 '.',
                 "E",
                 ',',
-                ';'
+                "Infinity",
+                '.',
+                "Nan",
+                ';',
+                '^'
         );
         ExpressionNumberKind.DEFAULT.name();
         SpreadsheetExpressionFunctions.parseAliasSet("hello");

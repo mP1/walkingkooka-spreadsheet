@@ -103,8 +103,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static char DECIMAL = '.';
     private final static String EXPONENT = "e";
     private final static char GROUP_SEPARATOR = ',';
+    private final static String INFINITY = "Infinity!";
     private final static char MINUS = '!';
+    private final static char MONETARY_DECIMAL_SEPARATOR = ':';
+    private final static String NAN = "Nan!";
     private final static char PERCENT = '#';
+    private final static char PERMILL_SYMBOL = '^';
     private final static char PLUS = '@';
     private final static char ZERO_DIGIT = '0';
 
@@ -286,7 +290,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                             DECIMAL,
                             EXPONENT,
                             GROUP_SEPARATOR,
-                            PERCENT
+                            INFINITY,
+                            MONETARY_DECIMAL_SEPARATOR,
+                            NAN,
+                            PERCENT,
+                            PERMILL_SYMBOL
                     )
             ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
@@ -914,7 +922,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"decimalSeparator\": \".\",\n" +
                         "    \"exponentSymbol\": \"e\",\n" +
                         "    \"groupSeparator\": \",\",\n" +
-                        "    \"percentageSymbol\": \"#\"\n" +
+                        "    \"infinitySymbol\": \"Infinity!\",\n" +
+                        "    \"monetaryDecimalSeparator\": \":\",\n" +
+                        "    \"nanSymbol\": \"Nan!\",\n" +
+                        "    \"percentageSymbol\": \"#\",\n" +
+                        "    \"permillSymbol\": \"^\"\n" +
                         "  },\n" +
                         "  \"defaultYear\": 1900,\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
@@ -1090,7 +1102,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"decimalSeparator\": \".\",\n" +
                         "    \"exponentSymbol\": \"e\",\n" +
                         "    \"groupSeparator\": \",\",\n" +
-                        "    \"percentageSymbol\": \"#\"\n" +
+                        "    \"infinitySymbol\": \"Infinity!\",\n" +
+                        "    \"monetaryDecimalSeparator\": \":\",\n" +
+                        "    \"nanSymbol\": \"Nan!\",\n" +
+                        "    \"percentageSymbol\": \"#\",\n" +
+                        "    \"permillSymbol\": \"^\"\n" +
                         "  },\n" +
                         "  \"defaultYear\": 1900,\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
@@ -1298,7 +1314,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         DECIMAL,
                         EXPONENT,
                         GROUP_SEPARATOR,
-                        PERCENT
+                        INFINITY,
+                        MONETARY_DECIMAL_SEPARATOR,
+                        NAN,
+                        PERCENT,
+                        PERMILL_SYMBOL
                 ),
                 LOCALE,
                 new MathContext(
