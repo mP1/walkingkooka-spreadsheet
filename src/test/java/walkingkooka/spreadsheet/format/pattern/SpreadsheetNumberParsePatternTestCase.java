@@ -77,7 +77,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return PERCENT;
             }
 
@@ -99,7 +99,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
                         .label("exponentSymbol").value(this.exponentSymbol())
                         .label("groupSeparator").value(this.groupSeparator())
                         .label("negativeSign").value(this.negativeSign())
-                        .label("percentageSymbol").value(this.percentageSymbol())
+                        .label("percentSymbol").value(this.percentSymbol())
                         .label("positiveSign").value(this.positiveSign())
                         .label("mathContext").value(this.mathContext())
                         .build();

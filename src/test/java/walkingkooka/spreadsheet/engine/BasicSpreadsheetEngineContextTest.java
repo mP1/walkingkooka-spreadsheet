@@ -925,7 +925,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"infinitySymbol\": \"Infinity!\",\n" +
                         "    \"monetaryDecimalSeparator\": \":\",\n" +
                         "    \"nanSymbol\": \"Nan!\",\n" +
-                        "    \"percentageSymbol\": \"#\",\n" +
+                        "    \"percentSymbol\": \"#\",\n" +
                         "    \"permillSymbol\": \"^\"\n" +
                         "  },\n" +
                         "  \"defaultYear\": 1900,\n" +
@@ -1105,7 +1105,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"infinitySymbol\": \"Infinity!\",\n" +
                         "    \"monetaryDecimalSeparator\": \":\",\n" +
                         "    \"nanSymbol\": \"Nan!\",\n" +
-                        "    \"percentageSymbol\": \"#\",\n" +
+                        "    \"percentSymbol\": \"#\",\n" +
                         "    \"permillSymbol\": \"^\"\n" +
                         "  },\n" +
                         "  \"defaultYear\": 1900,\n" +

@@ -55,11 +55,11 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
     }
 
     /**
-     * {@see SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol}
+     * {@see SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol}
      */
     @SuppressWarnings("SameReturnValue")
-    static SpreadsheetPatternSpreadsheetFormatterNumberComponent percentageSymbol() {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol.INSTANCE;
+    static SpreadsheetPatternSpreadsheetFormatterNumberComponent percentSymbol() {
+        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.INSTANCE;
     }
 
     /**

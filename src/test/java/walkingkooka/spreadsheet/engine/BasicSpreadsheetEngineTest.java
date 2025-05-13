@@ -178,7 +178,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static char MONETARY_DECIMAL_SEPARATOR = ':';
     private final static String NAN_SYMBOL = "Nan!";
     private final static char NEGATIVE_SIGN = '-';
-    private final static char PERCENTAGE_SYMBOL = '%';
+    private final static char PERCENT_SYMBOL = '%';
     private final static char PERMILL_SYMBOL = '^';
     private final static char POSITIVE_SIGN = '+';
 
@@ -537,7 +537,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 INFINITY_SYMBOL,
                                 MONETARY_DECIMAL_SEPARATOR,
                                 NAN_SYMBOL,
-                                PERCENTAGE_SYMBOL,
+                                PERCENT_SYMBOL,
                                 PERMILL_SYMBOL
                         )
                 ).set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)

@@ -2528,7 +2528,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return 'R';
             }
 

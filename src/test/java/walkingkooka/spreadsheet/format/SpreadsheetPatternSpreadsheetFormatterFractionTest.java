@@ -632,7 +632,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return 'P';
             }
         };

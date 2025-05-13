@@ -133,7 +133,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
             this.percentage = true;
             this.decimalPlacesShift = this.decimalPlacesShift + 2; // x100
         }
-        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.percentageSymbol());
+        this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.percentSymbol());
     }
 
     /**

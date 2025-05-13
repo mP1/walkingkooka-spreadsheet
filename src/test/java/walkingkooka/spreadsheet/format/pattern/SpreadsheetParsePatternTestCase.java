@@ -536,7 +536,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return PERCENT;
             }
 

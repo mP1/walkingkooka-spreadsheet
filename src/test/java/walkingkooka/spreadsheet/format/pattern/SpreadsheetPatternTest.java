@@ -1296,7 +1296,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
-                    public char percentageSymbol() {
+                    public char percentSymbol() {
                         return '%';
                     }
                 },
@@ -1331,7 +1331,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
-                    public char percentageSymbol() {
+                    public char percentSymbol() {
                         return '!';
                     }
                 },
@@ -1432,7 +1432,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
-                    public char percentageSymbol() {
+                    public char percentSymbol() {
                         return '*';
                     }
 
@@ -1671,7 +1671,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return '%';
             }
 
@@ -1741,7 +1741,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return '%';
             }
 

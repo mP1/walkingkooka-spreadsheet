@@ -82,7 +82,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFractionContext implements Con
     private SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign sign;
 
     void appendPercentage() {
-        this.text.append(this.context.percentageSymbol());
+        this.text.append(this.context.percentSymbol());
     }
 
     void appendSlash() {

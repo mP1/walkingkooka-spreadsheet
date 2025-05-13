@@ -90,8 +90,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
         this.text.append(this.context.negativeSign());
     }
 
-    void appendPercentage() {
-        this.text.append(this.context.percentageSymbol());
+    void appendPercent() {
+        this.text.append(this.context.percentSymbol());
     }
 
     void appendText(final String text) {

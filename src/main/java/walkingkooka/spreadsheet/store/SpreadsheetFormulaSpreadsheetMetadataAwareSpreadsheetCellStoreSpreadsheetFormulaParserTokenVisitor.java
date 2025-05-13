@@ -681,7 +681,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final PercentSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::percentageSymbol,
+                DecimalNumberSymbols::percentSymbol,
                 SpreadsheetFormulaParserToken::percentSymbol
         );
     }

@@ -47,11 +47,11 @@ abstract class SpreadsheetPatternSpreadsheetFormatterFractionComponent {
     }
 
     /**
-     * {@see SpreadsheetPatternSpreadsheetFormatterFractionComponentPercentageSymbol}
+     * {@see SpreadsheetPatternSpreadsheetFormatterFractionComponentPercentSymbol}
      */
     @SuppressWarnings("SameReturnValue")
-    static SpreadsheetPatternSpreadsheetFormatterFractionComponent percentageSymbol() {
-        return SpreadsheetPatternSpreadsheetFormatterFractionComponentPercentageSymbol.INSTANCE;
+    static SpreadsheetPatternSpreadsheetFormatterFractionComponent percentSymbol() {
+        return SpreadsheetPatternSpreadsheetFormatterFractionComponentPercentSymbol.INSTANCE;
     }
 
     /**

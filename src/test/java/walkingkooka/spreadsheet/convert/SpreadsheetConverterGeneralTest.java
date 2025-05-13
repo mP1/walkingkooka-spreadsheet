@@ -1422,7 +1422,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                                 "Infinity!",
                                                 '*',
                                                 "Nan!",
-                                                '^', // percentageSymbol,
+                                                '^', // percentSymbol,
                                                 '&'
                                         ),
                                         Locale.ENGLISH,
