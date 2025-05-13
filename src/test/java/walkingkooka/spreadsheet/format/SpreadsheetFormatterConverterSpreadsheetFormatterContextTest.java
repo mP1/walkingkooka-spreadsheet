@@ -24,6 +24,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -41,7 +42,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
-public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext> {
+public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext>,
+        DecimalNumberContextDelegator {
 
     private final static Locale LOCALE = Locale.FRANCE;
 
@@ -181,7 +183,10 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         );
     }
 
-    private DecimalNumberContext decimalNumberContext() {
+    // DecimalNumberContextDelegator....................................................................................
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
                 DecimalNumberSymbols.fromDecimalFormatSymbols(
                         '+',
@@ -191,6 +196,8 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
                 MathContext.UNLIMITED
         );
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetFormatterConverterSpreadsheetFormatterContext> type() {

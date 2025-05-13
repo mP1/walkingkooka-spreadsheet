@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
@@ -33,7 +34,8 @@ import java.util.function.BiFunction;
 /**
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
-final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext {
+final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext,
+        DecimalNumberContextDelegator {
 
     static BasicSpreadsheetFormatParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory){
         return new BasicSpreadsheetFormatParserContext(
@@ -53,28 +55,8 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
     public int defaultYear() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
     }
 
     @Override
@@ -109,23 +91,8 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
     public LocalDateTime now() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public char percentSymbol() {
-        return this.context.percentSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
     }
 
     @Override
@@ -143,7 +110,16 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
         throw new UnsupportedOperationException();
     }
 
+    // DecimalNumberContextDelegator....................................................................................
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return this.context;
+    }
+
     private final DecimalNumberContext context;
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

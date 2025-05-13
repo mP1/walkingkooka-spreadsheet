@@ -27,7 +27,6 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -181,6 +180,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static char PERCENT_SYMBOL = '%';
     private final static char PERMILL_SYMBOL = '^';
     private final static char POSITIVE_SIGN = '+';
+    private final static char ZERO_DIGIT = '0';
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
@@ -529,7 +529,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         DecimalNumberSymbols.with(
                                 NEGATIVE_SIGN,
                                 POSITIVE_SIGN,
-                                DecimalNumberContext.ZERO_DIGIT,
+                                ZERO_DIGIT,
                                 CURRENCY_SYMBOL,
                                 DECIMAL_SEPARATOR,
                                 EXPONENT_SYMBOL,

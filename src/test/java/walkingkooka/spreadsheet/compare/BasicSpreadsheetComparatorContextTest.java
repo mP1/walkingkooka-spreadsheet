@@ -22,6 +22,8 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -37,7 +39,8 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext> {
+public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext>,
+        DecimalNumberContextDelegator {
 
     @Test
     public void testWithNullConverterContextFails() {
@@ -109,44 +112,18 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     );
 
     @Override
-    public String currencySymbol() {
-        return CONVERTER_CONTEXT.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return CONVERTER_CONTEXT.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return CONVERTER_CONTEXT.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return CONVERTER_CONTEXT.groupSeparator();
-    }
-
-    @Override
     public MathContext mathContext() {
         return CONVERTER_CONTEXT.mathContext();
     }
 
-    @Override
-    public char negativeSign() {
-        return CONVERTER_CONTEXT.negativeSign();
-    }
+    // DecimalNumberContextDelegator....................................................................................
 
     @Override
-    public char percentSymbol() {
-        return CONVERTER_CONTEXT.percentSymbol();
+    public DecimalNumberContext decimalNumberContext() {
+        return CONVERTER_CONTEXT;
     }
 
-    @Override
-    public char positiveSign() {
-        return CONVERTER_CONTEXT.positiveSign();
-    }
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetComparatorContext> type() {

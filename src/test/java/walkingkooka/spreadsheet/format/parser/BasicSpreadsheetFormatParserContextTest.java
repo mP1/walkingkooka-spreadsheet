@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -29,7 +30,8 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
-        SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext> {
+        SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext>,
+        DecimalNumberContextDelegator {
 
     @Test
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
@@ -71,25 +73,7 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
         return BasicSpreadsheetFormatParserContext.with(InvalidCharacterExceptionFactory.POSITION);
     }
 
-    @Override
-    public String currencySymbol() {
-        return this.decimalNumberContext().currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.decimalNumberContext().decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.decimalNumberContext().exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.decimalNumberContext().groupSeparator();
-    }
+    // DecimalNumberContext.............................................................................................
 
     @Override
     public MathContext mathContext() {
@@ -97,23 +81,11 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     }
 
     @Override
-    public char negativeSign() {
-        return this.decimalNumberContext().negativeSign();
-    }
-
-    @Override
-    public char percentSymbol() {
-        return this.decimalNumberContext().percentSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.decimalNumberContext().positiveSign();
-    }
-
-    private DecimalNumberContext decimalNumberContext() {
+    public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.american(this.mathContext());
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetFormatParserContext> type() {
