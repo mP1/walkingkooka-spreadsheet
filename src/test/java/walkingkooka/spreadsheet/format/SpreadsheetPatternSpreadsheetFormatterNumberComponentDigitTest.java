@@ -23,8 +23,13 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentDigitTes
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentDigit.with(1, SpreadsheetPatternSpreadsheetFormatterNumberZero.ZERO),
-                "0");
+        this.toStringAndCheck(
+                SpreadsheetPatternSpreadsheetFormatterNumberComponentDigit.with(
+                        1,
+                        SpreadsheetPatternSpreadsheetFormatterNumberZero.ZERO
+                ),
+                "0"
+        );
     }
 
     @Override
