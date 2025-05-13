@@ -130,7 +130,7 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
      * Sample text.
      * <pre>
      * number-to-number
-     * collection ( number-to-boolen, number-number, string-to-local-date "yyyy-mm-dd")
+     * collection ( number-to-boolean, number-number, string-to-local-date "yyyy-mm-dd")
      * </pre>
      * The {@link SpreadsheetComparatorProvider} will be used to fetch {@link SpreadsheetComparator} with any parameters.
      */
