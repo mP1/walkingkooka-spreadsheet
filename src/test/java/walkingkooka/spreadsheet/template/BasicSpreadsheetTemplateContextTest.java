@@ -156,8 +156,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
     }
 
     @Override
-    public char percentageSymbol() {
-        return SPREADSHEET_PARSER_CONTEXT.percentageSymbol();
+    public char percentSymbol() {
+        return SPREADSHEET_PARSER_CONTEXT.percentSymbol();
     }
 
     @Override

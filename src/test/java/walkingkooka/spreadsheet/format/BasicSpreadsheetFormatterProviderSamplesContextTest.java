@@ -71,8 +71,8 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     }
 
     @Override
-    public char percentageSymbol() {
-        return SPREADSHEET_FORMATTER_CONTEXT.percentageSymbol();
+    public char percentSymbol() {
+        return SPREADSHEET_FORMATTER_CONTEXT.percentSymbol();
     }
 
     @Override

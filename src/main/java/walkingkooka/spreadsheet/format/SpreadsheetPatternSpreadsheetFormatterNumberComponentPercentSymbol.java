@@ -18,25 +18,25 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Inserts the percentage symbol.
+ * Inserts the percent symbol.
  */
-final class SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol extends SpreadsheetPatternSpreadsheetFormatterNumberComponent {
+final class SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol extends SpreadsheetPatternSpreadsheetFormatterNumberComponent {
 
     /**
      * Singleton
      */
-    static final SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol INSTANCE = new SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol();
+    static final SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol INSTANCE = new SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol() {
+    private SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol() {
         super();
     }
 
     @Override
     void append(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
-        context.appendPercentage();
+        context.appendPercent();
     }
 
     @Override

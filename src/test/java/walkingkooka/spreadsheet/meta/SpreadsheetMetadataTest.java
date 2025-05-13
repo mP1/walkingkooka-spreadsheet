@@ -252,7 +252,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                                         "\u221e",
                                         '.',
                                         "NaN",
-                                        '%', // percentageSymbols
+                                        '%', // percentSymbols
                                         '\u2030' // permillSymbol
                                 )
                         )

@@ -252,7 +252,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentageSymbol=':' permillSymbol='>' fr_FR precision=7 roundin"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentSymbol=':' permillSymbol='>' fr_FR precision=7 roundingMo"
         );
     }
 
@@ -377,7 +377,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         this.infinitySymbol(),
                         this.monetaryDecimalSeparator(),
                         this.nanSymbol(),
-                        this.percentageSymbol(),
+                        this.percentSymbol(),
                         this.permillSymbol()
                 ),
                 LOCALE,
@@ -428,7 +428,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Override
-    public char percentageSymbol() {
+    public char percentSymbol() {
         return ':';
     }
 

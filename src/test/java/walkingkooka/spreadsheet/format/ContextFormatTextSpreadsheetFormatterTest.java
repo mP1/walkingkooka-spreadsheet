@@ -112,7 +112,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
             }
 
             @Override
-            public char percentageSymbol() {
+            public char percentSymbol() {
                 return 'R';
             }
 

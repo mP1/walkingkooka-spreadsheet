@@ -101,7 +101,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParse
             this.percentage = true;
             this.multiplier = this.multiplier.scaleByPowerOfTen(2);// x100
         }
-        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.percentageSymbol());
+        this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.percentSymbol());
     }
 
     /**

@@ -4293,8 +4293,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             }
 
             @Override
-            public char percentageSymbol() {
-                return decimalNumberContext.percentageSymbol();
+            public char percentSymbol() {
+                return decimalNumberContext.percentSymbol();
             }
 
             @Override

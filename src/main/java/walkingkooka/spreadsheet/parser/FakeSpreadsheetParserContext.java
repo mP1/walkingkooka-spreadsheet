@@ -49,7 +49,7 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
     }
 
     @Override
-    public char percentageSymbol() {
+    public char percentSymbol() {
         throw new UnsupportedOperationException();
     }
 

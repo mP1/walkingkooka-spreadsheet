@@ -644,8 +644,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     }
 
     @Override
-    public char percentageSymbol() {
-        return DECIMAL_NUMBER_CONTEXT.percentageSymbol();
+    public char percentSymbol() {
+        return DECIMAL_NUMBER_CONTEXT.percentSymbol();
     }
 
     @Override

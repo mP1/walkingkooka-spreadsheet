@@ -127,9 +127,9 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
-    public char percentageSymbol() {
+    public char percentSymbol() {
         return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .percentageSymbol();
+                .percentSymbol();
     }
 
     @Override

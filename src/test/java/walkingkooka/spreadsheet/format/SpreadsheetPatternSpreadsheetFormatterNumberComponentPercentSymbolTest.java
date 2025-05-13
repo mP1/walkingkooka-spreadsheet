@@ -19,15 +19,15 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbolTest extends SpreadsheetPatternSpreadsheetFormatterNumberComponentTestCase<SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol> {
+public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbolTest extends SpreadsheetPatternSpreadsheetFormatterNumberComponentTestCase<SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol.INSTANCE, "%");
+        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.INSTANCE, "%");
     }
 
     @Override
-    public Class<SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol> type() {
-        return SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentageSymbol.class;
+    public Class<SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol> type() {
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.class;
     }
 }

@@ -183,7 +183,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public char percentageSymbol() {
+    public char percentSymbol() {
         return PERCENTAGE;
     }
 
