@@ -27,7 +27,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
      */
     @SuppressWarnings("SameReturnValue")
     static SpreadsheetPatternSpreadsheetFormatterNumberComponent currencySymbol() {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrencySymbol.INSTANCE;
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrencySymbol.INSTANCE;
     }
 
     /**
@@ -35,7 +35,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
      */
     @SuppressWarnings("SameReturnValue")
     static SpreadsheetPatternSpreadsheetFormatterNumberComponent decimalSeparator() {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentDecimalSeparator.INSTANCE;
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentDecimalSeparator.INSTANCE;
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
      */
     static SpreadsheetPatternSpreadsheetFormatterNumberComponent digit(final int position,
                                                                        final SpreadsheetPatternSpreadsheetFormatterNumberZero zero) {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentDigit.with(position, zero);
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentDigit.with(position, zero);
     }
 
     /**
@@ -51,7 +51,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
      */
     @SuppressWarnings("SameReturnValue")
     static SpreadsheetPatternSpreadsheetFormatterNumberComponent exponentSymbol() {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentExponentSymbol.INSTANCE;
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentExponentSymbol.INSTANCE;
     }
 
     /**
@@ -59,14 +59,14 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberComponent {
      */
     @SuppressWarnings("SameReturnValue")
     static SpreadsheetPatternSpreadsheetFormatterNumberComponent percentSymbol() {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.INSTANCE;
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.INSTANCE;
     }
 
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral}
      */
     static SpreadsheetPatternSpreadsheetFormatterNumberComponent textLiteral(final String text) {
-        return walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral.with(text);
+        return SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral.with(text);
     }
 
     SpreadsheetPatternSpreadsheetFormatterNumberComponent() {

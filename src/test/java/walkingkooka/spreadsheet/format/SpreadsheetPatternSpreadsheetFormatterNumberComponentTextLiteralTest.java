@@ -24,7 +24,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLite
     @Test
     public void testToString() {
         final String text = "abc123";
-        this.toStringAndCheck(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral.with(text), text);
+        this.toStringAndCheck(
+                SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral.with(text),
+                text
+        );
     }
 
     @Override
