@@ -46,7 +46,7 @@ final class SpreadsheetConverterStringToSpreadsheetSelection extends Spreadsheet
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
-        return (value instanceof Character || value instanceof String) &&
+        return value instanceof String &&
                 (type == SpreadsheetCellReference.class ||
                         type == SpreadsheetCellReferenceOrRange.class ||
                         type == SpreadsheetCellRangeReference.class ||
