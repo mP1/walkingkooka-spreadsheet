@@ -59,6 +59,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
             }
 
             return SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
+                    formatter.currency, // when true formatting will use the monetaryDecimalSeparator rather than decimalSeparator
                     SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(
                             SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(valueSign),
                             integerDigits,
@@ -99,6 +100,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
             final int exponent = rounded.precision() - rounded.scale() - integerDigitCount;
 
             return SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
+                    formatter.currency,
                     SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(value.signum()), digits.substring(0, integerDigitCount), formatter.groupSeparator),
                     SpreadsheetPatternSpreadsheetFormatterNumberDigits.fraction(digits.substring(integerDigitCount, Math.min(integerDigitCount + fractionDigitCount, digitCount))),
                     SpreadsheetPatternSpreadsheetFormatterNumberDigits.exponent(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(exponent), String.valueOf(Math.abs(exponent))),

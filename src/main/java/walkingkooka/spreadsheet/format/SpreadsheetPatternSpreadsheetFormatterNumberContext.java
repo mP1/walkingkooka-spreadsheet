@@ -29,23 +29,34 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
     /**
      * Factory that creates a new context.
      */
-    static SpreadsheetPatternSpreadsheetFormatterNumberContext with(final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer,
+    static SpreadsheetPatternSpreadsheetFormatterNumberContext with(final boolean currency,
+                                                                    final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer,
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction,
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumberDigits exponent,
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumber formatter,
                                                                     final SpreadsheetFormatterContext context) {
-        return new SpreadsheetPatternSpreadsheetFormatterNumberContext(integer, fraction, exponent, formatter, context);
+        return new SpreadsheetPatternSpreadsheetFormatterNumberContext(
+                currency,
+                integer,
+                fraction,
+                exponent,
+                formatter,
+                context
+        );
     }
 
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetPatternSpreadsheetFormatterNumberContext(final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer,
+    private SpreadsheetPatternSpreadsheetFormatterNumberContext(final boolean currency,
+                                                                final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer,
                                                                 final SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction,
                                                                 final SpreadsheetPatternSpreadsheetFormatterNumberDigits exponent,
                                                                 final SpreadsheetPatternSpreadsheetFormatterNumber formatter,
                                                                 final SpreadsheetFormatterContext context) {
         super();
+
+        this.currency = currency;
 
         this.integer = integer;
         this.fraction = fraction;
@@ -73,7 +84,14 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
 
     void appendDecimalSeparator(final SpreadsheetPatternSpreadsheetFormatterNumberDigits next) {
         this.digits.sign(this);
-        this.text.append(this.context.decimalSeparator());
+
+        final SpreadsheetFormatterContext context = this.context;
+
+        this.text.append(
+                this.currency ?
+                        context.monetaryDecimalSeparator() :
+                context.decimalSeparator()
+        );
         this.digits = next;
     }
 
@@ -100,6 +118,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
 
     private final SpreadsheetFormatterContext context;
 
+    private boolean currency;
+
     private SpreadsheetPatternSpreadsheetFormatterNumberDigits digits;
 
     final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer;
@@ -125,6 +145,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
                 .disable(ToStringBuilderOption.QUOTE)
                 .separator("")
                 .labelSeparator("")
+                .value(this.currency ? "currency " : "") // https://github.com/mP1/walkingkooka/issues/2525
                 .value(this.integer)
                 .value(this.fraction)
                 .value(this.exponent)
