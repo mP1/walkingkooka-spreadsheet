@@ -17,14 +17,13 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
 /**
  * A {@link Converter} that converts an SpreadsheetId as a {@link String} into a {@link SpreadsheetId}.
  */
-final class SpreadsheetConverterStringToSpreadsheetId extends SpreadsheetConverter {
+final class SpreadsheetConverterStringToSpreadsheetId extends SpreadsheetConverterStringTo {
 
     /**
      * Singleton
@@ -36,33 +35,22 @@ final class SpreadsheetConverterStringToSpreadsheetId extends SpreadsheetConvert
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
-        return value instanceof String && SpreadsheetId.class == type;
+    boolean isType(final Object value,
+                   final Class<?> type,
+                   final SpreadsheetConverterContext context) {
+        return SpreadsheetId.class == type;
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
-        Either<T, String> result;
-
-        try {
-            result = this.successfulConversion(
-                    SpreadsheetId.parse(
-                        context.convertOrFail(
-                                value,
-                                String.class
-                        )
-                    ),
-                    type
-            );
-        } catch (final RuntimeException cause) {
-            result = Either.right(cause.getMessage());
-        }
-
-        return result;
+    Object tryConvert(final Object value,
+                      final Class<?> type,
+                      final SpreadsheetConverterContext context) {
+        return SpreadsheetId.parse(
+                context.convertOrFail(
+                        value,
+                        String.class
+                )
+        );
     }
 
     @Override

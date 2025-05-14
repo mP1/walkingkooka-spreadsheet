@@ -17,14 +17,13 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
 /**
  * A {@link Converter} that converts {@link String} to {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName}.
  */
-final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends SpreadsheetConverter {
+final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends SpreadsheetConverterStringTo {
 
     /**
      * Singleton
@@ -39,9 +38,9 @@ final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends 
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
+    boolean isType(final Object value,
+                   final Class<?> type,
+                   final SpreadsheetConverterContext context) {
         return value instanceof String &&
                 isMetadataPropertyNameSubClass(type);
     }
@@ -54,9 +53,9 @@ final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends 
 
         Class<?> temp = type;
 
-        while(Object.class != temp) {
+        while (Object.class != temp) {
             subClass = SpreadsheetMetadataPropertyName.class == temp;
-            if(subClass) {
+            if (subClass) {
                 break;
             }
 
@@ -67,21 +66,10 @@ final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends 
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
-        Either<T, String> result;
-
-        try {
-            result = this.successfulConversion(
-                    SpreadsheetMetadataPropertyName.with((String)value),
-                    type
-            );
-        } catch (final RuntimeException cause) {
-            result = Either.right(cause.getMessage());
-        }
-
-        return result;
+    Object tryConvert(final Object value,
+                      final Class<?> type,
+                      final SpreadsheetConverterContext context) {
+        return SpreadsheetMetadataPropertyName.with((String) value);
     }
 
     @Override

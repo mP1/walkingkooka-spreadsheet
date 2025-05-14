@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.text.CharSequences;
 
@@ -27,7 +26,7 @@ import walkingkooka.text.CharSequences;
  * <br>
  * This {@link Converter} exists to support functions like text where the user provides a value and a pattern.
  */
-final class SpreadsheetConverterStringToFormatPattern extends SpreadsheetConverter {
+final class SpreadsheetConverterStringToFormatPattern extends SpreadsheetConverterStringTo {
 
     static SpreadsheetConverterStringToFormatPattern with(final String pattern) {
         return new SpreadsheetConverterStringToFormatPattern(
@@ -40,27 +39,20 @@ final class SpreadsheetConverterStringToFormatPattern extends SpreadsheetConvert
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
-        return String.class == type || context.canConvert(value, type);
-    }
-
-    @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
-        return this.successfulConversion(
-                this.formatUsingPattern(
-                        value,
-                        context
-                ),
+    boolean isType(final Object value,
+                   final Class<?> type,
+                   final SpreadsheetConverterContext context) {
+        return String.class == type || context.canConvert(
+                value,
                 type
         );
     }
 
-    private String formatUsingPattern(final Object value,
-                                      final SpreadsheetConverterContext context) {
+
+    @Override
+    String tryConvert(final Object value,
+                      final Class<?> type,
+                      final SpreadsheetConverterContext context) {
         return SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor.format(
                 value,
                 this.pattern,

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Cast;
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -34,7 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  * A {@link Converter} that handles converting {@link String} into {@link SpreadsheetSelection} using the right
  * {@link SpreadsheetSelection} parseXXX method.
  */
-final class SpreadsheetConverterStringToSpreadsheetSelection extends SpreadsheetConverter {
+final class SpreadsheetConverterStringToSpreadsheetSelection extends SpreadsheetConverterStringTo {
 
     final static SpreadsheetConverterStringToSpreadsheetSelection INSTANCE = new SpreadsheetConverterStringToSpreadsheetSelection();
 
@@ -43,31 +42,27 @@ final class SpreadsheetConverterStringToSpreadsheetSelection extends Spreadsheet
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
-        return value instanceof String &&
-                (type == SpreadsheetCellReference.class ||
-                        type == SpreadsheetCellReferenceOrRange.class ||
-                        type == SpreadsheetCellRangeReference.class ||
-                        type == SpreadsheetColumnReference.class ||
-                        type == SpreadsheetColumnRangeReference.class ||
-                        type == SpreadsheetLabelName.class ||
-                        type == SpreadsheetRowReference.class ||
-                        type == SpreadsheetRowRangeReference.class);
+    boolean isType(final Object value,
+                   final Class<?> type,
+                   final SpreadsheetConverterContext context) {
+        return type == SpreadsheetCellReference.class ||
+                type == SpreadsheetCellReferenceOrRange.class ||
+                type == SpreadsheetCellRangeReference.class ||
+                type == SpreadsheetColumnReference.class ||
+                type == SpreadsheetColumnRangeReference.class ||
+                type == SpreadsheetLabelName.class ||
+                type == SpreadsheetRowReference.class ||
+                type == SpreadsheetRowRangeReference.class;
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
-        return this.successfulConversion(
-                SpreadsheetConverterStringToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
-                        (String) value,
-                        Cast.to(type),
-                        context
-                ),
-                type
+    Object tryConvert(final Object value,
+                      final Class<?> type,
+                      final SpreadsheetConverterContext context) {
+        return SpreadsheetConverterStringToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
+                (String) value,
+                Cast.to(type),
+                context
         );
     }
 

@@ -18,14 +18,13 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
 
 /**
  * A {@link Converter} that converts an SpreadsheetError as a {@link String} into a {@link SpreadsheetError}.
  */
-final class SpreadsheetConverterStringToSpreadsheetError extends SpreadsheetConverter {
+final class SpreadsheetConverterStringToSpreadsheetError extends SpreadsheetConverterStringTo {
 
     /**
      * Singleton
@@ -37,33 +36,22 @@ final class SpreadsheetConverterStringToSpreadsheetError extends SpreadsheetConv
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
-        return value instanceof String && SpreadsheetError.class == type;
+    boolean isType(final Object value,
+                   final Class<?> type,
+                   final SpreadsheetConverterContext context) {
+        return SpreadsheetError.class == type;
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
-        Either<T, String> result;
-
-        try {
-            result = this.successfulConversion(
-                    SpreadsheetError.parse(
-                        context.convertOrFail(
-                                value,
-                                String.class
-                        )
-                    ),
-                    type
-            );
-        } catch (final RuntimeException cause) {
-            result = Either.right(cause.getMessage());
-        }
-
-        return result;
+    SpreadsheetError tryConvert(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
+        return SpreadsheetError.parse(
+                context.convertOrFail(
+                        value,
+                        String.class
+                )
+        );
     }
 
     @Override
