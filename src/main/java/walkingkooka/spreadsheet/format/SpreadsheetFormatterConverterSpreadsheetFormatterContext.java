@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -29,12 +31,11 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
+        DateTimeContextDelegator,
         DecimalNumberContextDelegator {
 
     static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
@@ -45,16 +46,6 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         super();
 
         this.context = context;
-    }
-
-    @Override
-    public List<String> ampms() {
-        return this.context.ampms();
-    }
-
-    @Override
-    public String ampm(final int hourOfDay) {
-        return this.context.ampm(hourOfDay);
     }
 
     @Override
@@ -111,11 +102,6 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public int defaultYear() {
-        return this.context.defaultYear();
-    }
-
-    @Override
     public Locale locale() {
         return this.context.locale();
     }
@@ -126,63 +112,20 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public List<String> monthNames() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public String monthName(final int month) {
-        return this.context.monthName(month);
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.context.monthNameAbbreviations();
-    }
-
-    @Override
-    public String monthNameAbbreviation(final int month) {
-        return this.context.monthNameAbbreviation(month);
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
-    @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.context.resolveLabel(labelName);
     }
 
     @Override
-    public int twoDigitYear() {
-        return this.context.twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.context.weekDayNames();
-    }
-
-    @Override
-    public String weekDayName(final int day) {
-        return this.context.weekDayName(day);
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.context.weekDayNameAbbreviations();
-    }
-
-    @Override
-    public String weekDayNameAbbreviation(final int day) {
-        return this.context.weekDayNameAbbreviation(day);
-    }
-
-    @Override
     public ExpressionNumberKind expressionNumberKind() {
         return this.context.expressionNumberKind();
+    }
+
+    // DateTimeContext..................................................................................................
+
+    @Override
+    public DateTimeContext dateTimeContext() {
+        return this.context;
     }
 
     // DecimalNumberContext.............................................................................................
