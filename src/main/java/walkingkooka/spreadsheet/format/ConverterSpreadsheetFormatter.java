@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
