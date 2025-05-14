@@ -34,8 +34,8 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -58,7 +58,14 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.FRANCE;
 
-    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = new FakeSpreadsheetLabelNameResolver() {
+
+        // variable length #toString and ToStringBuilder max length causes random test fails
+        @Override
+        public String toString() {
+            return FakeSpreadsheetLabelNameResolver.class.getSimpleName();
+        }
+    };
 
     private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
 
@@ -252,7 +259,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentSymbol=':' permillSymbol='>' fr_FR precision=7 roundingMo"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentSymbol=':' permillSymbol='>' fr_FR precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
