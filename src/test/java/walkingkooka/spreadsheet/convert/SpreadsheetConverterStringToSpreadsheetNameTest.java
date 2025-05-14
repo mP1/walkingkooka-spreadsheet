@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetName;
 
 public final class SpreadsheetConverterStringToSpreadsheetNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToSpreadsheetName> {
@@ -34,6 +35,16 @@ public final class SpreadsheetConverterStringToSpreadsheetNameTest extends Sprea
         );
     }
 
+    @Test
+    public void testConvertCharSequenceToSpreadsheetName() {
+        final SpreadsheetName name = SpreadsheetName.with("SpreadsheetName222");
+
+        this.convertAndCheck(
+                new StringBuilder(name.toString()),
+                name
+        );
+    }
+
     @Override
     public SpreadsheetConverterStringToSpreadsheetName createConverter() {
         return SpreadsheetConverterStringToSpreadsheetName.INSTANCE;
@@ -42,14 +53,28 @@ public final class SpreadsheetConverterStringToSpreadsheetNameTest extends Sprea
     @Override
     public SpreadsheetConverterContext createContext() {
         return new FakeSpreadsheetConverterContext() {
+
             @Override
-            public <T> Either<T, String> convert(final Object value,
-                                                 final Class<T> type) {
-                return this.successfulConversion(
-                        type.cast(value),
-                        type
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return converter.canConvert(
+                        value,
+                        type,
+                        this
                 );
             }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
         };
     }
 

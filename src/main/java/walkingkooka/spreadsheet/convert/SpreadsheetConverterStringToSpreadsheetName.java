@@ -42,15 +42,10 @@ final class SpreadsheetConverterStringToSpreadsheetName extends SpreadsheetConve
     }
 
     @Override
-    Object tryConvert(final Object value,
+    Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
-        return SpreadsheetName.with(
-                context.convertOrFail(
-                        value,
-                        String.class
-                )
-        );
+        return SpreadsheetName.with(value);
     }
 
     @Override

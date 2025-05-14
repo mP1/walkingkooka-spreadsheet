@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -42,7 +44,7 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
     }
 
     @Test
-    public void testConvertValueMessageCell() {
+    public void testConvertStringWithValueMessageCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage(
                 "Message123"
@@ -58,7 +60,25 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
     }
 
     @Test
-    public void testConvertValueMessageLabel() {
+    public void testConvertCharSequenceWithValueMessageCell() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage(
+                "Message123"
+        );
+        final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(cell);
+
+        this.convertAndCheck(
+                new StringBuilder(
+                        validationError.text()
+                ),
+                ValidationError.class,
+                this.createContext(cell),
+                validationError
+        );
+    }
+
+    @Test
+    public void testConvertStringWithValueMessageLabel() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage("Message123");
         final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(label);
@@ -72,7 +92,7 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
     }
 
     @Test
-    public void testConvertOnlyMessage() {
+    public void testConvertStringWithOnlyMessage() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final String message = "Message123";
 
@@ -97,6 +117,28 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
 
     private SpreadsheetConverterContext createContext(final SpreadsheetExpressionReference cellOrLabel) {
         return new FakeSpreadsheetConverterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return converter.canConvert(
+                        value,
+                        type,
+                        this
+                );
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
 
             @Override
             public SpreadsheetExpressionReference validationReference() {

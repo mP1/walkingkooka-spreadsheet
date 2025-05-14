@@ -34,12 +34,15 @@ abstract class SpreadsheetConverterStringTo extends SpreadsheetConverter {
     public final boolean canConvert(final Object value,
                                     final Class<?> type,
                                     final SpreadsheetConverterContext context) {
-        // special case for SpreadsheetConverterStringToFormatPattern
-        return (value instanceof String || this instanceof SpreadsheetConverterStringTo) &&
-                this.isType(
+        // test isType is quicker so do first
+        return this.isType(
+                value,
+                type,
+                context
+        ) &&
+                context.canConvert(
                         value,
-                        type,
-                        context
+                        String.class
                 );
     }
 
@@ -56,7 +59,10 @@ abstract class SpreadsheetConverterStringTo extends SpreadsheetConverter {
         try {
             result = this.successfulConversion(
                     this.tryConvert(
-                            value,
+                            context.convertOrFail(
+                                    value,
+                                    String.class
+                            ),
                             type,
                             context
                     ),
@@ -69,7 +75,7 @@ abstract class SpreadsheetConverterStringTo extends SpreadsheetConverter {
         return result;
     }
 
-    abstract Object tryConvert(final Object value,
+    abstract Object tryConvert(final String value,
                                final Class<?> type,
                                final SpreadsheetConverterContext context);
 }

@@ -41,8 +41,7 @@ final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends 
     boolean isType(final Object value,
                    final Class<?> type,
                    final SpreadsheetConverterContext context) {
-        return value instanceof String &&
-                isMetadataPropertyNameSubClass(type);
+        return isMetadataPropertyNameSubClass(type);
     }
 
     /**
@@ -66,10 +65,10 @@ final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends 
     }
 
     @Override
-    Object tryConvert(final Object value,
+    Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
-        return SpreadsheetMetadataPropertyName.with((String) value);
+        return SpreadsheetMetadataPropertyName.with(value);
     }
 
     @Override
