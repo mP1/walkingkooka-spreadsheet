@@ -458,20 +458,38 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     // two patterns.....................................................................................................
 
     @Test
-    public void testFormatterPatternPatternWithPositiveNumber() {
+    public void testFormatterPatternPatternWithPositiveCurrencyNumber() {
         this.formatAndCheck2(
                 "$0.0;[color44]0.00",
                 123,
-                "c123d0"
+                "c123*0"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternWithPositiveNumber() {
+        this.formatAndCheck2(
+                "0.0;[color44]0.00",
+                123,
+                "123d0"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternWithNegativeCurrencyNumber() {
+        this.formatAndCheck2(
+                "[color44]0.0;$0.00",
+                -123,
+                "cn123*00"
         );
     }
 
     @Test
     public void testFormatterPatternPatternWithNegativeNumber() {
         this.formatAndCheck2(
-                "[color44]0.0;$0.00",
+                "[color44]0.0;0.00",
                 -123,
-                "cn123d00"
+                "n123d00"
         );
     }
 
@@ -480,7 +498,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "$0.0;[color44]0.00",
                 0,
-                "c0d0"
+                "c0*0"
         );
     }
 
@@ -500,7 +518,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "$0.0;[color44]0.00;[color44]0.000",
                 123,
-                "c123d0"
+                "c123*0"
         );
     }
 
@@ -509,7 +527,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "[color44]0.0;$0.00;[color44]0.000",
                 -123,
-                "cn123d00"
+                "cn123*00"
         );
     }
 
@@ -518,7 +536,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "[color44]0.0;[color44]0.00;$0.000",
                 0,
-                "c0d000"
+                "c0*000"
         );
     }
 
@@ -538,7 +556,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "$0.0;[color44]0.00;[color44]0.000;[color44]@@@@",
                 123,
-                "c123d0"
+                "c123*0"
         );
     }
 
@@ -547,7 +565,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "[color44]0.0;$0.00;[color44]0.000;[color44]@@@@",
                 -123,
-                "cn123d00"
+                "cn123*00"
         );
     }
 
@@ -556,7 +574,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         this.formatAndCheck2(
                 "[color44]0.0;[color44]0.00;$0.000;[color44]@@@@",
                 0,
-                "c0d000"
+                "c0*000"
         );
     }
 
@@ -632,6 +650,11 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public String exponentSymbol() {
                 return "x";
+            }
+
+            @Override
+            public char monetaryDecimalSeparator() {
+                return '*';
             }
 
             @Override

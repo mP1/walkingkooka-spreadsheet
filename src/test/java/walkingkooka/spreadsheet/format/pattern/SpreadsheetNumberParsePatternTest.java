@@ -574,11 +574,20 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     // formatter........................................................................................................
 
     @Test
-    public void testFormatterPatternPatternPatternWithNegativeNumber() {
+    public void testFormatterPatternPatternPatternWithNegativeCurrencyNumber() {
         this.formatAndCheck2(
                 "$0.00",
                 -123,
-                "cn123d00"
+                "cn123*00"
+        );
+    }
+
+    @Test
+    public void testFormatterPatternPatternPatternWithNegativeNumber() {
+        this.formatAndCheck2(
+                "0.00",
+                -123,
+                "n123d00"
         );
     }
 
@@ -617,6 +626,11 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
             @Override
             public String exponentSymbol() {
                 return "x";
+            }
+
+            @Override
+            public char monetaryDecimalSeparator() {
+                return '*';
             }
 
             @Override

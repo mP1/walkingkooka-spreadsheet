@@ -51,6 +51,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
         final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor =
                 SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor.analyze(token);
 
+        this.currency = visitor.currency;
+
         this.color = visitor.color;
 
         this.components = visitor.components;
@@ -95,6 +97,11 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
                         null
         );
     }
+
+    /**
+     * When true indicates that his pattern formats currency values.
+     */
+    final boolean currency;
 
     private Optional<Color> color(final SpreadsheetFormatterContext context) {
         Object colorNameOrNumber = this.color;

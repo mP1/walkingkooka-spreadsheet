@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.CurrencySpreadsheetFormatParserToken;
@@ -87,7 +88,11 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
 
     @Override
     protected void visit(final CurrencySpreadsheetFormatParserToken token) {
-        this.add(SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol());
+        this.add(
+                SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol()
+        );
+
+        this.currency = true;
     }
 
     @Override
@@ -163,7 +168,13 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
         );
     }
 
-    // misc ..................................................................................................
+    // misc ............................................................................................................
+
+    /**
+     * true indicates that the pattern is for a currency, which means the {@link DecimalNumberContext#monetaryDecimalSeparator()},
+     * will be used rather than {@link DecimalNumberContext#decimalSeparator()}.
+     */
+    boolean currency = false;
 
     /**
      * Keeps track of whether the digits are integerDigitSymbolCount, fractionDigitSymbolCount or exponentDigitSymbolCount

@@ -740,11 +740,37 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SpreadsheetCellRangeStores.treeMap()
                 ),
                 cell,
+                SpreadsheetPattern.parseNumberFormatPattern("#.00")
+                        .formatter(),
+                cell.setFormattedValue(
+                        Optional.of(
+                                TextNode.text("1.00")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testFormatValueAndStylePatternsIncludesCurrencySymbol() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("1")
+                        .setExpressionValue(
+                                Optional.of(1)
+                        )
+        );
+
+        this.formatAndStyleAndCheck(
+                this.createContext(
+                        METADATA,
+                        SpreadsheetLabelStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap()
+                ),
+                cell,
                 SpreadsheetPattern.parseNumberFormatPattern("$#.00")
                         .formatter(),
                 cell.setFormattedValue(
                         Optional.of(
-                                TextNode.text("CURR1.00")
+                                TextNode.text("CURR1:00")
                         )
                 )
         );
@@ -791,7 +817,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         .formatter(),
                 cell.setFormattedValue(
                         Optional.of(
-                                TextNode.text("CURR1.00")
+                                TextNode.text("CURR1:00")
                                         .setAttributes(
                                                 style.value()
                                         )

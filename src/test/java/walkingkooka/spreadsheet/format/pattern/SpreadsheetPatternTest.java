@@ -1741,6 +1741,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             }
 
             @Override
+            public char monetaryDecimalSeparator() {
+                return '*';
+            }
+
+            @Override
             public char percentSymbol() {
                 return '%';
             }

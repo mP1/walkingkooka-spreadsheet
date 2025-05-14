@@ -2012,6 +2012,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
+    @Test
+    public void testFormatNumberWithPatternCurrencyMonetaryDecimalSeparator() {
+        this.parseFormatAndCheck(
+                "$000.000",
+                123.456,
+                "C123*456"
+        );
+    }
+
     // percentage ......................................................................................................
 
     @Test
@@ -2520,6 +2529,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             @Override
             public MathContext mathContext() {
                 return new MathContext(32, roundingMode);
+            }
+
+            @Override
+            public char monetaryDecimalSeparator() {
+                return '*';
             }
 
             @Override
