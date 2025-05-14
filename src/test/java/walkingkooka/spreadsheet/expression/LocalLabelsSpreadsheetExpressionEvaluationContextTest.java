@@ -413,6 +413,11 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                     }
 
                     @Override
+                    public char zeroDigit() {
+                        return ZERO;
+                    }
+
+                    @Override
                     public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
                         Objects.requireNonNull(reference, "reference");
                         throw new UnsupportedOperationException();
