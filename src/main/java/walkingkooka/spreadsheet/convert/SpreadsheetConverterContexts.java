@@ -22,7 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 
 import java.util.Optional;
 

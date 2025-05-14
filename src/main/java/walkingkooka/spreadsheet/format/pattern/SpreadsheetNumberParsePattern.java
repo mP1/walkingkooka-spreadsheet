@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 
 import java.util.List;
 

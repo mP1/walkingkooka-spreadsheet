@@ -21,7 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
+import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
 
 import java.util.Optional;
 

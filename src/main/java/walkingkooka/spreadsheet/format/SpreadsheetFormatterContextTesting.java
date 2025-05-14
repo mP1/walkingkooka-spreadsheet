@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumberConverterContextTesting;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextTesting;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
-import walkingkooka.tree.expression.ExpressionNumberConverterContextTesting;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends ExpressionNumberConverterContextTesting<C>,
         SpreadsheetLabelNameResolverTesting<C> {

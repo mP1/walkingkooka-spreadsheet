@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberConverters;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

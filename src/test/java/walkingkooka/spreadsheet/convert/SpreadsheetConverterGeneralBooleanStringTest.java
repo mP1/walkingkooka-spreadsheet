@@ -23,7 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 
 public final class SpreadsheetConverterGeneralBooleanStringTest implements ConverterTesting2<SpreadsheetConverterGeneralBooleanString, SpreadsheetConverterContext> {
 
