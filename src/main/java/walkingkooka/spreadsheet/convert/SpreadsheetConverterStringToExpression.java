@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -30,7 +29,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 /**
  * A {@link Converter} that converts an expression as a {@link String} into a {@link Expression}.
  */
-final class SpreadsheetConverterStringToExpression extends SpreadsheetConverter {
+final class SpreadsheetConverterStringToExpression extends SpreadsheetConverterStringTo {
 
     /**
      * Singleton
@@ -42,46 +41,34 @@ final class SpreadsheetConverterStringToExpression extends SpreadsheetConverter 
     }
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type,
-                              final SpreadsheetConverterContext context) {
-        return value instanceof String && Expression.class == type;
+    boolean isType(final Object value,
+                   final Class<?> type,
+                   final SpreadsheetConverterContext context) {
+        return Expression.class == type;
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
-        Either<T, String> result;
-
-        try {
-            result = this.successfulConversion(
-                    SpreadsheetFormulaParsers.expression()
-                            .parseText(
-                                    value.toString(),
-                                    SpreadsheetParserContexts.basic(
-                                            InvalidCharacterExceptionFactory.POSITION,
-                                            context,
-                                            context,
-                                            ';' // valueSeparator
-                                    )
-                            ).cast(SpreadsheetFormulaParserToken.class)
-                            .toExpression(
-                                    new FakeSpreadsheetExpressionEvaluationContext() {
-                                        @Override
-                                        public ExpressionNumberKind expressionNumberKind() {
-                                            return context.expressionNumberKind();
-                                        }
-                                    }
-                            ).get()
-                    ,
-                    type
-            );
-        } catch (final RuntimeException cause) {
-            result = Either.right(cause.getMessage());
-        }
-
-        return result;
+    Expression tryConvert(final Object value,
+                          final Class<?> type,
+                          final SpreadsheetConverterContext context) {
+        return SpreadsheetFormulaParsers.expression()
+                .parseText(
+                        value.toString(),
+                        SpreadsheetParserContexts.basic(
+                                InvalidCharacterExceptionFactory.POSITION,
+                                context,
+                                context,
+                                ';' // valueSeparator
+                        )
+                ).cast(SpreadsheetFormulaParserToken.class)
+                .toExpression(
+                        new FakeSpreadsheetExpressionEvaluationContext() {
+                            @Override
+                            public ExpressionNumberKind expressionNumberKind() {
+                                return context.expressionNumberKind();
+                            }
+                        }
+                ).get();
     }
 
     @Override
