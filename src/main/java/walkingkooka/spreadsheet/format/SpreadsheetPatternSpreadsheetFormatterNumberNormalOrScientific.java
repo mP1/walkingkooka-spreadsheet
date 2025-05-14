@@ -41,11 +41,11 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
                                     .getRoundingMode()
                     );
 
-            final int valueSign = rounded.signum();
+            final int valueSignum = rounded.signum();
             String integerDigits = "";
             String fractionDigits = "";
 
-            if (0 != valueSign) {
+            if (0 != valueSignum) {
                 final String digits = rounded
                         .unscaledValue()
                         .abs()
@@ -66,7 +66,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
             return SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
                     formatter.currency, // when true formatting will use the monetaryDecimalSeparator rather than decimalSeparator
                     SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(
-                            SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(valueSign),
+                            SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(valueSignum),
                             integerDigits,
                             formatter.groupSeparator
                     ),
