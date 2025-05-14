@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 
+/**
+ * A {@link Converter} that includes a canConvert guard before calling an abstract template convertXXX method.
+ */
 abstract class SpreadsheetConverter implements Converter<SpreadsheetConverterContext> {
 
     SpreadsheetConverter() {
