@@ -137,6 +137,7 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
 
     private final ExpressionNumberConverterContext context;
 
+    @Override
     public String toString() {
         return this.context.toString();
     }
