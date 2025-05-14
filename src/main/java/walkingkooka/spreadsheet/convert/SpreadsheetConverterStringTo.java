@@ -48,9 +48,9 @@ abstract class SpreadsheetConverterStringTo extends SpreadsheetConverter {
                             final SpreadsheetConverterContext context);
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
+    final <T> Either<T, String> convert0(final Object value,
+                                         final Class<T> type,
+                                         final SpreadsheetConverterContext context) {
         Either<T, String> result;
 
         try {
