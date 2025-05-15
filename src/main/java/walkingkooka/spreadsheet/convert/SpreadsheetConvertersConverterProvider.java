@@ -176,6 +176,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.stringToValidationError();
                 break;
+            case TEXT_TO_TEXT_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToText();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown converter " + name);
         }
@@ -274,6 +279,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STRING_TO_VALIDATION_ERROR = ConverterName.with(STRING_TO_VALIDATION_ERROR_STRING);
 
+    private final static String TEXT_TO_TEXT_STRING = "text-to-text";
+
+    final static ConverterName TEXT_TO_TEXT = ConverterName.with(TEXT_TO_TEXT_STRING);
+
     @Override
     public ConverterInfoSet converterInfos() {
         return INFOS;
@@ -297,7 +306,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(STRING_TO_SPREADSHEET_ID),
                     converterInfo(STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
                     converterInfo(STRING_TO_SPREADSHEET_NAME),
-                    converterInfo(STRING_TO_VALIDATION_ERROR)
+                    converterInfo(STRING_TO_VALIDATION_ERROR),
+                    converterInfo(TEXT_TO_TEXT)
             )
     );
 
