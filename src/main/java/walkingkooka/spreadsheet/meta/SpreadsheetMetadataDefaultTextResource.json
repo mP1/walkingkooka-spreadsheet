@@ -70,7 +70,7 @@
   "defaultYear": 1900,
   "exporters": "",
   "expressionNumberKind": "BIG_DECIMAL",
-  "findConverter": "collection(text-to-text, error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
+  "findConverter": "collection(text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
   "findFunctions": "@",
   "findHighlighting": false,
   "formatConverter": "collection(text-to-text, error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
@@ -122,7 +122,7 @@
     "word-wrap": "NORMAL"
   },
   "twoDigitYear": 20,
-  "validatorConverter": "collection(text-to-text, error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)",
+  "validatorConverter": "collection(text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)",
   "validatorFormHandler": "non-null",
   "validatorFunctions": "@",
   "validatorValidators": "",

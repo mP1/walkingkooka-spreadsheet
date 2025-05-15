@@ -126,11 +126,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.numberToNumber();
                 break;
-            case PLUGIN_SELECTOR_LIKE_TO_STRING_STRING:
-                parameterCountCheck(copy, 0);
-
-                converter = SpreadsheetConverters.pluginSelectorLike();
-                break;
             case SELECTION_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -244,10 +239,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName NUMBER_TO_NUMBER = ConverterName.with(NUMBER_TO_NUMBER_STRING);
 
-    private final static String PLUGIN_SELECTOR_LIKE_TO_STRING_STRING = "plugin-selector-like-to-string";
-
-    final static ConverterName PLUGIN_SELECTOR_LIKE_TO_STRING = ConverterName.with(PLUGIN_SELECTOR_LIKE_TO_STRING_STRING);
-
     private final static String SELECTION_TO_SELECTION_STRING = "selection-to-selection";
 
     final static ConverterName SELECTION_TO_SELECTION = ConverterName.with(SELECTION_TO_SELECTION_STRING);
@@ -306,7 +297,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(ERROR_TO_STRING),
                     converterInfo(GENERAL),
                     converterInfo(NUMBER_TO_NUMBER),
-                    converterInfo(PLUGIN_SELECTOR_LIKE_TO_STRING),
                     converterInfo(SPREADSHEET_CELL_TO),
                     converterInfo(SELECTION_TO_SELECTION),
                     converterInfo(SELECTION_TO_STRING),
