@@ -123,6 +123,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ExpressionNumberConverters#numberToNumber}
+     */
+    public static Converter<SpreadsheetConverterContext> numberToNumber() {
+        return ExpressionNumberConverters.numberToNumber();
+    }
+
+    /**
      * A wrapper around {@link Converters#parser(Class, Parser, Function, BiFunction)} simplifying the abstraction.
      */
     public static <V> Converter<SpreadsheetConverterContext> parser(final Class<V> parserValueType,
