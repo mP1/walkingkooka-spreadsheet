@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.math.MathTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
@@ -52,6 +53,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         HashCodeEqualsDefinedTesting2<P>,
         JsonNodeMarshallingTesting<P>,
         IsMethodTesting<P>,
+        MathTesting,
         ParserTesting,
         ParseStringTesting<P>,
         TreePrintableTesting,
@@ -506,14 +508,6 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
 
     final SpreadsheetFormatterContext createContext() {
         return this.createContext('0');
-    }
-
-    final static char ARABIC_ZERO_DIGIT = '\u0660';
-
-    final static String arabicDigit(final int digit) {
-        return String.valueOf(
-                (char)(ARABIC_ZERO_DIGIT + digit)
-        );
     }
 
     abstract SpreadsheetFormatterContext createContext(final char zeroDigit);
