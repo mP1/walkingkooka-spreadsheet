@@ -957,13 +957,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"defaultYear\": 1900,\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                        "  \"findConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"findConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formatConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formulaConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formulaConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
@@ -977,7 +977,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"roundingMode\": \"HALF_UP\",\n" +
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sortConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"sortConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"backgroundColor\": \"white\",\n" +
                         "    \"borderBottomColor\": \"black\",\n" +
@@ -1018,7 +1018,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validatorConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"validatorConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"validatorFormHandler\": \"non-null\",\n" +
                         "  \"validatorFunctions\": \"@\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
@@ -1137,13 +1137,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"defaultYear\": 1900,\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                        "  \"findConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"findConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formatConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formulaConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formulaConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
@@ -1157,7 +1157,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"roundingMode\": \"HALF_UP\",\n" +
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sortConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"sortConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"backgroundColor\": \"white\",\n" +
                         "    \"borderBottomColor\": \"black\",\n" +
@@ -1198,7 +1198,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validatorConverter\": \"collection(null-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"validatorConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, string-to-expression, string-to-selection, string-to-validation-error, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"validatorFormHandler\": \"non-null\",\n" +
                         "  \"validatorFunctions\": \"@\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
