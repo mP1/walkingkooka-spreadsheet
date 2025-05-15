@@ -123,6 +123,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterNullToNumber}
+     */
+    public static Converter<SpreadsheetConverterContext> nullToNumber() {
+        return SpreadsheetConverterNullToNumber.INSTANCE;
+    }
+
+    /**
      * {@see ExpressionNumberConverters#numberToNumber}
      */
     public static Converter<SpreadsheetConverterContext> numberToNumber() {

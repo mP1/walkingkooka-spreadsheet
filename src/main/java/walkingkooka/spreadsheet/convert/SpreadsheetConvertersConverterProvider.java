@@ -126,6 +126,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.numberToNumber();
                 break;
+            case NULL_TO_NUMBER_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.nullToNumber();
+                break;
             case SELECTION_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -235,6 +240,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
 
+    private final static String NULL_TO_NUMBER_STRING = "null-to-number";
+
+    final static ConverterName NULL_TO_NUMBER = ConverterName.with(NULL_TO_NUMBER_STRING);
+
     private final static String NUMBER_TO_NUMBER_STRING = "number-to-number";
 
     final static ConverterName NUMBER_TO_NUMBER = ConverterName.with(NUMBER_TO_NUMBER_STRING);
@@ -296,6 +305,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(ERROR_TO_NUMBER),
                     converterInfo(ERROR_TO_STRING),
                     converterInfo(GENERAL),
+                    converterInfo(NULL_TO_NUMBER),
                     converterInfo(NUMBER_TO_NUMBER),
                     converterInfo(SPREADSHEET_CELL_TO),
                     converterInfo(SELECTION_TO_SELECTION),
