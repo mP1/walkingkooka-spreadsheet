@@ -27,12 +27,13 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction extends S
     /**
      * Creates a new {@link SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction}
      */
-    static SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction with(final String text) {
+    static SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction with(final String text,
+                                                                           final char zeroDigit) {
 
         // remove any trailing zeros...
         int end = text.length();
         while (end > 0) {
-            if (text.charAt(end - 1) != '0') {
+            if (text.charAt(end - 1) != zeroDigit) {
                 break;
             }
             end--;

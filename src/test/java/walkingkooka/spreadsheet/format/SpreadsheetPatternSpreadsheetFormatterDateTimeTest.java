@@ -1288,6 +1288,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         }
 
         @Override
+        public char zeroDigit() {
+            return '0';
+        }
+
+        @Override
         public boolean canConvert(final Object value,
                                   final Class<?> target) {
             return value instanceof LocalDateTime && LocalDateTime.class == target;

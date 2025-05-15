@@ -37,8 +37,12 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberDigits implements Use
     /**
      * {@link SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction}
      */
-    static SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction(final String text) {
-        return SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction.with(text);
+    static SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction(final String text,
+                                                                       final char zeroDigit) {
+        return SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction.with(
+                text,
+                zeroDigit
+        );
     }
 
     /**

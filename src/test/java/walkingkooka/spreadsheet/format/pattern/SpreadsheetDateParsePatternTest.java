@@ -469,7 +469,7 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -493,6 +493,11 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
             }
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.localDateToLocalDateTime();
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
+            }
         };
     }
 

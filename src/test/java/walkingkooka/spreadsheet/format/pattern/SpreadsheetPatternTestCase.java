@@ -453,6 +453,31 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         );
     }
 
+    final void formatAndCheck2(final String pattern,
+                               final Object value,
+                               final char zeroDigit,
+                               final String expected) {
+        this.formatAndCheck2(
+                pattern,
+                value,
+                zeroDigit,
+                SpreadsheetText.EMPTY.setText(expected)
+        );
+    }
+
+    final void formatAndCheck2(final String pattern,
+                               final Object value,
+                               final char zeroDigit,
+                               final SpreadsheetText expected) {
+        this.formatAndCheck(
+                this.createPattern(pattern)
+                        .formatter(),
+                value,
+                this.createContext(zeroDigit),
+                expected
+        );
+    }
+
     @Test
     public final void testFormatSpreadsheetTextWithNullValueFails() {
         assertThrows(
@@ -479,7 +504,19 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         );
     }
 
-    abstract SpreadsheetFormatterContext createContext();
+    final SpreadsheetFormatterContext createContext() {
+        return this.createContext('0');
+    }
+
+    final static char ARABIC_ZERO_DIGIT = '\u0660';
+
+    final static String arabicDigit(final int digit) {
+        return String.valueOf(
+                (char)(ARABIC_ZERO_DIGIT + digit)
+        );
+    }
+
+    abstract SpreadsheetFormatterContext createContext(final char zeroDigit);
 
     // hashCode/equals..................................................................................................
 

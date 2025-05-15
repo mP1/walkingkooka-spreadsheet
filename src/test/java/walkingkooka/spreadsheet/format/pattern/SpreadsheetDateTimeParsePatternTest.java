@@ -554,7 +554,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
     }
 
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -585,6 +585,11 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
                             Converters.simple()
                     )
             );
+
+            @Override
+            public char zeroDigit() {
+                return '0';
+            }
         };
     }
 

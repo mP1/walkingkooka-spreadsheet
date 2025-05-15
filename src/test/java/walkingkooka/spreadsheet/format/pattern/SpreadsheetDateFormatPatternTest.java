@@ -413,6 +413,25 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
+    public void testFormatterFormatIncludesColorNumberUsingArabicZeroDigit() {
+        this.formatAndCheck2(
+                "[color44]yyyymmdd",
+                LocalDate.of(2000, 12, 31),
+                ARABIC_ZERO_DIGIT,
+                SpreadsheetText.with(
+                                arabicDigit(2) +
+                                        arabicDigit(0) +
+                                        arabicDigit(0) +
+                                        arabicDigit(0) +
+                                        arabicDigit(1) +
+                                        arabicDigit(2) +
+                                        arabicDigit(3) +
+                                        arabicDigit(1)
+                        ).setColor(Optional.of(RED))
+        );
+    }
+
+    @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
@@ -421,8 +440,22 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterGeneralUsingArabicZeroDigit() {
+        this.formatAndCheck2(
+                "General",
+                LocalDate.of(1999, 12, 31),
+                ARABIC_ZERO_DIGIT,
+                arabicDigit(1) +
+                        arabicDigit(0) +
+                        arabicDigit(9) +
+                        arabicDigit(5) +
+                        arabicDigit(6)
+        );
+    }
+
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -522,6 +555,11 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public String weekDayNameAbbreviation(final int day) {
                 return this.dateTimeContext().weekDayNameAbbreviation(day);
+            }
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
             }
 
             private DateTimeContext dateTimeContext() {

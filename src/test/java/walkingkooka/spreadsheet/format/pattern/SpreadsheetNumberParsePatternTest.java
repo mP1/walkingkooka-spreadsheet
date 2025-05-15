@@ -592,7 +592,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -629,6 +629,11 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
             }
 
             @Override
+            public MathContext mathContext() {
+                return MathContext.UNLIMITED;
+            }
+
+            @Override
             public char monetaryDecimalSeparator() {
                 return '*';
             }
@@ -639,8 +644,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
             }
 
             @Override
-            public MathContext mathContext() {
-                return MathContext.UNLIMITED;
+            public char zeroDigit() {
+                return zeroDigit;
             }
         };
     }

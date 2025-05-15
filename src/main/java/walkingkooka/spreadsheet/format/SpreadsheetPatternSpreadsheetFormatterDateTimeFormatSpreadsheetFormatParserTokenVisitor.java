@@ -340,13 +340,18 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         // only add decimal point followed by millis as a decimal if decimal places were present.
         final int millisecondDecimals = this.millisecondDecimals;
         if (millisecondDecimals > 0) {
-            this.append(this.context.decimalSeparator());
+            final SpreadsheetFormatterContext context = this.context;
+            this.append(context.decimalSeparator());
 
             double millis = secondsAndMills - seconds;
 
+            final char zeroDigit = context.zeroDigit();
+
             for (int i = 0; i < millisecondDecimals; i++) {
                 millis = millis * 10;
-                this.append(Character.forDigit(((int) millis) % 10, 10));
+                this.append(
+                        (char)(zeroDigit + millis % 10)
+                );
             }
         }
     }
@@ -392,13 +397,22 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         }
     }
 
-    private void append(final int text) {
-        this.text.append(text);
+    /**
+     * Appends the value after converting it to text using the {@link SpreadsheetFormatterContext#zeroDigit()}.
+     */
+    private void append(final int value) {
+        final char zeroDigit = this.context.zeroDigit();
+
+        for (final char c : String.valueOf(value).toCharArray()) {
+            this.append(
+                    (char) (c - '0' + zeroDigit)
+            );
+        }
     }
 
     private void appendWithLeadingZero(final int value) {
-        if (value < 10) {
-            this.append('0');
+        if(value < 10) {
+            this.append(0);
         }
         this.append(value);
     }

@@ -645,7 +645,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -680,6 +680,11 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
             @Override
             public char decimalSeparator() {
                 return 'D';
+            }
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
             }
         };
     }

@@ -635,6 +635,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
             public char percentSymbol() {
                 return 'P';
             }
+
+            @Override
+            public char zeroDigit() {
+                return '0';
+            }
         };
     }
 
