@@ -282,6 +282,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString}
+     */
+    public static Converter<SpreadsheetConverterContext> textToText() {
+        return Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString();
+    }
+
+    /**
      * {@see SpreadsheetConverterUnformattedNumber}
      */
     public static Converter<SpreadsheetConverterContext> unformattedNumber() {
