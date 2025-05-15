@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.NeverError;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.AmPmSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
@@ -144,7 +145,11 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 text = ampm.toUpperCase();
                 break;
             default:
-                throw new UnsupportedOperationException("Expected ampm kind got " + kind);
+                NeverError.unhandledCase(
+                        kind,
+                        SpreadsheetFormatParserTokenKind.values()
+                );
+                text = null;
         }
 
         this.text.append(text);
@@ -199,7 +204,10 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Expected day kind got " + kind);
+                NeverError.unhandledEnum(
+                        kind,
+                        SpreadsheetFormatParserTokenKind.values()
+                );
         }
     }
 
@@ -237,7 +245,10 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 this.appendWithLeadingZero(hour);
                 break;
             default:
-                throw new UnsupportedOperationException("Expected hour kind got " + kind);
+                NeverError.unhandledEnum(
+                        kind,
+                        SpreadsheetFormatParserTokenKind.values()
+                );
         }
     }
 
@@ -261,7 +272,10 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Expected minute kind got " + kind);
+                NeverError.unhandledEnum(
+                        kind,
+                        SpreadsheetFormatParserTokenKind.values()
+                );
         }
     }
 
@@ -307,7 +321,10 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Expected month kind got " + kind);
+                NeverError.unhandledEnum(
+                        kind,
+                        SpreadsheetFormatParserTokenKind.values()
+                );
         }
     }
 
@@ -334,7 +351,10 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 this.appendWithLeadingZero(seconds);
                 break;
             default:
-                throw new UnsupportedOperationException("Expected seconds kind got " + kind);
+                NeverError.unhandledEnum(
+                        kind,
+                        SpreadsheetFormatParserTokenKind.values()
+                );
         }
 
         // only add decimal point followed by millis as a decimal if decimal places were present.
@@ -393,7 +413,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 this.append(year);
                 break;
             default:
-                throw new UnsupportedOperationException("Expected year kind got " + kind);
+                NeverError.unhandledEnum(kind, SpreadsheetFormatParserTokenKind.values());
         }
     }
 
