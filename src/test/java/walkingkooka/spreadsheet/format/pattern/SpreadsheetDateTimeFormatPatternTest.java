@@ -732,6 +732,15 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
+    public void testFormatterYyyymmddhhmmss000() {
+        this.formatAndCheck2(
+                "yyyy,mm,dd,hh,mm,ss.000",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
+                "2000,12,31,12,58,59d123"
+        );
+    }
+
+    @Test
     public void testFormatterFormatIncludesColorName() {
         this.formatAndCheck2(
                 "[red]yyyymmddhhmmss",
@@ -754,6 +763,35 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
+    public void testFormatterFormatIncludesColorNumberUsingArabicZeroDigit() {
+        this.formatAndCheck2(
+                "[color44]yyyymmddhhmmss.000",
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
+                ARABIC_ZERO_DIGIT,
+                SpreadsheetText.with(
+                        arabicDigit(2) +
+                                arabicDigit(0) +
+                                arabicDigit(0) +
+                                arabicDigit(0) +
+                                arabicDigit(1) +
+                                arabicDigit(2) +
+                                arabicDigit(3) +
+                                arabicDigit(1) +
+                                arabicDigit(1) +
+                                arabicDigit(2) +
+                                arabicDigit(5) +
+                                arabicDigit(8) +
+                                arabicDigit(5) +
+                                arabicDigit(9) +
+                                'd' + // decimal point
+                                arabicDigit(1) +
+                                arabicDigit(2) +
+                                arabicDigit(3)
+                ).setColor(Optional.of(RED))
+        );
+    }
+
+    @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
@@ -762,8 +800,32 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
+    @Test
+    public void testFormatterGeneralUsingArabicZeroDigi() {
+        this.formatAndCheck2(
+                "General",
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                ARABIC_ZERO_DIGIT,
+                arabicDigit(1) +
+                        arabicDigit(0) +
+                        arabicDigit(9) +
+                        arabicDigit(5) +
+                        arabicDigit(6) +
+                        'd' + // decimalpoint
+                        arabicDigit(5) +
+                        arabicDigit(4) +
+                        arabicDigit(0) +
+                        arabicDigit(9) +
+                        arabicDigit(6) +
+                        arabicDigit(0) +
+                        arabicDigit(6) +
+                        arabicDigit(4) +
+                        arabicDigit(8) //"10956d540960648"
+        );
+    }
+
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -858,6 +920,11 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             @Override
             public String weekDayNameAbbreviation(final int day) {
                 return this.dateTimeContext().weekDayNameAbbreviation(day);
+            }
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
             }
 
             private DateTimeContext dateTimeContext() {

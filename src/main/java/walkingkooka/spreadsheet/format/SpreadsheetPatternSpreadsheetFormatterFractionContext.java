@@ -96,6 +96,10 @@ final class SpreadsheetPatternSpreadsheetFormatterFractionContext implements Con
         this.text.append(text);
     }
 
+    char zeroDigit() {
+        return this.context.zeroDigit();
+    }
+
     private final SpreadsheetFormatterContext context;
 
     SpreadsheetPatternSpreadsheetFormatterFractionDigits digits;

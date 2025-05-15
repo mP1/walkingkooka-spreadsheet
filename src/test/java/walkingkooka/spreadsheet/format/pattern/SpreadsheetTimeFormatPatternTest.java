@@ -431,6 +431,30 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
+    public void testFormatterFormatIncludesColorNumberUsingArabicZeroDigit() {
+        this.formatAndCheck2(
+                "[color44]hhmmss.000",
+                LocalTime.of(12, 58, 59, 123456789),
+                ARABIC_ZERO_DIGIT,
+                SpreadsheetText.with(
+                        arabicDigit(1) +
+                                arabicDigit(2) +
+                                arabicDigit(5) +
+                                arabicDigit(8) +
+                                arabicDigit(5) +
+                                arabicDigit(9) +
+                                'D' + // decimal separator
+                                arabicDigit(1) +
+                                arabicDigit(2) +
+                                arabicDigit(3)
+                        )
+                        .setColor(
+                                Optional.of(RED)
+                        )
+        );
+    }
+
+    @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
@@ -439,8 +463,22 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    @Test
+    public void testFormatterGeneralWithArabicZeroDigit() {
+        this.formatAndCheck2(
+                "General",
+                LocalTime.of(12, 58, 59),
+                ARABIC_ZERO_DIGIT,
+                arabicDigit(4) +
+                        arabicDigit(6) +
+                        arabicDigit(7) +
+                        arabicDigit(3) +
+                        arabicDigit(9)
+        );
+    }
+
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -497,6 +535,11 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public MathContext mathContext() {
                 return MathContext.DECIMAL128;
+            }
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
             }
 
             @Override

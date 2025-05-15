@@ -340,8 +340,9 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
+    // zeroDigit is ignore and should never be used when formatting text
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override

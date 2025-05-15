@@ -76,7 +76,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
         this.digits.append(symbolDigitPosition, zero, this);
     }
 
-    void appendDigit(final char c, final int numberDigitPosition) {
+    void appendDigit(final char c,
+                     final int numberDigitPosition) {
         this.digits.sign(this);
         this.text.append(c);
         this.digits.groupSeparator(numberDigitPosition, this);
@@ -114,6 +115,10 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
 
     void appendText(final String text) {
         this.text.append(text);
+    }
+
+    char zeroDigit() {
+        return this.context.zeroDigit();
     }
 
     private final SpreadsheetFormatterContext context;

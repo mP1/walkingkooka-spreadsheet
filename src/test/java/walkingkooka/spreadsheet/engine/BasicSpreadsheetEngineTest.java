@@ -243,6 +243,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         public MathContext mathContext() {
             return METADATA.mathContext();
         }
+
+        @Override
+        public char zeroDigit() {
+            return ZERO_DIGIT;
+        }
     };
 
     private final static int DEFAULT_YEAR = 1900;

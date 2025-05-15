@@ -41,15 +41,20 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
                                     .getRoundingMode()
                     );
 
+            final char zeroDigit = context.zeroDigit();
+
             final int valueSignum = rounded.signum();
             String integerDigits = "";
             String fractionDigits = "";
 
             if (0 != valueSignum) {
-                final String digits = rounded
-                        .unscaledValue()
-                        .abs()
-                        .toString();
+                final String digits = fixDigits(
+                        rounded
+                                        .unscaledValue()
+                                        .abs()
+                                        .toString(),
+                                zeroDigit
+                        );
                 final int integerDigitCount = Math.min(
                         rounded.precision() - rounded.scale(),
                         digits.length()
@@ -59,8 +64,10 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
                         "";
                 fractionDigits = integerDigitCount >= 0 ?
                         digits.substring(integerDigitCount) :
-                        CharSequences.repeating('0', -integerDigitCount) +
-                                digits;
+                        CharSequences.repeating(
+                                zeroDigit,
+                                -integerDigitCount
+                        ) + digits;
             }
 
             return SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
@@ -70,7 +77,10 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
                             integerDigits,
                             formatter.groupSeparator
                     ),
-                    SpreadsheetPatternSpreadsheetFormatterNumberDigits.fraction(fractionDigits),
+                    SpreadsheetPatternSpreadsheetFormatterNumberDigits.fraction(
+                            fractionDigits,
+                            zeroDigit
+                    ),
                     NO_EXPONENT,
                     formatter,
                     context
@@ -89,6 +99,8 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
             final int integerDigitSymbolCount = formatter.integerDigitSymbolCount;
             final int fractionDigitSymbolCount = formatter.fractionDigitSymbolCount;
 
+            final char zeroDigit = context.zeroDigit();
+
             final BigDecimal rounded = value.abs()
                     .setScale(
                             (integerDigitSymbolCount + fractionDigitSymbolCount) - (value.precision() - value.scale()),
@@ -96,9 +108,12 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
                     )
                     .stripTrailingZeros();
 
-            final String digits = rounded.unscaledValue()
-                    .abs()
-                    .toString();
+            final String digits = fixDigits(
+                    rounded.unscaledValue()
+                            .abs()
+                            .toString(),
+                    zeroDigit
+            );
             final int digitCount = digits.length();
             final int integerDigitCount = Math.min(
                     integerDigitSymbolCount,
@@ -129,16 +144,21 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
                                             integerDigitCount + fractionDigitCount,
                                             digitCount
                                     )
-                            )
+                            ),
+                            zeroDigit
                     ),
                     SpreadsheetPatternSpreadsheetFormatterNumberDigits.exponent(
                             SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(exponent),
-                            String.valueOf(
-                                    Math.abs(exponent)
+                            fixDigits(
+                                    String.valueOf(
+                                            Math.abs(exponent)
+                                    ),
+                                    zeroDigit
                             )
                     ),
                     formatter,
-                    context);
+                    context
+            );
         }
     };
 
@@ -149,6 +169,45 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
     abstract SpreadsheetPatternSpreadsheetFormatterNumberContext context(final BigDecimal value,
                                                                          final SpreadsheetPatternSpreadsheetFormatterNumber formatter,
                                                                          final SpreadsheetFormatterContext context);
+
+    /**
+     * Handles translating arabic-hindu digits '0' to the equivalent {@link SpreadsheetFormatterContext#zeroDigit()}.
+     * The length of the returned string will never change.
+     */
+    private static String fixDigits(final String digits,
+                                    final char zeroDigit) {
+        String fixed = digits;
+        final int delta = -'0' + zeroDigit;
+
+        if (0 != delta) {
+            final StringBuilder b = new StringBuilder();
+
+            for (char c : fixed.toCharArray()) {
+                switch (c) {
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
+                        c = (char) (c + delta);
+                        break;
+                    default:
+                        break;
+                }
+
+                b.append(c);
+            }
+
+            fixed = b.toString();
+        }
+
+        return fixed;
+    }
 
     private final static SpreadsheetPatternSpreadsheetFormatterNumberDigits NO_EXPONENT = SpreadsheetPatternSpreadsheetFormatterNumberDigits.exponent(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "");
 }

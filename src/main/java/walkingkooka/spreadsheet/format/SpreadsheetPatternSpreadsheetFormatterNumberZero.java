@@ -56,7 +56,10 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberZero {
     ZERO {
         @Override
         void append(final int textDigitPosition, final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
-            context.appendDigit('0', textDigitPosition);
+            context.appendDigit(
+                    '0',
+                    textDigitPosition
+            );
         }
 
         @Override

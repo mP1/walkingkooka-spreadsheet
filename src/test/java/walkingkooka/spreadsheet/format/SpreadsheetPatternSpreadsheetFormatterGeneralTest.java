@@ -154,6 +154,16 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         );
     }
 
+    @Test
+    public void testFormatNonScientificWithNonArabicDigits() {
+        this.formatAndCheck2(
+                ExpressionNumberKind.DOUBLE.create(1.5),
+                6,
+                '\u0660',
+                "\u0661!\u0665"
+        );
+    }
+
     // scientific.......................................................................................................
 
     @Test
@@ -264,15 +274,38 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         );
     }
 
+    @Test
+    public void testFormatScientificNumberWithNonHinduArabicDigits() {
+        this.formatAndCheck2(
+                ExpressionNumberKind.DOUBLE.create(1.2345678901E12),
+                5, // generalFormatNumberDigitCount
+                '\u0660', // zeroDigit
+                "\u0661!\u0662\u0663\u0664\u0665\u0667X\u0661\u0662"
+        );
+    }
+
     private void formatAndCheck2(final ExpressionNumber number,
                                  final int generalFormatNumberDigitCount,
+                                 final String text) {
+        this.formatAndCheck2(
+                number,
+                generalFormatNumberDigitCount,
+                '0', // zeroDigit
+                text
+        );
+    }
+
+    private void formatAndCheck2(final ExpressionNumber number,
+                                 final int generalFormatNumberDigitCount,
+                                 final char zeroDigit,
                                  final String text) {
         this.formatAndCheck(
                 this.createFormatter(),
                 number,
                 this.createContext(
                         number.kind(),
-                        generalFormatNumberDigitCount
+                        generalFormatNumberDigitCount,
+                        zeroDigit
                 ),
                 text
         );
@@ -304,12 +337,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public SpreadsheetFormatterContext createContext() {
         return this.createContext(
                 KIND,
-                8 // generalFormatNumberDigitCount
+                8, // generalFormatNumberDigitCount
+                '0'
         );
     }
 
     private SpreadsheetFormatterContext createContext(final ExpressionNumberKind kind,
-                                                      final int generalFormatNumberDigitCount) {
+                                                      final int generalFormatNumberDigitCount,
+                                                      final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -382,6 +417,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
             @Override
             public char positiveSign() {
                 return 'P';
+            }
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
             }
         };
     }

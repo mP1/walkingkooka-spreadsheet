@@ -2552,6 +2552,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
             }
 
             @Override
+            public char zeroDigit() {
+                return '0';
+            }
+
+            @Override
             public Optional<Color> colorName(final SpreadsheetColorName name) {
                 checkEquals(
                         SpreadsheetColorName.with("red"),

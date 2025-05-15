@@ -1721,6 +1721,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         return this.decimalNumberContext.mathContext();
                     }
 
+                    @Override
+                    public char zeroDigit() {
+                        return this.decimalNumberContext.zeroDigit();
+                    }
+
                     private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.UNLIMITED);
                 },
                 SpreadsheetText.with(text));

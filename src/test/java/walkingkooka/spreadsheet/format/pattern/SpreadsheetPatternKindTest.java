@@ -414,6 +414,11 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                                 throw new UnsupportedOperationException();
                             }
                     );
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "Friday, 31 December 1999"
         );
@@ -513,6 +518,11 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                                 throw new UnsupportedOperationException();
                             }
                     );
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "Friday, 31 December 1999 at 12:58:59 PM"
         );
@@ -565,6 +575,11 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                     @Override
                     public MathContext mathContext() {
                         return this.context.mathContext();
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
 
                     private final DecimalNumberContext context = DecimalNumberContexts.american(MathContext.DECIMAL32);
@@ -698,6 +713,11 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                                 throw new UnsupportedOperationException();
                             }
                     );
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "12:58:59 PM"
         );

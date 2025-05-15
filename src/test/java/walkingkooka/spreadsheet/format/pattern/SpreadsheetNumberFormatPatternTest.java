@@ -588,6 +588,16 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     }
 
     @Test
+    public void testFormatterPatternWithArabicZero() {
+        this.formatAndCheck2(
+                "00.00;",
+                10.05,
+                ARABIC_ZERO_DIGIT,
+                arabicDigit(1) + arabicDigit(0) + "d" + arabicDigit(0) + arabicDigit(5)
+        );
+    }
+
+    @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
@@ -596,8 +606,18 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         );
     }
 
+    @Test
+    public void testFormatterGeneralWithArabicZero() {
+        this.formatAndCheck2(
+                "General",
+                10.05,
+                ARABIC_ZERO_DIGIT,
+                arabicDigit(1) + arabicDigit(0) + "d" + arabicDigit(0) + arabicDigit(5)
+        );
+    }
+
     @Override
-    SpreadsheetFormatterContext createContext() {
+    SpreadsheetFormatterContext createContext(final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -660,6 +680,11 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public char negativeSign() {
                 return 'n';
+            }
+
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
             }
 
             @Override

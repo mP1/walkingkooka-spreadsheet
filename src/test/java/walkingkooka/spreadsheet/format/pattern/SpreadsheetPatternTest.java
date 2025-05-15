@@ -251,6 +251,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
+
+                    @Override
                     public Optional<Color> colorName(final SpreadsheetColorName name) {
                         return formattedText.color();
                     }
@@ -667,6 +672,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public MathContext mathContext() {
                         return MathContext.DECIMAL32;
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "1234"
         );
@@ -876,6 +886,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public MathContext mathContext() {
                         return MathContext.DECIMAL32;
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "1234"
         );
@@ -1006,6 +1021,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public MathContext mathContext() {
                         return MathContext.DECIMAL128;
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "1.50 Hello"
         );
@@ -1036,6 +1056,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public MathContext mathContext() {
                         return MathContext.DECIMAL128;
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "1.50 Hello"
         );
@@ -1065,6 +1090,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public MathContext mathContext() {
                         return MathContext.DECIMAL128;
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 "1.5 Hello"
@@ -1100,6 +1130,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public Optional<Color> colorName(final SpreadsheetColorName name) {
                         return Optional.of(COLOR);
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 SpreadsheetText.with("1.5 Hello")
@@ -1145,6 +1180,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public MathContext mathContext() {
                         return MathContext.DECIMAL32;
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 "1.5"
@@ -1201,6 +1241,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                 "colorName"
                         );
                         return Optional.of(color);
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 SpreadsheetText.with("1.5")
@@ -1261,6 +1306,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                         );
                         return Optional.of(color);
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 SpreadsheetText.with("1.5")
                         .setColor(
@@ -1299,6 +1349,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public char percentSymbol() {
                         return '%';
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "100.5% Hello"
         );
@@ -1333,6 +1388,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public char percentSymbol() {
                         return '!';
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 "100.5! Hello"
@@ -1590,6 +1650,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             public MathContext mathContext() {
                 return MathContext.DECIMAL128;
             }
+
+            @Override
+            public char zeroDigit() {
+                return '0';
+            }
         };
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
 
@@ -1631,6 +1696,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             @Override
             public MathContext mathContext() {
                 return MathContext.DECIMAL128;
+            }
+
+            @Override
+            public char zeroDigit() {
+                return '0';
             }
         };
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
@@ -1678,6 +1748,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             @Override
             public MathContext mathContext() {
                 return MathContext.DECIMAL128;
+            }
+
+            @Override
+            public char zeroDigit() {
+                return '0';
             }
         };
         final ExpressionNumber number = ExpressionNumberKind.BIG_DECIMAL.create(12345.67);
@@ -1748,6 +1823,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             @Override
             public char percentSymbol() {
                 return '%';
+            }
+
+            @Override
+            public char zeroDigit() {
+                return '0';
             }
 
             @Override
@@ -1991,6 +2071,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public MathContext mathContext() {
                         return MathContext.DECIMAL32;
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 "1234"
