@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetConverterStringToTest implements ClassTesting<SpreadsheetConverterStringTo> {
+public final class SpreadsheetConverterTextToTest implements ClassTesting<SpreadsheetConverterTextTo> {
 
     @Override
-    public Class<SpreadsheetConverterStringTo> type() {
-        return SpreadsheetConverterStringTo.class;
+    public Class<SpreadsheetConverterTextTo> type() {
+        return SpreadsheetConverterTextTo.class;
     }
 
     @Override

@@ -29,13 +29,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidationError;
 
-public final class SpreadsheetConverterStringToValidationErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToValidationError>
+public final class SpreadsheetConverterTextToValidationErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToValidationError>
         implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertEmptyString() {
         this.convertFails(
-                SpreadsheetConverterStringToValidationError.INSTANCE,
+                SpreadsheetConverterTextToValidationError.INSTANCE,
                 "",
                 ValidationError.class,
                 this.createContext(SpreadsheetSelection.A1),
@@ -106,8 +106,8 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
     }
 
     @Override
-    public SpreadsheetConverterStringToValidationError createConverter() {
-        return SpreadsheetConverterStringToValidationError.INSTANCE;
+    public SpreadsheetConverterTextToValidationError createConverter() {
+        return SpreadsheetConverterTextToValidationError.INSTANCE;
     }
 
     @Override
@@ -152,7 +152,7 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterStringToValidationError.INSTANCE,
+                SpreadsheetConverterTextToValidationError.INSTANCE,
                 "String to ValidationError"
         );
     }
@@ -160,7 +160,7 @@ public final class SpreadsheetConverterStringToValidationErrorTest extends Sprea
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterStringToValidationError> type() {
-        return SpreadsheetConverterStringToValidationError.class;
+    public Class<SpreadsheetConverterTextToValidationError> type() {
+        return SpreadsheetConverterTextToValidationError.class;
     }
 }

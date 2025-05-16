@@ -29,14 +29,14 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 /**
  * A {@link Converter} that converts an expression as a {@link String} into a {@link Expression}.
  */
-final class SpreadsheetConverterStringToExpression extends SpreadsheetConverterStringTo {
+final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTextTo {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterStringToExpression INSTANCE = new SpreadsheetConverterStringToExpression();
+    final static SpreadsheetConverterTextToExpression INSTANCE = new SpreadsheetConverterTextToExpression();
 
-    private SpreadsheetConverterStringToExpression() {
+    private SpreadsheetConverterTextToExpression() {
         super();
     }
 

@@ -24,9 +24,9 @@ import walkingkooka.tree.expression.Expression;
 /**
  * A {@link Converter} that converts an expression as a {@link String} into a {@link Expression}.
  */
-abstract class SpreadsheetConverterStringTo extends SpreadsheetConverter {
+abstract class SpreadsheetConverterTextTo extends SpreadsheetConverter {
 
-    SpreadsheetConverterStringTo() {
+    SpreadsheetConverterTextTo() {
         super();
     }
 

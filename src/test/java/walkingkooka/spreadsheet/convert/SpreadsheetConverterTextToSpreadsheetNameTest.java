@@ -21,38 +21,39 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 
-public final class SpreadsheetConverterStringToSpreadsheetIdTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToSpreadsheetId> {
+public final class SpreadsheetConverterTextToSpreadsheetNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetName> {
 
     @Test
-    public void testConvertStringToSpreadsheetId() {
-        final SpreadsheetId id = SpreadsheetId.parse("123");
+    public void testConvertStringToSpreadsheetName() {
+        final SpreadsheetName name = SpreadsheetName.with("SpreadsheetName222");
 
         this.convertAndCheck(
-                id.toString(),
-                id
+                name.toString(),
+                name
         );
     }
 
     @Test
-    public void testConvertCharSequenceToSpreadsheetId() {
-        final SpreadsheetId id = SpreadsheetId.parse("123");
+    public void testConvertCharSequenceToSpreadsheetName() {
+        final SpreadsheetName name = SpreadsheetName.with("SpreadsheetName222");
 
         this.convertAndCheck(
-                new StringBuilder(id.toString()),
-                id
+                new StringBuilder(name.toString()),
+                name
         );
     }
 
     @Override
-    public SpreadsheetConverterStringToSpreadsheetId createConverter() {
-        return SpreadsheetConverterStringToSpreadsheetId.INSTANCE;
+    public SpreadsheetConverterTextToSpreadsheetName createConverter() {
+        return SpreadsheetConverterTextToSpreadsheetName.INSTANCE;
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
         return new FakeSpreadsheetConverterContext() {
+
             @Override
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
@@ -80,7 +81,7 @@ public final class SpreadsheetConverterStringToSpreadsheetIdTest extends Spreads
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterStringToSpreadsheetId> type() {
-        return SpreadsheetConverterStringToSpreadsheetId.class;
+    public Class<SpreadsheetConverterTextToSpreadsheetName> type() {
+        return SpreadsheetConverterTextToSpreadsheetName.class;
     }
 }

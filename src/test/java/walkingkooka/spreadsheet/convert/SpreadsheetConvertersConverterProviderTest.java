@@ -230,29 +230,29 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithStringToExpression() {
+    public void testConverterSelectorWithTextToExpression() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.STRING_TO_EXPRESSION + "",
+                SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION + "",
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.stringToExpression()
+                SpreadsheetConverters.textToExpression()
         );
     }
 
     @Test
-    public void testConverterSelectorWithStringToSelection() {
+    public void testConverterSelectorWithTextToSelection() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION + "",
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION + "",
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.stringToSelection()
+                SpreadsheetConverters.textToSelection()
         );
     }
 
     @Test
-    public void testConverterSelectorWithStringToSpreadsheetMetadataPropertyName() {
+    public void testConverterSelectorWithTextToSpreadsheetMetadataPropertyName() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME + "",
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME + "",
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.stringToSpreadsheetMetadataPropertyName()
+                SpreadsheetConverters.textToSpreadsheetMetadataPropertyName()
         );
     }
 
@@ -276,12 +276,12 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithStringToSelection() {
+    public void testConverterNameWithTextToSelection() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION,
                 Lists.empty(),
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.stringToSelection()
+                SpreadsheetConverters.textToSelection()
         );
     }
 
