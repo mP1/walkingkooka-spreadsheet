@@ -39,7 +39,7 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
     /**
      * A {@link Comparator} that may be used to compare {@link SpreadsheetColumn} within a {@link java.util.SortedSet}.
      */
-    public static Comparator<SpreadsheetColumn> REFERENCE_COMPARATOR = HasSpreadsheetReference.hasSpreadsheetReferenceComparator();
+    public static final Comparator<SpreadsheetColumn> REFERENCE_COMPARATOR = HasSpreadsheetReference.hasSpreadsheetReferenceComparator();
 
     /**
      * Factory that creates a new {@link SpreadsheetColumn}

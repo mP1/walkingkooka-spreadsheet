@@ -47,7 +47,7 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     /**
      * {@link ExpressionFunctionAliasSet#empty(CaseSensitivity)}.
      */
-    public static ExpressionFunctionAliasSet EMPTY_ALIAS_SET = ExpressionFunctionAliasSet.empty(NAME_CASE_SENSITIVITY);
+    public static final ExpressionFunctionAliasSet EMPTY_ALIAS_SET = ExpressionFunctionAliasSet.empty(NAME_CASE_SENSITIVITY);
 
     /**
      * {@link ExpressionFunctionInfoSet#empty(CaseSensitivity)}.

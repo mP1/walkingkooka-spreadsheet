@@ -110,7 +110,7 @@ public enum SpreadsheetErrorKind implements HasText {
      * A prefix character that precedes all {@link SpreadsheetErrorKind}.
      * This will be used to identify a message which may or may not have an {@link SpreadsheetErrorKind}.
      */
-    static char PREFIX = '#';
+    static final char PREFIX = '#';
 
     /**
      * The {@link SpreadsheetErrorKind} that is used as a default by {@link SpreadsheetError#parse(String)} is missing a

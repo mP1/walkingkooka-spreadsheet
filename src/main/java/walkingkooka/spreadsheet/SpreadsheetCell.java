@@ -66,7 +66,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * A {@link Comparator} that only uses the {@link SpreadsheetCell#REFERENCE_COMPARATOR}.
      */
-    public static Comparator<SpreadsheetCell> REFERENCE_COMPARATOR = Comparator.comparing(SpreadsheetCell::reference);
+    public static final Comparator<SpreadsheetCell> REFERENCE_COMPARATOR = Comparator.comparing(SpreadsheetCell::reference);
 
     /**
      * Holds an absent {@link SpreadsheetFormatterSelector}.
