@@ -355,6 +355,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SELECTION),
                     converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_ID),
+                    converterInfo(TEXT_TO_SPREADSHEET_METADATA_COLOR),
                     converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_TEXT),
