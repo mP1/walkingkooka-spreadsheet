@@ -127,7 +127,6 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
                 b.id().get(), c.id().get());
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testValues() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
@@ -150,7 +149,6 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testValuesWindow() {
         final TreeMapSpreadsheetUserStore store = this.createStore();

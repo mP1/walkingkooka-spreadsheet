@@ -450,7 +450,6 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    @SuppressWarnings("unchecked")
     default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
                                                                                             final TT reference,
                                                                                             final int offset,
