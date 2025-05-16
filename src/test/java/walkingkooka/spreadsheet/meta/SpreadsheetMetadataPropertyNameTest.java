@@ -48,7 +48,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
@@ -534,12 +533,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
-
-    @Test
-    public void testJsonNodeNameCached() {
-        final SpreadsheetMetadataPropertyName<?> propertyName = this.createObject();
-        assertSame(propertyName.jsonPropertyName, propertyName.jsonPropertyName);
-    }
 
     @Override
     public SpreadsheetMetadataPropertyName<?> createName(final String name) {
