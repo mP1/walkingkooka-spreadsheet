@@ -17,16 +17,17 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetSelectionCsvParserTest implements ClassTesting<SpreadsheetSelectionCsvParser> {
+public final class SpreadsheetSelectionCsvParserTest implements ClassTesting<SpreadsheetSelectionCsvParser<?>> {
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetSelectionCsvParser> type() {
-        return SpreadsheetSelectionCsvParser.class;
+    public Class<SpreadsheetSelectionCsvParser<?>> type() {
+        return Cast.to(SpreadsheetSelectionCsvParser.class);
     }
 
     @Override
