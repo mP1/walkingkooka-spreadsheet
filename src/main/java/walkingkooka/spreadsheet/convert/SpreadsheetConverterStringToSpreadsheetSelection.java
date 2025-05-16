@@ -56,11 +56,11 @@ final class SpreadsheetConverterStringToSpreadsheetSelection extends Spreadsheet
     }
 
     @Override
-    Object tryConvert(final Object value,
+    Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
         return SpreadsheetConverterStringToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
-                (String) value,
+                value,
                 Cast.to(type),
                 context
         );

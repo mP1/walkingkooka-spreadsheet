@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -32,6 +34,14 @@ public final class SpreadsheetConverterStringToSpreadsheetSelectionTest extends 
         this.convertAndCheck2(
                 "A1",
                 SpreadsheetSelection::parseCell
+        );
+    }
+
+    @Test
+    public void testConvertCharSequenceToCell() {
+        this.convertAndCheck(
+                new StringBuilder("A1"),
+                SpreadsheetSelection.A1
         );
     }
 
@@ -196,6 +206,29 @@ public final class SpreadsheetConverterStringToSpreadsheetSelectionTest extends 
 
     private SpreadsheetConverterContext createContext(final Function<SpreadsheetSelection, SpreadsheetSelection> resolveIfLabel) {
         return new FakeSpreadsheetConverterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return converter.canConvert(
+                        value,
+                        type,
+                        this
+                );
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
+
             @Override
             public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
                 return resolveIfLabel.apply(selection);

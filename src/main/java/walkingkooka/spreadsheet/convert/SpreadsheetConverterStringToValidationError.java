@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.validation.ValidationError;
@@ -45,12 +44,11 @@ final class SpreadsheetConverterStringToValidationError extends SpreadsheetConve
     }
 
     @Override
-    Object tryConvert(final Object value,
+    Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
-        return SpreadsheetError.parse(
-                Cast.to(value)
-        ).toValidationError(context.validationReference());
+        return SpreadsheetError.parse(value)
+                .toValidationError(context.validationReference());
     }
 
     @Override

@@ -64,6 +64,14 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
     }
 
     @Test
+    public void testConvertAddExpressionWithStringBuilder() {
+        this.convertStringAndEvaluateExpression(
+                new StringBuilder("1+2.5"),
+                EXPRESSION_NUMBER_KIND.create(1 + 2.5)
+        );
+    }
+
+    @Test
     public void testConvertComplexExpression() {
         this.convertStringAndEvaluateExpression(
                 "1+2*3",
@@ -71,7 +79,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
         );
     }
 
-    private void convertStringAndEvaluateExpression(final String string,
+    private void convertStringAndEvaluateExpression(final CharSequence string,
                                                     final Object expected) {
         final Expression expression = this.convert(
                 string,

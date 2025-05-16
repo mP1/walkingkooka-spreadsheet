@@ -43,15 +43,10 @@ final class SpreadsheetConverterStringToSpreadsheetError extends SpreadsheetConv
     }
 
     @Override
-    SpreadsheetError tryConvert(final Object value,
+    SpreadsheetError tryConvert(final String value,
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
-        return SpreadsheetError.parse(
-                context.convertOrFail(
-                        value,
-                        String.class
-                )
-        );
+        return SpreadsheetError.parse(value);
     }
 
     @Override

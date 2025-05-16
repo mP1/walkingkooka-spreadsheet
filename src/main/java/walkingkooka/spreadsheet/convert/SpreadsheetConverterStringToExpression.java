@@ -48,12 +48,12 @@ final class SpreadsheetConverterStringToExpression extends SpreadsheetConverterS
     }
 
     @Override
-    Expression tryConvert(final Object value,
+    Expression tryConvert(final String value,
                           final Class<?> type,
                           final SpreadsheetConverterContext context) {
         return SpreadsheetFormulaParsers.expression()
                 .parseText(
-                        value.toString(),
+                        value,
                         SpreadsheetParserContexts.basic(
                                 InvalidCharacterExceptionFactory.POSITION,
                                 context,

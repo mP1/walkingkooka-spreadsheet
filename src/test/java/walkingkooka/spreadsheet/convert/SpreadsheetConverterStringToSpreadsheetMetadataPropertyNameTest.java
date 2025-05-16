@@ -48,27 +48,36 @@ public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTe
     }
 
     @Test
-    public void testConvertNamedColor() {
-        this.convertStringAndCheck(
+    public void testConvertCharSequenceSpreadsheetMetadataPropertyNameNamedColor() {
+        final SpreadsheetMetadataPropertyName<Integer> name = SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.RED);
+        this.convertAndCheck(
+                new StringBuilder(name.value()),
+                name
+        );
+    }
+
+    @Test
+    public void testConvertStringNamedColor() {
+        this.convertSpreadsheetMetadataPropertyNameAndCheck(
                 SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.RED)
         );
     }
 
     @Test
-    public void testConvertNumberedColor() {
-        this.convertStringAndCheck(
+    public void testConvertStringNumberedColor() {
+        this.convertSpreadsheetMetadataPropertyNameAndCheck(
                 SpreadsheetMetadataPropertyName.numberedColor(1)
         );
     }
 
     @Test
-    public void testConvertRoundingMode() {
-        this.convertStringAndCheck(
+    public void testConvertStringRoundingMode() {
+        this.convertSpreadsheetMetadataPropertyNameAndCheck(
                 SpreadsheetMetadataPropertyName.ROUNDING_MODE
         );
     }
 
-    private void convertStringAndCheck(final SpreadsheetMetadataPropertyName<?> propertyName) {
+    private void convertSpreadsheetMetadataPropertyNameAndCheck(final SpreadsheetMetadataPropertyName<?> propertyName) {
         this.convertAndCheck(
                 propertyName.value(),
                 propertyName

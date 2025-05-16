@@ -42,15 +42,10 @@ final class SpreadsheetConverterStringToSpreadsheetId extends SpreadsheetConvert
     }
 
     @Override
-    Object tryConvert(final Object value,
+    Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
-        return SpreadsheetId.parse(
-                context.convertOrFail(
-                        value,
-                        String.class
-                )
-        );
+        return SpreadsheetId.parse(value);
     }
 
     @Override
