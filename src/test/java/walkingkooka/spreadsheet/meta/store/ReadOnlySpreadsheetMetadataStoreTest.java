@@ -108,7 +108,6 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     public void testIdsWindow() {
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     @Override
     public void testValues() {

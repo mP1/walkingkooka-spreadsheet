@@ -84,7 +84,6 @@ public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCell
         );
     }
 
-    @SuppressWarnings("unchecked")
     default void findCellsWithCellOrCellRangeAndCheck(final SpreadsheetCellReferencesStore store,
                                                       final SpreadsheetCellReferenceOrRange cellOrCellRange,
                                                       final int offset,

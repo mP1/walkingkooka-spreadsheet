@@ -1306,7 +1306,6 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     @Override
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
                 null != other && this.getClass() == other.getClass() && this.equals0(Cast.to(other));
