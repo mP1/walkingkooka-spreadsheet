@@ -156,7 +156,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                         InvalidCharacterExceptionFactory.POSITION,
                         scc,
                         scc,
-                        '0' // valueSeparator not required because not parsing multiple values.
+                        '*' // valueSeparator not required because not parsing multiple values.
                 ),
                 parserTokenToValue
         );
