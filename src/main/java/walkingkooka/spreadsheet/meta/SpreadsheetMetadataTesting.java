@@ -365,6 +365,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
+            Optional.of(METADATA_EN_AU),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SPREADSHEET_LABEL_NAME_RESOLVER,

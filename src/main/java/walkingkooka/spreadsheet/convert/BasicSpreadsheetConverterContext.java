@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -35,16 +36,19 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         ExpressionNumberConverterContextDelegator,
         UsesToStringBuilder {
 
-    static BasicSpreadsheetConverterContext with(final Optional<SpreadsheetExpressionReference> validationReference,
+    static BasicSpreadsheetConverterContext with(Optional<SpreadsheetMetadata> spreadsheetMetadata,
+                                                 final Optional<SpreadsheetExpressionReference> validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final ExpressionNumberConverterContext context) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetConverterContext(
+                spreadsheetMetadata,
                 validationReference,
                 converter,
                 spreadsheetLabelNameResolver,
@@ -52,15 +56,26 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         );
     }
 
-    private BasicSpreadsheetConverterContext(final Optional<SpreadsheetExpressionReference> validationReference,
+    private BasicSpreadsheetConverterContext(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+                                             final Optional<SpreadsheetExpressionReference> validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final ExpressionNumberConverterContext context) {
+        this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.context = context;
     }
+
+    // HasSpreadsheetName...............................................................................................
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        return this.spreadsheetMetadata.orElseThrow(() -> new IllegalStateException("No SpreadsheetMetadata available"));
+    }
+
+    private Optional<SpreadsheetMetadata> spreadsheetMetadata;
 
     // ValidationReference..............................................................................................
 

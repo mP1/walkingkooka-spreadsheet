@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
@@ -678,10 +679,26 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // spreadsheetConverterContext......................................................................................
 
     @Test
+    public void testSpreadsheetConverterContextWithNullSpreadsheetMetadataFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        null,
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetConverterContextWithNullValidationReferenceFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         null,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
@@ -696,6 +713,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         null,
                         SpreadsheetLabelNameResolvers.fake(),
@@ -710,6 +728,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         null,
@@ -724,6 +743,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
@@ -738,6 +758,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
@@ -752,6 +773,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),

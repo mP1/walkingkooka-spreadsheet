@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -38,6 +39,12 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     default Converter<SpreadsheetConverterContext> converter() {
         return this.spreadsheetConverterContext()
                 .converter();
+    }
+
+    @Override
+    default SpreadsheetMetadata spreadsheetMetadata() {
+        return this.spreadsheetConverterContext()
+                .spreadsheetMetadata();
     }
 
     @Override

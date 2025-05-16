@@ -100,6 +100,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 8, // generalNumberFormatDigitCount
                 SpreadsheetFormatters.fake(),
                 SpreadsheetConverterContexts.basic(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                         new FakeConverter<>() {
 

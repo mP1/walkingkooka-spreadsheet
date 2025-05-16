@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Context;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.text.TextNode;
 
@@ -68,6 +69,14 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
      * Returns the number of digits when formatting a number.
      */
     int generalFormatNumberDigitCount();
+
+    /**
+     * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetMetadata} during formatting.
+     */
+    @Override
+    default SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetExpressionReference} being validated.

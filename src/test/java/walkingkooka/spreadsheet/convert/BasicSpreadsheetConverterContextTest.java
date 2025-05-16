@@ -55,10 +55,25 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     // with.............................................................................................................
 
     @Test
+    public void testWithNullSpreadsheetMetadataFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetConverterContext.with(
+                        null,
+                        VALIDATION_REFERENCE,
+                        CONVERTER,
+                        LABEL_RESOLVER,
+                        ExpressionNumberConverterContexts.fake()
+                )
+        );
+    }
+
+    @Test
     public void testWithNullConverterFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         VALIDATION_REFERENCE,
                         null,
                         LABEL_RESOLVER,
@@ -72,6 +87,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         VALIDATION_REFERENCE,
                         CONVERTER,
                         null,
@@ -85,6 +101,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetConverterContext.with(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         VALIDATION_REFERENCE,
                         CONVERTER,
                         LABEL_RESOLVER,
@@ -107,6 +124,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
+                SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
                 LABEL_RESOLVER,

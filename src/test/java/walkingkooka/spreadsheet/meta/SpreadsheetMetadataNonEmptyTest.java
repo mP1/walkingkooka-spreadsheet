@@ -1389,6 +1389,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 expected,
                 converter,
                 SpreadsheetConverterContexts.basic(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         converter,
                         LABEL_NAME_RESOLVER,
@@ -1459,6 +1460,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         PROVIDER_CONTEXT
                 ),
                 metadata.spreadsheetConverterContext(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         LABEL_NAME_RESOLVER,

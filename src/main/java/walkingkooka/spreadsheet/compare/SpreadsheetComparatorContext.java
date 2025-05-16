@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 /**
@@ -26,6 +27,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
  * compatible with the actual {@link java.util.Comparator}.
  */
 public interface SpreadsheetComparatorContext extends SpreadsheetConverterContext {
+
+    /**
+     * {@link SpreadsheetMetadata} is unavailable in a comparator context.
+     */
+    @Override
+    default SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * A {@link SpreadsheetComparatorContext} is not executed within validation and will never need the validation reference.

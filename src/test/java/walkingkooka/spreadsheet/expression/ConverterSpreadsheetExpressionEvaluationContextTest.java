@@ -36,6 +36,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -539,6 +540,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                             private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
                         },
                         METADATA.spreadsheetConverterContext(
+                                SpreadsheetConverterContexts.NO_METADATA,
                                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 LABEL_NAME_RESOLVER,

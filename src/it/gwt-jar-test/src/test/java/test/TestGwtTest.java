@@ -20,6 +20,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -317,6 +318,7 @@ public class TestGwtTest extends GWTTestCase {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
+                                        SpreadsheetConverterContexts.NO_METADATA,
                                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                         LABEL_NAME_RESOLVER,

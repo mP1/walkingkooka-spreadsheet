@@ -832,6 +832,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                 SpreadsheetLabelNameResolvers.fake(),

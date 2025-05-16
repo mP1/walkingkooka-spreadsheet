@@ -184,6 +184,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         "123.5",
                         ExpressionNumber.class,
                         SpreadsheetConverterContexts.basic(
+                                SpreadsheetConverterContexts.NO_METADATA,
                                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                                 SpreadsheetConverters.basic(),
                                 SpreadsheetLabelNameResolvers.fake(),
