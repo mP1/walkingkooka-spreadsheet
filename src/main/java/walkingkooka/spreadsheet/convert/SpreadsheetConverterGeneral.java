@@ -200,7 +200,7 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 ),
                 characterOrStringTo(
                         ExpressionNumberConverters.toExpressionNumberThen(
-                                SpreadsheetConverters.textToExpressionNumber(
+                                SpreadsheetConverters.textToNumber(
                                         numberParser
                                 ),
                                 ExpressionNumberConverters.numberOrExpressionNumberToNumber()

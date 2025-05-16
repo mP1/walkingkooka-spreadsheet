@@ -210,15 +210,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetFormulaParserToken} and converting
-     * that into a {@link ExpressionNumber}. Note the {@link Converter} does not support converting to other {@link Number} types and attempts will fail.
+     * that into a {@link Number}.
      */
-    public static Converter<SpreadsheetConverterContext> textToExpressionNumber(final Parser<SpreadsheetParserContext> parser) {
-        return parser(
-                ExpressionNumber.class, // parserValueType
-                parser,
-                (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(NumberSpreadsheetFormulaParserToken.class)
-                        .toNumber(scc)
+    public static Converter<SpreadsheetConverterContext> textToNumber(final Parser<SpreadsheetParserContext> parser) {
+        return ExpressionNumberConverters.toExpressionNumberThen(
+                parser(
+                        ExpressionNumber.class, // parserValueType
+                        parser,
+                        (final ParserToken t,
+                         final SpreadsheetConverterContext scc) -> t.cast(NumberSpreadsheetFormulaParserToken.class)
+                                .toNumber(scc)
+                ),
+                numberToNumber()
         );
     }
 
