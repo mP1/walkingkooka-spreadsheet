@@ -41,7 +41,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -1378,16 +1377,6 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public SpreadsheetConverterContext createContext() {
         return this.createContext(
                 SpreadsheetLabelNameResolvers.fake()
-        );
-    }
-
-    private SpreadsheetConverterContext createContext(final SpreadsheetLabelName label,
-                                                      final SpreadsheetSelection selection) {
-        return this.createContext(
-                (s) -> {
-                    this.checkEquals(label, s, "label");
-                    return Optional.ofNullable(selection);
-                }
         );
     }
 
