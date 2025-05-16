@@ -158,8 +158,7 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
 
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
-            formatter = (SpreadsheetPatternSpreadsheetFormatter)
-                    SpreadsheetPattern.parseNumberFormatPattern(
+            formatter = SpreadsheetPattern.parseNumberFormatPattern(
                             "0." +
                                     CharSequences.repeating('#', digitCount) +
                                     "E+0"
@@ -182,8 +181,7 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = this.generalNumberFormatDigitCountToNonScientificFormatter;
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
-            formatter = (SpreadsheetPatternSpreadsheetFormatter)
-                    SpreadsheetPattern.parseNumberFormatPattern(
+            formatter = SpreadsheetPattern.parseNumberFormatPattern(
                             "0." +
                                     CharSequences.repeating('#', digitCount)
                     ).formatter();
