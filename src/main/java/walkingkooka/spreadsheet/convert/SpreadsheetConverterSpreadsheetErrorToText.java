@@ -26,30 +26,34 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
  * A {@link Converter} that can convert {@link SpreadsheetError} to a {@link String} value.
  * This basically returns the {@link SpreadsheetErrorKind#text()}, giving text like <code>#ERROR</code>.
  */
-final class SpreadsheetConverterSpreadsheetErrorToString extends SpreadsheetConverterSpreadsheetError {
+final class SpreadsheetConverterSpreadsheetErrorToText extends SpreadsheetConverterSpreadsheetError {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterSpreadsheetErrorToString INSTANCE = new SpreadsheetConverterSpreadsheetErrorToString();
+    final static SpreadsheetConverterSpreadsheetErrorToText INSTANCE = new SpreadsheetConverterSpreadsheetErrorToText();
 
     /**
      * Private ctor use singleton.
      */
-    private SpreadsheetConverterSpreadsheetErrorToString() {
+    private SpreadsheetConverterSpreadsheetErrorToText() {
     }
 
     @Override
     boolean canConvertSpreadsheetError(final SpreadsheetError error,
-                                       final Class<?> type) {
-        return String.class == type;
+                                       final Class<?> type,
+                                       final SpreadsheetConverterContext context) {
+        return context.canConvert(
+                null,
+                String.class
+        );
     }
 
     @Override
     <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
                                                   final Class<T> type,
                                                   final SpreadsheetConverterContext context) {
-        return this.successfulConversion(
+        return context.convert(
                 error.kind()
                         .text(),
                 type
@@ -58,6 +62,6 @@ final class SpreadsheetConverterSpreadsheetErrorToString extends SpreadsheetConv
 
     @Override
     public String toString() {
-        return "SpreadsheetError to String";
+        return "SpreadsheetError to text";
     }
 }

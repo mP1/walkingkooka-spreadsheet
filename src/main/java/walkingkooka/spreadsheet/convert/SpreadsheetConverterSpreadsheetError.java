@@ -38,12 +38,14 @@ abstract class SpreadsheetConverterSpreadsheetError extends SpreadsheetConverter
         return value instanceof SpreadsheetError &&
                 this.canConvertSpreadsheetError(
                         (SpreadsheetError) value,
-                        type
+                        type,
+                        context
                 );
     }
 
     abstract boolean canConvertSpreadsheetError(final SpreadsheetError error,
-                                                final Class<?> type);
+                                                final Class<?> type,
+                                                final SpreadsheetConverterContext context);
 
     @Override
     final <T> Either<T, String> convert0(final Object value,

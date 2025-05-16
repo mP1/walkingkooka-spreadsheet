@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 
-public final class SpreadsheetConverterSpreadsheetErrorToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetErrorToString> {
+public final class SpreadsheetConverterSpreadsheetErrorToTextTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetErrorToText> {
 
     @Test
     public void testConvertNonErrorFails() {
@@ -33,7 +35,7 @@ public final class SpreadsheetConverterSpreadsheetErrorToStringTest extends Spre
     }
 
     @Test
-    public void testConvertErrorErrorToString() {
+    public void testConvertSpreadsheetErrorErrorToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.ERROR;
 
         this.convertAndCheck(
@@ -44,7 +46,7 @@ public final class SpreadsheetConverterSpreadsheetErrorToStringTest extends Spre
     }
 
     @Test
-    public void testConvertErrorDiv0ToString() {
+    public void testConvertSpreadsheetErrorDiv0ToString() {
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
 
         this.convertAndCheck(
@@ -55,7 +57,18 @@ public final class SpreadsheetConverterSpreadsheetErrorToStringTest extends Spre
     }
 
     @Test
-    public void testConvertToNumber() {
+    public void testConvertSpreadsheetErrorDiv0ToCharSequence() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
+
+        this.convertAndCheck(
+                kind.setMessage("Message will be ignored2"),
+                CharSequence.class,
+                kind.text()
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetErrorToNumber() {
         this.convertFails(
                 SpreadsheetErrorKind.DIV0.setMessage("!!"),
                 Number.class
@@ -63,13 +76,35 @@ public final class SpreadsheetConverterSpreadsheetErrorToStringTest extends Spre
     }
 
     @Override
-    public SpreadsheetConverterSpreadsheetErrorToString createConverter() {
-        return SpreadsheetConverterSpreadsheetErrorToString.INSTANCE;
+    public SpreadsheetConverterSpreadsheetErrorToText createConverter() {
+        return SpreadsheetConverterSpreadsheetErrorToText.INSTANCE;
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
-        return SpreadsheetConverterContexts.fake();
+        return new FakeSpreadsheetConverterContext() {
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                );
+            }
+
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
+        };
     }
 
     // toString.........................................................................................................
@@ -77,15 +112,15 @@ public final class SpreadsheetConverterSpreadsheetErrorToStringTest extends Spre
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterSpreadsheetErrorToString.INSTANCE,
-                "SpreadsheetError to String"
+                SpreadsheetConverterSpreadsheetErrorToText.INSTANCE,
+                "SpreadsheetError to text"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterSpreadsheetErrorToString> type() {
-        return SpreadsheetConverterSpreadsheetErrorToString.class;
+    public Class<SpreadsheetConverterSpreadsheetErrorToText> type() {
+        return SpreadsheetConverterSpreadsheetErrorToText.class;
     }
 }

@@ -42,7 +42,8 @@ final class SpreadsheetConverterSpreadsheetErrorThrowing extends SpreadsheetConv
 
     @Override
     boolean canConvertSpreadsheetError(final SpreadsheetError error,
-                                       final Class<?> type) {
+                                       final Class<?> type,
+                                       final SpreadsheetConverterContext context) {
         return true;
     }
 

@@ -111,10 +111,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.errorToNumber();
                 break;
-            case ERROR_TO_STRING_STRING:
+            case ERROR_TO_TEXT_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.errorToString();
+                converter = SpreadsheetConverters.errorToText();
                 break;
             case FORMAT_PATTERN_TO_STRING_STRING:
                 parameterCountCheck(copy, 1);
@@ -239,9 +239,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName ERROR_TO_NUMBER = ConverterName.with(ERROR_TO_NUMBER_STRING);
 
-    private final static String ERROR_TO_STRING_STRING = "error-to-string";
+    private final static String ERROR_TO_TEXT_STRING = "error-to-text";
 
-    final static ConverterName ERROR_TO_STRING = ConverterName.with(ERROR_TO_STRING_STRING);
+    final static ConverterName ERROR_TO_TEXT = ConverterName.with(ERROR_TO_TEXT_STRING);
 
     private final static String FORMAT_PATTERN_TO_STRING_STRING = "format-pattern-to-string";
 
@@ -314,7 +314,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(COLLECTION),
                     converterInfo(ERROR_THROWING),
                     converterInfo(ERROR_TO_NUMBER),
-                    converterInfo(ERROR_TO_STRING),
+                    converterInfo(ERROR_TO_TEXT),
                     converterInfo(FORMAT_PATTERN_TO_STRING),
                     converterInfo(GENERAL),
                     converterInfo(NULL_TO_NUMBER),

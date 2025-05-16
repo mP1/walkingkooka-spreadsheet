@@ -91,10 +91,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterSpreadsheetErrorToString}
+     * {@see SpreadsheetConverterSpreadsheetErrorToText}
      */
-    public static Converter<SpreadsheetConverterContext> errorToString() {
-        return SpreadsheetConverterSpreadsheetErrorToString.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> errorToText() {
+        return SpreadsheetConverterSpreadsheetErrorToText.INSTANCE;
     }
 
     /**
