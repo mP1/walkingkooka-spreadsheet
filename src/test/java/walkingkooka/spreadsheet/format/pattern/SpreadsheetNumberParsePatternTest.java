@@ -28,6 +28,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
@@ -1212,10 +1213,10 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                Converters.fake(),
+                SpreadsheetConverters.textToText(),
                 SpreadsheetLabelNameResolvers.fake(),
                 ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
+                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                         ConverterContexts.basic(
                                 Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),

@@ -48,9 +48,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // date.............................................................................................................
 
     @Test
-    public void testStringToDateConvertFails() {
+    public void testTextToDateConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.stringToDate(
+                SpreadsheetConverters.textToDate(
                         SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                                 .parser()
                 ),
@@ -61,9 +61,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testStringToDateConvert() {
+    public void testTextToDateConvert() {
         this.convertAndCheck(
-                SpreadsheetConverters.stringToDate(
+                SpreadsheetConverters.textToDate(
                         SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                                 .parser()
                 ),
@@ -77,9 +77,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // dateTime.............................................................................................................
 
     @Test
-    public void testStringToDateTimeConvertFails() {
+    public void testTextToDateTimeConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.stringToDateTime(
+                SpreadsheetConverters.textToDateTime(
                         SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
                                 .parser()
                 ),
@@ -90,9 +90,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testStringToDateTimeConvert() {
+    public void testTextToDateTimeConvert() {
         this.convertAndCheck(
-                SpreadsheetConverters.stringToDateTime(
+                SpreadsheetConverters.textToDateTime(
                         SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
                                 .parser()
                 ),
@@ -106,9 +106,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // time.............................................................................................................
 
     @Test
-    public void testStringToTimeConvertFails() {
+    public void testTextToTimeConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.stringToTime(
+                SpreadsheetConverters.textToTime(
                         SpreadsheetPattern.parseTimeParsePattern("hh:mm")
                                 .parser()
                 ),
@@ -119,9 +119,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testStringToTimeConvert() {
+    public void testTextToTimeConvert() {
         this.convertAndCheck(
-                SpreadsheetConverters.stringToTime(
+                SpreadsheetConverters.textToTime(
                         SpreadsheetPattern.parseTimeParsePattern("hh:mm")
                                 .parser()
                 ),
@@ -135,7 +135,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private SpreadsheetConverterContext dateTimeSpreadsheetConverterContext() {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                Converters.fake(), // not used
+                SpreadsheetConverters.textToText(), // not used
                 SpreadsheetLabelNameResolvers.fake(), // not required
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(), // not used
@@ -163,9 +163,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // expressionNumber.................................................................................................
 
     @Test
-    public void testStringToExpressionNumberConvertFails() {
+    public void testTextToExpressionNumberConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.stringToExpressionNumber(
+                SpreadsheetConverters.textToExpressionNumber(
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .parser()
                 ),
@@ -176,26 +176,37 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testStringToExpressionNumberBigDecimalConvert() {
-        this.convertStringToExpressionNumberAndCheck(
+    public void testTextToExpressionNumberBigDecimalConvert() {
+        this.convertTextToExpressionNumberAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL
         );
     }
 
     @Test
-    public void testStringToExpressionNumberDoubleConvert() {
-        this.convertStringToExpressionNumberAndCheck(
+    public void testTextToExpressionNumberDoubleConvert() {
+        this.convertTextToExpressionNumberAndCheck(
                 ExpressionNumberKind.DOUBLE
         );
     }
 
-    private void convertStringToExpressionNumberAndCheck(final ExpressionNumberKind kind) {
+    private void convertTextToExpressionNumberAndCheck(final ExpressionNumberKind kind) {
         this.convertAndCheck(
-                SpreadsheetConverters.stringToExpressionNumber(
+                SpreadsheetConverters.textToExpressionNumber(
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .parser()
                 ),
                 "1.25",
+                ExpressionNumber.class,
+                this.expressionNumberSpreadsheetConverterContext(kind),
+                kind.create(1.25)
+        );
+
+        this.convertAndCheck(
+                SpreadsheetConverters.textToExpressionNumber(
+                        SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .parser()
+                ),
+                new StringBuilder("1.25"),
                 ExpressionNumber.class,
                 this.expressionNumberSpreadsheetConverterContext(kind),
                 kind.create(1.25)
@@ -205,7 +216,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testExpressionNumberConvertIntegerFails() {
         this.convertFails(
-                SpreadsheetConverters.stringToExpressionNumber(
+                SpreadsheetConverters.textToExpressionNumber(
                         SpreadsheetPattern.parseNumberParsePattern("000")
                                 .parser()
                 ),
@@ -218,7 +229,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private SpreadsheetConverterContext expressionNumberSpreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                Converters.fake(), // not used
+                SpreadsheetConverters.textToText(), // not used
                 SpreadsheetLabelNameResolvers.fake(), // not required
                 ExpressionNumberConverterContexts.basic(
                         Converters.fake(), // not used
