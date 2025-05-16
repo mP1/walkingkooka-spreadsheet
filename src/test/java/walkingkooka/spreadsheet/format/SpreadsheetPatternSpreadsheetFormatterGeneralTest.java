@@ -279,8 +279,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         this.formatAndCheck2(
                 ExpressionNumberKind.DOUBLE.create(1.2345678901E12),
                 5, // generalFormatNumberDigitCount
-                '\u0660', // zeroDigit
-                "\u0661!\u0662\u0663\u0664\u0665\u0667X\u0661\u0662"
+                ARABIC_ZERO_DIGIT, // zeroDigit
+                arabicDigit(1) +
+                        "!" +
+                        arabicDigit(2) +
+                        arabicDigit(3) +
+                        arabicDigit(4) +
+                        arabicDigit(5) +
+                        arabicDigit(7) +
+                        'X' +
+                        arabicDigit(1) +
+                        arabicDigit(2)
         );
     }
 
