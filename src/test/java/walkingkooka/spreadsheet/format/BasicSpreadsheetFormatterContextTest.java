@@ -259,7 +259,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentSymbol=':' permillSymbol='>' fr_FR precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to text | SpreadsheetError to Number FakeSpreadsheetLabelNameResolver symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentSymbol=':' perm"
         );
     }
 
@@ -340,8 +340,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 Converters.collection(
                         Cast.to(
                                 Lists.of(
+                                        SpreadsheetConverters.textToText(),
                                         Converters.numberToBoolean(),
-                                        SpreadsheetConverters.errorToString(),
+                                        SpreadsheetConverters.errorToText(),
                                         SpreadsheetConverters.errorToNumber()
                                 )
                         )
