@@ -2429,6 +2429,23 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         }
     }
 
+    @Test
+    public void testFormatArabicZeroDigit() {
+        this.formatNumberAndCheck(
+                this.createFormatter("0.00"),
+                "12.34",
+                ExpressionNumberKind.BIG_DECIMAL,
+                this.createContext(ARABIC_ZERO_DIGIT),
+                SpreadsheetText.EMPTY.setText(
+                        arabicDigit(1) +
+                                arabicDigit(2) +
+                                "!" +
+                                arabicDigit(3) +
+                                arabicDigit(4)
+                )
+        );
+    }
+
     private void formatNumberAndCheck(final SpreadsheetPatternSpreadsheetFormatterNumber formatter,
                                       final String value,
                                       final ExpressionNumberKind kind,
@@ -2472,10 +2489,25 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
 
     @Override
     public SpreadsheetFormatterContext createContext() {
-        return this.createContext(RoundingMode.HALF_UP);
+        return this.createContext('0');
     }
 
     private SpreadsheetFormatterContext createContext(final RoundingMode roundingMode) {
+        return this.createContext(
+                '0',
+                roundingMode
+        );
+    }
+
+    private SpreadsheetFormatterContext createContext(final char zeroDigit) {
+        return this.createContext(
+                zeroDigit,
+                RoundingMode.HALF_UP
+        );
+    }
+
+    private SpreadsheetFormatterContext createContext(final char zeroDigit,
+                                                      final RoundingMode roundingMode) {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
@@ -2553,7 +2585,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
 
             @Override
             public char zeroDigit() {
-                return '0';
+                return zeroDigit;
             }
 
             @Override
