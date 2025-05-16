@@ -20,15 +20,15 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
-public final class SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor> {
+public final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor> {
     @Override
-    public SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor createVisitor() {
-        return new SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor(null, null);
+    public SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor createVisitor() {
+        return new SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor(null, null);
     }
 
     @Override
-    public Class<SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor> type() {
-        return SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor.class;
+    public Class<SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor> type() {
+        return SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor.class;
     }
 
     @Override
@@ -38,6 +38,6 @@ public final class SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisi
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetConverterStringToFormatPattern.class.getSimpleName();
+        return SpreadsheetConverterFormatPatternToString.class.getSimpleName();
     }
 }

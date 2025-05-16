@@ -98,6 +98,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterFormatPatternToString}
+     */
+    public static Converter<SpreadsheetConverterContext> formatPatternToString(final String pattern) {
+        return SpreadsheetConverterFormatPatternToString.with(pattern);
+    }
+
+    /**
      * {@see SpreadsheetConverterGeneral}
      */
     public static Converter<SpreadsheetConverterContext> general(final SpreadsheetFormatter dateFormatter,
@@ -223,13 +230,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                  final SpreadsheetConverterContext scc) -> t.cast(NumberSpreadsheetFormulaParserToken.class)
                         .toNumber(scc)
         );
-    }
-
-    /**
-     * {@see SpreadsheetConverterStringToFormatPattern}
-     */
-    public static Converter<SpreadsheetConverterContext> stringToFormatPattern(final String pattern) {
-        return SpreadsheetConverterStringToFormatPattern.with(pattern);
     }
 
     /**

@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -43,7 +42,7 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetConverterStringToFormatPatternTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToFormatPattern> {
+public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -51,7 +50,7 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
     public void testWithNullPatternFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetConverterStringToFormatPattern.with(null)
+                () -> SpreadsheetConverterFormatPatternToString.with(null)
         );
     }
 
@@ -59,30 +58,26 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
     public void testWithEmptyPatternFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetConverterStringToFormatPattern.with("")
+                () -> SpreadsheetConverterFormatPatternToString.with("")
         );
     }
 
-    // boolean.........................................................................................................
+    // boolean..........................................................................................................
 
     @Test
-    public void testConvertStringToBooleanFalse() {
-        this.convertAndCheck(
-                SpreadsheetConverterStringToFormatPattern.with("$000.000"),
+    public void testConvertBooleanFalseToString() {
+        this.convertToStringAndCheck(
+                "$000.000",
                 false,
-                String.class,
-                this.createContext(),
                 "$000.000"
         );
     }
 
     @Test
-    public void testConvertStringToBooleanTrue() {
-        this.convertAndCheck(
-                SpreadsheetConverterStringToFormatPattern.with("$000.000"),
+    public void testConvertBooleanTrueToString() {
+        this.convertToStringAndCheck(
+                "$000.000",
                 true,
-                String.class,
-                this.createContext(),
                 "$001.000"
         );
     }
@@ -92,67 +87,65 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
     private final static int NUMBER = 123;
 
     @Test
-    public void testConvertStringToBigDecimal() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertBigDecimalToString() {
+        this.convertNumberToStringAndCheck(
                 BigDecimal.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToBigInteger() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertBigIntegerToString() {
+        this.convertNumberToStringAndCheck(
                 BigInteger.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToFloat() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertFloatToString() {
+        this.convertNumberToStringAndCheck(
                 Float.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToDouble() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertDoubleToString() {
+        this.convertNumberToStringAndCheck(
                 Double.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToExpressionNumber() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertExpressionNumberToString() {
+        this.convertNumberToStringAndCheck(
                 KIND.create(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToInteger() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertIntegerToString() {
+        this.convertNumberToStringAndCheck(
                 Integer.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToLong() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertLongToString() {
+        this.convertNumberToStringAndCheck(
                 Integer.valueOf(NUMBER)
         );
     }
 
     @Test
-    public void testConvertStringToShort() {
-        this.convertStringToNumberAndCheck(
+    public void testConvertShortToString() {
+        this.convertNumberToStringAndCheck(
                 Short.valueOf((short) NUMBER)
         );
     }
 
-    private void convertStringToNumberAndCheck(final Number number) {
-        this.convertAndCheck(
-                SpreadsheetConverterStringToFormatPattern.with("$000.000"),
+    private void convertNumberToStringAndCheck(final Number number) {
+        this.convertToStringAndCheck(
+                "$000.000",
                 number,
-                String.class,
-                this.createContext(),
                 "$123.000"
         );
     }
@@ -160,124 +153,138 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
     // date time ......................................................................................................
 
     @Test
-    public void testConvertStringToLocalDate() {
-        this.convertAndCheck(
-                SpreadsheetConverterStringToFormatPattern.with("yyyy mm dd"),
+    public void testConvertLocalDateToString() {
+        this.convertToStringAndCheck(
+                "yyyy mm dd",
                 LocalDate.of(1999, 12, 31),
-                String.class,
-                this.createContext(),
                 "1999 12 31"
         );
     }
 
     @Test
-    public void testConvertStringToLocalDateTime() {
-        this.convertAndCheck(
-                SpreadsheetConverterStringToFormatPattern.with("yyyy mm dd hh mm ss"),
+    public void testConvertLocalDateTimeToString() {
+        this.convertToStringAndCheck(
+                "yyyy mm dd hh mm ss",
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                String.class,
-                this.createContext(),
                 "1999 12 31 12 58 59"
         );
     }
 
     @Test
-    public void testConvertStringToLocalTime() {
-        this.convertAndCheck(
-                SpreadsheetConverterStringToFormatPattern.with("ss mm hh"),
+    public void testConvertLocalTimeToString() {
+        this.convertToStringAndCheck(
+                "ss mm hh",
                 LocalTime.of(12, 58, 59),
-                String.class,
-                this.createContext(),
                 "59 58 12"
         );
     }
 
-    // String.... ......................................................................................................
+    // Text...........................................................................................................
 
     @Test
-    public void testConvertStringToCharacter() {
-        this.convertStringAndCheck("Hello");
+    public void testConvertCharacterToString() {
+        this.convertToStringAndCheck("Hello");
     }
 
     @Test
     public void testConvertStringToString() {
-        this.convertStringAndCheck("Hello");
+        this.convertToStringAndCheck("Hello");
     }
 
     @Test
-    public void testConvertStringToCell() {
-        this.convertStringAndCheck(
+    public void testConvertCellToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseCell("$A1")
         );
     }
 
     @Test
-    public void testConvertStringToCellRange() {
-        this.convertStringAndCheck(
+    public void testConvertCellRangeToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseCellRange("$A1:$B2")
         );
     }
 
     @Test
-    public void testConvertStringToColumn() {
-        this.convertStringAndCheck(
+    public void testConvertColumnToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseColumn("$A")
         );
     }
 
     @Test
-    public void testConvertStringToColumnRange() {
-        this.convertStringAndCheck(
+    public void testConvertColumnRangeToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseColumnRange("$A:$B")
         );
     }
 
     @Test
-    public void testConvertStringToRow() {
-        this.convertStringAndCheck(
+    public void testConvertRowToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseRow("$12")
         );
     }
 
     @Test
-    public void testConvertStringToRowRange() {
-        this.convertStringAndCheck(
+    public void testConvertRowRangeToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.parseRowRange("$12:$34")
         );
     }
 
     @Test
-    public void testConvertStringToLabel() {
-        this.convertStringAndCheck(
+    public void testConvertLabelToString() {
+        this.convertToStringAndCheck(
                 SpreadsheetSelection.labelName("Label123")
         );
     }
 
-    private void convertStringAndCheck(final Object value) {
-        this.convertAndCheck(
+    private void convertToStringAndCheck(final Object value) {
+        this.convertToStringAndCheck(
                 this.createConverter(),
                 value,
-                String.class,
-                this.createContext(),
                 value.toString()
         );
     }
 
+    private void convertToStringAndCheck(final String pattern,
+                                         final Object value,
+                                         final String expected) {
+        this.convertToStringAndCheck(
+                SpreadsheetConverterFormatPatternToString.with(pattern),
+                value,
+                expected
+        );
+    }
+
+    private void convertToStringAndCheck(final SpreadsheetConverterFormatPatternToString converter,
+                                         final Object value,
+                                         final String expected) {
+        this.convertAndCheck(
+                converter,
+                value,
+                String.class,
+                this.createContext(),
+                expected
+        );
+    }
+
     @Override
-    public SpreadsheetConverterStringToFormatPattern createConverter() {
-        return SpreadsheetConverterStringToFormatPattern.with("!");
+    public SpreadsheetConverterFormatPatternToString createConverter() {
+        return SpreadsheetConverterFormatPatternToString.with("!");
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
         final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                Converters.numberToNumber()
-                        ),
+                        Converters.simple(),
+                        Converters.booleanToNumber(),
+                        SpreadsheetConverters.textToText(),
+                        SpreadsheetConverters.numberToNumber(),
                         Converters.localDateToLocalDateTime(),
-                        Converters.localTimeToLocalDateTime(),
-                        Converters.simple()
+                        Converters.localTimeToLocalDateTime()
                 )
         );
 
@@ -311,7 +318,7 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterStringToFormatPattern> type() {
-        return SpreadsheetConverterStringToFormatPattern.class;
+    public Class<SpreadsheetConverterFormatPatternToString> type() {
+        return SpreadsheetConverterFormatPatternToString.class;
     }
 }
