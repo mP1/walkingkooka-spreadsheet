@@ -303,7 +303,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                 this.createFormatter(),
                 number,
                 this.createContext(
-                        number.kind(),
                         generalFormatNumberDigitCount,
                         zeroDigit
                 ),
@@ -336,14 +335,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     @Override
     public SpreadsheetFormatterContext createContext() {
         return this.createContext(
-                KIND,
                 8, // generalFormatNumberDigitCount
                 '0'
         );
     }
 
-    private SpreadsheetFormatterContext createContext(final ExpressionNumberKind kind,
-                                                      final int generalFormatNumberDigitCount,
+    private SpreadsheetFormatterContext createContext(final int generalFormatNumberDigitCount,
                                                       final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
