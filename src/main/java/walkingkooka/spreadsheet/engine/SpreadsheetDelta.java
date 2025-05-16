@@ -314,7 +314,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 result = SortedSets.immutable(sortedSet);
             }
         }
-        ;
 
         return result;
     }
