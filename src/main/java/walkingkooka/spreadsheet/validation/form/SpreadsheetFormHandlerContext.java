@@ -31,6 +31,7 @@ public interface SpreadsheetFormHandlerContext extends FormHandlerContext<Spread
     /**
      * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}
      */
+    @Override
     default Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
         return Cast.to(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
