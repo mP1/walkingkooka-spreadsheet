@@ -257,21 +257,21 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithSelectionToString() {
+    public void testConverterNameWithSelectionToText() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_STRING,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT,
                 Lists.empty(),
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.selectionToString()
+                SpreadsheetConverters.selectionToText()
         );
     }
 
     @Test
-    public void testConverterSelectorWithStringToString() {
+    public void testConverterSelectorWithSelectionToText() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_STRING + "",
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT + "",
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.selectionToString()
+                SpreadsheetConverters.selectionToText()
         );
     }
 

@@ -170,10 +170,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterSpreadsheetSelectionToString}
+     * {@see SpreadsheetConverterSpreadsheetSelectionToText}
      */
-    public static Converter<SpreadsheetConverterContext> selectionToString() {
-        return SpreadsheetConverterSpreadsheetSelectionToString.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> selectionToText() {
+        return SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE;
     }
 
     /**
