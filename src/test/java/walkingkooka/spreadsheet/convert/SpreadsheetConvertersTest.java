@@ -160,73 +160,90 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    // expressionNumber.................................................................................................
+    // textToNumber.....................................................................................................
 
     @Test
-    public void testTextToExpressionNumberConvertFails() {
+    public void testTextToNumberConvertFails() {
         this.convertFails(
-                SpreadsheetConverters.textToExpressionNumber(
+                SpreadsheetConverters.textToNumber(
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .parser()
                 ),
                 "1",
                 ExpressionNumber.class,
-                this.expressionNumberSpreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL)
+                this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL)
         );
     }
 
     @Test
-    public void testTextToExpressionNumberBigDecimalConvert() {
-        this.convertTextToExpressionNumberAndCheck(
+    public void testTextToNumberConvertCharSequenceToExpressionNumberBigDecimalConvert() {
+        this.textToNumberConvertCharSequenceToExpressionNumberAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL
         );
     }
 
     @Test
-    public void testTextToExpressionNumberDoubleConvert() {
-        this.convertTextToExpressionNumberAndCheck(
+    public void testTextToNumberConvertCharSequenceToExpressionNumberDoubleConvert() {
+        this.textToNumberConvertCharSequenceToExpressionNumberAndCheck(
                 ExpressionNumberKind.DOUBLE
         );
     }
 
-    private void convertTextToExpressionNumberAndCheck(final ExpressionNumberKind kind) {
+    private void textToNumberConvertCharSequenceToExpressionNumberAndCheck(final ExpressionNumberKind kind) {
         this.convertAndCheck(
-                SpreadsheetConverters.textToExpressionNumber(
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .parser()
-                ),
-                "1.25",
-                ExpressionNumber.class,
-                this.expressionNumberSpreadsheetConverterContext(kind),
-                kind.create(1.25)
-        );
-
-        this.convertAndCheck(
-                SpreadsheetConverters.textToExpressionNumber(
+                SpreadsheetConverters.textToNumber(
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .parser()
                 ),
                 new StringBuilder("1.25"),
                 ExpressionNumber.class,
-                this.expressionNumberSpreadsheetConverterContext(kind),
+                this.spreadsheetConverterContext(kind),
                 kind.create(1.25)
         );
     }
 
     @Test
-    public void testExpressionNumberConvertIntegerFails() {
-        this.convertFails(
-                SpreadsheetConverters.textToExpressionNumber(
+    public void testTextToNumberConvertTextToExpressionNumberBigDecimalConvert() {
+        this.textToNumberConvertTextToExpressionNumberAndCheck(
+                ExpressionNumberKind.BIG_DECIMAL
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertTextToExpressionNumberDoubleConvert() {
+        this.textToNumberConvertTextToExpressionNumberAndCheck(
+                ExpressionNumberKind.DOUBLE
+        );
+    }
+
+    private void textToNumberConvertTextToExpressionNumberAndCheck(final ExpressionNumberKind kind) {
+        this.convertAndCheck(
+                SpreadsheetConverters.textToNumber(
+                        SpreadsheetPattern.parseNumberParsePattern("0.00")
+                                .parser()
+                ),
+                "1.25",
+                ExpressionNumber.class,
+                this.spreadsheetConverterContext(kind),
+                kind.create(1.25)
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertStringToInteger() {
+        this.convertAndCheck(
+                SpreadsheetConverters.textToNumber(
                         SpreadsheetPattern.parseNumberParsePattern("000")
                                 .parser()
                 ),
                 "123",
                 Integer.class,
-                this.expressionNumberSpreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL)
+                this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+                123
         );
     }
 
-    private SpreadsheetConverterContext expressionNumberSpreadsheetConverterContext(final ExpressionNumberKind kind) {
+    private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.textToText(), // not used

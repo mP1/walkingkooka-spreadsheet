@@ -91,7 +91,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
         // the parser returns an ExpressionNumber
         // the 2nd converter handles converting tht ExpressionNumber to Number if target is a number
         return ExpressionNumberConverters.toExpressionNumberThen(
-                SpreadsheetConverters.textToExpressionNumber(
+                SpreadsheetConverters.textToNumber(
                         this.parser()
                 ),
                 ExpressionNumberConverters.numberOrExpressionNumberToNumber()

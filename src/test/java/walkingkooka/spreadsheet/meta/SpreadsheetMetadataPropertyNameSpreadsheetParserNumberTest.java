@@ -70,7 +70,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                 .extractLocaleAwareValue(locale)
                 .get();
 
-        final ExpressionNumber value = SpreadsheetConverters.textToExpressionNumber(
+        final ExpressionNumber value = SpreadsheetConverters.textToNumber(
                 SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
                         parserSelector,
                         PROVIDER_CONTEXT
