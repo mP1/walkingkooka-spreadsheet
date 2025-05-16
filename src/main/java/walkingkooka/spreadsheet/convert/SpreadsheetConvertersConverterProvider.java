@@ -188,6 +188,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToSpreadsheetName();
                 break;
+            case TEXT_TO_SPREADSHEET_TEXT_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToSpreadsheetText();
+                break;
             case TEXT_TO_VALIDATION_ERROR_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -304,6 +309,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_SPREADSHEET_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_NAME_STRING);
 
+    private final static String TEXT_TO_SPREADSHEET_TEXT_STRING = "text-to-spreadsheet-text";
+
+    final static ConverterName TEXT_TO_SPREADSHEET_TEXT = ConverterName.with(TEXT_TO_SPREADSHEET_TEXT_STRING);
+
     private final static String TEXT_TO_VALIDATION_ERROR_STRING = "text-to-validation-error";
 
     final static ConverterName TEXT_TO_VALIDATION_ERROR = ConverterName.with(TEXT_TO_VALIDATION_ERROR_STRING);
@@ -338,6 +347,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SPREADSHEET_ID),
                     converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),
+                    converterInfo(TEXT_TO_SPREADSHEET_TEXT),
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_TEXT)
             )

@@ -934,7 +934,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"colorWhite\": 2,\n" +
                         "  \"colorYellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-text, format-pattern-to-string, general, null-to-number, number-to-number, selection-to-selection, selection-to-text, spreadsheet-cell-to, text-to-error, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-id, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-text, text-to-validation-error\",\n" +
+                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-text, format-pattern-to-string, general, null-to-number, number-to-number, selection-to-selection, selection-to-text, spreadsheet-cell-to, text-to-error, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-id, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-text, text-to-text, text-to-validation-error\",\n" +
                         "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
@@ -961,7 +961,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-text, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"formatConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-text, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-text, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formulaConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -1114,7 +1114,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"colorWhite\": 2,\n" +
                         "  \"colorYellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-text, format-pattern-to-string, general, null-to-number, number-to-number, selection-to-selection, selection-to-text, spreadsheet-cell-to, text-to-error, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-id, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-text, text-to-validation-error\",\n" +
+                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-text, format-pattern-to-string, general, null-to-number, number-to-number, selection-to-selection, selection-to-text, spreadsheet-cell-to, text-to-error, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-id, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-text, text-to-text, text-to-validation-error\",\n" +
                         "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                         "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
@@ -1141,7 +1141,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-text, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"formatConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-text, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-text, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formulaConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
