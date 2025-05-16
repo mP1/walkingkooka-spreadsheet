@@ -48,12 +48,12 @@ import java.util.Optional;
  * <br>
  * Note it is possible for this fail if the pattern is invalid and parsing of the pattern fails.
  */
-final class SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
+final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     static String format(final Object value,
                          final String pattern,
                          final SpreadsheetConverterContext context) {
-        final SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor visitor = new SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor(
+        final SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor visitor = new SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor(
                 pattern,
                 context
         );
@@ -62,7 +62,7 @@ final class SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor ext
     }
 
     // VisibleForTesting
-    SpreadsheetConverterStringToFormatPatternSpreadsheetValueVisitor(final String pattern,
+    SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor(final String pattern,
                                                                      final SpreadsheetConverterContext context) {
         super();
         this.pattern = pattern;
