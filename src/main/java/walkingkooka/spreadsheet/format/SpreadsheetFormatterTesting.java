@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.math.MathTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextNode;
@@ -28,7 +29,8 @@ import java.util.Optional;
 /**
  * Mixin interface with default methods to assist testing of a given {@link SpreadsheetFormatter}.
  */
-public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
+public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
+        MathTesting {
 
     // formatAndCheck...................................................................................................
 
