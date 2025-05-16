@@ -1032,7 +1032,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testToStringMetadataLotsProperties() {
+    public void testToStringMetadataIncludingAllColorProperties() {
         SpreadsheetMetadata metadata = METADATA;
 
         for (int i = SpreadsheetColors.MIN; i <= SpreadsheetColors.MAX; i++) {
