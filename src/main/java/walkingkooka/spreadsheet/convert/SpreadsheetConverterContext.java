@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -29,6 +30,7 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
  */
 public interface SpreadsheetConverterContext extends ExpressionNumberConverterContext,
         HasConverter<SpreadsheetConverterContext>,
+        HasSpreadsheetMetadata,
         SpreadsheetLabelNameResolver,
         HasMissingCellNumberValue {
 

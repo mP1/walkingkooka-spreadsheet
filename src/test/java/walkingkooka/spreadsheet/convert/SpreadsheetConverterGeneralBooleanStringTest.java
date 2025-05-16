@@ -76,6 +76,7 @@ public final class SpreadsheetConverterGeneralBooleanStringTest implements Conve
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.basic(),
                 SpreadsheetLabelNameResolvers.fake(),

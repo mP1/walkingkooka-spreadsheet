@@ -293,6 +293,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
         final Locale locale = Locale.FRANCE;
 
         return SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,
                 SpreadsheetLabelNameResolvers.fake(),

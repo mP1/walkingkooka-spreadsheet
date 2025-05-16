@@ -79,6 +79,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                 text,
                 ExpressionNumber.class,
                 SpreadsheetConverterContexts.basic(
+                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                         SpreadsheetConverters.basic(),
                         SpreadsheetLabelNameResolvers.fake(),

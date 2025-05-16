@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
@@ -28,16 +29,20 @@ import java.util.Optional;
 
 public final class SpreadsheetConverterContexts implements PublicStaticHelper {
 
+    public final static Optional<SpreadsheetMetadata> NO_METADATA = Optional.empty();
+
     public final static Optional<SpreadsheetExpressionReference> NO_VALIDATION_REFERENCE = Optional.empty();
 
     /**
      * {@see BasicSpreadsheetConverterContext}
      */
-    public static SpreadsheetConverterContext basic(final Optional<SpreadsheetExpressionReference> validationReference,
+    public static SpreadsheetConverterContext basic(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+                                                    final Optional<SpreadsheetExpressionReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final ExpressionNumberConverterContext context) {
         return BasicSpreadsheetConverterContext.with(
+                spreadsheetMetadata,
                 validationReference,
                 converter,
                 spreadsheetLabelNameResolver,
