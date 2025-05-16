@@ -22,13 +22,13 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
-public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToSpreadsheetMetadataPropertyName>
+public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadataPropertyName>
         implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertEmptyString() {
         this.convertFails(
-                SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE,
+                SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
                 "",
                 SpreadsheetMetadataPropertyName.class,
                 this.createContext(),
@@ -39,7 +39,7 @@ public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTe
     @Test
     public void testConvertInvalidSpreadsheetMetadataPropertyName() {
         this.convertFails(
-                SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE,
+                SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
                 "!invalid",
                 SpreadsheetMetadataPropertyName.class,
                 this.createContext(),
@@ -85,8 +85,8 @@ public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTe
     }
 
     @Override
-    public SpreadsheetConverterStringToSpreadsheetMetadataPropertyName createConverter() {
-        return SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE;
+    public SpreadsheetConverterTextToSpreadsheetMetadataPropertyName createConverter() {
+        return SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE;
     }
 
     @Override
@@ -99,7 +99,7 @@ public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTe
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE,
+                SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
                 "String to SpreadsheetMetadataPropertyName"
         );
     }
@@ -107,7 +107,7 @@ public final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyNameTe
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterStringToSpreadsheetMetadataPropertyName> type() {
-        return SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.class;
+    public Class<SpreadsheetConverterTextToSpreadsheetMetadataPropertyName> type() {
+        return SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.class;
     }
 }

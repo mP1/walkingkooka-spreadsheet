@@ -18,19 +18,21 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.validation.ValidationError;
+
 
 /**
- * A {@link Converter} that converts an SpreadsheetId as a {@link String} into a {@link SpreadsheetId}.
+ * A {@link Converter} that converts a {@link String} into a {@link ValidationError}.
  */
-final class SpreadsheetConverterStringToSpreadsheetId extends SpreadsheetConverterStringTo {
+final class SpreadsheetConverterTextToValidationError extends SpreadsheetConverterTextTo {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterStringToSpreadsheetId INSTANCE = new SpreadsheetConverterStringToSpreadsheetId();
+    final static SpreadsheetConverterTextToValidationError INSTANCE = new SpreadsheetConverterTextToValidationError();
 
-    private SpreadsheetConverterStringToSpreadsheetId() {
+    private SpreadsheetConverterTextToValidationError() {
         super();
     }
 
@@ -38,18 +40,19 @@ final class SpreadsheetConverterStringToSpreadsheetId extends SpreadsheetConvert
     boolean isType(final Object value,
                    final Class<?> type,
                    final SpreadsheetConverterContext context) {
-        return SpreadsheetId.class == type;
+        return ValidationError.class == type;
     }
 
     @Override
     Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
-        return SpreadsheetId.parse(value);
+        return SpreadsheetError.parse(value)
+                .toValidationError(context.validationReference());
     }
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetId.class.getSimpleName();
+        return "String to " + ValidationError.class.getSimpleName();
     }
 }

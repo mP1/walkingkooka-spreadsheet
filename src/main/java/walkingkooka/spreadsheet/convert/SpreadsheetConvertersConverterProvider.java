@@ -153,40 +153,40 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetCellTo();
                 break;
-            case STRING_TO_ERROR_STRING:
+            case TEXT_TO_ERROR_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToSpreadsheetError();
+                converter = SpreadsheetConverters.textToSpreadsheetError();
                 break;
-            case STRING_TO_EXPRESSION_STRING:
+            case TEXT_TO_EXPRESSION_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToExpression();
+                converter = SpreadsheetConverters.textToExpression();
                 break;
-            case STRING_TO_SELECTION_STRING:
+            case TEXT_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToSelection();
+                converter = SpreadsheetConverters.textToSelection();
                 break;
-            case STRING_TO_SPREADSHEET_ID_STRING:
+            case TEXT_TO_SPREADSHEET_ID_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToSpreadsheetId();
+                converter = SpreadsheetConverters.textToSpreadsheetId();
                 break;
-            case STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING:
+            case TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToSpreadsheetMetadataPropertyName();
+                converter = SpreadsheetConverters.textToSpreadsheetMetadataPropertyName();
                 break;
-            case STRING_TO_SPREADSHEET_NAME_STRING:
+            case TEXT_TO_SPREADSHEET_NAME_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToSpreadsheetName();
+                converter = SpreadsheetConverters.textToSpreadsheetName();
                 break;
-            case STRING_TO_VALIDATION_ERROR_STRING:
+            case TEXT_TO_VALIDATION_ERROR_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = SpreadsheetConverters.stringToValidationError();
+                converter = SpreadsheetConverters.textToValidationError();
                 break;
             case TEXT_TO_TEXT_STRING:
                 parameterCountCheck(copy, 0);
@@ -271,33 +271,33 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_CELL_TO = ConverterName.with(SPREADSHEET_CELL_TO_STRING);
 
-    private final static String STRING_TO_ERROR_STRING = "string-to-error";
+    private final static String TEXT_TO_ERROR_STRING = "text-to-error";
 
-    final static ConverterName STRING_TO_ERROR = ConverterName.with(STRING_TO_ERROR_STRING);
+    final static ConverterName TEXT_TO_ERROR = ConverterName.with(TEXT_TO_ERROR_STRING);
 
-    private final static String STRING_TO_EXPRESSION_STRING = "string-to-expression";
+    private final static String TEXT_TO_EXPRESSION_STRING = "text-to-expression";
 
-    final static ConverterName STRING_TO_EXPRESSION = ConverterName.with(STRING_TO_EXPRESSION_STRING);
+    final static ConverterName TEXT_TO_EXPRESSION = ConverterName.with(TEXT_TO_EXPRESSION_STRING);
 
-    private final static String STRING_TO_SELECTION_STRING = "string-to-selection";
+    private final static String TEXT_TO_SELECTION_STRING = "text-to-selection";
 
-    final static ConverterName STRING_TO_SELECTION = ConverterName.with(STRING_TO_SELECTION_STRING);
+    final static ConverterName TEXT_TO_SELECTION = ConverterName.with(TEXT_TO_SELECTION_STRING);
 
-    private final static String STRING_TO_SPREADSHEET_ID_STRING = "string-to-spreadsheet-id";
+    private final static String TEXT_TO_SPREADSHEET_ID_STRING = "text-to-spreadsheet-id";
 
-    final static ConverterName STRING_TO_SPREADSHEET_ID = ConverterName.with(STRING_TO_SPREADSHEET_ID_STRING);
+    final static ConverterName TEXT_TO_SPREADSHEET_ID = ConverterName.with(TEXT_TO_SPREADSHEET_ID_STRING);
 
-    private final static String STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING = "string-to-spreadsheet-metadata-property-name";
+    private final static String TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING = "text-to-spreadsheet-metadata-property-name";
 
-    final static ConverterName STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME = ConverterName.with(STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING);
+    final static ConverterName TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING);
 
-    private final static String STRING_TO_SPREADSHEET_NAME_STRING = "string-to-spreadsheet-name";
+    private final static String TEXT_TO_SPREADSHEET_NAME_STRING = "text-to-spreadsheet-name";
 
-    final static ConverterName STRING_TO_SPREADSHEET_NAME = ConverterName.with(STRING_TO_SPREADSHEET_NAME_STRING);
+    final static ConverterName TEXT_TO_SPREADSHEET_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_NAME_STRING);
 
-    private final static String STRING_TO_VALIDATION_ERROR_STRING = "string-to-validation-error";
+    private final static String TEXT_TO_VALIDATION_ERROR_STRING = "text-to-validation-error";
 
-    final static ConverterName STRING_TO_VALIDATION_ERROR = ConverterName.with(STRING_TO_VALIDATION_ERROR_STRING);
+    final static ConverterName TEXT_TO_VALIDATION_ERROR = ConverterName.with(TEXT_TO_VALIDATION_ERROR_STRING);
 
     private final static String TEXT_TO_TEXT_STRING = "text-to-text";
 
@@ -322,13 +322,13 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SPREADSHEET_CELL_TO),
                     converterInfo(SELECTION_TO_SELECTION),
                     converterInfo(SELECTION_TO_TEXT),
-                    converterInfo(STRING_TO_ERROR),
-                    converterInfo(STRING_TO_EXPRESSION),
-                    converterInfo(STRING_TO_SELECTION),
-                    converterInfo(STRING_TO_SPREADSHEET_ID),
-                    converterInfo(STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
-                    converterInfo(STRING_TO_SPREADSHEET_NAME),
-                    converterInfo(STRING_TO_VALIDATION_ERROR),
+                    converterInfo(TEXT_TO_ERROR),
+                    converterInfo(TEXT_TO_EXPRESSION),
+                    converterInfo(TEXT_TO_SELECTION),
+                    converterInfo(TEXT_TO_SPREADSHEET_ID),
+                    converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
+                    converterInfo(TEXT_TO_SPREADSHEET_NAME),
+                    converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_TEXT)
             )
     );

@@ -30,13 +30,13 @@ import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.util.Optional;
 
-public final class SpreadsheetConverterStringToExpressionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToExpression>
+public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToExpression>
         implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertEmptyString() {
         this.convertFails(
-                SpreadsheetConverterStringToExpression.INSTANCE,
+                SpreadsheetConverterTextToExpression.INSTANCE,
                 "",
                 Expression.class,
                 this.createContext(),
@@ -47,7 +47,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
     @Test
     public void testConvertInvalidExpression() {
         this.convertFails(
-                SpreadsheetConverterStringToExpression.INSTANCE,
+                SpreadsheetConverterTextToExpression.INSTANCE,
                 "1+xyz(",
                 Expression.class,
                 this.createContext(),
@@ -105,8 +105,8 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
     }
 
     @Override
-    public SpreadsheetConverterStringToExpression createConverter() {
-        return SpreadsheetConverterStringToExpression.INSTANCE;
+    public SpreadsheetConverterTextToExpression createConverter() {
+        return SpreadsheetConverterTextToExpression.INSTANCE;
     }
 
     @Override
@@ -119,7 +119,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterStringToExpression.INSTANCE,
+                SpreadsheetConverterTextToExpression.INSTANCE,
                 "String to Expression"
         );
     }
@@ -127,7 +127,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterStringToExpression> type() {
-        return SpreadsheetConverterStringToExpression.class;
+    public Class<SpreadsheetConverterTextToExpression> type() {
+        return SpreadsheetConverterTextToExpression.class;
     }
 }

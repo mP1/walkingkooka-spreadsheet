@@ -23,17 +23,17 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 /**
  * A {@link Converter} that converts {@link String} to {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName}.
  */
-final class SpreadsheetConverterStringToSpreadsheetMetadataPropertyName extends SpreadsheetConverterStringTo {
+final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends SpreadsheetConverterTextTo {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterStringToSpreadsheetMetadataPropertyName INSTANCE = new SpreadsheetConverterStringToSpreadsheetMetadataPropertyName();
+    final static SpreadsheetConverterTextToSpreadsheetMetadataPropertyName INSTANCE = new SpreadsheetConverterTextToSpreadsheetMetadataPropertyName();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetConverterStringToSpreadsheetMetadataPropertyName() {
+    private SpreadsheetConverterTextToSpreadsheetMetadataPropertyName() {
         super();
     }
 

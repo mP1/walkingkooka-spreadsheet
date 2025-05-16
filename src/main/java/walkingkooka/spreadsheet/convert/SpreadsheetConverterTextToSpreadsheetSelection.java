@@ -33,11 +33,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  * A {@link Converter} that handles converting {@link String} into {@link SpreadsheetSelection} using the right
  * {@link SpreadsheetSelection} parseXXX method.
  */
-final class SpreadsheetConverterStringToSpreadsheetSelection extends SpreadsheetConverterStringTo {
+final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetConverterTextTo {
 
-    final static SpreadsheetConverterStringToSpreadsheetSelection INSTANCE = new SpreadsheetConverterStringToSpreadsheetSelection();
+    final static SpreadsheetConverterTextToSpreadsheetSelection INSTANCE = new SpreadsheetConverterTextToSpreadsheetSelection();
 
-    private SpreadsheetConverterStringToSpreadsheetSelection() {
+    private SpreadsheetConverterTextToSpreadsheetSelection() {
         super();
     }
 
@@ -59,7 +59,7 @@ final class SpreadsheetConverterStringToSpreadsheetSelection extends Spreadsheet
     Object tryConvert(final String value,
                       final Class<?> type,
                       final SpreadsheetConverterContext context) {
-        return SpreadsheetConverterStringToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
+        return SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
                 value,
                 Cast.to(type),
                 context

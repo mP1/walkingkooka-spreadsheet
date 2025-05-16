@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -18,19 +19,19 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.SpreadsheetError;
 
 /**
- * A {@link Converter} that converts an SpreadsheetName as a {@link String} into a {@link SpreadsheetName}.
+ * A {@link Converter} that converts an SpreadsheetError as a {@link String} into a {@link SpreadsheetError}.
  */
-final class SpreadsheetConverterStringToSpreadsheetName extends SpreadsheetConverterStringTo {
+final class SpreadsheetConverterTextToSpreadsheetError extends SpreadsheetConverterTextTo {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterStringToSpreadsheetName INSTANCE = new SpreadsheetConverterStringToSpreadsheetName();
+    final static SpreadsheetConverterTextToSpreadsheetError INSTANCE = new SpreadsheetConverterTextToSpreadsheetError();
 
-    private SpreadsheetConverterStringToSpreadsheetName() {
+    private SpreadsheetConverterTextToSpreadsheetError() {
         super();
     }
 
@@ -38,18 +39,18 @@ final class SpreadsheetConverterStringToSpreadsheetName extends SpreadsheetConve
     boolean isType(final Object value,
                    final Class<?> type,
                    final SpreadsheetConverterContext context) {
-        return SpreadsheetName.class == type;
+        return SpreadsheetError.class == type;
     }
 
     @Override
-    Object tryConvert(final String value,
-                      final Class<?> type,
-                      final SpreadsheetConverterContext context) {
-        return SpreadsheetName.with(value);
+    SpreadsheetError tryConvert(final String value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
+        return SpreadsheetError.parse(value);
     }
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetName.class.getSimpleName();
+        return "String to " + SpreadsheetError.class.getSimpleName();
     }
 }

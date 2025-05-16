@@ -23,7 +23,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
 
-public final class SpreadsheetConverterStringToSpreadsheetErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterStringToSpreadsheetError> {
+public final class SpreadsheetConverterTextToSpreadsheetErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetError> {
 
     @Test
     public void testConvertStringToSpreadsheetError() {
@@ -46,8 +46,8 @@ public final class SpreadsheetConverterStringToSpreadsheetErrorTest extends Spre
     }
 
     @Override
-    public SpreadsheetConverterStringToSpreadsheetError createConverter() {
-        return SpreadsheetConverterStringToSpreadsheetError.INSTANCE;
+    public SpreadsheetConverterTextToSpreadsheetError createConverter() {
+        return SpreadsheetConverterTextToSpreadsheetError.INSTANCE;
     }
 
     @Override
@@ -81,7 +81,7 @@ public final class SpreadsheetConverterStringToSpreadsheetErrorTest extends Spre
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterStringToSpreadsheetError> type() {
-        return SpreadsheetConverterStringToSpreadsheetError.class;
+    public Class<SpreadsheetConverterTextToSpreadsheetError> type() {
+        return SpreadsheetConverterTextToSpreadsheetError.class;
     }
 }

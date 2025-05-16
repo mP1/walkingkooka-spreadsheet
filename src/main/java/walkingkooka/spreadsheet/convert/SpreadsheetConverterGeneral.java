@@ -351,7 +351,7 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                         value,
                         targetType
                 ) ||
-                SpreadsheetConverterStringToSpreadsheetSelection.INSTANCE.canConvert(
+                SpreadsheetConverterTextToSpreadsheetSelection.INSTANCE.canConvert(
                         value,
                         targetType,
                         context

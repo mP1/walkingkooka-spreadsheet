@@ -212,13 +212,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterStringToExpression}
-     */
-    public static Converter<SpreadsheetConverterContext> stringToExpression() {
-        return SpreadsheetConverterStringToExpression.INSTANCE;
-    }
-
-    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetFormulaParserToken} and converting
      * that into a {@link ExpressionNumber}. Note the {@link Converter} does not support converting to other {@link Number} types and attempts will fail.
      */
@@ -233,38 +226,45 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterStringToSpreadsheetSelection}
+     * {@see SpreadsheetConverterTextToExpression}
      */
-    public static Converter<SpreadsheetConverterContext> stringToSelection() {
-        return SpreadsheetConverterStringToSpreadsheetSelection.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> textToExpression() {
+        return SpreadsheetConverterTextToExpression.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetConverterStringToSpreadsheetId}
+     * {@see SpreadsheetConverterTextToSpreadsheetSelection}
      */
-    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetId() {
-        return SpreadsheetConverterStringToSpreadsheetId.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> textToSelection() {
+        return SpreadsheetConverterTextToSpreadsheetSelection.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetConverterStringToSpreadsheetMetadataPropertyName}
+     * {@see SpreadsheetConverterTextToSpreadsheetId}
      */
-    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetMetadataPropertyName() {
-        return SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetId() {
+        return SpreadsheetConverterTextToSpreadsheetId.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetConverterStringToSpreadsheetError}
+     * {@see SpreadsheetConverterTextToSpreadsheetMetadataPropertyName}
      */
-    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetError() {
-        return SpreadsheetConverterStringToSpreadsheetError.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataPropertyName() {
+        return SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetConverterStringToSpreadsheetName}
+     * {@see SpreadsheetConverterTextToSpreadsheetError}
      */
-    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetName() {
-        return SpreadsheetConverterStringToSpreadsheetName.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetError() {
+        return SpreadsheetConverterTextToSpreadsheetError.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetName() {
+        return SpreadsheetConverterTextToSpreadsheetName.INSTANCE;
     }
     
     /**
@@ -282,10 +282,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterStringToValidationError}
+     * {@see SpreadsheetConverterTextToValidationError}
      */
-    public static Converter<SpreadsheetConverterContext> stringToValidationError() {
-        return SpreadsheetConverterStringToValidationError.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> textToValidationError() {
+        return SpreadsheetConverterTextToValidationError.INSTANCE;
     }
 
     /**
