@@ -273,7 +273,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetName() {
         return SpreadsheetConverterTextToSpreadsheetName.INSTANCE;
     }
-    
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetText}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetText() {
+        return SpreadsheetConverterTextToSpreadsheetText.INSTANCE;
+    }
+
     /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link TimeSpreadsheetFormulaParserToken} and converting
      * that into a {@link LocalTime}.
