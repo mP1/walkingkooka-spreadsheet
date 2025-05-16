@@ -70,7 +70,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                 .extractLocaleAwareValue(locale)
                 .get();
 
-        final ExpressionNumber value = SpreadsheetConverters.stringToExpressionNumber(
+        final ExpressionNumber value = SpreadsheetConverters.textToExpressionNumber(
                 SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
                         parserSelector,
                         PROVIDER_CONTEXT
@@ -80,7 +80,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                 ExpressionNumber.class,
                 SpreadsheetConverterContexts.basic(
                         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                        Converters.fake(),
+                        SpreadsheetConverters.basic(),
                         SpreadsheetLabelNameResolvers.fake(),
                         ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),

@@ -193,14 +193,14 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                         )
                 ), // string -> boolean
                 characterOrStringTo(
-                        SpreadsheetConverters.stringToDate(dateParser)
+                        SpreadsheetConverters.textToDate(dateParser)
                 ),
                 characterOrStringTo(
-                        SpreadsheetConverters.stringToDateTime(dateTimeParser)
+                        SpreadsheetConverters.textToDateTime(dateTimeParser)
                 ),
                 characterOrStringTo(
                         ExpressionNumberConverters.toExpressionNumberThen(
-                                SpreadsheetConverters.stringToExpressionNumber(
+                                SpreadsheetConverters.textToExpressionNumber(
                                         numberParser
                                 ),
                                 ExpressionNumberConverters.numberOrExpressionNumberToNumber()
@@ -216,7 +216,7 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                         )
                 ),
                 characterOrStringTo(
-                        SpreadsheetConverters.stringToTime(timeParser)
+                        SpreadsheetConverters.textToTime(timeParser)
                 )
         );
 

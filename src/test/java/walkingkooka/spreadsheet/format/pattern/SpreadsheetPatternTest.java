@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -1793,7 +1794,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 );
             }
 
-            private final Converter<SpreadsheetFormatterContext> converter = SpreadsheetConverters.basic();
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.basic();
 
             @Override
             public String currencySymbol() {
