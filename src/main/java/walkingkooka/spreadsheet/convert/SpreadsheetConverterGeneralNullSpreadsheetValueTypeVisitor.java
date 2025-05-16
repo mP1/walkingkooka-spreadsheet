@@ -177,7 +177,7 @@ final class SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor extends S
 
     @Override
     protected void visitShort() {
-        this.value = Short.valueOf((short) 0);
+        this.value = (short) 0;
     }
 
     @Override

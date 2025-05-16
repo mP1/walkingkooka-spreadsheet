@@ -126,21 +126,21 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertIntegerToString() {
         this.convertNumberToStringAndCheck(
-                Integer.valueOf(NUMBER)
+                (Integer)NUMBER
         );
     }
 
     @Test
     public void testConvertLongToString() {
         this.convertNumberToStringAndCheck(
-                Integer.valueOf(NUMBER)
+                (long)NUMBER
         );
     }
 
     @Test
     public void testConvertShortToString() {
         this.convertNumberToStringAndCheck(
-                Short.valueOf((short) NUMBER)
+                (short) NUMBER
         );
     }
 

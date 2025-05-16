@@ -1645,7 +1645,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         );
 
         this.checkEquals(
-                Long.valueOf((long) range.width() * (long) range.height()),
+                (long) range.width() * (long) range.height(),
                 range.cellStream()
                         .count()
         );
