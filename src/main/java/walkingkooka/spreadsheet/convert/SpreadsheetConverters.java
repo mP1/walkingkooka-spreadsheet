@@ -261,6 +261,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToSpreadsheetMetadataColor}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataColor() {
+        return SpreadsheetConverterTextToSpreadsheetMetadataColor.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetError}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetError() {
