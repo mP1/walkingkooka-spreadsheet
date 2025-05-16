@@ -555,13 +555,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link DecimalNumberContext} if the required properties are present.
      * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#CURRENCY_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_SEPARATOR}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#GROUP_SEPARATOR}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NEGATIVE_SIGN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#PERCENT_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#POSITIVE_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_NUMBER_SYMBOLS}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
      * </ul>
