@@ -174,8 +174,8 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
      * Handles translating arabic-hindu digits '0' to the equivalent {@link SpreadsheetFormatterContext#zeroDigit()}.
      * The length of the returned string will never change.
      */
-    private static String fixDigits(final String digits,
-                                    final char zeroDigit) {
+    static String fixDigits(final String digits,
+                            final char zeroDigit) {
         String fixed = digits;
         final int delta = -'0' + zeroDigit;
 

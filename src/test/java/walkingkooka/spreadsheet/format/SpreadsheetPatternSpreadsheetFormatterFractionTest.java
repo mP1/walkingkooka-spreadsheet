@@ -535,6 +535,36 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         );
     }
 
+    @Test
+    public void testFormatWithArabicDigits() {
+        this.formatAndCheck(
+                this.createFormatter("0/0"),
+                new BigDecimal(12),
+                this.createContext(ARABIC_ZERO_DIGIT),
+                arabicDigit(6) +
+                        arabicDigit(0) +
+                        "/" +
+                        arabicDigit(5)
+        );
+    }
+
+    @Test
+    public void testFormatWithArabicDigits2() {
+        // 6150/50
+        this.formatAndCheck(
+                this.createFormatter("00/00"),
+                new BigDecimal(123),
+                this.createContext(ARABIC_ZERO_DIGIT),
+                arabicDigit(6) +
+                        arabicDigit(1) +
+                        arabicDigit(5) +
+                        arabicDigit(0) +
+                        "/" +
+                        arabicDigit(5) +
+                        arabicDigit(0)
+        );
+    }
+
     //helpers ..........................................................................................................
 
     private void parseFormatAndCheck(final String pattern,
@@ -609,6 +639,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
     @Override
     public SpreadsheetFormatterContext createContext() {
+        return this.createContext('0');
+    }
+
+    public SpreadsheetFormatterContext createContext(final char zero) {
         return new FakeSpreadsheetFormatterContext() {
             @Override
             public String currencySymbol() {
@@ -638,7 +672,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
             @Override
             public char zeroDigit() {
-                return '0';
+                return zero;
             }
         };
     }
