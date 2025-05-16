@@ -123,7 +123,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
 
     private final SpreadsheetFormatterContext context;
 
-    private boolean currency;
+    private final boolean currency;
 
     private SpreadsheetPatternSpreadsheetFormatterNumberDigits digits;
 
