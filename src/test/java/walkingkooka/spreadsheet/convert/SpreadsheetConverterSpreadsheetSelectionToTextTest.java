@@ -18,16 +18,26 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetConverterSpreadsheetSelectionToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetSelectionToString> {
+public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetSelectionToText> {
 
     @Test
     public void testConvertSpreadsheetCellToString() {
         this.convertAndCheck(
                 SpreadsheetSelection.parseCell("$A$1"),
                 "$A$1"
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToCharacter() {
+        this.convertAndCheck(
+                SpreadsheetSelection.parseColumn("A"),
+                'A'
         );
     }
 
@@ -56,13 +66,36 @@ public final class SpreadsheetConverterSpreadsheetSelectionToStringTest extends 
     }
 
     @Override
-    public SpreadsheetConverterSpreadsheetSelectionToString createConverter() {
-        return SpreadsheetConverterSpreadsheetSelectionToString.INSTANCE;
+    public SpreadsheetConverterSpreadsheetSelectionToText createConverter() {
+        return SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE;
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
-        return SpreadsheetConverterContexts.fake();
+        return new FakeSpreadsheetConverterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type) {
+                return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                );
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(
+                        value,
+                        target,
+                        this
+                );
+            }
+
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
+        };
     }
 
     // toString.........................................................................................................
@@ -70,7 +103,7 @@ public final class SpreadsheetConverterSpreadsheetSelectionToStringTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterSpreadsheetSelectionToString.INSTANCE,
+                SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE,
                 "Selection to String"
         );
     }
@@ -78,7 +111,7 @@ public final class SpreadsheetConverterSpreadsheetSelectionToStringTest extends 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterSpreadsheetSelectionToString> type() {
-        return SpreadsheetConverterSpreadsheetSelectionToString.class;
+    public Class<SpreadsheetConverterSpreadsheetSelectionToText> type() {
+        return SpreadsheetConverterSpreadsheetSelectionToText.class;
     }
 }

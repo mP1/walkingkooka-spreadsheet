@@ -24,24 +24,29 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 /**
  * A {@link Converter} that converts {@link SpreadsheetSelection} to {@link String}.
  */
-final class SpreadsheetConverterSpreadsheetSelectionToString extends SpreadsheetConverter {
+final class SpreadsheetConverterSpreadsheetSelectionToText extends SpreadsheetConverter {
 
     /**
      * Singleton
      */
-    final static SpreadsheetConverterSpreadsheetSelectionToString INSTANCE = new SpreadsheetConverterSpreadsheetSelectionToString();
+    final static SpreadsheetConverterSpreadsheetSelectionToText INSTANCE = new SpreadsheetConverterSpreadsheetSelectionToText();
 
     /**
      * Private ctor use singleton.
      */
-    private SpreadsheetConverterSpreadsheetSelectionToString() {
+    private SpreadsheetConverterSpreadsheetSelectionToText() {
     }
 
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
-        return value instanceof SpreadsheetSelection && String.class == type;
+        return value instanceof SpreadsheetSelection &&
+                TO_TEXT.canConvert(
+                        null,
+                        type,
+                        context
+                );
     }
 
     @Override
@@ -50,17 +55,21 @@ final class SpreadsheetConverterSpreadsheetSelectionToString extends Spreadsheet
                                    final SpreadsheetConverterContext context) {
         return this.convertSpreadsheetSelectionToString(
                 (SpreadsheetSelection) value,
-                type
+                type,
+                context
         );
     }
 
     public <T> Either<T, String> convertSpreadsheetSelectionToString(final SpreadsheetSelection selection,
-                                                                     final Class<T> type) {
-        return this.successfulConversion(
+                                                                     final Class<T> type,
+                                                                     final SpreadsheetConverterContext context) {
+        return context.convert(
                 selection.text(),
                 type
         );
     }
+
+    private final static Converter<SpreadsheetConverterContext> TO_TEXT = SpreadsheetConverters.textToText();
 
     @Override
     public String toString() {
