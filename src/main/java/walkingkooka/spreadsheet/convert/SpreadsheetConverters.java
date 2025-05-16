@@ -240,6 +240,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToSpreadsheetColorName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
+        return SpreadsheetConverterTextToSpreadsheetColorName.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetId}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetId() {
