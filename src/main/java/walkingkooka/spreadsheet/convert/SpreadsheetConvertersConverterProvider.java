@@ -168,6 +168,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToSelection();
                 break;
+            case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToSpreadsheetColorName();
+                break;
             case TEXT_TO_SPREADSHEET_ID_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -283,6 +288,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_SELECTION = ConverterName.with(TEXT_TO_SELECTION_STRING);
 
+    private final static String TEXT_TO_SPREADSHEET_COLOR_NAME_STRING = "text-to-spreadsheet-color-name";
+
+    final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
+
     private final static String TEXT_TO_SPREADSHEET_ID_STRING = "text-to-spreadsheet-id";
 
     final static ConverterName TEXT_TO_SPREADSHEET_ID = ConverterName.with(TEXT_TO_SPREADSHEET_ID_STRING);
@@ -325,6 +334,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_ERROR),
                     converterInfo(TEXT_TO_EXPRESSION),
                     converterInfo(TEXT_TO_SELECTION),
+                    converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_ID),
                     converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),
