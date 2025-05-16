@@ -125,13 +125,21 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
                     .divide(BigInteger.TEN);
         }
 
+        final char zeroDigit = context.zeroDigit();
+
         final SpreadsheetPatternSpreadsheetFormatterFractionContext context2 = SpreadsheetPatternSpreadsheetFormatterFractionContext.with(
                 SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.fromSignum(sign),
                 SpreadsheetPatternSpreadsheetFormatterFractionDigits.numerator(
-                        numerator.toString()
+                        SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.fixDigits(
+                                numerator.toString(),
+                                zeroDigit
+                        )
                 ),
                 SpreadsheetPatternSpreadsheetFormatterFractionDigits.denominator(
-                        denominator.toString()
+                        SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.fixDigits(
+                                denominator.toString(),
+                                zeroDigit
+                        )
                 ),
                 this,
                 context
