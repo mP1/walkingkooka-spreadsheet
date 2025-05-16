@@ -102,6 +102,17 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithFormatPatternToString() {
+        final String pattern = "#.##";
+
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.FORMAT_PATTERN_TO_STRING + " (\"" + pattern + "\")",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.formatPatternToString(pattern)
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithCollection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.COLLECTION + " (error-to-number, error-to-string)",
