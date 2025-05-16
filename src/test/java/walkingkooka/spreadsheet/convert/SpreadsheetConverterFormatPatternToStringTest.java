@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -42,7 +43,8 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString> {
+public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString>
+        implements HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -313,6 +315,20 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                         KIND
                 )
         );
+    }
+
+    // Object...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentPattern() {
+        this.checkNotEquals(
+                SpreadsheetConverterFormatPatternToString.with("#.##")
+        );
+    }
+
+    @Override
+    public SpreadsheetConverterFormatPatternToString createObject() {
+        return SpreadsheetConverterFormatPatternToString.with("$0.00");
     }
 
     // class............................................................................................................

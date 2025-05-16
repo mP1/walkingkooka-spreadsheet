@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
@@ -85,6 +86,24 @@ final class SpreadsheetConverterFormatPatternToString extends SpreadsheetConvert
      * The pattern used to format values.
      */
     private final String pattern;
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.pattern.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetConverterFormatPatternToString &&
+                        this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final SpreadsheetConverterFormatPatternToString other) {
+        return this.pattern.equals(other.pattern);
+    }
 
     @Override
     public String toString() {
