@@ -17,14 +17,15 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetSelectionSetTest implements ClassTesting<SpreadsheetSelectionSet> {
+public final class SpreadsheetSelectionSetTest implements ClassTesting<SpreadsheetSelectionSet<?, ?>> {
 
     @Override
-    public Class<SpreadsheetSelectionSet> type() {
-        return SpreadsheetSelectionSet.class;
+    public Class<SpreadsheetSelectionSet<?, ?>> type() {
+        return Cast.to(SpreadsheetSelectionSet.class);
     }
 
     @Override
