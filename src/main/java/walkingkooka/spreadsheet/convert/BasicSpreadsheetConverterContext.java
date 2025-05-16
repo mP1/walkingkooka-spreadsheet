@@ -41,7 +41,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                                  final ExpressionNumberConverterContext context) {
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
-        Objects.requireNonNull(spreadsheetLabelNameResolver, "createSpreadsheetLabelNameResolver");
+        Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetConverterContext(
