@@ -377,7 +377,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 DecimalNumberSymbols.with(
                         this.negativeSign(),
                         this.positiveSign(),
-                        '0',
+                        this.zeroDigit(),
                         this.currencySymbol(),
                         this.decimalSeparator(),
                         this.exponentSymbol(),
