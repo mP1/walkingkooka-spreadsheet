@@ -826,7 +826,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 differentValidator
         );
-        this.formattedValueAndCheck(different);
+        this.formattedValueAndCheck(
+                different,
+                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+        );
     }
 
     private Optional<ValidatorSelector> validator() {
@@ -1100,8 +1103,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 ).setDateTimeSymbols(this.dateTimeSymbols())
                 .setParser(this.parser())
                 .setFormatter(this.formatter())
-                .setFormattedValue(this.formattedValue())
-                .setValidator(this.validator());
+                .setValidator(this.validator())
+                .setFormattedValue(this.formattedValue());
     }
 
     // json.............................................................................................................

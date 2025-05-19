@@ -170,7 +170,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         this.style,
-                        NO_FORMATTED_VALUE_CELL,
                         this.validator
                 );
     }
@@ -207,7 +206,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         this.style,
-                        NO_FORMATTED_VALUE_CELL,
                         this.validator
                 );
     }
@@ -251,17 +249,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     private SpreadsheetCell replaceDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
-        final SpreadsheetFormula formula = this.formula;
-
         return this.replace(
                 this.reference,
-                formula.setToken(SpreadsheetFormula.NO_TOKEN)
-                        .setText(formula.text()),
+                this.formula,
                 dateTimeSymbols,
                 this.formatter,
                 this.parser,
                 this.style,
-                NO_FORMATTED_VALUE_CELL,
                 this.validator
         );
     }
@@ -287,7 +281,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         Objects.requireNonNull(formatter, "formatter"),
                         this.parser,
                         this.style,
-                        NO_FORMATTED_VALUE_CELL,
                         this.validator
                 );
     }
@@ -326,7 +319,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.formatter,
                 parser,
                 this.style,
-                NO_FORMATTED_VALUE_CELL,
                 this.validator
         );
     }
@@ -352,7 +344,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         Objects.requireNonNull(style, "style"),
-                        NO_FORMATTED_VALUE_CELL,
                         this.validator
                 );
     }
@@ -371,17 +362,17 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public SpreadsheetCell setFormattedValue(final Optional<TextNode> formattedValue) {
         Objects.requireNonNull(formattedValue, "formattedValue");
 
-        final Optional<TextNode> formatted2 = formattedValue.map(TextNode::root);
-        return this.formattedValue.equals(formatted2) ?
+        final Optional<TextNode> formattedValueRoot = formattedValue.map(TextNode::root);
+        return this.formattedValue.equals(formattedValueRoot) ?
                 this :
-                this.replace(
+                new SpreadsheetCell(
                         this.reference,
                         this.formula,
                         this.dateTimeSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
-                        formatted2,
+                        formattedValueRoot,
                         this.validator
                 );
     }
@@ -407,7 +398,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         this.style,
-                        this.formattedValue,
                         Objects.requireNonNull(validator, "validator")
                 );
     }
@@ -428,7 +418,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     final Optional<SpreadsheetFormatterSelector> formatter,
                                     final Optional<SpreadsheetParserSelector> parser,
                                     final TextStyle style,
-                                    final Optional<TextNode> formatted,
                                     final Optional<ValidatorSelector> validator) {
         return new SpreadsheetCell(
                 reference,
@@ -437,7 +426,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 formatter,
                 parser,
                 style,
-                formatted,
+                NO_FORMATTED_VALUE_CELL,
                 validator
         );
     }
