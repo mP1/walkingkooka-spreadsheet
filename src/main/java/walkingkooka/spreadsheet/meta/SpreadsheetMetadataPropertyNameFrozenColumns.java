@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -79,6 +80,6 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
 
     @Override
     SpreadsheetColumnRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
-        return this.failParseUrlFragmentSaveValueUnsupported();
+        return SpreadsheetSelection.parseColumnRange(value);
     }
 }

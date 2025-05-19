@@ -39,6 +39,17 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
         this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
+    // parseUrlFragmentSaveValue........................................................................................
+
+    @Test
+    public void testParseUrlFragmentSaveValueQuery() {
+        this.checkEquals(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS
+                        .parseUrlFragmentSaveValue("A:B")
+        );
+    }
+
     @Test
     public void testToString() {
         this.toStringAndCheck(
