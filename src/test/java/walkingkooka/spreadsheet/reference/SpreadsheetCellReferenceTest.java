@@ -2075,7 +2075,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testUrlFragment2() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellOrCellRange("A1:B2"),
-                UrlFragment.parse("cell/A1:B2")
+                UrlFragment.parse("A1:B2")
         );
     }
 
@@ -2083,7 +2083,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testUrlFragmentAllCells() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.ALL_CELLS,
-                UrlFragment.parse("cell/*")
+                UrlFragment.parse("*")
         );
     }
 

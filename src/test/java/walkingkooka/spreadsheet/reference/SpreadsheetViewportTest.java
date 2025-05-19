@@ -332,7 +332,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testUrlFragmentCell() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.A1.setDefaultAnchor(),
-                "cell/A1"
+                "A1"
         );
     }
 
@@ -341,7 +341,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3")
                         .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
-                "cell/B2:C3/top-left"
+                "B2:C3/top-left"
         );
     }
 
@@ -350,7 +350,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3")
                         .setAnchor(SpreadsheetViewportAnchor.TOP_RIGHT),
-                "cell/B2:C3/top-right"
+                "B2:C3/top-right"
         );
     }
 
@@ -359,7 +359,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumn("Z")
                         .setDefaultAnchor(),
-                "column/Z"
+                "Z"
         );
     }
 
@@ -368,7 +368,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumnRange("X:Y")
                         .setAnchor(SpreadsheetViewportAnchor.LEFT),
-                "column/X:Y/left"
+                "X:Y/left"
         );
     }
 
@@ -377,7 +377,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumnRange("X:Y")
                         .setAnchor(SpreadsheetViewportAnchor.RIGHT),
-                "column/X:Y/right"
+                "X:Y/right"
         );
     }
 
@@ -386,7 +386,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellOrLabel("Label123")
                         .setDefaultAnchor(),
-                "cell/Label123"
+                "Label123"
         );
     }
 
@@ -395,7 +395,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseCellOrLabel("Label123")
                         .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT),
-                "cell/Label123/bottom-right"
+                "Label123/bottom-right"
         );
     }
 
