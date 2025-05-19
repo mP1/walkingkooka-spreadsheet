@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.FakeDateTimeContext;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -85,6 +86,11 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
 
     @Override
     public char zeroDigit() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DecimalNumberSymbols decimalNumberSymbols() {
         throw new UnsupportedOperationException();
     }
 
