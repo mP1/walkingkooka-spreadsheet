@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -47,6 +48,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +77,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * Holds an absent {@link DateTimeSymbols}
      */
     public final static Optional<DateTimeSymbols> NO_DATETIME_SYMBOLS = Optional.empty();
+
+    /**
+     * Holds an absent {@link DateTimeSymbols}
+     */
+    public final static Optional<DecimalNumberSymbols> NO_DECIMAL_NUMBER_SYMBOLS = Optional.empty();
 
     /**
      * Holds an absent {@link SpreadsheetFormatterSelector}.
@@ -110,6 +117,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 checkReference(reference),
                 checkFormula(formula),
                 NO_DATETIME_SYMBOLS,
+                NO_DECIMAL_NUMBER_SYMBOLS,
                 NO_FORMATTER,
                 NO_PARSER,
                 NO_STYLE,
@@ -124,6 +132,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private SpreadsheetCell(final SpreadsheetCellReference reference,
                             final SpreadsheetFormula formula,
                             final Optional<DateTimeSymbols> dateTimeSymbols,
+                            final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                             final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<SpreadsheetParserSelector> parser,
                             final TextStyle style,
@@ -134,6 +143,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         this.reference = reference;
         this.formula = formula;
         this.dateTimeSymbols = dateTimeSymbols;
+        this.decimalNumberSymbols = decimalNumberSymbols;
         this.formatter = formatter;
         this.parser = parser;
         this.style = style;
@@ -167,6 +177,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         checkReference(reference),
                         this.formula,
                         this.dateTimeSymbols,
+                        this.decimalNumberSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -203,6 +214,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.reference,
                         formula,
                         this.dateTimeSymbols,
+                        this.decimalNumberSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -253,6 +265,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 this.formula,
                 dateTimeSymbols,
+                this.decimalNumberSymbols,
                 this.formatter,
                 this.parser,
                 this.style,
@@ -264,6 +277,42 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * An optional {@link DateTimeSymbols} which will override the default {@link DateTimeSymbols}.
      */
     private final Optional<DateTimeSymbols> dateTimeSymbols;
+
+    // decimalNumberSymbols..................................................................................................
+
+    public Optional<DecimalNumberSymbols> decimalNumberSymbols() {
+        return this.decimalNumberSymbols;
+    }
+
+    /**
+     * Returns a {@link SpreadsheetCell} with the given {@link DecimalNumberSymbols}. If the formula has a token or
+     * expression they will be cleared.
+     */
+    public SpreadsheetCell setDecimalNumberSymbols(final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
+        return this.decimalNumberSymbols.equals(decimalNumberSymbols) ?
+                this :
+                this.replaceDecimalNumberSymbols(
+                        Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols")
+                );
+    }
+
+    private SpreadsheetCell replaceDecimalNumberSymbols(final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
+        return this.replace(
+                this.reference,
+                this.formula,
+                this.dateTimeSymbols,
+                decimalNumberSymbols,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
+        );
+    }
+
+    /**
+     * An optional {@link DecimalNumberSymbols} which will override the default {@link DecimalNumberSymbols}.
+     */
+    private final Optional<DecimalNumberSymbols> decimalNumberSymbols;
     
     // formatter........................................................................................................
 
@@ -278,6 +327,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.reference,
                         this.formula,
                         this.dateTimeSymbols,
+                        this.decimalNumberSymbols,
                         Objects.requireNonNull(formatter, "formatter"),
                         this.parser,
                         this.style,
@@ -316,6 +366,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 formula.setToken(SpreadsheetFormula.NO_TOKEN)
                         .setText(formula.text()),
                 this.dateTimeSymbols,
+                this.decimalNumberSymbols,
                 this.formatter,
                 parser,
                 this.style,
@@ -341,6 +392,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.reference,
                         this.formula,
                         this.dateTimeSymbols,
+                        this.decimalNumberSymbols,
                         this.formatter,
                         this.parser,
                         Objects.requireNonNull(style, "style"),
@@ -369,6 +421,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.reference,
                         this.formula,
                         this.dateTimeSymbols,
+                        this.decimalNumberSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -395,6 +448,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         reference,
                         this.formula,
                         this.dateTimeSymbols,
+                        this.decimalNumberSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -415,6 +469,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
                                     final Optional<DateTimeSymbols> dateTimeSymbols,
+                                    final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                                     final Optional<SpreadsheetFormatterSelector> formatter,
                                     final Optional<SpreadsheetParserSelector> parser,
                                     final TextStyle style,
@@ -423,6 +478,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 reference,
                 formula,
                 dateTimeSymbols,
+                decimalNumberSymbols,
                 formatter,
                 parser,
                 style,
@@ -440,6 +496,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
                 false == this.dateTimeSymbols.isPresent() &&
+                false == this.decimalNumberSymbols.isPresent() &&
                 false == this.formatter.isPresent() &&
                 false == this.parser.isPresent() &&
                 this.style.isEmpty() &&
@@ -498,6 +555,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     context.unmarshall(
                                             propertyAndValue,
                                             DateTimeSymbols.class
+                                    )
+                            )
+                    );
+                    break;
+                case DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING:
+                    patched = patched.setDecimalNumberSymbols(
+                            Optional.ofNullable(
+                                    context.unmarshall(
+                                            propertyAndValue,
+                                            DecimalNumberSymbols.class
                                     )
                             )
                     );
@@ -583,6 +650,21 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a {@link DecimalNumberSymbols}.
+     */
+    public JsonNode decimalNumberSymbolsPatch(final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return this.makePatch(
+                DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                context.marshall(
+                        this.decimalNumberSymbols.orElse(null)
+                )
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
      * a formatter.
      */
     public JsonNode formatterPatch(final JsonNodeMarshallContext context) {
@@ -650,6 +732,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.printTreeLabel(
                     "dateTimeSymbols",
                     this.dateTimeSymbols,
+                    printer
+            );
+
+            this.printTreeLabel(
+                    "decimalNumberSymbols",
+                    this.decimalNumberSymbols,
                     printer
             );
 
@@ -753,6 +841,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                                         final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
         DateTimeSymbols dateTimeSymbols = null;
+        DecimalNumberSymbols decimalNumberSymbols = null;
         SpreadsheetFormatterSelector formatter = null;
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetParserSelector parser = null;
@@ -769,6 +858,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     dateTimeSymbols = context.unmarshall(
                             child,
                             DateTimeSymbols.class
+                    );
+                    break;
+                case DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING:
+                    decimalNumberSymbols = context.unmarshall(
+                            child,
+                            DecimalNumberSymbols.class
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
@@ -802,6 +897,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 reference,
                 formula,
                 Optional.ofNullable(dateTimeSymbols),
+                Optional.ofNullable(decimalNumberSymbols),
                 Optional.ofNullable(formatter),
                 Optional.ofNullable(parser),
                 style,
@@ -851,6 +947,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
         }
 
+        if (this.decimalNumberSymbols.isPresent()) {
+            object = object.set(
+                    DATE_TIME_SYMBOLS_PROPERTY,
+                    context.marshall(this.decimalNumberSymbols)
+            );
+        }
+
         if (this.formatter.isPresent()) {
             object = object.set(
                     FORMATTER_PROPERTY,
@@ -896,6 +999,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String DATE_TIME_SYMBOLS_PROPERTY_STRING = "dateTimeSymbols";
 
+    private final static String DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING = "decimalNumberSymbols";
+
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
 
     private final static String PARSER_PROPERTY_STRING = "parser";
@@ -909,6 +1014,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
     final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_PROPERTY_STRING);
+
+    final static JsonPropertyName DECIMAL_NUMBER_SYMBOLS_PROPERTY = JsonPropertyName.with(DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING);
 
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
 
@@ -925,8 +1032,15 @@ public final class SpreadsheetCell implements CanBeEmpty,
     static {
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
         SpreadsheetFormula.EMPTY.hashCode();
+
+        final Locale locale = Locale.getDefault();
+
         DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(Locale.getDefault())
+                new DateFormatSymbols(locale)
+        );
+        DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(locale)
         );
         TextNode.NO_ATTRIBUTES.isEmpty();
         SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.toString();
@@ -947,6 +1061,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 this.formula,
                 this.dateTimeSymbols,
+                this.decimalNumberSymbols,
                 this.style,
                 this.parser,
                 this.formatter,
@@ -966,6 +1081,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.reference.equals(other.reference()) &&
                 this.formula.equals(other.formula()) &&
                 this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
+                this.decimalNumberSymbols.equals(other.decimalNumberSymbols) &&
                 this.style.equals(other.style) &&
                 this.parser.equals(other.parser) &&
                 this.formatter.equals(other.formatter) &&
@@ -983,6 +1099,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         builder.value(this.reference)
                 .value(this.formula)
                 .value(this.dateTimeSymbols)
+                .value(this.decimalNumberSymbols)
                 .value(this.style)
                 .enable(ToStringBuilderOption.QUOTE)
                 .value(this.parser.map(Object::toString).orElse(""))
