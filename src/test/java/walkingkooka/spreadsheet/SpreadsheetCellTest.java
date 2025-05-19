@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -62,7 +63,9 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -231,7 +234,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(different, differentReference);
         this.formulaAndCheck(different, this.formula());
-
+        this.dateTimeSymbolsAndCheck(different);
         this.referenceAndCheck(cell);
         this.checkEquals(
                 cell.parser(),
@@ -343,6 +346,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 Optional.of(SpreadsheetErrorKind.VALUE)
                         )
         );
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -372,6 +376,77 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+    // SetDateTimeSymbols...............................................................................................
+
+    @Test
+    public void testSetDateTimeSymbolsNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setDateTimeSymbols(null)
+        );
+    }
+
+    @Test
+    public void testSetDateTimeSymbolsSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(
+                cell,
+                cell.setDateTimeSymbols(
+                        cell.dateTimeSymbols()
+                )
+        );
+    }
+
+    @Test
+    public void testSetDateTimeSymbolsDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+
+        final Optional<DateTimeSymbols> differentDateTimeSymbols = this.dateTimeSymbols(Locale.FRANCE);
+        final SpreadsheetCell different = cell.setDateTimeSymbols(differentDateTimeSymbols);
+        assertNotSame(cell, different);
+
+        this.referenceAndCheck(different);
+        this.formulaAndCheck(different);
+        this.dateTimeSymbolsAndCheck(
+                different,
+                differentDateTimeSymbols
+        );
+        this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
+        this.validatorAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of dateTimeSymbols / value change.
+    }
+
+    private Optional<DateTimeSymbols> dateTimeSymbols() {
+        return SpreadsheetCell.NO_DATETIME_SYMBOLS;
+    }
+
+    private Optional<DateTimeSymbols> dateTimeSymbols(final Locale locale) {
+        return Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
+                )
+        );
+    }
+
+    private void dateTimeSymbolsAndCheck(final SpreadsheetCell cell) {
+        this.dateTimeSymbolsAndCheck(
+                cell,
+                this.dateTimeSymbols()
+        );
+    }
+
+    private void dateTimeSymbolsAndCheck(final SpreadsheetCell cell,
+                                         final Optional<DateTimeSymbols> dateTimeSymbols) {
+        this.checkEquals(
+                dateTimeSymbols,
+                cell.dateTimeSymbols(),
+                "dateTimeSymbols"
+        );
+    }
+    
     // SetFormatter.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -413,6 +488,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formula()
         );
+        this.formulaAndCheck(different);
         this.formatterAndCheck(
                 different,
                 differentFormatter
@@ -431,6 +507,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(different);
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheckNone(different);
         this.styleAndCheck(different);
@@ -530,6 +607,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formula()
         );
+        this.formulaAndCheck(different);
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(
                 different,
@@ -567,6 +646,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, formula);
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different, differentParser);
         this.styleAndCheck(different);
@@ -582,6 +662,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(different);
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheckNone(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -662,6 +743,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formula()
         );
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(
@@ -729,6 +811,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formula()
         );
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -806,6 +889,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formula()
         );
+        this.dateTimeSymbolsAndCheck(different);
         this.formatterAndCheck(
                 different,
                 this.formatter()
@@ -958,6 +1042,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testEqualsDifferentDateTimeSymbols() {
+        this.checkNotEquals(
+                this.createObject()
+                        .setDateTimeSymbols(
+                                this.dateTimeSymbols(Locale.FRANCE)
+                        )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentTextStyle() {
         this.checkNotEquals(
                 this.createObject()
@@ -1020,7 +1114,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         return SpreadsheetCell.with(
                         reference(column, row),
                         formula(formula)
-                )
+                ).setDateTimeSymbols(this.dateTimeSymbols())
                 .setParser(this.parser())
                 .setFormatter(this.formatter())
                 .setFormattedValue(this.formattedValue())
@@ -1190,6 +1284,29 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
+    public void testUnmarshallObjectDateTimeSymbols() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        final Optional<DateTimeSymbols> dateTimeSymbols = this.dateTimeSymbols(Locale.ENGLISH);
+
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(JsonPropertyName.with(reference().toString()),
+                                JsonNode.object()
+                                        .set(
+                                                SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
+                                                context.marshall(dateTimeSymbols.get())
+                                        )
+                        ),
+                SpreadsheetCell.with(
+                        reference(),
+                        SpreadsheetFormula.EMPTY
+                ).setDateTimeSymbols(dateTimeSymbols)
+        );
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
     public void testUnmarshallObjectReferenceAndFormulaAndFormatterAndFormattedCell() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
@@ -1243,6 +1360,83 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testMarshallWithDateTimeSymbols() {
+        this.marshallAndCheck(
+                SpreadsheetCell.with(
+                                reference(COLUMN, ROW),
+                                SpreadsheetFormula.EMPTY
+                                        .setText(FORMULA)
+                        ).setDateTimeSymbols(
+                                this.dateTimeSymbols(Locale.ENGLISH)
+                ),
+                "{\n" +
+                        "  \"B21\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1+2\"\n" +
+                        "    },\n" +
+                        "    \"dateTimeSymbols\": [\n" +
+                        "      {\n" +
+                        "        \"type\": \"date-time-symbols\",\n" +
+                        "        \"value\": {\n" +
+                        "          \"ampms\": [\n" +
+                        "            \"AM\",\n" +
+                        "            \"PM\"\n" +
+                        "          ],\n" +
+                        "          \"monthNames\": [\n" +
+                        "            \"January\",\n" +
+                        "            \"February\",\n" +
+                        "            \"March\",\n" +
+                        "            \"April\",\n" +
+                        "            \"May\",\n" +
+                        "            \"June\",\n" +
+                        "            \"July\",\n" +
+                        "            \"August\",\n" +
+                        "            \"September\",\n" +
+                        "            \"October\",\n" +
+                        "            \"November\",\n" +
+                        "            \"December\"\n" +
+                        "          ],\n" +
+                        "          \"monthNameAbbreviations\": [\n" +
+                        "            \"Jan\",\n" +
+                        "            \"Feb\",\n" +
+                        "            \"Mar\",\n" +
+                        "            \"Apr\",\n" +
+                        "            \"May\",\n" +
+                        "            \"Jun\",\n" +
+                        "            \"Jul\",\n" +
+                        "            \"Aug\",\n" +
+                        "            \"Sep\",\n" +
+                        "            \"Oct\",\n" +
+                        "            \"Nov\",\n" +
+                        "            \"Dec\"\n" +
+                        "          ],\n" +
+                        "          \"weekDayNames\": [\n" +
+                        "            \"Sunday\",\n" +
+                        "            \"Monday\",\n" +
+                        "            \"Tuesday\",\n" +
+                        "            \"Wednesday\",\n" +
+                        "            \"Thursday\",\n" +
+                        "            \"Friday\",\n" +
+                        "            \"Saturday\"\n" +
+                        "          ],\n" +
+                        "          \"weekDayNameAbbreviations\": [\n" +
+                        "            \"Sun\",\n" +
+                        "            \"Mon\",\n" +
+                        "            \"Tue\",\n" +
+                        "            \"Wed\",\n" +
+                        "            \"Thu\",\n" +
+                        "            \"Fri\",\n" +
+                        "            \"Sat\"\n" +
+                        "          ]\n" +
+                        "        }\n" +
+                        "      }\n" +
+                        "    ]\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    @Test
     public void testMarshallWithStyle() {
         final TextStyle italics = TextStyle.EMPTY
                 .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
@@ -1270,21 +1464,21 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testMarshallWithFormattedValue() {
         this.marshallAndCheck(
-                this.createCell(),
+                SpreadsheetCell.with(
+                        reference(COLUMN, ROW),
+                        SpreadsheetFormula.EMPTY
+                                .setText(FORMULA)
+                ).setFormattedValue(
+                        this.formattedValue()
+                ),
                 "{\n" +
                         "  \"B21\": {\n" +
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
-                        "    \"formatter\": \"text-format-pattern @@\",\n" +
-                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
                         "    \"formattedValue\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
-                        "    },\n" +
-                        "    \"validator\": {\n" +
-                        "      \"type\": \"validator-selector\",\n" +
-                        "      \"value\": \"validator123\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}"
@@ -2050,6 +2244,67 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testTreePrintableFormulaDateTimeSymbols() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetSelection.parseCell("$A$1"),
+                        formula(FORMULA_TEXT)
+                ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text:\n" +
+                        "      \"=1+2\"\n" +
+                        "  dateTimeSymbols:\n" +
+                        "    DateTimeSymbols\n" +
+                        "      ampms\n" +
+                        "        am\n" +
+                        "        pm\n" +
+                        "      monthNames\n" +
+                        "        January\n" +
+                        "        February\n" +
+                        "        March\n" +
+                        "        April\n" +
+                        "        May\n" +
+                        "        June\n" +
+                        "        July\n" +
+                        "        August\n" +
+                        "        September\n" +
+                        "        October\n" +
+                        "        November\n" +
+                        "        December\n" +
+                        "      monthNameAbbreviations\n" +
+                        "        Jan.\n" +
+                        "        Feb.\n" +
+                        "        Mar.\n" +
+                        "        Apr.\n" +
+                        "        May\n" +
+                        "        Jun.\n" +
+                        "        Jul.\n" +
+                        "        Aug.\n" +
+                        "        Sep.\n" +
+                        "        Oct.\n" +
+                        "        Nov.\n" +
+                        "        Dec.\n" +
+                        "      weekDayNames\n" +
+                        "        Sunday\n" +
+                        "        Monday\n" +
+                        "        Tuesday\n" +
+                        "        Wednesday\n" +
+                        "        Thursday\n" +
+                        "        Friday\n" +
+                        "        Saturday\n" +
+                        "      weekDayNameAbbreviations\n" +
+                        "        Sun.\n" +
+                        "        Mon.\n" +
+                        "        Tue.\n" +
+                        "        Wed.\n" +
+                        "        Thu.\n" +
+                        "        Fri.\n" +
+                        "        Sat.\n"
+        );
+    }
+
+    @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleParsePattern() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
@@ -2294,7 +2549,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"validator123\" \"formattedValue-text\""
+                "B21 =1+2 \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"validator123\" \"formattedValue-text\""
         );
     }
 

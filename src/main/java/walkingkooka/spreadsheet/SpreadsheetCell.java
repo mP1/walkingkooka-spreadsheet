@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -45,9 +46,11 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.text.DateFormatSymbols;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -67,6 +70,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * A {@link Comparator} that only uses the {@link SpreadsheetCell#REFERENCE_COMPARATOR}.
      */
     public static final Comparator<SpreadsheetCell> REFERENCE_COMPARATOR = Comparator.comparing(SpreadsheetCell::reference);
+
+    /**
+     * Holds an absent {@link DateTimeSymbols}
+     */
+    public final static Optional<DateTimeSymbols> NO_DATETIME_SYMBOLS = Optional.empty();
 
     /**
      * Holds an absent {@link SpreadsheetFormatterSelector}.
@@ -101,6 +109,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
                 checkReference(reference),
                 checkFormula(formula),
+                NO_DATETIME_SYMBOLS,
                 NO_FORMATTER,
                 NO_PARSER,
                 NO_STYLE,
@@ -114,6 +123,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private SpreadsheetCell(final SpreadsheetCellReference reference,
                             final SpreadsheetFormula formula,
+                            final Optional<DateTimeSymbols> dateTimeSymbols,
                             final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<SpreadsheetParserSelector> parser,
                             final TextStyle style,
@@ -123,6 +133,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         this.reference = reference;
         this.formula = formula;
+        this.dateTimeSymbols = dateTimeSymbols;
         this.formatter = formatter;
         this.parser = parser;
         this.style = style;
@@ -155,6 +166,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.replace(
                         checkReference(reference),
                         this.formula,
+                        this.dateTimeSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -191,6 +203,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.replace(
                         this.reference,
                         formula,
+                        this.dateTimeSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -219,6 +232,45 @@ public final class SpreadsheetCell implements CanBeEmpty,
         // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
     }
 
+    // dateTimeSymbols..................................................................................................
+
+    public Optional<DateTimeSymbols> dateTimeSymbols() {
+        return this.dateTimeSymbols;
+    }
+
+    /**
+     * Returns a {@link SpreadsheetCell} with the given {@link DateTimeSymbols}. If the formula has a token or
+     * expression they will be cleared.
+     */
+    public SpreadsheetCell setDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
+        return this.dateTimeSymbols.equals(dateTimeSymbols) ?
+                this :
+                this.replaceDateTimeSymbols(
+                        Objects.requireNonNull(dateTimeSymbols, "dateTimeSymbols")
+                );
+    }
+
+    private SpreadsheetCell replaceDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
+        final SpreadsheetFormula formula = this.formula;
+
+        return this.replace(
+                this.reference,
+                formula.setToken(SpreadsheetFormula.NO_TOKEN)
+                        .setText(formula.text()),
+                dateTimeSymbols,
+                this.formatter,
+                this.parser,
+                this.style,
+                NO_FORMATTED_VALUE_CELL,
+                this.validator
+        );
+    }
+
+    /**
+     * An optional {@link DateTimeSymbols} which will override the default {@link DateTimeSymbols}.
+     */
+    private final Optional<DateTimeSymbols> dateTimeSymbols;
+    
     // formatter........................................................................................................
 
     public Optional<SpreadsheetFormatterSelector> formatter() {
@@ -231,6 +283,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.replace(
                         this.reference,
                         this.formula,
+                        this.dateTimeSymbols,
                         Objects.requireNonNull(formatter, "formatter"),
                         this.parser,
                         this.style,
@@ -269,6 +322,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.reference,
                 formula.setToken(SpreadsheetFormula.NO_TOKEN)
                         .setText(formula.text()),
+                this.dateTimeSymbols,
                 this.formatter,
                 parser,
                 this.style,
@@ -294,6 +348,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.replace(
                         this.reference,
                         this.formula,
+                        this.dateTimeSymbols,
                         this.formatter,
                         this.parser,
                         Objects.requireNonNull(style, "style"),
@@ -322,6 +377,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.replace(
                         this.reference,
                         this.formula,
+                        this.dateTimeSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -347,6 +403,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.replace(
                         reference,
                         this.formula,
+                        this.dateTimeSymbols,
                         this.formatter,
                         this.parser,
                         this.style,
@@ -367,6 +424,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
+                                    final Optional<DateTimeSymbols> dateTimeSymbols,
                                     final Optional<SpreadsheetFormatterSelector> formatter,
                                     final Optional<SpreadsheetParserSelector> parser,
                                     final TextStyle style,
@@ -375,6 +433,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
                 reference,
                 formula,
+                dateTimeSymbols,
                 formatter,
                 parser,
                 style,
@@ -391,6 +450,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
+                false == this.dateTimeSymbols.isPresent() &&
                 false == this.formatter.isPresent() &&
                 false == this.parser.isPresent() &&
                 this.style.isEmpty() &&
@@ -441,6 +501,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                             propertyAndValue,
                                             context
                                     )
+                    );
+                    break;
+                case DATE_TIME_SYMBOLS_PROPERTY_STRING:
+                    patched = patched.setDateTimeSymbols(
+                            Optional.ofNullable(
+                                    context.unmarshall(
+                                            propertyAndValue,
+                                            DateTimeSymbols.class
+                                    )
+                            )
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
@@ -504,6 +574,21 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.makePatch(
                 FORMULA_PROPERTY,
                 context.marshall(this.formula)
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a {@link DateTimeSymbols}.
+     */
+    public JsonNode dateTimeSymbolsPatch(final JsonNodeMarshallContext context) {
+        checkContext(context);
+
+        return this.makePatch(
+                DATE_TIME_SYMBOLS_PROPERTY,
+                context.marshall(
+                        this.dateTimeSymbols.orElse(null)
+                )
         );
     }
 
@@ -576,6 +661,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
         printer.indent();
         {
             this.formula.printTree(printer);
+
+            {
+                final Optional<DateTimeSymbols> dateTimeSymbols = this.dateTimeSymbols();
+                if (dateTimeSymbols.isPresent()) {
+                    printer.println("dateTimeSymbols:");
+                    printer.indent();
+                    {
+                        dateTimeSymbols.get()
+                                .printTree(printer);
+                    }
+                    printer.outdent();
+                }
+            }
 
             {
                 final Optional<SpreadsheetFormatterSelector> formatter = this.formatter();
@@ -667,6 +765,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                                         final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
+        DateTimeSymbols dateTimeSymbols = null;
         SpreadsheetFormatterSelector formatter = null;
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetParserSelector parser = null;
@@ -678,6 +777,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
             switch (name.value()) {
                 case FORMULA_PROPERTY_STRING:
                     formula = context.unmarshall(child, SpreadsheetFormula.class);
+                    break;
+                case DATE_TIME_SYMBOLS_PROPERTY_STRING:
+                    dateTimeSymbols = context.unmarshall(
+                            child,
+                            DateTimeSymbols.class
+                    );
                     break;
                 case FORMATTER_PROPERTY_STRING:
                     formatter = context.unmarshall(
@@ -709,6 +814,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
                 reference,
                 formula,
+                Optional.ofNullable(dateTimeSymbols),
                 Optional.ofNullable(formatter),
                 Optional.ofNullable(parser),
                 style,
@@ -750,6 +856,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private JsonNode marshallProperties(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object()
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));
+
+        if (this.dateTimeSymbols.isPresent()) {
+            object = object.set(
+                    DATE_TIME_SYMBOLS_PROPERTY,
+                    context.marshall(this.dateTimeSymbols)
+            );
+        }
 
         if (this.formatter.isPresent()) {
             object = object.set(
@@ -794,6 +907,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String FORMULA_PROPERTY_STRING = "formula";
 
+    private final static String DATE_TIME_SYMBOLS_PROPERTY_STRING = "dateTimeSymbols";
+
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
 
     private final static String PARSER_PROPERTY_STRING = "parser";
@@ -805,6 +920,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final static String VALIDATOR_PROPERTY_STRING = "validator";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
+
+    final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_PROPERTY_STRING);
 
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
 
@@ -821,6 +938,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
     static {
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
         SpreadsheetFormula.EMPTY.hashCode();
+        DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.getDefault())
+        );
         TextNode.NO_ATTRIBUTES.isEmpty();
         SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.toString();
 
@@ -839,6 +959,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return Objects.hash(
                 this.reference,
                 this.formula,
+                this.dateTimeSymbols,
                 this.style,
                 this.parser,
                 this.formatter,
@@ -857,6 +978,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private boolean equals0(final SpreadsheetCell other) {
         return this.reference.equals(other.reference()) &&
                 this.formula.equals(other.formula()) &&
+                this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
                 this.style.equals(other.style) &&
                 this.parser.equals(other.parser) &&
                 this.formatter.equals(other.formatter) &&
@@ -873,6 +995,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.reference)
                 .value(this.formula)
+                .value(this.dateTimeSymbols)
                 .value(this.style)
                 .enable(ToStringBuilderOption.QUOTE)
                 .value(this.parser.map(Object::toString).orElse(""))
