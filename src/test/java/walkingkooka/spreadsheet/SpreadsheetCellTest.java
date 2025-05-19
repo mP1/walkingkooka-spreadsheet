@@ -85,6 +85,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     private final static SpreadsheetCellReference REFERENCE = SpreadsheetSelection.A1;
     private final static String FORMULA = "=1+2";
 
+    private final static TextStyle BOLD_ITALICS = TextStyle.EMPTY.setValues(
+                Maps.of(
+                        TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
+                        TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC
+                )
+        );
+
+
     @Test
     public void testWithNullReferenceFails() {
         assertThrows(
@@ -1156,14 +1164,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .set(
                         SpreadsheetCell.FORMULA_PROPERTY, 
                         context.marshall(this.formula()))
-                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(this.boldAndItalics()))
+                .set(
+                        SpreadsheetCell.STYLE_PROPERTY,
+                        context.marshall(BOLD_ITALICS)
+                )
         );
     }
 
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyle() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
-
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
@@ -1177,34 +1186,32 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                                 context.marshall(this.formula())
                                         ).set(
                                                 SpreadsheetCell.STYLE_PROPERTY,
-                                                context.marshall(boldAndItalics)
+                                                context.marshall(BOLD_ITALICS)
                                         )
                         ),
                 SpreadsheetCell.with(
                         reference(),
                         this.formula()
-                ).setStyle(boldAndItalics)
+                ).setStyle(BOLD_ITALICS)
         );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatter() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
-
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
                                 .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
                                 .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
                         ),
                 SpreadsheetCell.with(
                                 reference(),
                                 this.formula()
-                        ).setStyle(boldAndItalics)
+                        ).setStyle(BOLD_ITALICS)
                         .setFormatter(formatter())
         );
     }
@@ -1212,8 +1219,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
-
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
@@ -1224,11 +1229,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 ),
                                 JsonNode.object()
                                         .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
                                         .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), this.formula())
-                        .setStyle(boldAndItalics)
+                        .setStyle(BOLD_ITALICS)
                         .setFormattedValue(formattedValue()));
     }
 
@@ -1310,8 +1315,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatterAndFormattedCell() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
-
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
@@ -1320,12 +1323,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 JsonPropertyName.with(reference().toString()),
                                 JsonNode.object()
                                         .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
                                         .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
                                         .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 SpreadsheetCell.with(reference(), this.formula())
-                        .setStyle(boldAndItalics)
+                        .setStyle(BOLD_ITALICS)
                         .setFormatter(formatter())
                         .setFormattedValue(formattedValue()));
     }
@@ -1471,11 +1474,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testMarshallWithStyleAndFormattedValue() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
-
         this.marshallAndCheck(
                 this.createCell()
-                        .setStyle(boldAndItalics)
+                        .setStyle(BOLD_ITALICS)
                         .setFormattedValue(this.formattedValue()),
                 "{\n" +
                         "  \"A1\": {\n" +
@@ -2204,7 +2205,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 .setToken(token())
                                 .setExpression(expression())
                                 .setExpressionValue(Optional.of(3))
-                ).setStyle(this.boldAndItalics()),
+                ).setStyle(BOLD_ITALICS),
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
@@ -2293,7 +2294,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(this.boldAndItalics())
+                        .setStyle(BOLD_ITALICS)
                         .setParser(this.parser())
                         .setFormula(
                                 this.formula(FORMULA_TEXT)
@@ -2331,7 +2332,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(this.boldAndItalics())
+                        .setStyle(BOLD_ITALICS)
                         .setParser(this.parser())
                         .setFormatter(this.formatter())
                         .setFormula(
@@ -2377,7 +2378,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         .setToken(token())
                                         .setExpression(expression())
                                         .setExpressionValue(Optional.of(3))
-                        ).setStyle(this.boldAndItalics())
+                        ).setStyle(BOLD_ITALICS)
                         .setFormatter(formatter()),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -2413,7 +2414,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         .setToken(token())
                                         .setExpression(expression())
                                         .setExpressionValue(Optional.of(3))
-                        ).setStyle(this.boldAndItalics())
+                        ).setStyle(BOLD_ITALICS)
                         .setFormatter(formatter())
                         .setFormattedValue(formattedValue()),
                 "Cell A1\n" +
@@ -2532,7 +2533,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testToStringWithTextStyle() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
+        final TextStyle boldAndItalics = BOLD_ITALICS;
 
         this.toStringAndCheck(
                 SpreadsheetCell.with(
@@ -2590,15 +2591,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private SpreadsheetCell createCell() {
         return this.createObject();
-    }
-
-    private TextStyle boldAndItalics() {
-        return TextStyle.EMPTY.setValues(
-                Maps.of(
-                        TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
-                        TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC
-                )
-        );
     }
 
     // class............................................................................................................
