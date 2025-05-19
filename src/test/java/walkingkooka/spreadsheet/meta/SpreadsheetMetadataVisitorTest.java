@@ -23,6 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
@@ -54,6 +55,7 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -266,6 +268,20 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         );
     }
 
+    @Test
+    public void testVisitDateTimeSymbols() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDateTimeSymbols(final DateTimeSymbols s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.ENGLISH)
+                ));
+    }
+    
     @Test
     public void testVisitDecimalNumberSymbols() {
         new TestSpreadsheetMetadataVisitor() {

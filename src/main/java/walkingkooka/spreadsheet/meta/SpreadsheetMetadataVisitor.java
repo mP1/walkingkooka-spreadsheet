@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.PluginNameSet;
@@ -146,6 +147,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitDateTimeFormatter(final SpreadsheetFormatterSelector selector) {
+        // nop
+    }
+
+    protected void visitDateTimeSymbols(final DateTimeSymbols symbols) {
         // nop
     }
 
