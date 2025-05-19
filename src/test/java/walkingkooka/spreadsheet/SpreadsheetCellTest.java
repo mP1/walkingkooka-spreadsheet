@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -63,6 +64,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -122,6 +124,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(cell);
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheck(cell);
         this.parserAndCheck(cell);
         this.styleAndCheck(cell);
@@ -140,6 +143,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -156,6 +160,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(cell);
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -182,6 +187,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
         );
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -207,6 +213,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 formula
         );
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -245,6 +252,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different, differentReference);
         this.formulaAndCheck(different, this.formula());
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.referenceAndCheck(cell);
         this.checkEquals(
                 cell.parser(),
@@ -327,6 +335,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 differentFormula
         );
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -353,6 +362,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
         );
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -418,6 +428,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 differentDateTimeSymbols
         );
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -450,6 +461,79 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 dateTimeSymbols,
                 cell.dateTimeSymbols(),
                 "dateTimeSymbols"
+        );
+    }
+
+    // SetDecimalNumberSymbols..........................................................................................
+
+    @Test
+    public void testSetDecimalNumberSymbolsNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setDecimalNumberSymbols(null)
+        );
+    }
+
+    @Test
+    public void testSetDecimalNumberSymbolsSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(
+                cell,
+                cell.setDecimalNumberSymbols(
+                        cell.decimalNumberSymbols()
+                )
+        );
+    }
+
+    @Test
+    public void testSetDecimalNumberSymbolsDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+
+        final Optional<DecimalNumberSymbols> differentDecimalNumberSymbols = this.decimalNumberSymbols(Locale.FRANCE);
+        final SpreadsheetCell different = cell.setDecimalNumberSymbols(differentDecimalNumberSymbols);
+        assertNotSame(cell, different);
+
+        this.referenceAndCheck(different);
+        this.formulaAndCheck(different);
+        this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(
+                different,
+                differentDecimalNumberSymbols
+        );
+        this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
+        this.validatorAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of decimalNumberSymbols / value change.
+    }
+
+    private Optional<DecimalNumberSymbols> decimalNumberSymbols() {
+        return SpreadsheetCell.NO_DECIMAL_NUMBER_SYMBOLS;
+    }
+
+    private Optional<DecimalNumberSymbols> decimalNumberSymbols(final Locale locale) {
+        return Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(locale)
+                )
+        );
+    }
+
+    private void decimalNumberSymbolsAndCheck(final SpreadsheetCell cell) {
+        this.decimalNumberSymbolsAndCheck(
+                cell,
+                this.decimalNumberSymbols()
+        );
+    }
+
+    private void decimalNumberSymbolsAndCheck(final SpreadsheetCell cell,
+                                              final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
+        this.checkEquals(
+                decimalNumberSymbols,
+                cell.decimalNumberSymbols(),
+                "decimalNumberSymbols"
         );
     }
     
@@ -496,6 +580,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(cell);
+        this.decimalNumberSymbolsAndCheck(cell);
         this.formatterAndCheck(
                 different,
                 differentFormatter
@@ -515,6 +600,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different);
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheckNone(different);
         this.styleAndCheck(different);
@@ -616,6 +702,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(
                 different,
@@ -654,6 +741,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different, REFERENCE);
         this.formulaAndCheck(different, formula);
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different, differentParser);
         this.styleAndCheck(different);
@@ -670,6 +758,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different);
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheckNone(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -751,6 +840,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(
@@ -819,6 +909,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -900,6 +991,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(
                 different,
                 this.formatter()
@@ -1040,6 +1132,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testEqualsDifferentDecimalNumberSymbols() {
+        this.checkNotEquals(
+                this.createObject()
+                        .setDecimalNumberSymbols(
+                                this.decimalNumberSymbols(Locale.FRANCE)
+                        )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentTextStyle() {
         this.checkNotEquals(
                 this.createObject()
@@ -1101,6 +1203,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         reference,
                         this.formula(formula)
                 ).setDateTimeSymbols(this.dateTimeSymbols())
+                .setDecimalNumberSymbols(this.decimalNumberSymbols())
                 .setParser(this.parser())
                 .setFormatter(this.formatter())
                 .setValidator(this.validator())
@@ -1284,6 +1387,30 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         reference(),
                         SpreadsheetFormula.EMPTY
                 ).setDateTimeSymbols(dateTimeSymbols)
+        );
+    }
+
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void testUnmarshallObjectDecimalNumberSymbols() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        final Optional<DecimalNumberSymbols> decimalNumberSymbols = this.decimalNumberSymbols(Locale.ENGLISH);
+
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(JsonPropertyName.with(reference().toString()),
+                                JsonNode.object()
+                                        .set(
+                                                SpreadsheetCell.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                                                context.marshall(decimalNumberSymbols.get())
+                                        )
+                        ),
+                SpreadsheetCell.with(
+                        reference(),
+                        SpreadsheetFormula.EMPTY
+                ).setDecimalNumberSymbols(decimalNumberSymbols)
         );
     }
 
@@ -2294,6 +2421,47 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "        Thu.\n" +
                         "        Fri.\n" +
                         "        Sat.\n"
+        );
+    }
+
+
+    @Test
+    public void testTreePrintableFormulaDecimalNumberSymbols() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetSelection.parseCell("$A$1"),
+                        formula(FORMULA_TEXT)
+                ).setDecimalNumberSymbols(this.decimalNumberSymbols(LOCALE)),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text:\n" +
+                        "      \"=1+2\"\n" +
+                        "  decimalNumberSymbols:\n" +
+                        "    DecimalNumberSymbols\n" +
+                        "      negativeSign\n" +
+                        "        '-'\n" +
+                        "      positiveSign\n" +
+                        "        '+'\n" +
+                        "      zeroDigit\n" +
+                        "        '0'\n" +
+                        "      currencySymbol\n" +
+                        "        \"$\"\n" +
+                        "      decimalSeparator\n" +
+                        "        '.'\n" +
+                        "      exponentSymbol\n" +
+                        "        \"e\"\n" +
+                        "      groupSeparator\n" +
+                        "        ','\n" +
+                        "      infinitySymbol\n" +
+                        "        \"∞\"\n" +
+                        "      monetaryDecimalSeparator\n" +
+                        "        '.'\n" +
+                        "      nanSymbol\n" +
+                        "        \"NaN\"\n" +
+                        "      percentSymbol\n" +
+                        "        '%'\n" +
+                        "      permillSymbol\n" +
+                        "        '‰'\n"
         );
     }
 
