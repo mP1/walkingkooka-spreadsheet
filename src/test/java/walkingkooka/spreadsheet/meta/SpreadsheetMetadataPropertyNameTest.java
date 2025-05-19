@@ -20,10 +20,12 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -44,6 +46,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -52,6 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
         implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>>,
+        ConstantsTesting<SpreadsheetMetadataPropertyName<?>>,
         HasSpreadsheetPatternKindTesting {
 
     @Test
@@ -597,6 +601,21 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
         );
+    }
+
+    // constants........................................................................................................
+
+    @Test
+    public void testConstantsAll() {
+        this.checkNotEquals(
+                Sets.empty(),
+                SpreadsheetMetadataPropertyName.ALL
+        );
+    }
+
+    @Override
+    public Set<SpreadsheetMetadataPropertyName<?>> intentionalDuplicateConstants() {
+        return Set.of();
     }
 
     // ClassTesting.....................................................................................................

@@ -107,15 +107,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     static final Map<String, SpreadsheetMetadataPropertyName<?>> CONSTANTS = Maps.sorted(SpreadsheetMetadataPropertyName.CASE_SENSITIVITY.comparator());
 
     /**
-     * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(SpreadsheetColorName)} and {@link SpreadsheetMetadataPropertyName#numberedColor(int)}.
-     */
-    public final static Set<SpreadsheetMetadataPropertyName<?>> ALL = Sets.readOnly(
-            new TreeSet<>(
-                    CONSTANTS.values()
-            )
-    );
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final SpreadsheetMetadataPropertyName<T> constant) {
@@ -387,6 +378,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewport</code> {@link SpreadsheetViewport}.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetViewport> VIEWPORT = registerConstant(SpreadsheetMetadataPropertyNameViewport.instance());
+
+    /**
+     * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(SpreadsheetColorName)} and {@link SpreadsheetMetadataPropertyName#numberedColor(int)}.
+     */
+    public final static Set<SpreadsheetMetadataPropertyName<?>> ALL = Sets.readOnly(
+            new TreeSet<>(
+                    CONSTANTS.values()
+            )
+    );
 
     /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
