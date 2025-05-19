@@ -1621,7 +1621,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testPatchSameText() {
+    public void testPatchFormulaTextSame() {
         final String text = "=123";
 
         this.patchAndCheck(
@@ -1642,7 +1642,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testPatchDifferentText() {
+    public void testPatchFormulaText() {
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
         final String text = "=2";
 
@@ -1668,52 +1668,28 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testPatchSetStyle() {
+    public void testPatchDateTimeSymbols() {
+        final Optional<DateTimeSymbols> dateTimeSymbols = dateTimeSymbols(LOCALE);
+
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
                 formula("=1")
         );
 
-        final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"));
-
         this.patchAndCheck(
                 cell,
                 JsonNode.object()
                         .set(
-                                SpreadsheetCell.STYLE_PROPERTY,
-                                JsonNodeMarshallContexts.basic()
-                                        .marshall(style)
+                                SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
+                                marshallContext()
+                                        .marshall(dateTimeSymbols.get())
                         ),
-                cell.setStyle(style)
+                cell.setDateTimeSymbols(dateTimeSymbols)
         );
     }
 
     @Test
-    public void testPatchSetStyle2() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
-        );
-
-        final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"))
-                .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
-
-        this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.STYLE_PROPERTY,
-                                JsonNodeMarshallContexts.basic()
-                                        .marshall(style)
-                        ),
-                cell.setStyle(style)
-        );
-    }
-
-    @Test
-    public void testPatchSetFormatter() {
+    public void testPatchFormatter() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
                 formula("=1")
@@ -1744,7 +1720,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testPatchRemoveFormatter() {
+    public void testPatchFormatterRemove() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
                 formula("=1")
@@ -1765,6 +1741,51 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 cell.setFormatter(
                         SpreadsheetCell.NO_FORMATTER
                 )
+        );
+    }
+
+    @Test
+    public void testPatchStyle() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                formula("=1")
+        );
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"));
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.STYLE_PROPERTY,
+                                JsonNodeMarshallContexts.basic()
+                                        .marshall(style)
+                        ),
+                cell.setStyle(style)
+        );
+    }
+
+    @Test
+    public void testPatchStyle2() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                formula("=1")
+        );
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"))
+                .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.STYLE_PROPERTY,
+                                JsonNodeMarshallContexts.basic()
+                                        .marshall(style)
+                        ),
+                cell.setStyle(style)
         );
     }
 
