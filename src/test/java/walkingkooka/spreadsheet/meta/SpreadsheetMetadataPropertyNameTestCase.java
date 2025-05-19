@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -187,8 +188,12 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             final HasUrlFragment has = (HasUrlFragment) value;
             text = has.urlFragment().value();
         } else {
-
-            text = String.valueOf(value);
+            if(value instanceof HasText) {
+                final HasText has = (HasText) value;
+                text = has.text();
+            } else {
+                text = String.valueOf(value);
+            }
         }
 
         try {
