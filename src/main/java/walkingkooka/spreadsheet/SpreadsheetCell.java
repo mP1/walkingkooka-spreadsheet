@@ -569,7 +569,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
      */
     public JsonNode formulaPatch(final JsonNodeMarshallContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return this.makePatch(
                 FORMULA_PROPERTY,
@@ -582,7 +582,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * a {@link DateTimeSymbols}.
      */
     public JsonNode dateTimeSymbolsPatch(final JsonNodeMarshallContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return this.makePatch(
                 DATE_TIME_SYMBOLS_PROPERTY,
@@ -597,7 +597,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * a formatter.
      */
     public JsonNode formatterPatch(final JsonNodeMarshallContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return this.makePatch(
                 FORMATTER_PROPERTY,
@@ -612,7 +612,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * a parse-pattern.
      */
     public JsonNode parserPatch(final JsonNodeMarshallContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return this.makePatch(
                 PARSER_PROPERTY,
@@ -627,7 +627,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * patch a style
      */
     public JsonNode stylePatch(final JsonNodeMarshallContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return this.makePatch(
                 STYLE_PROPERTY,
@@ -647,10 +647,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                         .toString()
                         )
                 );
-    }
-
-    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
-        return Objects.requireNonNull(context, "context");
     }
 
     // TreePrintable....................................................................................................
