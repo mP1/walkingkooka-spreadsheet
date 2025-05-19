@@ -32,7 +32,6 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
@@ -1618,36 +1617,19 @@ public abstract class SpreadsheetSelection implements HasText,
     // HasUrlFragment...................................................................................................
 
     /**
-     * Produces a fragment that is composed of the selection type a slash and the string form of a selection.
+     * Sames of the url fragment are shown below
      * <pre>
-     * cell/A1
-     * cell/Label123
-     * column/A1
-     * column/B2:C3
+     * A1
+     * Label123
+     * A1
+     * B2:C3
+     * *
      * </pre>
      */
     @Override
     public final UrlFragment urlFragment() {
-        UrlFragment urlFragment;
-
-        if (this.isCell() || this.isCellRange() || this.isLabelName()) {
-            urlFragment = SpreadsheetUrlFragments.CELL;
-        } else {
-            if (this.isColumn() || this.isColumnRange()) {
-                urlFragment = SpreadsheetUrlFragments.COLUMN;
-            } else {
-                if (this.isRow() || this.isRowRange()) {
-                    urlFragment = SpreadsheetUrlFragments.ROW;
-                } else {
-                    throw new IllegalStateException("Unknown selection " + this);
-                }
-            }
-        }
-
-        return urlFragment.appendSlashThen(
-                UrlFragment.with(
-                        this.toStringMaybeStar()
-                )
+        return UrlFragment.with(
+                this.toStringMaybeStar()
         );
     }
 

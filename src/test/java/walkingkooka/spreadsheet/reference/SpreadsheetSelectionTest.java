@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.store.HasNotFoundTextTesting;
@@ -1678,57 +1677,6 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
                 "Cell not found: \"Z99\""
-        );
-    }
-
-    // HasUrlFragment...................................................................................................
-
-    @Test
-    public void testHasUrlFragmentCell() {
-        this.urlFragmentAndCheck(
-                SpreadsheetSelection.A1,
-                "cell/A1"
-        );
-    }
-
-    @Test
-    public void testHasUrlFragmentCellRange() {
-        this.urlFragmentAndCheck(
-                SpreadsheetSelection.parseCellOrCellRange("B2:C3"),
-                "cell/B2:C3"
-        );
-    }
-
-    @Test
-    public void testHasUrlFragmentColumn() {
-        this.urlFragmentAndCheck(
-                SpreadsheetSelection.parseColumn("D"),
-                "column/D"
-        );
-    }
-
-    @Test
-    public void testHasUrlFragmentColumnRange() {
-        this.urlFragmentAndCheck(
-                SpreadsheetSelection.parseColumnRange("E:F"),
-                "column/E:F"
-        );
-    }
-
-    @Test
-    public void testHasUrlFragmentLabel() {
-        this.urlFragmentAndCheck(
-                SpreadsheetSelection.labelName("Label456"),
-                "cell/Label456"
-        );
-    }
-
-    private void urlFragmentAndCheck(final SpreadsheetSelection selection,
-                                     final String expected) {
-        this.checkEquals(
-                UrlFragment.with(expected),
-                selection.urlFragment(),
-                () -> selection + " urlFragment"
         );
     }
 

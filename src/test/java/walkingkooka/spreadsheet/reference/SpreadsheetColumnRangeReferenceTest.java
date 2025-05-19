@@ -1377,7 +1377,7 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     public void testUrlFragment2() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.parseColumnRange("A:B"),
-                UrlFragment.parse("column/A:B")
+                UrlFragment.parse("A:B")
         );
     }
 
@@ -1385,7 +1385,7 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     public void testUrlFragmentAllColumns() {
         this.urlFragmentAndCheck(
                 SpreadsheetSelection.ALL_COLUMNS,
-                UrlFragment.parse("column/*")
+                UrlFragment.parse("*")
         );
     }
 

@@ -1872,15 +1872,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public final void testHasUrlFragment() {
         final S selection = this.createSelection();
-        final String toString = selection.toString();
 
         this.urlFragmentAndCheck(
                 selection,
                 UrlFragment.with(
-                        (selection.isLabelName() ? "cell" : selection.selectionTypeName())
-                                .replace("-range", "") +
-                                "/" +
-                                toString
+                        selection.toStringMaybeStar()
                 )
         );
     }
