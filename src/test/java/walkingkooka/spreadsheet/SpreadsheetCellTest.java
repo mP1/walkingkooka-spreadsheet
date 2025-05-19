@@ -116,6 +116,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(cell);
         this.formulaAndCheck(cell);
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheck(cell);
         this.parserAndCheck(cell);
         this.styleAndCheck(cell);
@@ -133,6 +134,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 reference.toRelative()
         );
         this.formulaAndCheck(cell);
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -148,6 +150,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(cell);
         this.formulaAndCheck(cell);
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -173,6 +176,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         SpreadsheetErrorKind.VALUE)
                         )
         );
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -197,6 +201,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 cell,
                 formula
         );
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -321,6 +326,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 differentFormula
         );
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -489,6 +495,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 this.formula()
         );
         this.formulaAndCheck(different);
+        this.dateTimeSymbolsAndCheck(cell);
         this.formatterAndCheck(
                 different,
                 differentFormatter
@@ -1277,7 +1284,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         .setFormula(SpreadsheetFormula.EMPTY)
                         .setParser(this.parser())
                         .setFormula(formula)
-                        .setFormattedValue(formattedValue())
                         .setFormattedValue(formattedValue())
         );
     }
