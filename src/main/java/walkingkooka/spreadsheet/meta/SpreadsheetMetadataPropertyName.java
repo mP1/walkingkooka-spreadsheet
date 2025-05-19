@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterName;
@@ -84,6 +85,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Predicate;
 
 /**
@@ -102,6 +105,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
      */
     static final Map<String, SpreadsheetMetadataPropertyName<?>> CONSTANTS = Maps.sorted(SpreadsheetMetadataPropertyName.CASE_SENSITIVITY.comparator());
+
+    /**
+     * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(SpreadsheetColorName)} and {@link SpreadsheetMetadataPropertyName#numberedColor(int)}.
+     */
+    public final static Set<SpreadsheetMetadataPropertyName<?>> ALL = Sets.readOnly(
+            new TreeSet<>(
+                    CONSTANTS.values()
+            )
+    );
 
     /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
