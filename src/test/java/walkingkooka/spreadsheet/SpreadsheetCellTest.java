@@ -863,7 +863,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "validator"
         );
     }
-    
+
     // SetFormattedValue................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -982,16 +982,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         .setFormula(
                                 parseFormula("=1+C4")
                         )
-        );
-    }
-
-    private SpreadsheetFormula parseFormula(final String text) {
-        return SpreadsheetFormula.parse(
-                TextCursors.charSequence(text),
-                SpreadsheetFormulaParsers.valueOrExpression(
-                        Parsers.never()
-                ),
-                SPREADSHEET_PARSER_CONTEXT
         );
     }
 
@@ -1114,8 +1104,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .setValidator(this.validator());
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
-    
+    // json.............................................................................................................
+
     @Test
     public void testUnmarshallBooleanFails() {
         this.unmarshallFails(JsonNode.booleanNode(true));
@@ -1601,13 +1591,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public SpreadsheetCell createHateosResource() {
         return this.createCell();
-    }
-
-    private SpreadsheetCell createCell(final String reference) {
-        return SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell(reference),
-                formula("1+2")
-        );
     }
 
     // patch............................................................................................................
@@ -2612,6 +2595,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private SpreadsheetCell createCell() {
         return this.createObject();
+    }
+
+    private SpreadsheetCell createCell(final String reference) {
+        return SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell(reference),
+                formula("1+2")
+        );
+    }
+
+    private SpreadsheetFormula parseFormula(final String text) {
+        return SpreadsheetFormula.parse(
+                TextCursors.charSequence(text),
+                SpreadsheetFormulaParsers.valueOrExpression(
+                        Parsers.never()
+                ),
+                SPREADSHEET_PARSER_CONTEXT
+        );
     }
 
     // class............................................................................................................
