@@ -20,6 +20,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -80,6 +81,6 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
 
     @Override
     SpreadsheetRowRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
-        return this.failParseUrlFragmentSaveValueUnsupported();
+        return SpreadsheetSelection.parseRowRange(value);
     }
 }
