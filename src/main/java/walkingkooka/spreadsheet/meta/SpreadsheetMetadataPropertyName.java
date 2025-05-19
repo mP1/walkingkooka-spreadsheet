@@ -24,6 +24,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.Name;
@@ -79,6 +80,7 @@ import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
@@ -169,6 +171,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime.instance());
 
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DateTimeSymbols}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<DateTimeSymbols> DATE_TIME_SYMBOLS = registerConstant(SpreadsheetMetadataPropertyNameDateTimeSymbols.instance());
+    
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DecimalNumberSymbols}</code>
      */
@@ -760,6 +767,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         final EmailAddress emailAddress = EmailAddress.parse("user@example.com");
         final LocalDateTime now = LocalDateTime.now();
 
+        final Locale locale = Locale.getDefault();
+
         AuditInfo.with(
                 emailAddress,
                 now,
@@ -768,6 +777,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         );
         Color.BLACK.alpha();
         ConverterSelector.parse("Dummy");
+        DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(locale)
+        );
         DecimalNumberSymbols.with(
                 '-',
                 '+',

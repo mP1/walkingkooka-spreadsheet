@@ -26,6 +26,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
@@ -98,6 +99,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -234,6 +236,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testLoadFromLocale() {
+        final Locale locale = Locale.ENGLISH;
+
         this.checkEquals(
                 SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("dddd, mmmm d, yyyy").spreadsheetFormatterSelector())
@@ -241,6 +245,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss;dddd, mmmm d, yy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0;dddd, mmmm d, yyyy \\a\\t h:mm:ss;dddd, mmmm d, yyyy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss;mmmm d, yy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0;mmmm d, yyyy \\a\\t h:mm:ss;mmmm d, yyyy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm").spreadsheetParserSelector())
                         .set(
+                                SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(locale)
+                                )
+                        ).set(
                                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                                 DecimalNumberSymbols.with(
                                         '-', // negativeSign
@@ -256,8 +265,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                                         '%', // percentSymbols
                                         '\u2030' // permillSymbol
                                 )
-                        )
-                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                        ).set(SpreadsheetMetadataPropertyName.LOCALE, locale)
                         .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#,##0.###").spreadsheetFormatterSelector())
                         .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#,##0.###;#,##0").spreadsheetParserSelector())
                         .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("h:mm:ss AM/PM").spreadsheetFormatterSelector())
@@ -265,7 +273,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ','),
                 SpreadsheetMetadata.EMPTY.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.ENGLISH
+                        locale
                 ).loadFromLocale()
         );
     }

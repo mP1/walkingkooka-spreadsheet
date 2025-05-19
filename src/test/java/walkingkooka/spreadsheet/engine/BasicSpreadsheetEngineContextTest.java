@@ -940,6 +940,58 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"dateTimeOffset\": \"-25569\",\n" +
                         "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                        "  \"dateTimeSymbols\": {\n" +
+                        "    \"ampms\": [\n" +
+                        "      \"am\",\n" +
+                        "      \"pm\"\n" +
+                        "    ],\n" +
+                        "    \"monthNames\": [\n" +
+                        "      \"January\",\n" +
+                        "      \"February\",\n" +
+                        "      \"March\",\n" +
+                        "      \"April\",\n" +
+                        "      \"May\",\n" +
+                        "      \"June\",\n" +
+                        "      \"July\",\n" +
+                        "      \"August\",\n" +
+                        "      \"September\",\n" +
+                        "      \"October\",\n" +
+                        "      \"November\",\n" +
+                        "      \"December\"\n" +
+                        "    ],\n" +
+                        "    \"monthNameAbbreviations\": [\n" +
+                        "      \"Jan.\",\n" +
+                        "      \"Feb.\",\n" +
+                        "      \"Mar.\",\n" +
+                        "      \"Apr.\",\n" +
+                        "      \"May\",\n" +
+                        "      \"Jun.\",\n" +
+                        "      \"Jul.\",\n" +
+                        "      \"Aug.\",\n" +
+                        "      \"Sep.\",\n" +
+                        "      \"Oct.\",\n" +
+                        "      \"Nov.\",\n" +
+                        "      \"Dec.\"\n" +
+                        "    ],\n" +
+                        "    \"weekDayNames\": [\n" +
+                        "      \"Sunday\",\n" +
+                        "      \"Monday\",\n" +
+                        "      \"Tuesday\",\n" +
+                        "      \"Wednesday\",\n" +
+                        "      \"Thursday\",\n" +
+                        "      \"Friday\",\n" +
+                        "      \"Saturday\"\n" +
+                        "    ],\n" +
+                        "    \"weekDayNameAbbreviations\": [\n" +
+                        "      \"Sun.\",\n" +
+                        "      \"Mon.\",\n" +
+                        "      \"Tue.\",\n" +
+                        "      \"Wed.\",\n" +
+                        "      \"Thu.\",\n" +
+                        "      \"Fri.\",\n" +
+                        "      \"Sat.\"\n" +
+                        "    ]\n" +
+                        "  },\n" +
                         "  \"decimalNumberSymbols\": {\n" +
                         "    \"negativeSign\": \"!\",\n" +
                         "    \"positiveSign\": \"@\",\n" +
@@ -1120,6 +1172,58 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                         "  \"dateTimeOffset\": \"-25569\",\n" +
                         "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                        "  \"dateTimeSymbols\": {\n" +
+                        "    \"ampms\": [\n" +
+                        "      \"am\",\n" +
+                        "      \"pm\"\n" +
+                        "    ],\n" +
+                        "    \"monthNames\": [\n" +
+                        "      \"January\",\n" +
+                        "      \"February\",\n" +
+                        "      \"March\",\n" +
+                        "      \"April\",\n" +
+                        "      \"May\",\n" +
+                        "      \"June\",\n" +
+                        "      \"July\",\n" +
+                        "      \"August\",\n" +
+                        "      \"September\",\n" +
+                        "      \"October\",\n" +
+                        "      \"November\",\n" +
+                        "      \"December\"\n" +
+                        "    ],\n" +
+                        "    \"monthNameAbbreviations\": [\n" +
+                        "      \"Jan.\",\n" +
+                        "      \"Feb.\",\n" +
+                        "      \"Mar.\",\n" +
+                        "      \"Apr.\",\n" +
+                        "      \"May\",\n" +
+                        "      \"Jun.\",\n" +
+                        "      \"Jul.\",\n" +
+                        "      \"Aug.\",\n" +
+                        "      \"Sep.\",\n" +
+                        "      \"Oct.\",\n" +
+                        "      \"Nov.\",\n" +
+                        "      \"Dec.\"\n" +
+                        "    ],\n" +
+                        "    \"weekDayNames\": [\n" +
+                        "      \"Sunday\",\n" +
+                        "      \"Monday\",\n" +
+                        "      \"Tuesday\",\n" +
+                        "      \"Wednesday\",\n" +
+                        "      \"Thursday\",\n" +
+                        "      \"Friday\",\n" +
+                        "      \"Saturday\"\n" +
+                        "    ],\n" +
+                        "    \"weekDayNameAbbreviations\": [\n" +
+                        "      \"Sun.\",\n" +
+                        "      \"Mon.\",\n" +
+                        "      \"Tue.\",\n" +
+                        "      \"Wed.\",\n" +
+                        "      \"Thu.\",\n" +
+                        "      \"Fri.\",\n" +
+                        "      \"Sat.\"\n" +
+                        "    ]\n" +
+                        "  },\n" +
                         "  \"decimalNumberSymbols\": {\n" +
                         "    \"negativeSign\": \"!\",\n" +
                         "    \"positiveSign\": \"@\",\n" +
