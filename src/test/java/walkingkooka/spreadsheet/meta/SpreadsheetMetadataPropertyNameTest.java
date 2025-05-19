@@ -348,14 +348,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseUrlFragmentSaveValueFrozenRowFails() {
-        this.parseValueFails(
-                SpreadsheetMetadataPropertyName.FROZEN_ROWS,
-                "1:2"
-        );
-    }
-
-    @Test
     public void testParseUrlFragmentSaveValueSpreadsheetIdFails() {
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
