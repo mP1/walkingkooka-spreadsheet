@@ -653,7 +653,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return Objects.requireNonNull(context, "context");
     }
 
-    // TreePrintable.....................................................................................................
+    // TreePrintable....................................................................................................
 
     @Override
     public void printTree(final IndentingPrinter printer) {
@@ -662,72 +662,74 @@ public final class SpreadsheetCell implements CanBeEmpty,
         {
             this.formula.printTree(printer);
 
-            {
-                final Optional<DateTimeSymbols> dateTimeSymbols = this.dateTimeSymbols();
-                if (dateTimeSymbols.isPresent()) {
-                    printer.println("dateTimeSymbols:");
-                    printer.indent();
-                    {
-                        dateTimeSymbols.get()
-                                .printTree(printer);
-                    }
-                    printer.outdent();
-                }
+            this.printTreeLabel(
+                    "dateTimeSymbols",
+                    this.dateTimeSymbols,
+                    printer
+            );
+
+            this.printTreeLabel(
+                    "formatter",
+                    this.formatter,
+                    printer
+            );
+
+            this.printTreeLabel(
+                    "parser",
+                    this.parser,
+                    printer
+            );
+
+            final TextStyle style = this.style;
+            if(style.isNotEmpty()) {
+                this.printTreeLabel(
+                        "style",
+                        style,
+                        printer
+                );
             }
 
-            {
-                final Optional<SpreadsheetFormatterSelector> formatter = this.formatter();
-                if (formatter.isPresent()) {
-                    printer.println("formatter:");
-                    printer.indent();
-                    {
-                        formatter.get()
-                                .printTree(printer);
-                    }
-                    printer.outdent();
-                }
-            }
+            this.printTreeLabel(
+                    "formattedValue",
+                    this.formattedValue,
+                    printer
+            );
 
-            {
-                final Optional<SpreadsheetParserSelector> parser = this.parser();
-                if (parser.isPresent()) {
-                    printer.println("parser:");
-                    printer.indent();
-                    {
-                        parser.get().printTree(printer);
-                    }
-                    printer.outdent();
-                }
-            }
-
-            this.style.printTree(printer);
-
-            {
-                final Optional<TextNode> formatted = this.formattedValue();
-                if (formatted.isPresent()) {
-                    printer.println("formattedValue:");
-                    printer.indent();
-                    {
-                        formatted.get().printTree(printer);
-                    }
-                    printer.outdent();
-                }
-            }
-
-            {
-                final Optional<ValidatorSelector> validator = this.validator();
-                if (validator.isPresent()) {
-                    printer.println("validator:");
-                    printer.indent();
-                    {
-                        validator.get()
-                                .printTree(printer);
-                    }
-                    printer.outdent();
-                }
-            }
+            this.printTreeLabel(
+                    "validator",
+                    this.validator,
+                    printer
+            );
         }
         printer.outdent();
+    }
+
+    private void printTreeLabel(final String label,
+                                final Optional<?> value,
+                                final IndentingPrinter printer) {
+        if (value.isPresent()) {
+            this.printTreeLabel(
+                    label,
+                    value.get(),
+                    printer
+            );
+        }
+    }
+
+    private void printTreeLabel(final String label,
+                                final Object value,
+                                final IndentingPrinter printer) {
+            printer.print(label);
+            printer.println(":");
+
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                        value,
+                        printer
+                );
+            }
+            printer.outdent();
     }
 
     // JsonNodeContext...................................................................................................

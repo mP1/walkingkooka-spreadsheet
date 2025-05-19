@@ -2226,9 +2226,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "    expressionValue:\n" +
                         "      3\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                        "  style:\n" +
+                        "    TextStyle\n" +
+                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -2294,7 +2295,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParsePattern() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleParser() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
@@ -2325,14 +2326,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  parser:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                        "  style:\n" +
+                        "    TextStyle\n" +
+                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParsePatternFormatter() {
+    public void testTreePrintableFormulaTokenExpressionValueStyleParserFormatter() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
                         .setFormula(SpreadsheetFormula.EMPTY)
@@ -2367,9 +2369,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  parser:\n" +
                         "    date-time-parse-pattern\n" +
                         "      \"dd/mm/yyyy\"\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                        "  style:\n" +
+                        "    TextStyle\n" +
+                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -2403,9 +2406,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
                         "      \"@@\"\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                        "  style:\n" +
+                        "    TextStyle\n" +
+                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -2440,11 +2444,43 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
                         "      \"@@\"\n" +
-                        "  TextStyle\n" +
-                        "    font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "    font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                        "  style:\n" +
+                        "    TextStyle\n" +
+                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
                         "  formattedValue:\n" +
                         "    Text \"formattedValue-text\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableFormulaValidator() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                                SpreadsheetSelection.parseCell("$A$1"),
+                                formula(FORMULA_TEXT)
+                                        .setToken(token())
+                                        .setExpression(expression())
+                                        .setExpressionValue(Optional.of(3))
+                        ).setValidator(this.validator()),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    token:\n" +
+                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                        "          NumberSpreadsheetFormula \"1\"\n" +
+                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                        "          NumberSpreadsheetFormula \"2\"\n" +
+                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                        "    expression:\n" +
+                        "      AddExpression\n" +
+                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                        "    expressionValue:\n" +
+                        "      3\n" +
+                        "  validator:\n" +
+                        "    validator123\n"
         );
     }
 
