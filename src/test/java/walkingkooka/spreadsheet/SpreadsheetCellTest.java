@@ -2490,7 +2490,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     // toString.........................................................................................................
 
     @Test
-    public void testToStringEmptySpreadsheetFormula() {
+    public void testToStringEmptyFormula() {
         this.toStringAndCheck(
                 REFERENCE.setFormula(SpreadsheetFormula.EMPTY),
                 REFERENCE.toString()
@@ -2498,42 +2498,59 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testToStringWithTextStyle() {
-        final TextStyle boldAndItalics = this.boldAndItalics();
-
-        this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
-                        this.formula()).setStyle(boldAndItalics),
-                REFERENCE + " " + this.formula() + " " + boldAndItalics);
-    }
-
-    @Test
-    public void testToStringWithoutErrorWithoutFormatterWithoutFormatted() {
+    public void testToStringWithDateTimeSymbols() {
         this.toStringAndCheck(
                 SpreadsheetCell.with(
                         REFERENCE,
                         this.formula()
-                ),
-                REFERENCE + " " + this.formula()
+                ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
+                "A1 =1+2 ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\""
         );
     }
 
     @Test
-    public void testToStringWithoutErrorWithFormatterWithoutFormatted() {
+    public void testToStringWithFormatter() {
         this.toStringAndCheck(
                 SpreadsheetCell.with(
-                                REFERENCE,
-                                this.formula()
-                        )
-                        .setFormatter(this.formatter()),
-                REFERENCE + " " + this.formula() + " \"text-format-pattern @@\""
+                        REFERENCE,
+                        this.formula()
+                ).setFormatter(this.formatter()),
+                "A1 =1+2 \"text-format-pattern @@\""
         );
     }
 
     @Test
-    public void testToStringWithoutError() {
+    public void testToStringWithParser() {
         this.toStringAndCheck(
-                this.createCell(),
-                "A1 =1+2 \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"validator123\" \"formattedValue-text\""
+                SpreadsheetCell.with(
+                        REFERENCE,
+                        this.formula()
+                ).setParser(this.parser()),
+                "A1 =1+2 \"date-time-parse-pattern dd/mm/yyyy\""
+        );
+    }
+
+    @Test
+    public void testToStringWithTextStyle() {
+        final TextStyle boldAndItalics = this.boldAndItalics();
+
+        this.toStringAndCheck(
+                SpreadsheetCell.with(
+                        REFERENCE,
+                        this.formula()
+                ).setStyle(boldAndItalics),
+                "A1 =1+2 {font-style=ITALIC, font-weight=bold}"
+        );
+    }
+
+    @Test
+    public void testToStringWithValidator() {
+        this.toStringAndCheck(
+                SpreadsheetCell.with(
+                        REFERENCE,
+                        this.formula()
+                ).setValidator(this.differentValidator()),
+                "A1 =1+2 \"different-validator-456\""
         );
     }
 
