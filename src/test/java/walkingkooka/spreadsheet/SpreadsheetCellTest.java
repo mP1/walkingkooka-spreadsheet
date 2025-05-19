@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -83,9 +82,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         ToStringTesting<SpreadsheetCell>,
         TreePrintableTesting,
         SpreadsheetMetadataTesting {
-    private final static int COLUMN = 1;
-    private final static int ROW = 20;
-    private final static SpreadsheetCellReference REFERENCE = reference(COLUMN, ROW);
+    private final static SpreadsheetCellReference REFERENCE = SpreadsheetSelection.A1;
     private final static String FORMULA = "=1+2";
 
     @Test
@@ -258,23 +255,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     private static SpreadsheetCellReference differentReference() {
-        return reference(99, 888);
+        return SpreadsheetSelection.parseCell("B2");
     }
 
     private static SpreadsheetCellReference reference() {
-        return reference(COLUMN, ROW);
-    }
-
-    private static SpreadsheetCellReference reference(final int column,
-                                                      final int row) {
-        return SpreadsheetSelection.cell(
-                SpreadsheetReferenceKind.RELATIVE.column(column),
-                SpreadsheetReferenceKind.RELATIVE.row(row)
-        );
+        return REFERENCE;
     }
 
     private void referenceAndCheck(final SpreadsheetCell cell) {
-        this.referenceAndCheck(cell, REFERENCE);
+        this.referenceAndCheck(
+                cell,
+                REFERENCE
+        );
     }
 
     private void referenceAndCheck(final SpreadsheetCell cell,
@@ -1016,34 +1008,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testEqualsDifferentFormulaEquals() {
+    public void testEqualsDifferentReference() {
         this.checkNotEquals(
                 this.createObject(
-                        COLUMN,
-                        ROW,
+                        REFERENCE.add(1,1),
+                        FORMULA
+                )
+        );
+    }
+
+
+    @Test
+    public void testEqualsDifferentFormula() {
+        this.checkNotEquals(
+                this.createObject(
+                        REFERENCE,
                         FORMULA + "99"
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentColumn() {
-        this.checkNotEquals(
-                this.createObject(
-                        99,
-                        ROW,
-                        FORMULA
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentRow() {
-        this.checkNotEquals(
-                this.createObject(
-                        COLUMN,
-                        99,
-                        FORMULA
                 )
         );
     }
@@ -1109,18 +1089,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public SpreadsheetCell createObject() {
         return this.createObject(
-                COLUMN,
-                ROW,
+                REFERENCE,
                 FORMULA
         );
     }
 
-    private SpreadsheetCell createObject(final int column,
-                                         final int row,
+    private SpreadsheetCell createObject(final SpreadsheetCellReference reference,
                                          final String formula) {
         return SpreadsheetCell.with(
-                        reference(column, row),
-                        formula(formula)
+                        reference,
+                        this.formula(formula)
                 ).setDateTimeSymbols(this.dateTimeSymbols())
                 .setParser(this.parser())
                 .setFormatter(this.formatter())
@@ -1358,25 +1336,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testMarshallWithFormula() {
         this.marshallAndCheck(
                 SpreadsheetCell.with(
-                        reference(COLUMN, ROW),
+                        REFERENCE,
                         SpreadsheetFormula.EMPTY
                                 .setText(FORMULA)
                 ),
-                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}}}");
+                "{\"A1\": {\"formula\": {\"text\": \"=1+2\"}}}");
     }
 
     @Test
     public void testMarshallWithDateTimeSymbols() {
         this.marshallAndCheck(
                 SpreadsheetCell.with(
-                                reference(COLUMN, ROW),
-                                SpreadsheetFormula.EMPTY
-                                        .setText(FORMULA)
-                        ).setDateTimeSymbols(
-                                this.dateTimeSymbols(Locale.ENGLISH)
+                        REFERENCE,
+                        SpreadsheetFormula.EMPTY
+                                .setText(FORMULA)
+                ).setDateTimeSymbols(
+                        this.dateTimeSymbols(Locale.ENGLISH)
                 ),
                 "{\n" +
-                        "  \"B21\": {\n" +
+                        "  \"A1\": {\n" +
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
@@ -1449,13 +1427,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.marshallAndCheck(
                 SpreadsheetCell.with(
-                                reference(COLUMN, ROW),
+                                REFERENCE,
                                 SpreadsheetFormula.EMPTY
                                         .setText(FORMULA)
                         )
                         .setStyle(italics),
                 "{\n" +
-                        "  \"B21\": {\n" +
+                        "  \"A1\": {\n" +
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
@@ -1471,14 +1449,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testMarshallWithFormattedValue() {
         this.marshallAndCheck(
                 SpreadsheetCell.with(
-                        reference(COLUMN, ROW),
+                        REFERENCE,
                         SpreadsheetFormula.EMPTY
                                 .setText(FORMULA)
                 ).setFormattedValue(
                         this.formattedValue()
                 ),
                 "{\n" +
-                        "  \"B21\": {\n" +
+                        "  \"A1\": {\n" +
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
@@ -1500,7 +1478,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         .setStyle(boldAndItalics)
                         .setFormattedValue(this.formattedValue()),
                 "{\n" +
-                        "  \"B21\": {\n" +
+                        "  \"A1\": {\n" +
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
@@ -2555,7 +2533,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                "B21 =1+2 \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"validator123\" \"formattedValue-text\""
+                "A1 =1+2 \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"validator123\" \"formattedValue-text\""
         );
     }
 
