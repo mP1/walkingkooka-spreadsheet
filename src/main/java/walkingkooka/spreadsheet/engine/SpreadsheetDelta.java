@@ -57,7 +57,6 @@ import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -2656,17 +2655,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private final static CharacterConstant CSV_COMMA = CharacterConstant.COMMA;
-
-    /**
-     * Accepts a {@link Collection} of any {@link SpreadsheetSelection} and returns a {@link JsonString} with the selections
-     * as a CSV.
-     */
-    private static <S extends SpreadsheetSelection> JsonString marshallSelection(final Collection<S> selections,
-                                                                                 final JsonPropertyName name) {
-        return JsonNode.string(
-                csv(selections)
-        ).setName(name);
-    }
 
     /**
      * Creates a JSON object with each cell one of the properties.
