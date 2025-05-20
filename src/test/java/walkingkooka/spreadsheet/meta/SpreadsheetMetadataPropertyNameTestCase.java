@@ -66,7 +66,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
         this.checkEquals(
                 false,
-                TextStylePropertyName.values()
+                TextStylePropertyName.VALUES
                         .stream()
                         .anyMatch(p -> p.value().equals(property))
         );
