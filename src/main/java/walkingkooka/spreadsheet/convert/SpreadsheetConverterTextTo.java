@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.convert.TextTemplatedConverter;
+import walkingkooka.convert.ToTextTemplatedConverter;
 
 /**
  * Base converter that handles converting text like source into a target type..
  */
-abstract class SpreadsheetConverterTextTo implements TextTemplatedConverter<SpreadsheetConverterContext> {
+abstract class SpreadsheetConverterTextTo implements ToTextTemplatedConverter<SpreadsheetConverterContext> {
 
     SpreadsheetConverterTextTo() {
         super();
