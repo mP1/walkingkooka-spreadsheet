@@ -38,9 +38,9 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends Sp
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return isMetadataPropertyNameSubClass(type);
     }
 
@@ -65,9 +65,9 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends Sp
     }
 
     @Override
-    Object tryConvert(final String value,
-                      final Class<?> type,
-                      final SpreadsheetConverterContext context) {
+    public Object parseText(final String value,
+                            final Class<?> type,
+                            final SpreadsheetConverterContext context) {
         return SpreadsheetMetadataPropertyName.with(value);
     }
 

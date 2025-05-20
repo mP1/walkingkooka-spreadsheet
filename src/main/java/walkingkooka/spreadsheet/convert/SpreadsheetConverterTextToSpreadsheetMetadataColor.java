@@ -40,24 +40,24 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColor extends Spreadshe
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return Color.class == type;
     }
 
     @Override
-    Color tryConvert(final String text,
-                     final Class<?> type,
-                     final SpreadsheetConverterContext context) {
+    public Color parseText(final String text,
+                           final Class<?> type,
+                           final SpreadsheetConverterContext context) {
         return SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatParserTokenVisitor.color(
-                        SpreadsheetFormatParsers.color()
-                                .parseText(
-                                        text,
-                                        SpreadsheetFormatParserContexts.basic(
-                                                InvalidCharacterExceptionFactory.POSITION
-                                        )
-                                ),
+                SpreadsheetFormatParsers.color()
+                        .parseText(
+                                text,
+                                SpreadsheetFormatParserContexts.basic(
+                                        InvalidCharacterExceptionFactory.POSITION
+                                )
+                        ),
                 context
         );
     }
