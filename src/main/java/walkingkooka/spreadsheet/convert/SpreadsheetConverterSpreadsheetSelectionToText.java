@@ -50,9 +50,9 @@ final class SpreadsheetConverterSpreadsheetSelectionToText extends SpreadsheetCo
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
-                                   final SpreadsheetConverterContext context) {
+    public <T> Either<T, String> doConvert(final Object value,
+                                           final Class<T> type,
+                                           final SpreadsheetConverterContext context) {
         return this.convertSpreadsheetSelectionToString(
                 (SpreadsheetSelection) value,
                 type,

@@ -408,9 +408,9 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> targetType,
-                                   final SpreadsheetConverterContext context) {
+    public <T> Either<T, String> doConvert(final Object value,
+                                           final Class<T> targetType,
+                                           final SpreadsheetConverterContext context) {
         // special case if targetType = Object just return value.
         return Object.class == targetType ?
                 this.successfulConversion(
