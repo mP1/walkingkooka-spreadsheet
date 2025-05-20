@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.TemplatedConverter;
+import walkingkooka.convert.TryingShortCircuitingConverter;
 
 /**
  * A {@link Converter} that only supports converting values to {@link String}. Numbers are formatted to {@link String}
  * using a simple pattern, ignoring any number format pattern.
  */
-final class SpreadsheetConverterUnformattedNumber implements TemplatedConverter<SpreadsheetConverterContext> {
+final class SpreadsheetConverterUnformattedNumber implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton

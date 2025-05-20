@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.TemplatedConverter;
+import walkingkooka.convert.TryingShortCircuitingConverter;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -32,7 +32,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
  * A {@link Converter} that supports converting a {@link SpreadsheetCell} to various target types, where each type maps
  * to a property within a {@link SpreadsheetCell}, such as {@link TextStyle} extracting the {@link SpreadsheetCell#style()}.
  */
-final class SpreadsheetConverterSpreadsheetCell implements TemplatedConverter<SpreadsheetConverterContext> {
+final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton

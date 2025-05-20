@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.TemplatedConverter;
+import walkingkooka.convert.TryingShortCircuitingConverter;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 /**
  * A {@link Converter} that converts null to {@link Number} returning {@link SpreadsheetConverterContext#missingCellNumberValue()}.
  */
-final class SpreadsheetConverterNullToNumber implements TemplatedConverter<SpreadsheetConverterContext> {
+final class SpreadsheetConverterNullToNumber implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
