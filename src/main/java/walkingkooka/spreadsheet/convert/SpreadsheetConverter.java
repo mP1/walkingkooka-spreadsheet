@@ -17,41 +17,17 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ShortCircuitingConverter;
 
 /**
  * A {@link Converter} that includes a canConvert guard before calling an abstract template convertXXX method.
  */
-abstract class SpreadsheetConverter implements Converter<SpreadsheetConverterContext> {
+abstract class SpreadsheetConverter implements ShortCircuitingConverter<SpreadsheetConverterContext> {
 
     SpreadsheetConverter() {
         super();
     }
-
-    @Override
-    public final <T> Either<T, String> convert(final Object value,
-                                               final Class<T> targetType,
-                                               final SpreadsheetConverterContext context) {
-        return this.canConvert(
-                value,
-                targetType,
-                context
-        ) ?
-                this.convert0(
-                        value,
-                        targetType,
-                        context
-                ) :
-                this.failConversion(
-                        value,
-                        targetType
-                );
-    }
-
-    abstract <T> Either<T, String> convert0(final Object value,
-                                            final Class<T> targetType,
-                                            final SpreadsheetConverterContext context);
 
     @Override
     public abstract String toString();

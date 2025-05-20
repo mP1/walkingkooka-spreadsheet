@@ -48,9 +48,9 @@ abstract class SpreadsheetConverterSpreadsheetError extends SpreadsheetConverter
                                                 final SpreadsheetConverterContext context);
 
     @Override
-    final <T> Either<T, String> convert0(final Object value,
-                                         final Class<T> targetType,
-                                         final SpreadsheetConverterContext context) {
+    public final <T> Either<T, String> doConvert(final Object value,
+                                                 final Class<T> targetType,
+                                                 final SpreadsheetConverterContext context) {
         return this.convertSpreadsheetError(
                 (SpreadsheetError) value,
                 targetType,
