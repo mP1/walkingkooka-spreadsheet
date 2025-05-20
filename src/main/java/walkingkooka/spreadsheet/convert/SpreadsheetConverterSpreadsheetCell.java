@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.TemplatedConverter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -30,7 +30,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
  * A {@link Converter} that supports converting a {@link SpreadsheetCell} to various target types, where each type maps
  * to a property within a {@link SpreadsheetCell}, such as {@link TextStyle} extracting the {@link SpreadsheetCell#style()}.
  */
-final class SpreadsheetConverterSpreadsheetCell extends SpreadsheetConverter {
+final class SpreadsheetConverterSpreadsheetCell implements TemplatedConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
@@ -59,8 +59,8 @@ final class SpreadsheetConverterSpreadsheetCell extends SpreadsheetConverter {
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
+    public Object tryConvertOrFail(final Object value,
+                                   final Class<?> type,
                                    final SpreadsheetConverterContext context) {
         return this.convertSpreadsheetCell(
                 (SpreadsheetCell) value,
@@ -70,9 +70,9 @@ final class SpreadsheetConverterSpreadsheetCell extends SpreadsheetConverter {
     }
 
     // maybe add support for picking errors or individual formatted value types (problem is String already selects formula.text.
-    private <T> Either<T, String> convertSpreadsheetCell(final SpreadsheetCell cell,
-                                                         final Class<T> type,
-                                                         final SpreadsheetConverterContext context) {
+    private Object convertSpreadsheetCell(final SpreadsheetCell cell,
+                                          final Class<?> type,
+                                          final SpreadsheetConverterContext context) {
         Object value;
 
         if (SpreadsheetCell.class == type) {
@@ -115,10 +115,7 @@ final class SpreadsheetConverterSpreadsheetCell extends SpreadsheetConverter {
             }
         }
 
-        return this.successfulConversion(
-                value,
-                type
-        );
+        return value;
     }
 
     @Override
