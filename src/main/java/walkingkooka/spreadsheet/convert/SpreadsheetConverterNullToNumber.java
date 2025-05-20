@@ -17,14 +17,14 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.TemplatedConverter;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 /**
  * A {@link Converter} that converts null to {@link Number} returning {@link SpreadsheetConverterContext#missingCellNumberValue()}.
  */
-final class SpreadsheetConverterNullToNumber extends SpreadsheetConverter {
+final class SpreadsheetConverterNullToNumber implements TemplatedConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
@@ -45,13 +45,10 @@ final class SpreadsheetConverterNullToNumber extends SpreadsheetConverter {
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
+    public Object tryConvertOrFail(final Object value,
+                                   final Class<?> type,
                                    final SpreadsheetConverterContext context) {
-        return this.successfulConversion(
-                context.missingCellNumberValue(),
-                type
-        );
+        return context.missingCellNumberValue();
     }
 
     @Override
