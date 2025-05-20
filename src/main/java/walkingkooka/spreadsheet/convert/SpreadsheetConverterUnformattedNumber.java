@@ -17,14 +17,14 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.TemplatedConverter;
 
 /**
  * A {@link Converter} that only supports converting values to {@link String}. Numbers are formatted to {@link String}
  * using a simple pattern, ignoring any number format pattern.
  */
-final class SpreadsheetConverterUnformattedNumber extends SpreadsheetConverter {
+final class SpreadsheetConverterUnformattedNumber implements TemplatedConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
@@ -43,15 +43,12 @@ final class SpreadsheetConverterUnformattedNumber extends SpreadsheetConverter {
     }
 
     @Override
-    <T> Either<T, String> convert0(final Object value,
-                                   final Class<T> type,
+    public Object tryConvertOrFail(final Object value,
+                                   final Class<?> type,
                                    final SpreadsheetConverterContext context) {
-        return this.successfulConversion(
-                SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor.convertToString(
-                        value,
-                        context
-                ),
-                type
+        return SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor.convertToString(
+                value,
+                context
         );
     }
 
