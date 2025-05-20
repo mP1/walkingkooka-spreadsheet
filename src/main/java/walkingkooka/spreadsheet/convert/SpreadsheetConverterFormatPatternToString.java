@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.TemplatedConverter;
+import walkingkooka.convert.TryingShortCircuitingConverter;
 import walkingkooka.text.CharSequences;
 
 import java.time.LocalDate;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * A {@link Converter} that converts uses the given {@link String pattern} to attempt to format given values.
  */
-final class SpreadsheetConverterFormatPatternToString implements TemplatedConverter<SpreadsheetConverterContext> {
+final class SpreadsheetConverterFormatPatternToString implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     /**
      * Factory that creates a {@link SpreadsheetConverterFormatPatternToString}.
