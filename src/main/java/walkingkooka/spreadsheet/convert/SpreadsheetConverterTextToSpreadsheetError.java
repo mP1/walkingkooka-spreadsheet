@@ -36,16 +36,16 @@ final class SpreadsheetConverterTextToSpreadsheetError extends SpreadsheetConver
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return SpreadsheetError.class == type;
     }
 
     @Override
-    SpreadsheetError tryConvert(final String value,
-                                final Class<?> type,
-                                final SpreadsheetConverterContext context) {
+    public SpreadsheetError parseText(final String value,
+                                      final Class<?> type,
+                                      final SpreadsheetConverterContext context) {
         return SpreadsheetError.parse(value);
     }
 

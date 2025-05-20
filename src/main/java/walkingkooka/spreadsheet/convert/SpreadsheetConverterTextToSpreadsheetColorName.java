@@ -36,16 +36,16 @@ final class SpreadsheetConverterTextToSpreadsheetColorName extends SpreadsheetCo
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return SpreadsheetColorName.class == type;
     }
 
     @Override
-    SpreadsheetColorName tryConvert(final String value,
-                                    final Class<?> type,
-                                    final SpreadsheetConverterContext context) {
+    public SpreadsheetColorName parseText(final String value,
+                                          final Class<?> type,
+                                          final SpreadsheetConverterContext context) {
         return SpreadsheetColorName.with(value);
     }
 

@@ -41,16 +41,16 @@ final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTex
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return Expression.class == type;
     }
 
     @Override
-    Expression tryConvert(final String value,
-                          final Class<?> type,
-                          final SpreadsheetConverterContext context) {
+    public Expression parseText(final String value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return SpreadsheetFormulaParsers.expression()
                 .parseText(
                         value,

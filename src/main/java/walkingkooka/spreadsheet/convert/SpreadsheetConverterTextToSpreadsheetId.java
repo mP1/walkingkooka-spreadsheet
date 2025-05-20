@@ -35,16 +35,16 @@ final class SpreadsheetConverterTextToSpreadsheetId extends SpreadsheetConverter
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return SpreadsheetId.class == type;
     }
 
     @Override
-    Object tryConvert(final String value,
-                      final Class<?> type,
-                      final SpreadsheetConverterContext context) {
+    public Object parseText(final String value,
+                            final Class<?> type,
+                            final SpreadsheetConverterContext context) {
         return SpreadsheetId.parse(value);
     }
 

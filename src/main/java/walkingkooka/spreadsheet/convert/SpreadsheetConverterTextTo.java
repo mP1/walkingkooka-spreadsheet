@@ -17,65 +17,14 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
-import walkingkooka.convert.Converter;
-import walkingkooka.tree.expression.Expression;
+import walkingkooka.convert.TextTemplatedConverter;
 
 /**
- * A {@link Converter} that converts an expression as a {@link String} into a {@link Expression}.
+ * Base converter that handles converting text like source into a target type..
  */
-abstract class SpreadsheetConverterTextTo extends SpreadsheetConverter {
+abstract class SpreadsheetConverterTextTo implements TextTemplatedConverter<SpreadsheetConverterContext> {
 
     SpreadsheetConverterTextTo() {
         super();
     }
-
-    @Override
-    public final boolean canConvert(final Object value,
-                                    final Class<?> type,
-                                    final SpreadsheetConverterContext context) {
-        // test isType is quicker so do first
-        return this.isType(
-                value,
-                type,
-                context
-        ) &&
-                context.canConvert(
-                        value,
-                        String.class
-                );
-    }
-
-    abstract boolean isType(final Object value,
-                            final Class<?> type,
-                            final SpreadsheetConverterContext context);
-
-    @Override
-    final <T> Either<T, String> convert0(final Object value,
-                                         final Class<T> type,
-                                         final SpreadsheetConverterContext context) {
-        Either<T, String> result;
-
-        try {
-            result = this.successfulConversion(
-                    this.tryConvert(
-                            context.convertOrFail(
-                                    value,
-                                    String.class
-                            ),
-                            type,
-                            context
-                    ),
-                    type
-            );
-        } catch (final RuntimeException cause) {
-            result = Either.right(cause.getMessage());
-        }
-
-        return result;
-    }
-
-    abstract Object tryConvert(final String value,
-                               final Class<?> type,
-                               final SpreadsheetConverterContext context);
 }

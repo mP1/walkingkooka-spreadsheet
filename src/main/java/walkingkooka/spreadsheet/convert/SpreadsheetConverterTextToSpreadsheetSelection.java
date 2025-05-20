@@ -42,9 +42,9 @@ final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetCo
     }
 
     @Override
-    boolean isType(final Object value,
-                   final Class<?> type,
-                   final SpreadsheetConverterContext context) {
+    public boolean isTargetType(final Object value,
+                                final Class<?> type,
+                                final SpreadsheetConverterContext context) {
         return type == SpreadsheetCellReference.class ||
                 type == SpreadsheetCellReferenceOrRange.class ||
                 type == SpreadsheetCellRangeReference.class ||
@@ -56,9 +56,9 @@ final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetCo
     }
 
     @Override
-    Object tryConvert(final String value,
-                      final Class<?> type,
-                      final SpreadsheetConverterContext context) {
+    public Object parseText(final String value,
+                            final Class<?> type,
+                            final SpreadsheetConverterContext context) {
         return SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
                 value,
                 Cast.to(type),
