@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.TemplatedConverter;
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -51,6 +53,8 @@ final class SpreadsheetConverterSpreadsheetCell implements TemplatedConverter<Sp
         return SpreadsheetCell.class == type ||
                 String.class == type || // formula.text
                 Object.class == type || // formula.value
+                DateTimeSymbols.class == type ||
+                DecimalNumberSymbols.class == type ||
                 SpreadsheetFormatterSelector.class == type || // formatter format-pattern etc.
                 SpreadsheetParserSelector.class == type || // parser parse-pattern etc
                 ValidatorSelector.class == type ||
@@ -86,26 +90,36 @@ final class SpreadsheetConverterSpreadsheetCell implements TemplatedConverter<Sp
                             .value()
                             .orElse(null);
                 } else {
-                    if (SpreadsheetFormatterSelector.class == type) {
-                        value = cell.formatter()
+                    if(DateTimeSymbols.class == type) {
+                        value = cell.dateTimeSymbols()
                                 .orElse(null);
                     } else {
-                        if (SpreadsheetParserSelector.class == type) {
-                            value = cell.parser()
+                        if(DecimalNumberSymbols.class == type) {
+                            value = cell.decimalNumberSymbols()
                                     .orElse(null);
                         } else {
-                            if (ValidatorSelector.class == type) {
-                                value = cell.validator()
+                            if (SpreadsheetFormatterSelector.class == type) {
+                                value = cell.formatter()
                                         .orElse(null);
                             } else {
-                                if (TextStyle.class == type) {
-                                    value = cell.style();
+                                if (SpreadsheetParserSelector.class == type) {
+                                    value = cell.parser()
+                                            .orElse(null);
                                 } else {
-                                    if (TextNode.class == type) {
-                                        value = cell.formattedValue()
+                                    if (ValidatorSelector.class == type) {
+                                        value = cell.validator()
                                                 .orElse(null);
                                     } else {
-                                        throw new IllegalArgumentException("Unexpected target type " + type.getName());
+                                        if (TextStyle.class == type) {
+                                            value = cell.style();
+                                        } else {
+                                            if (TextNode.class == type) {
+                                                value = cell.formattedValue()
+                                                        .orElse(null);
+                                            } else {
+                                                throw new IllegalArgumentException("Unexpected target type " + type.getName());
+                                            }
+                                        }
                                     }
                                 }
                             }
