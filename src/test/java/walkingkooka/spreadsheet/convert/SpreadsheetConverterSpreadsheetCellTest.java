@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -29,7 +31,10 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetCell> {
@@ -95,6 +100,63 @@ public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetCo
                 ),
                 Object.class,
                 value
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToDateTimeSymbols() {
+        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.FRANCE)
+        );
+
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setDateTimeSymbols(
+                                Optional.of(
+                                        dateTimeSymbols
+                                )
+                        )
+                ,
+                DateTimeSymbols.class,
+                dateTimeSymbols
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToDateTimeSymbolsWhenMissing() {
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                DateTimeSymbols.class,
+                null
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToDecimalNumberSymbols() {
+        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.FRANCE)
+        );
+
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setDecimalNumberSymbols(
+                                Optional.of(
+                                        decimalNumberSymbols
+                                )
+                        )
+                ,
+                DecimalNumberSymbols.class,
+                decimalNumberSymbols
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToDecimalNumberSymbolsWhenMissing() {
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                DecimalNumberSymbols.class,
+                null
         );
     }
 
