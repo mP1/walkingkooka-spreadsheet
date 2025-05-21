@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -87,6 +88,7 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -159,6 +161,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_PARSER_PROVIDER
     );
 
+    DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(LOCALE)
+    );
+
     DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
             '+',
             new DecimalFormatSymbols(LOCALE)
@@ -220,6 +226,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
                     SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+                    DATE_TIME_SYMBOLS
             ).set(
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                     DECIMAL_NUMBER_SYMBOLS
