@@ -660,8 +660,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         final ExpressionNumberKind kind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
-        missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
         DecimalNumberContext decimalNumberContext;
         try {
