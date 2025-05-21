@@ -41,7 +41,6 @@ import walkingkooka.locale.HasLocale;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
@@ -149,7 +148,6 @@ import java.util.function.Function;
  * Cell specific data such as individual format patterns are not stored here but on the {@link walkingkooka.spreadsheet.SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
-        HasDecimalNumberContext,
         HasExpressionNumberKind,
         HasLocale,
         HasMathContext,
@@ -580,10 +578,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * <li>{@link SpreadsheetMetadataPropertyName#LOCALE} which may provide some defaults if some of the above properties are missing.</li>
      * </ul>
      */
-    @Override
-    public abstract DecimalNumberContext decimalNumberContext();
+    public final DecimalNumberContext decimalNumberContext(final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(cell, "cell");
 
-    final DecimalNumberContext decimalNumberContext0() {
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
@@ -658,9 +655,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
      * </ul>
      */
-    public abstract ExpressionNumberContext expressionNumberContext();
+    public final ExpressionNumberContext expressionNumberContext(final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(cell, "cell");
 
-    final ExpressionNumberContext expressionNumberContext0() {
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         final ExpressionNumberKind kind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
@@ -669,7 +666,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         DecimalNumberContext decimalNumberContext;
         try {
-            decimalNumberContext = this.decimalNumberContext();
+            decimalNumberContext = this.decimalNumberContext(cell);
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
             decimalNumberContext = null;
@@ -995,7 +992,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         DecimalNumberContext decimalNumberContext;
         try {
-            decimalNumberContext = this.decimalNumberContext();
+            decimalNumberContext = this.decimalNumberContext(cell);
         } catch (final MissingMetadataPropertiesException cause) {
             decimalNumberContext = null;
             missing.addMissing(cause);
@@ -1187,7 +1184,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         // ExpressionNumberContext
         ExpressionNumberContext expressionNumberContext;
         try {
-            expressionNumberContext = this.expressionNumberContext();
+            expressionNumberContext = this.expressionNumberContext(SpreadsheetMetadata.NO_CELL);
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
             expressionNumberContext = null;

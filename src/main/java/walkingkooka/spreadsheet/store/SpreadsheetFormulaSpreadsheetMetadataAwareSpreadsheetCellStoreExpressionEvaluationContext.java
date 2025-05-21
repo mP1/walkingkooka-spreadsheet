@@ -151,7 +151,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     @Override
     public DecimalNumberContext decimalNumberContext() {
         if(null == this.decimalNumberContext) {
-            this.decimalNumberContext = this.metadata.decimalNumberContext();
+            this.decimalNumberContext = this.metadata.decimalNumberContext(
+                    Optional.of(this.cell)
+            );
         }
         return this.decimalNumberContext;
     }

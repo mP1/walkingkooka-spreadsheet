@@ -1549,14 +1549,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    // HasDecimalNumberContext..........................................................................................
+    // DecimalNumberContext.............................................................................................
 
     @Test
     public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY
-                .decimalNumberContext());
+                .decimalNumberContext(SpreadsheetMetadata.NO_CELL)
+        );
         this.checkEquals(
                 "Metadata missing: locale, precision, roundingMode",
                 thrown.getMessage(),
@@ -1586,19 +1587,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 );
     }
 
-    @Test
-    public void testDecimalNumberContextCached() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
-        assertSame(
-                metadata.decimalNumberContext(),
-                metadata.decimalNumberContext()
-        );
-    }
-
     // EnvironmentContext...............................................................................................
 
     @Test
@@ -1622,14 +1610,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    // HasExpressionNumberContext.......................................................................................
+    // ExpressionNumberContext..........................................................................................
 
     @Test
     public void testExpressionNumberContextSomeRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
-                .expressionNumberContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                        .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                        .expressionNumberContext(SpreadsheetMetadata.NO_CELL)
+        );
         this.checkEquals(
                 "Metadata missing: locale, roundingMode",
                 thrown.getMessage(),
@@ -1639,10 +1630,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testExpressionNumberContextSomeRequiredPropertiesAbsentFails2() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
-                .expressionNumberContext());
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                        .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
+                        .expressionNumberContext(SpreadsheetMetadata.NO_CELL)
+        );
         this.checkEquals(
                 "Metadata missing: locale, precision",
                 thrown.getMessage(),
@@ -1660,7 +1654,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
-                .expressionNumberContext();
+                .expressionNumberContext(SpreadsheetMetadata.NO_CELL);
         this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
         this.checkNotEquals(null, context.mathContext(), "mathContext");
     }

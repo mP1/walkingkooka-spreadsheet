@@ -149,7 +149,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testExpressionNumberContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                SpreadsheetMetadata.EMPTY::expressionNumberContext
+                () -> SpreadsheetMetadata.EMPTY.expressionNumberContext(SpreadsheetMetadata.NO_CELL)
         );
         this.checkEquals(
                 "Metadata missing: expressionNumberKind, locale, precision, roundingMode",

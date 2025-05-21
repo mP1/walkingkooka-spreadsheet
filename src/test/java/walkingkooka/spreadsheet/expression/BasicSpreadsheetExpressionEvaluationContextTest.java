@@ -523,7 +523,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         return DECIMAL_NUMBER_CONTEXT;
     }
 
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA.decimalNumberContext();
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA.decimalNumberContext(SpreadsheetMetadata.NO_CELL);
 
     @Override
     public void testExpressionFunctionWithNullFunctionNameFails() {
