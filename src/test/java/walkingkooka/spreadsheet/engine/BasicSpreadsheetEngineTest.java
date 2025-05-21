@@ -91,7 +91,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
-import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
@@ -650,7 +649,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private void loadCellFails(final String formulaText,
                                final SpreadsheetError error) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -674,7 +673,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -695,7 +694,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaMissingCellReference2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -716,7 +715,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaUnknownLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
 
         final SpreadsheetLabelMapping labelMapping = LABEL.setLabelMappingReference(LABEL_CELL);
@@ -754,7 +753,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaFunctionMissingCellNumberParameter() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -780,7 +779,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaFunctionMissingCellStringParameter() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -806,7 +805,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaLabelToMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.checkEquals(
                 Optional.empty(),
@@ -847,7 +846,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -903,7 +902,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                   final Optional<SpreadsheetFormatterSelector> formatter,
                                                   final String formattedText) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -930,7 +929,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesComputeIfNecessaryCachesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -957,7 +956,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesParserFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -986,7 +985,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesParser() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1016,7 +1015,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesComputeIfNecessaryKeepsExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1032,7 +1031,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                this.createContext(defaultYear, engine, context.storeRepository()));
+                this.createContext(defaultYear, context.storeRepository()));
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
 
@@ -1049,7 +1048,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesComputeIfNecessaryHonoursExpressionIsPure() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1073,7 +1072,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                this.createContext(defaultYear, engine, context.storeRepository())
+                this.createContext(defaultYear, context.storeRepository())
         );
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
@@ -1091,7 +1090,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesComputeIfNecessaryHonoursFunctionIsPure() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1143,7 +1142,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1173,7 +1172,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesForceRecomputeIgnoresValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1208,7 +1207,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 this.createContext(
                         defaultYear,
-                        engine,
                         context.storeRepository()
                 )
         );
@@ -1227,7 +1225,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesForceRecomputeIgnoresCache() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -1276,7 +1274,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesForceRecomputeIgnoresPreviousError() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCell unsaved = this.cell(
@@ -1319,7 +1317,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithComputeThenSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         context.storeRepository()
@@ -1349,7 +1347,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesManyCellsFormulasWithoutCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("$C$2");
@@ -1387,7 +1385,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("$C$2");
@@ -1451,7 +1449,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithFormulaCrossCellReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("$C$2");
@@ -1533,7 +1531,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWhereValueLabelInvalidFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         context.storeRepository()
@@ -1557,7 +1555,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWhereValueIsCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -1599,7 +1597,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWhereValueIsLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -1688,7 +1686,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void loadCellAndCheck(final Set<SpreadsheetDeltaProperties> deltaProperties) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -1841,7 +1839,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final SpreadsheetCell expected) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         context.storeRepository()
                 .cells()
@@ -1867,7 +1865,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadCellWithNullValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -1905,7 +1903,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadCellWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -1946,7 +1944,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadCellWithFormulaReferencesToMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
 
@@ -1981,7 +1979,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -2038,7 +2036,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithEmptyFormula() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", "");
         final SpreadsheetCell a1Formatted = this.formatCell(a1);
@@ -2073,7 +2071,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithFormulaSelfReferenceCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -2119,7 +2117,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithEmptyFormulaTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -2190,7 +2188,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private void saveCellWithErrorAndCheck(final String formula,
                                            final SpreadsheetError error) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
         final SpreadsheetCell a1Formatted = this.formatCell(
@@ -2231,7 +2229,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithFormulaMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+2");
         final SpreadsheetCell a1Formatted = this.formatCell(
@@ -2271,7 +2269,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithIgnoresPreviousErrorComputesValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
@@ -2313,7 +2311,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithSecondTimeWithDifferentStyle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
@@ -2382,7 +2380,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -2507,7 +2505,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "a1",
@@ -2541,7 +2539,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellRefreshFirst() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -2609,7 +2607,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellReferencesFirst() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -2671,7 +2669,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellReferencesFirstLoadBothCellsIndividually() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -2785,7 +2783,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellSaveCellRefreshesFirstAndSecond() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -2885,7 +2883,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithLabelCycleToSelf() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(SpreadsheetSelection.A1);
 
@@ -2930,7 +2928,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithLabelToSelf() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(SpreadsheetSelection.A1);
 
@@ -2976,7 +2974,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelDifferentCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.saveCellAndCheck(
                 engine,
@@ -3041,7 +3039,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithUnknownLabelReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName unknown = SpreadsheetSelection.labelName("UNKNOWNLABEL");
 
@@ -3096,7 +3094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelToMissingCellRefreshesFirstCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
@@ -3163,7 +3161,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelSaveCellRefreshesCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "$A$1",
@@ -3255,7 +3253,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellSaveLabelRefreshesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
@@ -3354,7 +3352,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -3445,7 +3443,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithDoubleIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -3575,7 +3573,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellSaveCellLoadCellVerifyReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
@@ -3702,7 +3700,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellSaveCellSaveAgainDifferentCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
@@ -3902,7 +3900,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelSaveCellSaveLabelSaveCellWithCellAndLabelLoadCellVerifyReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
@@ -4223,7 +4221,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private void saveCellAndLoadAndFormattedCheck(final String formula,
                                                   final Object value) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", formula);
         final SpreadsheetCell a1Formatted = this.formatCell(
@@ -4268,7 +4266,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithEmptyFormulaTextAndExpressionValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123);
 
@@ -4315,7 +4313,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithEmptyFormulaTextAndInputValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final Optional<Object> value = Optional.of(
                 EXPRESSION_NUMBER_KIND.create(123)
@@ -4372,7 +4370,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithExpressionValueValidatorFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setExpressionValue(
                 Optional.of(VALIDATOR_FAIL_NUMBER)
@@ -4427,7 +4425,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithExpressionValueValidatorPass() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
@@ -4465,7 +4463,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithInputValueValidatorFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
                 Optional.of(VALIDATOR_FAIL_NUMBER)
@@ -4513,7 +4511,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithInputValueValidatorPass() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
                 Optional.of(VALIDATOR_PASS_NUMBER)
@@ -4560,7 +4558,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", "'Hello");
         final SpreadsheetCell a1Formatted = this.formatCell(
@@ -4607,7 +4605,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
         final SpreadsheetCell a1Cell = this.cell(
@@ -4658,7 +4656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveCellSaveLabelRefreshesFirstCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
@@ -4735,7 +4733,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
@@ -4796,7 +4794,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelSaveLabelSameCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.saveCellAndCheck(
                 engine,
@@ -4906,7 +4904,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellsWithOnlyExpressionValues() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", "=1+2");
         final SpreadsheetCell a1Formatted = this.formatCell(
@@ -4960,7 +4958,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellsWithIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -5030,7 +5028,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellsWithDoubleIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -5113,7 +5111,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellsWithOnlyWithCrossReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -5200,7 +5198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellsWithOnlyWithCrossReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell("a1", "=b2+1");
         final SpreadsheetCell a1Formatted = this.formatCell(
@@ -5256,7 +5254,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellsWithOnlyWithCrossReferences3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "a1",
@@ -5331,7 +5329,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelRefreshesCellThenSaveCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -5423,7 +5421,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellSaveLabelRefreshesCellReferencesAndColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
@@ -5502,7 +5500,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellsMatchingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -5536,7 +5534,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellsMatchingCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         engine.saveCell(
@@ -5577,7 +5575,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellsMatchingColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         engine.saveCell(
@@ -5627,7 +5625,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellsWhereCellFormulaWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
@@ -5683,7 +5681,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellsWhereCellWithCellExternalReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
         final SpreadsheetCell a1Cell = this.cell(
@@ -5759,7 +5757,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellsIncludesColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetColumnStore columnStore = context.storeRepository()
                 .columns();
@@ -5799,7 +5797,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellWithLabelReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetLabelStore labelStore = repository.labels();
@@ -5877,7 +5875,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellWithLabelReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
@@ -6011,7 +6009,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteCellWithRow() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetRowStore rowStore = context.storeRepository()
                 .rows();
@@ -6055,7 +6053,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadColumnMissingColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY,
@@ -6069,7 +6067,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetColumnReference columnReference = SpreadsheetSelection.parseColumn("Z");
         final SpreadsheetColumn column = columnReference.column()
@@ -6096,7 +6094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveColumnWithoutCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
@@ -6117,7 +6115,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveColumnWithCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
 
@@ -6155,7 +6153,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveColumnHiddenTheUnhiddenWithCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
 
@@ -6220,7 +6218,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithZeroNothingDeleted() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
 
@@ -6241,7 +6239,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithNoCellsRefreshed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b = SpreadsheetSelection.parseCell("B2"); // B2
@@ -6294,7 +6292,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithColumnsAfterCellsRefreshed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b = SpreadsheetSelection.parseCell("B2"); // B2
@@ -6547,7 +6545,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private void deleteColumnColumnsAfterCellsRefreshedAndCheck(final String formula,
                                                                 final Object value) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2"); // B2
@@ -6604,7 +6602,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithColumnsAfterCellsRefreshed2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2"); //replaced by $c$3
@@ -6679,7 +6677,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithLabelsToCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -6753,7 +6751,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithLabelsToCellReferencedFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -6829,7 +6827,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithLabelToDeletedCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -6878,7 +6876,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -6967,7 +6965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithCellReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -7060,7 +7058,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithCellReferencesToDeletedCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -7106,7 +7104,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnWithSeveral() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1"); // DELETED
@@ -7208,7 +7206,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadRowWithMissingRow() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY,
@@ -7222,7 +7220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadRow() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetRowReference row999 = SpreadsheetSelection.parseRow("999");
         final SpreadsheetRow row = row999.row()
@@ -7249,7 +7247,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveRowWithoutCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
@@ -7270,7 +7268,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveRowWithCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
 
@@ -7310,7 +7308,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveRowHiddenTheUnhiddenWithCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
 
@@ -7377,7 +7375,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithNone() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2");
 
@@ -7407,7 +7405,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithOne() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("A2");
@@ -7481,7 +7479,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithOne2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1; //
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("A2"); // replaced by c
@@ -7569,7 +7567,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithMany() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute(); //
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2");
@@ -7665,7 +7663,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToCellUnmodified() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -7771,7 +7769,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToCellFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -7863,7 +7861,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelToCellReferenceDeleted() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
@@ -7925,7 +7923,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithCellReferencesFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // B1
@@ -8052,7 +8050,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithCellReferencesFixed2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2");
@@ -8181,7 +8179,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeUnmodified() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -8279,7 +8277,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeDeleted() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -8340,7 +8338,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeDeleted2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -8435,7 +8433,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeDeleted3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -8514,7 +8512,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
@@ -8638,7 +8636,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -8687,7 +8685,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -8734,7 +8732,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed4() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -8786,7 +8784,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithNone() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
 
@@ -8825,7 +8823,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithOne() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A1");
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -8904,7 +8902,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithOne2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); //
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1"); // replaced by c1
@@ -9010,7 +9008,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithMany() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); //
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1"); // DELETED
@@ -9100,7 +9098,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToCellUnmodified() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -9204,7 +9202,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToCellFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference e1 = SpreadsheetSelection.parseCell("$E$1");
@@ -9303,7 +9301,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelToCellReferenceDeleted() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference e1 = SpreadsheetSelection.parseCell("$E$1");
@@ -9369,7 +9367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithCellReferencesFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -9493,7 +9491,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithCellReferencesFixed2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1");
@@ -9622,7 +9620,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeUnmodified() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -9720,7 +9718,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeDeleted() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -9764,7 +9762,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeDeleted2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -9850,7 +9848,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeDeleted3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -9935,7 +9933,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference f1 = SpreadsheetSelection.parseCell("$F$1");
@@ -10057,7 +10055,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -10108,7 +10106,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -10155,7 +10153,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed4() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -10207,7 +10205,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference cv1 = SpreadsheetSelection.parseCell("$CV$1");
 
@@ -10243,7 +10241,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1"); // MOVED
@@ -10323,7 +10321,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumn2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1"); // MOVED
@@ -10421,7 +10419,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithLabelToCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -10515,7 +10513,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithLabelToCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -10671,7 +10669,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithLabelToRangeUnchanged() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -10761,7 +10759,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithLabelToRangeUpdated() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference f1 = SpreadsheetSelection.parseCell("$F$1");
@@ -10876,7 +10874,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1"); // B1
@@ -10997,7 +10995,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithCellReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("$B$1"); //
@@ -11119,7 +11117,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithSeveral() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); //
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1"); // MOVED
@@ -11261,7 +11259,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("B1"); // MOVED
@@ -11327,7 +11325,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertColumnsWithRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("B1"); // MOVED
@@ -11398,7 +11396,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("$A$100"); // A3
 
@@ -11432,7 +11430,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // MOVED
@@ -11533,7 +11531,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRows2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // MOVED
@@ -11633,7 +11631,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithLabelToCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2Cell = SpreadsheetSelection.parseCell("$B$2"); //
         final SpreadsheetCellReference d4Cell = SpreadsheetSelection.parseCell("$D$4"); // moved
@@ -11738,7 +11736,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithLabelToCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // moved
@@ -11890,7 +11888,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithLabelToRangeUnchanged() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
@@ -11992,7 +11990,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithLabelToRangeUpdated() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
@@ -12108,7 +12106,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // A2
@@ -12229,7 +12227,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithCellReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // A2
@@ -12338,7 +12336,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithSeveral() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11"); // MOVED
@@ -12479,7 +12477,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -12534,7 +12532,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testInsertRowsWithRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
@@ -12608,7 +12606,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesNothing() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         this.loadMultipleCellRangesAndCheck(
                 engine,
@@ -12637,7 +12635,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRanges() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -12691,7 +12689,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRanges2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -12759,7 +12757,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesNothingWithColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetColumnStore columnStore = context.storeRepository()
                 .columns();
@@ -12806,7 +12804,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesNothingWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -12847,7 +12845,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesNothingWithRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetRowStore rowStore = context.storeRepository()
                 .rows();
@@ -12893,7 +12891,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithDivideByZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -12932,7 +12930,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell b2Cell = this.cell(
                 "b2",
@@ -13033,7 +13031,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithReferencesToReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -13130,7 +13128,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithReferencesToReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "a1",
@@ -13226,7 +13224,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell c3Cell = this.cell(
                 "c3",
@@ -13339,7 +13337,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesOnlyLabelsToCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -13381,7 +13379,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesOnlyLabelsToRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
@@ -13422,7 +13420,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesOnlyLabelsToCellAndRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName c3Label = SpreadsheetLabelName.labelName("C3LABEL");
         final SpreadsheetCellReference c3Cell = SpreadsheetSelection.parseCell("c3");
@@ -13497,7 +13495,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesWithLabelsLabelWithoutCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell c3Cell = this.cell(
                 "c3",
@@ -13584,7 +13582,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesFiltersHiddenColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -13664,7 +13662,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadMultipleCellRangesFiltersHiddenRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -13748,7 +13746,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsDeleteOneCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -13792,7 +13790,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsDeleteOneCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -13868,7 +13866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsDeletesManyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -13914,7 +13912,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsDeletesManyCells2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -13996,7 +13994,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsSaveWithMissingCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("$C$3");
@@ -14105,7 +14103,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsSaveWithMissingCells2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14247,7 +14245,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsRangeOneEmptyCells2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14351,7 +14349,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsRangeTwoEmptyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14626,7 +14624,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void fillCellsAndCheck(final String formulaText, final Object expected) {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14686,7 +14684,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsRepeatCellInto2x2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14751,7 +14749,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCells2x2CellInto1x1() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14829,7 +14827,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCells2x2Into2x2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14897,7 +14895,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCells2x2Into7x2Gives6x2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -14995,7 +14993,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCells2x2Into2x7Gives2x6() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -15090,7 +15088,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsAbsoluteCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference k21 = SpreadsheetSelection.parseCell("$K$21");
         final SpreadsheetCellReference l22 = SpreadsheetSelection.parseCell("$L$22");
@@ -15171,7 +15169,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsExpressionRelativeCellReferenceFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -15233,7 +15231,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsExternalCellReferencesRefreshed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
@@ -15297,7 +15295,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsWithColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repo = context.storeRepository();
 
@@ -15353,7 +15351,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFillWithCellsWithRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repo = context.storeRepository();
 
@@ -15443,7 +15441,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15526,7 +15524,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsSkipsMissingCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15573,7 +15571,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsSkipsEmptyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15619,7 +15617,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15700,7 +15698,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15749,7 +15747,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithLabelsAndReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15833,7 +15831,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -15910,7 +15908,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithValueTypeFiltering() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -16021,7 +16019,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithValueTypeFilteringAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -16128,7 +16126,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithValueTypeFilteringAndCount2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -16235,7 +16233,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithPathRlbuValueTypeFilteringAndCount2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -16323,7 +16321,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
@@ -16521,7 +16519,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSortCellsWithColumnsNothingChanged() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
@@ -16558,7 +16556,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSortCellsWithColumnsRowsSwapped() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         engine.saveCells(
                 Sets.of(
@@ -16608,7 +16606,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSortCellsWithRowsColumnsSwapped() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         engine.saveCells(
                 Sets.of(
@@ -16658,7 +16656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSortCellsWithColumnsRowsSwappedIncludesSortedCellReferences() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         engine.saveCells(
                 Sets.of(
@@ -16728,7 +16726,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSortCellsWithColumnsRowsSwappedReferencedByCellsOutsideSortRange() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         engine.saveCells(
                 Sets.of(
@@ -16798,7 +16796,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSortCellsWithColumnsRowsSwappedLabelNotUpdated() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         engine.saveCells(
                 Sets.of(
@@ -16862,7 +16860,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWheCellAbsent() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         // note the cell reference is not included in the response
         this.loadFormulaReferencesAndCheck(
@@ -16880,7 +16878,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWhenWithoutFormulaReferences() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
@@ -16908,7 +16906,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithFormulaIncludingLabel() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         // points to cell
         final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingReference(
@@ -16945,7 +16943,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithCellFormulaWithLabel() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         // points to cell
         final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingReference(SpreadsheetSelection.A1);
@@ -16982,7 +16980,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithCellHasCellAndLabelTarget() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         // points to cell
         final SpreadsheetCell a1Cell = this.cell(
@@ -17045,7 +17043,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithoutReferences() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
@@ -17088,7 +17086,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithManyFormulaCellReferences() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
@@ -17157,7 +17155,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithManyFormulaCellReferencesAndOffset() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
@@ -17221,7 +17219,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadFormulaReferencesWithManyFormulaCellReferencesAndOffsetAndCount() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
@@ -17282,7 +17280,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadLabelWithUnknownLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELB2");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -17318,7 +17316,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadLabelWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
 
@@ -17440,7 +17438,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelWithMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
                 SpreadsheetSelection.labelName("LABELA1"),
@@ -17470,7 +17468,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelAndUnrelatedSaveCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -17522,7 +17520,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelAndSaveCellForLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -17584,7 +17582,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelAndSaveCellSaveSecondCellToLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
         final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(
@@ -17668,7 +17666,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelWithCycleFails() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
@@ -17716,7 +17714,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelSaveCellToLabelMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
         final SpreadsheetLabelMapping mapping = SpreadsheetSelection.labelName("B2LABEL")
@@ -17797,7 +17795,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelSaveCellToLabelMissingCellSaveMissingCellRefreshesOtherCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
@@ -17891,7 +17889,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelSaveCellSaveCellWithLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
                 SpreadsheetSelection.labelName("A1LABEL"),
@@ -17976,7 +17974,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveLabelWithReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = this.cell(
                 "$A$1",
@@ -18077,7 +18075,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("LABEL111");
         final SpreadsheetLabelMapping mapping1 = SpreadsheetLabelMapping.with(
@@ -18146,7 +18144,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testLoadLabelsWithOffsetAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("LABEL111");
         final SpreadsheetLabelMapping mapping1 = SpreadsheetLabelMapping.with(
@@ -18217,7 +18215,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -18254,7 +18252,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteLabelRefreshesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
@@ -18312,7 +18310,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteLabelRefreshesCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
@@ -18377,7 +18375,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteLabelRefreshesCellAndColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -18448,7 +18446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testDeleteLabelRefreshesCellAndRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
@@ -22953,14 +22951,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Override
     public SpreadsheetEngineContext createContext() {
-        return this.createContext(SpreadsheetEngines.fake());
-    }
-
-    private SpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
-        return this.createContext(
-                METADATA,
-                cellStore
-        );
+        return this.createContext(METADATA);
     }
 
     private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
@@ -22970,56 +22961,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    private SpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
+        return this.createContext(
+                METADATA,
+                cellStore
+        );
+    }
+
     private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                    final SpreadsheetCellStore cellStore) {
         return this.createContext(
                 DEFAULT_YEAR,
-                SpreadsheetEngines.fake(),
                 metadata,
-                new FakeSpreadsheetStoreRepository() {
-                    @Override
-                    public SpreadsheetCellStore cells() {
-                        return cellStore;
-                    }
-
-                    @Override
-                    public SpreadsheetColumnStore columns() {
-                        return this.columnStore;
-                    }
-
-                    private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
-
-                    @Override
-                    public SpreadsheetLabelStore labels() {
-                        return this.labels;
-                    }
-
-                    private final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
-
-                    @Override
-                    public SpreadsheetRowStore rows() {
-                        return this.rowStore;
-                    }
-
-                    private final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
-                }
-        );
-    }
-
-    private SpreadsheetEngineContext createContext(final SpreadsheetEngine engine) {
-        return this.createContext(
-                DEFAULT_YEAR,
-                engine
-        );
-    }
-
-    private SpreadsheetEngineContext createContext(final int defaultYear,
-                                                   final SpreadsheetEngine engine) {
-        return this.createContext(
-                defaultYear,
-                engine,
                 SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
+                        cellStore,
                         SpreadsheetCellReferencesStores.treeMap(),
                         SpreadsheetColumnStores.treeMap(),
                         SpreadsheetFormStores.treeMap(),
@@ -23037,18 +22992,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetEngineContext createContext(final int defaultYear,
-                                                   final SpreadsheetEngine engine,
                                                    final SpreadsheetStoreRepository storeRepository) {
         return this.createContext(
                 defaultYear,
-                engine,
                 METADATA,
                 storeRepository
         );
     }
 
     private SpreadsheetEngineContext createContext(final int defaultYear,
-                                                   final SpreadsheetEngine engine,
                                                    final SpreadsheetMetadata metadata, // required by ranges tests with frozen columns/rows.
                                                    final SpreadsheetStoreRepository storeRepository) {
         return SpreadsheetEngineContexts.basic(
