@@ -127,6 +127,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -576,13 +577,21 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     final DecimalNumberContext decimalNumberContext0() {
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
         final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
         final Integer precision = missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
         final RoundingMode roundingMode = missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
         missing.reportIfMissing();
+
+        DecimalNumberSymbols decimalNumberSymbols = this.get(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS)
+                .orElse(null);
+        if (null == decimalNumberSymbols) {
+            decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                    '+',
+                    new DecimalFormatSymbols(locale)
+            );
+        }
 
         return DecimalNumberContexts.basic(
                 decimalNumberSymbols,

@@ -152,7 +152,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadata.EMPTY::expressionNumberContext
         );
         this.checkEquals(
-                "Metadata missing: decimalNumberSymbols, expressionNumberKind, locale, precision, roundingMode",
+                "Metadata missing: expressionNumberKind, locale, precision, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -200,7 +200,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: decimalNumberSymbols, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+                "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -214,7 +214,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                         .spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: decimalNumberSymbols, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+                "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -241,7 +241,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Metadata missing: dateTimeOffset, decimalNumberSymbols, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validatorConverter",
+                "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validatorConverter",
                 thrown.getMessage(),
                 "message"
         );

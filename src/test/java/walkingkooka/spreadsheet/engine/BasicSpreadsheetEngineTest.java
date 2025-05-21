@@ -141,6 +141,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -4687,6 +4688,163 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         STYLE.setChildren(
                                 Lists.of(
                                         TextNode.text("ven./décembre/1999")
+                                )
+                        )
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+
+
+
+    @Test
+    public void testSaveCellWithMetadataMissingDecimalNumberSymbols() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
+        ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.setChildren(
+                                Lists.of(
+                                        TextNode.text("$123.75")
+                                )
+                        )
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithMetadataMissingDecimalNumberSymbolsAndLocaleGermany() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
+        ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+        ).set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.GERMANY
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.setChildren(
+                                Lists.of(
+                                        TextNode.text("\u20AC123,75") // EURO
+                                )
+                        )
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithMetadataDecimalNumberSymbols() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.setChildren(
+                                Lists.of(
+                                        TextNode.text("\u20AC123,75") // EURO
                                 )
                         )
                 )

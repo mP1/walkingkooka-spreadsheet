@@ -1551,7 +1551,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> SpreadsheetMetadata.EMPTY
                 .decimalNumberContext());
         this.checkEquals(
-                "Metadata missing: decimalNumberSymbols, locale, precision, roundingMode",
+                "Metadata missing: locale, precision, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -1624,7 +1624,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .expressionNumberContext());
         this.checkEquals(
-                "Metadata missing: decimalNumberSymbols, locale, roundingMode",
+                "Metadata missing: locale, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -1637,7 +1637,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .expressionNumberContext());
         this.checkEquals(
-                "Metadata missing: decimalNumberSymbols, locale, precision",
+                "Metadata missing: locale, precision",
                 thrown.getMessage(),
                 "message"
         );
