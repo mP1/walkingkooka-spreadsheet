@@ -109,7 +109,8 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
-    public Optional<TextNode> formatValue(final Optional<Object> value,
+    public Optional<TextNode> formatValue(final SpreadsheetCell cell,
+                                          final Optional<Object> value,
                                           final SpreadsheetFormatter formatter) {
         throw new UnsupportedOperationException();
     }

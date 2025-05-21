@@ -64,6 +64,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
@@ -1460,6 +1461,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         PROVIDER_CONTEXT
                 ),
                 metadata.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -1507,7 +1509,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
                             final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
-                            final DateTimeContext context = metadata.dateTimeContext(NOW);
+                            final DateTimeContext context = metadata.dateTimeContext(
+                                    SpreadsheetMetadata.NO_CELL,
+                                    NOW
+                            );
                             this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
                             this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
                             this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
@@ -1533,7 +1538,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
-        final DateTimeContext context = metadata.dateTimeContext(NOW);
+        final DateTimeContext context = metadata.dateTimeContext(
+                SpreadsheetMetadata.NO_CELL,
+                NOW
+        );
 
         this.checkEquals(
                 dateTimeSymbols,
@@ -1784,6 +1792,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.spreadsheetFormatterContext(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,

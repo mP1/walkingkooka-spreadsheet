@@ -535,7 +535,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public Optional<TextNode> formatValue(final Optional<Object> value,
+            public Optional<TextNode> formatValue(final SpreadsheetCell cell,
+                                                  final Optional<Object> value,
                                                   final SpreadsheetFormatter formatter) {
                 checkEquals(
                         FORMULA_VALUE,
@@ -553,6 +554,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                                                        final Optional<SpreadsheetFormatter> formatter) {
                 return cell.setFormattedValue(
                         this.formatValue(
+                                cell,
                                 cell.formula()
                                         .value(),
                                 formatter.orElse(

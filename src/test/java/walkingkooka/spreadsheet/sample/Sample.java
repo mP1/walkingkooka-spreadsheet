@@ -329,6 +329,7 @@ public final class Sample {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
+                                        SpreadsheetMetadata.NO_CELL,
                                         SpreadsheetConverterContexts.NO_METADATA,
                                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -360,6 +361,7 @@ public final class Sample {
                 return cell.setFormattedValue(
                         Optional.of(
                                 this.formatValue(
+                                        cell,
                                         cell.formula()
                                                 .value(),
                                         formatter.orElse(
@@ -378,7 +380,8 @@ public final class Sample {
             }
 
             @Override
-            public Optional<TextNode> formatValue(final Optional<Object> value,
+            public Optional<TextNode> formatValue(final SpreadsheetCell cell,
+                                                  final Optional<Object> value,
                                                   final SpreadsheetFormatter formatter) {
                 checkEquals(
                         false,
@@ -389,6 +392,7 @@ public final class Sample {
                 return formatter.format(
                         value,
                         metadata.spreadsheetFormatterContext(
+                                cell,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 spreadsheetFormatterProvider,

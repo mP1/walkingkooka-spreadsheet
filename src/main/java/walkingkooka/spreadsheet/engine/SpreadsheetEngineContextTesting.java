@@ -249,11 +249,25 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // formatValue......................................................................................................
 
     @Test
+    default void testFormatValueNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .formatValue(
+                                null,
+                                Optional.of("1"),
+                                null
+                        )
+        );
+    }
+
+    @Test
     default void testFormatValueNullValueFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
                         .formatValue(
+                                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
                                 Optional.of("1"),
                                 null
                         )
@@ -266,67 +280,80 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 NullPointerException.class,
                 () -> this.createContext()
                         .formatValue(
+                                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
                                 Optional.of("1"),
                                 null
                         )
         );
     }
 
-    default void formatValueAndCheck(final Object value,
+    default void formatValueAndCheck(final SpreadsheetCell cell,
+                                     final Object value,
                                      final SpreadsheetFormatter formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
+                cell,
                 Optional.of(value),
                 formatter,
                 expected
         );
     }
 
-    default void formatValueAndCheck(final Optional<Object> value,
+    default void formatValueAndCheck(final SpreadsheetCell cell,
+                                     final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
+                cell,
                 value,
                 formatter,
                 expected.toTextNode()
         );
     }
 
-    default void formatValueAndCheck(final Object value,
+    default void formatValueAndCheck(final SpreadsheetCell cell,
+                                     final Object value,
                                      final SpreadsheetFormatter formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
+                cell,
                 Optional.of(value),
                 formatter,
                 expected
         );
     }
 
-    default void formatValueAndCheck(final Optional<Object> value,
+    default void formatValueAndCheck(final SpreadsheetCell cell,
+                                     final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
+                cell,
                 value,
                 formatter,
                 Optional.of(expected)
         );
     }
 
-    default void formatValueAndCheck(final Object value,
+    default void formatValueAndCheck(final SpreadsheetCell cell,
+                                     final Object value,
                                      final SpreadsheetFormatter formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
+                cell,
                 Optional.of(value),
                 formatter,
                 expected
         );
     }
 
-    default void formatValueAndCheck(final Optional<Object> value,
+    default void formatValueAndCheck(final SpreadsheetCell cell,
+                                     final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
                 this.createContext(),
+                cell,
                 value,
                 formatter,
                 expected
@@ -334,11 +361,13 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell cell,
                                      final Object value,
                                      final SpreadsheetFormatter formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 context,
+                cell,
                 Optional.of(value),
                 formatter,
                 expected
@@ -346,11 +375,13 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell cell,
                                      final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 context,
+                cell,
                 value,
                 formatter,
                 Optional.of(expected)
@@ -358,16 +389,18 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell cell,
                                      final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final Optional<TextNode> expected) {
         this.checkEquals(
                 expected,
                 context.formatValue(
+                        cell,
                         value,
                         formatter
                 ),
-                () -> "formatValue " + CharSequences.quoteIfChars(value) + " " + formatter
+                () -> "formatValue " + cell + " " + CharSequences.quoteIfChars(value) + " " + formatter
         );
     }
 

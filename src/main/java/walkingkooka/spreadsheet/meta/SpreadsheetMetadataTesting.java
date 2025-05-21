@@ -67,6 +67,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.storage.FakeStorageStoreContext;
 import walkingkooka.storage.StorageStoreContext;
 import walkingkooka.test.Testing;
@@ -374,6 +375,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
+            SpreadsheetMetadata.NO_CELL,
             Optional.of(METADATA_EN_AU),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -387,6 +389,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,

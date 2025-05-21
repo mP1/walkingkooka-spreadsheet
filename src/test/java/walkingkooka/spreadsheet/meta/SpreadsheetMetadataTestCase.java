@@ -590,7 +590,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testHasDateTimeContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> this.createObject().dateTimeContext(LocalDateTime::now)
+                () -> this.createObject()
+                        .dateTimeContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                LocalDateTime::now
+                        )
         );
         checkMessage(
                 thrown,
