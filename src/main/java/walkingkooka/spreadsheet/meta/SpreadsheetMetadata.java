@@ -39,6 +39,8 @@ import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.HasLocale;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
@@ -572,7 +574,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public abstract DecimalNumberContext decimalNumberContext();
 
     final DecimalNumberContext decimalNumberContext0() {
-        return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
+
+        final DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
+        final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+
+        final Integer precision = missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        missing.reportIfMissing();
+
+        return DecimalNumberContexts.basic(
+                decimalNumberSymbols,
+                locale,
+                new MathContext(
+                        precision,
+                        roundingMode
+                )
+        );
     }
 
     // EnvironmentContext...............................................................................................
