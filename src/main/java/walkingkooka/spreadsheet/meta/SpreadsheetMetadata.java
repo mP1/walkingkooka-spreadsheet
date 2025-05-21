@@ -584,8 +584,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
-        final Integer precision = missing.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        final RoundingMode roundingMode = missing.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        MathContext mathContext;
+        try {
+            mathContext = this.mathContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            missing.addMissing(cause);
+            mathContext = null;
+        }
 
         missing.reportIfMissing();
 
@@ -601,10 +606,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return DecimalNumberContexts.basic(
                 decimalNumberSymbols,
                 locale,
-                new MathContext(
-                        precision,
-                        roundingMode
-                )
+                mathContext
         );
     }
 
