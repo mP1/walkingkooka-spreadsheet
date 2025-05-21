@@ -367,7 +367,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 METADATA.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.forLanguageTag("ES")
-                ),
+                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -442,7 +442,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 METADATA.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.forLanguageTag("ES")
-                ),
+                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -510,7 +510,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 METADATA.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.forLanguageTag("ES")
-                ),
+                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -576,7 +576,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 METADATA.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.forLanguageTag("ES")
-                ),
+                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -769,7 +769,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 METADATA.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.forLanguageTag("ES")
-                ),
+                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
                 SPREADSHEET_PARSER_PROVIDER,
                 PROVIDER_CONTEXT
         );

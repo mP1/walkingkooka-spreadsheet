@@ -1497,7 +1497,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // HasDateTimeContext...............................................................................................
 
     @Test
-    public void testDateTimeContext() {
+    public void testDateTimeContextMissingDateTimeSymbols() {
         Arrays.stream(Locale.getAvailableLocales())
                 .forEach(l -> {
                             final int twoDigitYear = 49;
@@ -1517,6 +1517,29 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
                         }
                 );
+    }
+
+    @Test
+    public void testDateTimeContextWithDateTimeSymbols() {
+        final Locale locale = Locale.forLanguageTag("FR");
+
+        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+        );
+
+        final int twoDigitYear = 49;
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
+
+        final DateTimeContext context = metadata.dateTimeContext(NOW);
+
+        this.checkEquals(
+                dateTimeSymbols,
+                context.dateTimeSymbols(),
+                "dateTimeSymbols"
+        );
     }
 
     // HasDecimalNumberContext..........................................................................................
