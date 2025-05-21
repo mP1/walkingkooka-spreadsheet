@@ -97,7 +97,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         super();
     }
 
-    // isEmpty...........................................................................................................
+    // isEmpty..........................................................................................................
 
     @Test
     public final void testIsEmpty() {
@@ -113,7 +113,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().get(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .get(null)
+        );
     }
 
     @Test
@@ -268,7 +272,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetNullPropertyNameFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().set(null, "value"));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .set(null, "value")
+        );
     }
 
     @Test
@@ -339,12 +347,20 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetEffectiveStylePropertyNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().getEffectiveStyleProperty(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .getEffectiveStyleProperty(null)
+        );
     }
 
     @Test
     public final void testGetEffectiveStylePropertyAbsent() {
-        this.getEffectiveStylePropertyAndCheck(this.createObject(), TextStylePropertyName.WORD_WRAP, null);
+        this.getEffectiveStylePropertyAndCheck(
+                this.createObject(),
+                TextStylePropertyName.WORD_WRAP,
+                null
+        );
     }
 
     @Test
@@ -374,11 +390,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // getEffectiveStyleOrFail.................................................................................................
+    // getEffectiveStyleOrFail..........................................................................................
 
     @Test
     public final void testGetEffectiveStylePropertyOrFailNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().getEffectiveStylePropertyOrFail(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .getEffectiveStylePropertyOrFail(null)
+        );
     }
 
     @Test
@@ -394,7 +414,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final TextStylePropertyName<WordWrap> textStylePropertyName = TextStylePropertyName.WORD_WRAP;
         final WordWrap wordWrap = WordWrap.BREAK_WORD;
 
-        this.getEffectiveStylePropertyOrFailAndCheck(this.createObject()
+        this.getEffectiveStylePropertyOrFailAndCheck(
+                this.createObject()
                         .setDefaults(
                                 SpreadsheetMetadata.EMPTY.set(
                                         SpreadsheetMetadataPropertyName.STYLE,
@@ -427,9 +448,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                    final SpreadsheetColorName name,
                                    final Color color) {
         final Function<SpreadsheetColorName, Optional<Color>> nameToColor = metadata.nameToColor();
-        this.checkEquals(Optional.ofNullable(color),
+        this.checkEquals(
+                Optional.ofNullable(color),
                 nameToColor.apply(name),
-                () -> name + " to color " + metadata);
+                () -> name + " to color " + metadata
+        );
     }
 
     // NumberToColor....................................................................................................
@@ -443,9 +466,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                      final int number,
                                      final Color color) {
         final Function<Integer, Optional<Color>> numberToColor = metadata.numberToColor();
-        this.checkEquals(Optional.ofNullable(color),
+        this.checkEquals(
+                Optional.ofNullable(color),
                 numberToColor.apply(number),
-                () -> number + " to color " + metadata);
+                () -> number + " to color " + metadata
+        );
     }
 
     // NumberToColorName................................................................................................
@@ -613,8 +638,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testDecimalNumberContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject()
-                .decimalNumberContext(SpreadsheetMetadata.NO_CELL)
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> this.createObject()
+                        .decimalNumberContext(SpreadsheetMetadata.NO_CELL)
         );
         checkMessage(
                 thrown,
@@ -756,25 +783,37 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testDefaultsNotNull() {
         final SpreadsheetMetadata metadata = this.createObject();
-        this.checkNotEquals(null, metadata.defaults());
+        this.checkNotEquals(
+                null,
+                metadata.defaults()
+        );
     }
 
     @Test
     public final void testSetDefaultsNullFails() {
         final SpreadsheetMetadata metadata = this.createObject();
-        assertThrows(NullPointerException.class, () -> metadata.setDefaults(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> metadata.setDefaults(null)
+        );
     }
 
     @Test
     public final void testSetDefaultsSame() {
         final SpreadsheetMetadata metadata = this.createObject();
-        assertSame(metadata, metadata.setDefaults(metadata.defaults()));
+        assertSame(
+                metadata,
+                metadata.setDefaults(metadata.defaults())
+        );
     }
 
     @Test
     public final void testSetDefaultsEmpty() {
         final SpreadsheetMetadata metadata = this.createObject();
-        assertSame(metadata, metadata.setDefaults(SpreadsheetMetadata.EMPTY));
+        assertSame(
+                metadata,
+                metadata.setDefaults(SpreadsheetMetadata.EMPTY)
+        );
     }
 
     @Test
@@ -803,7 +842,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetDefaultsIncludesSpreadsheetIdFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+        this.setDefaultsWithInvalidFails(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(123)
+        );
     }
 
     private <TT> void setDefaultsWithInvalidFails(final SpreadsheetMetadataPropertyName<TT> property,
@@ -811,8 +853,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata metadata = this.createObject();
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(property, value);
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
-        this.checkEquals("Defaults includes invalid default values: " + property, thrown.getMessage(), () -> "defaults with " + defaults);
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> metadata.setDefaults(defaults)
+        );
+        this.checkEquals(
+                "Defaults includes invalid default values: " +
+                        property,
+                thrown.getMessage(),
+                () -> "defaults with " + defaults
+        );
     }
 
     final void checkDefaults(final SpreadsheetMetadata metadata,
@@ -821,9 +871,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             assertSame(null, metadata.defaults, "defaults");
         } else {
             assertSame(defaults, metadata.defaults, "defaults");
-            this.checkEquals(false, metadata.defaults.isEmpty(), () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults);
+            this.checkEquals(
+                    false,
+                    metadata.defaults.isEmpty(),
+                    () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults
+            );
         }
     }
+
+    // json.............................................................................................................
 
     @Test
     public final void testRoundtripWithDefaults() {
@@ -834,37 +890,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
         this.marshallRoundTripTwiceAndCheck(withDefaults);
     }
-
-    // missingRequiredProperties........................................................................................
-
-    @Test
-    public final void testMissingRequiredPropertiesReadOnly() {
-        assertThrows(UnsupportedOperationException.class,
-                () -> this.createObject().missingRequiredProperties().add(SpreadsheetMetadataPropertyName.VIEWPORT));
-    }
-
-    final void missingRequiredPropertiesAndCheck(final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetMetadataPropertyName<?>... missing) {
-        this.checkEquals(Sets.of(missing),
-                metadata.missingRequiredProperties(),
-                () -> "" + metadata);
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final Class<SpreadsheetMetadata> type() {
-        return Cast.to(this.metadataType());
-    }
-
-    abstract Class<T> metadataType();
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public final SpreadsheetMetadata unmarshall(final JsonNode from,
@@ -877,10 +902,45 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return this.createObject();
     }
 
+    // missingRequiredProperties........................................................................................
+
+    @Test
+    public final void testMissingRequiredPropertiesReadOnly() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createObject()
+                        .missingRequiredProperties()
+                        .add(SpreadsheetMetadataPropertyName.VIEWPORT)
+        );
+    }
+
+    final void missingRequiredPropertiesAndCheck(final SpreadsheetMetadata metadata,
+                                                 final SpreadsheetMetadataPropertyName<?>... missing) {
+        this.checkEquals(
+                Sets.of(missing),
+                metadata.missingRequiredProperties(),
+                () -> "" + metadata
+        );
+    }
+
     // HateosResourceTesting.............................................................................................
 
     @Override
     public final SpreadsheetMetadata createHateosResource() {
         return this.createObject();
+    }
+
+    // class...........................................................................................................
+
+    @Override
+    public final Class<SpreadsheetMetadata> type() {
+        return Cast.to(this.metadataType());
+    }
+
+    abstract Class<T> metadataType();
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
