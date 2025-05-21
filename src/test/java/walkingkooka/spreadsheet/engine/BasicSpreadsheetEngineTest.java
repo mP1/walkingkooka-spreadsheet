@@ -4559,6 +4559,107 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellWithMetadataMissingDateTimeSymbols() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+                SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.setChildren(
+                                Lists.of(
+                                        TextNode.text("Fri./December/1999")
+                                )
+                        )
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithMetadataMissingDateTimeSymbolsAndLocaleGermany() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+                SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+        ).set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.GERMANY
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.setChildren(
+                                Lists.of(
+                                        TextNode.text("Fr./Dezember/1999")
+                                )
+                        )
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
     public void testSaveCellWithMetadataDateTimeSymbols() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
