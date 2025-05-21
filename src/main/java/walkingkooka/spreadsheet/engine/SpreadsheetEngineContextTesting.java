@@ -249,6 +249,18 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // formatValue......................................................................................................
 
     @Test
+    default void testFormatValueNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .formatValue(
+                                Optional.of("1"),
+                                null
+                        )
+        );
+    }
+
+    @Test
     default void testFormatValueNullFormatterFails() {
         assertThrows(
                 NullPointerException.class,
