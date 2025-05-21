@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.Either;
+import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.TryingShortCircuitingConverter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -32,7 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  *     <li>{@link SpreadsheetCellReference} to {@link SpreadsheetCellRangeReference}</li>
  * </ul>
  */
-final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Converter<SpreadsheetConverterContext> {
+final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
@@ -55,35 +56,40 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Conve
     }
 
     @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> type,
-                                         final SpreadsheetConverterContext context) {
-        return isCellToCellRange(value, type) ?
-                this.successfulConversion(
-                        cellToCellRange((SpreadsheetCellReference) value),
-                        type
-                ) :
-                isCellRangeToCell(value, type) ?
-                        this.successfulConversion(
-                                cellRangeToCell((SpreadsheetCellRangeReference) value),
-                                type
-                        ) :
-                        isCellOrCellRange(value, type) ?
-                                this.successfulConversion(
-                                        context.resolveIfLabel((SpreadsheetSelection) value),
-                                        type
-                                ) :
-                                isExpressionReference(value, type) ?
-                                        this.successfulConversion(
-                                                value,
-                                                type
-                                        ) :
-                                        isSelection(value, type) ?
-                                                this.successfulConversion(
-                                                        value,
-                                                        type
-                                                ) :
-                                                this.failConversion(value, type);
+    public Object tryConvertOrFail(final Object value,
+                                   final Class<?> type,
+                                   final SpreadsheetConverterContext context) {
+        final Object result;
+
+        final SpreadsheetSelection selection = (SpreadsheetSelection) value;
+
+        if (isCellToCellRange(value, type)) {
+            result = cellToCellRange(selection.toCell());
+        } else {
+            if (isCellRangeToCell(value, type)) {
+                result = cellRangeToCell(selection.toCellRange());
+            } else {
+                if (isCellOrCellRange(value, type)) {
+                    result = context.resolveIfLabel(selection);
+                } else {
+                    if (isExpressionReference(value, type)) {
+                        result = selection;
+                    } else {
+                        if (isSelection(value, type)) {
+                            result = selection;
+                        } else {
+                            throw new ConversionException(
+                                    "Cant convert " + value + " to " + type.getName(),
+                                    value,
+                                    type
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     private static boolean isCellOrCellRange(final Object value,
