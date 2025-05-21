@@ -694,12 +694,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetConverterContext} to be used to convert {@link SpreadsheetCell cell} {@link SpreadsheetFormula#value()}
      * during a format.
      */
-    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final SpreadsheetCell cell,
+    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
                                                                           final SpreadsheetLabelNameResolver labelNameResolver,
                                                                           final ConverterProvider converterProvider,
                                                                           final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
-                Optional.of(cell),
+                cell,
                 SpreadsheetConverterContexts.NO_METADATA,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
@@ -1060,7 +1060,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext spreadsheetFormatterContext(final SpreadsheetCell cell,
+    public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
@@ -1123,7 +1123,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
                 this.spreadsheetFormatterContext(
-                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY), // has no DateTimeSymbols
+                        NO_CELL,
                         labelNameResolver,
                         converterProvider,
                         spreadsheetFormatterProvider,

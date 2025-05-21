@@ -392,7 +392,7 @@ public final class Sample {
                 return formatter.format(
                         value,
                         metadata.spreadsheetFormatterContext(
-                                cell,
+                                Optional.of(cell),
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 spreadsheetFormatterProvider,

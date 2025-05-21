@@ -313,7 +313,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 value,
                 this.spreadsheetMetadata()
                         .spreadsheetFormatterContext(
-                                cell,
+                                Optional.of(cell),
                                 this, // SpreadsheetLabelNameResolver,
                                 this.spreadsheetProvider, // ConverterProvider,
                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,
