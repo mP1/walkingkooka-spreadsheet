@@ -605,7 +605,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().decimalNumberContext());
         checkMessage(
                 thrown,
-                "Metadata missing: decimalNumberSymbols, locale, precision, roundingMode"
+                "Metadata missing: locale, precision, roundingMode"
         );
     }
 
