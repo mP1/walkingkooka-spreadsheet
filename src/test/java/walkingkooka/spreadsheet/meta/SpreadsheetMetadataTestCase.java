@@ -602,11 +602,20 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // HasDecimalNumberContext..........................................................................................
+    @Test
+    public final void testDecimalNumberContextWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .decimalNumberContext(null)
+        );
+    }
 
     @Test
-    public final void testHasDecimalNumberContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().decimalNumberContext());
+    public final void testDecimalNumberContextRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject()
+                .decimalNumberContext(SpreadsheetMetadata.NO_CELL)
+        );
         checkMessage(
                 thrown,
                 "Metadata missing: locale, precision, roundingMode"

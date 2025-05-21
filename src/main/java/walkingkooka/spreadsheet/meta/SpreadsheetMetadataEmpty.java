@@ -19,9 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -109,16 +107,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public Function<Integer, Optional<SpreadsheetColorName>> numberToColorName() {
         return this.numberToColorName0();
-    }
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        return this.decimalNumberContext0();
-    }
-
-    @Override
-    public ExpressionNumberContext expressionNumberContext() {
-        return this.expressionNumberContext0();
     }
 
     @Override

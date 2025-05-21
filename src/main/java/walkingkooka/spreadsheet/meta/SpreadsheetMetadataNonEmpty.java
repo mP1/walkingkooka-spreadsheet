@@ -20,9 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -200,32 +198,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cache {link Function}
      */
     private Function<Integer, Optional<SpreadsheetColorName>> numberToColorName;
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        if (null == this.decimalNumberContext) {
-            this.decimalNumberContext = this.decimalNumberContext0();
-        }
-        return this.decimalNumberContext;
-    }
-
-    /**
-     * Cached {@link DecimalNumberContext}.
-     */
-    private DecimalNumberContext decimalNumberContext;
-
-    @Override
-    public ExpressionNumberContext expressionNumberContext() {
-        if (null == this.expressionNumberContext) {
-            this.expressionNumberContext = this.expressionNumberContext0();
-        }
-        return this.expressionNumberContext;
-    }
-
-    /**
-     * Cached {@link ExpressionNumberContext}.
-     */
-    private ExpressionNumberContext expressionNumberContext;
 
     @Override
     public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
