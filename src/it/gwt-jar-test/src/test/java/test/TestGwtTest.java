@@ -318,6 +318,7 @@ public class TestGwtTest extends GWTTestCase {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
+                                        SpreadsheetMetadata.NO_CELL,
                                         SpreadsheetConverterContexts.NO_METADATA,
                                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -349,6 +350,7 @@ public class TestGwtTest extends GWTTestCase {
                 return cell.setFormattedValue(
                         Optional.of(
                                 this.formatValue(
+                                        cell,
                                         cell.formula()
                                                 .value(),
                                         formatter.orElse(
@@ -367,7 +369,8 @@ public class TestGwtTest extends GWTTestCase {
             }
 
             @Override
-            public Optional<TextNode> formatValue(final Optional<Object> value,
+            public Optional<TextNode> formatValue(final SpreadsheetCell cell,
+                                                  final Optional<Object> value,
                                                   final SpreadsheetFormatter formatter) {
                 checkEquals(
                         false,
@@ -378,6 +381,7 @@ public class TestGwtTest extends GWTTestCase {
                 return formatter.format(
                         value,
                         metadata.spreadsheetFormatterContext(
+                                cell,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 spreadsheetFormatterProvider,

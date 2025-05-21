@@ -30,6 +30,7 @@ public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStor
     public SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor createVisitor() {
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(
                 null,
+                null,
                 null
         );
     }

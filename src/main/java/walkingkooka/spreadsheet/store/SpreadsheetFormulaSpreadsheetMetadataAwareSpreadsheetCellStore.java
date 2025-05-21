@@ -144,7 +144,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 if (null != token) {
                     formula = formula.setText(token.text());
                     formula = formula.setExpression(
-                            token.toExpression(this.expressionEvaluationContext())
+                            token.toExpression(
+                                    this.expressionEvaluationContext(cell)
+                            )
                     ); // also clears value/error
                 }
             } catch (final Exception failed) {
@@ -336,6 +338,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 .orElse(null);
         if (null != token) {
             token = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor.update(
+                    cell,
                     token,
                     this.metadata,
                     this.providerContext // HasNow
@@ -346,7 +349,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 fixed = fixed.setFormula(
                         formula.setText(token.text())
                                 .setToken(Optional.of(token))
-                                .setExpression(token.toExpression(this.expressionEvaluationContext()))
+                                .setExpression(
+                                        token.toExpression(
+                                                this.expressionEvaluationContext(cell)
+                                        )
+                                )
                 );
             }
         }
@@ -354,8 +361,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         return fixed;
     }
 
-    private ExpressionEvaluationContext expressionEvaluationContext() {
+    private ExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetCell cell) {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(
+                cell,
                 this.metadata,
                 this.providerContext // HasNow
         );

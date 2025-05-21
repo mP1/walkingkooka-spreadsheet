@@ -687,10 +687,27 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // spreadsheetConverterContext......................................................................................
 
     @Test
+    public void testSpreadsheetConverterContextWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        null,
+                        SpreadsheetConverterContexts.NO_METADATA,
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
     public void testSpreadsheetConverterContextWithNullSpreadsheetMetadataFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         null,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
@@ -706,6 +723,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         null,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
@@ -721,6 +739,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         null,
@@ -736,6 +755,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
@@ -751,6 +771,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
@@ -766,6 +787,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
@@ -781,6 +803,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,

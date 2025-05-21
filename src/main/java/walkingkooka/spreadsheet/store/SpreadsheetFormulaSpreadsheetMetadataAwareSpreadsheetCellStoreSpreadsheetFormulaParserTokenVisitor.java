@@ -23,6 +23,7 @@ import walkingkooka.collect.stack.Stacks;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.parser.AdditionSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.AmPmSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.ApostropheSymbolSpreadsheetFormulaParserToken;
@@ -109,6 +110,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -117,10 +119,12 @@ import java.util.function.Function;
  */
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
 
-    static SpreadsheetFormulaParserToken update(final SpreadsheetFormulaParserToken token,
+    static SpreadsheetFormulaParserToken update(final SpreadsheetCell cell,
+                                                final SpreadsheetFormulaParserToken token,
                                                 final SpreadsheetMetadata metadata,
                                                 final HasNow now) {
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor visitor = new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(
+                cell,
                 metadata,
                 now
         );
@@ -128,9 +132,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         return visitor.children.get(0).cast(SpreadsheetFormulaParserToken.class);
     }
 
-    SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(final SpreadsheetMetadata metadata,
+    SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(final SpreadsheetCell cell,
+                                                                                                       final SpreadsheetMetadata metadata,
                                                                                                        final HasNow now) {
         super();
+
+        this.cell = cell;
         this.metadata = metadata;
         this.now = now;
     }
@@ -796,10 +803,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     private DateTimeContext dateTimeContext() {
         if (null == this.dateTimeContext) {
-            this.dateTimeContext = this.metadata.dateTimeContext(this.now);
+            this.dateTimeContext = this.metadata.dateTimeContext(
+                    Optional.of(this.cell),
+                    this.now
+            );
         }
         return this.dateTimeContext;
     }
+
+    private final SpreadsheetCell cell;
 
     private final HasNow now;
 

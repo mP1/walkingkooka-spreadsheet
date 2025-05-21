@@ -23,6 +23,7 @@ import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -48,17 +49,22 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         DateTimeContextDelegator,
         DecimalNumberContextDelegator {
 
-    static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetMetadata metadata,
+    static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetCell cell,
+                                                                                                          final SpreadsheetMetadata metadata,
                                                                                                           final HasNow now) {
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(
+                cell,
                 metadata,
                 now
         );
     }
 
-    private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(final SpreadsheetMetadata metadata,
+    private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(final SpreadsheetCell cell,
+                                                                                                      final SpreadsheetMetadata metadata,
                                                                                                       final HasNow now) {
         super();
+
+        this.cell = cell;
         this.metadata = metadata;
         this.now = now;
     }
@@ -126,12 +132,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     @Override
     public DateTimeContext dateTimeContext() {
         if(null == this.dateTimeContext) {
-            this.dateTimeContext = this.metadata.dateTimeContext(this.now);
+            this.dateTimeContext = this.metadata.dateTimeContext(
+                    Optional.of(this.cell),
+                    this.now
+            );
         }
         return this.dateTimeContext;
     }
 
     private DateTimeContext dateTimeContext;
+
+    private final SpreadsheetCell cell;
 
     private final HasNow now;
 

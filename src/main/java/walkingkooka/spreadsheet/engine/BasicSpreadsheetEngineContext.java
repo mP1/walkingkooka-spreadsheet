@@ -240,6 +240,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 }
 
                 this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
+                        cell,
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         converterSelector,
@@ -303,7 +304,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // formatValue......................................................................................................
 
     @Override
-    public Optional<TextNode> formatValue(final Optional<Object> value,
+    public Optional<TextNode> formatValue(final SpreadsheetCell cell,
+                                          final Optional<Object> value,
                                           final SpreadsheetFormatter formatter) {
         Objects.requireNonNull(formatter, "formatter");
 
@@ -311,6 +313,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 value,
                 this.spreadsheetMetadata()
                         .spreadsheetFormatterContext(
+                                cell,
                                 this, // SpreadsheetLabelNameResolver,
                                 this.spreadsheetProvider, // ConverterProvider,
                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,
@@ -338,6 +341,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 cell.setFormattedValue(
                         Optional.of(
                                 this.formatValue(
+                                                cell,
                                                 value,
                                                 formatter.orElse(
                                                         this.spreadsheetMetadata()
