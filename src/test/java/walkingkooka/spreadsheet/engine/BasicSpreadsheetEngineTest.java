@@ -186,21 +186,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
-            return this.converter.canConvert(value, type, this);
+            return this.converter.canConvert(
+                    value,
+                    type,
+                    this
+            );
         }
 
         @Override
         public <T> Either<T, String> convert(final Object value,
                                              final Class<T> target) {
-            return this.converter.convert(value, target, this);
+            return this.converter.convert(
+                    value,
+                    target,
+                    this
+            );
         }
 
-        private final Converter<SpreadsheetConverterContext> converter = ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                .cast(SpreadsheetConverterContext.class)
-                .to(
-                        Number.class,
-                        Converters.collection(
-                                Lists.of(
+        private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
+                Lists.of(
                                         Converters.simple()
                                                 .cast(SpreadsheetConverterContext.class),
                                         SpreadsheetConverters.errorToText()
@@ -215,9 +219,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 Converters.numberToNumber()
                                         ),
                                         Converters.objectToString()
-                                )
-                        )
-                );
+                )
+        ).cast(SpreadsheetConverterContext.class);
 
         @Override
         public char decimalSeparator() {
