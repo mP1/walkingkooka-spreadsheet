@@ -525,10 +525,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasDateTimeContext...............................................................................................
 
     /**
-     * Returns a {@link DateTimeContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE}</li>
-     * </ul>
+     * Returns a {@link DateTimeContext} trying {@link SpreadsheetMetadataPropertyName#DATE_TIME_SYMBOLS} as the source of
+     * {@link DateTimeSymbols} and then the {@link SpreadsheetMetadataPropertyName#LOCALE}.
      */
     public final DateTimeContext dateTimeContext(final HasNow now) {
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
