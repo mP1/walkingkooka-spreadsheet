@@ -72,7 +72,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
@@ -688,25 +687,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * Creates a {@link SpreadsheetConverterContext} to be used to convert {@link SpreadsheetCell cell} {@link SpreadsheetFormula#value()}
-     * during a format.
-     */
-    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
-                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                          final ConverterProvider converterProvider,
-                                                                          final ProviderContext providerContext) {
-        return this.spreadsheetConverterContext(
-                cell,
-                SpreadsheetConverterContexts.NO_METADATA,
-                NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
-                labelNameResolver,
-                converterProvider,
-                providerContext
-        );
-    }
-
-    /**
      * Returns a general {@link Converter} using the required properties.
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_OFFSET}</li>
@@ -1083,8 +1063,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         SpreadsheetConverterContext formatSpreadsheetConverterContext;
         try {
-            formatSpreadsheetConverterContext = this.formatSpreadsheetConverterContext(
+            formatSpreadsheetConverterContext = this.spreadsheetConverterContext(
                     cell,
+                    SpreadsheetConverterContexts.NO_METADATA,
+                    NO_VALIDATION_REFERENCE,
+                    SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                     labelNameResolver,
                     converterProvider,
                     providerContext
