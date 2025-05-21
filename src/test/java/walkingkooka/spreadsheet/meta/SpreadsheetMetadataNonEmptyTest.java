@@ -64,7 +64,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
@@ -1792,7 +1791,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.spreadsheetFormatterContext(
-                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                        SpreadsheetMetadata.NO_CELL,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
