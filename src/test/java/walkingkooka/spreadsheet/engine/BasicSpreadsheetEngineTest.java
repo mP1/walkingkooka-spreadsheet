@@ -27,6 +27,7 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -139,11 +140,13 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -4533,6 +4536,58 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         ).get()
                                 )
                                 .root()
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithMetadataDateTimeSymbols() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.FRANCE)
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.setChildren(
+                                Lists.of(
+                                        TextNode.text("ven./décembre/1999")
+                                )
+                        )
                 )
         );
 

@@ -539,10 +539,16 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         missing.reportIfMissing();
 
+        DateTimeSymbols dateTimeSymbols = this.get(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS)
+                .orElse(null);
+        if (null == dateTimeSymbols) {
+            dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(locale)
+            );
+        }
+
         return DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(locale)
-                ),
+                dateTimeSymbols,
                 locale,
                 defaultYear,
                 twoYearDigit,
