@@ -513,6 +513,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                     public List<String> monthNameAbbreviations() {
                                         return dateTimeContext.monthNameAbbreviations();
                                     }
+
+                                    @Override
+                                    public char zeroDigit() {
+                                        return '0';
+                                    }
                                 })
                         .map(t -> tokenToValue.apply(
                                 t,

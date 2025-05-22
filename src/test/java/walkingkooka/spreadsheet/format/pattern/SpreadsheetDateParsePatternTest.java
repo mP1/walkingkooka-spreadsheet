@@ -401,6 +401,22 @@ public final class SpreadsheetDateParsePatternTest extends SpreadsheetParsePatte
         );
     }
 
+    @Test
+    public void testParseDateWithArabicSpreadsheetParserContext() {
+        this.checkEquals(
+                LocalDate.of(1999, 12, 31),
+                this.createPattern("yyyy/mm/dd")
+                        .parse(
+                                arabicDigits(1999) +
+                                        "/" +
+                                        arabicDigits(12) +
+                                        "/" +
+                                        arabicDigits(31),
+                                this.parserContext(ARABIC_DECIMAL_NUMBER_CONTEXT)
+                        )
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

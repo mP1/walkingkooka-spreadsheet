@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.formula.parser.MillisecondSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 
 public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserMilliseconds>
         implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserMilliseconds> {
@@ -153,6 +153,20 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
     private final static String PATTERN = "abc-pattern-ignored-not-checked-or-used-in-anyway";
 
     @Test
+    public void testParseWithArabicDecimalNumberContext() {
+        final String text = arabicDigits(123);
+
+        this.parseAndCheck(
+                SpreadsheetNonNumberParsePatternParserMilliseconds.with(PATTERN),
+                this.createContext(ARABIC_ZERO_DIGIT),
+                text,
+                SpreadsheetFormulaParserToken.millisecond(123_000_000, text),
+                text,
+                "" // textAfter
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(this.createParser(), PATTERN);
     }
@@ -164,7 +178,16 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
 
     @Override
     public SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.fake();
+        return this.createContext('0');
+    }
+
+    private SpreadsheetParserContext createContext(final char zeroDigit) {
+        return new FakeSpreadsheetParserContext() {
+            @Override
+            public char zeroDigit() {
+                return zeroDigit;
+            }
+        };
     }
 
     // hashcode/equals..................................................................................................

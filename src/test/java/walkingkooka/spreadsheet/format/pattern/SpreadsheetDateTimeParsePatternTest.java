@@ -461,6 +461,26 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
         );
     }
 
+    @Test
+    public void testParseDateTimeWithArabicSpreadsheetParserContext() {
+        this.checkEquals(
+                LocalDateTime.of(1999, 12, 31, 12, 58),
+                this.createPattern("yyyy/mm/dd/hh/mm")
+                        .parse(
+                                arabicDigits(1999) +
+                                        "/" +
+                                        arabicDigits(12) +
+                                        "/" +
+                                        arabicDigits(31) +
+                                        "/" +
+                                        arabicDigits(12) +
+                                        "/" +
+                                        arabicDigits(58),
+                                this.parserContext(ARABIC_DECIMAL_NUMBER_CONTEXT)
+                        )
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
