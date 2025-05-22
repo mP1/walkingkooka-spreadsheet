@@ -23950,7 +23950,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         parser.parseText(
                                         text,
                                         SpreadsheetParserContexts.basic(
-                                                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+                                                InvalidCharacterExceptionFactory.POSITION,
                                                 dateTimeContext,
                                                 ExpressionNumberContexts.basic(
                                                         EXPRESSION_NUMBER_KIND,
