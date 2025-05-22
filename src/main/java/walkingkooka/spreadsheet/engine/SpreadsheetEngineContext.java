@@ -62,6 +62,11 @@ public interface SpreadsheetEngineContext extends Context,
         HasMissingCellNumberValue {
 
     /**
+     * Useful constant for some members that require a {@link SpreadsheetCell}.
+     */
+    Optional<SpreadsheetCell> NO_CELL = Optional.empty();
+
+    /**
      * Returns the base server url, which can then be used to create links to cells and more.
      * This is necessary for functions such as hyperlink which creates a link to a cell.
      */

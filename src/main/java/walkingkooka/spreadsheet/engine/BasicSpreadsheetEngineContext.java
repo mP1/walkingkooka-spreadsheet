@@ -195,7 +195,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return token.toExpression(
                 this.spreadsheetExpressionEvaluationContext(
-                        Optional.empty(),// cell
+                        NO_CELL,
                         SpreadsheetExpressionReferenceLoaders.fake() // toExpression never loads references
                 )
         );
