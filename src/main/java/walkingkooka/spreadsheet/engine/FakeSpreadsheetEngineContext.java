@@ -83,8 +83,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     // formula..........................................................................................................
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
+                                                      final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(formula, "formula");
+        Objects.requireNonNull(cell, "cell");
+
         throw new UnsupportedOperationException();
     }
 

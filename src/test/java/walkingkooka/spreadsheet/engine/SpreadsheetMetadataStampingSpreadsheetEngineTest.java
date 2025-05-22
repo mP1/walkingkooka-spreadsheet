@@ -496,7 +496,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
+                                                              final Optional<SpreadsheetCell> cell) {
                 final TextCursorSavePoint beginning = formula.save();
                 formula.end();
 

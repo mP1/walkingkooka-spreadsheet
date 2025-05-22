@@ -618,7 +618,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.toExpressionAndCheck(
                 context,
                 context.parseFormula(
-                        TextCursors.charSequence("=1+2")
+                        TextCursors.charSequence("=1+2"),
+                        SpreadsheetEngineContext.NO_CELL
                 ),
                 Expression.add(
                         Expression.value(

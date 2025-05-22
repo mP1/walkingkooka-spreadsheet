@@ -36,7 +36,6 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -121,8 +120,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.functionAliases = functionAliases;
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
-
-        this.parserContext = metadata.spreadsheetParserContext(providerContext);
     }
 
     @Override
@@ -171,7 +168,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // parsing formula and executing....................................................................................
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
+                                                      final Optional<SpreadsheetCell> cell) {
         return SpreadsheetFormulaParsers.valueOrExpression(
                         this.metadata.spreadsheetParser(
                                 this, // SpreadsheetParserProvider
@@ -179,15 +177,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         )
                 )
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(formula, this.parserContext)
-                .get()
+                .parse(
+                        formula,
+                        this.metadata.spreadsheetParserContext(
+                                cell,
+                                this // HasNow
+                        )
+                ).get()
                 .cast(SpreadsheetFormulaParserToken.class);
     }
-
-    /**
-     * This parser is used to parse strings, date, date/time, time and numbers outside an expression but within a formula.
-     */
-    private final SpreadsheetParserContext parserContext;
 
     @Override
     public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {

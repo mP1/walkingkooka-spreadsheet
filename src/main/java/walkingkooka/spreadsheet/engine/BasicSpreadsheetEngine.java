@@ -1456,7 +1456,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                     ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
                                             )
                                     ),
-                            metadata.spreadsheetParserContext(context)
+                            metadata.spreadsheetParserContext(
+                                    Optional.of(cell),
+                                    context
+                            )
                     );
 
                     token = formula.token()
