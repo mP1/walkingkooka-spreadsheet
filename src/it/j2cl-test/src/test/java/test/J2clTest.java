@@ -288,7 +288,8 @@ public class J2clTest {
             }
 
             @Override
-            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
+                                                              final Optional<SpreadsheetCell> cell) {
                 return Cast.to(
                         SpreadsheetFormulaParsers.expression()
                                 .orFailIfCursorNotEmpty(ParserReporters.basic())
