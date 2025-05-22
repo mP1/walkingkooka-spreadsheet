@@ -605,8 +605,18 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         missing.reportIfMissing();
 
-        DecimalNumberSymbols decimalNumberSymbols = this.get(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS)
-                .orElse(null);
+        DecimalNumberSymbols decimalNumberSymbols = null;
+        if (cell.isPresent()) {
+            decimalNumberSymbols = cell.get()
+                    .decimalNumberSymbols()
+                    .orElse(null);
+        }
+
+        if (null == decimalNumberSymbols) {
+            decimalNumberSymbols = this.get(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS)
+                    .orElse(null);
+        }
+
         if (null == decimalNumberSymbols) {
             decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
                     '+',
