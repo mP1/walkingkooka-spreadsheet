@@ -172,7 +172,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 NullPointerException.class,
                 () -> this.createContext()
                         .spreadsheetExpressionEvaluationContext(
-                                Optional.empty(), // cell
+                                SpreadsheetEngineContext.NO_CELL,
                                 null
                         )
         );
