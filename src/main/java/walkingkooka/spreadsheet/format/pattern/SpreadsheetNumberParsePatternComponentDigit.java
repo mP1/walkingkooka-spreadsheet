@@ -76,11 +76,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
             }
 
             final char c = cursor.at();
-
-            final int digit = Character.digit(
-                    c,
-                    10
-            );
+            final int digit = context.digit(c);
             if (-1 != digit) {
                 request.digits.append(c);
 

@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.formula.parser.CurrencySymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DecimalSeparatorSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DigitsSpreadsheetFormulaParserToken;
@@ -40,6 +43,8 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.math.MathContext;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -232,6 +237,76 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
                 "0000",
                 "6",
                 digits(6)
+        );
+    }
+
+    @Test
+    public void testParseArabicDecimalNumberContext() {
+        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
+        );
+
+        final String one = arabicDigits(1);
+
+        final String text = one;
+
+        this.parseAndCheck(
+                this.createParser("0"),
+                this.createContext(
+                        DecimalNumberContexts.basic(
+                                decimalNumberSymbols,
+                                ARABIC_ZERO_DIGIT_LOCALE,
+                                MathContext.DECIMAL32
+                        )
+                ),
+                text,
+                SpreadsheetFormulaParserToken.number(
+                        Lists.of(
+                                SpreadsheetFormulaParserToken.digits(one, one)
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testParseArabicDecimalNumberContext2() {
+        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
+        );
+
+        final String one = arabicDigits(1);
+        final String decimal = String.valueOf(decimalNumberSymbols.decimalSeparator());
+        final String five = arabicDigits(5);
+
+        final String text = one +
+                decimal +
+                five;
+
+        this.parseAndCheck(
+                this.createParser("0.0"),
+                this.createContext(
+                        this.createContext(
+                                DecimalNumberContexts.basic(
+                                        decimalNumberSymbols,
+                                        ARABIC_ZERO_DIGIT_LOCALE,
+                                        MathContext.DECIMAL32
+                                )
+                        )
+                ),
+                text,
+                SpreadsheetFormulaParserToken.number(
+                        Lists.of(
+                                SpreadsheetFormulaParserToken.digits(one, one),
+                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(decimal, decimal),
+                                SpreadsheetFormulaParserToken.digits(five, five)
+                        ),
+                        text
+                ),
+                text
         );
     }
 
@@ -597,12 +672,18 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
 
     @Override
     public SpreadsheetParserContext createContext() {
+        return this.createContext(
+                this.decimalNumberContext()
+        );
+    }
+
+    final SpreadsheetParserContext createContext(final DecimalNumberContext decimalNumberContext) {
         return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 ExpressionNumberContexts.basic(
                         ExpressionNumberKind.BIG_DECIMAL,
-                        this.decimalNumberContext()
+                        decimalNumberContext
                 ),
                 VALUE_SEPARATOR
         );

@@ -47,6 +47,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
     final static char PLUS = 'p';
     final static char MINUS = 'm';
     final static char DECIMAL = 'd';
+    final static char ZERO = '0';
 
     @Override
     public final DecimalNumberContext decimalNumberContext() {
@@ -87,6 +88,11 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
             }
 
             @Override
+            public char zeroDigit() {
+                return ZERO;
+            }
+
+            @Override
             public MathContext mathContext() {
                 return MathContext.UNLIMITED;
             }
@@ -101,6 +107,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
                         .label("negativeSign").value(this.negativeSign())
                         .label("percentSymbol").value(this.percentSymbol())
                         .label("positiveSign").value(this.positiveSign())
+                        .label("zeroDigit").value(this.zeroDigit())
                         .label("mathContext").value(this.mathContext())
                         .build();
             }

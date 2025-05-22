@@ -89,6 +89,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     final static char MINUS = 'm';
     final static char PERCENT = 'q';
     final static char PLUS = 'p';
+    final static char ZERO = '0';
 
     SpreadsheetParsePatternTestCase() {
         super();
@@ -543,6 +544,11 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
             @Override
             public char positiveSign() {
                 return PLUS;
+            }
+
+            @Override
+            public char zeroDigit() {
+                return ZERO;
             }
         };
     }
