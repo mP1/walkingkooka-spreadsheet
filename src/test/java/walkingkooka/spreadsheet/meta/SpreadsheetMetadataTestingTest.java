@@ -116,6 +116,9 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testSpreadsheetParserContext() {
         METADATA_EN_AU
-                .spreadsheetParserContext(LocalDateTime::now);
+                .spreadsheetParserContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        LocalDateTime::now
+                );
     }
 }

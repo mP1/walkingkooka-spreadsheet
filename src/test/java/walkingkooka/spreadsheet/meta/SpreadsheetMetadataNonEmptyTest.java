@@ -2015,7 +2015,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ).parse(
                         cursor,
                         this.metadataWithSpreadsheetParserContext()
-                                .spreadsheetParserContext(NOW)
+                                .spreadsheetParserContext(
+                                        SpreadsheetMetadata.NO_CELL,
+                                        NOW
+                                )
                 ).orElseThrow(() -> new AssertionError("parser failed"));
         this.checkEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
 
@@ -2042,7 +2045,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.checkNotEquals(
                 null,
-                metadata.spreadsheetParserContext(NOW)
+                metadata.spreadsheetParserContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        NOW
+                )
         );
     }
 

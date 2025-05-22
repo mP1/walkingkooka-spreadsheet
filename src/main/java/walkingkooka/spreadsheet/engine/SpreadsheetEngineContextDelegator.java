@@ -61,9 +61,13 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
+                                                       final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetEngineContext()
-                .parseFormula(formula);
+                .parseFormula(
+                        formula,
+                        cell
+                );
     }
 
     @Override

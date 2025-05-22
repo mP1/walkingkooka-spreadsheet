@@ -406,7 +406,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext();
 
-    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(NOW);
+    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
+            SpreadsheetMetadata.NO_CELL,
+            NOW
+    );
 
     SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
             SpreadsheetProviders.basic(

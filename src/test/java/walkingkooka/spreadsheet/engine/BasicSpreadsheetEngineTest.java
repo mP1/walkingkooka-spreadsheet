@@ -27,7 +27,11 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.MathTesting;
 import walkingkooka.net.AbsoluteUrl;
@@ -58,7 +62,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -184,8 +190,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static char PERMILL_SYMBOL = '^';
     private final static char POSITIVE_SIGN = '+';
     private final static char ZERO_DIGIT = '0';
+    
+    private static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
-    private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
+        TestSpreadsheetFormatterContext(final DateTimeSymbols dateTimeSymbols,
+                                        final DecimalNumberSymbols decimalNumberSymbols) {
+            this.dateTimeSymbols = dateTimeSymbols;
+            this.decimalNumberSymbols = decimalNumberSymbols;
+        }
+
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
@@ -208,41 +221,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
                 Lists.of(
-                                        Converters.simple()
-                                                .cast(SpreadsheetConverterContext.class),
-                                        SpreadsheetConverters.errorToText()
-                                                .cast(SpreadsheetConverterContext.class),
-                                        SpreadsheetConverters.errorToNumber()
-                                                .cast(SpreadsheetConverterContext.class),
-                                        Converters.localDateToLocalDateTime()
-                                                .cast(SpreadsheetConverterContext.class),
-                                        Converters.localTimeToLocalDateTime()
-                                                .cast(SpreadsheetConverterContext.class),
-                                        ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                                Converters.numberToNumber()
-                                        ),
-                                        Converters.objectToString()
+                        Converters.simple()
+                                .cast(SpreadsheetConverterContext.class),
+                        SpreadsheetConverters.errorToText()
+                                .cast(SpreadsheetConverterContext.class),
+                        SpreadsheetConverters.errorToNumber()
+                                .cast(SpreadsheetConverterContext.class),
+                        Converters.localDateToLocalDateTime()
+                                .cast(SpreadsheetConverterContext.class),
+                        Converters.localTimeToLocalDateTime()
+                                .cast(SpreadsheetConverterContext.class),
+                        ExpressionNumberConverters.toNumberOrExpressionNumber(
+                                Converters.numberToNumber()
+                        ),
+                        Converters.objectToString()
                 )
         ).cast(SpreadsheetConverterContext.class);
 
         @Override
-        public char decimalSeparator() {
-            return DECIMAL_SEPARATOR;
-        }
-
-        @Override
         public ExpressionNumberKind expressionNumberKind() {
             return EXPRESSION_NUMBER_KIND;
-        }
-
-        @Override
-        public char negativeSign() {
-            return NEGATIVE_SIGN;
-        }
-
-        @Override
-        public char positiveSign() {
-            return POSITIVE_SIGN;
         }
 
         @Override
@@ -251,10 +249,110 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public char zeroDigit() {
-            return ZERO_DIGIT;
+        public char decimalSeparator() {
+            return this.decimalNumberSymbols().decimalSeparator();
         }
-    };
+
+        @Override
+        public char negativeSign() {
+            return this.decimalNumberSymbols().negativeSign();
+        }
+
+        @Override
+        public char positiveSign() {
+            return this.decimalNumberSymbols().positiveSign();
+        }
+
+        @Override
+        public char zeroDigit() {
+            return this.decimalNumberSymbols().zeroDigit();
+        }
+
+        @Override
+        public DecimalNumberSymbols decimalNumberSymbols() {
+            if (null == this.decimalNumberSymbols) {
+                throw new UnsupportedOperationException();
+            }
+            return this.decimalNumberSymbols;
+        }
+
+        private final DecimalNumberSymbols decimalNumberSymbols;
+
+
+        @Override
+        public List<String> ampms() {
+            return this.dateTimeSymbols().ampms();
+        }
+
+        @Override
+        public List<String> monthNames() {
+            return this.dateTimeSymbols().monthNames();
+        }
+
+        @Override
+        public List<String> monthNameAbbreviations() {
+            return this.dateTimeSymbols().monthNameAbbreviations();
+        }
+
+        @Override
+        public List<String> weekDayNames() {
+            return this.dateTimeSymbols().weekDayNames();
+        }
+
+        @Override
+        public List<String> weekDayNameAbbreviations() {
+            return this.dateTimeSymbols().weekDayNameAbbreviations();
+        }
+
+        @Override
+        public DateTimeSymbols dateTimeSymbols() {
+            if (null == this.dateTimeSymbols) {
+                throw new UnsupportedOperationException();
+            }
+            return this.dateTimeSymbols;
+        }
+
+        private final DateTimeSymbols dateTimeSymbols;
+    }
+
+    private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new TestSpreadsheetFormatterContext(
+            DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(LOCALE)
+            ),
+            DecimalNumberSymbols.with(
+                    NEGATIVE_SIGN,
+                    POSITIVE_SIGN,
+                    ZERO_DIGIT,
+                    CURRENCY_SYMBOL,
+                    DECIMAL_SEPARATOR,
+                    EXPONENT_SYMBOL,
+                    GROUP_SEPARATOR,
+                    INFINITY_SYMBOL,
+                    MONETARY_DECIMAL_SEPARATOR,
+                    NAN_SYMBOL,
+                    PERCENT_SYMBOL,
+                    PERMILL_SYMBOL
+            )
+    );
+
+    private final static DateTimeSymbols FRANCE_DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(Locale.FRANCE)
+    );
+
+    private final static DecimalNumberSymbols ARABIC_DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
+            '+',
+            new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
+    );
+
+    private final static SpreadsheetFormatterContext ARABIC_NUMBER_FORMATTER_CONTEXT = new TestSpreadsheetFormatterContext(
+            null,
+            ARABIC_DECIMAL_NUMBER_SYMBOLS
+    );
+    
+    private final static SpreadsheetFormatterContext FRANCE_DATE_ARABIC_NUMBER_FORMATTER_CONTEXT = new TestSpreadsheetFormatterContext(
+            FRANCE_DATE_TIME_SYMBOLS,
+            ARABIC_DECIMAL_NUMBER_SYMBOLS
+    );
 
     private final static int DEFAULT_YEAR = 1900;
     private final static int TWO_DIGIT_YEAR = 20;
@@ -4116,6 +4214,75 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellWithFormulaDateLiteralAndArabicDecimalNumberSymbols() {
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(
+                                arabicDigits(31) +
+                                        "/" +
+                                        arabicDigits(12) +
+                                        "/" +
+                                        arabicDigits(1999)
+                        )
+                ).setDecimalNumberSymbols(
+                        Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("date-parse-pattern dd/mm/yyyy")
+                        )
+                ).setStyle(STYLE),
+                LocalDate.of(1999, 12, 31),
+                ARABIC_NUMBER_FORMATTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSaveCellWithFormulaDateLiteralAndFrenchDateTimeSymbolsAndArabicDecimalNumberSymbols() {
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(
+                                arabicDigits(31) +
+                                        "/décembre/" +
+                                        arabicDigits(1999)
+                        )
+                ).setDateTimeSymbols(
+                        Optional.of(FRANCE_DATE_TIME_SYMBOLS)
+                ).setDecimalNumberSymbols(
+                        Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("date-parse-pattern dd/mmmm/yyyy")
+                        )
+                ).setStyle(STYLE),
+                LocalDate.of(1999, 12, 31),
+                FRANCE_DATE_ARABIC_NUMBER_FORMATTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSaveCellWithFormulaDateLiteralAndFrenchDateNumberSymbolsAndArabicDecimalNumberSymbols2() {
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(
+                                arabicDigits(31) +
+                                        "/décembre/" +
+                                        arabicDigits(1999)
+                        )
+                ).setDateTimeSymbols(
+                        Optional.of(FRANCE_DATE_TIME_SYMBOLS)
+                ).setDecimalNumberSymbols(
+                        Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("date-parse-pattern dd/mmmm/yyyy")
+                        )
+                ).setStyle(STYLE),
+                LocalDate.of(1999, 12, 31),
+                FRANCE_DATE_ARABIC_NUMBER_FORMATTER_CONTEXT
+        );
+    }
+
+    @Test
     public void testSaveCellWithFormulaDateTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31 12:34",
@@ -4127,10 +4294,63 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellWithFormulaDateTimeLiteralAndArabicDecimalNumberSymbols() {
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(
+                                arabicDigits(12) +
+                                        ':' +
+                                        arabicDigits(34) +
+                                        " " +
+                                        arabicDigits(31) +
+                                        "/décembre/" +
+                                        arabicDigits(1999)
+                        )
+                ).setDateTimeSymbols(
+                        Optional.of(FRANCE_DATE_TIME_SYMBOLS)
+                ).setDecimalNumberSymbols(
+                        Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("date-time-parse-pattern hh:mm dd/mmmm/yyyy")
+                        )
+                ).setStyle(STYLE),
+                LocalDateTime.of(
+                        LocalDate.of(1999, 12, 31),
+                        LocalTime.of(12, 34)
+                ),
+                FRANCE_DATE_ARABIC_NUMBER_FORMATTER_CONTEXT
+        );
+    }
+
+    @Test
     public void testSaveCellWithFormulaNumberLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "123",
-                123
+                EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
+    public void testSaveCellWithFormulaNumberLiteralAndArabicDecimalNumberSymbols() {
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(
+                                arabicDigits(12) +
+                                        ARABIC_DECIMAL_NUMBER_SYMBOLS.decimalSeparator() +
+                                        arabicDigits(34)
+                        )
+                ).setDecimalNumberSymbols(
+                        Optional.of(
+                                ARABIC_DECIMAL_NUMBER_SYMBOLS
+                        )
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("number-parse-pattern 00.00")
+                        )
+                ).setStyle(STYLE),
+                EXPRESSION_NUMBER_KIND.create(12.34),
+                ARABIC_NUMBER_FORMATTER_CONTEXT
         );
     }
 
@@ -4138,7 +4358,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithFormulaNumber() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123",
-                123
+                EXPRESSION_NUMBER_KIND.create(123)
         );
     }
 
@@ -4146,7 +4366,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithFormulaNumberMath() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123+456.75",
-                123 + 456.75
+                EXPRESSION_NUMBER_KIND.create(123 + 456.75)
         );
     }
 
@@ -4222,19 +4442,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testSaveCellWithTimeLiteralAndArabicDecimalNumberSymbols() {
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(
+                                arabicDigits(12) + ':' + arabicDigits(34)
+                        )
+                ).setDecimalNumberSymbols(
+                        Optional.of(
+                                ARABIC_DECIMAL_NUMBER_SYMBOLS
+                        )
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("time-parse-pattern hh:mm")
+                        )
+                ).setStyle(STYLE),
+                LocalTime.of(
+                        12,
+                        34
+                ),
+                FRANCE_DATE_ARABIC_NUMBER_FORMATTER_CONTEXT
+        );
+    }
+
     private void saveCellAndLoadAndFormattedCheck(final String formula,
                                                   final Object value) {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
+        this.saveCellAndLoadAndFormattedCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText(formula)
+                ).setStyle(STYLE),
+                value,
+                SPREADSHEET_TEXT_FORMAT_CONTEXT
+        );
+    }
 
-        final SpreadsheetCell a1 = this.cell("a1", formula);
+    private void saveCellAndLoadAndFormattedCheck(final SpreadsheetCell a1,
+                                                  final Object value,
+                                                  final SpreadsheetFormatterContext formatterContext) {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext engineContext = this.createContext();
+
         final SpreadsheetCell a1Formatted = this.formatCell(
                 a1,
-                value
+                Optional.of(value),
+                STYLE,
+                formatterContext
         );
 
-        final SpreadsheetDelta result = engine.saveCell(a1, context);
-        final SpreadsheetCellStore cellStore = context.storeRepository()
+        final SpreadsheetDelta result = engine.saveCell(a1, engineContext);
+        final SpreadsheetCellStore cellStore = engineContext.storeRepository()
                 .cells();
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
@@ -4248,11 +4505,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         rowHeights("1")
                 ).setColumnCount(
                         OptionalInt.of(
-                                engine.columnCount(context)
+                                engine.columnCount(engineContext)
                         )
                 ).setRowCount(
                         OptionalInt.of(
-                                engine.rowCount(context)
+                                engine.rowCount(engineContext)
                         )
                 );
         this.checkEquals(
@@ -4578,11 +4835,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
                 .setDateTimeSymbols(
-                        Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.FRANCE)
-                                )
-                        )
+                        Optional.of(FRANCE_DATE_TIME_SYMBOLS)
                 ).setStyle(STYLE);
 
         final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
@@ -4780,9 +5033,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetMetadata metadata = METADATA.set(
                 SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.FRANCE)
-                )
+                FRANCE_DATE_TIME_SYMBOLS
         ).set(
                 SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
                 SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
@@ -23609,23 +23860,69 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formatCell(final SpreadsheetCell cell,
                                        final Optional<Object> value,
                                        final TextStyle style) {
+        return formatCell(
+                cell,
+                value,
+                style,
+                SPREADSHEET_TEXT_FORMAT_CONTEXT
+        );
+    }
+
+    private SpreadsheetCell formatCell(final SpreadsheetCell cell,
+                                       final Optional<Object> value,
+                                       final TextStyle style,
+                                       final SpreadsheetFormatterContext context) {
         final SpreadsheetFormula formula = cell.formula();
 
-        SpreadsheetCell result = false == formula.text().isEmpty() || formula.expressionValue().isPresent() ?
-                cell.setFormula(
-                        this.parseFormula(formula)
-                                .setExpressionValue(value)
-                ) :
-                cell.setFormula(
-                        formula.setInputValue(value)
-                );
+        final DateTimeContext dateTimeContext = this.dateTimeContext();
+        final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
+
+        SpreadsheetCell result;
+
+        if (false == formula.text().isEmpty() || formula.expressionValue().isPresent()) {
+            SpreadsheetParser parser = cell.parser()
+                    .map(s -> SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(s, PROVIDER_CONTEXT))
+                    .orElseGet(
+                            () -> METADATA.spreadsheetParser(
+                                    SPREADSHEET_PARSER_PROVIDER,
+                                    PROVIDER_CONTEXT
+                            )
+                    );
+
+            result = cell.setFormula(
+                    this.parseFormula(
+                            formula,
+                            parser,
+                            cell.dateTimeSymbols()
+                                    .map(s -> DateTimeContexts.basic(
+                                                    s,
+                                                    dateTimeContext.locale(),
+                                                    dateTimeContext.defaultYear(),
+                                                    dateTimeContext.twoDigitYear(),
+                                                    dateTimeContext
+                                            )
+                                    ).orElse(dateTimeContext),
+                            cell.decimalNumberSymbols()
+                                    .map(s -> DecimalNumberContexts.basic(
+                                                    s,
+                                                    decimalNumberContext.locale(),
+                                                    decimalNumberContext.mathContext()
+                                            )
+                                    ).orElse(decimalNumberContext)
+                    ).setExpressionValue(value)
+            );
+        } else {
+            result = cell.setFormula(
+                    formula.setInputValue(value)
+            );
+        }
 
         final TextNode formattedText = METADATA.spreadsheetFormatter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
         ).format(
                 value,
-                SPREADSHEET_TEXT_FORMAT_CONTEXT
+                context
         ).orElseThrow(
                 () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
         );
@@ -23641,23 +23938,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     /**
      * Assumes the formula is syntactically correct and updates the cell.
      */
-    private SpreadsheetFormula parseFormula(final SpreadsheetFormula formula) {
+    private SpreadsheetFormula parseFormula(final SpreadsheetFormula formula,
+                                            final SpreadsheetParser parser,
+                                            final DateTimeContext dateTimeContext,
+                                            final DecimalNumberContext decimalNumberContext) {
         final String text = formula.text();
 
         final SpreadsheetFormulaParserToken token =
                 text.isEmpty() ?
                         null :
-                        METADATA.spreadsheetParser(
-                                        SPREADSHEET_PARSER_PROVIDER,
-                                        PROVIDER_CONTEXT
-                                ).parseText(
+                        parser.parseText(
                                         text,
                                         SpreadsheetParserContexts.basic(
                                                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                                                this.dateTimeContext(),
+                                                dateTimeContext,
                                                 ExpressionNumberContexts.basic(
                                                         EXPRESSION_NUMBER_KIND,
-                                                        this.decimalNumberContext()
+                                                        decimalNumberContext
                                                 ),
                                                 VALUE_SEPARATOR
                                         )

@@ -137,7 +137,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                     .orElse(null);
             try {
                 if (null == token) {
-                    token = this.parseFormulaTextExpression(text);
+                    token = this.parseFormulaTextExpression(
+                            text,
+                            cell
+                    );
                     formula = formula
                             .setToken(Optional.of(token));
                 }
@@ -165,7 +168,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     /**
      * Parses the formula text into an {@link SpreadsheetFormulaParserToken}.
      */
-    private SpreadsheetFormulaParserToken parseFormulaTextExpression(final String text) {
+    private SpreadsheetFormulaParserToken parseFormulaTextExpression(final String text,
+                                                                     final SpreadsheetCell cell) {
         final SpreadsheetMetadata metadata = this.metadata;
         final ProviderContext providerContext = this.providerContext;
 
@@ -175,7 +179,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(
                         TextCursors.charSequence(text),
-                        metadata.spreadsheetParserContext(providerContext)
+                        metadata.spreadsheetParserContext(
+                                Optional.of(cell),
+                                providerContext
+                        )
                 ).orElse(null)
                 .cast(SpreadsheetFormulaParserToken.class);
     }

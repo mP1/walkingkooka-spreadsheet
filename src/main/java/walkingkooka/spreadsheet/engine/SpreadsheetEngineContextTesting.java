@@ -69,24 +69,69 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // parseFormula......................................................................................................
 
     @Test
-    default void testParseFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().parseFormula(null));
+    default void testParseFormulaNullTextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .parseFormula(
+                                null,
+                                SpreadsheetEngineContext.NO_CELL
+                        )
+        );
+    }
+
+    @Test
+    default void testParseFormulaNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .parseFormula(
+                                TextCursors.fake(),
+                                null
+                        )
+        );
     }
 
     default void parseFormulaAndCheck(final String expression,
                                       final SpreadsheetFormulaParserToken expected) {
-        this.parseFormulaAndCheck(this.createContext(),
+        this.parseFormulaAndCheck(
                 expression,
-                expected);
+                SpreadsheetEngineContext.NO_CELL,
+                expected
+        );
+    }
+
+    default void parseFormulaAndCheck(final String expression,
+                                      final Optional<SpreadsheetCell> cell,
+                                      final SpreadsheetFormulaParserToken expected) {
+        this.parseFormulaAndCheck(
+                this.createContext(),
+                expression,
+                cell,
+                expected
+        );
     }
 
     default void parseFormulaAndCheck(final SpreadsheetEngineContext context,
                                       final String formula,
                                       final SpreadsheetFormulaParserToken expected) {
+        this.parseFormulaAndCheck(
+                context,
+                formula,
+                SpreadsheetEngineContext.NO_CELL,
+                expected
+        );
+    }
+
+    default void parseFormulaAndCheck(final SpreadsheetEngineContext context,
+                                      final String formula,
+                                      final Optional<SpreadsheetCell> cell,
+                                      final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
                 expected,
                 context.parseFormula(
-                        TextCursors.charSequence(formula)
+                        TextCursors.charSequence(formula),
+                        cell
                 ),
                 () -> "parseFormula " + formula + " with context " + context);
     }

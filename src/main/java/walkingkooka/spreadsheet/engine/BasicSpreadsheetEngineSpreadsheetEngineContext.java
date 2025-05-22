@@ -79,8 +79,12 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
-        return this.spreadsheetEngineContext.parseFormula(formula);
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
+                                                      final Optional<SpreadsheetCell> cell) {
+        return this.spreadsheetEngineContext.parseFormula(
+                formula,
+                cell
+        );
     }
 
     @Override

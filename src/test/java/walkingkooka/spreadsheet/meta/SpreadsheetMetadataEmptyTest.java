@@ -197,7 +197,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testSpreadsheetParserContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        LocalDateTime::now
+                )
         );
         this.checkEquals(
                 "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
@@ -211,7 +214,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY
-                        .spreadsheetParserContext(LocalDateTime::now)
+                        .spreadsheetParserContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                LocalDateTime::now
+                        )
         );
         this.checkEquals(
                 "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",

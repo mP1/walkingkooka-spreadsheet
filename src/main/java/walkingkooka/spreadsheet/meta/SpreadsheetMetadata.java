@@ -1170,14 +1170,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetParserContext}.
      */
-    public final SpreadsheetParserContext spreadsheetParserContext(final HasNow now) {
+    public final SpreadsheetParserContext spreadsheetParserContext(final Optional<SpreadsheetCell> cell,
+                                                                   final HasNow now) {
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         // DateTimeContext
         DateTimeContext dateTimeContext;
         try {
             dateTimeContext = this.dateTimeContext(
-                NO_CELL,
+                cell,
                 now
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1188,7 +1189,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         // ExpressionNumberContext
         ExpressionNumberContext expressionNumberContext;
         try {
-            expressionNumberContext = this.expressionNumberContext(SpreadsheetMetadata.NO_CELL);
+            expressionNumberContext = this.expressionNumberContext(cell);
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
             expressionNumberContext = null;
