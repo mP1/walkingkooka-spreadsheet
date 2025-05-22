@@ -47,14 +47,14 @@ final class SpreadsheetNonNumberParsePatternParserMilliseconds extends Spreadshe
     MillisecondSpreadsheetFormulaParserToken parseNotEmpty0(final TextCursor cursor,
                                                             final SpreadsheetParserContext context,
                                                             final TextCursorSavePoint start) {
-        MillisecondSpreadsheetFormulaParserToken token = null;
+        MillisecondSpreadsheetFormulaParserToken token;
         double digitValue = FIRST_DIGIT;
         double value = 0;
 
 
         for (; ; ) {
             final char c = cursor.at();
-            final int digit = Character.digit(c, 10);
+            final int digit = context.digit(c);
             if (-1 == digit) {
                 token = digitValue != FIRST_DIGIT ?
                         token(value, start) :

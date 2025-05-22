@@ -552,6 +552,22 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
         );
     }
 
+    @Test
+    public void testParseTimeWithArabicSpreadsheetParserContext() {
+        this.checkEquals(
+                LocalTime.of(12, 58, 59),
+                this.createPattern("hh/mm/ss")
+                        .parse(
+                                arabicDigits(12) +
+                                        "/" +
+                                        arabicDigits(58) +
+                                        "/" +
+                                        arabicDigits(59),
+                                this.parserContext(ARABIC_DECIMAL_NUMBER_CONTEXT)
+                        )
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test

@@ -24,6 +24,8 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -68,6 +70,8 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -799,16 +803,31 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     }
 
     final SpreadsheetParserContext parserContext() {
+        return this.parserContext(
+                this.decimalNumberContext()
+        );
+    }
+
+    final SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext) {
         return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                 this.dateTimeContext(),
                 ExpressionNumberContexts.basic(
                         EXPRESSION_NUMBER_KIND,
-                        this.decimalNumberContext()
+                        decimalNumberContext
                 ),
                 VALUE_SEPARATOR
         );
     }
+
+    final DecimalNumberContext ARABIC_DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                    '+',
+                    new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
+            ),
+            ARABIC_ZERO_DIGIT_LOCALE,
+            MathContext.DECIMAL32
+    );
 
     // ConverterTesting.................................................................................................
 
