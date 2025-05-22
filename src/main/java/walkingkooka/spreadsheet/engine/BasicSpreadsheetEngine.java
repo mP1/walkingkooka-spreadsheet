@@ -1599,7 +1599,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext =
                 (final Object v,
                  final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
-                        Optional.ofNullable(cell),
+                        Optional.of(cell),
                         loader
                 ).addLocalVariable(
                         SpreadsheetValidatorContext.VALUE,
