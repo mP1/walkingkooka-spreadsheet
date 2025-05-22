@@ -53,7 +53,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -100,9 +99,7 @@ import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -23650,13 +23647,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetFormulaParserToken token =
                 text.isEmpty() ?
                         null :
-                        SpreadsheetFormulaParsers.valueOrExpression(
-                                        METADATA.spreadsheetParser(
-                                                SPREADSHEET_PARSER_PROVIDER,
-                                                PROVIDER_CONTEXT
-                                        )
-                                ).orFailIfCursorNotEmpty(ParserReporters.basic())
-                                .parse(TextCursors.charSequence(text),
+                        METADATA.spreadsheetParser(
+                                        SPREADSHEET_PARSER_PROVIDER,
+                                        PROVIDER_CONTEXT
+                                ).parseText(
+                                        text,
                                         SpreadsheetParserContexts.basic(
                                                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                                                 this.dateTimeContext(),
@@ -23666,7 +23661,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 ),
                                                 VALUE_SEPARATOR
                                         )
-                                ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))
+                                )
                                 .cast(SpreadsheetFormulaParserToken.class);
         SpreadsheetFormula parsedFormula = formula;
         if (null != token) {
