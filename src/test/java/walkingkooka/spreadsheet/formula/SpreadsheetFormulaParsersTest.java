@@ -4313,6 +4313,11 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             }
 
             @Override
+            public char zeroDigit() {
+                return decimalNumberContext.zeroDigit();
+            }
+
+            @Override
             public Locale locale() {
                 return decimalNumberContext.locale();
             }

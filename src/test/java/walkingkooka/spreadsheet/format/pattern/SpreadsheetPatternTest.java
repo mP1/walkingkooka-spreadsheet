@@ -1458,6 +1458,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     public char positiveSign() {
                         return '+';
                     }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
+                    }
                 },
                 "1.5",
                 SpreadsheetFormulaParserToken.number(
@@ -1500,6 +1505,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     @Override
                     public char positiveSign() {
                         return '+';
+                    }
+
+                    @Override
+                    public char zeroDigit() {
+                        return '0';
                     }
                 },
                 "1.5*",
