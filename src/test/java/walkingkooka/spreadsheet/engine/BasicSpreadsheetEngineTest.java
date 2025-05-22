@@ -29,6 +29,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.MathTesting;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
@@ -163,7 +164,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SuppressWarnings("PointlessArithmeticExpression")
 public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
         implements SpreadsheetEngineTesting<BasicSpreadsheetEngine>,
-        SpreadsheetMetadataTesting {
+        SpreadsheetMetadataTesting,
+        MathTesting {
+
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
 
     private final static String DATE_PATTERN = "yyyy/mm/dd";
@@ -4791,7 +4794,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(
                         STYLE.setChildren(
                                 Lists.of(
-                                        TextNode.text("\u20AC123,75") // EURO
+                                        TextNode.text(EURO_SYMBOL + "123,75") // EURO
                                 )
                         )
                 )
@@ -4844,7 +4847,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(
                         STYLE.setChildren(
                                 Lists.of(
-                                        TextNode.text("\u20AC123,75") // EURO
+                                        TextNode.text(EURO_SYMBOL + "123,75") // EURO
                                 )
                         )
                 )
