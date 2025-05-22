@@ -546,8 +546,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         missing.reportIfMissing();
 
-        DateTimeSymbols dateTimeSymbols = this.get(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS)
-                .orElse(null);
+        DateTimeSymbols dateTimeSymbols = null;
+
+        if (cell.isPresent()) {
+            dateTimeSymbols = cell.get()
+                    .dateTimeSymbols()
+                    .orElse(null);
+        }
+
+        if (null == dateTimeSymbols) {
+            dateTimeSymbols = this.get(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS)
+                    .orElse(null);
+        }
+
         if (null == dateTimeSymbols) {
             dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
                     new DateFormatSymbols(locale)
