@@ -26,6 +26,7 @@ import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -1114,6 +1115,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToDateTimeSymbols,
                 DATE_TIME_SYMBOLS_PROPERTY,
+                (pattern) -> context.marshall(
+                        pattern.orElse(null)
+                )
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsDecimalNumberSymbolsPatch(final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToDecimalNumberSymbols,
+                                                     final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToDecimalNumberSymbols, "cellToDecimalNumberSymbols");
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+                cellToDecimalNumberSymbols,
+                DECIMAL_NUMBER_SYMBOLS_PROPERTY,
                 (pattern) -> context.marshall(
                         pattern.orElse(null)
                 )
@@ -2698,6 +2716,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String COLUMNS_PROPERTY_STRING = "columns";
     private final static String DATE_TIME_SYMBOLS_STRING = "dateTimeSymbols";
+    private final static String DECIMAL_NUMBER_SYMBOLS_STRING = "decimalNumberSymbols";
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
@@ -2733,6 +2752,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_STRING);
+
+    // @VisibleForTesting
+    final static JsonPropertyName DECIMAL_NUMBER_SYMBOLS_PROPERTY = JsonPropertyName.with(DECIMAL_NUMBER_SYMBOLS_STRING);
 
     // @VisibleForTesting
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);

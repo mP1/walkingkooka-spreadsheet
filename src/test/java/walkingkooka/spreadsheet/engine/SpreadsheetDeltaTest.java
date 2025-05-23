@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -61,6 +62,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -621,6 +623,163 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsDecimalNumberSymbolsPatch...................................................................................
+
+    @Test
+    public void testCellsDecimalNumberSymbolsPatchWithNullCellsToDecimalNumberSymbolsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsDecimalNumberSymbolsPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsDecimalNumberSymbolsPatch() {
+        final DecimalNumberSymbols symbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.FRANCE)
+        );
+
+        this.cellsDecimalNumberSymbolsPatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        Optional.of(symbols)
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("decimalNumberSymbols"),
+                                                                marshall(symbols)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsDecimalNumberSymbolsPatchEmptyCells() {
+        this.cellsDecimalNumberSymbolsPatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsDecimalNumberSymbolsPatchMultipleCells() {
+        final DecimalNumberSymbols symbols1 = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.FRANCE)
+        );
+        final DecimalNumberSymbols symbols2 = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.GERMANY)
+        );
+        final DecimalNumberSymbols symbols3 = null;
+
+        final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToSymbols = Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(symbols1),
+                SpreadsheetSelection.parseCell("A2"),
+                Optional.of(symbols2),
+                SpreadsheetSelection.parseCell("A3"),
+                Optional.ofNullable(symbols3)
+        );
+
+        this.cellsDecimalNumberSymbolsPatchAndCheck(
+                cellToSymbols,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("decimalNumberSymbols"),
+                                                                marshall(symbols1)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("decimalNumberSymbols"),
+                                                                marshall(symbols2)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A3"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("decimalNumberSymbols"),
+                                                                marshall(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsDecimalNumberSymbolsPatchAndCheck(final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToDecimalNumberSymbols,
+                                                        final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                cellToDecimalNumberSymbols,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellAndDecimalNumberSymbols : cellToDecimalNumberSymbols.entrySet()) {
+            final SpreadsheetCellReference cellReference = cellAndDecimalNumberSymbols.getKey();
+
+            final SpreadsheetCell cell = cellReference.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("'Patched over")
+            ).setStyle(style);
+
+
+            beforePatchCells.add(cell);
+            patchedCells.add(
+                    cell.setDecimalNumberSymbols(cellAndDecimalNumberSymbols.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+    
     // cellsFormulaPatch................................................................................................
 
     @Test
