@@ -137,11 +137,8 @@ Converter(s) are part of many core features, some are listed below and the more 
 
 ### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
 
-All sorting is performed by using a selected `SpreadsheetComparator`, which is identical to a `java.util.Comparator`
-but also includes a `type` property of `java.lang.Class`. The `type` property is used to convert each value prior to the
-actual comparison.
-
-This supports advanced features such as sorting a range of cells with
+All sorting is performed by using a selected [SpreadsheetComparator](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java),
+which is identical to a `java.util.Comparator`. These may be enabled to supporting sorting one or more column/row/cell-range.
 
 - Date
 - DateTime
@@ -158,17 +155,14 @@ This supports advanced features such as sorting a range of cells with
 - Time
 - Year
 
-It is thus possible to sort a column(s) in the following possible ways
+Examples of combining multiple `SpreadsheetComparators` for a column range might include.
 
 - `day-of-month` then `month-of-year` then `year`
 - `seconds-of-minute` then `minute-of-day` then `hour-of-day`
 
 When sorting a cell-range/column/rows it is possible to sort each column/row with different `SpreadsheetComparator(s)`.
 
-- Additional `SpreadsheetComparator(s)` may be provided via a
-  custom [SpreadsheetComparatorProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparatorProvider.java)
-  *DONE*
-- Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/15)
+The plugin architecture allows authoring/installing custom comparators.
 
 ### [ExpressionFunction](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/function/ExpressionFunction.java)
 
