@@ -603,7 +603,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // cellsFormatterPatch..........................................................................................
+    // cellsFormatterPatch..............................................................................................
 
     @Test
     public void testCellsFormatterPatchWithNullCellsFails() {
@@ -783,7 +783,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // cellsParserPatch..........................................................................................
+    // cellsParserPatch.................................................................................................
 
     @Test
     public void testCellsParserPatchWithNullCellsFails() {
@@ -962,7 +962,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // cellsStylePatch.......................................................................................................
+    // cellsStylePatch..................................................................................................
 
     @Test
     public void testCellsStylePatchWithNullCellsFails() {
@@ -1188,7 +1188,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // formatterPatch..................................................................................................
+    // formatterPatch...................................................................................................
 
     @Test
     public void testFormatterPatchWithNullPatternFails() {
@@ -1250,7 +1250,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // parserPatch...............................................................................................
+    // parserPatch......................................................................................................
 
     @Test
     public void testParserPatchWithNullPatternFails() {
@@ -1800,7 +1800,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // PatchCells.....................................................................................................
+    // PatchCells.......................................................................................................
 
     @Test
     public void testPatchCellsWithNullSelectionFails() {
@@ -3343,7 +3343,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // PatchRows.....................................................................................................
+    // PatchRows........................................................................................................
 
     @Test
     public void testPatchRowsCellsFails() {
@@ -3695,7 +3695,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // resolveCellLabels.....................................................................................................
+    // resolveCellLabels................................................................................................
 
     final Function<SpreadsheetLabelName, SpreadsheetCellReference> LABEL_TO_CELL = (l) -> {
         throw new UnsupportedOperationException();
