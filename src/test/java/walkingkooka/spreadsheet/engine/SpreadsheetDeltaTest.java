@@ -467,7 +467,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-
     // cellsDateTimeSymbolsPatch........................................................................................
 
     @Test
@@ -622,7 +621,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // cellsFormulaPatch.......................................................................................................
+    // cellsFormulaPatch................................................................................................
 
     @Test
     public void testCellsFormulaPatchWithNullCellsFails() {
