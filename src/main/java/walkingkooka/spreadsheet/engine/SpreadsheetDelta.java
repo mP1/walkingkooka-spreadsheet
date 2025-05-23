@@ -1236,6 +1236,34 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
+     * Creates a {@link SpreadsheetFormatterSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode dateTimeSymbolsPatch(final Optional<DateTimeSymbols> symbols,
+                                                final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(symbols, "symbols");
+        Objects.requireNonNull(context, "context");
+
+        return makePatch(
+                DATE_TIME_SYMBOLS_PROPERTY,
+                context.marshallOptional(symbols)
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetFormatterSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode decimalNumberSymbolsPatch(final Optional<DecimalNumberSymbols> symbols,
+                                                     final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(symbols, "symbols");
+        Objects.requireNonNull(context, "context");
+
+        return makePatch(
+                DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                context.marshallOptional(symbols)
+        );
+    }
+
+    /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
      */
     public static JsonNode formulaPatch(final SpreadsheetFormula formula,
@@ -1290,6 +1318,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
+    /**
+     * Creates a {@link ValidatorSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode validatorPatch(final Optional<ValidatorSelector> validator,
+                                          final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(validator, "validator");
+        Objects.requireNonNull(context, "context");
+
+        return makePatch(
+                VALIDATOR_PROPERTY,
+                context.marshallOptional(validator)
+        );
+    }
+    
     private static JsonNode makePatch(final JsonPropertyName propertyName,
                                       final JsonNode value) {
         return JsonNode.object()
