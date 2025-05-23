@@ -866,7 +866,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // columnCount......................................................................................................
 
     /**
-     * Returns the total number or columns in this spreadsheet (if selected).
+     * Returns the total number of columns in this spreadsheet (if selected).
      */
     public final OptionalInt columnCount() {
         return this.columnCount;
