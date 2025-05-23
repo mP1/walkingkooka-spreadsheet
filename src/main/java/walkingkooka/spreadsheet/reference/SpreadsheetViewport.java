@@ -259,11 +259,9 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                     );
                     break;
                 case SELECTION_PROPERTY_STRING:
-                    anchoredSelection = Optional.of(
-                            context.unmarshall(
-                                    child,
-                                    AnchoredSpreadsheetSelection.class
-                            )
+                    anchoredSelection = context.unmarshallOptional(
+                            child,
+                            AnchoredSpreadsheetSelection.class
                     );
                     break;
                 case NAVIGATION_PROPERTY_STRING:

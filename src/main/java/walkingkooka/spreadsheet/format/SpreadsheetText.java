@@ -202,7 +202,10 @@ public final class SpreadsheetText implements HasText,
 
         final Optional<Color> color = this.color;
         if (color.isPresent()) {
-            object = object.set(COLOR_PROPERTY, context.marshall(color.get()));
+            object = object.set(
+                    COLOR_PROPERTY,
+                    context.marshallOptional(color)
+            );
         }
 
         return object.set(TEXT_PROPERTY, JsonNode.string(this.text));
