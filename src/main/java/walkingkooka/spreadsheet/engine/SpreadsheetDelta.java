@@ -1582,14 +1582,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             patchInvalidFail(CELLS_PROPERTY_STRING, VALIDATOR_PROPERTY_STRING);
         }
 
-        if (false == cellsPatched && stylePatched && null == selection) {
-            throw new IllegalArgumentException(
-                    "Patch includes " +
-                            CharSequences.quote(STYLE_PROPERTY_STRING) +
-                            " but is missing selection."
-            );
-        }
-
         if (formatterPatched && parserPatched) {
             patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSER_PROPERTY_STRING);
         }
@@ -2072,7 +2064,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                       final Set<SpreadsheetCell> cells,
                                                       final Function<SpreadsheetCell, SpreadsheetCell> patcher,
                                                       final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {
-        final SpreadsheetCellRangeReference cellRange = selection.toCellRange();
+        final SpreadsheetCellRangeReference cellRange = null != selection ?
+                selection.toCellRange() :
+                null;
 
         final Set<SpreadsheetCell> patched = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCellReference> patchedCellReferences = SortedSets.tree(
@@ -2089,7 +2083,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             );
         }
 
-        if (patched.size() < cellRange.count()) {
+        if (null != selection && patched.size() < cellRange.count()) {
             for (final SpreadsheetCellReference possible : cellRange) {
                 if (cellRange.testCell(possible) && false == patchedCellReferences.contains(possible)) {
                     patched.add(

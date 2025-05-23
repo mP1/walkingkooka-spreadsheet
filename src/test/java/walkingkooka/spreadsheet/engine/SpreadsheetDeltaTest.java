@@ -2008,25 +2008,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchWithStyleMissingSelectionFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patch(
-                        SpreadsheetDelta.stylePatch(
-                                TextStylePropertyName.COLOR.stylePatch(null)
-                        ),
-                        JsonNodeUnmarshallContexts.fake()
-                )
-        );
-
-        this.checkEquals(
-                "Patch includes \"style\" but is missing selection.",
-                thrown.getMessage(),
-                "message"
-        );
-    }
-
-    @Test
     public void testPatchWithNoViewport() {
         this.patchViewportAndCheck(
                 SpreadsheetDelta.NO_VIEWPORT,
@@ -2293,6 +2274,44 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 JsonNode.object()
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.nullNode()),
                 before.setWindow(SpreadsheetDelta.NO_WINDOW)
+        );
+    }
+
+    @Test
+    public void testPatchWithStyle() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1")
+        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("=99")
+                );
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1,
+                                        b2
+                                )
+                        ),
+                SpreadsheetDelta.stylePatch(
+                        this.marshall(style)
+                ),
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1.setStyle(style),
+                                        b2.setStyle(style)
+                                )
+                        )
         );
     }
 
