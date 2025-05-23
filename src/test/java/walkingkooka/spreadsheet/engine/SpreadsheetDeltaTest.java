@@ -2470,7 +2470,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.patchAndCheck(
                 before,
                 JsonNode.object()
-                        .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.nullNode()),
+                        .set(
+                                SpreadsheetDelta.WINDOW_PROPERTY,
+                                JsonNode.string("")
+                        ),
                 before.setWindow(SpreadsheetDelta.NO_WINDOW)
         );
     }
