@@ -2278,6 +2278,44 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchWithFormatter() {
+        final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
+                SpreadsheetFormatterSelector.parse("hello-formatter")
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1")
+        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("=99")
+                );
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1,
+                                        b2
+                                )
+                        ),
+                SpreadsheetDelta.formatterPatch(
+                        formatter,
+                        MARSHALL_CONTEXT
+                ),
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1.setFormatter(formatter),
+                                        b2.setFormatter(formatter)
+                                )
+                        )
+        );
+    }
+
+    @Test
     public void testPatchWithStyle() {
         final TextStyle style = TextStyle.EMPTY.set(
                 TextStylePropertyName.COLOR,
