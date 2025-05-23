@@ -34,8 +34,6 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -1333,14 +1331,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Patches the cells within this {@link SpreadsheetDelta} using the provided patch, which may be any of the following:
-     * <ul>
-     *     <li>{@link SpreadsheetFormatPattern}</li>
-     *     <li>{@link SpreadsheetParsePattern}</li>
-     *     <li>{@link TextStyle}</li>
-     * </ul>
-     * Any attempt to patch any other property will result in a {@link IllegalArgumentException} being thrown. It is not
-     * possible to patch a single formula for given {@link SpreadsheetCell cells}.<br>
+     * Patches the cells within this {@link SpreadsheetDelta} using the provided patch.
      * <br>
      * Cells to be patched
      * <pre>
@@ -1354,14 +1345,26 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      *   }
      * }
      * </pre>
-     * Format pattern patch
+     * {@link DateTimeSymbols}
+     * <pre>
+     * {
+     *   "dateTimeSymbols": "DateTimeSymbols"}
+     * }
+     * </pre>
+     * {@link DecimalNumberSymbols}
+     * <pre>
+     * {
+     *   "decimalNumberSymbols": "DecimalNumberSymbols"}
+     * }
+     * </pre>
+     * {@link SpreadsheetFormatterSelector}
      * <pre>
      * {
      *   "formatter": "text-format-pattern @\"patched\""
      *   }
      * }
      * </pre>
-     * Parse pattern patch
+     * {@link SpreadsheetParserSelector}
      * <pre>
      * {
      *   "parser": {
@@ -1377,6 +1380,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      *   "style": {
      *     "color": "#123456"
      *   }
+     * }
+     * </pre>
+     * {@link ValidatorSelector}
+     * <pre>
+     * {
+     *   "validator": "ValidatorSelector"}
      * }
      * </pre>
      */
