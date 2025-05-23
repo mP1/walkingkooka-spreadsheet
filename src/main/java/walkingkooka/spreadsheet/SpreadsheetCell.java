@@ -551,41 +551,33 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
                     patched = patched.setDateTimeSymbols(
-                            Optional.ofNullable(
-                                    context.unmarshall(
-                                            propertyAndValue,
-                                            DateTimeSymbols.class
-                                    )
+                            context.unmarshallOptional(
+                                    propertyAndValue,
+                                    DateTimeSymbols.class
                             )
                     );
                     break;
                 case DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING:
                     patched = patched.setDecimalNumberSymbols(
-                            Optional.ofNullable(
-                                    context.unmarshall(
-                                            propertyAndValue,
-                                            DecimalNumberSymbols.class
-                                    )
+                            context.unmarshallOptional(
+                                    propertyAndValue,
+                                    DecimalNumberSymbols.class
                             )
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
                     patched = patched.setFormatter(
-                            Optional.ofNullable(
-                                    context.unmarshall(
-                                            propertyAndValue,
-                                            SpreadsheetFormatterSelector.class
-                                    )
+                            context.unmarshallOptional(
+                                    propertyAndValue,
+                                    SpreadsheetFormatterSelector.class
                             )
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
                     patched = patched.setParser(
-                            Optional.ofNullable(
-                                    context.unmarshall(
-                                            propertyAndValue,
-                                            SpreadsheetParserSelector.class
-                                    )
+                            context.unmarshallOptional(
+                                    propertyAndValue,
+                                    SpreadsheetParserSelector.class
                             )
                     );
                     break;
@@ -600,11 +592,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     break;
                 case VALIDATOR_PROPERTY_STRING:
                     patched = patched.setValidator(
-                            Optional.ofNullable(
-                                    context.unmarshall(
-                                            propertyAndValue,
-                                            ValidatorSelector.class
-                                    )
+                            context.unmarshallOptional(
+                                    propertyAndValue,
+                                    ValidatorSelector.class
                             )
                     );
                     break;
@@ -642,9 +632,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.makePatch(
                 DATE_TIME_SYMBOLS_PROPERTY,
-                context.marshall(
-                        this.dateTimeSymbols.orElse(null)
-                )
+                context.marshallOptional(this.dateTimeSymbols)
         );
     }
 
@@ -657,9 +645,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.makePatch(
                 DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                context.marshall(
-                        this.decimalNumberSymbols.orElse(null)
-                )
+                context.marshallOptional(this.decimalNumberSymbols)
         );
     }
 
@@ -672,9 +658,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.makePatch(
                 FORMATTER_PROPERTY,
-                context.marshall(
-                        this.formatter.orElse(null)
-                )
+                context.marshallOptional(this.formatter)
         );
     }
 
@@ -687,9 +671,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         return this.makePatch(
                 PARSER_PROPERTY,
-                context.marshall(
-                        this.parser.orElse(null)
-                )
+                context.marshallOptional(this.parser)
         );
     }
 

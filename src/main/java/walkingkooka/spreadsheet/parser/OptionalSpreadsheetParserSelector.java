@@ -82,19 +82,15 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
     static OptionalSpreadsheetParserSelector unmarshall(final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         return with(
-                Optional.ofNullable(
-                        context.unmarshall(
-                                node,
-                                SpreadsheetParserSelector.class
-                        )
+                context.unmarshallOptional(
+                        node,
+                        SpreadsheetParserSelector.class
                 )
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshall(
-                this.value.orElse(null)
-        );
+        return context.marshallOptional(this.value);
     }
 
     static {

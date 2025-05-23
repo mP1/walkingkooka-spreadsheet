@@ -1114,9 +1114,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToDateTimeSymbols,
                 DATE_TIME_SYMBOLS_PROPERTY,
-                (pattern) -> context.marshall(
-                        pattern.orElse(null)
-                )
+                context::marshallOptional
         );
     }
 
@@ -1131,9 +1129,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToDecimalNumberSymbols,
                 DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                (pattern) -> context.marshall(
-                        pattern.orElse(null)
-                )
+                context::marshallOptional
         );
     }
 
@@ -1148,9 +1144,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToFormatters,
                 FORMATTER_PROPERTY,
-                (pattern) -> context.marshall(
-                        pattern.orElse(null)
-                )
+                context::marshallOptional
         );
     }
 
@@ -1165,9 +1159,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToParser,
                 PARSER_PROPERTY,
-                (pattern) -> context.marshall(
-                        pattern.orElse(null)
-                )
+                context::marshallOptional
         );
     }
 
@@ -1197,9 +1189,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToValidators,
                 VALIDATOR_PROPERTY,
-                (pattern) -> context.marshall(
-                        pattern.orElse(null)
-                )
+                context::marshallOptional
         );
     }
 
@@ -1837,12 +1827,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                   final Set<SpreadsheetCell> cells,
                                                                   final JsonNode patch,
                                                                   final JsonNodeUnmarshallContext context) {
-        final Optional<DateTimeSymbols> dateTimeSymbols = Optional.ofNullable(
-                context.unmarshall(
-                        patch.objectOrFail()
-                                .getOrFail(DATE_TIME_SYMBOLS_PROPERTY),
-                        DateTimeSymbols.class
-                )
+        final Optional<DateTimeSymbols> dateTimeSymbols = context.unmarshallOptional(
+                patch.objectOrFail()
+                        .getOrFail(DATE_TIME_SYMBOLS_PROPERTY),
+                DateTimeSymbols.class
         );
 
         return patchAllCells(
@@ -1866,12 +1854,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                                        final Set<SpreadsheetCell> cells,
                                                                        final JsonNode patch,
                                                                        final JsonNodeUnmarshallContext context) {
-        final Optional<DecimalNumberSymbols> decimalNumberSymbols = Optional.ofNullable(
-                context.unmarshall(
-                        patch.objectOrFail()
-                                .getOrFail(DECIMAL_NUMBER_SYMBOLS_PROPERTY),
-                        DecimalNumberSymbols.class
-                )
+        final Optional<DecimalNumberSymbols> decimalNumberSymbols = context.unmarshallOptional(
+                patch.objectOrFail()
+                        .getOrFail(DECIMAL_NUMBER_SYMBOLS_PROPERTY),
+                DecimalNumberSymbols.class
         );
 
         return patchAllCells(
@@ -1895,12 +1881,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                             final Set<SpreadsheetCell> cells,
                                                             final JsonNode patch,
                                                             final JsonNodeUnmarshallContext context) {
-        final Optional<SpreadsheetFormatterSelector> formatter = Optional.ofNullable(
-                context.unmarshall(
-                        patch.objectOrFail()
-                                .getOrFail(FORMATTER_PROPERTY),
-                        SpreadsheetFormatterSelector.class
-                )
+        final Optional<SpreadsheetFormatterSelector> formatter = context.unmarshallOptional(
+                patch.objectOrFail()
+                        .getOrFail(FORMATTER_PROPERTY),
+                SpreadsheetFormatterSelector.class
         );
 
         return patchAllCells(
@@ -1924,12 +1908,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                          final Set<SpreadsheetCell> cells,
                                                          final JsonNode patch,
                                                          final JsonNodeUnmarshallContext context) {
-        final Optional<SpreadsheetParserSelector> parserSelector = Optional.ofNullable(
-                context.unmarshall(
-                        patch.objectOrFail()
-                                .getOrFail(PARSER_PROPERTY),
-                        SpreadsheetParserSelector.class
-                )
+        final Optional<SpreadsheetParserSelector> parserSelector = context.unmarshallOptional(
+                patch.objectOrFail()
+                        .getOrFail(PARSER_PROPERTY),
+                SpreadsheetParserSelector.class
         );
 
         return patchAllCells(
@@ -2072,12 +2054,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                             final Set<SpreadsheetCell> cells,
                                                             final JsonNode patch,
                                                             final JsonNodeUnmarshallContext context) {
-        final Optional<ValidatorSelector> validatorSelector = Optional.ofNullable(
-                context.unmarshall(
-                        patch.objectOrFail()
-                                .getOrFail(VALIDATOR_PROPERTY),
-                        ValidatorSelector.class
-                )
+        final Optional<ValidatorSelector> validatorSelector = context.unmarshallOptional(
+                patch.objectOrFail()
+                        .getOrFail(VALIDATOR_PROPERTY),
+                ValidatorSelector.class
         );
 
         return patchAllCells(

@@ -82,19 +82,15 @@ public final class OptionalSpreadsheetFormatterSelector implements Value<Optiona
     static OptionalSpreadsheetFormatterSelector unmarshall(final JsonNode node,
                                                            final JsonNodeUnmarshallContext context) {
         return with(
-                Optional.ofNullable(
-                        context.unmarshall(
-                                node,
-                                SpreadsheetFormatterSelector.class
-                        )
+                context.unmarshallOptional(
+                        node,
+                        SpreadsheetFormatterSelector.class
                 )
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshall(
-                this.value.orElse(null)
-        );
+        return context.marshallOptional(this.value);
     }
 
     static {
