@@ -48,7 +48,7 @@ public enum SpreadsheetCellValueKind {
     FORMATTER {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
-            return cell.formula();
+            return cell.formatter();
         }
     },
 
