@@ -1492,6 +1492,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         boolean stylePatched = false;
         boolean validatorPatched = false;
 
+
+
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
 
             final JsonPropertyName propertyName = propertyAndValue.name();
@@ -1789,28 +1791,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return node.isNull() ?
                 NO_COLUMNS :
-                this.patchApplyColumnsNonNull(
+                patchApplySelectionToValue(
                         selection,
                         node,
+                        SpreadsheetSelection::parseColumn,
+                        this::column,
+                        SpreadsheetColumn.class,
                         context
                 );
-    }
-
-    /**
-     * Takes a json object of reference to column and patches the existing columns in this {@link SpreadsheetDelta}.
-     * If the patch is a new column it is added, existing columns are patched.
-     */
-    private Set<SpreadsheetColumn> patchApplyColumnsNonNull(final SpreadsheetSelection selection,
-                                                            final JsonNode node,
-                                                            final JsonNodeUnmarshallContext context) {
-        return patchApplySelectionToValue(
-                selection,
-                node,
-                SpreadsheetSelection::parseColumn,
-                this::column,
-                SpreadsheetColumn.class,
-                context
-        );
     }
 
     /**
@@ -1963,28 +1951,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return node.isNull() ?
                 NO_ROWS :
-                this.patchApplyRowsNonNull(
+                patchApplySelectionToValue(
                         selection,
                         node,
+                        SpreadsheetSelection::parseRow,
+                        this::row,
+                        SpreadsheetRow.class,
                         context
                 );
-    }
-
-    /**
-     * Takes a json object of reference to row and patches the existing rows in this {@link SpreadsheetDelta}.
-     * If the patch is a new row it is added, existing rows are patched.
-     */
-    private Set<SpreadsheetRow> patchApplyRowsNonNull(final SpreadsheetSelection selection,
-                                                      final JsonNode node,
-                                                      final JsonNodeUnmarshallContext context) {
-        return patchApplySelectionToValue(
-                selection,
-                node,
-                SpreadsheetSelection::parseRow,
-                this::row,
-                SpreadsheetRow.class,
-                context
-        );
     }
 
     private <S extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchApplySelectionToValue(final SpreadsheetSelection patchSelection,
