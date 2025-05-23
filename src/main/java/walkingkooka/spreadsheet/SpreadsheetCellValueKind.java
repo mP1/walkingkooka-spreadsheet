@@ -31,6 +31,13 @@ public enum SpreadsheetCellValueKind {
         }
     },
 
+    DATE_TIME_SYMBOLS {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.dateTimeSymbols();
+        }
+    },
+
     FORMULA {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
