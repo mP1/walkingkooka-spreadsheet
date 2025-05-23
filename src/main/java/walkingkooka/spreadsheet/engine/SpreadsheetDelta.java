@@ -1645,7 +1645,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case DATE_TIME_SYMBOLS_STRING:
                     cells = patchApplyDateTimeSymbols(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             JsonNode.object()
                                     .set(
@@ -1657,7 +1657,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case DECIMAL_NUMBER_SYMBOLS_STRING:
                     cells = patchApplyDecimalNumberSymbols(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             JsonNode.object()
                                     .set(
@@ -1669,7 +1669,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case FORMATTER_PROPERTY_STRING:
                     cells = patchApplyFormatter(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             JsonNode.object()
                                     .set(
@@ -1681,7 +1681,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case FORMULA_PROPERTY_STRING:
                     cells = patchApplyCellFormula(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             JsonNode.object()
                                     .set(
@@ -1693,7 +1693,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case PARSER_PROPERTY_STRING:
                     cells = patchApplyParser(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             JsonNode.object()
                                     .set(
@@ -1712,7 +1712,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case STYLE_PROPERTY_STRING:
                     cells = patchStyle(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             propertyAndValue,
                             context
@@ -1720,7 +1720,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case VALIDATOR_PROPERTY_STRING:
                     cells = patchApplyValidator(
-                            selection.toCellRange(),
+                            selection,
                             cells,
                             JsonNode.object()
                                     .set(
@@ -1797,7 +1797,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyCellFormula(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchApplyCellFormula(final SpreadsheetSelection selection,
                                                               final Set<SpreadsheetCell> cells,
                                                               final JsonNode patch,
                                                               final JsonNodeUnmarshallContext context) {
@@ -1808,7 +1808,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setFormula(formula),
                 r -> r.setFormula(formula)
@@ -1823,7 +1823,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyDateTimeSymbols(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchApplyDateTimeSymbols(final SpreadsheetSelection selection,
                                                                   final Set<SpreadsheetCell> cells,
                                                                   final JsonNode patch,
                                                                   final JsonNodeUnmarshallContext context) {
@@ -1836,7 +1836,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setDateTimeSymbols(dateTimeSymbols),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
@@ -1852,7 +1852,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyDecimalNumberSymbols(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchApplyDecimalNumberSymbols(final SpreadsheetSelection selection,
                                                                        final Set<SpreadsheetCell> cells,
                                                                        final JsonNode patch,
                                                                        final JsonNodeUnmarshallContext context) {
@@ -1865,7 +1865,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setDecimalNumberSymbols(decimalNumberSymbols),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
@@ -1881,7 +1881,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyFormatter(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchApplyFormatter(final SpreadsheetSelection selection,
                                                             final Set<SpreadsheetCell> cells,
                                                             final JsonNode patch,
                                                             final JsonNodeUnmarshallContext context) {
@@ -1894,7 +1894,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setFormatter(formatter),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
@@ -1910,7 +1910,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyParser(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchApplyParser(final SpreadsheetSelection selection,
                                                          final Set<SpreadsheetCell> cells,
                                                          final JsonNode patch,
                                                          final JsonNodeUnmarshallContext context) {
@@ -1923,7 +1923,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setParser(parserSelector),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
@@ -2026,7 +2026,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchStyle(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchStyle(final SpreadsheetSelection selection,
                                                    final Set<SpreadsheetCell> cells,
                                                    final JsonNode patch,
                                                    final JsonNodeUnmarshallContext context) {
@@ -2036,7 +2036,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setStyle(
                         c.style()
@@ -2058,7 +2058,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyValidator(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchApplyValidator(final SpreadsheetSelection selection,
                                                             final Set<SpreadsheetCell> cells,
                                                             final JsonNode patch,
                                                             final JsonNodeUnmarshallContext context) {
@@ -2071,7 +2071,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
 
         return patchAllCells(
-                cellRange,
+                selection,
                 cells,
                 c -> c.setValidator(validatorSelector),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
@@ -2079,10 +2079,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private static Set<SpreadsheetCell> patchAllCells(final SpreadsheetCellRangeReference cellRange,
+    private static Set<SpreadsheetCell> patchAllCells(final SpreadsheetSelection selection,
                                                       final Set<SpreadsheetCell> cells,
                                                       final Function<SpreadsheetCell, SpreadsheetCell> patcher,
                                                       final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {
+        final SpreadsheetCellRangeReference cellRange = selection.toCellRange();
+
         final Set<SpreadsheetCell> patched = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCellReference> patchedCellReferences = SortedSets.tree(
                 SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
