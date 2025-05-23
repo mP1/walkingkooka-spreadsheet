@@ -59,6 +59,7 @@ import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
@@ -1416,6 +1417,191 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                             .setStyle(
                                     cellAndStyle.getValue()
                                             .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
+                            )
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+
+    // cellsValidatorPatch.................................................................................................
+
+    @Test
+    public void testCellsValidatorPatchWithNullCellsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsValidatorPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsValidatorPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsValidatorPatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsValidatorPatch() {
+        final Optional<ValidatorSelector> validator = Optional.of(
+                ValidatorSelector.parse("hello")
+        );
+
+        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
+                SpreadsheetSelection.A1,
+                validator
+        );
+
+        this.cellsValidatorPatchAndCheck(
+                cellToValidators,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("validator"),
+                                                                marshall(validator.get())
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsValidatorPatchEmptyPattern() {
+        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
+                SpreadsheetSelection.A1,
+                SpreadsheetCell.NO_VALIDATOR
+        );
+
+        this.cellsValidatorPatchAndCheck(
+                cellToValidators,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("validator"),
+                                                                marshall(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsValidatorPatchEmptyCells() {
+        this.cellsValidatorPatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsValidatorPatchMultipleCells() {
+        final Optional<ValidatorSelector> validatorSelector1 = Optional.of(
+                ValidatorSelector.parse("hello1")
+        );
+        final Optional<ValidatorSelector> validatorSelector2 = Optional.of(
+                ValidatorSelector.parse("hello2")
+        );
+        final Optional<ValidatorSelector> validatorSelector3 = Optional.empty();
+
+        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
+                SpreadsheetSelection.A1,
+                validatorSelector1,
+                SpreadsheetSelection.parseCell("A2"),
+                validatorSelector2,
+                SpreadsheetSelection.parseCell("A3"),
+                validatorSelector3
+        );
+
+        this.cellsValidatorPatchAndCheck(
+                cellToValidators,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("validator"),
+                                                                marshall(validatorSelector1.get())
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("validator"),
+                                                                marshall(validatorSelector2.get())
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A3"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("validator"),
+                                                                marshall(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsValidatorPatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidator,
+                                          final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsValidatorPatch(
+                cellToValidator,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<ValidatorSelector>> cellAndValidator : cellToValidator.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndValidator.getKey();
+
+            beforePatchCells.add(
+                    cell.setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=1")
+                    ).setValidator(
+                            Optional.of(
+                                    ValidatorSelector.parse("before")
+                            )
+                    )
+            );
+            patchedCells.add(
+                    cell.setFormula(formula)
+                            .setValidator(
+                                    cellAndValidator.getValue()
                             )
             );
         }

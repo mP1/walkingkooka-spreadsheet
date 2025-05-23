@@ -66,6 +66,7 @@ import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -1184,6 +1185,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 cellToStyles,
                 STYLE_PROPERTY,
                 context::marshall
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsValidatorPatch(final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators,
+                                               final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToValidators, "cellToValidators");
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+                cellToValidators,
+                VALIDATOR_PROPERTY,
+                (pattern) -> context.marshall(
+                        pattern.orElse(null)
+                )
         );
     }
 
@@ -2726,6 +2744,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String REFERENCES_PROPERTY_STRING = "references";
     private final static String ROWS_PROPERTY_STRING = "rows";
     private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
+    private final static String VALIDATOR_PROPERTY_STRING = "validator"; // only used by patchCells
 
     private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
     private final static String DELETED_COLUMNS_PROPERTY_STRING = "deletedColumns";
@@ -2798,6 +2817,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING); // only used by patchCells
+
+    // @VisibleForTesting
+    final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING); // only used by patchCells
+
     // @VisibleForTesting
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
