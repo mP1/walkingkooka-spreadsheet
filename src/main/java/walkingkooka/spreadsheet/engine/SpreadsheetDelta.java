@@ -873,11 +873,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     public SpreadsheetDelta setColumnCount(final OptionalInt columnCount) {
-        checkCount(columnCount, "columnCount");
-
         return this.columnCount.equals(columnCount) ?
                 this :
-                this.replaceColumnCount(columnCount);
+                this.replaceColumnCount(
+                        countCheck(columnCount, "columnCount")
+                );
     }
 
     abstract SpreadsheetDelta replaceColumnCount(final OptionalInt columnCount);
@@ -896,16 +896,16 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final OptionalInt rowCount;
 
     public SpreadsheetDelta setRowCount(final OptionalInt rowCount) {
-        checkCount(rowCount, "rowCount");
-
         return this.rowCount.equals(rowCount) ?
                 this :
-                this.replaceRowCount(rowCount);
+                this.replaceRowCount(
+                        countCheck(rowCount, "rowCount")
+                );
     }
 
     abstract SpreadsheetDelta replaceRowCount(final OptionalInt rowCount);
 
-    private OptionalInt checkCount(final OptionalInt value,
+    private OptionalInt countCheck(final OptionalInt value,
                                    final String label) {
         Objects.requireNonNull(value, label);
 
