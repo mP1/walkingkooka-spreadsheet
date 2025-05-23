@@ -2905,6 +2905,121 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithDateTimeSymbols() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDateTimeSymbols(
+                        Optional.of(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDateTimeSymbols(
+                        Optional.empty()
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<DateTimeSymbols> symbols1 = Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.FRANCE)
+                )
+        );
+        final Optional<DateTimeSymbols> symbols2 = Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.GERMANY)
+                )
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setDateTimeSymbols(symbols1),
+                        a2.setDateTimeSymbols(symbols2)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                symbols1,
+                                SpreadsheetSelection.parseCell("A2"),
+                                symbols2
+                        ),
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchCellsWithDecimalNumberSymbols() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDecimalNumberSymbols(
+                        Optional.of(
+                                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                        '+',
+                                        new DecimalFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDecimalNumberSymbols(
+                        Optional.empty()
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<DecimalNumberSymbols> symbols1 =  Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                )
+        );
+        final Optional<DecimalNumberSymbols> symbols2 =  Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.GERMANY)
+                )
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setDecimalNumberSymbols(symbols1),
+                        a2.setDecimalNumberSymbols(symbols2)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                symbols1,
+                                SpreadsheetSelection.parseCell("A2"),
+                                symbols2
+                        ),
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+    
+    @Test
     public void testPatchCellsWithFormatterWithMissingCells() {
         final Optional<SpreadsheetFormatterSelector> beforeFormatter = Optional.of(
                 SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
@@ -3502,6 +3617,56 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    @Test
+    public void testPatchCellsWithValidator() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(
+                        Optional.of(
+                                ValidatorSelector.parse("before-validator")
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(
+                        Optional.empty()
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<ValidatorSelector> validator1 = Optional.of(
+                ValidatorSelector.parse("patched-validator1")
+        );
+        final Optional<ValidatorSelector> validator2 = Optional.of(
+                ValidatorSelector.parse("patched-validator2")
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setValidator(validator1),
+                        a2.setValidator(validator2)
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.cellsValidatorPatch(
+                        Maps.of(
+                                SpreadsheetSelection.A1,
+                                validator1,
+                                SpreadsheetSelection.parseCell("A2"),
+                                validator2
+                        ),
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+    
     private void patchCellsAndCheck(final SpreadsheetDelta before,
                                     final SpreadsheetCellReferenceOrRange cellReferenceOrRange,
                                     final JsonNode patch,
