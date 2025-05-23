@@ -103,37 +103,37 @@ these will be a plugin where users can contribute an alternative or supplementar
 ### [SpreadsheetConverters](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 
 These `Converters` along with a few others belonging to other repos are used to convert values from one type to another.
+These support expressions where values are converters as necessary from one value type to another, 
+eg 
 
 - basic
 - collection
-- errorThrowing
-- errorToNumber
-- errorToString
-- general
-- parser
-- pluginSelectorLike
-- selectionToSelection
-- selectionToString
-- spreadsheetCellTo
-- stringToDate
-- stringToDateTime
-- stringToExpression
-- stringToExpressionNumber
-- stringToFormatPattern
-- stringToSelection
-- stringToSpreadsheetId
-- stringToSpreadsheetMetadataPropertyName
-- stringToSpreadsheetName
-- stringToTime
-- unformattedNumber
-
-- [walkingkooka-convert](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/Converters.java)
-- [walkingkooka-tree](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/ExpressionNumberConverters.java)
-
-Converter(s) are part of many core features, some are listed below and the more will be created.
-
-- Within a formula expression converting a date to a number within an addition and other places containing math with non
-  number values.
+- [errorThrowing](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetErrorThrowing.java)
+- [errorToNumber](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetErrorToNumber.java)
+- [errorToText](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetErrorToText.java)
+- [formatPatternToString](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterFormatPatternToString.java)
+- [general](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterGeneral.java)
+- [null](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterNullToNumber.java) Handles converting null/missing cell values into 0, 10 + B2 when B2 is missing becomes 10 + 0. 
+- [numberToNumber](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/convert/ExpressionNumberConverters.java)
+- [parser](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
+- [selectionToSelection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetSelectionToSpreadsheetSelectionConverter.java)
+- [selectionToText](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetSelectionToText.java)
+- [spreadsheetCellTo](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetCell.java)
+- [textToDate](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
+- [textToDateTime](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
+- [textToNumber](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
+- [textToExpression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToExpression.java)
+- [textToSelection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetSelection.java)
+- [textToSpreadsheetColorName](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetColorName.java)
+- [textToSpreadsheetId](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetId.java)
+- [textToSpreadsheetMetadataPropertyName](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.java)
+- [textToSpreadsheetMetadataColor](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetMetadataColor.java)
+- [textToSpreadsheetError](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetError.java)
+- [textToSpreadsheetName](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetName.java)
+- [textToSpreadsheetText](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/textToSpreadsheetText.java)
+- [textToTime](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
+- [textToValidationError](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToValidationError.java)
+- [textToText](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/CharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrStringConverter.java)
 
 ### [SpreadsheetComparators](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/compare/SpreadsheetComparator.java)
 
