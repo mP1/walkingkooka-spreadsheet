@@ -1259,9 +1259,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return makePatch(
                 FORMATTER_PROPERTY,
-                formatter.isPresent() ?
-                        context.marshall(formatter.get()) :
-                        JsonNode.nullNode()
+                context.marshallOptional(formatter)
         );
     }
 
@@ -1275,9 +1273,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return makePatch(
                 PARSER_PROPERTY,
-                parser.isPresent() ?
-                        context.marshall(parser.get()) :
-                        JsonNode.nullNode()
+                context.marshallOptional(parser)
         );
     }
 
@@ -1626,7 +1622,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             switch (propertyNameString) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
                     patched = patched.setViewport(
-                            unmarshallViewport(propertyAndValue, context)
+                            context.unmarshallOptional(
+                                    propertyAndValue,
+                                    SpreadsheetViewport.class
+                            )
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
@@ -2375,9 +2374,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             switch (name.value()) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setViewport(
-                            unmarshallViewport(
+                            context.unmarshallOptional(
                                     child,
-                                    context
+                                    SpreadsheetViewport.class
                             )
                     );
                     break;
@@ -2533,13 +2532,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         return unmarshalled;
-    }
-
-    private static Optional<SpreadsheetViewport> unmarshallViewport(final JsonNode node,
-                                                                    final JsonNodeUnmarshallContext context) {
-        return Optional.ofNullable(
-                context.unmarshall(node, SpreadsheetViewport.class)
-        );
     }
 
     private static <T> Set<T> unmarshallReferenceTo(final JsonNode node,
