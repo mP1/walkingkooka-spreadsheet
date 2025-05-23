@@ -1126,7 +1126,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
     public static JsonNode cellsDecimalNumberSymbolsPatch(final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToDecimalNumberSymbols,
-                                                     final JsonNodeMarshallContext context) {
+                                                          final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToDecimalNumberSymbols, "cellToDecimalNumberSymbols");
         Objects.requireNonNull(context, "context");
 
@@ -1138,7 +1138,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 )
         );
     }
-    
+
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
@@ -1397,9 +1397,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             Sets.of(
                     SpreadsheetDelta.CELLS_PROPERTY_STRING,
                     SpreadsheetDelta.FORMULA_PROPERTY_STRING,
+                    SpreadsheetDelta.DATE_TIME_SYMBOLS_STRING,
+                    SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_STRING,
                     SpreadsheetDelta.FORMATTER_PROPERTY_STRING,
                     SpreadsheetDelta.PARSER_PROPERTY_STRING,
-                    SpreadsheetDelta.STYLE_PROPERTY_STRING
+                    SpreadsheetDelta.STYLE_PROPERTY_STRING,
+                    SpreadsheetDelta.VALIDATOR_PROPERTY_STRING
             )
     );
 
@@ -1481,10 +1484,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                       final JsonNode json,
                                       final Predicate<String> patchableProperties) {
         boolean cellsPatched = false;
+        boolean dateTimeSymbolsPatched = false;
+        boolean decimalNumberSymbolsPatched = false;
         boolean formulaPatched = false;
         boolean formatterPatched = false;
         boolean parserPatched = false;
         boolean stylePatched = false;
+        boolean validatorPatched = false;
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
 
@@ -1503,6 +1509,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case COLUMNS_PROPERTY_STRING:
                     break;
+                case DATE_TIME_SYMBOLS_STRING:
+                    dateTimeSymbolsPatched = true;
+                    break;
+                case DECIMAL_NUMBER_SYMBOLS_STRING:
+                    decimalNumberSymbolsPatched = true;
+                    break;
                 case FORMATTER_PROPERTY_STRING:
                     formatterPatched = true;
                     break;
@@ -1518,6 +1530,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case STYLE_PROPERTY_STRING:
                     stylePatched = true;
+                case VALIDATOR_PROPERTY_STRING:
+                    validatorPatched = true;
                     break;
                 case LABELS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
@@ -1546,6 +1560,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             }
         }
 
+        if (cellsPatched && dateTimeSymbolsPatched) {
+            patchInvalidFail(CELLS_PROPERTY_STRING, DATE_TIME_SYMBOLS_STRING);
+        }
+
+        if (cellsPatched && decimalNumberSymbolsPatched) {
+            patchInvalidFail(CELLS_PROPERTY_STRING, DECIMAL_NUMBER_SYMBOLS_STRING);
+        }
+
         if (cellsPatched && formatterPatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, FORMATTER_PROPERTY_STRING);
         }
@@ -1556,6 +1578,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (cellsPatched && stylePatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+        }
+
+        if (cellsPatched && validatorPatched) {
+            patchInvalidFail(CELLS_PROPERTY_STRING, VALIDATOR_PROPERTY_STRING);
         }
 
         if (false == cellsPatched && stylePatched && null == selection) {
@@ -1615,6 +1641,30 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             context
                     );
                     break;
+                case DATE_TIME_SYMBOLS_STRING:
+                    cells = patchApplyDateTimeSymbols(
+                            selection.toCellRange(),
+                            cells,
+                            JsonNode.object()
+                                    .set(
+                                            DATE_TIME_SYMBOLS_PROPERTY,
+                                            propertyAndValue
+                                    ),
+                            context
+                    );
+                    break;
+                case DECIMAL_NUMBER_SYMBOLS_STRING:
+                    cells = patchApplyDecimalNumberSymbols(
+                            selection.toCellRange(),
+                            cells,
+                            JsonNode.object()
+                                    .set(
+                                            DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                                            propertyAndValue
+                                    ),
+                            context
+                    );
+                    break;
                 case FORMATTER_PROPERTY_STRING:
                     cells = patchApplyFormatter(
                             selection.toCellRange(),
@@ -1663,6 +1713,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             selection.toCellRange(),
                             cells,
                             propertyAndValue,
+                            context
+                    );
+                    break;
+                case VALIDATOR_PROPERTY_STRING:
+                    cells = patchApplyValidator(
+                            selection.toCellRange(),
+                            cells,
+                            JsonNode.object()
+                                    .set(
+                                            VALIDATOR_PROPERTY,
+                                            propertyAndValue
+                                    ),
                             context
                     );
                     break;
@@ -1776,6 +1838,64 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 cells,
                 c -> c.setFormula(formula),
                 r -> r.setFormula(formula)
+        );
+    }
+
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode symbols}.
+     * <pre>
+     * {
+     *   "dateTimeSymbols": "DateTimeSymbolsJson..."
+     * }
+     * </pre>
+     */
+    private static Set<SpreadsheetCell> patchApplyDateTimeSymbols(final SpreadsheetCellRangeReference cellRange,
+                                                                  final Set<SpreadsheetCell> cells,
+                                                                  final JsonNode patch,
+                                                                  final JsonNodeUnmarshallContext context) {
+        final Optional<DateTimeSymbols> dateTimeSymbols = Optional.ofNullable(
+                context.unmarshall(
+                        patch.objectOrFail()
+                                .getOrFail(DATE_TIME_SYMBOLS_PROPERTY),
+                        DateTimeSymbols.class
+                )
+        );
+
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setDateTimeSymbols(dateTimeSymbols),
+                r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                        .setDateTimeSymbols(dateTimeSymbols)
+        );
+    }
+
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode symbols}.
+     * <pre>
+     * {
+     *   "decimalNumberSymbols": "DecimalNumberSymbolsJson..."
+     * }
+     * </pre>
+     */
+    private static Set<SpreadsheetCell> patchApplyDecimalNumberSymbols(final SpreadsheetCellRangeReference cellRange,
+                                                                       final Set<SpreadsheetCell> cells,
+                                                                       final JsonNode patch,
+                                                                       final JsonNodeUnmarshallContext context) {
+        final Optional<DecimalNumberSymbols> decimalNumberSymbols = Optional.ofNullable(
+                context.unmarshall(
+                        patch.objectOrFail()
+                                .getOrFail(DECIMAL_NUMBER_SYMBOLS_PROPERTY),
+                        DecimalNumberSymbols.class
+                )
+        );
+
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setDecimalNumberSymbols(decimalNumberSymbols),
+                r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                        .setDecimalNumberSymbols(decimalNumberSymbols)
         );
     }
 
@@ -1967,6 +2087,35 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 ),
                 r -> r.setFormula(SpreadsheetFormula.EMPTY)
                         .setStyle(style)
+        );
+    }
+
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode symbols}.
+     * <pre>
+     * {
+     *   "validatorSelector": "ValidatorSelectorJson..."
+     * }
+     * </pre>
+     */
+    private static Set<SpreadsheetCell> patchApplyValidator(final SpreadsheetCellRangeReference cellRange,
+                                                            final Set<SpreadsheetCell> cells,
+                                                            final JsonNode patch,
+                                                            final JsonNodeUnmarshallContext context) {
+        final Optional<ValidatorSelector> validatorSelector = Optional.ofNullable(
+                context.unmarshall(
+                        patch.objectOrFail()
+                                .getOrFail(VALIDATOR_PROPERTY),
+                        ValidatorSelector.class
+                )
+        );
+
+        return patchAllCells(
+                cellRange,
+                cells,
+                c -> c.setValidator(validatorSelector),
+                r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                        .setValidator(validatorSelector)
         );
     }
 
@@ -2639,8 +2788,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             final SpreadsheetLabelNameSet deletedLabels = this.deletedLabels;
             if (false == deletedLabels.isEmpty()) {
                 children.add(
-                         context.marshall(deletedLabels)
-                                 .setName(DELETED_LABELS_PROPERTY)
+                        context.marshall(deletedLabels)
+                                .setName(DELETED_LABELS_PROPERTY)
                 );
             }
         }
