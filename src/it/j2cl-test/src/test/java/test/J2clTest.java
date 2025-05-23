@@ -295,7 +295,10 @@ public class J2clTest {
                                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(
                                         formula,
-                                        metadata.spreadsheetParserContext(NOW)
+                                        metadata.spreadsheetParserContext(
+                                                cell,
+                                                NOW
+                                        )
                                 ) // TODO should fetch parse metadata prop
                                 .get()
                 );
