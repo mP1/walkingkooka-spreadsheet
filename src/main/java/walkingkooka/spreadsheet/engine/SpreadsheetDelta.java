@@ -2562,13 +2562,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 SpreadsheetViewportWindows.parse(json.stringOrFail());
     }
 
-    static <S extends SpreadsheetSelection> String csv(final Collection<S> selections) {
-        return CSV_COMMA.toSeparatedString(
-                selections,
-                SpreadsheetSelection::toString
-        );
-    }
-
     private final static Class<Form<SpreadsheetExpressionReference>> FORM_SPREADSHEET_EXPRESSION_REFERENCE_CLASS = Cast.to(Form.class);
 
     /**
