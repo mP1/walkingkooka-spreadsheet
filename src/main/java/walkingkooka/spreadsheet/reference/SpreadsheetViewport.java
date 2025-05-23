@@ -299,7 +299,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         if (anchoredSelection.isPresent()) {
             object = object.set(
                     SELECTION_PROPERTY,
-                    context.marshall(anchoredSelection.get())
+                    context.marshallOptional(anchoredSelection)
             );
         }
 

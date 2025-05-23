@@ -87,8 +87,8 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 contentType = SpreadsheetMediaTypes.JSON_FORMULAS;
                 break;
             case FORMATTER:
-                value = (c) -> context.marshall(
-                        c.formatter().orElse(null)
+                value = (c) -> context.marshallOptional(
+                        c.formatter()
                 ).setName(
                         name(c)
                 );
@@ -103,9 +103,8 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 contentType = SpreadsheetMediaTypes.JSON_STYLES;
                 break;
             case PARSER:
-                value = (c) -> context.marshall(
+                value = (c) -> context.marshallOptional(
                         c.parser()
-                                .orElse(null)
                 ).setName(
                         name(c)
                 );

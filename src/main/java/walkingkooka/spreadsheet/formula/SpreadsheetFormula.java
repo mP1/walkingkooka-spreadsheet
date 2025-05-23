@@ -717,9 +717,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         SpreadsheetFormulaParserToken token = null;
         Expression expression = null;
         Object expressionValue = null;
-        ValidationValueTypeName inputValueType = null;
+        Optional<ValidationValueTypeName> inputValueType = NO_INPUT_VALUE_TYPE;
         Object inputValue = null;
-        SpreadsheetError error = null;
+        Optional<SpreadsheetError> error = NO_ERROR;
 
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -742,7 +742,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     expressionValue = context.unmarshallWithType(child);
                     break;
                 case INPUT_VALUE_TYPE_PROPERTY_STRING:
-                    inputValueType = context.unmarshall(
+                    inputValueType = context.unmarshallOptional(
                             child,
                             ValidationValueTypeName.class
                     );
@@ -751,7 +751,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     inputValue = context.unmarshallWithType(child);
                     break;
                 case ERROR_PROPERTY_STRING:
-                    error = context.unmarshall(
+                    error = context.unmarshallOptional(
                             child,
                             SpreadsheetError.class
                     );
@@ -766,9 +766,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 .setToken(Optional.ofNullable(token))
                 .setExpression(Optional.ofNullable(expression))
                 .setExpressionValue(Optional.ofNullable(expressionValue))
-                .setInputValueType(Optional.ofNullable(inputValueType))
+                .setInputValueType(inputValueType)
                 .setInputValue(Optional.ofNullable(inputValue))
-                .setError(Optional.ofNullable(error));
+                .setError(error);
     }
 
     /**
@@ -820,9 +820,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         if (inputValueType.isPresent()) {
             object = object.set(
                     INPUT_VALUE_TYPE_PROPERTY,
-                    context.marshall(
-                            inputValueType.get()
-                    )
+                    context.marshallOptional(inputValueType)
             );
         }
 
@@ -830,9 +828,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         if (error.isPresent()) {
             object = object.set(
                     ERROR_PROPERTY,
-                    context.marshall(
-                            error.get()
-                    )
+                    context.marshallOptional(error)
             );
         }
 
