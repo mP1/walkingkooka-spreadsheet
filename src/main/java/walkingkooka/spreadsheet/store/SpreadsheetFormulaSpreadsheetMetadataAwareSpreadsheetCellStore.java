@@ -31,8 +31,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
@@ -173,18 +171,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         final SpreadsheetMetadata metadata = this.metadata;
         final ProviderContext providerContext = this.providerContext;
 
-        return this.metadata.spreadsheetParser(
+        return metadata.spreadsheetParser(
                         this.spreadsheetParserProvider,
                         providerContext
-                ).orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(text),
+                ).parseText(
+                        text,
                         metadata.spreadsheetParserContext(
                                 Optional.of(cell),
                                 providerContext
                         )
-                ).orElse(null)
-                .cast(SpreadsheetFormulaParserToken.class);
+                ).cast(SpreadsheetFormulaParserToken.class);
     }
 
     // batch............................................................................................................
