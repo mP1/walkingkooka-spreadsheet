@@ -2640,9 +2640,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             final Optional<SpreadsheetViewport> viewport = this.viewport;
             if (viewport.isPresent()) {
                 children.add(
-                        context.marshall(
-                                viewport.get()
-                        ).setName(VIEWPORT_SELECTION_PROPERTY)
+                        context.marshallOptional(viewport)
+                                .setName(VIEWPORT_SELECTION_PROPERTY)
                 );
             }
         }
@@ -2829,8 +2828,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return JsonNode.object().setChildren(children);
     }
-
-    private final static CharacterConstant CSV_COMMA = CharacterConstant.COMMA;
 
     /**
      * Creates a JSON object with each cell one of the properties.
