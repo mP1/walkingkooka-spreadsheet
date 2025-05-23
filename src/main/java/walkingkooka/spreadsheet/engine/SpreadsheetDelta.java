@@ -1761,28 +1761,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         return node.isNull() ?
                 NO_CELLS :
-                this.patchApplyCellsNonNull(
+                patchApplySelectionToValue(
                         selection,
                         node,
+                        SpreadsheetSelection::parseCell,
+                        this::cell,
+                        SpreadsheetCell.class,
                         context
                 );
-    }
-
-    /**
-     * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
-     * If the patch is a new cell it is added, existing cells are patched.
-     */
-    private Set<SpreadsheetCell> patchApplyCellsNonNull(final SpreadsheetSelection selection,
-                                                        final JsonNode node,
-                                                        final JsonNodeUnmarshallContext context) {
-        return patchApplySelectionToValue(
-                selection,
-                node,
-                SpreadsheetSelection::parseCell,
-                this::cell,
-                SpreadsheetCell.class,
-                context
-        );
     }
 
     private Set<SpreadsheetColumn> patchApplyColumns(final SpreadsheetSelection selection,
