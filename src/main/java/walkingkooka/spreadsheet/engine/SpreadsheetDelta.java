@@ -1292,7 +1292,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Creates a {@link JsonObject} which can then be used to as an argument to {@link #patchStyle(SpreadsheetCellRangeReference, Set, JsonNode, JsonNodeUnmarshallContext)}.
+     * Creates a {@link JsonObject} which can then be used to as an argument to {@link #patch(JsonNode, JsonNodeUnmarshallContext)}
+     * and {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
     public static JsonNode stylePatch(final JsonNode style) {
         Objects.requireNonNull(style, "style");
