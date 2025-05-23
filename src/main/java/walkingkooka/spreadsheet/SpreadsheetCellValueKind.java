@@ -38,6 +38,13 @@ public enum SpreadsheetCellValueKind {
         }
     },
 
+    DECIMAL_NUMBER_SYMBOLS {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.decimalNumberSymbols();
+        }
+    },
+
     FORMULA {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
@@ -63,6 +70,13 @@ public enum SpreadsheetCellValueKind {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.style();
+        }
+    },
+
+    VALIDATOR {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.validator();
         }
     },
 
