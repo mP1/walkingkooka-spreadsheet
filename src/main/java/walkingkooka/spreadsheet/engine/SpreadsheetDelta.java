@@ -25,6 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -1102,6 +1103,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsDateTimeSymbolsPatch(final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToDateTimeSymbols,
+                                                     final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToDateTimeSymbols, "cellToDateTimeSymbols");
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+                cellToDateTimeSymbols,
+                DATE_TIME_SYMBOLS_PROPERTY,
+                (pattern) -> context.marshall(
+                        pattern.orElse(null)
+                )
+        );
+    }
+    
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
@@ -2679,6 +2697,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewport";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String COLUMNS_PROPERTY_STRING = "columns";
+    private final static String DATE_TIME_SYMBOLS_STRING = "dateTimeSymbols";
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
@@ -2711,6 +2730,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName COLUMNS_PROPERTY = JsonPropertyName.with(COLUMNS_PROPERTY_STRING);
+
+    // @VisibleForTesting
+    final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_STRING);
 
     // @VisibleForTesting
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);

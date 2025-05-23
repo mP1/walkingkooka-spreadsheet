@@ -23,6 +23,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -59,6 +60,8 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -461,6 +464,161 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY,
                 patch,
                 SpreadsheetDelta.EMPTY.setCells(cells)
+        );
+    }
+
+
+    // cellsDateTimeSymbolsPatch........................................................................................
+
+    @Test
+    public void testCellsDateTimeSymbolsPatchWithNullCellsToDateTimeSymbolsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsDateTimeSymbolsPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsDateTimeSymbolsPatch() {
+        final DateTimeSymbols symbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.FRANCE)
+        );
+
+        this.cellsDateTimeSymbolsPatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        Optional.of(symbols)
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("dateTimeSymbols"),
+                                                                marshall(symbols)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsDateTimeSymbolsPatchEmptyCells() {
+        this.cellsDateTimeSymbolsPatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsDateTimeSymbolsPatchMultipleCells() {
+        final DateTimeSymbols symbols1 = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.FRANCE)
+        );
+        final DateTimeSymbols symbols2 = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.GERMANY)
+        );
+        final DateTimeSymbols symbols3 = null;
+
+        final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToSymbols = Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(symbols1),
+                SpreadsheetSelection.parseCell("A2"),
+                Optional.of(symbols2),
+                SpreadsheetSelection.parseCell("A3"),
+                Optional.ofNullable(symbols3)
+        );
+
+        this.cellsDateTimeSymbolsPatchAndCheck(
+                cellToSymbols,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("dateTimeSymbols"),
+                                                                marshall(symbols1)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("dateTimeSymbols"),
+                                                                marshall(symbols2)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A3"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("dateTimeSymbols"),
+                                                                marshall(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsDateTimeSymbolsPatchAndCheck(final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToDateTimeSymbols,
+                                                   final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                cellToDateTimeSymbols,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellAndDateTimeSymbols : cellToDateTimeSymbols.entrySet()) {
+            final SpreadsheetCellReference cellReference = cellAndDateTimeSymbols.getKey();
+
+            final SpreadsheetCell cell = cellReference.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("'Patched over")
+            ).setStyle(style);
+
+
+            beforePatchCells.add(cell);
+            patchedCells.add(
+                    cell.setDateTimeSymbols(cellAndDateTimeSymbols.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
