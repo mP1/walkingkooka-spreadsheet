@@ -2316,6 +2316,44 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchWithParser() {
+        final Optional<SpreadsheetParserSelector> parser = Optional.of(
+                SpreadsheetParserSelector.parse("hello-parser")
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1")
+        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("=99")
+                );
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1,
+                                        b2
+                                )
+                        ),
+                SpreadsheetDelta.parserPatch(
+                        parser,
+                        MARSHALL_CONTEXT
+                ),
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1.setParser(parser),
+                                        b2.setParser(parser)
+                                )
+                        )
+        );
+    }
+
+    @Test
     public void testPatchWithStyle() {
         final TextStyle style = TextStyle.EMPTY.set(
                 TextStylePropertyName.COLOR,
