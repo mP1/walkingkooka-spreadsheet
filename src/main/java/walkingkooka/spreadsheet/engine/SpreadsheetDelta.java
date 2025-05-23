@@ -92,7 +92,7 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         TreePrintable {
 
-    public final static Optional<SpreadsheetViewport> NO_VIEWPORT = Optional.empty();
+    public final static Optional<SpreadsheetViewport> NO_VIEWPORT = java.util.Optional.empty();
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
@@ -321,7 +321,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link SpreadsheetCell} matching the given {@link SpreadsheetCellReference}.
      */
-    public Optional<SpreadsheetCell> cell(final SpreadsheetCellReference cell) {
+    public final Optional<SpreadsheetCell> cell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         return this.cells()
@@ -374,7 +374,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link SpreadsheetColumn} matching the given {@link SpreadsheetColumnReference}.
      */
-    public Optional<SpreadsheetColumn> column(final SpreadsheetColumnReference column) {
+    public final Optional<SpreadsheetColumn> column(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
 
         return this.columns()
@@ -420,7 +420,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link Form} with the given {@link FormName}.
      */
-    public Optional<Form<SpreadsheetExpressionReference>> form(final FormName form) {
+    public final Optional<Form<SpreadsheetExpressionReference>> form(final FormName form) {
         Objects.requireNonNull(form, "form");
 
         return this.forms()
@@ -524,7 +524,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link SpreadsheetRow} matching the given {@link SpreadsheetRowReference}.
      */
-    public Optional<SpreadsheetRow> row(final SpreadsheetRowReference row) {
+    public final Optional<SpreadsheetRow> row(final SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
 
         return this.rows()
@@ -601,7 +601,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Returns the references for the given {@link SpreadsheetCellReference}.
      */
-    public Optional<Set<SpreadsheetExpressionReference>> references(final SpreadsheetCellReference cell) {
+    public final Optional<Set<SpreadsheetExpressionReference>> references(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         return Optional.ofNullable(
@@ -872,7 +872,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.columnCount;
     }
 
-    public SpreadsheetDelta setColumnCount(final OptionalInt columnCount) {
+    public final SpreadsheetDelta setColumnCount(final OptionalInt columnCount) {
         return this.columnCount.equals(columnCount) ?
                 this :
                 this.replaceColumnCount(
@@ -895,7 +895,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     final OptionalInt rowCount;
 
-    public SpreadsheetDelta setRowCount(final OptionalInt rowCount) {
+    public final SpreadsheetDelta setRowCount(final OptionalInt rowCount) {
         return this.rowCount.equals(rowCount) ?
                 this :
                 this.replaceRowCount(
@@ -1311,8 +1311,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Attempts to patch a unknown cell will fail with an {@link IllegalArgumentException} being thrown.
      */
     @Override
-    public SpreadsheetDelta patch(final JsonNode json,
-                                  final JsonNodeUnmarshallContext context) {
+    public final SpreadsheetDelta patch(final JsonNode json,
+                                        final JsonNodeUnmarshallContext context) {
         return this.patchValidateAndApply(
                 null,
                 json,
@@ -1380,9 +1380,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    public SpreadsheetDelta patchCells(final SpreadsheetCellReferenceOrRange cellOrCellRange,
-                                       final JsonNode json,
-                                       final JsonNodeUnmarshallContext context) {
+    public final SpreadsheetDelta patchCells(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                             final JsonNode json,
+                                             final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
 
         return this.patchValidateAndApply(
@@ -1422,8 +1422,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    public SpreadsheetDelta patchColumns(final JsonNode json,
-                                         final JsonNodeUnmarshallContext context) {
+    public final SpreadsheetDelta patchColumns(final JsonNode json,
+                                               final JsonNodeUnmarshallContext context) {
         return this.patchValidateAndApply(
                 null, // dont care now will matter when patchColumns supports format&style
                 json,
@@ -1448,8 +1448,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    public SpreadsheetDelta patchRows(final JsonNode json,
-                                      final JsonNodeUnmarshallContext context) {
+    public final SpreadsheetDelta patchRows(final JsonNode json,
+                                            final JsonNodeUnmarshallContext context) {
         return this.patchValidateAndApply(
                 null, // dont care now will matter when patchRows supports format&style
                 json,
@@ -2178,7 +2178,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // TreePrintable.....................................................................................................
 
     @Override
-    public void printTree(final IndentingPrinter printer) {
+    public final void printTree(final IndentingPrinter printer) {
         printer.println("SpreadsheetDelta");
         printer.indent();
         {
@@ -2945,7 +2945,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // equals...........................................................................................................
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(
                 this.viewport,
                 this.cells,
