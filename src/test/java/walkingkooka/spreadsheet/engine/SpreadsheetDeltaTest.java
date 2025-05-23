@@ -1613,6 +1613,144 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // dateTimeSymbolsPatch.............................................................................................
+
+    @Test
+    public void testDateTimeSymbolsPatchWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.dateTimeSymbolsPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeSymbolsPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.dateTimeSymbolsPatch(
+                        Optional.of(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(Locale.FRANCE)
+                                )
+                        ),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeSymbolsPatch() {
+        final Optional<DateTimeSymbols> symbols = Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.FRANCE)
+                )
+        );
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
+                                MARSHALL_CONTEXT.marshallOptional(symbols)
+                        )
+                ,
+                SpreadsheetDelta.dateTimeSymbolsPatch(
+                        symbols,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testDateTimeSymbolsPatchWithEmpty() {
+        final Optional<DateTimeSymbols> symbols = Optional.empty();
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
+                                MARSHALL_CONTEXT.marshallOptional(symbols)
+                        )
+                ,
+                SpreadsheetDelta.dateTimeSymbolsPatch(
+                        symbols,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    // decimalNumberSymbolsPatch........................................................................................
+
+    @Test
+    public void testDecimalNumberSymbolsPatchWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testDecimalNumberSymbolsPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
+                        Optional.of(
+                                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                        '+',
+                                        new DecimalFormatSymbols(Locale.FRANCE)
+                                )
+                        ),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testDecimalNumberSymbolsPatch() {
+        final Optional<DecimalNumberSymbols> symbols = Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                )
+        );
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                                MARSHALL_CONTEXT.marshallOptional(symbols)
+                        )
+                ,
+                SpreadsheetDelta.decimalNumberSymbolsPatch(
+                        symbols,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testDecimalNumberSymbolsPatchWithEmpty() {
+        final Optional<DecimalNumberSymbols> symbols = Optional.empty();
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                                MARSHALL_CONTEXT.marshallOptional(symbols)
+                        )
+                ,
+                SpreadsheetDelta.decimalNumberSymbolsPatch(
+                        symbols,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
     // formulaPatch.....................................................................................................
 
     @Test
@@ -1932,6 +2070,66 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 expected,
                 patch,
                 () -> "stylePatch " + patch
+        );
+    }
+
+    // validatorPatch...................................................................................................
+
+    @Test
+    public void testValidatorPatchWithNullPatternFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.validatorPatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testValidatorPatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.validatorPatch(
+                        Optional.of(
+                                ValidatorSelector.parse("hello")
+                        ),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testValidatorPatch() {
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("hello");
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.VALIDATOR_PROPERTY,
+                                marshall(validatorSelector)
+                        )
+                ,
+                SpreadsheetDelta.validatorPatch(
+                        Optional.of(validatorSelector),
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testValidatorPatchWithEmptyPattern() {
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.VALIDATOR_PROPERTY,
+                                JsonNode.nullNode()
+                        )
+                ,
+                SpreadsheetDelta.validatorPatch(
+                        Optional.empty(),
+                        MARSHALL_CONTEXT
+                )
         );
     }
 
@@ -2278,6 +2476,98 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchWithDateTimeSymbols() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDateTimeSymbols(
+                        Optional.of(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDateTimeSymbols(
+                        Optional.empty()
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<DateTimeSymbols> symbols = Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.GERMANY)
+                )
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setDateTimeSymbols(symbols),
+                        a2.setDateTimeSymbols(symbols)
+                )
+        );
+
+        this.patchAndCheck(
+                before,
+                SpreadsheetDelta.dateTimeSymbolsPatch(
+                        symbols,
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+
+    @Test
+    public void testPatchWithDecimalNumberSymbols() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDecimalNumberSymbols(
+                        Optional.of(
+                                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                        '+',
+                                        new DecimalFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setDecimalNumberSymbols(
+                        Optional.empty()
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<DecimalNumberSymbols> symbols =  Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                )
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setDecimalNumberSymbols(symbols),
+                        a2.setDecimalNumberSymbols(symbols)
+                )
+        );
+
+        this.patchAndCheck(
+                before,
+                SpreadsheetDelta.decimalNumberSymbolsPatch(
+                        symbols,
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+
+    @Test
     public void testPatchWithFormatter() {
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
                 SpreadsheetFormatterSelector.parse("hello-formatter")
@@ -2388,6 +2678,47 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                         b2.setStyle(style)
                                 )
                         )
+        );
+    }
+
+    @Test
+    public void testPatchWithValidator() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(
+                        Optional.of(
+                                ValidatorSelector.parse("before-validator")
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(
+                        Optional.empty()
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<ValidatorSelector> validator = Optional.of(
+                ValidatorSelector.parse("patched-validator1")
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setValidator(validator),
+                        a2.setValidator(validator)
+                )
+        );
+
+        this.patchAndCheck(
+                before,
+                SpreadsheetDelta.validatorPatch(
+                        validator,
+                        MARSHALL_CONTEXT
+                ),
+                after
         );
     }
 
