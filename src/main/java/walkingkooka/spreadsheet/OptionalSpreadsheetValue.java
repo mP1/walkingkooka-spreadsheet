@@ -82,16 +82,12 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
     static OptionalSpreadsheetValue<?> unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
         return with(
-                Optional.ofNullable(
-                        context.unmarshallWithType(node)
-                )
+                context.unmarshallOptionalWithType(node)
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshallWithType(
-                this.value.orElse(null)
-        );
+        return context.marshallOptionalWithType(this.value);
     }
 
     static {
