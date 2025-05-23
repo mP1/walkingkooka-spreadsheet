@@ -18,10 +18,86 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.text.TextAlign;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorSelector;
+
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
 
 public final class SpreadsheetCellValueKindTest implements ClassTesting<SpreadsheetCellValueKind> {
+
+    @Test
+    public void testCellValue() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setDateTimeSymbols(
+                        Optional.of(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(Locale.FRANCE)
+                                )
+                        )
+                ).setDecimalNumberSymbols(
+                        Optional.of(
+                                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                        '+',
+                                        new DecimalFormatSymbols(Locale.FRANCE)
+                                )
+                        )
+                ).setFormatter(
+                        Optional.of(
+                                SpreadsheetFormatterSelector.parse("hello-formatter")
+                        )
+                ).setFormattedValue(
+                        Optional.of(
+                                TextNode.text("formatted-value")
+                        )
+                ).setParser(
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("hello-parser")
+                        )
+                ).setStyle(
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.TEXT_ALIGN,
+                                TextAlign.CENTER
+                        )
+                ).setValidator(
+                        Optional.of(
+                                ValidatorSelector.parse("hello-validator")
+                        )
+                );
+
+        final Set<Object> values = Sets.hash();
+        for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {
+            final Object value = values.add(
+                    kind.cellValue(cell)
+            );
+            this.checkNotEquals(
+                    Optional.empty(),
+                    value,
+                    () -> kind + " value missing returned Optional#empty"
+            );
+
+            this.checkEquals(
+                    true,
+                    value,
+                    () -> kind + " returned duplicate value (must be returning wrong property"
+            );
+        }
+    }
 
     @Test
     public void testFileExtension() {
