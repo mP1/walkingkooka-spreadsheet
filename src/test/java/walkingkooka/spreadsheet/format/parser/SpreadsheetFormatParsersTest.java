@@ -215,7 +215,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionCloseParensFails() {
         this.conditionParseThrows(
                 textLiteralCloseParens(),
-                "Invalid character ')' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character ')' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -223,7 +223,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionColonFails() {
         this.conditionParseThrows(
                 textLiteralColon(),
-                "Invalid character ':' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character ':' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -231,7 +231,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionDayFails() {
         this.conditionParseThrows(
                 day(),
-                "Invalid character 'D' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character 'D' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -239,7 +239,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionDigitFails() {
         this.conditionParseThrows(
                 digit(),
-                "Invalid character '#' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '#' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -247,7 +247,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionDigitZeroFails() {
         this.conditionParseThrows(
                 digitZero(),
-                "Invalid character '0' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '0' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -255,7 +255,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionDigitSpaceFails() {
         this.conditionParseThrows(
                 digitSpace(),
-                "Invalid character '?' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '?' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -263,7 +263,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionDollarFails() {
         this.conditionParseThrows(
                 textLiteralDollar(),
-                "Invalid character '$' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '$' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -271,7 +271,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionFractionFails() {
         this.conditionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '/' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -279,7 +279,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionHourFails() {
         this.conditionParseThrows(
                 hour(),
-                "Invalid character 'H' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character 'H' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -287,7 +287,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionMinusFails() {
         this.conditionParseThrows(
                 textLiteralMinus(),
-                "Invalid character '-' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '-' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -295,7 +295,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionMonthFails() {
         this.conditionParseThrows(
                 month(),
-                "Invalid character 'M' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character 'M' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -303,7 +303,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionOpenParensFails() {
         this.conditionParseThrows(
                 textLiteralOpenParens(),
-                "Invalid character '(' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '(' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -311,7 +311,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionPlusFails() {
         this.conditionParseThrows(
                 textLiteralPlus(),
-                "Invalid character '+' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '+' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -319,7 +319,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionSecondFails() {
         this.conditionParseThrows(
                 second(),
-                "Invalid character 'S' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character 'S' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -327,7 +327,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionSlashFails() {
         this.conditionParseThrows(
                 textLiteralSlash(),
-                "Invalid character '/' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '/' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -335,7 +335,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionWhitespaceFails() {
         this.conditionParseThrows(
                 whitespace(),
-                "Invalid character ' ' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character ' ' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -343,7 +343,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionYearFails() {
         this.conditionParseThrows(
                 year(),
-                "Invalid character 'Y' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character 'Y' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -351,7 +351,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionTextPlaceholderFails() {
         this.conditionParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '@' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -359,7 +359,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testConditionOpenSquareBracketFails() {
         this.conditionParseThrows(
                 bracketOpenSymbol(),
-                "Invalid character '[' at 0 expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
+                "Invalid character '[' expected \"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\""
         );
     }
 
@@ -584,7 +584,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         separator()
                 ),
-                "Invalid character ';' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character ';' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -661,7 +661,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatTextDigitFails() {
         this.dateFormatParseThrows(
                 digit(),
-                "Invalid character '#' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '#' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -669,7 +669,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatTextDigitZeroFails() {
         this.dateFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '0' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -677,7 +677,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatTextDigitSpaceFails() {
         this.dateFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '?' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -685,7 +685,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatHourFails() {
         this.dateFormatParseThrows(
                 hour(),
-                "Invalid character 'H' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character 'H' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -693,7 +693,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatSecondFails() {
         this.dateFormatParseThrows(
                 second(),
-                "Invalid character 'S' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character 'S' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -701,7 +701,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateFormatTextPlaceholderFails() {
         this.dateFormatParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '@' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -2090,7 +2090,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseTextDigitFails() {
         this.dateParseParseThrows(
                 digit(),
-                "Invalid character '#' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '#' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -2098,7 +2098,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseTextDigitZeroFails() {
         this.dateParseParseThrows(
                 digitZero(),
-                "Invalid character '0' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '0' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -2106,7 +2106,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseTextDigitSpaceFails() {
         this.dateParseParseThrows(
                 digitSpace(),
-                "Invalid character '?' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '?' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -2114,7 +2114,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseHourFails() {
         this.dateParseParseThrows(
                 hour(),
-                "Invalid character 'H' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character 'H' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -2122,7 +2122,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseSecondFails() {
         this.dateParseParseThrows(
                 second(),
-                "Invalid character 'S' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character 'S' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -2130,7 +2130,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseTextPlaceholderFails() {
         this.dateParseParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '@' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -3530,7 +3530,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatSlashFails() {
         this.numberFormatParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at 0 expected ([[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]) | ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}]) | ([[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]) | ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}]) | ([[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]) | ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}]) | ([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}])"
+                "Invalid character '/' expected ([[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]) | ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}]) | ([[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]) | ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}]) | ([[\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]], \";\", [([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}]) | ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}]) | ([\"[\", [WHITESPACE], (\"=\" | \"<>\" | \">=\" | \">\" | \"<=\" | \"<\"), [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], \"]\"], [{WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | \"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED | COLOR}}])"
         );
     }
 
@@ -5780,7 +5780,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseSlashFails() {
         this.numberParseParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {\"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED}}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {\"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED}})}, [\";\"]"
+                "Invalid character '/' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {\"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED}}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {\"$\" | \".\" | ESCAPE | \"#\" | \"?\" | \"0\" | \",\" | NUMBER_LITERAL | \"%\" | QUOTED | \"E+\" | \"e+\" | \"E-\" | \"e-\", {\".\" | \"#\" | \"?\" | \"0\" | \",\" | \"$\" | ESCAPE | NUMBER_LITERAL | \"%\" | QUOTED}})}, [\";\"]"
         );
     }
 
@@ -7917,7 +7917,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionSlashFails() {
         this.fractionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at 0 expected {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, \"/\", {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}"
+                "Invalid character '/' expected {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, \"/\", {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}"
         );
     }
 
@@ -7952,7 +7952,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionGroupSeparatorFails() {
         this.fractionParseThrows(
                 groupSeparator(),
-                "Invalid character ',' at 0 expected {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, \"/\", {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}"
+                "Invalid character ',' expected {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, \"/\", {COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}, (\"#\" | \"?\" | \"0\"), {\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED}"
         );
     }
 
@@ -9177,7 +9177,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatSeparatorFails() {
         this.textFormatParseThrows(
                 separator(),
-                "Invalid character ';' at 0 expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
+                "Invalid character ';' expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
         );
     }
 
@@ -9185,7 +9185,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatTextDigitZeroFails() {
         this.textFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at 0 expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
+                "Invalid character '0' expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
         );
     }
 
@@ -9193,7 +9193,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatTextDigitSpaceFails() {
         this.textFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at 0 expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
+                "Invalid character '?' expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
         );
     }
 
@@ -9201,7 +9201,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatLetterFails() {
         this.textFormatParseThrows(
                 textLiteral('A'),
-                "Invalid character 'A' at 0 expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
+                "Invalid character 'A' expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
         );
     }
 
@@ -9646,7 +9646,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatSeparatorFails() {
         this.timeFormatParseThrows(
                 separator(),
-                "Invalid character ';' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character ';' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -9663,7 +9663,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatTextDigitFails() {
         this.timeFormatParseThrows(
                 digit(),
-                "Invalid character '#' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '#' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -9671,7 +9671,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatTextDigitZeroFails() {
         this.timeFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '0' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -9679,7 +9679,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatTextDigitSpaceFails() {
         this.timeFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '?' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -9687,7 +9687,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatDayFails() {
         this.timeFormatParseThrows(
                 day(),
-                "Invalid character 'D' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character 'D' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -9695,7 +9695,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatYearFails() {
         this.timeFormatParseThrows(
                 year(),
-                "Invalid character 'Y' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character 'Y' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 
@@ -9703,7 +9703,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatTextPlaceholderFails() {
         this.timeFormatParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character '@' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
     
@@ -11139,7 +11139,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseTextDigitFails() {
         this.timeParseParseThrows(
                 digit(),
-                "Invalid character '#' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '#' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -11147,7 +11147,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseTextDigitZeroFails() {
         this.timeParseParseThrows(
                 digitZero(),
-                "Invalid character '0' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '0' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -11155,7 +11155,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseTextDigitSpaceFails() {
         this.timeParseParseThrows(
                 digitSpace(),
-                "Invalid character '?' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '?' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -11163,7 +11163,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseDayFails() {
         this.timeParseParseThrows(
                 day(),
-                "Invalid character 'D' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character 'D' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -11171,7 +11171,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseYearFails() {
         this.timeParseParseThrows(
                 year(),
-                "Invalid character 'Y' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character 'Y' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -11179,7 +11179,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseTextPlaceholderFails() {
         this.timeParseParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at 0 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
+                "Invalid character '@' expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"H\"} | {\"M\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
     }
 
@@ -12586,7 +12586,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatSeparatorFails() {
         this.dateTimeFormatParseThrows(
                 separator(),
-                "Invalid character ';' at 0 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | {\"H\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
+                "Invalid character ';' expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | {\"H\"} | ({\"S\"}, [\".\", {\"0\"}]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
     }
 

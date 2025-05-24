@@ -1377,7 +1377,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText("@")
                         .setExpressionValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 0 expected \"dd/mmm/yyyy\"")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' expected \"dd/mmm/yyyy\"")
                                 )
                         )
         );

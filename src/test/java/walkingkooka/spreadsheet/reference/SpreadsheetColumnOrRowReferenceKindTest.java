@@ -339,7 +339,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 "A",
-                "Invalid character 'A' at 0"
+                "Invalid character 'A'"
         );
     }
 
