@@ -25,7 +25,7 @@ package walkingkooka.spreadsheet;
 // #NULL
 // #NUM
 
-import walkingkooka.InvalidTextException;
+import walkingkooka.TextException;
 import walkingkooka.Value;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
@@ -268,7 +268,7 @@ public enum SpreadsheetErrorKind implements HasText {
             }
 
             // #ERROR! 	Text in the formula is not recognized etc
-            if (cause instanceof InvalidTextException || cause instanceof ParserException) {
+            if (cause instanceof TextException || cause instanceof ParserException) {
                 kind = ERROR;
 
                 message = cause.getMessage();
