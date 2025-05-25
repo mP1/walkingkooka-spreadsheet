@@ -68,14 +68,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetConvertersConverterProvider.COLLECTION,
                 Lists.of(
                         SpreadsheetConverters.errorToNumber(),
-                        SpreadsheetConverters.errorToText()
+                        SpreadsheetConverters.textToSelection()
                 ),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.collection(
                         Cast.to(
                                 Lists.of(
                                         SpreadsheetConverters.errorToNumber(),
-                                        SpreadsheetConverters.errorToText()
+                                        SpreadsheetConverters.textToSelection()
                                 )
                         )
                 )
@@ -115,13 +115,13 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithCollection() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.COLLECTION + " (error-to-number, error-to-text)",
+                SpreadsheetConvertersConverterProvider.COLLECTION + " (error-to-number, text-to-text)",
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.collection(
                         Cast.to(
                                 Lists.of(
                                         SpreadsheetConverters.errorToNumber(),
-                                        SpreadsheetConverters.errorToText()
+                                        SpreadsheetConverters.textToText()
                                 )
                         )
                 )
@@ -144,25 +144,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorToNumber()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithErrorToText() {
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.ERROR_TO_TEXT + "",
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.errorToText()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithErrorToText() {
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.ERROR_TO_TEXT,
-                Lists.empty(),
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.errorToText()
         );
     }
 
