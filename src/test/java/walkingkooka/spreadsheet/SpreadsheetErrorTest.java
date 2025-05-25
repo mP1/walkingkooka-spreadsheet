@@ -537,6 +537,66 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    //textIncludingMessage..............................................................................................
+
+    @Test
+    public void testTextIncludingMessageWithDiv0() {
+        this.textIncludingMessageAndParseStringAndTextIncludingMessageCheck(
+                SpreadsheetErrorKind.DIV0.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextIncludingMessageWithError() {
+        this.textIncludingMessageAndParseStringAndTextIncludingMessageCheck(
+                SpreadsheetErrorKind.ERROR.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextIncludingMessageWithNA() {
+        this.textIncludingMessageAndParseStringAndTextIncludingMessageCheck(
+                SpreadsheetErrorKind.NA.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextIncludingMessageWithRef() {
+        this.textIncludingMessageAndParseStringAndTextIncludingMessageCheck(
+                SpreadsheetErrorKind.REF.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextIncludingMessageWithRefIgnoresValue() {
+        this.textIncludingMessageAndParseStringAndTextIncludingMessageCheck(
+                SpreadsheetErrorKind.REF.setMessage("Hello")
+                        .setValue(
+                                Optional.of(SpreadsheetSelection.A1)
+                        )
+        );
+    }
+
+    @Test
+    public void testTextIncludingMessageWithReferenceNotFound() {
+        this.textIncludingMessageAndParseStringAndTextIncludingMessageCheck(
+                SpreadsheetError.referenceNotFound(SpreadsheetSelection.A1)
+        );
+    }
+
+    private void textIncludingMessageAndParseStringAndTextIncludingMessageCheck(final SpreadsheetError error) {
+        System.out.println(error.textIncludingMessage());
+
+        this.parseStringAndCheck(
+                error.textIncludingMessage(),
+                SpreadsheetError.with(
+                        error.kind(),
+                        error.message(),
+                        SpreadsheetError.NO_VALUE
+                )
+        );
+    }
+    
     // TreePrintable...................................................................................................
 
     @Test
