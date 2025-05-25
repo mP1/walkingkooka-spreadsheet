@@ -119,6 +119,20 @@ public class J2clTest {
         Assert.assertNotEquals(null, SpreadsheetMetadata.NON_LOCALE_DEFAULTS);
     }
 
+    // see CellSpreadsheetExpressionEvaluationContext#validatorContext
+    @Test
+    public void testCellSpreadsheetExpressionEvaluationContext() {
+        SpreadsheetExpressionEvaluationContexts.cell(
+                Optional.empty(),
+                new FakeSpreadsheetExpressionEvaluationContext() {
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.empty();
+                    }
+                }
+        );
+    }
+
     @Test
     public void testFormula() {
         final SpreadsheetEngine engine = engine();

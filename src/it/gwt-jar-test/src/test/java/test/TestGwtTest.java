@@ -99,6 +99,19 @@ public class TestGwtTest extends GWTTestCase {
         );
     }
 
+    // see CellSpreadsheetExpressionEvaluationContext#validatorContext
+    public void testCellSpreadsheetExpressionEvaluationContext() {
+        SpreadsheetExpressionEvaluationContexts.cell(
+                Optional.empty(),
+                new FakeSpreadsheetExpressionEvaluationContext() {
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.empty();
+                    }
+                }
+        );
+    }
+
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static HasNow NOW = LocalDateTime::now;
