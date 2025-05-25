@@ -236,6 +236,16 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return this.message;
     }
 
+    public SpreadsheetError setMessage(final String message) {
+        return this.message.equals(message) ?
+                this :
+                new SpreadsheetError(
+                        this.kind,
+                        Objects.requireNonNull(message, "message"),
+                        this.value
+                );
+    }
+
     private final String message;
 
     /**
