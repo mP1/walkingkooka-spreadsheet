@@ -272,6 +272,13 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                 );
     }
 
+    /**
+     * Returns a {@link SpreadsheetError} with no value, returning a new instance if this has a value.
+     */
+    public SpreadsheetError clearValue() {
+        return this.setValue(NO_VALUE);
+    }
+
     private final Optional<Object> value;
 
     /**
