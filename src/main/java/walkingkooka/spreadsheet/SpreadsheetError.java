@@ -295,6 +295,26 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return this.kind.text();
     }
 
+    // textIncludingMessage.............................................................................................
+
+    /**
+     * Unlike {@link #text()} this also includes the {@link #message()}.
+     * Note this may be passed to {@link #parse(String)} returning an equivalent {@link SpreadsheetError}
+     */
+    public String textIncludingMessage() {
+        final String kindText = this.kind.text();
+        final String message = this.message;
+
+        // #DIV0 Message
+        return message.isEmpty() ?
+                kindText :
+                kindText +
+                        ' ' +
+                        CharSequences.trimLeft(
+                                this.message
+                        );
+    }
+
     // setNameString...................................................................................................
 
     /**
