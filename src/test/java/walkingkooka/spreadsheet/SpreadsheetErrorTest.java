@@ -42,6 +42,7 @@ import walkingkooka.validation.ValidationError;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -383,6 +384,27 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.checkKind(different, KIND);
         this.checkMessage(different, MESSAGE);
         this.checkValue(different, differentValue);
+
+        this.checkKind(error, KIND);
+        this.checkMessage(error, MESSAGE);
+        this.checkValue(error, VALUE);
+    }
+
+    // clearValue.......................................................................................................
+
+    @Test
+    public void testClearValue() {
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
+        final SpreadsheetError cleared = error.clearValue();
+
+        assertNotSame(
+                error,
+                cleared
+        );
+
+        this.checkKind(cleared, KIND);
+        this.checkMessage(cleared, MESSAGE);
+        this.checkValue(cleared, SpreadsheetError.NO_VALUE);
 
         this.checkKind(error, KIND);
         this.checkMessage(error, MESSAGE);
