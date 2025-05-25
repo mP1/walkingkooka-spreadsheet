@@ -292,10 +292,10 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         final SpreadsheetErrorKind kind = this.kind;
         return kind == SpreadsheetErrorKind.NAME_STRING ?
                 this :
-                this.setNameString0();
+                this.setNameStringDifferent();
     }
 
-    private SpreadsheetError setNameString0() {
+    private SpreadsheetError setNameStringDifferent() {
         final SpreadsheetErrorKind kind = this.kind;
         if (kind != SpreadsheetErrorKind.NAME) {
             throw new IllegalStateException(
@@ -343,15 +343,20 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         printer.indent();
 
         final String message = this.message();
-        if (!message.isEmpty()) {
-            printer.println(CharSequences.quoteAndEscape(this.message()));
+        if (false == message.isEmpty()) {
+            printer.println(
+                    CharSequences.quoteAndEscape(this.message())
+            );
         }
 
         final Object value = this.value()
                 .orElse(null);
 
         if (null != value) {
-            TreePrintable.printTreeOrToString(value, printer);
+            TreePrintable.printTreeOrToString(
+                    value,
+                    printer
+            );
         }
 
         printer.outdent();
