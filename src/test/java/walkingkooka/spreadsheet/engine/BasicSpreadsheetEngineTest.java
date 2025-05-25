@@ -223,7 +223,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Lists.of(
                         Converters.simple()
                                 .cast(SpreadsheetConverterContext.class),
-                        SpreadsheetConverters.errorToText()
+                        SpreadsheetConverters.textToText()
                                 .cast(SpreadsheetConverterContext.class),
                         SpreadsheetConverters.errorToNumber()
                                 .cast(SpreadsheetConverterContext.class),
