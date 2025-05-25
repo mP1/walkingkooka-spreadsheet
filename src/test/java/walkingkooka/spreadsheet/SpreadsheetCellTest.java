@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -60,6 +61,7 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
@@ -77,6 +79,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         ClassTesting2<SpreadsheetCell>,
         CanReplaceReferencesTesting<SpreadsheetCell>,
         HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+        HasTextTesting,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HasSpreadsheetReferenceTesting,
         HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
@@ -1083,6 +1086,72 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public SpreadsheetCell createReplaceReference() {
         return this.createCell();
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testTextWhenReferenceAndEmptyFormulaText() {
+        this.textAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                "A1,,,,,,,,,,"
+        );
+    }
+
+    @Test
+    public void testTextWhenReferenceAndNonEmptyFormulaText() {
+        this.textAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2+magic(\"hello\")")),
+                "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,"
+        );
+    }
+
+    @Test
+    public void testTextWhenReferenceAndInputValueTypeAndInputValue() {
+        this.textAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setInputValueType(
+                                Optional.of(ValidationValueTypeName.TEXT)
+                        ).setInputValue(
+                                Optional.of(123)
+                        )
+                ),
+                "A1,,text,,,,,,,,"
+        );
+    }
+
+    @Test
+    public void testTextWhenAllPropertiesSet() {
+        this.textAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("123")
+                ).setFormatter(
+                        Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
+                ).setParser(
+                        Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
+                ).setValidator(
+                        Optional.of(ValidatorSelector.parse("helloValidator3"))
+                ).setStyle(
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.TEXT_ALIGN,
+                                TextAlign.CENTER
+                        )
+                ).setDateTimeSymbols(
+                        Optional.of(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                ).setDecimalNumberSymbols(
+                        Optional.of(
+                                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                        '+',
+                                        new DecimalFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                ),
+                "A1,123,,,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,,helloValidator3"
+        );
     }
 
     // equals ..........................................................................................................

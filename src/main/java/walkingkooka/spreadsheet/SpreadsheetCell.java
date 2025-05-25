@@ -22,6 +22,8 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResource;
@@ -33,6 +35,7 @@ import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -65,6 +68,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         HasSpreadsheetReference<SpreadsheetCellReference>,
         HateosResource<SpreadsheetCellReference>,
         Patchable<SpreadsheetCell>,
+        HasText,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -700,6 +704,42 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                         .toString()
                         )
                 );
+    }
+
+    // HasText..........................................................................................................
+
+    /**
+     * Returns a CSV record with ALL cell properties. Empty or missing properties will have empty tokens.
+     * <br>
+     * This text will be used by various save history tokens to serialize a complete cell.
+     */
+    @Override
+    public String text() {
+        final SpreadsheetFormula formula = this.formula;
+
+        return CsvStringList.EMPTY.setElements(
+                Lists.of(
+                        this.reference().text(), // cell reference
+                        formula.text(),
+                        toText(formula.inputValueType()),
+                        "", // dunno how to serialize formula.inputValue
+                        toText(this.dateTimeSymbols),
+                        toText(this.decimalNumberSymbols),
+                        toText(this.formatter),
+                        toText(this.parser),
+                        this.style.text(),
+                        toText(this.formattedValue),
+                        toText(this.validator)
+                )
+        ).text();
+    }
+
+    /**
+     * Converts the {@Optional} holding {@link HasText} into a token or returns an empty string.
+     */
+    private static String toText(final Optional<? extends HasText> hasText) {
+        return hasText.map(HasText::text)
+                .orElse("");
     }
 
     // TreePrintable....................................................................................................
