@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -48,6 +49,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         ClassTesting2<SpreadsheetError>,
         HashCodeEqualsDefinedTesting2<SpreadsheetError>,
         JsonNodeMarshallingTesting<SpreadsheetError>,
+        HasTextTesting,
         TreePrintableTesting,
         ToStringTesting<SpreadsheetError> {
 
@@ -476,6 +478,63 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testTextWithDiv0() {
+        this.textAndParseStringAndTextCheck(
+                SpreadsheetErrorKind.DIV0.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextWithError() {
+        this.textAndParseStringAndTextCheck(
+                SpreadsheetErrorKind.ERROR.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextWithNA() {
+        this.textAndParseStringAndTextCheck(
+                SpreadsheetErrorKind.NA.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextWithRef() {
+        this.textAndParseStringAndTextCheck(
+                SpreadsheetErrorKind.REF.setMessage("Hello")
+        );
+    }
+
+    @Test
+    public void testTextWithRefIgnoresValue() {
+        this.textAndParseStringAndTextCheck(
+                SpreadsheetErrorKind.REF.setMessage("Hello")
+                        .setValue(
+                                Optional.of(SpreadsheetSelection.A1)
+                        )
+        );
+    }
+
+    @Test
+    public void testTextWithReferenceNotFound() {
+        this.textAndParseStringAndTextCheck(
+                SpreadsheetError.referenceNotFound(SpreadsheetSelection.A1)
+        );
+    }
+
+    private void textAndParseStringAndTextCheck(final SpreadsheetError error) {
+        System.out.println(error.text());
+
+        this.parseStringAndCheck(
+                error.text(),
+                error.kind()
+                        .setMessage("")
+        );
     }
 
     // TreePrintable...................................................................................................
