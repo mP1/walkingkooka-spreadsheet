@@ -88,13 +88,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterSpreadsheetErrorToText}
-     */
-    public static Converter<SpreadsheetConverterContext> errorToText() {
-        return SpreadsheetConverterSpreadsheetErrorToText.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterFormatPatternToString}
      */
     public static Converter<SpreadsheetConverterContext> formatPatternToString(final String pattern) {
