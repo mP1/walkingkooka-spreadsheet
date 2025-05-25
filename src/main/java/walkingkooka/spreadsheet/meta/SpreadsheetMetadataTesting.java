@@ -250,7 +250,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetExpressionFunctions.parseAliasSet("")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, error-to-text, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTERS,
                     SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
