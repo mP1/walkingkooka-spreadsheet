@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.form.Form;
 
@@ -102,6 +103,18 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
         return this.context;
+    }
+
+    // 2025-05-25T06:25:48.9704295Z [DEBUG]         Originally at:
+    // 2025-05-25T06:25:48.9706780Z [DEBUG]         /home/runner/work/walkingkooka-spreadsheet-expression-function/walkingkooka-spreadsheet-expression-function/target/it-tests/j2cl-test/target/walkingkooka-j2cl-maven-plugin-cache/walkingkooka--walkingkooka.spreadsheet.expression.function.ittest--jar--1.0-382f02da09e5aff2ae595ff39e411f70680e6c57/7-closure-compile/sources/walkingkooka/spreadsheet/expression/CellSpreadsheetExpressionEvaluationContext.java:36: ERROR - [JSC_DUPLICATE_CLASS_METHODS] Class contains duplicate method name "m_validatorContext__walkingkooka_spreadsheet_reference_SpreadsheetExpressionReference"
+    // 2025-05-25T06:25:48.9709413Z [DEBUG]           36| final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContextDelegator {
+    // 2025-05-25T06:25:48.9710024Z [DEBUG]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    // 2025-05-25T06:25:48.9710315Z [DEBUG]         1 error(s), 0 warning(s)
+    // 2025-05-25T06:25:48.9710546Z [INFO]               Closure compiler
+    // 2025-05-25T06:25:48.9710772Z [INFO]                 Exit code
+    @Override
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        return this.context.validatorContext(reference);
     }
 
     private final SpreadsheetExpressionEvaluationContext context;
