@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -46,6 +47,7 @@ import java.util.Optional;
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
 public final class SpreadsheetError implements Value<Optional<Object>>,
+        HasText,
         TreePrintable,
         HasSpreadsheetErrorKind,
         UsesToStringBuilder {
@@ -280,6 +282,17 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     public boolean isMissingCell() {
         return this.kind() == SpreadsheetErrorKind.NAME &&
                 this.value().orElse(null) instanceof SpreadsheetCellReference;
+    }
+
+    // HasText..........................................................................................................
+
+    /**
+     * Returns the text form of this error, note the message and any value will be ignored.
+     */
+    @Override
+    public String text() {
+        // #DIV0
+        return this.kind.text();
     }
 
     // setNameString...................................................................................................

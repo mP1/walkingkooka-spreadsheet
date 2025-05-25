@@ -383,10 +383,11 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertSpreadsheetErrorToStringFails() {
-        this.convertFails(
+    public void testConvertSpreadsheetErrorToString() {
+        this.convertAndCheck(
                 SpreadsheetErrorKind.DIV0.setMessage("Ignored"),
-                String.class
+                String.class,
+                SpreadsheetErrorKind.DIV0.toString()
         );
     }
 
