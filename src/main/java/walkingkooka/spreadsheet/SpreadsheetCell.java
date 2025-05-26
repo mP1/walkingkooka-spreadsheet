@@ -42,6 +42,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -49,12 +50,15 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.util.Collection;
@@ -745,7 +749,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         String json = "";
 
         if (value.isPresent()) {
-            final JsonNode jsonNode = MARSHALL_CONTEXT.marshall(value.get());
+            final JsonNode jsonNode = MARSHALL_CONTEXT.marshallWithType(value.get());
 
             final StringBuilder builder = new StringBuilder();
             final Printer printer = Printers.stringBuilder(
@@ -776,6 +780,105 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return hasText.map(HasText::text)
                 .orElse("");
     }
+
+    // parse............................................................................................................
+
+    /**
+     * Parses the CSV text back into a {@link SpreadsheetCell}. This is the inverse of {@link #text()}.
+     */
+    public static SpreadsheetCell parse(final String csv) {
+        Objects.requireNonNull(csv, "csv");
+
+        final CsvStringList list = CsvStringList.parse(csv);
+
+        final int count = list.size();
+        if (11 != count) {
+            throw new IllegalArgumentException("Expected 11 tokens but got " + count);
+        }
+
+        SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell(
+                        list.get(0)
+                ),
+                SpreadsheetFormula.EMPTY.setText(
+                        list.get(1)
+                )
+        );
+
+        cell = cell.setFormula(
+                cell.formula()
+                        .setInputValueType(
+                                parseCellComponent(
+                                        list.get(2),
+                                        ValidationValueTypeName::with
+                                )
+                        ).setInputValue(
+                                unmarshallCellComponentWithType(
+                                        list.get(3)
+                                )
+                        )
+        ).setDateTimeSymbols(
+                parseCellComponent(
+                        list.get(4),
+                        DateTimeSymbols::parse
+                )
+        ).setDecimalNumberSymbols(
+                parseCellComponent(
+                        list.get(5),
+                        DecimalNumberSymbols::parse
+                )
+        ).setFormatter(
+                parseCellComponent(
+                        list.get(6),
+                        SpreadsheetFormatterSelector::parse
+                )
+        ).setParser(
+                parseCellComponent(
+                        list.get(7),
+                        SpreadsheetParserSelector::parse
+                )
+        ).setStyle(
+                TextStyle.parse(
+                        list.get(8)
+                )
+        );
+
+        final Optional<TextNode> formattedValue = unmarshallCellComponentWithType(
+                list.get(9)
+        );
+
+        // must call setFormattedValue after setValidator because later clears former
+        return cell.setValidator(
+                parseCellComponent(
+                        list.get(10),
+                        ValidatorSelector::parse
+                )
+        ).setFormattedValue(formattedValue);
+    }
+
+    private static <TT> Optional<TT> parseCellComponent(final String text,
+                                                        final Function<String, TT> componentParser) {
+        return Optional.ofNullable(
+                text.isEmpty() ?
+                        null :
+                        componentParser.apply(text)
+        );
+    }
+
+    private static <TT> Optional<TT> unmarshallCellComponentWithType(final String text) {
+        return Optional.ofNullable(
+                text.isEmpty() ?
+                        null :
+                        UNMARSHALL_CONTEXT.unmarshallWithType(
+                                JsonNode.parse(text)
+                        )
+        );
+    }
+
+    private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
+            ExpressionNumberKind.BIG_DECIMAL,
+            MathContext.UNLIMITED
+    );
 
     // TreePrintable....................................................................................................
 
