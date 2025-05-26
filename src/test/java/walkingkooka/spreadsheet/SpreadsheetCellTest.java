@@ -30,6 +30,7 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -1107,7 +1108,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTextWhenReferenceAndInputValueTypeAndInputValue() {
+    public void testTextWhenReferenceAndInputValueTypeAndFormattedValue() {
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setInputValueType(
@@ -1115,8 +1116,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         ).setInputValue(
                                 Optional.of(123)
                         )
+                ).setFormattedValue(
+                        Optional.of(
+                                SpreadsheetText.with("Formatted-value-text")
+                                        .setColor(
+                                                Optional.of(
+                                                        Color.parse("#123456")
+                                                )
+                                        ).toTextNode()
+                        )
                 ),
-                "A1,,text,,,,,,,,"
+                "A1,,text,123,,,,,,\"{\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}\","
         );
     }
 
@@ -1125,6 +1135,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("123")
+                                .setInputValue(
+                                        Optional.of(123)
+                                )
                 ).setFormatter(
                         Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
                 ).setParser(
@@ -1149,8 +1162,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         new DecimalFormatSymbols(Locale.ENGLISH)
                                 )
                         )
+                ).setFormattedValue(
+                        Optional.of(
+                                SpreadsheetText.with("Formatted-value-text")
+                                        .setColor(
+                                                Optional.of(
+                                                        Color.parse("#123456")
+                                                )
+                                        ).toTextNode()
+                        )
                 ),
-                "A1,123,,,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,,helloValidator3"
+                "A1,,,123,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}\",helloValidator3"
         );
     }
 

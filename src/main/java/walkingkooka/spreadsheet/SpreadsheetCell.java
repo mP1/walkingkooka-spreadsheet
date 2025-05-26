@@ -36,13 +36,18 @@ import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
+import walkingkooka.text.Indentation;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.Printer;
+import walkingkooka.text.printer.Printers;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
@@ -710,6 +715,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     /**
      * Returns a CSV record with ALL cell properties. Empty or missing properties will have empty tokens.
+     * Most properties are converted to text (they implement {@link HasText#text()}, except for
+     * {@link SpreadsheetFormula#inputValueType()} and {@link SpreadsheetCell#formattedValue()}.
      * <br>
      * This text will be used by various save history tokens to serialize a complete cell.
      */
@@ -722,17 +729,45 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.reference().text(), // cell reference
                         formula.text(),
                         toText(formula.inputValueType()),
-                        "", // dunno how to serialize formula.inputValue
+                        toJsonText(formula.inputValue()),
                         toText(this.dateTimeSymbols),
                         toText(this.decimalNumberSymbols),
                         toText(this.formatter),
                         toText(this.parser),
                         this.style.text(),
-                        toText(this.formattedValue),
+                        toJsonText(this.formattedValue),
                         toText(this.validator)
                 )
         ).text();
     }
+
+    private static String toJsonText(final Optional<?> value) {
+        String json = "";
+
+        if (value.isPresent()) {
+            final JsonNode jsonNode = MARSHALL_CONTEXT.marshall(value.get());
+
+            final StringBuilder builder = new StringBuilder();
+            final Printer printer = Printers.stringBuilder(
+                    builder,
+                    LineEnding.NONE
+            );
+
+            jsonNode.printJson(
+                    printer.indenting(Indentation.EMPTY)
+            );
+
+            json = builder.toString();
+        }
+
+        return json;
+    }
+
+    /**
+     * The {@link SpreadsheetFormula#inputValue()} and {@link #formattedValue()} will both be marshalled to JSON
+     * before being included in the CSV {@link #text()}.
+     */
+    private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
 
     /**
      * Converts the {@Optional} holding {@link HasText} into a token or returns an empty string.
