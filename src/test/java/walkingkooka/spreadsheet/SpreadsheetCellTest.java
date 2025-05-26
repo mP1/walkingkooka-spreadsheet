@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -68,6 +69,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -81,6 +83,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         CanReplaceReferencesTesting<SpreadsheetCell>,
         HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
         HasTextTesting,
+        ParseStringTesting<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HasSpreadsheetReferenceTesting,
         HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
@@ -1126,7 +1129,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         ).toTextNode()
                         )
                 ),
-                "A1,,text,123,,,,,,\"{\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}\","
+                "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
         );
     }
 
@@ -1172,8 +1175,114 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         ).toTextNode()
                         )
                 ),
-                "A1,,,123,\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}\",helloValidator3"
+                "A1,,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
         );
+    }
+
+    // parse............................................................................................................
+
+    @Test
+    public void testParseReferenceAndFormulaText() {
+        this.textAndParseAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("123")
+                )
+        );
+    }
+
+    @Test
+    public void testParseInputValueInteger() {
+        this.textAndParseAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("123")
+                                .setInputValue(
+                                        Optional.of(123)
+                                )
+                )
+        );
+    }
+
+    @Test
+    public void testParseInputValueExpressionNumber() {
+        this.textAndParseAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("123")
+                                .setInputValue(
+                                        Optional.of(
+                                                EXPRESSION_NUMBER_KIND.create(456.75)
+                                        )
+                                )
+                )
+        );
+    }
+
+    @Test
+    public void testParseAllProperties() {
+        this.textAndParseAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("123")
+                                .setInputValue(
+                                        Optional.of(
+                                                LocalDate.of(1999,12,31)
+                                        )
+                                )
+                ).setFormatter(
+                        Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
+                ).setParser(
+                        Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
+                ).setValidator(
+                        Optional.of(ValidatorSelector.parse("helloValidator3"))
+                ).setStyle(
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.TEXT_ALIGN,
+                                TextAlign.CENTER
+                        )
+                ).setDateTimeSymbols(
+                        Optional.of(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                ).setDecimalNumberSymbols(
+                        Optional.of(
+                                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                        '+',
+                                        new DecimalFormatSymbols(Locale.ENGLISH)
+                                )
+                        )
+                ).setFormattedValue(
+                        Optional.of(
+                                SpreadsheetText.with("Formatted-value-text")
+                                        .setColor(
+                                                Optional.of(
+                                                        Color.parse("#123456")
+                                                )
+                                        ).toTextNode()
+                        )
+                )
+        );
+    }
+
+    private void textAndParseAndCheck(final SpreadsheetCell cell) {
+        this.parseStringAndCheck(
+                cell.text(),
+                cell
+        );
+    }
+
+    @Override
+    public SpreadsheetCell parseString(final String text) {
+        return SpreadsheetCell.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // equals ..........................................................................................................
