@@ -897,13 +897,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                                         final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
-        DateTimeSymbols dateTimeSymbols = null;
-        DecimalNumberSymbols decimalNumberSymbols = null;
-        SpreadsheetFormatterSelector formatter = null;
+        Optional<DateTimeSymbols> dateTimeSymbols = NO_DATETIME_SYMBOLS;
+        Optional<DecimalNumberSymbols> decimalNumberSymbols = NO_DECIMAL_NUMBER_SYMBOLS;
+        Optional<SpreadsheetFormatterSelector> formatter = NO_FORMATTER;
+        Optional<SpreadsheetParserSelector> parser = NO_PARSER;
         TextStyle style = TextStyle.EMPTY;
-        SpreadsheetParserSelector parser = null;
-        TextNode formatted = null;
-        ValidatorSelector validator = null;
+        Optional<TextNode> formatted = NO_FORMATTED_VALUE_CELL;
+        Optional<ValidatorSelector> validator = NO_VALIDATOR;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -912,40 +912,49 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     formula = context.unmarshall(child, SpreadsheetFormula.class);
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
-                    dateTimeSymbols = context.unmarshall(
+                    dateTimeSymbols = context.unmarshallOptional(
                             child,
                             DateTimeSymbols.class
                     );
                     break;
                 case DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING:
-                    decimalNumberSymbols = context.unmarshall(
+                    decimalNumberSymbols = context.unmarshallOptional(
                             child,
                             DecimalNumberSymbols.class
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
-                    formatter = context.unmarshall(
+                    formatter = context.unmarshallOptional(
                             child,
                             SpreadsheetFormatterSelector.class
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
-                    parser = context.unmarshall(
+                    parser = context.unmarshallOptional(
                             child,
                             SpreadsheetParserSelector.class
                     );
                     break;
                 case STYLE_PROPERTY_STRING:
-                    style = context.unmarshall(child, TextStyle.class);
+                    style = context.unmarshall(
+                            child,
+                            TextStyle.class
+                    );
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
-                    formatted = context.unmarshallWithType(child);
+                    formatted = context.unmarshallOptionalWithType(child);
                     break;
                 case VALIDATOR_PROPERTY_STRING:
-                    validator = context.unmarshallWithType(child);
+                    validator = context.unmarshallOptional(
+                            child,
+                            ValidatorSelector.class
+                    );
                     break;
                 default:
-                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(
+                            name,
+                            node
+                    );
                     break;
             }
         }
@@ -953,13 +962,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
                 reference,
                 formula,
-                Optional.ofNullable(dateTimeSymbols),
-                Optional.ofNullable(decimalNumberSymbols),
-                Optional.ofNullable(formatter),
-                Optional.ofNullable(parser),
+                dateTimeSymbols,
+                decimalNumberSymbols,
+                formatter,
+                parser,
                 style,
-                Optional.ofNullable(formatted),
-                Optional.ofNullable(validator)
+                formatted,
+                validator
         );
     }
 
@@ -1000,23 +1009,21 @@ public final class SpreadsheetCell implements CanBeEmpty,
         if (this.dateTimeSymbols.isPresent()) {
             object = object.set(
                     DATE_TIME_SYMBOLS_PROPERTY,
-                    context.marshall(this.dateTimeSymbols)
+                    context.marshallOptional(this.dateTimeSymbols)
             );
         }
 
         if (this.decimalNumberSymbols.isPresent()) {
             object = object.set(
                     DATE_TIME_SYMBOLS_PROPERTY,
-                    context.marshall(this.decimalNumberSymbols)
+                    context.marshallOptional(this.decimalNumberSymbols)
             );
         }
 
         if (this.formatter.isPresent()) {
             object = object.set(
                     FORMATTER_PROPERTY,
-                    context.marshall(
-                            this.formatter.get()
-                    )
+                    context.marshallOptional(this.formatter)
             );
         }
 
@@ -1024,9 +1031,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         if (parser.isPresent()) {
             object = object.set(
                     PARSER_PROPERTY,
-                    context.marshall(
-                            parser.get()
-                    )
+                    context.marshallOptional(parser)
             );
         }
 
@@ -1035,15 +1040,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
         }
 
         if (this.formattedValue.isPresent()) {
-            object = object.set(FORMATTED_VALUE_PROPERTY, context.marshallWithType(this.formattedValue.get()));
+            object = object.set(
+                    FORMATTED_VALUE_PROPERTY,
+                    context.marshallOptionalWithType(this.formattedValue)
+            );
         }
 
         if (this.validator.isPresent()) {
             object = object.set(
                     VALIDATOR_PROPERTY,
-                    context.marshallWithType(
-                            this.validator.get()
-                    )
+                    context.marshallOptional(this.validator)
             );
         }
 
