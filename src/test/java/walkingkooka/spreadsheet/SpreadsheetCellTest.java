@@ -1681,63 +1681,58 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
-                        "    \"dateTimeSymbols\": [\n" +
-                        "      {\n" +
-                        "        \"type\": \"date-time-symbols\",\n" +
-                        "        \"value\": {\n" +
-                        "          \"ampms\": [\n" +
-                        "            \"AM\",\n" +
-                        "            \"PM\"\n" +
-                        "          ],\n" +
-                        "          \"monthNames\": [\n" +
-                        "            \"January\",\n" +
-                        "            \"February\",\n" +
-                        "            \"March\",\n" +
-                        "            \"April\",\n" +
-                        "            \"May\",\n" +
-                        "            \"June\",\n" +
-                        "            \"July\",\n" +
-                        "            \"August\",\n" +
-                        "            \"September\",\n" +
-                        "            \"October\",\n" +
-                        "            \"November\",\n" +
-                        "            \"December\"\n" +
-                        "          ],\n" +
-                        "          \"monthNameAbbreviations\": [\n" +
-                        "            \"Jan\",\n" +
-                        "            \"Feb\",\n" +
-                        "            \"Mar\",\n" +
-                        "            \"Apr\",\n" +
-                        "            \"May\",\n" +
-                        "            \"Jun\",\n" +
-                        "            \"Jul\",\n" +
-                        "            \"Aug\",\n" +
-                        "            \"Sep\",\n" +
-                        "            \"Oct\",\n" +
-                        "            \"Nov\",\n" +
-                        "            \"Dec\"\n" +
-                        "          ],\n" +
-                        "          \"weekDayNames\": [\n" +
-                        "            \"Sunday\",\n" +
-                        "            \"Monday\",\n" +
-                        "            \"Tuesday\",\n" +
-                        "            \"Wednesday\",\n" +
-                        "            \"Thursday\",\n" +
-                        "            \"Friday\",\n" +
-                        "            \"Saturday\"\n" +
-                        "          ],\n" +
-                        "          \"weekDayNameAbbreviations\": [\n" +
-                        "            \"Sun\",\n" +
-                        "            \"Mon\",\n" +
-                        "            \"Tue\",\n" +
-                        "            \"Wed\",\n" +
-                        "            \"Thu\",\n" +
-                        "            \"Fri\",\n" +
-                        "            \"Sat\"\n" +
-                        "          ]\n" +
-                        "        }\n" +
-                        "      }\n" +
-                        "    ]\n" +
+                        "    \"dateTimeSymbols\": {\n" +
+                        "      \"ampms\": [\n" +
+                        "        \"AM\",\n" +
+                        "        \"PM\"\n" +
+                        "      ],\n" +
+                        "      \"monthNames\": [\n" +
+                        "        \"January\",\n" +
+                        "        \"February\",\n" +
+                        "        \"March\",\n" +
+                        "        \"April\",\n" +
+                        "        \"May\",\n" +
+                        "        \"June\",\n" +
+                        "        \"July\",\n" +
+                        "        \"August\",\n" +
+                        "        \"September\",\n" +
+                        "        \"October\",\n" +
+                        "        \"November\",\n" +
+                        "        \"December\"\n" +
+                        "      ],\n" +
+                        "      \"monthNameAbbreviations\": [\n" +
+                        "        \"Jan\",\n" +
+                        "        \"Feb\",\n" +
+                        "        \"Mar\",\n" +
+                        "        \"Apr\",\n" +
+                        "        \"May\",\n" +
+                        "        \"Jun\",\n" +
+                        "        \"Jul\",\n" +
+                        "        \"Aug\",\n" +
+                        "        \"Sep\",\n" +
+                        "        \"Oct\",\n" +
+                        "        \"Nov\",\n" +
+                        "        \"Dec\"\n" +
+                        "      ],\n" +
+                        "      \"weekDayNames\": [\n" +
+                        "        \"Sunday\",\n" +
+                        "        \"Monday\",\n" +
+                        "        \"Tuesday\",\n" +
+                        "        \"Wednesday\",\n" +
+                        "        \"Thursday\",\n" +
+                        "        \"Friday\",\n" +
+                        "        \"Saturday\"\n" +
+                        "      ],\n" +
+                        "      \"weekDayNameAbbreviations\": [\n" +
+                        "        \"Sun\",\n" +
+                        "        \"Mon\",\n" +
+                        "        \"Tue\",\n" +
+                        "        \"Wed\",\n" +
+                        "        \"Thu\",\n" +
+                        "        \"Fri\",\n" +
+                        "        \"Sat\"\n" +
+                        "      ]\n" +
+                        "    }\n" +
                         "  }\n" +
                         "}"
         );
@@ -1813,10 +1808,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
                         "    },\n" +
-                        "    \"validator\": {\n" +
-                        "      \"type\": \"validator-selector\",\n" +
-                        "      \"value\": \"validator123\"\n" +
-                        "    }\n" +
+                        "    \"validator\": \"validator123\"\n" +
                         "  }\n" +
                         "}"
         );
