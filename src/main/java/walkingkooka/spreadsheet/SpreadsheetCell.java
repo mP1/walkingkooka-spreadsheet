@@ -1118,7 +1118,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         if (this.decimalNumberSymbols.isPresent()) {
             object = object.set(
-                    DATE_TIME_SYMBOLS_PROPERTY,
+                    DECIMAL_NUMBER_SYMBOLS_PROPERTY,
                     context.marshallOptional(this.decimalNumberSymbols)
             );
         }

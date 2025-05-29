@@ -1739,6 +1739,40 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testMarshallWithDecimalNumberSymbols() {
+        this.marshallAndCheck(
+                SpreadsheetCell.with(
+                        REFERENCE,
+                        SpreadsheetFormula.EMPTY
+                                .setText(FORMULA)
+                ).setDecimalNumberSymbols(
+                        this.decimalNumberSymbols(Locale.ENGLISH)
+                ),
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1+2\"\n" +
+                        "    },\n" +
+                        "    \"decimalNumberSymbols\": {\n" +
+                        "      \"negativeSign\": \"-\",\n" +
+                        "      \"positiveSign\": \"+\",\n" +
+                        "      \"zeroDigit\": \"0\",\n" +
+                        "      \"currencySymbol\": \"¤\",\n" +
+                        "      \"decimalSeparator\": \".\",\n" +
+                        "      \"exponentSymbol\": \"E\",\n" +
+                        "      \"groupSeparator\": \",\",\n" +
+                        "      \"infinitySymbol\": \"∞\",\n" +
+                        "      \"monetaryDecimalSeparator\": \".\",\n" +
+                        "      \"nanSymbol\": \"NaN\",\n" +
+                        "      \"percentSymbol\": \"%\",\n" +
+                        "      \"permillSymbol\": \"‰\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    @Test
     public void testMarshallWithStyle() {
         final TextStyle italics = TextStyle.EMPTY
                 .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
