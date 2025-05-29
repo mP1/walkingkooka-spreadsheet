@@ -37,6 +37,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_FORMATTED_VALUES = MediaType.parse("application/formatted-values+json");
 
+    public static final MediaType JSON_VALUE_TYPE = MediaType.parse("application/value-types+json");
+
     private SpreadsheetMediaTypes() {
         throw new UnsupportedOperationException();
     }

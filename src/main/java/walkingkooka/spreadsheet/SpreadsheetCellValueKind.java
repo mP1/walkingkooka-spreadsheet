@@ -85,6 +85,14 @@ public enum SpreadsheetCellValueKind {
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.formattedValue();
         }
+    },
+
+    VALUE_TYPE {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.formula()
+                    .inputValueType();
+        }
     };
 
     SpreadsheetCellValueKind() {

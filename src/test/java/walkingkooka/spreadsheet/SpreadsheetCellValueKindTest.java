@@ -31,6 +31,7 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
@@ -43,42 +44,47 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
 
     @Test
     public void testCellValue() {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setDateTimeSymbols(
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setInputValueType(
                         Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.FRANCE)
-                                )
+                                ValidationValueTypeName.with("HelloValueType")
                         )
-                ).setDecimalNumberSymbols(
-                        Optional.of(
-                                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                        '+',
-                                        new DecimalFormatSymbols(Locale.FRANCE)
-                                )
+                )
+        ).setDateTimeSymbols(
+                Optional.of(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(Locale.FRANCE)
                         )
-                ).setFormatter(
-                        Optional.of(
-                                SpreadsheetFormatterSelector.parse("hello-formatter")
+                )
+        ).setDecimalNumberSymbols(
+                Optional.of(
+                        DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                '+',
+                                new DecimalFormatSymbols(Locale.FRANCE)
                         )
-                ).setFormattedValue(
-                        Optional.of(
-                                TextNode.text("formatted-value")
-                        )
-                ).setParser(
-                        Optional.of(
-                                SpreadsheetParserSelector.parse("hello-parser")
-                        )
-                ).setStyle(
-                        TextStyle.EMPTY.set(
-                                TextStylePropertyName.TEXT_ALIGN,
-                                TextAlign.CENTER
-                        )
-                ).setValidator(
-                        Optional.of(
-                                ValidatorSelector.parse("hello-validator")
-                        )
-                );
+                )
+        ).setFormatter(
+                Optional.of(
+                        SpreadsheetFormatterSelector.parse("hello-formatter")
+                )
+        ).setFormattedValue(
+                Optional.of(
+                        TextNode.text("formatted-value")
+                )
+        ).setParser(
+                Optional.of(
+                        SpreadsheetParserSelector.parse("hello-parser")
+                )
+        ).setStyle(
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.TEXT_ALIGN,
+                        TextAlign.CENTER
+                )
+        ).setValidator(
+                Optional.of(
+                        ValidatorSelector.parse("hello-validator")
+                )
+        );
 
         final Set<Object> values = Sets.hash();
         for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {

@@ -31,6 +31,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.OptionalValidationValueTypeName;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -66,7 +68,8 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                         SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType) ||
                         SpreadsheetMediaTypes.JSON_PARSERS.test(contentType) ||
                         SpreadsheetMediaTypes.JSON_STYLES.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType)
+                        SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType) ||
+                        SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)
                 );
     }
 
@@ -137,7 +140,19 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                                         )
                                 );
                             } else {
-                                throw new IllegalArgumentException("Unknown contentType " + contentType);
+                                if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)) {
+                                    value = (j) -> SpreadsheetImporterCellValue.valueType(
+                                            cell(j),
+                                            OptionalValidationValueTypeName.with(
+                                                    context.unmarshallOptional(
+                                                            j,
+                                                            ValidationValueTypeName.class
+                                                    )
+                                            )
+                                    );
+                                } else {
+                                    throw new IllegalArgumentException("Unknown contentType " + contentType);
+                                }
                             }
                         }
                     }
