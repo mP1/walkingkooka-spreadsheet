@@ -18,8 +18,11 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.validation.ValidationValueTypeName;
+
+import java.util.Set;
 
 /**
  * A collection of {@link ValidationValueTypeName} that may appear within a {@link SpreadsheetCell}.
@@ -37,6 +40,15 @@ public final class SpreadsheetValues implements PublicStaticHelper {
     public static final ValidationValueTypeName TEXT = ValidationValueTypeName.TEXT;
 
     public static final ValidationValueTypeName TIME = ValidationValueTypeName.TIME;
+
+    public static final Set<ValidationValueTypeName> ALL = Sets.of(
+            BOOLEAN,
+            DATE,
+            DATE_TIME,
+            NUMBER,
+            TEXT,
+            TIME
+    );
 
     /**
      * Stop creation
