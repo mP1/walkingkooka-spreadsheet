@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.OptionalTextNode;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.format.OptionalSpreadsheetFormatterSelector;
@@ -30,6 +29,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.List;

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.spreadsheet.OptionalSpreadsheetValue;
-import walkingkooka.spreadsheet.OptionalTextNode;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -30,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Objects;
