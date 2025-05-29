@@ -55,6 +55,7 @@ import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
@@ -547,6 +548,22 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         )
                 )
         );
+    }
+
+    // XXXPatch.........................................................................................................
+
+    /**
+     * Creates a PATCH for a formula to replace the {@link #inputValueType()}.
+     */
+    public static JsonNode inputValueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+        Objects.requireNonNull(valueType, "valueType");
+
+        return JsonNode.object()
+                .set(
+                        INPUT_VALUE_TYPE_PROPERTY,
+                        JsonNodeMarshallContexts.basic()
+                                .marshallOptional(valueType)
+                );
     }
 
     // Patchable........................................................................................................
