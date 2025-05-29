@@ -240,6 +240,31 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         );
     }
 
+    @Test
+    public void testExportWithMissingFormattedValue() {
+        this.exportAndCheck(
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.of(
+                                SpreadsheetSelection.A1.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                                ),
+                                SpreadsheetSelection.parseCell("A2")
+                                        .setFormula(
+                                                SpreadsheetFormula.EMPTY.setText("=333")
+                                        )
+                        )
+                ),
+                SpreadsheetCellValueKind.VALUE,
+                "A1-XFD1048576.value.json.txt",
+                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+                "{\n" +
+                        "  \"A1\": null,\n" +
+                        "  \"A2\": null\n" +
+                        "}"
+        );
+    }
+
     private void exportAndCheck(final SpreadsheetCellRange cells,
                                 final SpreadsheetCellValueKind valueKind,
                                 final String filename,
