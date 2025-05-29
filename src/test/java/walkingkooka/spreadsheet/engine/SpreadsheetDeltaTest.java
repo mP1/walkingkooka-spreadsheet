@@ -59,6 +59,7 @@ import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
@@ -1890,6 +1891,38 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // inputValueTypePatch...................................................................................................
+
+    @Test
+    public void testInputValueTypePatchWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.inputValueTypePatch(
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testInputValueTypePatch() {
+        final Optional<ValidationValueTypeName> inputValueType = Optional.of(
+                ValidationValueTypeName.with("Text123")
+        );
+
+        this.checkEquals(
+                JsonNode.parse(
+                        "{\n" +
+                        "  \"formula\": {\n" +
+                        "    \"inputValueType\": \"Text123\"\n" +
+                        "  }\n" +
+                        "}"
+                ),
+                SpreadsheetDelta.inputValueTypePatch(
+                        inputValueType
+                )
+        );
+    }
+    
     // parserPatch......................................................................................................
 
     @Test
@@ -2603,6 +2636,52 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                 Sets.of(
                                         a1.setFormatter(formatter),
                                         b2.setFormatter(formatter)
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testPatchWithInputValueType() {
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+                ValidationValueTypeName.with("hello-value-type")
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1")
+                        .setInputValueType(
+                                Optional.of(
+                                        ValidationValueTypeName.with("lost-value-type")
+                                )
+                        )
+        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("=99")
+                );
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1,
+                                        b2
+                                )
+                        ),
+                SpreadsheetDelta.inputValueTypePatch(valueType),
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1.setFormula(
+                                                a1.formula()
+                                                        .setInputValueType(valueType)
+                                        ),
+                                        b2.setFormula(
+                                                b2.formula()
+                                                        .setInputValueType(valueType)
+                                        )
                                 )
                         )
         );
