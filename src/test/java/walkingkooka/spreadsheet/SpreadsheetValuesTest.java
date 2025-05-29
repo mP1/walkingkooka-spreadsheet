@@ -17,12 +17,32 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public final class SpreadsheetValuesTest implements PublicStaticHelperTesting<SpreadsheetValues> {
+
+    @Test
+    public void testAll() {
+        this.checkEquals(
+                Lists.of(
+                        SpreadsheetValues.BOOLEAN,
+                        SpreadsheetValues.DATE,
+                        SpreadsheetValues.DATE_TIME,
+                        SpreadsheetValues.NUMBER,
+                        SpreadsheetValues.TEXT,
+                        SpreadsheetValues.TIME
+                ),
+                new ArrayList<>(
+                        SpreadsheetValues.ALL
+                )
+        );
+    }
 
     // class............................................................................................................
 
