@@ -271,6 +271,43 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         );
     }
 
+    @Test
+    public void testDoImportWithMissingFormattedValue() {
+        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+        ).setFormattedValue(
+                Optional.of(
+                        TextNode.text("Formatted 123.5")
+                )
+        );
+
+        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=333")
+                );
+
+        this.doImportAndCheck(
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.of(
+                                cellA1,
+                                cellA2
+                        )
+                ),
+                SpreadsheetCellValueKind.VALUE,
+                SpreadsheetImporterCellValue.formattedValue(
+                        cellA1.reference(),
+                        OptionalTextNode.with(
+                                cellA1.formattedValue()
+                        )
+                ),
+                SpreadsheetImporterCellValue.formattedValue(
+                        cellA2.reference(),
+                        OptionalTextNode.EMPTY
+                )
+        );
+    }
+
     private void doImportAndCheck(final SpreadsheetCellRange cells,
                                   final SpreadsheetCellValueKind valueKind,
                                   final SpreadsheetImporterCellValue... values) {

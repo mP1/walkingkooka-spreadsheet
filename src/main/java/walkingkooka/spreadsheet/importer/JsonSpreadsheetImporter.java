@@ -34,7 +34,6 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -103,11 +102,9 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                     value = (j) -> SpreadsheetImporterCellValue.formatter(
                             cell(j),
                             OptionalSpreadsheetFormatterSelector.with(
-                                    Optional.ofNullable(
-                                            context.unmarshall(
-                                                    j,
-                                                    SpreadsheetFormatterSelector.class
-                                            )
+                                    context.unmarshallOptional(
+                                            j,
+                                            SpreadsheetFormatterSelector.class
                                     )
                             )
                     );
@@ -116,11 +113,9 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                         value = (j) -> SpreadsheetImporterCellValue.parser(
                                 cell(j),
                                 OptionalSpreadsheetParserSelector.with(
-                                        Optional.ofNullable(
-                                                context.unmarshall(
-                                                        j,
-                                                        SpreadsheetParserSelector.class
-                                                )
+                                        context.unmarshallOptional(
+                                                j,
+                                                SpreadsheetParserSelector.class
                                         )
                                 )
                         );
@@ -138,11 +133,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                                 value = (j) -> SpreadsheetImporterCellValue.formattedValue(
                                         cell(j),
                                         OptionalTextNode.with(
-                                                Optional.ofNullable(
-                                                        context.unmarshallWithType(
-                                                                j
-                                                        )
-                                                )
+                                                context.unmarshallOptionalWithType(j)
                                         )
                                 );
                             } else {
