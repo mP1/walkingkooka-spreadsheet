@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.validation.OptionalValidationValueTypeName;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -117,6 +118,17 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                         name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMATTED_VALUES;
+                break;
+            case VALUE_TYPE:
+                value = (c) -> context.marshall(
+                        OptionalValidationValueTypeName.with(
+                                c.formula()
+                                        .inputValueType()
+                        )
+                ).setName(
+                        name(c)
+                );
+                contentType = SpreadsheetMediaTypes.JSON_VALUE_TYPE;
                 break;
             default:
                 value = null;

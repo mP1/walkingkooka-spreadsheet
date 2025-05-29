@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Optional;
 
@@ -260,6 +261,36 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
                 "{\n" +
                         "  \"A1\": null,\n" +
+                        "  \"A2\": null\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testExportWithValueType() {
+        this.exportAndCheck(
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.of(
+                                SpreadsheetSelection.A1.setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                                                .setInputValueType(
+                                                        Optional.of(
+                                                                ValidationValueTypeName.with("HelloValueType")
+                                                        )
+                                                )
+                                ),
+                                SpreadsheetSelection.parseCell("A2")
+                                        .setFormula(
+                                                SpreadsheetFormula.EMPTY.setText("=333")
+                                        )
+                        )
+                ),
+                SpreadsheetCellValueKind.VALUE_TYPE,
+                "A1-XFD1048576.value_type.json.txt",
+                SpreadsheetMediaTypes.JSON_VALUE_TYPE,
+                "{\n" +
+                        "  \"A1\": \"HelloValueType\",\n" +
                         "  \"A2\": null\n" +
                         "}"
         );

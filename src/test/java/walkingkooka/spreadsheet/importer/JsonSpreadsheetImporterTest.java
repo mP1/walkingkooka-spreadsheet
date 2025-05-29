@@ -41,6 +41,8 @@ import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.OptionalValidationValueTypeName;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
 import java.util.Optional;
@@ -304,6 +306,42 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                 SpreadsheetImporterCellValue.formattedValue(
                         cellA2.reference(),
                         OptionalTextNode.EMPTY
+                )
+        );
+    }
+
+    @Test
+    public void testDoImportWithValueType() {
+        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+                ValidationValueTypeName.with("Hello")
+        );
+
+        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=333")
+                                .setInputValueType(valueType)
+                );
+
+        this.doImportAndCheck(
+                SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.of(
+                                cellA1,
+                                cellA2
+                        )
+                ),
+                SpreadsheetCellValueKind.VALUE_TYPE,
+                SpreadsheetImporterCellValue.valueType(
+                        cellA1.reference(),
+                        OptionalValidationValueTypeName.EMPTY
+                ),
+                SpreadsheetImporterCellValue.valueType(
+                        cellA2.reference(),
+                        OptionalValidationValueTypeName.with(valueType)
                 )
         );
     }
