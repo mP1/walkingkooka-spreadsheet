@@ -2123,6 +2123,46 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setExpressionValue(value);
     }
 
+    // inputValueTypePatch..............................................................................................
+
+    @Test
+    public void testInputValueTypePatchWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.inputValueTypePatch(null)
+        );
+    }
+
+    @Test
+    public void testInputValueTypePatchWithNotEmpty() {
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.INPUT_VALUE_TYPE_PROPERTY,
+                                JsonNode.string("text123")
+                        ),
+                SpreadsheetFormula.inputValueTypePatch(
+                        Optional.of(
+                                ValidationValueTypeName.with("text123")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testInputValueTypePatchWithEmpty() {
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.INPUT_VALUE_TYPE_PROPERTY,
+                                JsonNode.nullNode()
+                        ),
+                SpreadsheetFormula.inputValueTypePatch(
+                        Optional.empty()
+                )
+        );
+    }
+
     // patch............................................................................................................
 
     @Test
@@ -2159,35 +2199,28 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testPatchInputValueTypeWithNull() {
+    public void testPatchInputValueTypeWithEmpty() {
         final SpreadsheetFormula formula = this.formula("=1");
+        final Optional<ValidationValueTypeName> valueType = SpreadsheetFormula.NO_INPUT_VALUE_TYPE;
 
         this.patchAndCheck(
                 formula,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetFormula.INPUT_VALUE_TYPE_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                formula.setInputValueType(
-                        Optional.empty()
-                )
+                SpreadsheetFormula.inputValueTypePatch(valueType),
+                formula.setInputValueType(valueType)
         );
     }
 
     @Test
-    public void testPatchInputValueTypeWithNonNull() {
+    public void testPatchInputValueTypeWithNonEmpty() {
         final SpreadsheetFormula formula = this.formula("=1");
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+                ValidationValueTypeName.with("text123")
+        );
+
         this.patchAndCheck(
                 formula,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetFormula.INPUT_VALUE_TYPE_PROPERTY,
-                                JsonNode.string(DIFFERENT_INPUT_VALUE_TYPE.value())
-                        ),
-                formula.setInputValueType(
-                        Optional.of(DIFFERENT_INPUT_VALUE_TYPE)
-                )
+                SpreadsheetFormula.inputValueTypePatch(valueType),
+                formula.setInputValueType(valueType)
         );
     }
 
