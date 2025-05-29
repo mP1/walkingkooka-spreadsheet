@@ -62,6 +62,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -1288,6 +1289,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return makePatch(
                 FORMATTER_PROPERTY,
                 context.marshallOptional(formatter)
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode inputValueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+        Objects.requireNonNull(valueType, "valueType");
+
+        return makePatch(
+                FORMULA_PROPERTY,
+                SpreadsheetFormula.inputValueTypePatch(valueType)
         );
     }
 
