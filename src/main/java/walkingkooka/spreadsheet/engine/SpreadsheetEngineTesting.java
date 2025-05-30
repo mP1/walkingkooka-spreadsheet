@@ -224,7 +224,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
         this.checkEquals(
-                SpreadsheetFormula.NO_EXPRESSION_VALUE,
+                SpreadsheetFormula.NO_VALUE,
                 spreadsheetCell.formula()
                         .errorOrValue(),
                 () -> "values parse returned cells=" + spreadsheetCell

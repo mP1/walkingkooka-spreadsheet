@@ -151,7 +151,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                     ); // also clears value/error
                 }
             } catch (final Exception failed) {
-                formula = formula.setExpressionValue(
+                formula = formula.setValue(
                         Optional.of(
                                 SpreadsheetErrorKind.translate(failed)
                         )

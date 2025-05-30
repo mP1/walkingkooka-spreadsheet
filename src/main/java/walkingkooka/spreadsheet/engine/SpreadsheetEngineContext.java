@@ -130,7 +130,7 @@ public interface SpreadsheetEngineContext extends Context,
         return this.formatValueAndStyle(
                 cell.setFormula(
                         cell.formula()
-                                .setExpressionValue(
+                                .setValue(
                                         valueReplacingError.isPresent() ?
                                                 valueReplacingError :
                                                 Optional.of(error)

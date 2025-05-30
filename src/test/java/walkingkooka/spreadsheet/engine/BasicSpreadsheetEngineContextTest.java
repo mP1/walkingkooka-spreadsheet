@@ -312,7 +312,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             if (cell.equalsIgnoreReferenceKind(LOAD_CELL_REFERENCE)) {
                 return Optional.of(
                         LOAD_CELL_REFERENCE.setFormula(
-                                SpreadsheetFormula.EMPTY.setExpressionValue(
+                                SpreadsheetFormula.EMPTY.setValue(
                                         Optional.of(LOAD_CELL_VALUE)
                                 )
                         )
@@ -730,7 +730,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testFormatValueAndStyle() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("1")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(1)
                         )
         );
@@ -756,7 +756,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testFormatValueAndStylePatternsIncludesCurrencySymbol() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("1")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(1)
                         )
         );
@@ -782,7 +782,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testFormatValueAndStyleWithConditionalFormattingRule() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("1")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(1)
                         )
         );
@@ -1346,7 +1346,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOAD_CELL_REFERENCE.setFormula(
                         SpreadsheetFormula.EMPTY
                                 .setText("'" + LOAD_CELL_VALUE)
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(LOAD_CELL_VALUE)
                                 )
                 )

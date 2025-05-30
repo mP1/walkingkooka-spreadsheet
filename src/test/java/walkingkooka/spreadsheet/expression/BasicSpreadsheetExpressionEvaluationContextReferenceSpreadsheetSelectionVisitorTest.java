@@ -60,7 +60,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                 cell.setFormula(
                                         SpreadsheetFormula.EMPTY
                                                 .setText("=1+2")
-                                                .setExpressionValue(
+                                                .setValue(
                                                         Optional.of(
                                                                 value
                                                         )
@@ -95,7 +95,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                 cell.setFormula(
                                         SpreadsheetFormula.EMPTY
                                                 .setText("=1+2")
-                                                .setExpressionValue(Optional.empty())
+                                                .setValue(Optional.empty())
                                 )
                         );
                     }
@@ -150,7 +150,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                 cell.setFormula(
                                         SpreadsheetFormula.EMPTY
                                                 .setText("=1+2")
-                                                .setExpressionValue(
+                                                .setValue(
                                                         Optional.of(
                                                                 value
                                                         )
@@ -197,7 +197,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                         .setFormula(
                                                 SpreadsheetFormula.EMPTY
                                                         .setText("=1")
-                                                        .setExpressionValue(
+                                                        .setValue(
                                                                 Optional.of(
                                                                         b2Value
                                                                 )
@@ -207,7 +207,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                         .setFormula(
                                                 SpreadsheetFormula.EMPTY
                                                         .setText("=2")
-                                                        .setExpressionValue(
+                                                        .setValue(
                                                                 Optional.of(
                                                                         b3Value
                                                                 )
@@ -250,7 +250,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                         .setFormula(
                                                 SpreadsheetFormula.EMPTY
                                                         .setText("=1")
-                                                        .setExpressionValue(
+                                                        .setValue(
                                                                 Optional.of(
                                                                         b2Value
                                                                 )
@@ -260,7 +260,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                         .setFormula(
                                                 SpreadsheetFormula.EMPTY
                                                         .setText("=2")
-                                                        .setExpressionValue(
+                                                        .setValue(
                                                                 Optional.of(
                                                                         c3Value
                                                                 )

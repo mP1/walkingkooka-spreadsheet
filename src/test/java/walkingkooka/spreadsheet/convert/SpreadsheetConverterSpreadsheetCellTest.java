@@ -92,7 +92,7 @@ public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetCo
         this.convertAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(
                                                 value
                                         )

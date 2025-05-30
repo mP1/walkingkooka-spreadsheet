@@ -358,7 +358,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                                         Optional.of(
                                                 Expression.value(FORMULA_VALUE)
                                         )
-                                ).setExpressionValue(
+                                ).setValue(
                                         Optional.of(FORMULA_VALUE)
                                 )
                 );
