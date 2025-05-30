@@ -2426,6 +2426,71 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+    // validatorPatch...................................................................................................
+
+    @Test
+    public void testValidatorPatchNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .validatorPatch(null)
+        );
+    }
+
+    @Test
+    public void testValidatorPatchNotEmpty() {
+        final Optional<ValidatorSelector> validator = Optional.of(
+                ValidatorSelector.parse("hello-validator")
+        );
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(validator);
+
+        final JsonNode patch = cell.validatorPatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                        "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"validator\": \"hello-validator\"\n" +
+                        "  }\n" +
+                        "}"
+        );
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setValidator(validator),
+                patch,
+                cell
+        );
+    }
+
+    @Test
+    public void testValidatorPatchEmpty() {
+        final Optional<ValidatorSelector> validator = SpreadsheetCell.NO_VALIDATOR;
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(validator);
+
+        final JsonNode patch = cell.validatorPatch(
+                this.jsonNodeMarshallContext()
+        );
+        this.checkEquals(
+                patch,
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"validator\": null\n" +
+                        "  }\n" +
+                        "}"
+        );
+
+        this.patchAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setValidator(validator),
+                patch,
+                cell
+        );
+    }
+    
     // treePrintable....................................................................................................
 
     @Test
