@@ -381,7 +381,7 @@ public final class Sample {
                                 this.formatValue(
                                         cell,
                                         cell.formula()
-                                                .value(),
+                                                .errorOrValue(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(

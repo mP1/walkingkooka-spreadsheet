@@ -178,7 +178,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                             (SpreadsheetCellReference) parameters.get(0)
                                     ).get()
                                     .formula()
-                                    .value()
+                                    .errorOrValue()
                                     .get();
                         }
 

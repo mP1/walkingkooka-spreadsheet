@@ -1595,7 +1595,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
 
         final SpreadsheetFormula formula = cell.formula();
-        final Optional<Object> value = formula.value();
+        final Optional<Object> value = formula.errorOrValue();
 
         final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
 

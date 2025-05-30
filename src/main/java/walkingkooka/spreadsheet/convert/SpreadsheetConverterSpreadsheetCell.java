@@ -87,7 +87,7 @@ final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuiting
             } else {
                 if (Object.class == type) {
                     value = cell.formula()
-                            .value()
+                            .errorOrValue()
                             .orElse(null);
                 } else {
                     if(DateTimeSymbols.class == type) {

@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -75,8 +74,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Patchable<SpreadsheetFormula>,
         TreePrintable,
         UsesToStringBuilder,
-        HasUrlFragment,
-        Value<Optional<Object>> {
+        HasUrlFragment {
 
     /**
      * A constant for an absent formula text.
@@ -400,8 +398,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * Returns any value that is present, first using any {@link #error()}, {@link #inputValue()} or {@link #expressionValue()}.
      */
-    @Override
-    public Optional<Object> value() {
+    public Optional<Object> errorOrValue() {
         Optional<Object> value;
 
         final Optional<SpreadsheetError> error = this.error;
@@ -425,7 +422,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Only returns an {@link SpreadsheetError} if one is present and ignores any non error value.
      */
     public Optional<SpreadsheetError> error() {
-        return this.value()
+        return this.errorOrValue()
                 .map(v -> v instanceof SpreadsheetError ?
                         (SpreadsheetError) v :
                         null
@@ -463,7 +460,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         SpreadsheetFormula result = this;
-        final Object value = this.value()
+        final Object value = this.errorOrValue()
                 .orElse(null);
         if (value instanceof SpreadsheetError) {
             final SpreadsheetError error = (SpreadsheetError) value;

@@ -1075,6 +1075,61 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // errorOrValue.....................................................................................................
+
+    @Test
+    public void testErrorOrValueWhenEmpty() {
+        this.errorOrValueAndCheck(
+                SpreadsheetFormula.EMPTY,
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testErrorOrValueWhenError() {
+        final Optional<SpreadsheetError> error = Optional.of(
+                SpreadsheetErrorKind.VALUE.setMessage("error123")
+        );
+
+        this.errorOrValueAndCheck(
+                SpreadsheetFormula.EMPTY.setError(error),
+                error
+        );
+    }
+
+    @Test
+    public void testErrorOrValueWhenInputValue() {
+        final Optional<Object> value = Optional.of(123);
+
+        this.errorOrValueAndCheck(
+                SpreadsheetFormula.EMPTY.setInputValue(value),
+                value
+        );
+    }
+
+    @Test
+    public void testErrorOrValueWhenErrorAndInputValue() {
+        final Optional<SpreadsheetError> error = Optional.of(
+                SpreadsheetErrorKind.VALUE.setMessage("error123")
+        );
+
+        this.errorOrValueAndCheck(
+                SpreadsheetFormula.EMPTY.setInputValue(
+                        Optional.of(123)
+                ).setError(error),
+                error
+        );
+    }
+
+    private void errorOrValueAndCheck(final SpreadsheetFormula formula,
+                                      final Optional<?> expected) {
+        this.checkEquals(
+                expected,
+                formula.errorOrValue(),
+                formula::toString
+        );
+    }
+
     // clear............................................................................................................
 
     @Test

@@ -146,7 +146,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         this.checkEquals(
                 Optional.of(FORMULA_VALUE),
                 loaded.formula()
-                        .value()
+                        .errorOrValue()
         );
 
         this.checkMetadataUpdated(context);
@@ -557,7 +557,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                         this.formatValue(
                                 cell,
                                 cell.formula()
-                                        .value(),
+                                        .errorOrValue(),
                                 formatter.orElse(
                                         SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
                                 )

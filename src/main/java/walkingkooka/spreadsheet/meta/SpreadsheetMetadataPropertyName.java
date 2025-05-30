@@ -367,7 +367,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATOR_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be the validator for the {@link SpreadsheetFormula#value}
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be the validator for the {@link SpreadsheetFormula#errorOrValue}
      */
     public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATOR_VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators.instance());
 
