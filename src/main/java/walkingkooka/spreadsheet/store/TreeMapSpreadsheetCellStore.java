@@ -480,7 +480,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 ).stream()
                 .filter(
                         (cell) -> cell.formula()
-                                .value()
+                                .errorOrValue()
                                 .map(filter)
                                 .orElse(false)
                 );

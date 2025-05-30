@@ -383,7 +383,7 @@ public class J2clTest {
                                 this.formatValue(
                                         cell,
                                         cell.formula()
-                                                .value(),
+                                                .errorOrValue(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(

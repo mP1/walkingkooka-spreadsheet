@@ -226,7 +226,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 SpreadsheetFormula.NO_EXPRESSION_VALUE,
                 spreadsheetCell.formula()
-                        .value(),
+                        .errorOrValue(),
                 () -> "values parse returned cells=" + spreadsheetCell
         );
         return spreadsheetCell;
@@ -2626,7 +2626,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 value,
                 cell.formula()
-                        .value()
+                        .errorOrValue()
                         .orElse(null
                         ),
                 () -> "formula values returned cell=" + cell);

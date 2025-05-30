@@ -333,7 +333,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetFormula formula = cell
                 .formula();
-        final Optional<Object> value = formula.value();
+        final Optional<Object> value = formula.errorOrValue();
 
         return this.applyConditionalRules(
                 cell.setFormattedValue(
