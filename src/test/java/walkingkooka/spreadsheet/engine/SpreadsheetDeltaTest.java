@@ -1832,7 +1832,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // formatterPatch...................................................................................................
 
     @Test
-    public void testFormatterPatchWithNullPatternFails() {
+    public void testFormatterPatchWithNullFormatterFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetDelta.formatterPatch(
@@ -1876,7 +1876,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testFormatterPatchWithEmptyPattern() {
+    public void testFormatterPatchWithEmptyFormatter() {
         this.checkEquals(
                 JsonNode.object()
                         .set(
@@ -1926,7 +1926,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // parserPatch......................................................................................................
 
     @Test
-    public void testParserPatchWithNullPatternFails() {
+    public void testParserPatchWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetDelta.parserPatch(
@@ -1970,7 +1970,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testParserPatchWithEmptyPattern() {
+    public void testParserPatchWithEmptySelector() {
         this.checkEquals(
                 JsonNode.object()
                         .set(
