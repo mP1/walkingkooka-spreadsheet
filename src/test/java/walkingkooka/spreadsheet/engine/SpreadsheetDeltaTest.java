@@ -1555,6 +1555,84 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsValueTypePatch..............................................................................................
+
+    @Test
+    public void testCellsValueTypePatchWithNullMapFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsValueTypePatch(null)
+        );
+    }
+
+    @Test
+    public void testCellsValueTypePatch() {
+        final Optional<ValidationValueTypeName> valueType1 = Optional.of(ValidationValueTypeName.with("hello-value-type"));
+        final Optional<ValidationValueTypeName> valueType2 = Optional.empty();
+
+        this.cellsValueTypePatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        valueType1,
+                        SpreadsheetSelection.parseCell("A2"),
+                        valueType2
+                ),
+                "{\n" +
+                        "  \"cells\": {\n" +
+                        "    \"A1\": {\n" +
+                        "      \"formula\": {\n" +
+                        "        \"valueType\": \"hello-value-type\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    \"A2\": {\n" +
+                        "      \"formula\": {\n" +
+                        "        \"valueType\": null\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    private void cellsValueTypePatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes,
+                                             final String expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsValueTypePatch(cellToValueTypes);
+
+        this.checkEquals(
+                JsonNode.parse(expected),
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellAndValueType : cellToValueTypes.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndValueType.getKey();
+
+            final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("'Patched over");
+
+            beforePatchCells.add(
+                    cell.setFormula(formula)
+                            .setStyle(style)
+            );
+            patchedCells.add(
+                    cell.setFormula(
+                            formula.setValueType(cellAndValueType.getValue())
+                    ).setStyle(style)
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+    
     // dateTimeSymbolsPatch.............................................................................................
 
     @Test
