@@ -1092,15 +1092,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode cellsFormulaPatch(final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas,
-                                             final JsonNodeMarshallContext context) {
-        Objects.requireNonNull(cellToFormulas, "cellToFormulas");
-        Objects.requireNonNull(context, "context");
+    public static JsonNode cellsFormulaTextPatch(final Map<SpreadsheetCellReference, String> cellToFormulaTexts) {
+        Objects.requireNonNull(cellToFormulaTexts, "cellToFormulaTexts");
 
         return cellsPatchFromMap(
-                cellToFormulas,
+                cellToFormulaTexts,
                 FORMULA_PROPERTY,
-                context::marshall
+                SpreadsheetFormula::textPatch
         );
     }
 
