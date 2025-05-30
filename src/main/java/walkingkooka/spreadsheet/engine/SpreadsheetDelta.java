@@ -1524,7 +1524,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 patchableProperties
         );
 
-        return patchApply(
+        return patchSelection(
                 selection,
                 json,
                 context
@@ -1651,9 +1651,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     @SuppressWarnings("lgtm[java/dereferenced-value-may-be-null]")
-    private SpreadsheetDelta patchApply(final SpreadsheetSelection selection,
-                                        final JsonNode json,
-                                        final JsonNodeUnmarshallContext context) {
+    private SpreadsheetDelta patchSelection(final SpreadsheetSelection selection,
+                                            final JsonNode json,
+                                            final JsonNodeUnmarshallContext context) {
         SpreadsheetDelta patched = this;
 
         Set<SpreadsheetCell> cells = this.cells();
@@ -1676,21 +1676,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = patchApplyCells(
+                    cells = patchCells(
                             selection,
                             propertyAndValue,
                             context
                     );
                     break;
                 case COLUMNS_PROPERTY_STRING:
-                    columns = patchApplyColumns(
+                    columns = patchColumns(
                             selection,
                             propertyAndValue,
                             context
                     );
                     break;
                 case DATE_TIME_SYMBOLS_STRING:
-                    cells = patchApplyDateTimeSymbols(
+                    cells = patchDateTimeSymbols(
                             selection,
                             cells,
                             JsonNode.object()
@@ -1702,7 +1702,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case DECIMAL_NUMBER_SYMBOLS_STRING:
-                    cells = patchApplyDecimalNumberSymbols(
+                    cells = patchDecimalNumberSymbols(
                             selection,
                             cells,
                             JsonNode.object()
@@ -1714,7 +1714,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
-                    cells = patchApplyFormatter(
+                    cells = patchFormatter(
                             selection,
                             cells,
                             JsonNode.object()
@@ -1726,7 +1726,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case FORMULA_PROPERTY_STRING:
-                    cells = patchApplyCellFormula(
+                    cells = patchCellsFormula(
                             selection,
                             cells,
                             JsonNode.object()
@@ -1738,7 +1738,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
-                    cells = patchApplyParser(
+                    cells = patchParser(
                             selection,
                             cells,
                             JsonNode.object()
@@ -1750,7 +1750,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case ROWS_PROPERTY_STRING:
-                    rows = patchApplyRows(
+                    rows = patchRows(
                             selection,
                             propertyAndValue,
                             context
@@ -1765,7 +1765,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case VALIDATOR_PROPERTY_STRING:
-                    cells = patchApplyValidator(
+                    cells = patchValidator(
                             selection,
                             cells,
                             JsonNode.object()
@@ -1804,13 +1804,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .setWindow(window);
     }
 
-    private Set<SpreadsheetCell> patchApplyCells(final SpreadsheetSelection selection,
-                                                 final JsonNode node,
-                                                 final JsonNodeUnmarshallContext context) {
+    private Set<SpreadsheetCell> patchCells(final SpreadsheetSelection selection,
+                                            final JsonNode node,
+                                            final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_CELLS :
-                patchApplySelectionToValue(
+                patchSelectionToValue(
                         selection,
                         node,
                         SpreadsheetSelection::parseCell,
@@ -1820,13 +1820,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 );
     }
 
-    private Set<SpreadsheetColumn> patchApplyColumns(final SpreadsheetSelection selection,
-                                                     final JsonNode node,
-                                                     final JsonNodeUnmarshallContext context) {
+    private Set<SpreadsheetColumn> patchColumns(final SpreadsheetSelection selection,
+                                                final JsonNode node,
+                                                final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_COLUMNS :
-                patchApplySelectionToValue(
+                patchSelectionToValue(
                         selection,
                         node,
                         SpreadsheetSelection::parseColumn,
@@ -1846,10 +1846,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyCellFormula(final SpreadsheetSelection selection,
-                                                              final Set<SpreadsheetCell> cells,
-                                                              final JsonNode patch,
-                                                              final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchCellsFormula(final SpreadsheetSelection selection,
+                                                          final Set<SpreadsheetCell> cells,
+                                                          final JsonNode patch,
+                                                          final JsonNodeUnmarshallContext context) {
         final SpreadsheetFormula formula = context.unmarshall(
                 patch.objectOrFail()
                         .getOrFail(FORMULA_PROPERTY),
@@ -1872,10 +1872,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyDateTimeSymbols(final SpreadsheetSelection selection,
-                                                                  final Set<SpreadsheetCell> cells,
-                                                                  final JsonNode patch,
-                                                                  final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchDateTimeSymbols(final SpreadsheetSelection selection,
+                                                             final Set<SpreadsheetCell> cells,
+                                                             final JsonNode patch,
+                                                             final JsonNodeUnmarshallContext context) {
         final Optional<DateTimeSymbols> dateTimeSymbols = context.unmarshallOptional(
                 patch.objectOrFail()
                         .getOrFail(DATE_TIME_SYMBOLS_PROPERTY),
@@ -1899,10 +1899,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyDecimalNumberSymbols(final SpreadsheetSelection selection,
-                                                                       final Set<SpreadsheetCell> cells,
-                                                                       final JsonNode patch,
-                                                                       final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchDecimalNumberSymbols(final SpreadsheetSelection selection,
+                                                                  final Set<SpreadsheetCell> cells,
+                                                                  final JsonNode patch,
+                                                                  final JsonNodeUnmarshallContext context) {
         final Optional<DecimalNumberSymbols> decimalNumberSymbols = context.unmarshallOptional(
                 patch.objectOrFail()
                         .getOrFail(DECIMAL_NUMBER_SYMBOLS_PROPERTY),
@@ -1926,10 +1926,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyFormatter(final SpreadsheetSelection selection,
-                                                            final Set<SpreadsheetCell> cells,
-                                                            final JsonNode patch,
-                                                            final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchFormatter(final SpreadsheetSelection selection,
+                                                       final Set<SpreadsheetCell> cells,
+                                                       final JsonNode patch,
+                                                       final JsonNodeUnmarshallContext context) {
         final Optional<SpreadsheetFormatterSelector> formatter = context.unmarshallOptional(
                 patch.objectOrFail()
                         .getOrFail(FORMATTER_PROPERTY),
@@ -1953,10 +1953,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyParser(final SpreadsheetSelection selection,
-                                                         final Set<SpreadsheetCell> cells,
-                                                         final JsonNode patch,
-                                                         final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchParser(final SpreadsheetSelection selection,
+                                                    final Set<SpreadsheetCell> cells,
+                                                    final JsonNode patch,
+                                                    final JsonNodeUnmarshallContext context) {
         final Optional<SpreadsheetParserSelector> parserSelector = context.unmarshallOptional(
                 patch.objectOrFail()
                         .getOrFail(PARSER_PROPERTY),
@@ -1972,13 +1972,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private Set<SpreadsheetRow> patchApplyRows(final SpreadsheetSelection selection,
+    private Set<SpreadsheetRow> patchRows(final SpreadsheetSelection selection,
                                                final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_ROWS :
-                patchApplySelectionToValue(
+                patchSelectionToValue(
                         selection,
                         node,
                         SpreadsheetSelection::parseRow,
@@ -1988,7 +1988,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 );
     }
 
-    private <S extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchApplySelectionToValue(final SpreadsheetSelection patchSelection,
+    private <S extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchSelectionToValue(final SpreadsheetSelection patchSelection,
                                                                                                        final JsonNode node,
                                                                                                        final Function<String, S> selectionParser,
                                                                                                        final Function<S, Optional<V>> selectionToValue,
@@ -2099,7 +2099,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchApplyValidator(final SpreadsheetSelection selection,
+    private static Set<SpreadsheetCell> patchValidator(final SpreadsheetSelection selection,
                                                             final Set<SpreadsheetCell> cells,
                                                             final JsonNode patch,
                                                             final JsonNodeUnmarshallContext context) {
