@@ -4572,7 +4572,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithEmptyFormulaTextAndInputValue() {
+    public void testSaveCellWithEmptyFormulaTextAndValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -4582,7 +4582,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell a1Cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
-                SpreadsheetFormula.EMPTY.setInputValue(value)
+                SpreadsheetFormula.EMPTY.setValue(value)
         ).setStyle(STYLE);
 
         final SpreadsheetDelta result = engine.saveCell(
@@ -4722,11 +4722,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithInputValueValidatorFails() {
+    public void testSaveCellWithValueValidatorFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(VALIDATOR_FAIL_NUMBER)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -4770,11 +4770,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithInputValueValidatorPass() {
+    public void testSaveCellWithValueValidatorPass() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(VALIDATOR_PASS_NUMBER)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -4830,7 +4830,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -4881,7 +4881,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -4933,7 +4933,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -4985,7 +4985,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -5042,7 +5042,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -5094,7 +5094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -5146,7 +5146,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -5199,7 +5199,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(value)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -22192,8 +22192,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("Value")
                 )
         ).setStyle(STYLE);
 
@@ -22265,15 +22265,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -22384,15 +22384,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -22475,8 +22475,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
@@ -22574,15 +22574,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -22689,15 +22689,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -22943,8 +22943,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("Value")
                 )
         ).setStyle(STYLE);
 
@@ -23016,15 +23016,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -23135,15 +23135,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -23226,8 +23226,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
@@ -23325,15 +23325,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -23440,15 +23440,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
         final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValue(
-                                Optional.of("B2InputValue")
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("B2Value")
                         )
                 ).setStyle(STYLE);
 
@@ -23545,8 +23545,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext();
 
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("A1InputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("A1Value")
                 )
         ).setStyle(STYLE);
 
@@ -23913,7 +23913,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             );
         } else {
             result = cell.setFormula(
-                    formula.setInputValue(value)
+                    formula.setValue(value)
             );
         }
 

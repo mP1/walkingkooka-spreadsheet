@@ -148,7 +148,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
         // cell may be present and may or may not have an inputValue.
         if (null != maybeCell) {
             value = delta.cell(maybeCell.toCell())
-                    .flatMap(c -> c.formula().inputValue())
+                    .flatMap(c -> c.formula().value())
                     .orElse(null);
         }
 
@@ -232,7 +232,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
             saving.add(
                     spreadsheetCell.setFormula(
                             spreadsheetCell.formula()
-                                    .setInputValue(field.value())
+                                    .setValue(field.value())
                     )
             );
         }

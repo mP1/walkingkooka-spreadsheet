@@ -733,7 +733,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.reference().text(), // cell reference
                         formula.text(),
                         toText(formula.valueType()),
-                        toJsonText(formula.inputValue()),
+                        toJsonText(formula.value()),
                         toText(this.dateTimeSymbols),
                         toText(this.decimalNumberSymbols),
                         toText(this.formatter),
@@ -768,7 +768,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     /**
-     * The {@link SpreadsheetFormula#inputValue()} and {@link #formattedValue()} will both be marshalled to JSON
+     * The {@link SpreadsheetFormula#value()} and {@link #formattedValue()} will both be marshalled to JSON
      * before being included in the CSV {@link #text()}.
      */
     private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
@@ -812,7 +812,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                         list.get(2),
                                         ValidationValueTypeName::with
                                 )
-                        ).setInputValue(
+                        ).setValue(
                                 unmarshallCellComponentWithType(
                                         list.get(3)
                                 )
