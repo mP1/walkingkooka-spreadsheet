@@ -720,7 +720,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     /**
      * Returns a CSV record with ALL cell properties. Empty or missing properties will have empty tokens.
      * Most properties are converted to text (they implement {@link HasText#text()}, except for
-     * {@link SpreadsheetFormula#inputValueType()} and {@link SpreadsheetCell#formattedValue()}.
+     * {@link SpreadsheetFormula#valueType()} and {@link SpreadsheetCell#formattedValue()}.
      * <br>
      * This text will be used by various save history tokens to serialize a complete cell.
      */
@@ -732,7 +732,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 Lists.of(
                         this.reference().text(), // cell reference
                         formula.text(),
-                        toText(formula.inputValueType()),
+                        toText(formula.valueType()),
                         toJsonText(formula.inputValue()),
                         toText(this.dateTimeSymbols),
                         toText(this.decimalNumberSymbols),
@@ -807,7 +807,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         cell = cell.setFormula(
                 cell.formula()
-                        .setInputValueType(
+                        .setValueType(
                                 parseCellComponent(
                                         list.get(2),
                                         ValidationValueTypeName::with

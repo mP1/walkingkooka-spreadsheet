@@ -45,7 +45,7 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
     @Test
     public void testCellValue() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setInputValueType(
+                SpreadsheetFormula.EMPTY.setValueType(
                         Optional.of(
                                 ValidationValueTypeName.with("HelloValueType")
                         )

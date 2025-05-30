@@ -1291,12 +1291,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode inputValueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
         Objects.requireNonNull(valueType, "valueType");
 
         return makePatch(
                 FORMULA_PROPERTY,
-                SpreadsheetFormula.inputValueTypePatch(valueType)
+                SpreadsheetFormula.valueTypePatch(valueType)
         );
     }
 
