@@ -1192,6 +1192,19 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsValueTypePatch(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes) {
+        Objects.requireNonNull(cellToValueTypes, "cellToValueTypes");
+
+        return cellsPatchFromMap(
+                cellToValueTypes,
+                FORMULA_PROPERTY,
+                SpreadsheetFormula::valueTypePatch
+        );
+    }
+
     private static <T> JsonNode cellsPatchFromMap(final Map<SpreadsheetCellReference, T> cellToValue,
                                                   final JsonPropertyName propertyName,
                                                   final Function<T, JsonNode> marshaller) {
@@ -2870,6 +2883,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String REFERENCES_PROPERTY_STRING = "references";
     private final static String ROWS_PROPERTY_STRING = "rows";
     private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
+    private final static String VALUE_TYPE_PROPERTY_STRING = "valueType"; // only used by patchCells
     private final static String VALIDATOR_PROPERTY_STRING = "validator"; // only used by patchCells
 
     private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
@@ -2946,6 +2960,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING); // only used by patchCells
+
+    // @VisibleForTesting
+    final static JsonPropertyName VALUE_TYPE_PROPERTY = JsonPropertyName.with(VALUE_TYPE_PROPERTY_STRING); // only used by patchCells
 
     // @VisibleForTesting
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
