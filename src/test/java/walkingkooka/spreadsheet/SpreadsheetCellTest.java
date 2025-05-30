@@ -202,8 +202,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testWithFormulaWithInputValue() {
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setInputValue(
+    public void testWithFormulaWithValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(
                         Optional.of(123)
                 )
@@ -1111,12 +1111,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTextWhenReferenceAndInputValueTypeAndFormattedValue() {
+    public void testTextWhenReferenceAndValueTypeAndFormattedValue() {
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setValueType(
                                 Optional.of(ValidationValueTypeName.TEXT)
-                        ).setInputValue(
+                        ).setValue(
                                 Optional.of(123)
                         )
                 ).setFormattedValue(
@@ -1138,7 +1138,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("123")
-                                .setInputValue(
+                                .setValue(
                                         Optional.of(123)
                                 )
                 ).setFormatter(
@@ -1191,11 +1191,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testParseInputValueInteger() {
+    public void testParseValueInteger() {
         this.textAndParseAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("123")
-                                .setInputValue(
+                                .setValue(
                                         Optional.of(123)
                                 )
                 )
@@ -1203,11 +1203,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testParseInputValueExpressionNumber() {
+    public void testParseValueExpressionNumber() {
         this.textAndParseAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("123")
-                                .setInputValue(
+                                .setValue(
                                         Optional.of(
                                                 EXPRESSION_NUMBER_KIND.create(456.75)
                                         )
@@ -1221,7 +1221,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.textAndParseAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("123")
-                                .setInputValue(
+                                .setValue(
                                         Optional.of(
                                                 LocalDate.of(1999,12,31)
                                         )

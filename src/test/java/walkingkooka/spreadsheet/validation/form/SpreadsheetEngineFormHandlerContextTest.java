@@ -208,7 +208,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
                                                               final SpreadsheetEngineContext context) {
                                 return SpreadsheetDelta.EMPTY.setCells(
                                         Sets.of(
-                                                cell.setFormula(SpreadsheetFormula.EMPTY.setInputValue(
+                                                cell.setFormula(SpreadsheetFormula.EMPTY.setValue(
                                                         Optional.of(value)
                                                 ))
                                         )
@@ -269,7 +269,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
                                 return SpreadsheetDelta.EMPTY.setCells(
                                         Sets.of(
                                                 cell.setFormula(
-                                                        SpreadsheetFormula.EMPTY.setInputValue(
+                                                        SpreadsheetFormula.EMPTY.setValue(
                                                                 Optional.of(value)
                                                         )
                                                 )
@@ -309,7 +309,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
                                 a1Cell.setFormula(
-                                        SpreadsheetFormula.EMPTY.setInputValue(
+                                        SpreadsheetFormula.EMPTY.setValue(
                                                 Optional.of(a1Value)
                                         )
                                 )
@@ -338,7 +338,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
                                 a1Cell.setFormula(
-                                        SpreadsheetFormula.EMPTY.setInputValue(
+                                        SpreadsheetFormula.EMPTY.setValue(
                                                 Optional.of(a1Value)
                                         )
                                 )

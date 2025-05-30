@@ -97,7 +97,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static String EXPRESSION = "1+2";
     private final static Double EXPRESSION_VALUE = 3.0;
     private final static ValidationValueTypeName VALUE_TYPE = ValidationValueTypeName.TEXT;
-    private final static String INPUT_VALUE = "\"InputValue444\"";
+    private final static String VALUE = "\"Value444\"";
     private final static String ERROR = "Message #1";
 
     private final static String DIFFERENT_TEXT = "99+99";
@@ -135,7 +135,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(formula);
         this.expressionValueAndCheck(formula);
-        this.inputValueAndCheck(formula);
+        this.valueAndCheck(formula);
         this.valueTypeAndCheck(formula);
         this.errorAndCheck(formula);
 
@@ -221,7 +221,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -250,7 +250,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -270,7 +270,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -322,7 +322,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different); // should also clear expression, value, error
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -407,7 +407,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -434,7 +434,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -465,7 +465,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -542,7 +542,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 differentExpressionValue
         );
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -569,7 +569,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -601,7 +601,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 differentExpressionValue
         );
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -671,7 +671,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 differentValueType
         );
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -691,12 +691,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different, DIFFERENT_VALUE_TYPE);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
     @Test
-    public void testSetValue() {
+    public void testSetValueType() {
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token())
                 .setExpression(this.expression())
@@ -717,7 +717,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 differentValueType
         );
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -753,37 +753,37 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
     
-    // SetInputValue....................................................................................................
+    // SetValue.........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
-    public void testSetInputValueNullFails() {
+    public void testSetValueNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
-                        .setInputValue(null)
+                        .setValue(null)
         );
     }
 
     @Test
-    public void testSetInputValueSame() {
+    public void testSetValueSame() {
         final SpreadsheetFormula formula = this.createObject();
         assertSame(
                 formula,
-                formula.setInputValue(
-                        formula.inputValue()
+                formula.setValue(
+                        formula.value()
                 )
         );
     }
 
     @Test
-    public void testSetInputValueDifferent() {
+    public void testSetValueDifferent() {
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token());
-        final Optional<Object> differentInputValue = Optional.of(
+        final Optional<Object> differentValue = Optional.of(
                 "different!"
         );
-        final SpreadsheetFormula different = formula.setInputValue(differentInputValue);
+        final SpreadsheetFormula different = formula.setValue(differentValue);
         assertNotSame(
                 formula,
                 different
@@ -794,20 +794,20 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different, differentInputValue);
-        this.inputValueAndCheck(
+        this.valueAndCheck(different, differentValue);
+        this.valueAndCheck(
                 different,
-                differentInputValue
+                differentValue
         );
         this.errorAndCheck(different);
     }
 
     @Test
-    public void testSetInputValueDifferentAndClear() {
+    public void testSetValueDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
-                .setInputValue(this.inputValue());
-        final Optional<Object> differentInputValue = SpreadsheetFormula.NO_EXPRESSION_VALUE;
-        final SpreadsheetFormula different = formula.setInputValue(differentInputValue);
+                .setValue(this.value());
+        final Optional<Object> differentValue = SpreadsheetFormula.NO_EXPRESSION_VALUE;
+        final SpreadsheetFormula different = formula.setValue(differentValue);
         assertNotSame(
                 formula,
                 different
@@ -818,20 +818,20 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
     @Test
-    public void testSetInputValueDifferentAfterSetValue() {
+    public void testSetValue() {
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token())
                 .setExpression(this.expression())
                 .setExpressionValue(this.expressionValue())
-                .setInputValue(this.inputValue());
+                .setValue(this.value());
 
-        final Optional<Object> differentInputValue = Optional.of("different!");
-        final SpreadsheetFormula different = formula.setInputValue(differentInputValue);
+        final Optional<Object> differentValue = Optional.of("different!");
+        final SpreadsheetFormula different = formula.setValue(differentValue);
         assertNotSame(formula, different);
 
         this.textAndCheck(different);
@@ -841,26 +841,26 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 formula.expression()
         );
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(
+        this.valueAndCheck(
                 different,
-                differentInputValue
+                differentValue
         );
         this.errorAndCheck(different);
     }
 
-    private Optional<Object> inputValue() {
-        return this.inputValue(EXPRESSION_VALUE);
+    private Optional<Object> value() {
+        return this.value(EXPRESSION_VALUE);
     }
 
-    private Optional<Object> inputValue(final Object value) {
+    private Optional<Object> value(final Object value) {
         return Optional.of(value);
     }
 
-    private void inputValueAndCheck(final SpreadsheetFormula formula,
-                                    final Optional<Object> value) {
+    private void valueAndCheck(final SpreadsheetFormula formula,
+                               final Optional<Object> value) {
         this.checkEquals(
                 value,
-                formula.inputValue(),
+                formula.value(),
                 "inputValue"
         );
 
@@ -872,10 +872,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         }
     }
 
-    private void inputValueAndCheck(final SpreadsheetFormula formula) {
-        this.inputValueAndCheck(
+    private void valueAndCheck(final SpreadsheetFormula formula) {
+        this.valueAndCheck(
                 formula,
-                SpreadsheetFormula.NO_EXPRESSION_VALUE
+                SpreadsheetFormula.NO_VALUE
         );
     }
     
@@ -921,7 +921,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(
                 different,
                 differentError
@@ -951,7 +951,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -977,7 +977,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(different, formula.expression());
         this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
-        this.inputValueAndCheck(different);
+        this.valueAndCheck(different);
         this.errorAndCheck(different, differentError);
     }
 
@@ -1098,23 +1098,23 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testErrorOrValueWhenInputValue() {
+    public void testErrorOrValueWhenValue() {
         final Optional<Object> value = Optional.of(123);
 
         this.errorOrValueAndCheck(
-                SpreadsheetFormula.EMPTY.setInputValue(value),
+                SpreadsheetFormula.EMPTY.setValue(value),
                 value
         );
     }
 
     @Test
-    public void testErrorOrValueWhenErrorAndInputValue() {
+    public void testErrorOrValueWhenErrorAndValue() {
         final Optional<SpreadsheetError> error = Optional.of(
                 SpreadsheetErrorKind.VALUE.setMessage("error123")
         );
 
         this.errorOrValueAndCheck(
-                SpreadsheetFormula.EMPTY.setInputValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(123)
                 ).setError(error),
                 error
@@ -1204,8 +1204,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testClearWhenInputValue() {
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setInputValue(this.inputValue());
+    public void testClearWhenValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(this.value());
 
         final SpreadsheetFormula cleared = formula.clear();
         assertSame(
@@ -1218,16 +1218,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(cleared);
         this.expressionValueAndCheck(cleared);
         this.valueTypeAndCheck(cleared);
-        this.inputValueAndCheck(
+        this.valueAndCheck(
                 cleared,
-                this.inputValue()
+                this.value()
         );
         this.errorAndCheck(cleared);
     }
 
     @Test
-    public void testClearWhenInputValueAndError() {
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setInputValue(this.inputValue())
+    public void testClearWhenValueAndError() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(this.value())
                 .setError(this.error());
 
         final SpreadsheetFormula cleared = formula.clear();
@@ -1241,9 +1241,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(cleared);
         this.expressionValueAndCheck(cleared);
         this.valueTypeAndCheck(cleared);
-        this.inputValueAndCheck(
+        this.valueAndCheck(
                 cleared,
-                this.inputValue()
+                this.value()
         );
         this.errorAndCheck(cleared);
     }
@@ -2133,25 +2133,25 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testEqualsDifferentInputValueKind() {
+    public void testEqualsDifferentValueKind() {
         checkNotEquals(
                 SpreadsheetFormula.EMPTY.setValueType(
                         this.valueType()
                 ),
-                SpreadsheetFormula.EMPTY.setInputValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(DIFFERENT_VALUE_TYPE)
                 )
         );
     }
 
     @Test
-    public void testEqualsDifferentInputValue() {
+    public void testEqualsDifferentValue() {
         checkNotEquals(
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        this.inputValue()
+                SpreadsheetFormula.EMPTY.setValue(
+                        this.value()
                 ),
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of("DifferentInputValue")
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("DifferentValue")
                 )
         );
     }
@@ -2300,42 +2300,42 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testPatchInputValueWithNull() {
+    public void testPatchValueWithNull() {
         final SpreadsheetFormula formula = this.formula("=1");
 
         this.patchAndCheck(
                 formula,
                 JsonNode.object()
                         .set(
-                                SpreadsheetFormula.INPUT_VALUE_PROPERTY,
+                                SpreadsheetFormula.VALUE_PROPERTY,
                                 JsonNode.nullNode()
                         ),
-                formula.setInputValue(
+                formula.setValue(
                         Optional.empty()
                 )
         );
     }
 
     @Test
-    public void testPatchInputValueWithNonNull() {
+    public void testPatchValueWithNonNull() {
         final SpreadsheetFormula formula = this.formula("=1");
-        final String inputValue = "InputValue111";
+        final String inputValue = "Value111";
 
         this.patchAndCheck(
                 formula,
                 JsonNode.object()
                         .set(
-                                SpreadsheetFormula.INPUT_VALUE_PROPERTY,
+                                SpreadsheetFormula.VALUE_PROPERTY,
                                 JsonNode.string(inputValue)
                         ),
-                formula.setInputValue(
+                formula.setValue(
                         Optional.of(inputValue)
                 )
         );
     }
 
     @Test
-    public void testPatchInputValueWithNonNull2() {
+    public void testPatchValueWithNonNull2() {
         final SpreadsheetFormula formula = this.formula("=1");
         final AbsoluteUrl inputValue = Url.parseAbsolute("https://example.com/123");
 
@@ -2343,11 +2343,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 formula,
                 JsonNode.object()
                         .set(
-                                SpreadsheetFormula.INPUT_VALUE_PROPERTY,
+                                SpreadsheetFormula.VALUE_PROPERTY,
                                 this.marshallContext()
                                         .marshallWithType(inputValue)
                         ),
-                formula.setInputValue(
+                formula.setValue(
                         Optional.of(inputValue)
                 )
         );
@@ -2426,7 +2426,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 this.createObject()
                         .setValueType(
                                 Optional.of(VALUE_TYPE)
-                        ).setInputValue(
+                        ).setValue(
                                 Optional.of(123)
                         ),
                 "text 123"
@@ -2434,10 +2434,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testToStringWithInputValue() {
+    public void testToStringWithValue() {
         this.toStringAndCheck(
                 this.createObject()
-                        .setInputValue(
+                        .setValue(
                                 Optional.of(123)
                         ),
                 "123"
@@ -2603,15 +2603,15 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testUnmarshallInputValue() {
+    public void testUnmarshallValue() {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(
-                                SpreadsheetFormula.INPUT_VALUE_PROPERTY,
-                                JsonNode.string(INPUT_VALUE)
+                                SpreadsheetFormula.VALUE_PROPERTY,
+                                JsonNode.string(VALUE)
                         ),
-                SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of(INPUT_VALUE)
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(VALUE)
                 )
         );
     }
@@ -2624,13 +2624,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 SpreadsheetFormula.VALUE_TYPE_PROPERTY,
                                 JsonNode.string(VALUE_TYPE.value())
                         ).set(
-                                SpreadsheetFormula.INPUT_VALUE_PROPERTY,
-                                JsonNode.string(INPUT_VALUE)
+                                SpreadsheetFormula.VALUE_PROPERTY,
+                                JsonNode.string(VALUE)
                         ),
                 SpreadsheetFormula.EMPTY.setValueType(
                         Optional.of(VALUE_TYPE)
-                ).setInputValue(
-                        Optional.of(INPUT_VALUE)
+                ).setValue(
+                        Optional.of(VALUE)
                 )
         );
     }
@@ -2757,35 +2757,35 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testMarshallValueTypeAndValue() {
         this.marshallAndCheck(
-                SpreadsheetFormula.EMPTY.setInputValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(VALUE_TYPE)
-                ).setInputValue(
+                ).setValue(
                         Optional.of("abc123")
                 ),
-                "{ \"inputValue\": \"abc123\"}"
+                "{ \"value\": \"abc123\"}"
         );
     }
 
     @Test
-    public void testMarshallInputValue() {
+    public void testMarshallValue() {
         this.marshallAndCheck(
-                SpreadsheetFormula.EMPTY.setInputValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of("abc123")
                 ),
-                "{ \"inputValue\": \"abc123\"}"
+                "{ \"value\": \"abc123\"}"
         );
     }
 
     @Test
-    public void testMarshallInputValueAndError() {
+    public void testMarshallValueAndError() {
         this.marshallAndCheck(
-                SpreadsheetFormula.EMPTY.setInputValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of("abc123")
                 ).setError(
                         this.error()
                 ),
                 "{\n" +
-                        "  \"inputValue\": \"abc123\",\n" +
+                        "  \"value\": \"abc123\",\n" +
                         "  \"error\": {\n" +
                         "    \"kind\": \"VALUE\",\n" +
                         "    \"message\": \"Message #1\"\n" +
