@@ -1755,24 +1755,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // formulaPatch.....................................................................................................
 
     @Test
-    public void testFormulaPatchWithNullFormulaFails() {
+    public void testFormulaPatchWithNullPatchFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetDelta.formulaPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testFormulaPatchWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.formulaPatch(
-                        SpreadsheetFormula.EMPTY,
-                        null
-                )
+                () -> SpreadsheetDelta.formulaPatch(null)
         );
     }
 
@@ -1781,8 +1767,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
 
         final JsonNode patch = SpreadsheetDelta.formulaPatch(
-                formula,
-                MARSHALL_CONTEXT
+                MARSHALL_CONTEXT.marshall(formula)
         );
 
         this.checkEquals(
@@ -3399,8 +3384,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formulaPatch(
-                        patched,
-                        MARSHALL_CONTEXT
+                        MARSHALL_CONTEXT.marshall(patched)
                 ),
                 after
         );
