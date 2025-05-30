@@ -323,7 +323,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(
                         SpreadsheetFormula.EMPTY.setText("=333")
-                                .setInputValueType(valueType)
+                                .setValueType(valueType)
                 );
 
         this.doImportAndCheck(

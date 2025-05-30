@@ -104,7 +104,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * Input value type is absent constant.
      */
-    public final static Optional<ValidationValueTypeName> NO_INPUT_VALUE_TYPE = Optional.empty();
+    public final static Optional<ValidationValueTypeName> NO_VALUE_TYPE = Optional.empty();
 
     /**
      * Input value is absent constant.
@@ -119,7 +119,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             NO_TOKEN,
             NO_EXPRESSION,
             NO_EXPRESSION_VALUE,
-            NO_INPUT_VALUE_TYPE,
+            NO_VALUE_TYPE,
             NO_INPUT_VALUE,
             NO_ERROR
     );
@@ -171,7 +171,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                final Optional<SpreadsheetFormulaParserToken> token,
                                final Optional<Expression> expression,
                                final Optional<Object> expressionValue,
-                               final Optional<ValidationValueTypeName> inputValueType,
+                               final Optional<ValidationValueTypeName> valueType,
                                final Optional<Object> inputValue,
                                final Optional<SpreadsheetError> error) {
         super();
@@ -181,7 +181,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         this.expression = expression;
         this.expressionValue = expressionValue;
 
-        this.inputValueType = inputValueType;
+        this.valueType = valueType;
         this.inputValue = inputValue;
 
         this.error = error;
@@ -212,7 +212,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                 NO_TOKEN,
                                 NO_EXPRESSION,
                                 NO_EXPRESSION_VALUE,
-                                NO_INPUT_VALUE_TYPE,
+                                NO_VALUE_TYPE,
                                 NO_INPUT_VALUE,
                                 NO_ERROR
                         );
@@ -259,7 +259,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         token,
                         NO_EXPRESSION,
                         NO_EXPRESSION_VALUE,
-                        NO_INPUT_VALUE_TYPE,
+                        NO_VALUE_TYPE,
                         NO_INPUT_VALUE,
                         NO_ERROR
                 );
@@ -288,7 +288,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         this.token,
                         Objects.requireNonNull(expression, "expression"),
                         NO_EXPRESSION_VALUE,
-                        NO_INPUT_VALUE_TYPE,
+                        NO_VALUE_TYPE,
                         NO_INPUT_VALUE,
                         NO_ERROR
                 );
@@ -321,7 +321,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         this.token,
                         this.expression,
                         Objects.requireNonNull(expressionValue, "expressionValue"),
-                        NO_INPUT_VALUE_TYPE,
+                        NO_VALUE_TYPE,
                         NO_INPUT_VALUE,
                         NO_ERROR
                 );
@@ -329,27 +329,27 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     private final Optional<Object> expressionValue;
 
-    // inputValueType...................................................................................................
+    // valueType........................................................................................................
 
     /**
      * A hint that is used by the UI to select an appropriate picker forcing the user to enter a matching {@link #inputValue}.
      */
-    public Optional<ValidationValueTypeName> inputValueType() {
-        return this.inputValueType;
+    public Optional<ValidationValueTypeName> valueType() {
+        return this.valueType;
     }
 
     /**
      * Would be setter that returns a {@link SpreadsheetFormula} with the input value hint.
      */
-    public SpreadsheetFormula setInputValueType(final Optional<ValidationValueTypeName> inputValueType) {
-        return this.inputValueType.equals(inputValueType) ?
+    public SpreadsheetFormula setValueType(final Optional<ValidationValueTypeName> valueType) {
+        return this.valueType.equals(valueType) ?
                 this :
                 this.replace(
                         NO_TEXT,
                         NO_TOKEN,
                         NO_EXPRESSION,
                         NO_EXPRESSION_VALUE,
-                        Objects.requireNonNull(inputValueType, "inputValueType"),
+                        Objects.requireNonNull(valueType, "valueType"),
                         NO_INPUT_VALUE,
                         NO_ERROR
                 );
@@ -358,7 +358,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * A type hint for the {@link #inputValue}.
      */
-    private final Optional<ValidationValueTypeName> inputValueType;
+    private final Optional<ValidationValueTypeName> valueType;
 
     // inputValue..................................................................................................
 
@@ -382,7 +382,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         NO_TOKEN,
                         NO_EXPRESSION,
                         NO_EXPRESSION_VALUE,
-                        this.inputValueType,
+                        this.valueType,
                         Objects.requireNonNull(inputValue, "inputValue"),
                         NO_ERROR
                 );
@@ -441,7 +441,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         this.token,
                         this.expression,
                         this.expressionValue,
-                        this.inputValueType,
+                        this.valueType,
                         this.inputValue,
                         Objects.requireNonNull(error, "error")
                 );
@@ -491,7 +491,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         this.token,
                         NO_EXPRESSION,
                         NO_EXPRESSION_VALUE,
-                        NO_INPUT_VALUE_TYPE,
+                        NO_VALUE_TYPE,
                         NO_INPUT_VALUE,
                         NO_ERROR
                 ) :
@@ -504,7 +504,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                        final Optional<SpreadsheetFormulaParserToken> token,
                                        final Optional<Expression> expression,
                                        final Optional<Object> expressionValue,
-                                       final Optional<ValidationValueTypeName> inputValueType,
+                                       final Optional<ValidationValueTypeName> valueType,
                                        final Optional<Object> inputValue,
                                        final Optional<SpreadsheetError> error) {
         return new SpreadsheetFormula(
@@ -512,7 +512,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 token,
                 expression,
                 expressionValue,
-                inputValueType,
+                valueType,
                 inputValue,
                 error
         );
@@ -550,14 +550,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // XXXPatch.........................................................................................................
 
     /**
-     * Creates a PATCH for a formula to replace the {@link #inputValueType()}.
+     * Creates a PATCH for a formula to replace the {@link #valueType()}.
      */
-    public static JsonNode inputValueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
         Objects.requireNonNull(valueType, "valueType");
 
         return JsonNode.object()
                 .set(
-                        INPUT_VALUE_TYPE_PROPERTY,
+                        VALUE_TYPE_PROPERTY,
                         JsonNodeMarshallContexts.basic()
                                 .marshallOptional(valueType)
                 );
@@ -595,8 +595,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                             propertyAndValue.stringOrFail()
                     );
                     break;
-                case INPUT_VALUE_TYPE_PROPERTY_STRING:
-                    patched = patched.setInputValueType(
+                case VALUE_TYPE_PROPERTY_STRING:
+                    patched = patched.setValueType(
                             Optional.ofNullable(
                                     context.unmarshall(
                                             propertyAndValue,
@@ -662,8 +662,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         );
 
         this.printTreeLabelAndValue(
-                "inputValueType",
-                this.inputValueType(),
+                "valueType",
+                this.valueType(),
                 printer
         );
 
@@ -745,7 +745,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         SpreadsheetFormulaParserToken token = null;
         Expression expression = null;
         Object expressionValue = null;
-        Optional<ValidationValueTypeName> inputValueType = NO_INPUT_VALUE_TYPE;
+        Optional<ValidationValueTypeName> valueType = NO_VALUE_TYPE;
         Object inputValue = null;
         Optional<SpreadsheetError> error = NO_ERROR;
 
@@ -769,8 +769,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 case EXPRESSION_VALUE_PROPERTY_STRING:
                     expressionValue = context.unmarshallWithType(child);
                     break;
-                case INPUT_VALUE_TYPE_PROPERTY_STRING:
-                    inputValueType = context.unmarshallOptional(
+                case VALUE_TYPE_PROPERTY_STRING:
+                    valueType = context.unmarshallOptional(
                             child,
                             ValidationValueTypeName.class
                     );
@@ -794,7 +794,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 .setToken(Optional.ofNullable(token))
                 .setExpression(Optional.ofNullable(expression))
                 .setExpressionValue(Optional.ofNullable(expressionValue))
-                .setInputValueType(inputValueType)
+                .setValueType(valueType)
                 .setInputValue(Optional.ofNullable(inputValue))
                 .setError(error);
     }
@@ -844,11 +844,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             );
         }
 
-        final Optional<ValidationValueTypeName> inputValueType = this.inputValueType;
-        if (inputValueType.isPresent()) {
+        final Optional<ValidationValueTypeName> valueType = this.valueType;
+        if (valueType.isPresent()) {
             object = object.set(
-                    INPUT_VALUE_TYPE_PROPERTY,
-                    context.marshallOptional(inputValueType)
+                    VALUE_TYPE_PROPERTY,
+                    context.marshallOptional(valueType)
             );
         }
 
@@ -868,7 +868,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private final static String EXPRESSION_PROPERTY_STRING = "expression";
     private final static String EXPRESSION_VALUE_PROPERTY_STRING = "expressionValue";
 
-    private final static String INPUT_VALUE_TYPE_PROPERTY_STRING = "inputValueType";
+    private final static String VALUE_TYPE_PROPERTY_STRING = "valueType";
     private final static String INPUT_VALUE_PROPERTY_STRING = "inputValue";
 
     private final static String ERROR_PROPERTY_STRING = "error";
@@ -880,7 +880,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
     final static JsonPropertyName EXPRESSION_VALUE_PROPERTY = JsonPropertyName.with(EXPRESSION_VALUE_PROPERTY_STRING);
 
-    final static JsonPropertyName INPUT_VALUE_TYPE_PROPERTY = JsonPropertyName.with(INPUT_VALUE_TYPE_PROPERTY_STRING);
+    final static JsonPropertyName VALUE_TYPE_PROPERTY = JsonPropertyName.with(VALUE_TYPE_PROPERTY_STRING);
     final static JsonPropertyName INPUT_VALUE_PROPERTY = JsonPropertyName.with(INPUT_VALUE_PROPERTY_STRING);
 
     final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
@@ -910,7 +910,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 this.token,
                 this.expression,
                 this.expressionValue,
-                this.inputValueType,
+                this.valueType,
                 this.inputValue,
                 this.error
         );
@@ -928,7 +928,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 this.token.equals(other.token) &&
                 this.expression.equals(other.expression) &&
                 this.expressionValue.equals(other.expressionValue) &&
-                this.inputValueType.equals(other.inputValueType) &&
+                this.valueType.equals(other.valueType) &&
                 this.inputValue.equals(other.inputValue) &&
                 this.error.equals(other.error);
     }
@@ -948,7 +948,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             builder.surroundValues("(=", ")")
                     .value(new Object[]{this.expressionValue});
         } else {
-            builder.value(this.inputValueType);
+            builder.value(this.valueType);
             builder.value(this.inputValue);
         }
 

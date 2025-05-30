@@ -1817,21 +1817,21 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    // inputValueTypePatch...................................................................................................
+    // valueTypePatch...................................................................................................
 
     @Test
-    public void testInputValueTypePatchWithNullFails() {
+    public void testValueTypePatchWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetDelta.inputValueTypePatch(
+                () -> SpreadsheetDelta.valueTypePatch(
                         null
                 )
         );
     }
 
     @Test
-    public void testInputValueTypePatch() {
-        final Optional<ValidationValueTypeName> inputValueType = Optional.of(
+    public void testValueTypePatch() {
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
                 ValidationValueTypeName.with("Text123")
         );
 
@@ -1839,12 +1839,12 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 JsonNode.parse(
                         "{\n" +
                         "  \"formula\": {\n" +
-                        "    \"inputValueType\": \"Text123\"\n" +
+                        "    \"valueType\": \"Text123\"\n" +
                         "  }\n" +
                         "}"
                 ),
-                SpreadsheetDelta.inputValueTypePatch(
-                        inputValueType
+                SpreadsheetDelta.valueTypePatch(
+                        valueType
                 )
         );
     }
@@ -2576,7 +2576,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("=1")
-                        .setInputValueType(
+                        .setValueType(
                                 Optional.of(
                                         ValidationValueTypeName.with("lost-value-type")
                                 )
@@ -2596,17 +2596,17 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                         b2
                                 )
                         ),
-                SpreadsheetDelta.inputValueTypePatch(valueType),
+                SpreadsheetDelta.valueTypePatch(valueType),
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         a1.setFormula(
                                                 a1.formula()
-                                                        .setInputValueType(valueType)
+                                                        .setValueType(valueType)
                                         ),
                                         b2.setFormula(
                                                 b2.formula()
-                                                        .setInputValueType(valueType)
+                                                        .setValueType(valueType)
                                         )
                                 )
                         )

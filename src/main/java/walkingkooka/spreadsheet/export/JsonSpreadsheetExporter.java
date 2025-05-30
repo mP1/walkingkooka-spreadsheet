@@ -123,7 +123,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 value = (c) -> context.marshall(
                         OptionalValidationValueTypeName.with(
                                 c.formula()
-                                        .inputValueType()
+                                        .valueType()
                         )
                 ).setName(
                         name(c)

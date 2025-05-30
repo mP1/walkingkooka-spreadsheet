@@ -274,7 +274,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         Sets.of(
                                 SpreadsheetSelection.A1.setFormula(
                                         SpreadsheetFormula.EMPTY.setText("=1+2")
-                                                .setInputValueType(
+                                                .setValueType(
                                                         Optional.of(
                                                                 ValidationValueTypeName.with("HelloValueType")
                                                         )

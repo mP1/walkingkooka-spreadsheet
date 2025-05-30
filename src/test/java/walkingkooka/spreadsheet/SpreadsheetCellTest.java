@@ -1114,7 +1114,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTextWhenReferenceAndInputValueTypeAndFormattedValue() {
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setInputValueType(
+                        SpreadsheetFormula.EMPTY.setValueType(
                                 Optional.of(ValidationValueTypeName.TEXT)
                         ).setInputValue(
                                 Optional.of(123)

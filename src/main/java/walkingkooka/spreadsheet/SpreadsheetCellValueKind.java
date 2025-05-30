@@ -92,7 +92,7 @@ public enum SpreadsheetCellValueKind {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.formula()
-                    .inputValueType();
+                    .valueType();
         }
     };
 
