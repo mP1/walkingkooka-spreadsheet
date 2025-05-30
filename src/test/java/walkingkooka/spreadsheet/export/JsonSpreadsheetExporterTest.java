@@ -287,7 +287,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetCellValueKind.VALUE_TYPE,
-                "A1-XFD1048576.value_type.json.txt",
+                "A1-XFD1048576.value-type.json.txt",
                 SpreadsheetMediaTypes.JSON_VALUE_TYPE,
                 "{\n" +
                         "  \"A1\": \"HelloValueType\",\n" +

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.io.FileExtension;
+import walkingkooka.text.CaseKind;
 
 /**
  * Directive that controls what part of a cell to export or when importing what part of a cell to replace.
@@ -96,7 +97,12 @@ public enum SpreadsheetCellValueKind {
     };
 
     SpreadsheetCellValueKind() {
-        this.fileExtension = FileExtension.with(this.name().toLowerCase());
+        this.fileExtension = FileExtension.with(
+                CaseKind.SNAKE.change(
+                                this.name(),
+                        CaseKind.KEBAB
+                )
+        );
     }
 
     public abstract Object cellValue(final SpreadsheetCell cell);

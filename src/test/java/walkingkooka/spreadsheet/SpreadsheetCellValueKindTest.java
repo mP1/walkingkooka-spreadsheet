@@ -105,11 +105,37 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
         }
     }
 
+    // fileExtension....................................................................................................
+
     @Test
-    public void testFileExtension() {
+    public void testFileExtensionWithCell() {
+        this.fileExtensionAndCheck(
+                SpreadsheetCellValueKind.CELL,
+                "cell"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithDecimalNumberSymbols() {
+        this.fileExtensionAndCheck(
+                SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
+                "decimal-number-symbols"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithValueType() {
+        this.fileExtensionAndCheck(
+                SpreadsheetCellValueKind.VALUE_TYPE,
+                "value-type"
+        );
+    }
+
+    private void fileExtensionAndCheck(final SpreadsheetCellValueKind kind,
+                                       final String expected) {
         this.checkEquals(
-                "cell",
-                SpreadsheetCellValueKind.CELL.fileExtension()
+                expected,
+                kind.fileExtension()
                         .value()
         );
     }
