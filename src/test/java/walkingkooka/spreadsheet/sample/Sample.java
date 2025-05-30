@@ -172,7 +172,7 @@ public final class Sample {
                                                                                 EXPRESSION_NUMBER_KIND.create(12)
                                                                         )
                                                                 )
-                                                        ).setExpressionValue(
+                                                        ).setValue(
                                                                 Optional.of(
                                                                         EXPRESSION_NUMBER_KIND.create(12)
                                                                 )

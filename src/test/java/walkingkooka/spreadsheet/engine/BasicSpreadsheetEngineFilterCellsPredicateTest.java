@@ -90,7 +90,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
                 this.createPredicate(SpreadsheetValueType.TEXT),
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=\"hello\"")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of("hello")
                                 )
                 )
@@ -110,7 +110,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
     public void testTestFalseWrongValueType() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=\"Hello\"")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of("Hello")
                         )
         );

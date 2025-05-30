@@ -1522,14 +1522,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     final Optional<Expression> maybeExpression = formula.expression();
                     if (maybeExpression.isPresent()) {
                         result = cell.setFormula(
-                                formula.setExpressionValue(
+                                formula.setValue(
                                         evaluation.evaluate(
                                                 this,
                                                 cell,
                                                 loader,
                                                 context
                                         )
-                                ).setExpressionValueIfError(context)
+                                ).setValueIfError(context)
                         );
                     }
                 }
@@ -1632,7 +1632,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     /**
      * If a formatted value is present and the {@link Expression#isPure(ExpressionPurityContext)} then return
-     * the current {@link SpreadsheetFormula#expressionValue()} otherwise evaluate the expression again.
+     * the current {@link SpreadsheetFormula#value()} otherwise evaluate the expression again.
      */
     // SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
     Optional<Object> evaluateIfNecessary(final SpreadsheetCell cell,
@@ -1640,7 +1640,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                          final SpreadsheetEngineContext context) {
         return cell.formattedValue().isPresent() && expressionRequired(cell).isPure(context) ?
                 cell.formula()
-                        .expressionValue() :
+                        .value() :
                 this.evaluate(
                         cell,
                         loader,

@@ -134,7 +134,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 TEXT
         );
         this.expressionAndCheck(formula);
-        this.expressionValueAndCheck(formula);
         this.valueAndCheck(formula);
         this.valueTypeAndCheck(formula);
         this.errorAndCheck(formula);
@@ -219,7 +218,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(different, differentText);
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -248,7 +246,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(different, DIFFERENT_TEXT);
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -258,7 +255,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetTextAfterSetExpressionSetValue() {
         final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression())
-                .setExpressionValue(this.expressionValue());
+                .setValue(this.value());
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
         assertNotSame(
                 formula,
@@ -268,7 +265,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(different, DIFFERENT_TEXT);
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -320,7 +316,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.tokenAndCheck(different, differentToken);
 
         this.expressionAndCheck(different); // should also clear expression, value, error
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -405,7 +400,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 differentExpression
         );
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -432,7 +426,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 this.token()
         );
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -443,7 +436,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token())
                 .setExpression(this.expression())
-                .setExpressionValue(this.expressionValue());
+                .setValue(this.value());
 
         final Optional<Expression> differentExpression = Optional.of(
                 Expression.value("different!")
@@ -463,7 +456,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 differentExpression
         );
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -494,141 +486,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.NO_EXPRESSION
         );
     }
-
-    // SetExpressionValue...............................................................................................
-
-    @SuppressWarnings("OptionalAssignedToNull")
-    @Test
-    public void testSetExpressionValueNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .setExpressionValue(null)
-        );
-    }
-
-    @Test
-    public void testSetExpressionValueSame() {
-        final SpreadsheetFormula formula = this.createObject();
-        assertSame(
-                formula,
-                formula.setExpressionValue(
-                        formula.expressionValue()
-                )
-        );
-    }
-
-    @Test
-    public void testSetExpressionValueDifferent() {
-        final SpreadsheetFormula formula = this.createObject()
-                .setToken(this.token());
-        final Optional<Object> differentExpressionValue = Optional.of(
-                "different!"
-        );
-        final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
-        assertNotSame(formula, different);
-
-        this.textAndCheck(
-                different,
-                TEXT
-        );
-        this.tokenAndCheck(
-                different,
-                this.token()
-        );
-        this.expressionAndCheck(different);
-        this.expressionValueAndCheck(
-                different,
-                differentExpressionValue
-        );
-        this.valueTypeAndCheck(different);
-        this.valueAndCheck(different);
-        this.errorAndCheck(different);
-    }
-
-    @Test
-    public void testSetExpressionValueDifferentAndClear() {
-        final SpreadsheetFormula formula = this.createObject()
-                .setToken(this.token())
-                .setExpressionValue(this.expressionValue());
-        final Optional<Object> differentExpressionValue = SpreadsheetFormula.NO_EXPRESSION_VALUE;
-        final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
-        assertNotSame(
-                formula,
-                different
-        );
-
-        this.textAndCheck(
-                different,
-                TEXT
-        );
-        this.tokenAndCheck(
-                different,
-                this.token()
-        );
-        this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
-        this.valueTypeAndCheck(different);
-        this.valueAndCheck(different);
-        this.errorAndCheck(different);
-    }
-
-    @Test
-    public void testSetExpressionValueDifferentAfterSetValue() {
-        final SpreadsheetFormula formula = this.createObject()
-                .setToken(this.token())
-                .setExpression(this.expression())
-                .setExpressionValue(this.expressionValue());
-
-        final Optional<Object> differentExpressionValue = Optional.of("different!");
-        final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
-        assertNotSame(formula, different);
-
-        this.textAndCheck(
-                different,
-                TEXT
-        );
-        this.tokenAndCheck(
-                different,
-                this.token()
-        );
-        this.expressionAndCheck(
-                different,
-                formula.expression()
-        );
-        this.expressionValueAndCheck(
-                different,
-                differentExpressionValue
-        );
-        this.valueTypeAndCheck(different);
-        this.valueAndCheck(different);
-        this.errorAndCheck(different);
-    }
-
-    private Optional<Object> expressionValue() {
-        return this.expressionValue(EXPRESSION_VALUE);
-    }
-
-    private Optional<Object> expressionValue(final Object value) {
-        return Optional.of(value);
-    }
-
-    private void expressionValueAndCheck(final SpreadsheetFormula formula,
-                                         final Optional<Object> value) {
-        this.checkEquals(
-                value,
-                formula.expressionValue(),
-                "expressionValue"
-        );
-    }
-
-    private void expressionValueAndCheck(final SpreadsheetFormula formula) {
-        this.expressionValueAndCheck(
-                formula,
-                SpreadsheetFormula.NO_EXPRESSION_VALUE
-        );
-    }
-
+    
     // SetValueType................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -666,7 +524,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(different);
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(
                 different,
                 differentValueType
@@ -689,7 +546,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(different);
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different, DIFFERENT_VALUE_TYPE);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -700,7 +556,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token())
                 .setExpression(this.expression())
-                .setExpressionValue(this.expressionValue())
                 .setValueType(this.valueType());
 
         final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
@@ -789,10 +644,15 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different
         );
 
-        this.textAndCheck(different);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                formula.token()
+        );
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different, differentValue);
         this.valueAndCheck(
@@ -806,17 +666,19 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetValueDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
                 .setValue(this.value());
-        final Optional<Object> differentValue = SpreadsheetFormula.NO_EXPRESSION_VALUE;
+        final Optional<Object> differentValue = SpreadsheetFormula.NO_VALUE;
         final SpreadsheetFormula different = formula.setValue(differentValue);
         assertNotSame(
                 formula,
                 different
         );
 
-        this.textAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -827,15 +689,20 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token())
                 .setExpression(this.expression())
-                .setExpressionValue(this.expressionValue())
                 .setValue(this.value());
 
         final Optional<Object> differentValue = Optional.of("different!");
         final SpreadsheetFormula different = formula.setValue(differentValue);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                formula.token()
+        );
         this.expressionAndCheck(
                 different,
                 formula.expression()
@@ -861,15 +728,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkEquals(
                 value,
                 formula.value(),
-                "inputValue"
+                formula::toString
         );
-
-        if(value.isPresent()) {
-            this.textAndCheck(formula);
-            this.tokenAndCheck(formula);
-            this.expressionAndCheck(formula);
-            this.expressionValueAndCheck(formula);
-        }
     }
 
     private void valueAndCheck(final SpreadsheetFormula formula) {
@@ -919,7 +779,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 this.token()
         );
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(
@@ -949,7 +808,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 this.token()
         );
         this.expressionAndCheck(different);
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different);
@@ -975,7 +833,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 this.token()
         );
         this.expressionAndCheck(different, formula.expression());
-        this.expressionValueAndCheck(different);
         this.valueTypeAndCheck(different);
         this.valueAndCheck(different);
         this.errorAndCheck(different, differentError);
@@ -1011,22 +868,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // replaceErrorWithValueIfPossible..................................................................................
 
     @Test
-    public void testSetExpressionValueIfErrorNullContextFails() {
+    public void testSetValueIfErrorNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetFormula.EMPTY
-                        .setExpressionValueIfError(null)
+                        .setValueIfError(null)
         );
     }
 
     @Test
-    public void testSetExpressionValueIfErrorWhenMissingCellBecomesZero() {
+    public void testSetValueIfErrorWhenMissingCellBecomesZero() {
         final ExpressionNumberKind kind = ExpressionNumberKind.BIG_DECIMAL;
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
 
-        this.setExpressionValueIfErrorAndCheck(
-                formula.setExpressionValue(
+        this.setValueIfErrorAndCheck(
+                formula.setValue(
                         Optional.of(
                                 SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1)
                         )
@@ -1038,7 +895,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind);
                     }
                 },
-                formula.setExpressionValue(
+                formula.setValue(
                         Optional.of(
                                 kind.zero()
                         )
@@ -1047,9 +904,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testSetExpressionValueIfErrorWhenNotMissingCell() {
-        this.setExpressionValueIfErrorAndCheck(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+    public void testSetValueIfErrorWhenNotMissingCell() {
+        this.setValueIfErrorAndCheck(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(
                                 "abc"
                         )
@@ -1057,21 +914,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void setExpressionValueIfErrorAndCheck(final SpreadsheetFormula formula) {
-        this.setExpressionValueIfErrorAndCheck(
+    private void setValueIfErrorAndCheck(final SpreadsheetFormula formula) {
+        this.setValueIfErrorAndCheck(
                 formula,
                 SpreadsheetEngineContexts.fake(),
                 formula
         );
     }
 
-    private void setExpressionValueIfErrorAndCheck(final SpreadsheetFormula formula,
-                                                   final SpreadsheetEngineContext context,
-                                                   final Object expected) {
+    private void setValueIfErrorAndCheck(final SpreadsheetFormula formula,
+                                         final SpreadsheetEngineContext context,
+                                         final Object expected) {
         this.checkEquals(
                 expected,
-                formula.setExpressionValueIfError(context),
-                () -> formula + " setExpressionValueIfError"
+                formula.setValueIfError(context),
+                () -> formula + " setValueIfError"
         );
     }
 
@@ -1170,11 +1027,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testClearNonEmptyTextTokenExpressionValue() {
+    public void testClearNonEmptyTextTokenValue() {
         final SpreadsheetFormula formula = formula("1+99")
                 .setToken(this.token())
-                .setExpression(this.expression())
-                .setExpressionValue(this.expressionValue());
+                .setExpression(this.expression());
         final SpreadsheetFormula cleared = formula.clear();
         assertNotSame(
                 formula,
@@ -1186,13 +1042,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private void clearAndCheck(final SpreadsheetFormula formula) {
         this.expressionAndCheck(formula);
-        this.expressionValueAndCheck(formula);
+        this.valueAndCheck(formula);
         this.errorAndCheck(formula);
     }
 
     @Test
-    public void testClearEmptyTextAndExpressionValue() {
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setExpressionValue(
+    public void testClearEmptyTextAndValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(123)
         );
 
@@ -1216,7 +1072,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(cleared);
         this.tokenAndCheck(cleared);
         this.expressionAndCheck(cleared);
-        this.expressionValueAndCheck(cleared);
         this.valueTypeAndCheck(cleared);
         this.valueAndCheck(
                 cleared,
@@ -1239,7 +1094,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.textAndCheck(cleared);
         this.tokenAndCheck(cleared);
         this.expressionAndCheck(cleared);
-        this.expressionValueAndCheck(cleared);
         this.valueTypeAndCheck(cleared);
         this.valueAndCheck(
                 cleared,
@@ -1415,7 +1269,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetPattern.parseNumberParsePattern("#")
                         .parser(),
                 SpreadsheetFormula.EMPTY.setText(text)
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'=\' at 0 expected \"#\"")
                                 )
@@ -1430,7 +1284,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetPattern.parseDateParsePattern("dd/mmm/yyyy")
                         .parser(),
                 SpreadsheetFormula.EMPTY.setText("@")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' expected \"dd/mmm/yyyy\"")
                                 )
@@ -1451,7 +1305,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         )
                 ),
                 SpreadsheetFormula.EMPTY.setText(text)
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 2 expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
                                 )
@@ -1651,7 +1505,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testIsEmptyWhenTextEmptyAndNonEmptyValue() {
         this.isEmptyAndCheck(
                 SpreadsheetFormula.EMPTY
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of("Hello")
                         ),
                 false
@@ -1950,30 +1804,30 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testTreePrintTextTokenExpressionValue() {
+    public void testTreePrintTextTokenValue() {
         this.treePrintAndCheck(
                 this.formula("1+2")
                         .setToken(this.token())
                         .setExpression(this.expression())
-                        .setExpressionValue(this.expressionValue()),
+                        .setValue(this.value()),
                 "Formula\n" +
                         "  token:\n" +
                         "    TextSpreadsheetFormula \"1+2\"\n" +
                         "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
-                        "  expressionValue:\n" +
+                        "  value:\n" +
                         "    3.0\n"
         );
     }
 
     @Test
-    public void testTreePrintTextTokenExpressionValueError() {
+    public void testTreePrintTextTokenValueError() {
         this.treePrintAndCheck(
                 this.formula("1+2")
                         .setToken(this.token())
                         .setExpression(this.expression())
-                        .setExpressionValue(this.expressionValue())
+                        .setValue(this.value())
                         .setError(this.error()),
                 "Formula\n" +
                         "  token:\n" +
@@ -1981,7 +1835,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
-                        "  expressionValue:\n" +
+                        "  value:\n" +
                         "    3.0\n" +
                         "  error:\n" +
                         "    #VALUE!\n" +
@@ -1990,13 +1844,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testTreePrintTreeExpressionValueString() {
+    public void testTreePrintTreeValueString() {
         this.treePrintAndCheck(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of("Hello123")
                 ),
                 "Formula\n" +
-                        "  expressionValue:\n" +
+                        "  value:\n" +
                         "    \"Hello123\"\n"
         );
     }
@@ -2004,12 +1858,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/1893
 
     @Test
-    public void testTreePrintTreeTextTokenExpressionExpressionValueImplementsTreePrintable() {
+    public void testTreePrintTreeTextTokenValueImplementsTreePrintable() {
         this.treePrintAndCheck(
                 this.formula("1+2")
                         .setToken(this.token())
                         .setExpression(this.expression())
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         new TreePrintable() {
                                             @Override
@@ -2026,7 +1880,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
-                        "  expressionValue:\n" +
+                        "  value:\n" +
                         "    1111\n" +
                         "    2222\n" +
                         "    3333\n"
@@ -2049,7 +1903,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testTreePrintTextError() {
         this.treePrintAndCheck(
                 this.formula("=123/0")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.DIV0.toError()
                                 )
@@ -2057,7 +1911,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "Formula\n" +
                         "  text:\n" +
                         "    \"=123/0\"\n" +
-                        "  expressionValue:\n" +
+                        "  value:\n" +
                         "    #DIV/0!\n"
         );
     }
@@ -2065,13 +1919,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testTreePrintError() {
         this.treePrintAndCheck(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(
                                 SpreadsheetErrorKind.DIV0.toError()
                         )
                 ),
                 "Formula\n" +
-                        "  expressionValue:\n" +
+                        "  value:\n" +
                         "    #DIV/0!\n"
         );
     }
@@ -2085,7 +1939,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "99+88",
                         this.token(),
                         this.expression(),
-                        this.expressionValue()
+                        this.value()
                 )
         );
     }
@@ -2097,7 +1951,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         TEXT,
                         this.token("different"),
                         this.expression(),
-                        this.expressionValue()
+                        this.value()
                 )
         );
     }
@@ -2109,25 +1963,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         TEXT,
                         this.token(),
                         this.expression("44"),
-                        this.expressionValue()
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentExpressionValue() {
-        checkNotEquals(
-                this.createFormula(
-                        TEXT,
-                        this.token(),
-                        this.expression(),
-                        this.expressionValue()
-                ),
-                this.createFormula(
-                        TEXT,
-                        this.token(),
-                        this.expression(),
-                        this.expressionValue("different-expression-value")
+                        this.value()
                 )
         );
     }
@@ -2175,7 +2011,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         return this.formula(formula)
                 .setToken(token)
                 .setExpression(expression)
-                .setExpressionValue(value);
+                .setValue(value);
     }
 
     // valueTypePatch..............................................................................................
@@ -2359,10 +2195,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 this.formula("=1"),
                 JsonNode.object()
                         .set(
-                                SpreadsheetFormula.EXPRESSION_VALUE_PROPERTY,
+                                SpreadsheetFormula.ERROR_PROPERTY,
                                 JsonNode.nullNode()
                         ),
-                SpreadsheetFormula.EXPRESSION_VALUE_PROPERTY,
+                SpreadsheetFormula.ERROR_PROPERTY,
                 JsonNode.nullNode()
         );
     }
@@ -2410,17 +2246,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // toString.........................................................................................................
 
     @Test
-    public void testToStringWithExpressionValue() {
-        this.toStringAndCheck(
-                this.createObject()
-                        .setExpressionValue(
-                                this.expressionValue(EXPRESSION_VALUE)
-                        ),
-                TEXT + " (=" + EXPRESSION_VALUE + ")"
-        );
-    }
-
-    @Test
     public void testToStringWithValueTypeAndValue() {
         this.toStringAndCheck(
                 this.createObject()
@@ -2440,7 +2265,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(
                                 Optional.of(123)
                         ),
-                "123"
+                "1+2 123"
         );
     }
 
@@ -2585,18 +2410,18 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testUnmarshallTextAndExpressionValue() {
+    public void testUnmarshallTextAndValue() {
         this.unmarshallAndCheck(
                 JsonNode.object()
                         .set(
                                 SpreadsheetFormula.TEXT_PROPERTY,
                                 JsonNode.string(TEXT)
                         ).set(
-                                SpreadsheetFormula.EXPRESSION_VALUE_PROPERTY,
+                                SpreadsheetFormula.VALUE_PROPERTY,
                                 JsonNode.number(EXPRESSION_VALUE)
                         ),
                 this.formula(TEXT)
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(EXPRESSION_VALUE)
                         )
         );
@@ -2727,10 +2552,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testMarshallTextAndExpressionValue() {
+    public void testMarshallTextAndValue() {
         this.marshallAndCheck(
                 this.formula(TEXT)
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(123L)
                         ),
                 JsonNode.object()
@@ -2738,7 +2563,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 JsonPropertyName.with("text"),
                                 JsonNode.string("1+2")
                         ).set(
-                                JsonPropertyName.with("expressionValue"),
+                                JsonPropertyName.with("value"),
                                 this.marshallContext()
                                         .marshallWithType(123L)
                         )
@@ -2746,11 +2571,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testMarshallTextAndExpressionValue2() {
+    public void testMarshallTextAndValue2() {
         this.marshallAndCheck(
                 this.formula(TEXT)
-                        .setExpressionValue(Optional.of("abc123")),
-                "{ \"text\": \"1+2\", \"expressionValue\": \"abc123\"}"
+                        .setValue(Optional.of("abc123")),
+                "{ \"text\": \"1+2\", \"value\": \"abc123\"}"
         );
     }
 
@@ -2801,10 +2626,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testMarshallRoundtripTextAndExpressionValue() {
+    public void testMarshallRoundtripTextAndValue() {
         this.marshallRoundTripTwiceAndCheck(
                 this.formula(TEXT)
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(123L)
                         )
         );
@@ -2814,16 +2639,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testMarshallRoundtripTextValueAndExpression() {
         this.marshallRoundTripTwiceAndCheck(
                 this.formula(TEXT)
-                        .setExpressionValue(Optional.of(123L))
+                        .setValue(Optional.of(123L))
                         .setExpression(this.expression())
         );
     }
 
     @Test
-    public void testMarshallRoundtripTextAndExpressionValueWithError() {
+    public void testMarshallRoundtripTextAndValueWithError() {
         this.marshallRoundTripTwiceAndCheck(
                 this.formula(TEXT)
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.VALUE.setMessage("error message #1")
                                 )

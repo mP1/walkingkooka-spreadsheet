@@ -1256,7 +1256,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context);
         this.checkNotEquals(
-                SpreadsheetFormula.NO_EXPRESSION_VALUE,
+                SpreadsheetFormula.NO_VALUE,
                 first.formula()
                         .error(),
                 () -> "Expected error absent=" + first
@@ -1853,7 +1853,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(value)
                 )
         ).setStyle(STYLE);
@@ -1870,7 +1870,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(value)
                 )
         ).setFormattedValue(
@@ -1889,7 +1889,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(value)
                 )
         ).setStyle(STYLE);
@@ -1906,7 +1906,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(value)
                 )
         ).setFormattedValue(
@@ -1925,7 +1925,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(value)
                 )
         ).setStyle(STYLE);
@@ -1975,7 +1975,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(
                         a1.setFormula(
-                                SpreadsheetFormula.EMPTY.setExpressionValue(
+                                SpreadsheetFormula.EMPTY.setValue(
                                         Optional.empty() // null value
                                 )
                         ).setStyle(STYLE)
@@ -2379,7 +2379,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b2,
                 SpreadsheetFormula.EMPTY
                         .setText("=1+2")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.VALUE.setMessage("error!")
                                 )
@@ -4533,7 +4533,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell a1Cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(value)
                 )
         ).setStyle(STYLE);
@@ -4633,7 +4633,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setExpressionValue(
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(VALIDATOR_FAIL_NUMBER)
         );
         final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
@@ -4690,7 +4690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell a1Cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
-                SpreadsheetFormula.EMPTY.setExpressionValue(
+                SpreadsheetFormula.EMPTY.setValue(
                         Optional.of(VALIDATOR_PASS_NUMBER)
                 )
         ).setValidator(
@@ -16606,61 +16606,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetSelection.parseCell("B1")
                                 .setFormula(
                                         SpreadsheetFormula.EMPTY.setText("=-999")
-                                                .setExpressionValue(
+                                                .setValue(
                                                         Optional.of(999)
                                                 )
                                 ),
                         a2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=1")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(1)
                                         )
                         ),
                         b2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello2")
                                         )
                         ),
                         c2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello3")
                                         )
                         ),
                         a3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=4")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(4)
                                         )
                         ),
                         b3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         ),
                         c3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=6")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(6)
                                         )
                         ),
                         a4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(7)
                                         )
                         ),
                         b4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=8")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(8)
                                         )
                         ),
                         c4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(9)
                                         )
                         )
@@ -16717,61 +16717,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetSelection.parseCell("B1")
                                 .setFormula(
                                         SpreadsheetFormula.EMPTY.setText("=-999")
-                                                .setExpressionValue(
+                                                .setValue(
                                                         Optional.of(999)
                                                 )
                                 ),
                         a2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=1")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(1)
                                         )
                         ),
                         b2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello2")
                                         )
                         ),
                         c2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello3")
                                         )
                         ),
                         a3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=4")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(4)
                                         )
                         ),
                         b3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         ),
                         c3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=6")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(6)
                                         )
                         ),
                         a4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(7)
                                         )
                         ),
                         b4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=8")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(8)
                                         )
                         ),
                         c4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(9)
                                         )
                         )
@@ -16824,61 +16824,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetSelection.parseCell("B1")
                                 .setFormula(
                                         SpreadsheetFormula.EMPTY.setText("=-999")
-                                                .setExpressionValue(
+                                                .setValue(
                                                         Optional.of(999)
                                                 )
                                 ),
                         a2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello1\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello1")
                                         )
                         ),
                         b2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello2")
                                         )
                         ),
                         c2.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello3")
                                         )
                         ),
                         a3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=4")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(4)
                                         )
                         ),
                         b3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         ),
                         c3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=6")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(6)
                                         )
                         ),
                         a4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(7)
                                         )
                         ),
                         b4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=8")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(8)
                                         )
                         ),
                         c4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(9)
                                         )
                         )
@@ -16942,31 +16942,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                         b3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         ),
                         c3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello6")
                                         )
                         ),
                         a4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(7)
                                         )
                         ),
                         b4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello8")
                                         )
                         ),
                         c4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(9)
                                         )
                         )
@@ -17030,31 +17030,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                         b3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         ),
                         c3.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello6")
                                         )
                         ),
                         a4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(7)
                                         )
                         ),
                         b4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("Hello8")
                                         )
                         ),
                         c4.setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(9)
                                         )
                         )
@@ -23879,7 +23879,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         SpreadsheetCell result;
 
-        if (false == formula.text().isEmpty() || formula.expressionValue().isPresent()) {
+        if (false == formula.text().isEmpty() || formula.value().isPresent()) {
             SpreadsheetParser parser = cell.parser()
                     .map(s -> SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(s, PROVIDER_CONTEXT))
                     .orElseGet(
@@ -23909,7 +23909,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                     decimalNumberContext.mathContext()
                                             )
                                     ).orElse(decimalNumberContext)
-                    ).setExpressionValue(value)
+                    ).setValue(value)
             );
         } else {
             result = cell.setFormula(
@@ -23992,7 +23992,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
             } catch (final Exception fail) {
-                parsedFormula = parsedFormula.setExpressionValue(
+                parsedFormula = parsedFormula.setValue(
                         Optional.of(
                                 SpreadsheetErrorKind.VALUE.setMessage(
                                         fail.getMessage()

@@ -99,11 +99,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public final static Optional<SpreadsheetError> NO_ERROR = Optional.empty();
 
     /**
-     * No expression value constant.
-     */
-    public final static Optional<Object> NO_EXPRESSION_VALUE = Optional.empty();
-
-    /**
      * Input value type is absent constant.
      */
     public final static Optional<ValidationValueTypeName> NO_VALUE_TYPE = Optional.empty();
@@ -120,7 +115,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             NO_TEXT,
             NO_TOKEN,
             NO_EXPRESSION,
-            NO_EXPRESSION_VALUE,
             NO_VALUE_TYPE,
             NO_VALUE,
             NO_ERROR
@@ -159,7 +153,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             formula = EMPTY.setText(
                     begin.textBetween()
                             .toString()
-            ).setExpressionValue(
+            ).setValue(
                     Optional.of(
                             SpreadsheetErrorKind.translate(cause)
                     )
@@ -172,7 +166,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private SpreadsheetFormula(final String text,
                                final Optional<SpreadsheetFormulaParserToken> token,
                                final Optional<Expression> expression,
-                               final Optional<Object> expressionValue,
                                final Optional<ValidationValueTypeName> valueType,
                                final Optional<Object> value,
                                final Optional<SpreadsheetError> error) {
@@ -181,7 +174,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         this.text = text;
         this.token = token;
         this.expression = expression;
-        this.expressionValue = expressionValue;
 
         this.valueType = valueType;
         this.value = value;
@@ -200,7 +192,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     /**
-     * Sets or replaces the text, clearing any {@link #expression()}, {@link #expressionValue()}, {@link #value()}
+     * Sets or replaces the text, clearing any {@link #expression()}, {@link #value()}, {@link #value()}
      * and {@link #error()}.
      */
     public SpreadsheetFormula setText(final String text) {
@@ -213,7 +205,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                 text,
                                 NO_TOKEN,
                                 NO_EXPRESSION,
-                                NO_EXPRESSION_VALUE,
                                 NO_VALUE_TYPE,
                                 NO_VALUE,
                                 NO_ERROR
@@ -260,7 +251,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                 this.text(), // no need to keep text if token is present.
                         token,
                         NO_EXPRESSION,
-                        NO_EXPRESSION_VALUE,
                         NO_VALUE_TYPE,
                         NO_VALUE,
                         NO_ERROR
@@ -289,7 +279,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         this.text,
                         this.token,
                         Objects.requireNonNull(expression, "expression"),
-                        NO_EXPRESSION_VALUE,
                         NO_VALUE_TYPE,
                         NO_VALUE,
                         NO_ERROR
@@ -301,35 +290,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * The expression can be executed to produce a value or error.
      */
     private final Optional<Expression> expression;
-
-    // expressionValue..................................................................................................
-
-    /**
-     * The value when this formula is evaluated.
-     */
-    public Optional<Object> expressionValue() {
-        return this.expressionValue;
-    }
-
-    /**
-     * Would be setter that returns a {@link SpreadsheetFormula} with the given expression value,
-     * also clearing any {@link #value()} and {@link #error()}.
-     */
-    public SpreadsheetFormula setExpressionValue(final Optional<Object> expressionValue) {
-        return this.expressionValue.equals(expressionValue) ?
-                this :
-                this.replace(
-                        this.text,
-                        this.token,
-                        this.expression,
-                        Objects.requireNonNull(expressionValue, "expressionValue"),
-                        NO_VALUE_TYPE,
-                        NO_VALUE,
-                        NO_ERROR
-                );
-    }
-
-    private final Optional<Object> expressionValue;
 
     // valueType........................................................................................................
 
@@ -350,7 +310,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         NO_TEXT,
                         NO_TOKEN,
                         NO_EXPRESSION,
-                        NO_EXPRESSION_VALUE,
                         Objects.requireNonNull(valueType, "valueType"),
                         NO_VALUE,
                         NO_ERROR
@@ -374,17 +333,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     /**
-     * Would be setter that returns a {@link SpreadsheetFormula} with the given value,
-     * also clearing any {@link #value()} and {@link #error()}.
+     * Would be setter that returns a {@link SpreadsheetFormula} with the given value and also clears any error.
      */
     public SpreadsheetFormula setValue(final Optional<Object> value) {
         return this.value.equals(value) ?
                 this :
                 this.replace(
-                        NO_TEXT,
-                        NO_TOKEN,
-                        NO_EXPRESSION,
-                        NO_EXPRESSION_VALUE,
+                        this.text,
+                        this.token,
+                        this.expression,
                         this.valueType,
                         Objects.requireNonNull(value, "value"),
                         NO_ERROR
@@ -399,24 +356,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // errorOrValue ....................................................................................................
 
     /**
-     * Returns any value that is present, first using any {@link #error()}, {@link #value()} or {@link #expressionValue()}.
+     * Returns any value that is present, first using any {@link #error()} or {@link #value()}.
      */
     public Optional<Object> errorOrValue() {
-        Optional<Object> errorOrValue;
-
-        final Optional<SpreadsheetError> error = this.error;
-        if(error.isPresent()) {
-            errorOrValue = Cast.to(error);
-        } else {
-            final Optional<Object> value = this.value;
-            if(value.isPresent()) {
-                errorOrValue = value;
-            } else {
-                errorOrValue = this.expressionValue;
-            }
-        }
-
-        return errorOrValue;
+        return Cast.<Optional<Object>>to(this.error)
+                .or(() -> this.value);
     }
 
     // error ...........................................................................................................
@@ -443,7 +387,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         this.text,
                         this.token,
                         this.expression,
-                        this.expressionValue,
                         this.valueType,
                         this.value,
                         Objects.requireNonNull(error, "error")
@@ -459,7 +402,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * <br>
      * This handles the special case of turning formulas to missing cells parse #NAME to a value of zero.
      */
-    public SpreadsheetFormula setExpressionValueIfError(final SpreadsheetEngineContext context) {
+    public SpreadsheetFormula setValueIfError(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
 
         SpreadsheetFormula result = this;
@@ -470,7 +413,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             final Optional<Object> errorValue = error.replaceWithValueIfPossible(context);
 
             result = null != errorValue && errorValue.isPresent() ?
-                    this.setExpressionValue(errorValue) :
+                    this.setValue(errorValue) :
                     this;
         }
 
@@ -480,20 +423,18 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // clear ...........................................................................................................
 
     /**
-     * Clears any parsed {@link #expression()}, {@link #expressionValue()} and {@link #error()}, but any {@link #text()}
-     * and {@link #value()} is kept.
+     * Clears any parsed {@link #expression()}, {@link #value()}  and {@link #error()}, but any {@link #text()}.
      */
     public SpreadsheetFormula clear() {
         final String text = this.text;
 
         // text will be cleared when token is present
         return (null == text || false == text.isEmpty()) &&
-                (this.expression().isPresent() || this.expressionValue().isPresent()) ?
+                (this.expression().isPresent() || this.value().isPresent()) ?
                 new SpreadsheetFormula(
                         text,
                         this.token,
                         NO_EXPRESSION,
-                        NO_EXPRESSION_VALUE,
                         NO_VALUE_TYPE,
                         NO_VALUE,
                         NO_ERROR
@@ -506,7 +447,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private SpreadsheetFormula replace(final String text,
                                        final Optional<SpreadsheetFormulaParserToken> token,
                                        final Optional<Expression> expression,
-                                       final Optional<Object> expressionValue,
                                        final Optional<ValidationValueTypeName> valueType,
                                        final Optional<Object> value,
                                        final Optional<SpreadsheetError> error) {
@@ -514,7 +454,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 text,
                 token,
                 expression,
-                expressionValue,
                 valueType,
                 value,
                 error
@@ -617,7 +556,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     break;
                 case TOKEN_PROPERTY_STRING:
                 case EXPRESSION_PROPERTY_STRING:
-                case EXPRESSION_VALUE_PROPERTY_STRING:
                 case ERROR_PROPERTY_STRING:
                     Patchable.invalidPropertyPresent(propertyName, propertyAndValue);
                     break;
@@ -657,12 +595,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     printer
             );
         }
-
-        this.printTreeLabelAndValue(
-                "expressionValue",
-                this.expressionValue(),
-                printer
-        );
 
         this.printTreeLabelAndValue(
                 "valueType",
@@ -747,7 +679,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         String text = NO_TEXT;
         SpreadsheetFormulaParserToken token = null;
         Expression expression = null;
-        Object expressionValue = null;
         Optional<ValidationValueTypeName> valueType = NO_VALUE_TYPE;
         Object value = null;
         Optional<SpreadsheetError> error = NO_ERROR;
@@ -768,9 +699,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     break;
                 case EXPRESSION_PROPERTY_STRING:
                     expression = context.unmarshallWithType(child);
-                    break;
-                case EXPRESSION_VALUE_PROPERTY_STRING:
-                    expressionValue = context.unmarshallWithType(child);
                     break;
                 case VALUE_TYPE_PROPERTY_STRING:
                     valueType = context.unmarshallOptional(
@@ -796,7 +724,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return EMPTY.setText(text)
                 .setToken(Optional.ofNullable(token))
                 .setExpression(Optional.ofNullable(expression))
-                .setExpressionValue(Optional.ofNullable(expressionValue))
                 .setValueType(valueType)
                 .setValue(Optional.ofNullable(value))
                 .setError(error);
@@ -811,10 +738,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         final Optional<Object> value = this.value;
 
         // dont marshall text if input value is present.
-        if (false == value.isPresent()) {
+        final String text = this.text();
+        if (false == text.isEmpty()) {
             object = object.set(
                     TEXT_PROPERTY,
-                    JsonNode.string(this.text())
+                    JsonNode.string(text)
             );
         }
 
@@ -826,16 +754,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         final Optional<Expression> expression = this.expression;
         if (expression.isPresent()) {
             object = object.set(EXPRESSION_PROPERTY, context.marshallWithType(expression.get()));
-        }
-
-        final Optional<Object> expressionValue = this.expressionValue;
-        if (expressionValue.isPresent()) {
-            object = object.set(
-                    EXPRESSION_VALUE_PROPERTY,
-                    context.marshallWithType(
-                            expressionValue.get()
-                    )
-            );
         }
 
         if (value.isPresent()) {
@@ -869,8 +787,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private final static String TEXT_PROPERTY_STRING = "text";
     private final static String TOKEN_PROPERTY_STRING = "token";
     private final static String EXPRESSION_PROPERTY_STRING = "expression";
-    private final static String EXPRESSION_VALUE_PROPERTY_STRING = "expressionValue";
-
     private final static String VALUE_TYPE_PROPERTY_STRING = "valueType";
     private final static String VALUE_PROPERTY_STRING = "value";
 
@@ -881,7 +797,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
     final static JsonPropertyName TOKEN_PROPERTY = JsonPropertyName.with(TOKEN_PROPERTY_STRING);
     final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
-    final static JsonPropertyName EXPRESSION_VALUE_PROPERTY = JsonPropertyName.with(EXPRESSION_VALUE_PROPERTY_STRING);
 
     final static JsonPropertyName VALUE_TYPE_PROPERTY = JsonPropertyName.with(VALUE_TYPE_PROPERTY_STRING);
     final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
@@ -912,7 +827,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 this.text,
                 this.token,
                 this.expression,
-                this.expressionValue,
                 this.valueType,
                 this.value,
                 this.error
@@ -930,7 +844,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return Objects.equals(this.text, other.text) && // text could be null when token is present
                 this.token.equals(other.token) &&
                 this.expression.equals(other.expression) &&
-                this.expressionValue.equals(other.expressionValue) &&
                 this.valueType.equals(other.valueType) &&
                 this.value.equals(other.value) &&
                 this.error.equals(other.error);
@@ -946,14 +859,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         builder.disable(ToStringBuilderOption.QUOTE);
         builder.value(this.text());
 
-        // expression OR value never both.
-        if (this.expressionValue.isPresent()) {
-            builder.surroundValues("(=", ")")
-                    .value(new Object[]{this.expressionValue});
-        } else {
-            builder.value(this.valueType);
-            builder.value(this.value);
-        }
+        builder.value(this.valueType);
+        builder.value(this.value);
 
         builder.value(this.error);
     }
@@ -961,14 +868,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // CanBeEmpty.......................................................................................................
 
     /**
-     * Returns true if this {@link SpreadsheetFormula#text} and {@link #expressionValue()} and {@link #value} are all empty.
+     * Returns true if this {@link SpreadsheetFormula#text} and {@link #value()}  and {@link #value} are all empty.
      */
     @Override
     public boolean isEmpty() {
         return this.text()
                 .isEmpty() &&
-                false == this.expressionValue()
-                        .isPresent() &&
                 false == this.value()
                         .isPresent();
     }

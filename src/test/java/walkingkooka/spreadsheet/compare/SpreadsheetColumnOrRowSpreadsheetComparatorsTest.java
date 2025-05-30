@@ -938,7 +938,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                                  final Object value) {
         return SpreadsheetSelection.parseCell(reference)
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setExpressionValue(
+                        SpreadsheetFormula.EMPTY.setValue(
                                 Optional.ofNullable(value)
                         )
                 );

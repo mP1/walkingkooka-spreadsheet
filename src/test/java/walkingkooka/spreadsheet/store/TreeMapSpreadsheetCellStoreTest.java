@@ -928,7 +928,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final SpreadsheetCell a1 = store.save(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(1)
                                 )
                 )
@@ -938,7 +938,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("ABC")
                                         )
                         )
@@ -948,7 +948,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A3")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         )
@@ -959,7 +959,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A4")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(true)
                                         )
                         )
@@ -978,7 +978,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A7")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(678)
                                         )
                         )
@@ -1001,7 +1001,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final SpreadsheetCell a1 = store.save(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(
                                                 ExpressionNumberKind.BIG_DECIMAL.create(5)
                                         )
@@ -1013,7 +1013,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("ABC")
                                         )
                         )
@@ -1023,7 +1023,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A3")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(
                                                         ExpressionNumberKind.DOUBLE.create(5)
                                                 )
@@ -1036,7 +1036,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A4")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(true)
                                         )
                         )
@@ -1055,7 +1055,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A7")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(678)
                                         )
                         )
@@ -1078,7 +1078,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final SpreadsheetCell a1 = store.save(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(1)
                                 )
                 )
@@ -1088,7 +1088,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("ABC")
                                         )
                         )
@@ -1098,7 +1098,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A3")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         )
@@ -1108,7 +1108,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A4")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(true)
                                         )
                         )
@@ -1127,7 +1127,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A7")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(678)
                                         )
                         )
@@ -1152,7 +1152,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final SpreadsheetCell a1 = store.save(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(1)
                                 )
                 )
@@ -1162,7 +1162,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("ABC")
                                         )
                         )
@@ -1172,7 +1172,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A3")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         )
@@ -1182,7 +1182,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A4")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(true)
                                         )
                         )
@@ -1201,7 +1201,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A7")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(678)
                                         )
                         )
@@ -1227,7 +1227,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final SpreadsheetCell a1 = store.save(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(1)
                                 )
                 )
@@ -1237,7 +1237,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("ABC")
                                         )
                         )
@@ -1247,7 +1247,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A3")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(5)
                                         )
                         )
@@ -1258,7 +1258,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A4")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(true)
                                         )
                         )
@@ -1277,7 +1277,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A7")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of(678)
                                         )
                         )
@@ -1298,7 +1298,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final SpreadsheetCell a1 = store.save(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(1)
                                 )
                 )
@@ -1308,7 +1308,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setExpressionValue(
+                                        .setValue(
                                                 Optional.of("ABC")
                                         )
                         )

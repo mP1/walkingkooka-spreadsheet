@@ -179,7 +179,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetCell.with(
                 REFERENCE,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(Lists.empty())
                         )
         );
@@ -188,7 +188,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(
                 cell,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(
                                         SpreadsheetErrorKind.VALUE)
                         )
@@ -356,7 +356,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         final SpreadsheetCell different = cell.setFormula(
                 SpreadsheetFormula.EMPTY
-                        .setExpressionValue(Optional.of(Lists.empty()))
+                        .setValue(Optional.of(Lists.empty()))
         );
         assertNotSame(cell, different);
 
@@ -364,7 +364,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(
                 different,
                 SpreadsheetFormula.EMPTY
-                        .setExpressionValue(
+                        .setValue(
                                 Optional.of(SpreadsheetErrorKind.VALUE)
                         )
         );
@@ -1175,7 +1175,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         ).toTextNode()
                         )
                 ),
-                "A1,,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
+                "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
         );
     }
 
@@ -2499,7 +2499,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
-                                .setExpressionValue(Optional.of(3))
+                                .setValue(Optional.of(3))
 
                 ),
                 "Cell A1\n" +
@@ -2516,7 +2516,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n"
         );
     }
@@ -2529,7 +2529,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
-                                .setExpressionValue(
+                                .setValue(
                                         Optional.of(
                                                 SpreadsheetErrorKind.VALUE.setMessage("error message 1")
                                         )
@@ -2550,7 +2550,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      #VALUE!\n" +
                         "        \"error message 1\"\n"
         );
@@ -2564,7 +2564,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         formula(FORMULA_TEXT)
                                 .setToken(token())
                                 .setExpression(expression())
-                                .setExpressionValue(Optional.of(3))
+                                .setValue(Optional.of(3))
                 ).setStyle(BOLD_ITALICS),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -2580,7 +2580,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n" +
                         "  style:\n" +
                         "    TextStyle\n" +
@@ -2702,7 +2702,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 this.formula(FORMULA_TEXT)
                                         .setToken(this.token())
                                         .setExpression(this.expression())
-                                        .setExpressionValue(Optional.of(3))
+                                        .setValue(Optional.of(3))
                         ),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -2718,7 +2718,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n" +
                         "  parser:\n" +
                         "    date-time-parse-pattern\n" +
@@ -2742,7 +2742,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 this.formula(FORMULA_TEXT)
                                         .setToken(this.token())
                                         .setExpression(this.expression())
-                                        .setExpressionValue(Optional.of(3))
+                                        .setValue(Optional.of(3))
                         ),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -2758,7 +2758,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n" +
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
@@ -2781,7 +2781,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 formula(FORMULA_TEXT)
                                         .setToken(token())
                                         .setExpression(expression())
-                                        .setExpressionValue(Optional.of(3))
+                                        .setValue(Optional.of(3))
                         ).setStyle(BOLD_ITALICS)
                         .setFormatter(formatter()),
                 "Cell A1\n" +
@@ -2798,7 +2798,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n" +
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
@@ -2818,7 +2818,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 formula(FORMULA_TEXT)
                                         .setToken(token())
                                         .setExpression(expression())
-                                        .setExpressionValue(Optional.of(3))
+                                        .setValue(Optional.of(3))
                         ).setStyle(BOLD_ITALICS)
                         .setFormatter(formatter())
                         .setFormattedValue(formattedValue()),
@@ -2836,7 +2836,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n" +
                         "  formatter:\n" +
                         "    text-format-pattern\n" +
@@ -2858,7 +2858,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 formula(FORMULA_TEXT)
                                         .setToken(token())
                                         .setExpression(expression())
-                                        .setExpressionValue(Optional.of(3))
+                                        .setValue(Optional.of(3))
                         ).setValidator(this.validator()),
                 "Cell A1\n" +
                         "  Formula\n" +
@@ -2874,7 +2874,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
                         "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    expressionValue:\n" +
+                        "    value:\n" +
                         "      3\n" +
                         "  validator:\n" +
                         "    validator123\n"
