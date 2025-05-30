@@ -701,6 +701,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
         );
     }
 
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a {@link ValidatorSelector}.
+     */
+    public JsonNode validatorPatch(final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return this.makePatch(
+                VALIDATOR_PROPERTY,
+                context.marshallOptional(this.validator)
+        );
+    }
+
     private JsonNode makePatch(final JsonPropertyName propertyName,
                                final JsonNode value) {
         return JsonNode.object()
