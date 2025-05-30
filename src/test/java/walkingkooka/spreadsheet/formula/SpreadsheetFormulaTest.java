@@ -96,12 +96,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static String TEXT = "1+2";
     private final static String EXPRESSION = "1+2";
     private final static Double EXPRESSION_VALUE = 3.0;
-    private final static ValidationValueTypeName INPUT_VALUE_TYPE = ValidationValueTypeName.TEXT;
+    private final static ValidationValueTypeName VALUE_TYPE = ValidationValueTypeName.TEXT;
     private final static String INPUT_VALUE = "\"InputValue444\"";
     private final static String ERROR = "Message #1";
 
     private final static String DIFFERENT_TEXT = "99+99";
-    private final static ValidationValueTypeName DIFFERENT_INPUT_VALUE_TYPE = ValidationValueTypeName.TIME;
+    private final static ValidationValueTypeName DIFFERENT_VALUE_TYPE = ValidationValueTypeName.TIME;
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -656,7 +656,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetValueTypeDifferent() {
         final SpreadsheetFormula formula = this.createObject()
                 .setToken(this.token());
-        final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_INPUT_VALUE_TYPE);
+        final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(
                 formula,
@@ -679,7 +679,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetValueTypeDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
                 .setValueType(this.valueType());
-        final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_INPUT_VALUE_TYPE);
+        final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(
                 formula,
@@ -690,7 +690,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
-        this.valueTypeAndCheck(different, DIFFERENT_INPUT_VALUE_TYPE);
+        this.valueTypeAndCheck(different, DIFFERENT_VALUE_TYPE);
         this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
@@ -703,7 +703,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setExpressionValue(this.expressionValue())
                 .setValueType(this.valueType());
 
-        final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_INPUT_VALUE_TYPE);
+        final Optional<ValidationValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(formula, different);
 
@@ -722,7 +722,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private Optional<ValidationValueTypeName> valueType() {
-        return this.valueType(INPUT_VALUE_TYPE);
+        return this.valueType(VALUE_TYPE);
     }
 
     private Optional<ValidationValueTypeName> valueType(final ValidationValueTypeName type) {
@@ -2139,7 +2139,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         this.valueType()
                 ),
                 SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of(DIFFERENT_INPUT_VALUE_TYPE)
+                        Optional.of(DIFFERENT_VALUE_TYPE)
                 )
         );
     }
@@ -2425,7 +2425,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.toStringAndCheck(
                 this.createObject()
                         .setValueType(
-                                Optional.of(INPUT_VALUE_TYPE)
+                                Optional.of(VALUE_TYPE)
                         ).setInputValue(
                                 Optional.of(123)
                         ),
@@ -2622,13 +2622,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 JsonNode.object()
                         .set(
                                 SpreadsheetFormula.VALUE_TYPE_PROPERTY,
-                                JsonNode.string(INPUT_VALUE_TYPE.value())
+                                JsonNode.string(VALUE_TYPE.value())
                         ).set(
                                 SpreadsheetFormula.INPUT_VALUE_PROPERTY,
                                 JsonNode.string(INPUT_VALUE)
                         ),
                 SpreadsheetFormula.EMPTY.setValueType(
-                        Optional.of(INPUT_VALUE_TYPE)
+                        Optional.of(VALUE_TYPE)
                 ).setInputValue(
                         Optional.of(INPUT_VALUE)
                 )
@@ -2758,7 +2758,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testMarshallValueTypeAndValue() {
         this.marshallAndCheck(
                 SpreadsheetFormula.EMPTY.setInputValue(
-                        Optional.of(INPUT_VALUE_TYPE)
+                        Optional.of(VALUE_TYPE)
                 ).setInputValue(
                         Optional.of("abc123")
                 ),
