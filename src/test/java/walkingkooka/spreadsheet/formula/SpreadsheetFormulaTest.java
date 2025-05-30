@@ -2163,6 +2163,30 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // textPatch........................................................................................................
+
+    @Test
+    public void testTextPatchWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.textPatch(null)
+        );
+    }
+
+    @Test
+    public void testTextPatch() {
+        final String text = "=1+2*3";
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.TEXT_PROPERTY,
+                                JsonNode.string(text)
+                        ),
+                SpreadsheetFormula.textPatch(text)
+        );
+    }
+    
     // patch............................................................................................................
 
     @Test
@@ -2175,26 +2199,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testPatchSameText() {
+        final String text = "=1+2*3";
+
         this.patchAndCheck(
-                this.formula("=1"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetFormula.TEXT_PROPERTY,
-                                JsonNode.string("=1")
-                        )
+                this.formula(text),
+                SpreadsheetFormula.textPatch(text)
         );
     }
 
     @Test
     public void testPatchDifferentText() {
+        final String text = "=1+2*3";
+
         this.patchAndCheck(
-                this.formula("=1"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetFormula.TEXT_PROPERTY,
-                                JsonNode.string("=2")
-                        ),
-                this.formula("=2")
+                this.formula("'Old"),
+                SpreadsheetFormula.textPatch(text),
+                this.formula(text)
         );
     }
 

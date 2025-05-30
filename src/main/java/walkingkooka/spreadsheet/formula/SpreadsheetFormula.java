@@ -566,6 +566,20 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 );
     }
 
+    /**
+     * Creates a PATCH for {@link SpreadsheetFormula#text()}
+     */
+    public static JsonNode textPatch(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        return JsonNode.object()
+                .set(
+                        TEXT_PROPERTY,
+                        JsonNodeMarshallContexts.basic()
+                                .marshall(text)
+                );
+    }
+
     // Patchable........................................................................................................
 
     @Override
