@@ -781,114 +781,52 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
-    
-    // cellsFormulaPatch................................................................................................
+
+    // cellsFormulaTextPatch............................................................................................
 
     @Test
-    public void testCellsFormulaPatchWithNullCellsFails() {
+    public void testCellsFormulaTextPatchWithNullMapFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetDelta.cellsFormulaPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+                () -> SpreadsheetDelta.cellsFormulaTextPatch(null)
         );
     }
 
     @Test
-    public void testCellsFormulaPatchWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsFormulaPatch(
-                        Maps.empty(),
-                        null
-                )
-        );
-    }
+    public void testCellsFormulaTextPatch() {
+        final String formulaText1 = "=1";
+        final String formulaText2 = "=22";
 
-    @Test
-    public void testCellsFormulaPatch() {
-        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
-
-        this.cellsFormulaPatchAndCheck(
+        this.cellsFormulaTextPatchAndCheck(
                 Maps.of(
                         SpreadsheetSelection.A1,
-                        formula
+                        formulaText1,
+                        SpreadsheetSelection.parseCell("A2"),
+                        formulaText2
                 ),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("formula"),
-                                                                marshall(formula)
-                                                        )
-                                        )
-                        )
+                "{\n" +
+                        "  \"cells\": {\n" +
+                        "    \"A1\": {\n" +
+                        "      \"formula\": {\n" +
+                        "        \"text\": \"=1\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    \"A2\": {\n" +
+                        "      \"formula\": {\n" +
+                        "        \"text\": \"=22\"\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
         );
     }
 
-    @Test
-    public void testCellsFormulaPatchEmptyCells() {
-        this.cellsFormulaPatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
-        );
-    }
-
-    @Test
-    public void testCellsFormulaPatchMultipleCells() {
-        final SpreadsheetFormula formula1 = SpreadsheetFormula.EMPTY.setText("=1");
-        final SpreadsheetFormula formula2 = SpreadsheetFormula.EMPTY.setText("=22");
-
-        final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas = Maps.of(
-                SpreadsheetSelection.A1,
-                formula1,
-                SpreadsheetSelection.parseCell("A2"),
-                formula2
-        );
-
-        this.cellsFormulaPatchAndCheck(
-                cellToFormulas,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("formula"),
-                                                                marshall(formula1)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("formula"),
-                                                                marshall(formula2)
-                                                        )
-                                        )
-                        )
-        );
-    }
-
-    private void cellsFormulaPatchAndCheck(final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas,
-                                           final JsonObject expected) {
-        final JsonNode patch = SpreadsheetDelta.cellsFormulaPatch(
-                cellToFormulas,
-                MARSHALL_CONTEXT
-        );
+    private void cellsFormulaTextPatchAndCheck(final Map<SpreadsheetCellReference, String> cellToFormulaTexts,
+                                               final String expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsFormulaTextPatch(cellToFormulaTexts);
 
         this.checkEquals(
-                expected,
+                JsonNode.parse(expected),
                 patch
         );
 
@@ -899,17 +837,20 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 Color.BLACK
         );
 
-        for (final Map.Entry<SpreadsheetCellReference, SpreadsheetFormula> cellAndFormula : cellToFormulas.entrySet()) {
-            final SpreadsheetCellReference cell = cellAndFormula.getKey();
+        for (final Map.Entry<SpreadsheetCellReference, String> cellAndFormulaText : cellToFormulaTexts.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndFormulaText.getKey();
+
+            final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("'Patched over");
 
             beforePatchCells.add(
-                    cell.setFormula(
-                            SpreadsheetFormula.EMPTY.setText("'Patched over")
-                    ).setStyle(style)
+                    cell.setFormula(formula)
+                            .setStyle(style)
             );
             patchedCells.add(
                     cell.setFormula(
-                            cellAndFormula.getValue()
+                            formula.setText(
+                                    cellAndFormulaText.getValue()
+                            )
                     ).setStyle(style)
             );
         }
@@ -4829,6 +4770,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
+
+    private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
+            ExpressionNumberKind.BIG_DECIMAL,
+            MathContext.DECIMAL32
+    );
 
     @Override
     public SpreadsheetDelta createPatchable() {
