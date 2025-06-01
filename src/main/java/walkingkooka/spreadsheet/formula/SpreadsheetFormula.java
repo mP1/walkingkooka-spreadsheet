@@ -352,8 +352,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Returns any value that is present, first using any {@link #error()} or {@link #value()}.
      */
     public Optional<Object> errorOrValue() {
-        return Cast.<Optional<Object>>to(this.error)
-                .or(() -> this.value);
+        // GWT's Optional#or is not implemented.
+        Optional<SpreadsheetError> errorOrValue = this.error;
+        return errorOrValue.isPresent() ?
+                Cast.to(errorOrValue) :
+                this.value;
     }
 
     // error ...........................................................................................................
