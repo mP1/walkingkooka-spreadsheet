@@ -114,8 +114,11 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                             ),
                             ExpressionNumberKind.BIG_DECIMAL
                     ),
-                    JsonNodeMarshallContexts.fake(),
-                    JsonNodeUnmarshallContexts.fake()
+                    JsonNodeMarshallContexts.basic(),
+                    JsonNodeUnmarshallContexts.basic(
+                            ExpressionNumberKind.BIG_DECIMAL,
+                            MathContext.DECIMAL32
+                    )
             )
     );
 

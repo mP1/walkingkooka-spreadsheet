@@ -158,8 +158,12 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         ),
                         KIND
                 ),
-                JsonNodeMarshallContexts.fake(),
-                JsonNodeUnmarshallContexts.fake()
+                JsonNodeMarshallContexts.basic(),
+                JsonNodeUnmarshallContexts.basic(
+                        KIND,
+                        this.decimalNumberContext()
+                                .mathContext()
+                )
         );
     }
 
