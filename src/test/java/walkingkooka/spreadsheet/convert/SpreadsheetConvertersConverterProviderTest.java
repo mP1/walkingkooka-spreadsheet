@@ -235,6 +235,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToSpreadsheetMetadata() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA + "",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToSpreadsheetMetadata()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadataColor() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_COLOR + "",

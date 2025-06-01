@@ -173,6 +173,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToSpreadsheetId();
                 break;
+            case TEXT_TO_SPREADSHEET_METADATA_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToSpreadsheetMetadata();
+                break;
             case TEXT_TO_SPREADSHEET_METADATA_COLOR_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -298,6 +303,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_SPREADSHEET_ID = ConverterName.with(TEXT_TO_SPREADSHEET_ID_STRING);
 
+    private final static String TEXT_TO_SPREADSHEET_METADATA_STRING = "text-to-spreadsheet-metadata";
+
+    final static ConverterName TEXT_TO_SPREADSHEET_METADATA = ConverterName.with(TEXT_TO_SPREADSHEET_METADATA_STRING);
+
     private final static String TEXT_TO_SPREADSHEET_METADATA_COLOR_STRING = "text-to-spreadsheet-metadata-color";
 
     final static ConverterName TEXT_TO_SPREADSHEET_METADATA_COLOR = ConverterName.with(TEXT_TO_SPREADSHEET_METADATA_COLOR_STRING);
@@ -345,6 +354,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SELECTION),
                     converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_ID),
+                    converterInfo(TEXT_TO_SPREADSHEET_METADATA),
                     converterInfo(TEXT_TO_SPREADSHEET_METADATA_COLOR),
                     converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),

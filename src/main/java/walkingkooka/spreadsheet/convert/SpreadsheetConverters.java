@@ -247,6 +247,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToSpreadsheetMetadata}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadata() {
+        return SpreadsheetConverterTextToSpreadsheetMetadata.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetMetadataPropertyName}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataPropertyName() {
