@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Objects;
 
@@ -35,6 +36,15 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
 
     private BasicSpreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
         this.converterContext = converterContext;
+    }
+
+    @Override
+    public SpreadsheetComparatorContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetConverterContext before = this.converterContext;
+        final SpreadsheetConverterContext after = this.converterContext.setPreProcessor(processor);
+        return before.equals(after) ?
+                this :
+                new BasicSpreadsheetComparatorContext(after);
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................

@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+
 import java.util.Objects;
 
 final class BasicSpreadsheetFormatterProviderSamplesContext implements SpreadsheetFormatterProviderSamplesContext,
@@ -33,6 +35,16 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
 
     private BasicSpreadsheetFormatterProviderSamplesContext(final SpreadsheetFormatterContext spreadsheetFormatterContext) {
         this.spreadsheetFormatterContext = spreadsheetFormatterContext;
+    }
+
+    @Override
+    public SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetFormatterContext before = this.spreadsheetFormatterContext;
+        final SpreadsheetFormatterContext after = before.setPreProcessor(processor);
+
+        return before.equals(after) ?
+                this :
+                new BasicSpreadsheetFormatterProviderSamplesContext(after);
     }
 
     // SpreadsheetFormatterContextDelegator.............................................................................

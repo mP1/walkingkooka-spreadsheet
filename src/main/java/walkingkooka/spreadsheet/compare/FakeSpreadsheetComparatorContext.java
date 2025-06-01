@@ -18,9 +18,15 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 public class FakeSpreadsheetComparatorContext extends FakeSpreadsheetConverterContext implements SpreadsheetComparatorContext {
     public FakeSpreadsheetComparatorContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetComparatorContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        throw new UnsupportedOperationException();
     }
 }

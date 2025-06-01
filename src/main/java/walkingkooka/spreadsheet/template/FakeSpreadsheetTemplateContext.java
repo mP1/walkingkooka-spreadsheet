@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.form.FormField;
 
@@ -60,6 +62,16 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
     @Override
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetTemplateContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetTemplateContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
         throw new UnsupportedOperationException();
     }
 }

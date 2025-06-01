@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
@@ -85,4 +86,9 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     default SpreadsheetExpressionReference validationReference() {
         throw new UnsupportedOperationException();
     }
+
+    // SpreadsheetConverterContext......................................................................................
+
+    @Override
+    SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);
 }

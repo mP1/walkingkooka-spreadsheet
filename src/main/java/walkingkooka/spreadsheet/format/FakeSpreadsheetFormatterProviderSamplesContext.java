@@ -17,5 +17,12 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+
 public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsheetFormatterContext implements SpreadsheetFormatterProviderSamplesContext {
+
+    @Override
+    public SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        throw new UnsupportedOperationException();
+    }
 }

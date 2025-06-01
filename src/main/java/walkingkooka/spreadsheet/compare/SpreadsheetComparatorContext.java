@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 /**
  * A {@link Context} that accompanies comparisons between two values. This might require converting values to a type
@@ -43,4 +44,9 @@ public interface SpreadsheetComparatorContext extends SpreadsheetConverterContex
     default SpreadsheetExpressionReference validationReference() {
         throw new UnsupportedOperationException();
     }
+
+    // SpreadsheetConverterContext......................................................................................
+
+    @Override
+    SpreadsheetComparatorContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);
 }

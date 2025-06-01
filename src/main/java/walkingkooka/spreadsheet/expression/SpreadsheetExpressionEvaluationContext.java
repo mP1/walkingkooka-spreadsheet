@@ -41,6 +41,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContext;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
@@ -200,4 +201,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      */
     @Override
     SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference);
+
+    // JsonNodeConverterContext.........................................................................................
+
+    @Override
+    SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);
 }

@@ -54,6 +54,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContextDelegator;
 
@@ -338,6 +339,28 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
+
+    // JsonNodeUnmarshallContext........................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
+        final SpreadsheetConverterContext after = before.setPreProcessor(processor);
+
+        return before.equals(after) ?
+                this :
+                new BasicSpreadsheetExpressionEvaluationContext(
+                        this.cell,
+                        this.spreadsheetExpressionReferenceLoader,
+                        this.serverUrl,
+                        this.spreadsheetMetadata,
+                        this.spreadsheetStoreRepository,
+                        after,
+                        this.formHandlerContext,
+                        this.expressionFunctionProvider,
+                        this.providerContext
+                );
+    }
 
     // Object...........................................................................................................
 
