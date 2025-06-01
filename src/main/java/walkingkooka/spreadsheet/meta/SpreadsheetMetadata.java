@@ -106,6 +106,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -999,6 +1000,22 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             missing.addMissing(cause);
         }
 
+        JsonNodeMarshallContext jsonNodeMarshallContext;
+        try {
+            jsonNodeMarshallContext = this.jsonNodeMarshallContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            jsonNodeMarshallContext = null;
+            missing.addMissing(cause);
+        }
+
+        JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
+        try {
+            jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext();
+        } catch (final MissingMetadataPropertiesException cause) {
+            jsonNodeUnmarshallContext = null;
+            missing.addMissing(cause);
+        }
+
         final Long dateOffset = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
         final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
 
@@ -1009,15 +1026,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 validationReference,
                 converter,
                 labelNameResolver,
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                dateOffset,
+                JsonNodeConverterContexts.basic(
+                        ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                dateTimeContext,
-                                decimalNumberContext
+                                ConverterContexts.basic(
+                                        dateOffset,
+                                        Converters.fake(),
+                                        dateTimeContext,
+                                        decimalNumberContext
+                                ),
+                                expressionNumberKind
                         ),
-                        expressionNumberKind
+                        jsonNodeMarshallContext,
+                        jsonNodeUnmarshallContext
                 )
         );
     }

@@ -22,16 +22,16 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextDelegator;
+import walkingkooka.tree.json.convert.JsonNodeConverterContext;
+import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 
 import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
-        ExpressionNumberConverterContextDelegator {
+        JsonNodeConverterContextDelegator {
 
     @Override
-    default ExpressionNumberConverterContext expressionNumberConverterContext() {
+    default JsonNodeConverterContext jsonNodeConverterContext() {
         return this.spreadsheetConverterContext();
     }
 
@@ -55,7 +55,8 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
 
     @Override
     default SpreadsheetExpressionReference validationReference() {
-        return this.validationReference();
+        return this.spreadsheetConverterContext()
+                .validationReference();
     }
 
     SpreadsheetConverterContext spreadsheetConverterContext();

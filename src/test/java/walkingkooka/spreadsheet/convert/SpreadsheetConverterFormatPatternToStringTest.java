@@ -31,6 +31,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -297,23 +300,27 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,
                 SpreadsheetLabelNameResolvers.fake(),
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                converter.cast(ConverterContext.class),
-                                DateTimeContexts.basic(
-                                        DateTimeSymbols.fromDateFormatSymbols(
-                                                new DateFormatSymbols(locale)
+                JsonNodeConverterContexts.basic(
+                        ExpressionNumberConverterContexts.basic(
+                                Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        converter.cast(ConverterContext.class),
+                                        DateTimeContexts.basic(
+                                                DateTimeSymbols.fromDateFormatSymbols(
+                                                        new DateFormatSymbols(locale)
+                                                ),
+                                                locale,
+                                                1900,
+                                                50,
+                                                LocalDateTime::now
                                         ),
-                                        locale,
-                                        1900,
-                                        50,
-                                        LocalDateTime::now
+                                        DecimalNumberContexts.american(MathContext.DECIMAL128)
                                 ),
-                                DecimalNumberContexts.american(MathContext.DECIMAL128)
+                                KIND
                         ),
-                        KIND
+                        JsonNodeMarshallContexts.fake(),
+                        JsonNodeUnmarshallContexts.fake()
                 )
         );
     }

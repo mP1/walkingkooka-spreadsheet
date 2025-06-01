@@ -23,7 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 
 public final class SpreadsheetConverterGeneralBooleanStringTest implements ConverterTesting2<SpreadsheetConverterGeneralBooleanString, SpreadsheetConverterContext> {
 
@@ -80,7 +80,7 @@ public final class SpreadsheetConverterGeneralBooleanStringTest implements Conve
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.basic(),
                 SpreadsheetLabelNameResolvers.fake(),
-                ExpressionNumberConverterContexts.fake()
+                JsonNodeConverterContexts.fake()
         );
     }
 
