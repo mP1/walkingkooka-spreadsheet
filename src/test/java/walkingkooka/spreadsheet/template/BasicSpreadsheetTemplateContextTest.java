@@ -65,6 +65,11 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
     }
 
     @Override
+    public void testExpressionFunctionWithNullFunctionNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
         throw new UnsupportedOperationException();
     }

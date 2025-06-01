@@ -17,12 +17,11 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -33,30 +32,27 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
-import walkingkooka.validation.function.FakeValidatorExpressionEvaluationContext;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
-public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> implements SpreadsheetExpressionEvaluationContext {
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetConverterContext implements SpreadsheetExpressionEvaluationContext {
 
     public FakeSpreadsheetExpressionEvaluationContext() {
         super();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -96,7 +92,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
 
     @Override
     public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
-        throw new UnsupportedOperationException();
+
     }
 
     @Override
@@ -110,34 +106,12 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
     }
 
     @Override
-    public Converter<SpreadsheetConverterContext> converter() {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public StorageStore storage() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetExpressionReference validationReference() {
-        throw new UnsupportedOperationException();
-    }
-
-    // EnvironmentContext...............................................................................................
-
-    @Override
-    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> environmentValueName) {
         throw new UnsupportedOperationException();
     }
 
@@ -151,10 +125,34 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
         throw new UnsupportedOperationException();
     }
 
-    // FormHandlerContext...............................................................................................
+    @Override
+    public StorageStore storage() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
-    public Form<SpreadsheetExpressionReference> form() {
+    public Optional<Object> validationValue() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                  final Object value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object handleException(final RuntimeException e) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Optional<Object>> reference(final ExpressionReference expressionReference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CaseSensitivity stringEqualsCaseSensitivity() {
         throw new UnsupportedOperationException();
     }
 
@@ -169,12 +167,22 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
     }
 
     @Override
-    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> list) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public boolean isPure(final ExpressionFunctionName expressionFunctionName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName expressionFunctionName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Form<SpreadsheetExpressionReference> form() {
         throw new UnsupportedOperationException();
     }
 }
