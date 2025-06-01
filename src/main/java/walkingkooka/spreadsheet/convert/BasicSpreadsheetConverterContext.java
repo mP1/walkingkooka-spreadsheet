@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -66,6 +67,21 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         this.converter = converter;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.context = context;
+    }
+
+    @Override
+    public SpreadsheetConverterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final JsonNodeConverterContext before = this.context;
+        final JsonNodeConverterContext after = before.setPreProcessor(processor);
+        return before.equals(after) ?
+                this :
+                new BasicSpreadsheetConverterContext(
+                        this.spreadsheetMetadata,
+                        this.validationReference,
+                        this.converter,
+                        this.spreadsheetLabelNameResolver,
+                        after
+                );
     }
 
     // HasSpreadsheetName...............................................................................................

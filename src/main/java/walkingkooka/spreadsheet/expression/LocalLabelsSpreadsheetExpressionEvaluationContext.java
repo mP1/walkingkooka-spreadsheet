@@ -54,6 +54,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContextDelegator;
 
@@ -355,6 +356,19 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     @Override
     public JsonNodeContext jsonNodeContext() {
         return this.context;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = before.setPreProcessor(processor);
+
+        return before.equals(after) ?
+                this :
+                new LocalLabelsSpreadsheetExpressionEvaluationContext(
+                        this.labelToValues,
+                        after
+                );
     }
 
     // Object...........................................................................................................

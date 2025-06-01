@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Objects;
@@ -162,6 +163,23 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {
         return this.context;
+    }
+
+    @Override
+    public SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetConverterContext before = this.context;
+        final SpreadsheetConverterContext after = this.context.setPreProcessor(processor);
+
+        return before.equals(after) ?
+                this :
+                new BasicSpreadsheetFormatterContext(
+                        this.numberToColor,
+                        this.nameToColor,
+                        this.cellCharacterWidth,
+                        this.generalFormatNumberDigitCount,
+                        this.formatter,
+                        after
+                );
     }
 
     private final SpreadsheetConverterContext context;

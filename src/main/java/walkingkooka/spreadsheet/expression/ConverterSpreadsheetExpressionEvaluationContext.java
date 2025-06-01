@@ -55,6 +55,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
@@ -446,6 +447,19 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context;
     }
 
+    @Override
+    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = this.context.setPreProcessor(processor);
+
+        return before.equals(after) ?
+                this :
+                new ConverterSpreadsheetExpressionEvaluationContext(
+                        this.converter,
+                        after
+                );
+    }
+
     // Object...........................................................................................................
 
     @Override
@@ -458,5 +472,4 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
      */
     // @VisibleForTesting
     final SpreadsheetExpressionEvaluationContext context;
-
 }

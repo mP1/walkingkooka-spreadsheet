@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.FakeFormHandlerContext;
 import walkingkooka.validation.form.FormField;
 
@@ -196,6 +197,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
             throw new UnsupportedOperationException();
         }
 
