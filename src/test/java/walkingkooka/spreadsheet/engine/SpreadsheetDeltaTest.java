@@ -3410,6 +3410,63 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithFormulaValueType() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("'will be patched over")
+                                .setValueType(
+                                        Optional.of(
+                                                ValidationValueTypeName.with("LostValueType")
+                                        )
+                                )
+                ).setStyle(
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.TEXT_ALIGN,
+                                TextAlign.CENTER
+                        )
+                );
+
+        final SpreadsheetCell a3 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("'not patched")
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1,
+                                a3
+                        )
+                );
+
+        final Optional<ValidationValueTypeName> typeName = Optional.of(
+                ValidationValueTypeName.with("patchedValueType")
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setFormula(
+                                a1.formula()
+                                        .setValueType(typeName)
+                        ),
+                        SpreadsheetSelection.parseCell("A2")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setValueType(typeName)
+                                )
+                )
+        );
+
+        this.patchCellsAndCheck(
+                before,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                SpreadsheetDelta.formulaPatch(
+                        SpreadsheetFormula.valueTypePatch(typeName)
+                ),
+                after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithDateTimeSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
