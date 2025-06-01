@@ -35,6 +35,9 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -127,15 +130,19 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 (s) -> {
                     throw new UnsupportedOperationException();
                 },
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                JsonNodeConverterContexts.basic(
+                        ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                DateTimeContexts.fake(),
-                                DecimalNumberContexts.american(MathContext.UNLIMITED)
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        Converters.fake(),
+                                        DateTimeContexts.fake(),
+                                        DecimalNumberContexts.american(MathContext.UNLIMITED)
+                                ),
+                                EXPRESSION_NUMBER_KIND
                         ),
-                        EXPRESSION_NUMBER_KIND
+                        JsonNodeMarshallContexts.fake(),
+                        JsonNodeUnmarshallContexts.fake()
                 )
         );
     }

@@ -23,7 +23,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
+import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 
 import java.util.Optional;
 
@@ -40,7 +40,7 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final Optional<SpreadsheetExpressionReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                    final ExpressionNumberConverterContext context) {
+                                                    final JsonNodeConverterContext context) {
         return BasicSpreadsheetConverterContext.with(
                 spreadsheetMetadata,
                 validationReference,

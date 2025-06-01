@@ -29,6 +29,9 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
@@ -88,27 +91,31 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                 Objects.requireNonNull(label, "label");
                 throw new UnsupportedOperationException();
             },
-            ExpressionNumberConverterContexts.basic(
-                    Converters.fake(),
-                    ConverterContexts.basic(
-                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                            Converters.objectToString(),
-                            DateTimeContexts.basic(
-                                    DateTimeSymbols.fromDateFormatSymbols(
-                                            new DateFormatSymbols(
-                                                    Locale.forLanguageTag("EN-AU")
-                                            )
+            JsonNodeConverterContexts.basic(
+                    ExpressionNumberConverterContexts.basic(
+                            Converters.fake(),
+                            ConverterContexts.basic(
+                                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                    Converters.objectToString(),
+                                    DateTimeContexts.basic(
+                                            DateTimeSymbols.fromDateFormatSymbols(
+                                                    new DateFormatSymbols(
+                                                            Locale.forLanguageTag("EN-AU")
+                                                    )
+                                            ),
+                                            Locale.forLanguageTag("EN-AU"),
+                                            1950, // default year
+                                            50, // two-digit-year
+                                            LocalDateTime::now
                                     ),
-                                    Locale.forLanguageTag("EN-AU"),
-                                    1950, // default year
-                                    50, // two-digit-year
-                                    LocalDateTime::now
+                                    DecimalNumberContexts.american(
+                                            MathContext.DECIMAL32
+                                    )
                             ),
-                            DecimalNumberContexts.american(
-                                    MathContext.DECIMAL32
-                            )
+                            ExpressionNumberKind.BIG_DECIMAL
                     ),
-                    ExpressionNumberKind.BIG_DECIMAL
+                    JsonNodeMarshallContexts.fake(),
+                    JsonNodeUnmarshallContexts.fake()
             )
     );
 

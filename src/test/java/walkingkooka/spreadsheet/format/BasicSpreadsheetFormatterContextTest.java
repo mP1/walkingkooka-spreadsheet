@@ -40,6 +40,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -348,14 +351,18 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         )
                 ),
                 LABEL_NAME_RESOLVER,
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                JsonNodeConverterContexts.basic(
+                        ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                this.dateTimeContext(),
-                                this.decimalNumberContext()),
-                        EXPRESSION_NUMBER_KIND
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        Converters.fake(),
+                                        this.dateTimeContext(),
+                                        this.decimalNumberContext()),
+                                EXPRESSION_NUMBER_KIND
+                        ),
+                        JsonNodeMarshallContexts.fake(),
+                        JsonNodeUnmarshallContexts.fake()
                 )
         );
     }

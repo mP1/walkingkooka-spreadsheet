@@ -26,21 +26,21 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextDelegator;
+import walkingkooka.tree.json.convert.JsonNodeConverterContext;
+import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 
 import java.util.Objects;
 import java.util.Optional;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
-        ExpressionNumberConverterContextDelegator,
+        JsonNodeConverterContextDelegator,
         UsesToStringBuilder {
 
-    static BasicSpreadsheetConverterContext with(Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    static BasicSpreadsheetConverterContext with(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetExpressionReference> validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                 final ExpressionNumberConverterContext context) {
+                                                 final JsonNodeConverterContext context) {
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
@@ -60,7 +60,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                              final Optional<SpreadsheetExpressionReference> validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                             final ExpressionNumberConverterContext context) {
+                                             final JsonNodeConverterContext context) {
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
@@ -126,14 +126,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
-    // ExpressionNumberConverterContext.................................................................................
+    // JsonNodeConverterContext.........................................................................................
 
     @Override
-    public ExpressionNumberConverterContext expressionNumberConverterContext() {
+    public JsonNodeConverterContext jsonNodeConverterContext() {
         return this.context;
     }
 
-    private final ExpressionNumberConverterContext context;
+    private final JsonNodeConverterContext context;
 
     // toString.........................................................................................................
 

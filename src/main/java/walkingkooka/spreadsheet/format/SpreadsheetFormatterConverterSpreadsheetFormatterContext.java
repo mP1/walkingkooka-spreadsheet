@@ -28,6 +28,11 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.MathContext;
@@ -36,7 +41,9 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
         DateTimeContextDelegator,
-        DecimalNumberContextDelegator {
+        DecimalNumberContextDelegator,
+        JsonNodeMarshallContextDelegator,
+        JsonNodeUnmarshallContextDelegator {
 
     static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
@@ -132,6 +139,25 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
+        return this.context;
+    }
+
+    // JsonNodeMarshallContextDelegator.................................................................................
+
+    @Override
+    public JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return this.context;
+    }
+
+    // JsonNodeUnmarshallContextDelegator...............................................................................
+
+    @Override
+    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
+        return this.context;
+    }
+
+    @Override
+    public JsonNodeContext jsonNodeContext() {
         return this.context;
     }
 

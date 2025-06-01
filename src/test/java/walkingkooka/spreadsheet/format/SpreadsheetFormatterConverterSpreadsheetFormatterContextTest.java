@@ -32,6 +32,9 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -159,15 +162,19 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
                 (s) -> {
                     throw new UnsupportedOperationException();
                 },
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                JsonNodeConverterContexts.basic(
+                        ExpressionNumberConverterContexts.basic(
                                 Converters.fake(),
-                                dateTimeContext(),
-                                decimalNumberContext()
+                                ConverterContexts.basic(
+                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                        Converters.fake(),
+                                        dateTimeContext(),
+                                        decimalNumberContext()
+                                ),
+                                ExpressionNumberKind.DEFAULT
                         ),
-                        ExpressionNumberKind.DEFAULT
+                        JsonNodeMarshallContexts.fake(),
+                        JsonNodeUnmarshallContexts.fake()
                 )
         );
     }

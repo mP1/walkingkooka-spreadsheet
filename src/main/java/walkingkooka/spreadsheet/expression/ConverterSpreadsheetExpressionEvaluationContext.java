@@ -50,9 +50,15 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
+import java.math.MathContext;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -72,7 +78,9 @@ import java.util.Set;
  */
 final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
         DateTimeContextDelegator,
-        DecimalNumberContextDelegator {
+        DecimalNumberContextDelegator,
+        JsonNodeMarshallContextDelegator,
+        JsonNodeUnmarshallContextDelegator {
 
     static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -174,6 +182,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public ExpressionNumberKind expressionNumberKind() {
         return this.context.expressionNumberKind();
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return this.context.mathContext();
     }
 
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
@@ -411,6 +424,25 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
+        return this.context;
+    }
+
+    // JsonNodeMarshallContextDelegator.................................................................................
+
+    @Override
+    public JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return this.context;
+    }
+
+    // JsonNodeUnmarshallContextDelegator...............................................................................
+
+    @Override
+    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
+        return this.context;
+    }
+
+    @Override
+    public JsonNodeContext jsonNodeContext() {
         return this.context;
     }
 

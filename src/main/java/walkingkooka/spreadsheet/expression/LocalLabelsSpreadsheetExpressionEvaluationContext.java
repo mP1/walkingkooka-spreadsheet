@@ -49,9 +49,15 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContextDelegator;
 
+import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
@@ -69,6 +75,8 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+        JsonNodeMarshallContextDelegator,
+        JsonNodeUnmarshallContextDelegator,
         UsesToStringBuilder {
 
     static LocalLabelsSpreadsheetExpressionEvaluationContext with(
@@ -308,6 +316,11 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         return this.context;
     }
 
+    @Override
+    public MathContext mathContext() {
+        return this.context.mathContext();
+    }
+
     // FormHandlerContextDelegator......................................................................................
 
     @Override
@@ -322,6 +335,25 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
 
     @Override
     public FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext() {
+        return this.context;
+    }
+
+    // JsonNodeMarshallContextDelegator.................................................................................
+
+    @Override
+    public JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return this.context;
+    }
+
+    // JsonNodeUnmarshallContextDelegator...............................................................................
+
+    @Override
+    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
+        return this.context;
+    }
+
+    @Override
+    public JsonNodeContext jsonNodeContext() {
         return this.context;
     }
 

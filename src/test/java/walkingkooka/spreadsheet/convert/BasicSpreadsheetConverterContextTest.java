@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
@@ -31,7 +30,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.convert.JsonNodeConverterContext;
+import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
@@ -63,7 +69,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         VALIDATION_REFERENCE,
                         CONVERTER,
                         LABEL_RESOLVER,
-                        ExpressionNumberConverterContexts.fake()
+                        JsonNodeConverterContexts.fake()
                 )
         );
     }
@@ -77,7 +83,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         VALIDATION_REFERENCE,
                         null,
                         LABEL_RESOLVER,
-                        ExpressionNumberConverterContexts.fake()
+                        JsonNodeConverterContexts.fake()
                 )
         );
     }
@@ -91,7 +97,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         VALIDATION_REFERENCE,
                         CONVERTER,
                         null,
-                        ExpressionNumberConverterContexts.fake()
+                        JsonNodeConverterContexts.fake()
                 )
         );
     }
@@ -128,28 +134,32 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 VALIDATION_REFERENCE,
                 CONVERTER,
                 LABEL_RESOLVER,
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        this.converterContext(),
-                        KIND
-                )
+                this.jsonNodeConverterContext()
         );
     }
 
-    private ConverterContext converterContext() {
-        return ConverterContexts.basic(
-                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                Converters.fake(),
-                DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
+    private JsonNodeConverterContext jsonNodeConverterContext() {
+        return JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                Converters.fake(),
+                                DateTimeContexts.basic(
+                                        DateTimeSymbols.fromDateFormatSymbols(
+                                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
+                                        ),
+                                        Locale.forLanguageTag("EN-AU"),
+                                        1900,
+                                        20,
+                                        LocalDateTime::now
+                                ),
+                                this.decimalNumberContext()
                         ),
-                        Locale.forLanguageTag("EN-AU"),
-                        1900,
-                        20,
-                        LocalDateTime::now
+                        KIND
                 ),
-                this.decimalNumberContext()
+                JsonNodeMarshallContexts.fake(),
+                JsonNodeUnmarshallContexts.fake()
         );
     }
 
@@ -169,15 +179,21 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     @Test
     public void testToString() {
+        final ExpressionNumberConverterContext converterContext = ExpressionNumberConverterContexts.fake();
+        final JsonNodeMarshallContext marshallContext = JsonNodeMarshallContexts.fake();
+        final JsonNodeUnmarshallContext unmarshallContext = JsonNodeUnmarshallContexts.fake();
+
         this.toStringAndCheck(
-                this.createContext(),
-                CONVERTER +
+                JsonNodeConverterContexts.basic(
+                        converterContext,
+                        marshallContext,
+                        unmarshallContext
+                ),
+                converterContext +
                         " " +
-                        LABEL_RESOLVER +
+                        marshallContext +
                         " " +
-                        this.converterContext() +
-                        " " +
-                        KIND
+                        unmarshallContext
         );
     }
 

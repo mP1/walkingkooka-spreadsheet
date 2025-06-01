@@ -17,28 +17,20 @@
 
 package walkingkooka.spreadsheet.template;
 
-import walkingkooka.Either;
 import walkingkooka.InvalidCharacterException;
-import walkingkooka.convert.Converter;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
-import walkingkooka.storage.StorageStore;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.template.TemplateValueName;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.form.FormField;
 
+import java.util.List;
 import java.util.Optional;
 
-public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
+public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEvaluationContext
         implements SpreadsheetTemplateContext {
     
     public FakeSpreadsheetTemplateContext() {
@@ -46,86 +38,28 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
     }
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    public FakeSpreadsheetTemplateContext setCell(final Optional<SpreadsheetCell> cell) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public AbsoluteUrl serverUrl() {
+    public String templateValue(final TemplateValueName name) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Converter<SpreadsheetConverterContext> converter() {
+    public char valueSeparator() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
-                                  final Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object handleException(final RuntimeException thrown) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public CaseSensitivity stringEqualsCaseSensitivity() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public long dateOffset() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> type) {
+    public List<ValidationError<SpreadsheetExpressionReference>> validateFormFields(final List<FormField<SpreadsheetExpressionReference>> fields) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isPure(final ExpressionFunctionName name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public StorageStore storage() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String templateValue(final TemplateValueName name) {
         throw new UnsupportedOperationException();
     }
 }
