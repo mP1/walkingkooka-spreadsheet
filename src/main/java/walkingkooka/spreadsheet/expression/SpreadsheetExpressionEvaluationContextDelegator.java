@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -35,11 +37,14 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextDelegator;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContextDelegator;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Delegates all {@link ExpressionEvaluationContextDelegator} and most {@link SpreadsheetExpressionEvaluationContext}
@@ -51,9 +56,43 @@ import java.util.Optional;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
+        SpreadsheetConverterContextDelegator,
         FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
         ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
         StorageExpressionEvaluationContextDelegator {
+
+    // SpreadsheetConverterContextDelegator.............................................................................
+
+    @Override
+    default SpreadsheetConverterContext spreadsheetConverterContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    @Override
+    default ConverterContext converterContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    @Override
+    default ExpressionNumberKind expressionNumberKind() {
+        return SpreadsheetConverterContextDelegator.super.expressionNumberKind();
+    }
+
+    @Override
+    default boolean isText(final Object value) {
+        return SpreadsheetExpressionEvaluationContext.super.isText(value);
+    }
+
+    // SpreadsheetExpressionEvaluationContextDelegator..................................................................
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
+
+    // StorageExpressionEvaluationContextDelegator......................................................................
 
     @Override
     default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
@@ -63,20 +102,59 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetExpressionEvaluationContext...........................................................................
 
     @Override
-    default Converter<SpreadsheetConverterContext> converter() {
-        return this.spreadsheetExpressionEvaluationContext().converter();
+    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .parseFormula(formula);
     }
 
     @Override
-    default boolean isText(final Object value) {
+    default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.spreadsheetExpressionEvaluationContext()
-                .isText(value);
+                .loadCell(cell);
+    }
+
+    @Override
+    default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .loadCellRange(range);
     }
 
     @Override
     default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetExpressionEvaluationContext()
                 .loadLabel(labelName);
+    }
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .setCell(cell);
+    }
+
+    @Override
+    default Optional<SpreadsheetCell> cell() {
+        return this.spreadsheetExpressionEvaluationContext()
+                .cell();
+    }
+
+    @Override
+    default AbsoluteUrl serverUrl() {
+        return this.spreadsheetExpressionEvaluationContext()
+                .serverUrl();
+    }
+
+    @Override
+    default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        this.spreadsheetExpressionEvaluationContext()
+                .setSpreadsheetMetadata(metadata);
+    }
+
+    // FormHandlerExpressionEvaluationContextDelegator..................................................................
+
+    @Override
+    default Form<SpreadsheetExpressionReference> form() {
+        return this.spreadsheetExpressionEvaluationContext()
+                .form();
     }
 
     @Override
@@ -92,27 +170,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    default Optional<Optional<Object>> reference(final ExpressionReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
-                .parseFormula(formula);
-    }
-
-    @Override
-    default AbsoluteUrl serverUrl() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .serverUrl();
-    }
-
-    @Override
-    default SpreadsheetMetadata spreadsheetMetadata() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .spreadsheetMetadata();
-    }
-
-    @Override
-    default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
-        this.spreadsheetExpressionEvaluationContext()
-                .setSpreadsheetMetadata(metadata);
+                .reference(reference);
     }
 
     @Override
@@ -126,17 +186,4 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
         return this.spreadsheetExpressionEvaluationContext()
                 .validatorContext(reference);
     }
-
-    @Override
-    default Form<SpreadsheetExpressionReference> form() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .form();
-    }
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
-        return this.spreadsheetExpressionEvaluationContext();
-    }
-
-    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
 }
