@@ -18,13 +18,18 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextTesting;
+import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
-public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends ExpressionNumberConverterContextTesting<C>,
+public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting<C>,
         SpreadsheetLabelNameResolverTesting<C> {
 
     @Override
     default C createSpreadsheetLabelNameResolver() {
         return this.createContext();
+    }
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetConverterContext.class.getSimpleName();
     }
 }
