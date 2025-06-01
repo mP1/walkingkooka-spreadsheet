@@ -34,9 +34,9 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
@@ -158,11 +158,13 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         ),
                         KIND
                 ),
-                JsonNodeMarshallContexts.basic(),
-                JsonNodeUnmarshallContexts.basic(
-                        KIND,
-                        this.decimalNumberContext()
-                                .mathContext()
+                JsonNodeMarshallUnmarshallContexts.basic(
+                        JsonNodeMarshallContexts.basic(),
+                        JsonNodeUnmarshallContexts.basic(
+                                KIND,
+                                this.decimalNumberContext()
+                                        .mathContext()
+                        )
                 )
         );
     }
@@ -184,20 +186,16 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Test
     public void testToString() {
         final ExpressionNumberConverterContext converterContext = ExpressionNumberConverterContexts.fake();
-        final JsonNodeMarshallContext marshallContext = JsonNodeMarshallContexts.fake();
-        final JsonNodeUnmarshallContext unmarshallContext = JsonNodeUnmarshallContexts.fake();
+        final JsonNodeMarshallUnmarshallContext marshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.fake();
 
         this.toStringAndCheck(
                 JsonNodeConverterContexts.basic(
                         converterContext,
-                        marshallContext,
-                        unmarshallContext
+                        marshallUnmarshallContext
                 ),
                 converterContext +
                         " " +
-                        marshallContext +
-                        " " +
-                        unmarshallContext
+                        marshallUnmarshallContext
         );
     }
 

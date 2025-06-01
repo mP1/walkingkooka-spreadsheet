@@ -110,6 +110,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.Patchable;
@@ -1037,8 +1038,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                 ),
                                 expressionNumberKind
                         ),
-                        jsonNodeMarshallContext,
-                        jsonNodeUnmarshallContext
+                        JsonNodeMarshallUnmarshallContexts.basic(
+                                jsonNodeMarshallContext,
+                                jsonNodeUnmarshallContext
+                        )
                 )
         );
     }
