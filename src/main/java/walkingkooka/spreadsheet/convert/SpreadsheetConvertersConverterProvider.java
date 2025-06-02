@@ -29,7 +29,6 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.UrlPath;
-import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -222,7 +221,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case TEXT_TO_URL_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = NetConverters.textToUrl();
+                converter = SpreadsheetConverters.textToUrl();
                 break;
             case TO_JSON_STRING:
                 parameterCountCheck(copy, 0);
