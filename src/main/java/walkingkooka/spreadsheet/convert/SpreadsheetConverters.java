@@ -212,6 +212,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToExpression}
+     */
+    public static Converter<SpreadsheetConverterContext> textToExpression() {
+        return SpreadsheetConverterTextToExpression.INSTANCE;
+    }
+
+    /**
+     * {@see ValidatorConvertConverters.textToFormName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToFormName() {
+        return ValidatorConvertConverters.textToFormName();
+    }
+
+    /**
      * {@see JsonNodeConverters#textToJsonNode}
      */
     public static Converter<SpreadsheetConverterContext> textToJson() {
@@ -236,20 +250,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterTextToExpression}
-     */
-    public static Converter<SpreadsheetConverterContext> textToExpression() {
-        return SpreadsheetConverterTextToExpression.INSTANCE;
-    }
-
-    /**
-     * {@see ValidatorConvertConverters.textToFormName}
-     */
-    public static Converter<SpreadsheetConverterContext> textToFormName() {
-        return ValidatorConvertConverters.textToFormName();
-    }
-
-    /**
      * {@see SpreadsheetConverterTextToSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> textToSelection() {
@@ -261,6 +261,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
         return SpreadsheetConverterTextToSpreadsheetColorName.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetError}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetError() {
+        return SpreadsheetConverterTextToSpreadsheetError.INSTANCE;
     }
 
     /**
@@ -289,13 +296,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataColor() {
         return SpreadsheetConverterTextToSpreadsheetMetadataColor.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetConverterTextToSpreadsheetError}
-     */
-    public static Converter<SpreadsheetConverterContext> textToSpreadsheetError() {
-        return SpreadsheetConverterTextToSpreadsheetError.INSTANCE;
     }
 
     /**
