@@ -198,6 +198,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithJsonTo() {
+        this.converterAndCheck(
+                "jsonTo",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.jsonTo()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithSelectionToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION + "",
@@ -222,6 +231,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION + "",
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.textToExpression()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithTextToJson() {
+        this.converterAndCheck(
+                "text-to-json",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToJson()
         );
     }
 
@@ -297,6 +315,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.textToUrl()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithToJson() {
+        this.converterAndCheck(
+                "to-json",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.toJson()
         );
     }
 
