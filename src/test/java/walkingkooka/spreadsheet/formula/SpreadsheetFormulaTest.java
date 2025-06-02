@@ -1512,6 +1512,17 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testIsEmptyWithValueType() {
+        this.isEmptyAndCheck(
+                SpreadsheetFormula.EMPTY
+                        .setValueType(
+                                Optional.of(ValidationValueTypeName.TEXT)
+                        ),
+                false
+        );
+    }
+
     // consumeSpreadsheetExpressionReferences...........................................................................
 
     @Test
