@@ -299,6 +299,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithTextToFormName() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME,
+                Lists.empty(),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToFormName()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION,
@@ -315,6 +325,26 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.textToUrl()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithTextToValidationSelector() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.TEXT_TO__VALIDATOR_SELECTOR,
+                Lists.empty(),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToValidatorSelector()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithTextToValueType() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.TEXT_TO_VALUE_TYPE,
+                Lists.empty(),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToValueType()
         );
     }
 

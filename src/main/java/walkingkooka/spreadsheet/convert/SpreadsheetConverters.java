@@ -36,6 +36,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
+import walkingkooka.validation.convert.ValidatorConvertConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -242,6 +243,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ValidatorConvertConverters.textToFormName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToFormName() {
+        return ValidatorConvertConverters.textToFormName();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> textToSelection() {
@@ -337,6 +345,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToText() {
         return Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString();
+    }
+
+    /**
+     * {@see ValidatorConvertConverters.textToValidatorSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToValidatorSelector() {
+        return ValidatorConvertConverters.textToValidatorSelector();
+    }
+
+    /**
+     * {@see ValidatorConvertConverters.textToValidationValueTypeName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToValueType() {
+        return ValidatorConvertConverters.textToValidationValueTypeName();
     }
 
     /**

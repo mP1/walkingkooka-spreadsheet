@@ -163,6 +163,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToExpression();
                 break;
+            case TEXT_TO_FORM_NAME_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToFormName();
+                break;
             case TEXT_TO_JSON_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -222,6 +227,16 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 parameterCountCheck(copy, 0);
 
                 converter = SpreadsheetConverters.textToUrl();
+                break;
+            case TEXT_TO_VALIDATOR_SELECTOR_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToValidatorSelector();
+                break;
+            case TEXT_TO_VALUE_TYPE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToValueType();
                 break;
             case TO_JSON_STRING:
                 parameterCountCheck(copy, 0);
@@ -314,6 +329,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_EXPRESSION = ConverterName.with(TEXT_TO_EXPRESSION_STRING);
 
+    private final static String TEXT_TO_FORM_NAME_STRING = "text-to-form-name";
+
+    final static ConverterName TEXT_TO_FORM_NAME = ConverterName.with(TEXT_TO_FORM_NAME_STRING);
+
     private final static String TEXT_TO_JSON_STRING = "text-to-json";
 
     final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
@@ -363,6 +382,14 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
 
+    private final static String TEXT_TO_VALIDATOR_SELECTOR_STRING = "text-to-validator-selector";
+
+    final static ConverterName TEXT_TO__VALIDATOR_SELECTOR = ConverterName.with(TEXT_TO_VALIDATOR_SELECTOR_STRING);
+
+    private final static String TEXT_TO_VALUE_TYPE_STRING = "text-to-value-type";
+
+    final static ConverterName TEXT_TO_VALUE_TYPE = ConverterName.with(TEXT_TO_VALUE_TYPE_STRING);
+
     private final static String TO_JSON_STRING = "to-json";
 
     final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
@@ -388,6 +415,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SELECTION_TO_TEXT),
                     converterInfo(TEXT_TO_ERROR),
                     converterInfo(TEXT_TO_EXPRESSION),
+                    converterInfo(TEXT_TO_FORM_NAME),
                     converterInfo(TEXT_TO_JSON),
                     converterInfo(TEXT_TO_SELECTION),
                     converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
@@ -400,6 +428,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_TEXT),
                     converterInfo(TEXT_TO_URL),
+                    converterInfo(TEXT_TO__VALIDATOR_SELECTOR),
+                    converterInfo(TEXT_TO_VALUE_TYPE),
                     converterInfo(TO_JSON)
             )
     );
