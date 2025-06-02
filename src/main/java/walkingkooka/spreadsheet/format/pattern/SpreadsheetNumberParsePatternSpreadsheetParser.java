@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.SpreadsheetValues;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -25,6 +26,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RequiredParser;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -92,6 +94,15 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
                 this.pattern.value()
         );
     }
+
+    @Override
+    public Optional<ValidationValueTypeName> valueType() {
+        return NUMBER;
+    }
+
+    private final static Optional<ValidationValueTypeName> NUMBER = Optional.of(
+            SpreadsheetValues.NUMBER
+    );
 
     // Object...........................................................................................................
 

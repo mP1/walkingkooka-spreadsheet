@@ -51,4 +51,14 @@ public interface SpreadsheetParserTesting2<P extends SpreadsheetParser> extends 
                 expected
         );
     }
+
+    // valueTypeAndCheck................................................................................................
+
+    @Test
+    default void testValueTypeNotNull() {
+        this.checkNotEquals(
+                null,
+                this.createParser()
+        );
+    }
 }

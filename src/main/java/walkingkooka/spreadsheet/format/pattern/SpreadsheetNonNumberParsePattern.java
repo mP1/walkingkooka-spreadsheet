@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -45,6 +46,14 @@ abstract class SpreadsheetNonNumberParsePattern extends SpreadsheetParsePattern 
      */
     @Override
     final SpreadsheetParser createParser() {
-        return SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor.toParser(this.value());
+        return SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor.toParser(
+                this.value(),
+                this.valueType()
+        );
     }
+
+    /**
+     * The {@link ValidationValueTypeName} returned by the returned {@link SpreadsheetParser#valueType()}.
+     */
+    abstract ValidationValueTypeName valueType();
 }

@@ -40,10 +40,24 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     );
 
     @Test
-    public void testWithNullFails() {
+    public void testWithNullParserFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserSpreadsheetParser.with(null)
+                () -> ParserSpreadsheetParser.with(
+                        null,
+                            SpreadsheetParser.NO_VALUE_TYPE
+                        )
+        );
+    }
+
+    @Test
+    public void testWithNullValueTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserSpreadsheetParser.with(
+                        Parsers.fake(),
+                        null
+                )
         );
     }
 
@@ -52,7 +66,10 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
         final SpreadsheetParser wrapped = SpreadsheetParsers.fake();
         assertSame(
                 wrapped,
-                ParserSpreadsheetParser.with(wrapped)
+                ParserSpreadsheetParser.with(
+                        wrapped,
+                        SpreadsheetParser.NO_VALUE_TYPE
+                )
         );
     }
 
@@ -87,7 +104,10 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
 
     @Override
     public ParserSpreadsheetParser createParser() {
-        return (ParserSpreadsheetParser) ParserSpreadsheetParser.with(PARSER);
+        return (ParserSpreadsheetParser) ParserSpreadsheetParser.with(
+                PARSER,
+                SpreadsheetParser.NO_VALUE_TYPE
+        );
     }
 
     @Override
@@ -100,8 +120,14 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-                ParserSpreadsheetParser.with(Parsers.fake()),
-                ParserSpreadsheetParser.with(Parsers.fake())
+                ParserSpreadsheetParser.with(
+                        Parsers.fake(),
+                        SpreadsheetParser.NO_VALUE_TYPE
+                ),
+                ParserSpreadsheetParser.with(
+                        Parsers.fake(),
+                        SpreadsheetParser.NO_VALUE_TYPE
+                )
         );
     }
 
@@ -115,7 +141,10 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                ParserSpreadsheetParser.with(PARSER),
+                ParserSpreadsheetParser.with(
+                        PARSER,
+                        SpreadsheetParser.NO_VALUE_TYPE
+                ),
                 PARSER.toString()
         );
     }

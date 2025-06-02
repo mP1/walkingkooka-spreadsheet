@@ -17,12 +17,16 @@
 
 package walkingkooka.spreadsheet.formula;
 
+import walkingkooka.spreadsheet.SpreadsheetValues;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.validation.ValidationValueTypeName;
+
+import java.util.Optional;
 
 /**
  * A {@link Parser} that consumes a {@link RowSpreadsheetFormulaParserToken}
@@ -57,6 +61,15 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     ParserToken token1(final SpreadsheetReferenceKind absoluteOrRelative, final int row, final String text) {
         return SpreadsheetFormulaParserToken.row(absoluteOrRelative.row(row), text);
     }
+
+    @Override
+    public Optional<ValidationValueTypeName> valueType() {
+        return ROW;
+    }
+
+    private final static Optional<ValidationValueTypeName> ROW = Optional.of(
+            SpreadsheetValues.ROW
+    );
 
     @Override
     public SpreadsheetRowReferenceSpreadsheetParser optional() {

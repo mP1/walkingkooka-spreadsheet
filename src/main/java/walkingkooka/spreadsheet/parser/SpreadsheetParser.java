@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A specialised {@link Parser} that supports extra operations
@@ -37,4 +39,14 @@ public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
      * tokenizing its pattern. A {@link SpreadsheetParserContext} could be useful such as displaying day names in the label for an {@link SpreadsheetParserSelectorTokenAlternative}.
      */
     List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context);
+
+    /**
+     * Constant for no value type.
+     */
+    Optional<ValidationValueTypeName> NO_VALUE_TYPE = Optional.empty();
+
+    /**
+     * Returns the {@link ValidationValueTypeName that this parser returns.
+     */
+    Optional<ValidationValueTypeName> valueType();
 }

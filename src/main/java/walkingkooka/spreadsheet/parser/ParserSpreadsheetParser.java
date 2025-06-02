@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,16 +33,20 @@ import java.util.Optional;
  */
 final class ParserSpreadsheetParser implements SpreadsheetParser {
 
-    public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser) {
+    public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
+                                         final Optional<ValidationValueTypeName> valueType) {
         return parser instanceof SpreadsheetParser ?
                 (SpreadsheetParser) parser :
                 new ParserSpreadsheetParser(
-                        Objects.requireNonNull(parser, "parser")
+                        Objects.requireNonNull(parser, "parser"),
+                        Objects.requireNonNull(valueType, "valueType")
                 );
     }
 
-    private ParserSpreadsheetParser(final Parser<SpreadsheetParserContext> parser) {
+    private ParserSpreadsheetParser(final Parser<SpreadsheetParserContext> parser,
+                                    final Optional<ValidationValueTypeName> valueType) {
         this.parser = parser;
+        this.valueType = valueType;
     }
 
     @Override
@@ -71,6 +76,13 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     }
 
     private final Parser<SpreadsheetParserContext> parser;
+
+    @Override
+    public Optional<ValidationValueTypeName> valueType() {
+        return this.valueType;
+    }
+
+    private final Optional<ValidationValueTypeName> valueType;
 
     // Object...........................................................................................................
 

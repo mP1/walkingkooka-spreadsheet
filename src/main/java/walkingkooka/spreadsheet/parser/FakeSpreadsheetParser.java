@@ -18,8 +18,10 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.text.cursor.parser.FakeParser;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
+import java.util.Optional;
 
 public class FakeSpreadsheetParser extends FakeParser<SpreadsheetParserContext> implements SpreadsheetParser {
 
@@ -29,6 +31,11 @@ public class FakeSpreadsheetParser extends FakeParser<SpreadsheetParserContext> 
 
     @Override
     public List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<ValidationValueTypeName> valueType() {
         throw new UnsupportedOperationException();
     }
 }

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
+import walkingkooka.spreadsheet.SpreadsheetValues;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.IllegalColumnArgumentException;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -24,6 +25,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.validation.ValidationValueTypeName;
+
+import java.util.Optional;
 
 /**
  * A {@link Parser} that consumes a {@link ColumnSpreadsheetFormulaParserToken}
@@ -72,6 +76,15 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
             );
         }
     }
+
+    @Override
+    public Optional<ValidationValueTypeName> valueType() {
+        return COLUMN;
+    }
+
+    private final static Optional<ValidationValueTypeName> COLUMN = Optional.of(
+            SpreadsheetValues.COLUMN
+    );
 
     @Override
     public SpreadsheetColumnReferenceSpreadsheetParser optional() {
