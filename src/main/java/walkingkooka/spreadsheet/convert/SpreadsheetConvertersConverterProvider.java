@@ -218,6 +218,16 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToText();
                 break;
+            case TEXT_TO_TEXT_NODE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToTextNode();
+                break;
+            case TEXT_TO_TEXT_STYLE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToTextStyle();
+                break;
             case TEXT_TO_URL_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -242,6 +252,21 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 parameterCountCheck(copy, 0);
 
                 converter = SpreadsheetConverters.toJson();
+                break;
+            case TO_TEXT_NODE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.toTextNode();
+                break;
+            case URL_TO_HYPERLINK_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.urlToHyperlink();
+                break;
+            case URL_TO_IMAGE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.urlToImage();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown converter " + name);
@@ -373,6 +398,14 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_TEXT = ConverterName.with(TEXT_TO_TEXT_STRING);
 
+    private final static String TEXT_TO_TEXT_NODE_STRING = "text-to-text-node";
+
+    final static ConverterName TEXT_TO_TEXT_NODE = ConverterName.with(TEXT_TO_TEXT_NODE_STRING);
+
+    private final static String TEXT_TO_TEXT_STYLE_STRING = "text-to-text-style";
+
+    final static ConverterName TEXT_TO_TEXT_STYLE = ConverterName.with(TEXT_TO_TEXT_STYLE_STRING);
+
     private final static String TEXT_TO_URL_STRING = "text-to-url";
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
@@ -392,6 +425,18 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TO_JSON_STRING = "to-json";
 
     final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
+
+    private final static String TO_TEXT_NODE_STRING = "to-text-node";
+
+    final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
+
+    private final static String URL_TO_HYPERLINK_STRING = "url-to-hyperlink";
+
+    final static ConverterName URL_TO_HYPERLINK = ConverterName.with(URL_TO_HYPERLINK_STRING);
+
+    private final static String URL_TO_IMAGE_STRING = "url-to-image";
+
+    final static ConverterName URL_TO_IMAGE = ConverterName.with(URL_TO_IMAGE_STRING);
 
     @Override
     public ConverterInfoSet converterInfos() {
@@ -425,11 +470,16 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_TEXT),
                     converterInfo(TEXT_TO_TEXT),
+                    converterInfo(TEXT_TO_TEXT_NODE),
+                    converterInfo(TEXT_TO_TEXT_STYLE),
                     converterInfo(TEXT_TO_URL),
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
                     converterInfo(TEXT_TO_VALUE_TYPE),
-                    converterInfo(TO_JSON)
+                    converterInfo(TO_JSON),
+                    converterInfo(TO_TEXT_NODE),
+                    converterInfo(URL_TO_HYPERLINK),
+                    converterInfo(URL_TO_IMAGE)
             )
     );
 
