@@ -29,7 +29,6 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
@@ -41,8 +40,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.visit.Visiting;
 
 import java.math.MathContext;
@@ -1098,100 +1095,6 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                 "Pattern \"hh:mm\" is not a TIME_PARSE_PATTERN.",
                 thrown.getMessage(),
                 "message"
-        );
-    }
-
-    // patternPatch.....................................................................................................
-
-    @Test
-    public void testPatternPatchWithNullPatternFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
-                        null,
-                        JsonNodeMarshallContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testPatternPatchWithNullContextFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseTextFormatPattern("@@@")
-                        ),
-                        null
-                )
-        );
-    }
-
-    @Test
-    public void testPatternPatchWithInvalidPatternFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseTextFormatPattern("@@@")
-                        ),
-                        JsonNodeMarshallContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testPatternPatchWithEmpty() {
-        final Optional<SpreadsheetFormatPattern> pattern = Optional.empty();
-        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
-
-        this.checkEquals(
-                SpreadsheetDelta.formatterPatch(
-                        pattern.map(SpreadsheetFormatPattern::spreadsheetFormatterSelector),
-                        context
-                ),
-                SpreadsheetPatternKind.DATE_FORMAT_PATTERN.patternPatch(
-                        pattern,
-                        context
-                )
-        );
-    }
-
-    @Test
-    public void testPatternPatchWithSpreadsheetFormatter() {
-        final SpreadsheetFormatPattern pattern = SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy");
-        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
-
-        this.checkEquals(
-                SpreadsheetDelta.formatterPatch(
-                        Optional.of(
-                                pattern.spreadsheetFormatterSelector()
-                        ),
-                        context
-                ),
-                pattern.patternKind()
-                        .patternPatch(
-                                Optional.of(pattern),
-                                context
-                        )
-        );
-    }
-
-    @Test
-    public void testPatternPatchWithSpreadsheetParsePattern() {
-        final SpreadsheetParsePattern pattern = SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy");
-        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
-
-        this.checkEquals(
-                SpreadsheetDelta.parserPatch(
-                        Optional.of(pattern.spreadsheetParserSelector()),
-                        context
-                ),
-                pattern.patternKind()
-                        .patternPatch(
-                                Optional.of(pattern),
-                                context
-                        )
         );
     }
 

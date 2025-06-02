@@ -22,18 +22,14 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -374,36 +370,6 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 throw new IllegalArgumentException("Pattern " + pattern + " is not a " + kind + ".");
             }
         }
-    }
-
-    /**
-     * Factory that creates a {@link JsonNode} patch for the given {@link SpreadsheetPattern}.
-     * Note because there are two types of {@link SpreadsheetPatternKind} one for formatting and other for parsing,
-     * there are also to types of json returned, one holding a {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}
-     * for formatting and a {@link SpreadsheetParserSelector} for parsing.
-     */
-    public JsonNode patternPatch(final Optional<? extends SpreadsheetPattern> pattern,
-                                 final JsonNodeMarshallContext context) {
-        Objects.requireNonNull(pattern, "pattern");
-
-        this.checkSameOrFail(pattern.orElse(null));
-        return this.isFormatPattern() ?
-                SpreadsheetDelta.formatterPatch(
-                        pattern.map(p -> {
-                            final SpreadsheetFormatPattern formatPattern = (SpreadsheetFormatPattern) p;
-                            return formatPattern.spreadsheetFormatterSelector();
-                        }),
-                        context
-                ) :
-                SpreadsheetDelta.parserPatch(
-                        pattern.map(
-                                p -> {
-                                    final SpreadsheetParsePattern parsePattern = (SpreadsheetParsePattern) p;
-                                    return parsePattern.spreadsheetParserSelector();
-                                }
-                        ),
-                        context
-                );
     }
 
     /**
