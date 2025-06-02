@@ -844,14 +844,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // CanBeEmpty.......................................................................................................
 
     /**
-     * Returns true if this {@link SpreadsheetFormula#text} and {@link #value()}  and {@link #value} are all empty.
+     * Returns true if this has no {@link #text()}, no {@link #value()} and no {@link #valueType()}.
      */
     @Override
     public boolean isEmpty() {
-        return this.text()
-                .isEmpty() &&
-                false == this.value()
-                        .isPresent();
+        return this.equals(EMPTY);
     }
 
     // isPure...........................................................................................................
