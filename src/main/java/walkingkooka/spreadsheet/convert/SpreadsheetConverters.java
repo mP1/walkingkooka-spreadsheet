@@ -36,6 +36,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
+import walkingkooka.tree.text.convert.TreeTextConverters;
 import walkingkooka.validation.convert.ValidatorConvertConverters;
 
 import java.time.LocalDate;
@@ -320,6 +321,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeTextConverters.textToText()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToTextNode() {
+        return TreeTextConverters.textToText();
+    }
+
+    /**
+     * {@see TreeTextConverters.textToTextStyle()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToTextStyle() {
+        return TreeTextConverters.textToTextStyle();
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link TimeSpreadsheetFormulaParserToken} and converting
      * that into a {@link LocalTime}.
      */
@@ -369,10 +384,31 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeTextConverters#hasTextNodeToTextNode}
+     */
+    public static Converter<SpreadsheetConverterContext> toTextNode() {
+        return TreeTextConverters.hasTextNodeToTextNode();
+    }
+
+    /**
      * {@see SpreadsheetConverterUnformattedNumber}
      */
     public static Converter<SpreadsheetConverterContext> unformattedNumber() {
         return SpreadsheetConverterUnformattedNumber.INSTANCE;
+    }
+
+    /**
+     * {@see TreeTextConverters.urlToHyperlink()}
+     */
+    public static Converter<SpreadsheetConverterContext> urlToHyperlink() {
+        return TreeTextConverters.urlToHyperlink();
+    }
+
+    /**
+     * {@see TreeTextConverters.urlToImage()}
+     */
+    public static Converter<SpreadsheetConverterContext> urlToImage() {
+        return TreeTextConverters.urlToImage();
     }
 
     /**

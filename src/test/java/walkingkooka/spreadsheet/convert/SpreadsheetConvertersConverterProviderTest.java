@@ -319,6 +319,24 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToTextNode() {
+        this.converterAndCheck(
+                "text-to-text-node",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToTextNode()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithTextToTextStyle() {
+        this.converterAndCheck(
+                "text-to-text-style",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToTextStyle()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToUrl() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_URL,
@@ -354,6 +372,33 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 "to-json",
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.toJson()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithToTextNode() {
+        this.converterAndCheck(
+                "to-text-node",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.toTextNode()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithUrlToHyperlink() {
+        this.converterAndCheck(
+                "url-to-hyperlink",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.urlToHyperlink()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithUrlToImage() {
+        this.converterAndCheck(
+                "url-to-image",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.urlToImage()
         );
     }
 
