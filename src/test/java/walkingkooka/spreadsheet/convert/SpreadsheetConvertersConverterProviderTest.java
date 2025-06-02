@@ -290,6 +290,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+    @Test
+    public void testConverterNameWithTextToUrl() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.TEXT_TO_URL,
+                Lists.empty(),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToUrl()
+        );
+    }
+
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(

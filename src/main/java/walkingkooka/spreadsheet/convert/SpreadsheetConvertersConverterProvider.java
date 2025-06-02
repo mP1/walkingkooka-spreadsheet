@@ -29,6 +29,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.UrlPath;
+import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -208,6 +209,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToText();
                 break;
+            case TEXT_TO_URL_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = NetConverters.textToUrl();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown converter " + name);
         }
@@ -331,6 +337,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_TEXT = ConverterName.with(TEXT_TO_TEXT_STRING);
 
+    private final static String TEXT_TO_URL_STRING = "text-to-url";
+
+    final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
+
     @Override
     public ConverterInfoSet converterInfos() {
         return INFOS;
@@ -360,7 +370,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_TEXT),
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
-                    converterInfo(TEXT_TO_TEXT)
+                    converterInfo(TEXT_TO_TEXT),
+                    converterInfo(TEXT_TO_URL)
             )
     );
 

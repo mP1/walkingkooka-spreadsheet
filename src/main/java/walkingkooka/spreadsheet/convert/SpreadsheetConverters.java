@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.net.convert.NetConverters;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
@@ -286,6 +287,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetText() {
         return SpreadsheetConverterTextToSpreadsheetText.INSTANCE;
+    }
+
+    /**
+     * {@see NetConverters#textToUrl()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToUrl() {
+        return NetConverters.textToUrl();
     }
 
     /**
