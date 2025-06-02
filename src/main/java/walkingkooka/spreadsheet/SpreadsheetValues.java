@@ -31,16 +31,35 @@ public final class SpreadsheetValues implements PublicStaticHelper {
 
     public static final ValidationValueTypeName BOOLEAN = ValidationValueTypeName.BOOLEAN;
 
+    public static final ValidationValueTypeName CELL = ValidationValueTypeName.with("cell");
+
+    public static final ValidationValueTypeName COLUMN = ValidationValueTypeName.with("column");
+
+    public static final ValidationValueTypeName CONDITION = ValidationValueTypeName.with("condition");
+
     public static final ValidationValueTypeName DATE = ValidationValueTypeName.DATE;
 
     public static final ValidationValueTypeName DATE_TIME = ValidationValueTypeName.DATE_TIME;
 
+    public static final ValidationValueTypeName ERROR = ValidationValueTypeName.with("error");
+
+    public static final ValidationValueTypeName LABEL = ValidationValueTypeName.with("label");
+
     public static final ValidationValueTypeName NUMBER = ValidationValueTypeName.NUMBER;
+
+    public static final ValidationValueTypeName ROW = ValidationValueTypeName.with("row");
+
+    public static final ValidationValueTypeName TEMPLATE_VALUE_NAME = ValidationValueTypeName.with("template-value-name");
 
     public static final ValidationValueTypeName TEXT = ValidationValueTypeName.TEXT;
 
     public static final ValidationValueTypeName TIME = ValidationValueTypeName.TIME;
 
+    public static final ValidationValueTypeName VALUE_OR_EXPRESSION = ValidationValueTypeName.with("valueOrExpression");
+
+    /**
+     * Does not include all types, only those that typically appear in a cell
+     */
     public static final Set<ValidationValueTypeName> ALL = Sets.of(
             BOOLEAN,
             DATE,

@@ -24,6 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.SpreadsheetValues;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -83,7 +84,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                                 1,
                                 Integer.MAX_VALUE
                         ).transform(SpreadsheetFormulaParsers::transformWhitespace)
-                        .setToString(whitespaceIdentifier.value())
+                        .setToString(whitespaceIdentifier.value()),
+                SpreadsheetParser.NO_VALUE_TYPE
         );
         WHITESPACE = whitespace;
 
@@ -91,7 +93,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 column()
                         .and(row())
                         .transform(SpreadsheetFormulaParsers::transformCell)
-                        .setToString("CELL")
+                        .setToString("CELL"),
+                Optional.of(SpreadsheetValues.CELL)
         );
         CELL = cell;
 
@@ -107,7 +110,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         .and(whitespace.optional())
                         .and(cell)
                         .transform(SpreadsheetFormulaParsers::transformCellRange)
-                        .setToString("CELL_RANGE")
+                        .setToString("CELL_RANGE"),
+                Optional.of(SpreadsheetValues.CELL)
         );
 
         CELL_RANGE = cellRange;
@@ -116,8 +120,9 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         CELL_OR_CELL_RANGE_OR_LABEL = SpreadsheetParsers.parser(
                 labelName()
                         .or(cellRange)
-                        .or(cell)
+                        .or(cell),
                         //.setToString("CELL_OR_CELL_RANGE_OR_LABEL")
+                Optional.of(SpreadsheetValues.CELL)
         );
     }
 
@@ -197,7 +202,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return SpreadsheetParsers.parser(
                 resolveParsers(value)
                         .apply(CONDITION_RIGHT_PARSER_IDENTIFIER)
-                        .transform(SpreadsheetFormulaParsers::transformConditionRight)
+                        .transform(SpreadsheetFormulaParsers::transformConditionRight),
+                Optional.of(SpreadsheetValues.CONDITION)
         );
     }
 
@@ -296,7 +302,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         Arrays.stream(SpreadsheetErrorKind.values())
                                 .map(SpreadsheetFormulaParsers::errorParser0)
                                 .collect(Collectors.toList())
-                )
+                ),
+                Optional.of(SpreadsheetValues.ERROR)
         );
     }
 
@@ -346,7 +353,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                             SpreadsheetFunctionName.MIN_LENGTH,
                             SpreadsheetFunctionName.MAX_LENGTH)
                     .transform(SpreadsheetFormulaParsers::transformFunctionName)
-                    .setToString(FUNCTION_NAME_IDENTIFIER.value())
+                    .setToString(FUNCTION_NAME_IDENTIFIER.value()),
+            SpreadsheetParser.NO_VALUE_TYPE
     );
 
     private static ParserToken transformFunctionName(final ParserToken token, final SpreadsheetParserContext context) {
@@ -602,7 +610,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return SpreadsheetParsers.parser(
                 resolveParsers(value)
                         .apply(VALUE_OR_EXPRESSION_IDENTIFIER)
-                        .transform(SpreadsheetFormulaParsers::transformValueOrExpression)
+                        .transform(SpreadsheetFormulaParsers::transformValueOrExpression),
+                Optional.of(SpreadsheetValues.VALUE_OR_EXPRESSION)
         );
     }
 
@@ -736,7 +745,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 SpreadsheetParsers.parser(
                         parsers.apply(
                                 EbnfIdentifierName.with(name)
-                        ).setToString(name)
+                        ).setToString(name),
+                        SpreadsheetParser.NO_VALUE_TYPE
                 );
 
         EXPRESSION_PARSER = getSpreadsheetParser.apply("EXPRESSION");
@@ -749,7 +759,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         final Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(
                 SpreadsheetParsers.parser(
                         TemplateValueName.PARSER.setToString("TEMPLATE_VALUE_NAME")
-                                .cast()
+                                .cast(),
+                        Optional.of(SpreadsheetValues.TEMPLATE_VALUE_NAME)
                 ).transform(
                         (t, x) -> SpreadsheetFormulaParserToken.templateValueName(
                                 TemplateValueName.with(t.text()),
@@ -762,7 +773,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 SpreadsheetParsers.parser(
                         parsers.apply(
                                 EbnfIdentifierName.with(name)
-                        ).setToString(name)
+                        ).setToString(name),
+                        SpreadsheetParser.NO_VALUE_TYPE
                 );
 
         TEMPLATE_EXPRESSION_PARSER = getSpreadsheetParser.apply("EXPRESSION");

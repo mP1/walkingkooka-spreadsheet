@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.SpreadsheetValues;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,6 +48,11 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
      */
     private SpreadsheetDateParsePattern(final ParserToken token) {
         super(token);
+    }
+
+    @Override
+    public ValidationValueTypeName valueType() {
+        return SpreadsheetValues.DATE;
     }
 
     @Override

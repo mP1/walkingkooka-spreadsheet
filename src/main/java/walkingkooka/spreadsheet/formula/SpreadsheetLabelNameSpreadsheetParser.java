@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.formula;
 
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetValues;
 import walkingkooka.spreadsheet.formula.parser.LabelSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -33,6 +34,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.RequiredParser;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -130,6 +132,15 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
 
         return NO_TOKENS;
     }
+
+    @Override
+    public Optional<ValidationValueTypeName> valueType() {
+        return LABEL_VALUE_TYPE;
+    }
+
+    private final static Optional<ValidationValueTypeName> LABEL_VALUE_TYPE = Optional.of(
+            SpreadsheetValues.LABEL
+    );
 
     @Override
     public String toString() {
