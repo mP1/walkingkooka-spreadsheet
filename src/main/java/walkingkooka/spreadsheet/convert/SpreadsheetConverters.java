@@ -313,10 +313,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see NetConverters#textToUrl()}
+     * {@see Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString}
      */
-    public static Converter<SpreadsheetConverterContext> textToUrl() {
-        return NetConverters.textToUrl();
+    public static Converter<SpreadsheetConverterContext> textToText() {
+        return Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString();
     }
 
     /**
@@ -334,17 +334,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see NetConverters#textToUrl()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToUrl() {
+        return NetConverters.textToUrl();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToValidationError}
      */
     public static Converter<SpreadsheetConverterContext> textToValidationError() {
         return SpreadsheetConverterTextToValidationError.INSTANCE;
-    }
-
-    /**
-     * {@see Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString}
-     */
-    public static Converter<SpreadsheetConverterContext> textToText() {
-        return Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString();
     }
 
     /**
