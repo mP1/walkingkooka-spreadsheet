@@ -213,11 +213,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToSpreadsheetText();
                 break;
-            case TEXT_TO_VALIDATION_ERROR_STRING:
-                parameterCountCheck(copy, 0);
-
-                converter = SpreadsheetConverters.textToValidationError();
-                break;
             case TEXT_TO_TEXT_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -227,6 +222,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 parameterCountCheck(copy, 0);
 
                 converter = SpreadsheetConverters.textToUrl();
+                break;
+            case TEXT_TO_VALIDATION_ERROR_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToValidationError();
                 break;
             case TEXT_TO_VALIDATOR_SELECTOR_STRING:
                 parameterCountCheck(copy, 0);
@@ -345,7 +345,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
 
-
     private final static String TEXT_TO_SPREADSHEET_ID_STRING = "text-to-spreadsheet-id";
 
     final static ConverterName TEXT_TO_SPREADSHEET_ID = ConverterName.with(TEXT_TO_SPREADSHEET_ID_STRING);
@@ -370,10 +369,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_SPREADSHEET_TEXT = ConverterName.with(TEXT_TO_SPREADSHEET_TEXT_STRING);
 
-    private final static String TEXT_TO_VALIDATION_ERROR_STRING = "text-to-validation-error";
-
-    final static ConverterName TEXT_TO_VALIDATION_ERROR = ConverterName.with(TEXT_TO_VALIDATION_ERROR_STRING);
-
     private final static String TEXT_TO_TEXT_STRING = "text-to-text";
 
     final static ConverterName TEXT_TO_TEXT = ConverterName.with(TEXT_TO_TEXT_STRING);
@@ -381,6 +376,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEXT_TO_URL_STRING = "text-to-url";
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
+
+    private final static String TEXT_TO_VALIDATION_ERROR_STRING = "text-to-validation-error";
+
+    final static ConverterName TEXT_TO_VALIDATION_ERROR = ConverterName.with(TEXT_TO_VALIDATION_ERROR_STRING);
 
     private final static String TEXT_TO_VALIDATOR_SELECTOR_STRING = "text-to-validator-selector";
 
@@ -425,9 +424,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_TEXT),
-                    converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_TEXT),
                     converterInfo(TEXT_TO_URL),
+                    converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO__VALIDATOR_SELECTOR),
                     converterInfo(TEXT_TO_VALUE_TYPE),
                     converterInfo(TO_JSON)
