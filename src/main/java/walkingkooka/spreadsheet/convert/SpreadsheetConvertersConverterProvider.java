@@ -383,7 +383,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     private final static String TEXT_TO_VALIDATOR_SELECTOR_STRING = "text-to-validator-selector";
 
-    final static ConverterName TEXT_TO__VALIDATOR_SELECTOR = ConverterName.with(TEXT_TO_VALIDATOR_SELECTOR_STRING);
+    final static ConverterName TEXT_TO_VALIDATOR_SELECTOR = ConverterName.with(TEXT_TO_VALIDATOR_SELECTOR_STRING);
 
     private final static String TEXT_TO_VALUE_TYPE_STRING = "text-to-value-type";
 
@@ -427,7 +427,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_TEXT),
                     converterInfo(TEXT_TO_URL),
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
-                    converterInfo(TEXT_TO__VALIDATOR_SELECTOR),
+                    converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
                     converterInfo(TEXT_TO_VALUE_TYPE),
                     converterInfo(TO_JSON)
             )
