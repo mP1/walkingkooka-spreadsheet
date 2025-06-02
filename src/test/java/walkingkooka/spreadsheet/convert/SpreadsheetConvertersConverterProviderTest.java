@@ -331,7 +331,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterNameWithTextToValidationSelector() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.TEXT_TO__VALIDATOR_SELECTOR,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATOR_SELECTOR,
                 Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.textToValidatorSelector()
