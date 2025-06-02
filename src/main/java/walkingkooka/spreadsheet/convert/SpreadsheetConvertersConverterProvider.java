@@ -124,6 +124,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = general(context);
                 break;
+            case JSON_TO_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.jsonTo();
+                break;
             case NUMBER_TO_NUMBER_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -158,6 +163,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 parameterCountCheck(copy, 0);
 
                 converter = SpreadsheetConverters.textToExpression();
+                break;
+            case TEXT_TO_JSON_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToJson();
                 break;
             case TEXT_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
@@ -214,6 +224,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = NetConverters.textToUrl();
                 break;
+            case TO_JSON_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.toJson();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown converter " + name);
         }
@@ -268,6 +283,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
 
+    private final static String JSON_TO_STRING = "jsonTo";
+
+    final static ConverterName JSON_TO = ConverterName.with(JSON_TO_STRING);
+
     private final static String NULL_TO_NUMBER_STRING = "null-to-number";
 
     final static ConverterName NULL_TO_NUMBER = ConverterName.with(NULL_TO_NUMBER_STRING);
@@ -295,6 +314,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEXT_TO_EXPRESSION_STRING = "text-to-expression";
 
     final static ConverterName TEXT_TO_EXPRESSION = ConverterName.with(TEXT_TO_EXPRESSION_STRING);
+
+    private final static String TEXT_TO_JSON_STRING = "text-to-json";
+
+    final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
 
     private final static String TEXT_TO_SELECTION_STRING = "text-to-selection";
 
@@ -341,6 +364,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
 
+    private final static String TO_JSON_STRING = "to-json";
+
+    final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
+
     @Override
     public ConverterInfoSet converterInfos() {
         return INFOS;
@@ -354,6 +381,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(ERROR_TO_NUMBER),
                     converterInfo(FORMAT_PATTERN_TO_STRING),
                     converterInfo(GENERAL),
+                    converterInfo(JSON_TO),
                     converterInfo(NULL_TO_NUMBER),
                     converterInfo(NUMBER_TO_NUMBER),
                     converterInfo(SPREADSHEET_CELL_TO),
@@ -361,6 +389,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SELECTION_TO_TEXT),
                     converterInfo(TEXT_TO_ERROR),
                     converterInfo(TEXT_TO_EXPRESSION),
+                    converterInfo(TEXT_TO_JSON),
                     converterInfo(TEXT_TO_SELECTION),
                     converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_ID),
@@ -371,7 +400,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_SPREADSHEET_TEXT),
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_TEXT),
-                    converterInfo(TEXT_TO_URL)
+                    converterInfo(TEXT_TO_URL),
+                    converterInfo(TO_JSON)
             )
     );
 

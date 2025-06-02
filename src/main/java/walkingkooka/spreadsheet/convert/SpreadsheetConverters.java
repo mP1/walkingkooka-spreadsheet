@@ -35,6 +35,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.json.convert.JsonNodeConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -121,6 +122,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see JsonNodeConverters#jsonNodeTo}
+     */
+    public static Converter<SpreadsheetConverterContext> jsonTo() {
+        return JsonNodeConverters.jsonNodeTo();
+    }
+
+    /**
      * {@see SpreadsheetConverterNullToNumber}
      */
     public static Converter<SpreadsheetConverterContext> nullToNumber() {
@@ -200,6 +208,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                  final SpreadsheetConverterContext scc) -> t.cast(DateTimeSpreadsheetFormulaParserToken.class)
                         .toLocalDateTime(scc)
         );
+    }
+
+    /**
+     * {@see JsonNodeConverters#textToJsonNode}
+     */
+    public static Converter<SpreadsheetConverterContext> textToJson() {
+        return JsonNodeConverters.textToJsonNode();
     }
 
     /**
@@ -322,6 +337,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToText() {
         return Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString();
+    }
+
+    /**
+     * {@see JsonNodeConverters#toJsonNode}
+     */
+    public static Converter<SpreadsheetConverterContext> toJson() {
+        return JsonNodeConverters.toJsonNode();
     }
 
     /**
