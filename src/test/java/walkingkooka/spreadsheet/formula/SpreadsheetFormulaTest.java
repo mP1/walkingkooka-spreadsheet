@@ -60,12 +60,14 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -2046,6 +2048,33 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 JsonNode.string(text)
                         ),
                 SpreadsheetFormula.textPatch(text)
+        );
+    }
+
+    // valuePatch.......................................................................................................
+
+    @Test
+    public void testValuePatchWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.valuePatch(null)
+        );
+    }
+
+    @Test
+    public void testValuePatch() {
+        final ExpressionNumber number = EXPRESSION_NUMBER_KIND.create(123);
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.VALUE_PROPERTY,
+                                JsonNodeMarshallContexts.basic()
+                                        .marshallWithType(number)
+                        ),
+                SpreadsheetFormula.valuePatch(
+                        Optional.of(number)
+                )
         );
     }
 
