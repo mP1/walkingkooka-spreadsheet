@@ -1911,51 +1911,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
         );
     }
-
-    // valueTypePatch...................................................................................................
-
-    @Test
-    public void testValueTypePatchWithNullValueTypeFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.valueTypePatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testValueTypePatchWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.valueTypePatch(
-                        Optional.empty(),
-                        null
-                )
-        );
-    }
-
-    @Test
-    public void testValueTypePatch() {
-        final Optional<ValidationValueTypeName> valueType = Optional.of(
-                ValidationValueTypeName.with("Text123")
-        );
-
-        this.checkEquals(
-                JsonNode.parse(
-                        "{\n" +
-                        "  \"formula\": {\n" +
-                        "    \"valueType\": \"Text123\"\n" +
-                        "  }\n" +
-                        "}"
-                ),
-                SpreadsheetDelta.valueTypePatch(
-                        valueType,
-                        MARSHALL_CONTEXT
-                )
-        );
-    }
     
     // parserPatch......................................................................................................
 
@@ -2247,7 +2202,52 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
         );
     }
-    
+
+    // valueTypePatch...................................................................................................
+
+    @Test
+    public void testValueTypePatchWithNullValueTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.valueTypePatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testValueTypePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.valueTypePatch(
+                        Optional.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testValueTypePatch() {
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+                ValidationValueTypeName.with("Text123")
+        );
+
+        this.checkEquals(
+                JsonNode.parse(
+                        "{\n" +
+                                "  \"formula\": {\n" +
+                                "    \"valueType\": \"Text123\"\n" +
+                                "  }\n" +
+                                "}"
+                ),
+                SpreadsheetDelta.valueTypePatch(
+                        valueType,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
     // Patch............................................................................................................
 
     @Test
@@ -2724,55 +2724,6 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
-    public void testPatchWithInputValueType() {
-        final Optional<ValidationValueTypeName> valueType = Optional.of(
-                ValidationValueTypeName.with("hello-value-type")
-        );
-
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
-                        .setValueType(
-                                Optional.of(
-                                        ValidationValueTypeName.with("lost-value-type")
-                                )
-                        )
-        );
-        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
-
-        this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1,
-                                        b2
-                                )
-                        ),
-                SpreadsheetDelta.valueTypePatch(
-                        valueType,
-                        MARSHALL_CONTEXT
-                ),
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1.setFormula(
-                                                a1.formula()
-                                                        .setValueType(valueType)
-                                        ),
-                                        b2.setFormula(
-                                                b2.formula()
-                                                        .setValueType(valueType)
-                                        )
-                                )
-                        )
-        );
-    }
-
-    @Test
     public void testPatchWithParser() {
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
                 SpreadsheetParserSelector.parse("hello-parser")
@@ -2935,7 +2886,56 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 after
         );
     }
-    
+
+    @Test
+    public void testPatchWithValueType() {
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+                ValidationValueTypeName.with("hello-value-type")
+        );
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setText("=1")
+                        .setValueType(
+                                Optional.of(
+                                        ValidationValueTypeName.with("lost-value-type")
+                                )
+                        )
+        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText("=99")
+                );
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1,
+                                        b2
+                                )
+                        ),
+                SpreadsheetDelta.valueTypePatch(
+                        valueType,
+                        MARSHALL_CONTEXT
+                ),
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        a1.setFormula(
+                                                a1.formula()
+                                                        .setValueType(valueType)
+                                        ),
+                                        b2.setFormula(
+                                                b2.formula()
+                                                        .setValueType(valueType)
+                                        )
+                                )
+                        )
+        );
+    }
+
     // PatchCells.......................................................................................................
 
     @Test
