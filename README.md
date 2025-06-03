@@ -136,6 +136,7 @@ eg
 - [textToText](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/CharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrStringConverter.java)
 - [textToTextNode](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TextToTextConverter.java)
 - [textToTextStyle](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TextToTextStyleConverter.java)
+- [textToTextStylePropertyName](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TextToTextStylePropertyNameConverter.java)
 - [textToTime](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [textToUrl](https://github.com/mP1/walkingkooka-net-convert/blob/master/src/main/java/walkingkooka/net/convert/TextToUrlConverter.java)
 - [textToValidationError](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToValidationError.java)

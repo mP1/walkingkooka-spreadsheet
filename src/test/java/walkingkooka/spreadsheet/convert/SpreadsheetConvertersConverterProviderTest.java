@@ -337,6 +337,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToTextStylePropertyName() {
+        this.converterAndCheck(
+                "text-to-text-style-property-name",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToTextStylePropertyName()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToUrl() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_URL,

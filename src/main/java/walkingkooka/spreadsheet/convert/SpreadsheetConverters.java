@@ -335,6 +335,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeTextConverters.textToTextStylePropertyName()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToTextStylePropertyName() {
+        return TreeTextConverters.textToTextStylePropertyName();
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link TimeSpreadsheetFormulaParserToken} and converting
      * that into a {@link LocalTime}.
      */
