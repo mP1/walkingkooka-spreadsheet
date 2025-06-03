@@ -1195,13 +1195,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode cellsValueTypePatch(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes) {
+    public static JsonNode cellsValueTypePatch(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes,
+                                               final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToValueTypes, "cellToValueTypes");
+        Objects.requireNonNull(context, "context");
 
         return cellsPatchFromMap(
                 cellToValueTypes,
                 FORMULA_PROPERTY,
-                SpreadsheetFormula::valueTypePatch
+                (Optional<ValidationValueTypeName> t) -> SpreadsheetFormula.valueTypePatch(t, context)
         );
     }
 
@@ -1345,12 +1347,17 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType,
+                                          final JsonNodeMarshallContext context) {
         Objects.requireNonNull(valueType, "valueType");
+        Objects.requireNonNull(context, "context");
 
         return makePatch(
                 FORMULA_PROPERTY,
-                SpreadsheetFormula.valueTypePatch(valueType)
+                SpreadsheetFormula.valueTypePatch(
+                        valueType,
+                        context
+                )
         );
     }
     

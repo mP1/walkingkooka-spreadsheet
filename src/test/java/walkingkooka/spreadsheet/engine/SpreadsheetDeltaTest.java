@@ -1561,7 +1561,21 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testCellsValueTypePatchWithNullMapFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValueTypePatch(null)
+                () -> SpreadsheetDelta.cellsValueTypePatch(
+                        null,
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testCellsValueTypePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsValueTypePatch(
+                        Maps.empty(),
+                        null
+                )
         );
     }
 
@@ -1596,7 +1610,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     private void cellsValueTypePatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes,
                                              final String expected) {
-        final JsonNode patch = SpreadsheetDelta.cellsValueTypePatch(cellToValueTypes);
+        final JsonNode patch = SpreadsheetDelta.cellsValueTypePatch(
+                cellToValueTypes,
+                MARSHALL_CONTEXT
+        );
 
         this.checkEquals(
                 JsonNode.parse(expected),
@@ -1898,10 +1915,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     // valueTypePatch...................................................................................................
 
     @Test
-    public void testValueTypePatchWithNullFails() {
+    public void testValueTypePatchWithNullValueTypeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetDelta.valueTypePatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testValueTypePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.valueTypePatch(
+                        Optional.empty(),
                         null
                 )
         );
@@ -1922,7 +1951,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                         "}"
                 ),
                 SpreadsheetDelta.valueTypePatch(
-                        valueType
+                        valueType,
+                        MARSHALL_CONTEXT
                 )
         );
     }
@@ -2674,7 +2704,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                         b2
                                 )
                         ),
-                SpreadsheetDelta.valueTypePatch(valueType),
+                SpreadsheetDelta.valueTypePatch(
+                        valueType,
+                        MARSHALL_CONTEXT
+                ),
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
@@ -3460,7 +3493,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 before,
                 SpreadsheetSelection.parseCellRange("A1:A2"),
                 SpreadsheetDelta.formulaPatch(
-                        SpreadsheetFormula.valueTypePatch(typeName)
+                        SpreadsheetFormula.valueTypePatch(
+                                typeName,
+                                MARSHALL_CONTEXT
+                        )
                 ),
                 after
         );

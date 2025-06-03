@@ -2081,10 +2081,24 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // valueTypePatch...................................................................................................
 
     @Test
-    public void testValueTypePatchWithNullFails() {
+    public void testValueTypePatchWithNullValueTypeFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetFormula.valueTypePatch(null)
+                () -> SpreadsheetFormula.valueTypePatch(
+                        null,
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testValueTypePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.valueTypePatch(
+                        Optional.empty(),
+                        null
+                )
         );
     }
 
@@ -2099,7 +2113,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.valueTypePatch(
                         Optional.of(
                                 ValidationValueTypeName.with("text123")
-                        )
+                        ),
+                        JsonNodeMarshallContexts.basic()
                 )
         );
     }
@@ -2113,7 +2128,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 JsonNode.nullNode()
                         ),
                 SpreadsheetFormula.valueTypePatch(
-                        Optional.empty()
+                        Optional.empty(),
+                        JsonNodeMarshallContexts.basic()
                 )
         );
     }
@@ -2224,7 +2240,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.patchAndCheck(
                 formula,
-                SpreadsheetFormula.valueTypePatch(valueType),
+                SpreadsheetFormula.valueTypePatch(
+                        valueType,
+                        JsonNodeMarshallContexts.basic()
+                ),
                 formula.setValueType(valueType)
         );
     }
@@ -2238,7 +2257,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.patchAndCheck(
                 formula,
-                SpreadsheetFormula.valueTypePatch(valueType),
+                SpreadsheetFormula.valueTypePatch(
+                        valueType,
+                        JsonNodeMarshallContexts.basic()
+                ),
                 formula.setValueType(valueType)
         );
     }
