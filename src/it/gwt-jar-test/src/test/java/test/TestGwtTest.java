@@ -336,7 +336,6 @@ public class TestGwtTest extends GWTTestCase {
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
                                         SpreadsheetMetadata.NO_CELL,
-                                        SpreadsheetConverterContexts.NO_METADATA,
                                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                         LABEL_NAME_RESOLVER,
