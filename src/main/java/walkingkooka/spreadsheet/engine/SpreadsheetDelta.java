@@ -1248,7 +1248,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Creates a {@link SpreadsheetFormatterSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     * Creates a {@link JsonNode} which can then be patch multiple cells.
      */
     public static JsonNode dateTimeSymbolsPatch(final Optional<DateTimeSymbols> symbols,
                                                 final JsonNodeMarshallContext context) {
@@ -1262,7 +1262,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Creates a {@link SpreadsheetFormatterSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     * Creates a {@link JsonNode} which can then be patch multiple cells.
      */
     public static JsonNode decimalNumberSymbolsPatch(final Optional<DecimalNumberSymbols> symbols,
                                                      final JsonNodeMarshallContext context) {
