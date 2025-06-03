@@ -2025,7 +2025,31 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setValue(value);
     }
 
-    // valueTypePatch..............................................................................................
+    // textPatch........................................................................................................
+
+    @Test
+    public void testTextPatchWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.textPatch(null)
+        );
+    }
+
+    @Test
+    public void testTextPatch() {
+        final String text = "=1+2*3";
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.TEXT_PROPERTY,
+                                JsonNode.string(text)
+                        ),
+                SpreadsheetFormula.textPatch(text)
+        );
+    }
+
+    // valueTypePatch...................................................................................................
 
     @Test
     public void testValueTypePatchWithNullFails() {
@@ -2064,30 +2088,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 )
         );
     }
-
-    // textPatch........................................................................................................
-
-    @Test
-    public void testTextPatchWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormula.textPatch(null)
-        );
-    }
-
-    @Test
-    public void testTextPatch() {
-        final String text = "=1+2*3";
-
-        this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetFormula.TEXT_PROPERTY,
-                                JsonNode.string(text)
-                        ),
-                SpreadsheetFormula.textPatch(text)
-        );
-    }
     
     // patch............................................................................................................
 
@@ -2100,7 +2100,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testPatchSameText() {
+    public void testPatchSetInvalidProperty() {
+        this.patchInvalidPropertyFails(
+                this.formula("=1"),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.ERROR_PROPERTY,
+                                JsonNode.nullNode()
+                        ),
+                SpreadsheetFormula.ERROR_PROPERTY,
+                JsonNode.nullNode()
+        );
+    }
+
+    @Test
+    public void testPatchTextSameText() {
         final String text = "=1+2*3";
 
         this.patchAndCheck(
@@ -2110,39 +2124,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testPatchDifferentText() {
+    public void testPatchTextDifferentText() {
         final String text = "=1+2*3";
 
         this.patchAndCheck(
                 this.formula("'Old"),
                 SpreadsheetFormula.textPatch(text),
                 this.formula(text)
-        );
-    }
-
-    @Test
-    public void testPatchValueTypeWithEmpty() {
-        final SpreadsheetFormula formula = this.formula("=1");
-        final Optional<ValidationValueTypeName> valueType = SpreadsheetFormula.NO_VALUE_TYPE;
-
-        this.patchAndCheck(
-                formula,
-                SpreadsheetFormula.valueTypePatch(valueType),
-                formula.setValueType(valueType)
-        );
-    }
-
-    @Test
-    public void testPatchValueTypeWithNonEmpty() {
-        final SpreadsheetFormula formula = this.formula("=1");
-        final Optional<ValidationValueTypeName> valueType = Optional.of(
-                ValidationValueTypeName.with("text123")
-        );
-
-        this.patchAndCheck(
-                formula,
-                SpreadsheetFormula.valueTypePatch(valueType),
-                formula.setValueType(valueType)
         );
     }
 
@@ -2201,16 +2189,28 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testPatchSetInvalidProperty() {
-        this.patchInvalidPropertyFails(
-                this.formula("=1"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetFormula.ERROR_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                SpreadsheetFormula.ERROR_PROPERTY,
-                JsonNode.nullNode()
+    public void testPatchValueTypeWithEmpty() {
+        final SpreadsheetFormula formula = this.formula("=1");
+        final Optional<ValidationValueTypeName> valueType = SpreadsheetFormula.NO_VALUE_TYPE;
+
+        this.patchAndCheck(
+                formula,
+                SpreadsheetFormula.valueTypePatch(valueType),
+                formula.setValueType(valueType)
+        );
+    }
+
+    @Test
+    public void testPatchValueTypeWithNonEmpty() {
+        final SpreadsheetFormula formula = this.formula("=1");
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+                ValidationValueTypeName.with("text123")
+        );
+
+        this.patchAndCheck(
+                formula,
+                SpreadsheetFormula.valueTypePatch(valueType),
+                formula.setValueType(valueType)
         );
     }
 
@@ -2495,7 +2495,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    // marshall.......................................................................................................
+    // marshall.........................................................................................................
 
     @Test
     public void testMarshallText() {
