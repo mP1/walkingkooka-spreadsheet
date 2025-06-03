@@ -498,14 +498,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * Creates a PATCH for a formula to replace the {@link #valueType()}.
      */
-    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType,
+                                          final JsonNodeMarshallContext context) {
         Objects.requireNonNull(valueType, "valueType");
+        Objects.requireNonNull(context, "context");
 
         return JsonNode.object()
                 .set(
                         VALUE_TYPE_PROPERTY,
-                        JsonNodeMarshallContexts.basic()
-                                .marshallOptional(valueType)
+                        context.marshallOptional(valueType)
                 );
     }
 
