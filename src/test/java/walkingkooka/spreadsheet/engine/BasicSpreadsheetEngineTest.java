@@ -4842,7 +4842,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(
                         STYLE.setChildren(
                                 Lists.of(
-                                        TextNode.text("Fri./December/1999")
+                                        TextNode.text("ven./décembre/1999")
                                 )
                         )
                 )
