@@ -468,20 +468,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // XXXPatch.........................................................................................................
 
     /**
-     * Creates a PATCH for a formula to replace the {@link #valueType()}.
-     */
-    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
-        Objects.requireNonNull(valueType, "valueType");
-
-        return JsonNode.object()
-                .set(
-                        VALUE_TYPE_PROPERTY,
-                        JsonNodeMarshallContexts.basic()
-                                .marshallOptional(valueType)
-                );
-    }
-
-    /**
      * Creates a PATCH for {@link SpreadsheetFormula#text()}
      */
     public static JsonNode textPatch(final String text) {
@@ -492,6 +478,20 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         TEXT_PROPERTY,
                         JsonNodeMarshallContexts.basic()
                                 .marshall(text)
+                );
+    }
+
+    /**
+     * Creates a PATCH for a formula to replace the {@link #valueType()}.
+     */
+    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+        Objects.requireNonNull(valueType, "valueType");
+
+        return JsonNode.object()
+                .set(
+                        VALUE_TYPE_PROPERTY,
+                        JsonNodeMarshallContexts.basic()
+                                .marshallOptional(valueType)
                 );
     }
 
