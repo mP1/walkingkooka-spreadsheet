@@ -1302,18 +1302,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
-     */
-    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
-        Objects.requireNonNull(valueType, "valueType");
-
-        return makePatch(
-                FORMULA_PROPERTY,
-                SpreadsheetFormula.valueTypePatch(valueType)
-        );
-    }
-
-    /**
      * Creates a {@link SpreadsheetParserSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
     public static JsonNode parserPatch(final Optional<SpreadsheetParserSelector> parser,
@@ -1351,6 +1339,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return makePatch(
                 VALIDATOR_PROPERTY,
                 context.marshallOptional(validator)
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType) {
+        Objects.requireNonNull(valueType, "valueType");
+
+        return makePatch(
+                FORMULA_PROPERTY,
+                SpreadsheetFormula.valueTypePatch(valueType)
         );
     }
     
