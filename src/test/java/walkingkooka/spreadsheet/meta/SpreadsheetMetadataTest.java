@@ -20,12 +20,15 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -36,6 +39,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -54,6 +58,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
@@ -817,6 +822,80 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, findConverter, locale, precision, roundingMode, twoDigitYear",
                 thrown.getMessage(),
                 "message"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextAndCellDateTimeSymbolsDecimalNumberSymbols() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
+        final char positiveSign = '*';
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY
+        ).setDateTimeSymbols(
+                Optional.of(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(locale)
+                        ).setMonthNames(
+                                Lists.of("Jan*", "Feb*", "Mar*", "Apr*", "May*", "Jun*", "Jul*", "Aug*", "Sep*", "Oct*", "Nov*", "Dec*")
+                        )
+                )
+        ).setDecimalNumberSymbols(
+                Optional.of(
+                        DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                positiveSign,
+                                new DecimalFormatSymbols(locale)
+                        )
+                )
+        );
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        locale
+                ).loadFromLocale()
+                .set(
+                        SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+                        Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+                        1950
+                ).set(
+                        SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
+                        ExpressionNumberKind.BIG_DECIMAL
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                        ConverterSelector.parse("simple")
+                ).set(
+                        SpreadsheetMetadataPropertyName.PRECISION,
+                        10
+                ).set(
+                        SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                        RoundingMode.HALF_UP
+                ).set(
+                        SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
+                        50
+                );
+
+        final SpreadsheetConverterContext context = metadata.spreadsheetConverterContext(
+                Optional.of(cell),
+                SpreadsheetConverterContexts.NO_METADATA,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                SpreadsheetLabelNameResolvers.fake(),
+                ConverterProviders.converters(),
+                PROVIDER_CONTEXT
+        );
+
+        this.checkEquals(
+                positiveSign,
+                context.positiveSign(),
+                "positiveSign"
+        );
+        this.checkEquals(
+                "Jan*",
+                context.monthName(0),
+                "monthName 0"
         );
     }
 

@@ -985,8 +985,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         DateTimeContext dateTimeContext;
         try {
             dateTimeContext = this.dateTimeContext(
-                    NO_CELL,
-                    providerContext
+                    cell,
+                    providerContext // now
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
