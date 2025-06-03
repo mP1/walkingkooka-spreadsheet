@@ -1347,6 +1347,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
      */
+    public static JsonNode valuePatch(final Optional<Object> value,
+                                      final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
+
+        return makePatch(
+                FORMULA_PROPERTY,
+                SpreadsheetFormula.valuePatch(
+                        value,
+                        context
+                )
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
+     */
     public static JsonNode valueTypePatch(final Optional<ValidationValueTypeName> valueType,
                                           final JsonNodeMarshallContext context) {
         Objects.requireNonNull(valueType, "valueType");

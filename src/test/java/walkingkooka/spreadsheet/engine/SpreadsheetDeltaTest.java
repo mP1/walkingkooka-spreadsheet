@@ -2200,6 +2200,54 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // valuePatch.......................................................................................................
+
+    @Test
+    public void testValuePatchWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.valuePatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testValuePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.valuePatch(
+                        Optional.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testValuePatch() {
+        final Optional<Object> value = Optional.of(
+                ExpressionNumberKind.BIG_DECIMAL.create(123)
+        );
+
+        this.checkEquals(
+                JsonNode.parse(
+                        "{\n" +
+                                "  \"formula\": {\n" +
+                                "    \"value\": {\n" +
+                                "      \"type\": \"expression-number\",\n" +
+                                "      \"value\": \"123\"\n" +
+                                "    }\n" +
+                                "  }\n" +
+                                "}"
+                ),
+                SpreadsheetDelta.valuePatch(
+                        value,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+    
     // Patch............................................................................................................
 
     @Test
@@ -2841,6 +2889,53 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    @Test
+    public void testPatchWithValue() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of(111)
+                        )
+                );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of(222)
+                        )
+                );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(a1, a2)
+                );
+
+        final Optional<Object> value = Optional.of(
+                "Hello"
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+                Sets.of(
+                        a1.setFormula(
+                                a1.formula()
+                                        .setValue(value)
+                        ),
+                        a2.setFormula(
+                                a2.formula()
+                                        .setValue(value)
+                        )
+                )
+        );
+
+        this.patchAndCheck(
+                before,
+                SpreadsheetDelta.valuePatch(
+                        value,
+                        MARSHALL_CONTEXT
+                ),
+                after
+        );
+    }
+    
     // PatchCells.......................................................................................................
 
     @Test
