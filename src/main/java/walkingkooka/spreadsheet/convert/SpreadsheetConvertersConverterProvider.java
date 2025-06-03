@@ -228,6 +228,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToTextStyle();
                 break;
+            case TEXT_TO_TEXT_STYLE_PROPERTY_NAME_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToTextStylePropertyName();
+                break;
             case TEXT_TO_URL_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -406,6 +411,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_TEXT_STYLE = ConverterName.with(TEXT_TO_TEXT_STYLE_STRING);
 
+    private final static String TEXT_TO_TEXT_STYLE_PROPERTY_NAME_STRING = "text-to-text-style-property-name";
+
+    final static ConverterName TEXT_TO_TEXT_STYLE_PROPERTY_NAME = ConverterName.with(TEXT_TO_TEXT_STYLE_PROPERTY_NAME_STRING);
+
     private final static String TEXT_TO_URL_STRING = "text-to-url";
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
@@ -472,6 +481,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_TEXT),
                     converterInfo(TEXT_TO_TEXT_NODE),
                     converterInfo(TEXT_TO_TEXT_STYLE),
+                    converterInfo(TEXT_TO_TEXT_STYLE_PROPERTY_NAME),
                     converterInfo(TEXT_TO_URL),
                     converterInfo(TEXT_TO_VALIDATION_ERROR),
                     converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
