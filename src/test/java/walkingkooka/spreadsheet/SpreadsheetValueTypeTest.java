@@ -35,6 +35,7 @@ import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -193,6 +194,154 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                 type::getName
         );
     }
+
+    // toClass..........................................................................................................
+
+    @Test
+    public void testToClassWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetValueType.toClass(null)
+        );
+    }
+
+    @Test
+    public void testToClassWithBoolean() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.BOOLEAN,
+                Boolean.class
+        );
+    }
+
+    @Test
+    public void testToClassWithCell() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.CELL,
+                SpreadsheetCellReference.class
+        );
+    }
+
+    @Test
+    public void testToClassWithCellRange() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.CELL_RANGE,
+                SpreadsheetCellRangeReference.class
+        );
+    }
+
+    @Test
+    public void testToClassWithColumn() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.COLUMN,
+                SpreadsheetColumnReference.class
+        );
+    }
+
+    @Test
+    public void testToClassWithColumnRange() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.COLUMN_RANGE,
+                SpreadsheetColumnRangeReference.class
+        );
+    }
+
+    @Test
+    public void testToClassDate() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.DATE,
+                LocalDate.class
+        );
+    }
+
+    @Test
+    public void testToClassDateTime() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.DATE_TIME,
+                LocalDateTime.class
+        );
+    }
+
+    @Test
+    public void testToClassWithError() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.ERROR,
+                SpreadsheetError.class
+        );
+    }
+
+    @Test
+    public void testToClassWithLabel() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.LABEL,
+                SpreadsheetLabelName.class
+        );
+    }
+
+    @Test
+    public void testToClassWithNumber() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.NUMBER,
+                ExpressionNumber.class
+        );
+    }
+
+    @Test
+    public void testToClassWithRow() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.ROW,
+                SpreadsheetRowReference.class
+        );
+    }
+
+    @Test
+    public void testToClassWithRowRange() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.ROW_RANGE,
+                SpreadsheetRowRangeReference.class
+        );
+    }
+
+    @Test
+    public void testToClassWithString() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.TEXT, String.class
+        );
+    }
+
+    @Test
+    public void testToClassWithLocalTime() {
+        this.toClassAndCheck(
+                SpreadsheetValueType.TIME, LocalTime.class
+        );
+    }
+
+    private void toClassAndCheck(final String valueType,
+                                 final Class<?> expected) {
+        this.toClassAndCheck(
+                ValidationValueTypeName.with(valueType),
+                expected
+        );
+    }
+
+    private void toClassAndCheck(final ValidationValueTypeName valueType,
+                                 final Class<?> expected) {
+        this.toClassAndCheck(
+                valueType,
+                Optional.of(expected)
+        );
+    }
+
+    private void toClassAndCheck(final ValidationValueTypeName valueType,
+                                 final Optional<Class<?>> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetValueType.toClass(valueType),
+                valueType::toString
+        );
+    }
+
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetValueType> type() {
