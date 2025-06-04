@@ -25,6 +25,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static String ANY = "*";
+
     public final static String BOOLEAN = "boolean";
 
     public final static String CELL = "cell";
@@ -45,11 +46,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static String NUMBER = "number";
 
-
     public final static String ROW = "row";
 
     public final static String ROW_RANGE = "row-range";
-
 
     public final static String TEXT = "text";
 
