@@ -36,7 +36,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
+
+    @Test
+    public void testValueTypeWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetValueType.valueType(null)
+        );
+    }
 
     @Test
     public void testValueTypeWithBoolean() {
