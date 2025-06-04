@@ -375,7 +375,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
             SpreadsheetMetadata.NO_CELL,
-            Optional.of(METADATA_EN_AU),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SPREADSHEET_LABEL_NAME_RESOLVER,

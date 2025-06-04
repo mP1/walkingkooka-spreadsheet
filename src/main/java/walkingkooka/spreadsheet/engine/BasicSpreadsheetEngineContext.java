@@ -27,7 +27,6 @@ import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -239,7 +238,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
                 this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
                         cell,
-                        SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         converterSelector,
                         this, // SpreadsheetLabelNameResolver,
