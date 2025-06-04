@@ -39,7 +39,7 @@ import java.time.LocalTime;
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
 
     @Test
-    public void testBoolean() {
+    public void testValueTypeWithBoolean() {
         this.valueTypeAndCheck(
                 Boolean.class,
                 SpreadsheetValueType.BOOLEAN
@@ -47,7 +47,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testCell() {
+    public void testValueTypeWithCell() {
         this.valueTypeAndCheck(
                 SpreadsheetCellReference.class,
                 SpreadsheetValueType.CELL
@@ -55,7 +55,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testCellRange() {
+    public void testValueTypeWithCellRange() {
         this.valueTypeAndCheck(
                 SpreadsheetCellRangeReference.class,
                 SpreadsheetValueType.CELL_RANGE
@@ -63,7 +63,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testColumn() {
+    public void testValueTypeWithColumn() {
         this.valueTypeAndCheck(
                 SpreadsheetColumnReference.class,
                 SpreadsheetValueType.COLUMN
@@ -71,7 +71,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testColumnRange() {
+    public void testValueTypeWithColumnRange() {
         this.valueTypeAndCheck(
                 SpreadsheetColumnRangeReference.class,
                 SpreadsheetValueType.COLUMN_RANGE
@@ -79,7 +79,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testError() {
+    public void testValueTypeWithError() {
         this.valueTypeAndCheck(
                 SpreadsheetError.class,
                 SpreadsheetValueType.ERROR
@@ -87,7 +87,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testExpressionNumber() {
+    public void testValueTypeWithExpressionNumber() {
         this.valueTypeAndCheck(
                 ExpressionNumber.class,
                 SpreadsheetValueType.NUMBER
@@ -95,7 +95,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testExpressionNumberBigDecimal() {
+    public void testValueTypeWithExpressionNumberBigDecimal() {
         this.valueTypeAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL.numberType(),
                 SpreadsheetValueType.NUMBER
@@ -103,7 +103,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testExpressionNumberDouble() {
+    public void testValueTypeWithExpressionNumberDouble() {
         this.valueTypeAndCheck(
                 ExpressionNumberKind.DOUBLE.numberType(),
                 SpreadsheetValueType.NUMBER
@@ -111,7 +111,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testLabel() {
+    public void testValueTypeWithLabel() {
         this.valueTypeAndCheck(
                 SpreadsheetLabelName.class,
                 SpreadsheetValueType.LABEL
@@ -119,7 +119,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testLocalDate() {
+    public void testValueTypeWithLocalDate() {
         this.valueTypeAndCheck(
                 LocalDate.class,
                 SpreadsheetValueType.DATE
@@ -127,7 +127,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testLocalDateTime() {
+    public void testValueTypeWithLocalDateTime() {
         this.valueTypeAndCheck(
                 LocalDateTime.class,
                 SpreadsheetValueType.DATE_TIME
@@ -135,7 +135,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testRow() {
+    public void testValueTypeWithRow() {
         this.valueTypeAndCheck(
                 SpreadsheetRowReference.class,
                 SpreadsheetValueType.ROW
@@ -143,7 +143,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testRowRange() {
+    public void testValueTypeWithRowRange() {
         this.valueTypeAndCheck(
                 SpreadsheetRowRangeReference.class,
                 SpreadsheetValueType.ROW_RANGE
@@ -151,7 +151,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testString() {
+    public void testValueTypeWithString() {
         this.valueTypeAndCheck(
                 String.class,
                 SpreadsheetValueType.TEXT
@@ -159,7 +159,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testLocalTime() {
+    public void testValueTypeWithLocalTime() {
         this.valueTypeAndCheck(
                 LocalTime.class,
                 SpreadsheetValueType.TIME
