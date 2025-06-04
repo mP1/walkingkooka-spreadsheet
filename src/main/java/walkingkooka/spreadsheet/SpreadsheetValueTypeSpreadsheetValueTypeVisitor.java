@@ -20,47 +20,52 @@ package walkingkooka.spreadsheet;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.validation.ValidationValueTypeName;
 
+/**
+ * Translates a {@link Class} into a {@link ValidationValueTypeName}, handling the "differences" eg, TEXT = {@link String}.
+ */
 final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
-    static String typeName(final Class<?> type) {
+    static ValidationValueTypeName valueType(final Class<?> type) {
         final SpreadsheetValueTypeSpreadsheetValueTypeVisitor visitor = new SpreadsheetValueTypeSpreadsheetValueTypeVisitor();
         visitor.accept(type);
-        return visitor.typeName;
+        return visitor.valueType;
     }
 
+    // @VisibleForTesting
     SpreadsheetValueTypeSpreadsheetValueTypeVisitor() {
         super();
     }
 
     @Override
     protected void visitBigDecimal() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitBigInteger() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitBoolean() {
-        this.typeName(SpreadsheetValueType.BOOLEAN);
+        this.valueType(SpreadsheetValueType.BOOLEAN);
     }
 
     @Override
     protected void visitByte() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitCellRange() {
-        this.typeName(SpreadsheetValueType.CELL_RANGE);
+        this.valueType(SpreadsheetValueType.CELL_RANGE);
     }
 
     @Override
     protected void visitCellReference() {
-        this.typeName(SpreadsheetValueType.CELL);
+        this.valueType(SpreadsheetValueType.CELL);
     }
 
     @Override
@@ -70,27 +75,27 @@ final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetV
 
     @Override
     protected void visitCharacter() {
-        this.typeName(SpreadsheetValueType.TEXT);
+        this.valueType(SpreadsheetValueType.TEXT);
     }
 
     @Override
     protected void visitColumnReference() {
-        this.typeName(SpreadsheetValueType.COLUMN);
+        this.valueType(SpreadsheetValueType.COLUMN);
     }
 
     @Override
     protected void visitColumnRangeReference() {
-        this.typeName(SpreadsheetValueType.COLUMN_RANGE);
+        this.valueType(SpreadsheetValueType.COLUMN_RANGE);
     }
 
     @Override
     protected void visitDouble() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitExpressionNumber() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
@@ -100,57 +105,57 @@ final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetV
 
     @Override
     protected void visitFloat() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitInteger() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitLabel() {
-        this.typeName(SpreadsheetValueType.LABEL);
+        this.valueType(SpreadsheetValueType.LABEL);
     }
 
     @Override
     protected void visitLocalDate() {
-        this.typeName(SpreadsheetValueType.DATE);
+        this.valueType(SpreadsheetValueType.DATE);
     }
 
     @Override
     protected void visitLocalDateTime() {
-        this.typeName(SpreadsheetValueType.DATE_TIME);
+        this.valueType(SpreadsheetValueType.DATE_TIME);
     }
 
     @Override
     protected void visitLocalTime() {
-        this.typeName(SpreadsheetValueType.TIME);
+        this.valueType(SpreadsheetValueType.TIME);
     }
 
     @Override
     protected void visitLong() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitNumber() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitRowReference() {
-        this.typeName(SpreadsheetValueType.ROW);
+        this.valueType(SpreadsheetValueType.ROW);
     }
 
     @Override
     protected void visitRowRangeReference() {
-        this.typeName(SpreadsheetValueType.ROW_RANGE);
+        this.valueType(SpreadsheetValueType.ROW_RANGE);
     }
 
     @Override
     protected void visitSpreadsheetError() {
-        this.typeName(SpreadsheetValueType.ERROR);
+        this.valueType(SpreadsheetValueType.ERROR);
     }
 
     @Override
@@ -160,27 +165,27 @@ final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetV
 
     @Override
     protected void visitShort() {
-        this.typeName(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER);
     }
 
     @Override
     protected void visitString() {
-        this.typeName(SpreadsheetValueType.TEXT);
+        this.valueType(SpreadsheetValueType.TEXT);
     }
 
     @Override
     protected void visitUnknown(final String typeName) {
-        this.typeName(typeName);
+        this.valueType(typeName);
     }
 
-    private void typeName(final String typeName) {
-        this.typeName = typeName;
+    private void valueType(final String typeName) {
+        this.valueType = ValidationValueTypeName.with(typeName);
     }
 
-    private String typeName;
+    private ValidationValueTypeName valueType;
 
     @Override
     public String toString() {
-        return this.typeName;
+        return this.valueType.toString();
     }
 }

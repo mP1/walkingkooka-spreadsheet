@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.lang.reflect.Method;
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testBoolean() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 Boolean.class,
                 SpreadsheetValueType.BOOLEAN
         );
@@ -47,7 +48,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testCell() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetCellReference.class,
                 SpreadsheetValueType.CELL
         );
@@ -55,7 +56,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testCellRange() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetCellRangeReference.class,
                 SpreadsheetValueType.CELL_RANGE
         );
@@ -63,7 +64,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testColumn() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetColumnReference.class,
                 SpreadsheetValueType.COLUMN
         );
@@ -71,7 +72,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testColumnRange() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetColumnRangeReference.class,
                 SpreadsheetValueType.COLUMN_RANGE
         );
@@ -79,7 +80,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testError() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetError.class,
                 SpreadsheetValueType.ERROR
         );
@@ -87,7 +88,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testExpressionNumber() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 ExpressionNumber.class,
                 SpreadsheetValueType.NUMBER
         );
@@ -95,7 +96,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testExpressionNumberBigDecimal() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL.numberType(),
                 SpreadsheetValueType.NUMBER
         );
@@ -103,7 +104,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testExpressionNumberDouble() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 ExpressionNumberKind.DOUBLE.numberType(),
                 SpreadsheetValueType.NUMBER
         );
@@ -111,7 +112,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testLabel() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetLabelName.class,
                 SpreadsheetValueType.LABEL
         );
@@ -119,7 +120,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testLocalDate() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 LocalDate.class,
                 SpreadsheetValueType.DATE
         );
@@ -127,7 +128,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testLocalDateTime() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 LocalDateTime.class,
                 SpreadsheetValueType.DATE_TIME
         );
@@ -135,7 +136,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testRow() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetRowReference.class,
                 SpreadsheetValueType.ROW
         );
@@ -143,7 +144,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testRowRange() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 SpreadsheetRowRangeReference.class,
                 SpreadsheetValueType.ROW_RANGE
         );
@@ -151,7 +152,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testString() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 String.class,
                 SpreadsheetValueType.TEXT
         );
@@ -159,17 +160,26 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testLocalTime() {
-        this.typeNameAndCheck(
+        this.valueTypeAndCheck(
                 LocalTime.class,
                 SpreadsheetValueType.TIME
         );
     }
 
-    private void typeNameAndCheck(final Class<?> type,
-                                  final String typeName) {
+    private void valueTypeAndCheck(final Class<?> type,
+                                   final String valueType) {
+        this.valueTypeAndCheck(
+                type,
+                ValidationValueTypeName.with(valueType)
+        );
+    }
+
+
+    private void valueTypeAndCheck(final Class<?> type,
+                                   final ValidationValueTypeName valueType) {
         this.checkEquals(
-                typeName,
-                SpreadsheetValueType.typeName(type),
+                valueType,
+                SpreadsheetValueType.valueType(type),
                 type::getName
         );
     }

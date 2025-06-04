@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.validation.ValidationValueTypeName;
 
 /**
  * A list of possible(supported) spreadsheet value types.
@@ -57,8 +58,8 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * For the given type returns the value type name.
      */
-    public static String typeName(final Class<?> type) {
-        return SpreadsheetValueTypeSpreadsheetValueTypeVisitor.typeName(type);
+    public static ValidationValueTypeName valueType(final Class<?> type) {
+        return SpreadsheetValueTypeSpreadsheetValueTypeVisitor.valueType(type);
     }
 
     /**
