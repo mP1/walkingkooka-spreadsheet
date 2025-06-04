@@ -18,10 +18,25 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.validation.ValidationValueTypeName;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A list of possible(supported) spreadsheet value types.
+ * A few helpers are provided to help translate {@link ValidationValueTypeName} to and from its equivalent java {@link Class}.
  */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
@@ -60,6 +75,62 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
      */
     public static ValidationValueTypeName toValueType(final Class<?> type) {
         return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.valueType(type);
+    }
+
+    public static Optional<Class<?>> toClass(final ValidationValueTypeName valueType) {
+        Objects.requireNonNull(valueType, "valueType");
+
+        final Class<?> javaType;
+
+        switch (valueType.text()) {
+            case BOOLEAN:
+                javaType = Boolean.class;
+                break;
+            case CELL:
+                javaType = SpreadsheetCellReference.class;
+                break;
+            case CELL_RANGE:
+                javaType = SpreadsheetCellRangeReference.class;
+                break;
+            case COLUMN:
+                javaType = SpreadsheetColumnReference.class;
+                break;
+            case COLUMN_RANGE:
+                javaType = SpreadsheetColumnRangeReference.class;
+                break;
+            case DATE:
+                javaType = LocalDate.class;
+                break;
+            case DATE_TIME:
+                javaType = LocalDateTime.class;
+                break;
+            case ERROR:
+                javaType = SpreadsheetError.class;
+                break;
+            case LABEL:
+                javaType = SpreadsheetLabelName.class;
+                break;
+            case NUMBER:
+                javaType = ExpressionNumber.class;
+                break;
+            case ROW:
+                javaType = SpreadsheetRowReference.class;
+                break;
+            case ROW_RANGE:
+                javaType = SpreadsheetRowRangeReference.class;
+                break;
+            case TEXT:
+                javaType = String.class;
+                break;
+            case TIME:
+                javaType = LocalTime.class;
+                break;
+            default:
+                javaType = null;
+                break;
+        }
+
+        return Optional.ofNullable(javaType);
     }
 
     /**
