@@ -41,155 +41,155 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
 
     @Test
-    public void testValueTypeWithNullFails() {
+    public void testToValueTypeWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetValueType.valueType(null)
+                () -> SpreadsheetValueType.toValueType(null)
         );
     }
 
     @Test
-    public void testValueTypeWithBoolean() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithBoolean() {
+        this.toValueTypeAndCheck(
                 Boolean.class,
                 SpreadsheetValueType.BOOLEAN
         );
     }
 
     @Test
-    public void testValueTypeWithCell() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithCell() {
+        this.toValueTypeAndCheck(
                 SpreadsheetCellReference.class,
                 SpreadsheetValueType.CELL
         );
     }
 
     @Test
-    public void testValueTypeWithCellRange() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithCellRange() {
+        this.toValueTypeAndCheck(
                 SpreadsheetCellRangeReference.class,
                 SpreadsheetValueType.CELL_RANGE
         );
     }
 
     @Test
-    public void testValueTypeWithColumn() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithColumn() {
+        this.toValueTypeAndCheck(
                 SpreadsheetColumnReference.class,
                 SpreadsheetValueType.COLUMN
         );
     }
 
     @Test
-    public void testValueTypeWithColumnRange() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithColumnRange() {
+        this.toValueTypeAndCheck(
                 SpreadsheetColumnRangeReference.class,
                 SpreadsheetValueType.COLUMN_RANGE
         );
     }
 
     @Test
-    public void testValueTypeWithError() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithError() {
+        this.toValueTypeAndCheck(
                 SpreadsheetError.class,
                 SpreadsheetValueType.ERROR
         );
     }
 
     @Test
-    public void testValueTypeWithExpressionNumber() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithExpressionNumber() {
+        this.toValueTypeAndCheck(
                 ExpressionNumber.class,
                 SpreadsheetValueType.NUMBER
         );
     }
 
     @Test
-    public void testValueTypeWithExpressionNumberBigDecimal() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithExpressionNumberBigDecimal() {
+        this.toValueTypeAndCheck(
                 ExpressionNumberKind.BIG_DECIMAL.numberType(),
                 SpreadsheetValueType.NUMBER
         );
     }
 
     @Test
-    public void testValueTypeWithExpressionNumberDouble() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithExpressionNumberDouble() {
+        this.toValueTypeAndCheck(
                 ExpressionNumberKind.DOUBLE.numberType(),
                 SpreadsheetValueType.NUMBER
         );
     }
 
     @Test
-    public void testValueTypeWithLabel() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithLabel() {
+        this.toValueTypeAndCheck(
                 SpreadsheetLabelName.class,
                 SpreadsheetValueType.LABEL
         );
     }
 
     @Test
-    public void testValueTypeWithLocalDate() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithLocalDate() {
+        this.toValueTypeAndCheck(
                 LocalDate.class,
                 SpreadsheetValueType.DATE
         );
     }
 
     @Test
-    public void testValueTypeWithLocalDateTime() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithLocalDateTime() {
+        this.toValueTypeAndCheck(
                 LocalDateTime.class,
                 SpreadsheetValueType.DATE_TIME
         );
     }
 
     @Test
-    public void testValueTypeWithRow() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithRow() {
+        this.toValueTypeAndCheck(
                 SpreadsheetRowReference.class,
                 SpreadsheetValueType.ROW
         );
     }
 
     @Test
-    public void testValueTypeWithRowRange() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithRowRange() {
+        this.toValueTypeAndCheck(
                 SpreadsheetRowRangeReference.class,
                 SpreadsheetValueType.ROW_RANGE
         );
     }
 
     @Test
-    public void testValueTypeWithString() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithString() {
+        this.toValueTypeAndCheck(
                 String.class,
                 SpreadsheetValueType.TEXT
         );
     }
 
     @Test
-    public void testValueTypeWithLocalTime() {
-        this.valueTypeAndCheck(
+    public void testToValueTypeWithLocalTime() {
+        this.toValueTypeAndCheck(
                 LocalTime.class,
                 SpreadsheetValueType.TIME
         );
     }
 
-    private void valueTypeAndCheck(final Class<?> type,
-                                   final String valueType) {
-        this.valueTypeAndCheck(
+    private void toValueTypeAndCheck(final Class<?> type,
+                                     final String valueType) {
+        this.toValueTypeAndCheck(
                 type,
                 ValidationValueTypeName.with(valueType)
         );
     }
 
 
-    private void valueTypeAndCheck(final Class<?> type,
-                                   final ValidationValueTypeName valueType) {
+    private void toValueTypeAndCheck(final Class<?> type,
+                                     final ValidationValueTypeName valueType) {
         this.checkEquals(
                 valueType,
-                SpreadsheetValueType.valueType(type),
+                SpreadsheetValueType.toValueType(type),
                 type::getName
         );
     }

@@ -19,16 +19,16 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetValueTypeSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetValueTypeSpreadsheetValueTypeVisitor> {
+public final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor> {
 
     @Override
-    public SpreadsheetValueTypeSpreadsheetValueTypeVisitor createVisitor() {
-        return new SpreadsheetValueTypeSpreadsheetValueTypeVisitor();
+    public SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor createVisitor() {
+        return new SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor();
     }
 
     @Override
-    public Class<SpreadsheetValueTypeSpreadsheetValueTypeVisitor> type() {
-        return SpreadsheetValueTypeSpreadsheetValueTypeVisitor.class;
+    public Class<SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor> type() {
+        return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.class;
     }
 
     @Override

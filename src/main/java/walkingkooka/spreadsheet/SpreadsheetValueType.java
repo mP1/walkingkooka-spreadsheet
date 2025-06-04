@@ -58,8 +58,8 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * For the given type returns the value type name.
      */
-    public static ValidationValueTypeName valueType(final Class<?> type) {
-        return SpreadsheetValueTypeSpreadsheetValueTypeVisitor.valueType(type);
+    public static ValidationValueTypeName toValueType(final Class<?> type) {
+        return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.valueType(type);
     }
 
     /**

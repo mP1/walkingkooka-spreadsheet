@@ -25,16 +25,16 @@ import walkingkooka.validation.ValidationValueTypeName;
 /**
  * Translates a {@link Class} into a {@link ValidationValueTypeName}, handling the "differences" eg, TEXT = {@link String}.
  */
-final class SpreadsheetValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
+final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
     static ValidationValueTypeName valueType(final Class<?> type) {
-        final SpreadsheetValueTypeSpreadsheetValueTypeVisitor visitor = new SpreadsheetValueTypeSpreadsheetValueTypeVisitor();
+        final SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor visitor = new SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor();
         visitor.accept(type);
         return visitor.valueType;
     }
 
     // @VisibleForTesting
-    SpreadsheetValueTypeSpreadsheetValueTypeVisitor() {
+    SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor() {
         super();
     }
 

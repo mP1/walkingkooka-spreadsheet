@@ -56,7 +56,7 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
                         v -> Boolean.TRUE :
                         v -> null != v &&
                                 valueType.equals(
-                                        SpreadsheetValueType.valueType(v.getClass())
+                                        SpreadsheetValueType.toValueType(v.getClass())
                                                 .text()
                                 ),
                 valueType
