@@ -77,6 +77,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.valueType(type);
     }
 
+    /**
+     * Translates a {@link ValidationValueTypeName} into its java {@link Class} equivalent.
+     * If the type is unknown an {@link Optional#empty()} is returned.
+     */
     public static Optional<Class<?>> toClass(final ValidationValueTypeName valueType) {
         Objects.requireNonNull(valueType, "valueType");
 
