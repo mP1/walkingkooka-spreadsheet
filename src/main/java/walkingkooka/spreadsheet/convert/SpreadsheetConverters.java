@@ -321,10 +321,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeTextConverters.textToText()}
+     * {@see TreeTextConverters.textToTextNode()}
      */
     public static Converter<SpreadsheetConverterContext> textToTextNode() {
-        return TreeTextConverters.textToText();
+        return TreeTextConverters.textToTextNode();
     }
 
     /**
