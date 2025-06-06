@@ -1555,6 +1555,109 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsValuePatch..................................................................................................
+
+    @Test
+    public void testCellsValuePatchWithNullMapFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsValuePatch(
+                        null,
+                        JsonNodeMarshallContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testCellsValuePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsValuePatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsValuePatch() {
+        final Optional<Object> value1 = Optional.of(
+                UNMARSHALL_CONTEXT.expressionNumberKind()
+                        .create(12.5)
+        );
+        final Optional<Object> value2 = Optional.empty();
+
+        this.cellsValuePatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        value1,
+                        SpreadsheetSelection.parseCell("A2"),
+                        value2
+                ),
+                "{\n" +
+                        "  \"cells\": {\n" +
+                        "    \"A1\": {\n" +
+                        "      \"formula\": {\n" +
+                        "        \"value\": {\n" +
+                        "          \"type\": \"expression-number\",\n" +
+                        "          \"value\": \"12.5\"\n" +
+                        "        }\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    \"A2\": {\n" +
+                        "      \"formula\": {\n" +
+                        "        \"value\": null\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    private void cellsValuePatchAndCheck(final Map<SpreadsheetCellReference, Optional<Object>> cellToValues,
+                                         final String expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsValuePatch(
+                cellToValues,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                JsonNode.parse(expected),
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<Object>> cellAndValue : cellToValues.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndValue.getKey();
+
+            final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
+
+            beforePatchCells.add(
+                    cell.setFormula(formula)
+                            .setStyle(style)
+            );
+            patchedCells.add(
+                    cell.setFormula(
+                            formula.setValue(
+                                    cellAndValue.getValue()
+                            )
+                    ).setStyle(style)
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+    
     // cellsValueTypePatch..............................................................................................
 
     @Test
