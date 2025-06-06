@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
@@ -57,7 +58,8 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
                         v -> null != v &&
                                 valueType.equals(
                                         SpreadsheetValueType.toValueType(v.getClass())
-                                                .text()
+                                                .map(HasText::text)
+                                                .orElse(null)
                                 ),
                 valueType
         );

@@ -71,9 +71,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public final static String TIME = "time";
 
     /**
-     * For the given type returns the value type name.
+     * For the given type returns the value type name, or {@link Optional#empty()} if the type is unknown.
      */
-    public static ValidationValueTypeName toValueType(final Class<?> type) {
+    public static Optional<ValidationValueTypeName> toValueType(final Class<?> type) {
         return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.valueType(type);
     }
 

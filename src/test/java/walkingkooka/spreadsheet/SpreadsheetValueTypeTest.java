@@ -177,19 +177,35 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
+    @Test
+    public void testToValueTypeWithUnknownType() {
+        this.toValueTypeAndCheck(
+                this.getClass(),
+                Optional.empty()
+        );
+    }
+
     private void toValueTypeAndCheck(final Class<?> type,
-                                     final String valueType) {
+                                     final String expected) {
         this.toValueTypeAndCheck(
                 type,
-                ValidationValueTypeName.with(valueType)
+                ValidationValueTypeName.with(expected)
         );
     }
 
 
     private void toValueTypeAndCheck(final Class<?> type,
-                                     final ValidationValueTypeName valueType) {
+                                     final ValidationValueTypeName expected) {
+        this.toValueTypeAndCheck(
+                type,
+                Optional.of(expected)
+        );
+    }
+
+    private void toValueTypeAndCheck(final Class<?> type,
+                                     final Optional<ValidationValueTypeName> expected) {
         this.checkEquals(
-                valueType,
+                expected,
                 SpreadsheetValueType.toValueType(type),
                 type::getName
         );
