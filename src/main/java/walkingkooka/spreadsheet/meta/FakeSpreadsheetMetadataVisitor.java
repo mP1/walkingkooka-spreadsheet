@@ -182,6 +182,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitFormatterFunctions(final ExpressionFunctionAliasSet functions) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
