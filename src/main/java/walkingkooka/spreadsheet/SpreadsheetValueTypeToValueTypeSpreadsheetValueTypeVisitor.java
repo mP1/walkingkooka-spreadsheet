@@ -17,25 +17,27 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.ValidationValueTypeName;
+
+import java.util.Optional;
 
 /**
  * Translates a {@link Class} into a {@link ValidationValueTypeName}, handling the "differences" eg, TEXT = {@link String}.
  */
 final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
-    static ValidationValueTypeName valueType(final Class<?> type) {
+    static Optional<ValidationValueTypeName> valueType(final Class<?> type) {
         final SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor visitor = new SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor();
         visitor.accept(type);
-        return visitor.valueType;
+        return Optional.ofNullable(
+                visitor.valueType
+        );
     }
 
     // @VisibleForTesting
     SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor() {
         super();
+        this.valueType = null;
     }
 
     @Override
@@ -69,11 +71,6 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     }
 
     @Override
-    protected void visitCellReferenceOrRange() {
-        throw new UnsupportedOperationException(SpreadsheetCellReferenceOrRange.class.getName());
-    }
-
-    @Override
     protected void visitCharacter() {
         this.valueType(SpreadsheetValueType.TEXT);
     }
@@ -96,11 +93,6 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     @Override
     protected void visitExpressionNumber() {
         this.valueType(SpreadsheetValueType.NUMBER);
-    }
-
-    @Override
-    protected void visitExpressionReference() {
-        throw new UnsupportedOperationException(ExpressionReference.class.getName());
     }
 
     @Override
@@ -159,11 +151,6 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     }
 
     @Override
-    protected void visitSpreadsheetSelection() {
-        throw new UnsupportedOperationException(SpreadsheetSelection.class.getName());
-    }
-
-    @Override
     protected void visitShort() {
         this.valueType(SpreadsheetValueType.NUMBER);
     }
@@ -171,11 +158,6 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     @Override
     protected void visitString() {
         this.valueType(SpreadsheetValueType.TEXT);
-    }
-
-    @Override
-    protected void visitUnknown(final String typeName) {
-        this.valueType(typeName);
     }
 
     private void valueType(final String typeName) {

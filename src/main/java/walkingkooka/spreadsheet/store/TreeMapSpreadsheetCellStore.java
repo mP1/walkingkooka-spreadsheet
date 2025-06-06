@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
+import walkingkooka.text.HasText;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
 
@@ -472,7 +473,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 v -> Boolean.TRUE :
                 v -> valueTypeName.equals(
                         SpreadsheetValueType.toValueType(v.getClass())
-                                .text()
+                                .map(HasText::text)
+                                .orElse(null)
                 );
 
         return this.between(
