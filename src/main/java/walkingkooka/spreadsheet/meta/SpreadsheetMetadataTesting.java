@@ -252,6 +252,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
             ).set(
+                    SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS,
+                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+            ).set(
                     SpreadsheetMetadataPropertyName.FORMATTERS,
                     SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
                             .aliasSet()

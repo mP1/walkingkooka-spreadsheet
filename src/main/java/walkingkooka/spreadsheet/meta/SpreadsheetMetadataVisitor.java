@@ -190,6 +190,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFormatterFunctions(final ExpressionFunctionAliasSet functions) {
+        // nop
+    }
+
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
         // nop
     }

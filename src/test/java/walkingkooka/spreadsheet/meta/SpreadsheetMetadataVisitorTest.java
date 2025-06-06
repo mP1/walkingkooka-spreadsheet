@@ -370,6 +370,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFormatterFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormatterFunctions(final ExpressionFunctionAliasSet s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+        );
+    }
+
+    @Test
     public void testVisitFormHandlers() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

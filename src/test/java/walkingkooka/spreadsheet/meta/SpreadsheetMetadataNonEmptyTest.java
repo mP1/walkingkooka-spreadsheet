@@ -2416,6 +2416,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("general")
         );
         properties.put(
+                SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+        );
+        properties.put(
                 SpreadsheetMetadataPropertyName.FORMATTERS,
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         .spreadsheetFormatterInfos()
