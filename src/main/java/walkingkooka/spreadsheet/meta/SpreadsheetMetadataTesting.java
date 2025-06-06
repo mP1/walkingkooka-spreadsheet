@@ -247,7 +247,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.parseAliasSet("")
+                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
                     SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
@@ -266,7 +266,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.parseAliasSet("")
+                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
                     SpreadsheetMetadataPropertyName.FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
