@@ -309,7 +309,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                             .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
             ).set(
                     SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                    SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector()
+                    SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
             ).set(
                     SpreadsheetMetadataPropertyName.TIME_FORMATTER,
                     SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()
