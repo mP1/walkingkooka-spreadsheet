@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.text.cursor.TextCursor;
@@ -59,6 +60,20 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         HasSpreadsheetMetadata,
         FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
         ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
+
+    /**
+     * Within a {@link SpreadsheetExpressionEvaluationContext} contains the name of value being formatted.
+     * This may be passed to {@link SpreadsheetExpressionEvaluationContext#reference(ExpressionReference)}.
+     */
+    SpreadsheetLabelName FORMAT_VALUE = SpreadsheetSelection.labelName("VALUE");
+
+    /**
+     * Getter that retrieves the value being formatted by a {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter}
+     */
+    default Optional<Object> formatValue() {
+        return this.reference(FORMAT_VALUE)
+                .orElse(Optional.empty());
+    }
 
     /**
      * A label that may be used to get the value being validated.

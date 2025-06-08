@@ -22,9 +22,6 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -73,12 +70,6 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
      * Returns the number of digits when formatting a number.
      */
     int generalFormatNumberDigitCount();
-
-    /**
-     * Within a {@link SpreadsheetExpressionEvaluationContext} contains the name of value being formatted.
-     * This may be passed to {@link SpreadsheetExpressionEvaluationContext#reference(ExpressionReference)}.
-     */
-    SpreadsheetLabelName FORMATTER_VALUE = SpreadsheetSelection.labelName("VALUE");
 
     /**
      * Creates a {@link SpreadsheetExpressionEvaluationContext} which will hold the given value supporting
