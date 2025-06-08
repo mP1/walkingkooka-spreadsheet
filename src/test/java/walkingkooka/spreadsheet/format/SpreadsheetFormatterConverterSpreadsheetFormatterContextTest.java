@@ -109,6 +109,11 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     @Override
+    public void testSpreadsheetExpressionEvaluationContextWithNullCellFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetFormatterConverterSpreadsheetFormatterContext createContext() {
         return SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(this.converterContext());
     }

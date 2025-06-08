@@ -409,6 +409,9 @@ public final class Sample {
                         value,
                         metadata.spreadsheetFormatterContext(
                                 Optional.of(cell),
+                                (final Optional<SpreadsheetCell> c) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 spreadsheetFormatterProvider,

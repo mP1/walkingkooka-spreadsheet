@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -42,6 +44,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final int cellCharacterWidth,
                                                  final int generalFormatNumberDigitCount,
                                                  final SpreadsheetFormatter formatter,
+                                                 final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                  final SpreadsheetConverterContext context) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
@@ -60,6 +63,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 cellCharacterWidth,
                 generalFormatNumberDigitCount,
                 formatter,
+                Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
                 context
         );
     }
@@ -69,6 +73,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                              final int cellCharacterWidth,
                                              final int generalFormatNumberDigitCount,
                                              final SpreadsheetFormatter formatter,
+                                             final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                              final SpreadsheetConverterContext context) {
         super();
 
@@ -77,9 +82,10 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.cellCharacterWidth = cellCharacterWidth;
         this.generalFormatNumberDigitCount = generalFormatNumberDigitCount;
 
-        this.context = context;
-
         this.formatter = formatter;
+        this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
+
+        this.context = context;
     }
 
     // BasicSpreadsheetFormatterContext................................................................................
@@ -104,6 +110,13 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     private final Function<SpreadsheetColorName, Optional<Color>> nameToColor;
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+        return this.spreadsheetExpressionEvaluationContext.apply(cell);
+    }
+
+    private final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext;
 
     // Converter........................................................................................................
 
@@ -178,6 +191,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                         this.cellCharacterWidth,
                         this.generalFormatNumberDigitCount,
                         this.formatter,
+                        this.spreadsheetExpressionEvaluationContext,
                         after
                 );
     }

@@ -19,7 +19,9 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Context;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
@@ -69,6 +71,12 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
      * Returns the number of digits when formatting a number.
      */
     int generalFormatNumberDigitCount();
+
+    /**
+     * Creates a {@link SpreadsheetExpressionEvaluationContext} which can be used to execute a {@link walkingkooka.tree.expression.Expression}
+     * within a format context.
+     */
+    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell);
 
     /**
      * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetExpressionReference} being validated.

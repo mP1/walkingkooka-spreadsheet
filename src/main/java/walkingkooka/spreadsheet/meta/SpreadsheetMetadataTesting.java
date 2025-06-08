@@ -37,6 +37,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.props.Properties;
 import walkingkooka.props.PropertiesPath;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
@@ -92,7 +93,9 @@ import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
@@ -389,8 +392,15 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
+    Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
+            (final Optional<SpreadsheetCell> cell) -> {
+                Objects.requireNonNull(cell, "cell");
+                throw new UnsupportedOperationException();
+            };
+
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
             SpreadsheetMetadata.NO_CELL,
+            FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
@@ -398,6 +408,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
+            FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,

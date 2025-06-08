@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -226,6 +227,9 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                                         1,
                                         8, // default general-format-number-digit-count
                                         SpreadsheetFormatters.fake(), // should never be called
+                                        (Optional<SpreadsheetCell> cell) -> {
+                                            throw new UnsupportedOperationException();
+                                        },
                                         this.context
                                 )
                         ).text()

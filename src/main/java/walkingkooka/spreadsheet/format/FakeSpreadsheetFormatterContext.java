@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
@@ -49,6 +51,11 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
 
     @Override
     public int generalFormatNumberDigitCount() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         throw new UnsupportedOperationException();
     }
 
