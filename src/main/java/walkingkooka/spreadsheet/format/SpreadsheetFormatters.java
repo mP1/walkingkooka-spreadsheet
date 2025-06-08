@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
@@ -121,6 +122,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      */
     public static SpreadsheetFormatter empty() {
         return EmptySpreadsheetFormatter.INSTANCE;
+    }
+
+    /**
+     * {@see ExpressionSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter expression(final Expression expression) {
+        return ExpressionSpreadsheetFormatter.with(expression);
     }
 
     /**
