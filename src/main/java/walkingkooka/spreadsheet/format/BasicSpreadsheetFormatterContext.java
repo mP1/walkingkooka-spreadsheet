@@ -152,7 +152,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        return SpreadsheetFormatterContext.super.spreadsheetMetadata();
+        return this.context.spreadsheetMetadata();
     }
 
     @Override
