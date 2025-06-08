@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -55,7 +54,7 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
         throw new UnsupportedOperationException();
     }
 

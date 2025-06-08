@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Context;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -73,10 +75,16 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     int generalFormatNumberDigitCount();
 
     /**
-     * Creates a {@link SpreadsheetExpressionEvaluationContext} which can be used to execute a {@link walkingkooka.tree.expression.Expression}
-     * within a format context.
+     * Within a {@link SpreadsheetExpressionEvaluationContext} contains the name of value being formatted.
+     * This may be passed to {@link SpreadsheetExpressionEvaluationContext#reference(ExpressionReference)}.
      */
-    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell);
+    SpreadsheetLabelName FORMATTER_VALUE = SpreadsheetSelection.labelName("VALUE");
+
+    /**
+     * Creates a {@link SpreadsheetExpressionEvaluationContext} which will hold the given value supporting
+     * the execution of an {@link walkingkooka.tree.expression.Expression}.
+     */
+    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value);
 
     /**
      * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetExpressionReference} being validated.

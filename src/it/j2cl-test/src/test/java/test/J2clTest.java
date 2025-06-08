@@ -411,7 +411,7 @@ public class J2clTest {
                         value,
                         metadata.spreadsheetFormatterContext(
                                 Optional.of(cell),
-                                (final Optional<SpreadsheetCell> c) -> {
+                                (final Optional<Object> v) -> {
                                     throw new UnsupportedOperationException();
                                 },
                                 LABEL_NAME_RESOLVER,

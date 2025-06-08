@@ -37,7 +37,6 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.props.Properties;
 import walkingkooka.props.PropertiesPath;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
@@ -392,9 +391,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
-    Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
-            (final Optional<SpreadsheetCell> cell) -> {
-                Objects.requireNonNull(cell, "cell");
+    Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
+            (final Optional<Object> value) -> {
+                Objects.requireNonNull(value, "value");
                 throw new UnsupportedOperationException();
             };
 

@@ -46,7 +46,6 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -1791,7 +1790,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 null,
                 metadata.spreadsheetFormatterContext(
                         SpreadsheetMetadata.NO_CELL,
-                        (final Optional<SpreadsheetCell> c) -> {
+                        (final Optional<Object> value) -> {
                             throw new UnsupportedOperationException();
                         },
                         LABEL_NAME_RESOLVER,
@@ -1821,7 +1820,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.spreadsheetFormatterProviderSamplesContext(
-                        (final Optional<SpreadsheetCell> c) -> {
+                        (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
                         LABEL_NAME_RESOLVER,
