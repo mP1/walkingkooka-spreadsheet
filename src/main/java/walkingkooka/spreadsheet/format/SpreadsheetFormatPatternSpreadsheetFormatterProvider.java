@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
 import java.text.DateFormat;
@@ -70,6 +71,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
+            case SpreadsheetFormatterName.EXPRESSION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
@@ -145,6 +147,17 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         values.stream()
                                 .map(c -> (SpreadsheetFormatter) c)
                                 .collect(Collectors.toList())
+                );
+                break;
+            case SpreadsheetFormatterName.EXPRESSION_STRING:
+                if (1 != count) {
+                    throw new IllegalArgumentException("Expected 1 value(s) got " + count);
+                }
+                formatter = SpreadsheetFormatters.expression(
+                        context.convertOrFail(
+                                copy.get(0),
+                                Expression.class
+                        )
                 );
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
@@ -225,6 +238,9 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                         selector,
                         SpreadsheetFormatParserTokenKind::isDateTime
                 );
+                break;
+            case SpreadsheetFormatterName.EXPRESSION_STRING:
+                next = null;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 next = null;
@@ -601,6 +617,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),

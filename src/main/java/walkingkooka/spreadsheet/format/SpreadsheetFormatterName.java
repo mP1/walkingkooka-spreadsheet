@@ -96,6 +96,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
     );
 
+    final static String EXPRESSION_STRING = "expression";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName EXPRESSION = new SpreadsheetFormatterName(
+            EXPRESSION_STRING,
+            null
+    );
+    
     final static String GENERAL_STRING = "general";
 
     /**
@@ -165,6 +175,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case DATE_TIME_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = DATE_TIME_FORMAT_PATTERN;
+                break;
+            case EXPRESSION_STRING:
+                spreadsheetFormatterName = EXPRESSION;
                 break;
             case GENERAL_STRING:
                 spreadsheetFormatterName = GENERAL;

@@ -20,12 +20,13 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
@@ -34,7 +35,24 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
 
-    private final static ProviderContext CONTEXT = ProviderContexts.fake();
+    private final static ProviderContext CONTEXT = new FakeProviderContext() {
+        @Override
+        public <T> T convertOrFail(final Object value,
+                                   final Class<T> type) {
+            if (value instanceof String && type == Expression.class) {
+                return type.cast(
+                        Expression.value(
+                                String.class.cast(value)
+                        )
+                );
+            }
+            throw this.convertThrowable(
+                    "Only support converting String to Expression but got " + value.getClass().getSimpleName() + " " + type.getSimpleName(),
+                    value,
+                    type
+            );
+        }
+    };
 
     @Test
     public void testSpreadsheetFormatterSelectorAutomaticFiveParameters() {
@@ -94,6 +112,17 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                                 SpreadsheetPattern.parseTextFormatPattern("@@").formatter(),
                                 SpreadsheetPattern.parseTimeFormatPattern("hh:mm").formatter()
                         )
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithExpression() {
+        this.spreadsheetFormatterAndCheck(
+                "expression (\"Hello\")",
+                CONTEXT,
+                SpreadsheetFormatters.expression(
+                        Expression.value("Hello")
                 )
         );
     }
@@ -1137,6 +1166,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern date-format-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\n" +
+                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\n" +
                         "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
@@ -1156,6 +1186,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                                 "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
                                 "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern date-format-pattern\",\n" +
                                 "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\",\n" +
+                                "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\",\n" +
                                 "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                                 "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\",\n" +
                                 "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
