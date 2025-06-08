@@ -29,11 +29,13 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -50,6 +52,7 @@ import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -71,6 +74,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
 
+    private final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
+            (cell) -> {
+                Objects.requireNonNull(cell, "cell");
+                throw new UnsupportedOperationException();
+            };
+
     @Test
     public void testWithNullNumberToColorFails() {
         this.withFails(
@@ -79,6 +88,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 this.converterContext()
         );
     }
@@ -91,6 +101,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 this.converterContext()
         );
     }
@@ -104,6 +115,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         -1,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         this.converterContext()
                 )
         );
@@ -118,6 +130,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         0,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         this.converterContext())
         );
     }
@@ -131,6 +144,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         CELL_CHARACTER_WIDTH,
                         -1,
                         this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         this.converterContext()
                 )
         );
@@ -145,6 +159,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         CELL_CHARACTER_WIDTH,
                         0,
                         this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         this.converterContext())
         );
     }
@@ -157,6 +172,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 null,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 this.converterContext()
         );
     }
@@ -169,6 +185,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 null
         );
     }
@@ -178,6 +195,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                            final int width,
                            final int generalNumberFormatDigitCount,
                            final SpreadsheetFormatter formatter,
+                           final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                            final SpreadsheetConverterContext converterContext) {
         assertThrows(
                 NullPointerException.class,
@@ -187,6 +205,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         width,
                         generalNumberFormatDigitCount,
                         formatter,
+                        spreadsheetExpressionEvaluationContext,
                         converterContext
                 )
         );
@@ -267,12 +286,15 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Override
     public BasicSpreadsheetFormatterContext createContext() {
-        return BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+        return BasicSpreadsheetFormatterContext.with(
+                this.numberToColor(),
                 this.nameToColor(),
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 this.formatter(),
-                this.converterContext());
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                this.converterContext()
+        );
     }
 
     private Function<Integer, Optional<Color>> numberToColor() {

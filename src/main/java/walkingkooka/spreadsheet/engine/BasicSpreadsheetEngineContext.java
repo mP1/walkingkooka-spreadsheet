@@ -310,6 +310,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.spreadsheetMetadata()
                         .spreadsheetFormatterContext(
                                 Optional.of(cell),
+                                (final Optional<SpreadsheetCell> c) -> this.spreadsheetEngineContext(
+                                        SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS
+                                ).spreadsheetExpressionEvaluationContext(
+                                        c,
+                                        SpreadsheetExpressionReferenceLoaders.fake()
+                                ),
                                 this, // SpreadsheetLabelNameResolver,
                                 this.spreadsheetProvider, // ConverterProvider,
                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,

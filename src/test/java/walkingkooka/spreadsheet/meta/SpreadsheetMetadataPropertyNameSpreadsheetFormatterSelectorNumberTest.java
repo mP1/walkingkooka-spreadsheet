@@ -25,6 +25,7 @@ import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -101,6 +102,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 1, // cellCharacterWidth
                 8, // generalNumberFormatDigitCount
                 SpreadsheetFormatters.fake(),
+                (final Optional<SpreadsheetCell> c) -> {
+                    throw new UnsupportedOperationException();
+                },
                 SpreadsheetConverterContexts.basic(
                         SpreadsheetConverterContexts.NO_METADATA,
                         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
