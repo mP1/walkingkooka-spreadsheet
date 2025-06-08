@@ -25,6 +25,7 @@ import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -170,6 +171,13 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         return before.equals(after) ?
                 this :
                 new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
+    }
+
+    // HasSpreadsheetMetadata............................................................................................
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        return this.context.spreadsheetMetadata();
     }
 
     private final SpreadsheetConverterContext context;

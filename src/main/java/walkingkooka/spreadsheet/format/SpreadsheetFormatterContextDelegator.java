@@ -75,7 +75,8 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
 
     @Override
     default SpreadsheetMetadata spreadsheetMetadata() {
-        return SpreadsheetFormatterContext.super.spreadsheetMetadata();
+        return this.spreadsheetFormatterContext()
+                .spreadsheetMetadata();
     }
 
     @Override
