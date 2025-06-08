@@ -62,6 +62,22 @@ final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter {
         return NO_TOKENS;
     }
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.expression.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other || other instanceof ExpressionSpreadsheetFormatter && this.equals0((ExpressionSpreadsheetFormatter) other);
+    }
+
+    private boolean equals0(final ExpressionSpreadsheetFormatter other) {
+        return this.expression.equals(other.expression);
+    }
+
     @Override
     public String toString() {
         return "expression";
