@@ -109,7 +109,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     @Override
-    public void testSpreadsheetExpressionEvaluationContextWithNullCellFails() {
+    public void testSpreadsheetExpressionEvaluationContextWithNullValueFails() {
         throw new UnsupportedOperationException();
     }
 

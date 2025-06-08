@@ -24,7 +24,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -133,7 +132,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
         throw new UnsupportedOperationException();
     }
 

@@ -92,7 +92,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     }
 
     @Test
-    default void testSpreadsheetExpressionEvaluationContextWithNullCellFails() {
+    default void testSpreadsheetExpressionEvaluationContextWithNullValueFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()

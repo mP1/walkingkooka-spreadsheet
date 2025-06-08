@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -97,7 +96,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testSpreadsheetFormatterContext() {
         METADATA_EN_AU.spreadsheetFormatterContext(
                 SpreadsheetMetadata.NO_CELL,
-                (final Optional<SpreadsheetCell> c) -> {
+                (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
                 (label) -> {

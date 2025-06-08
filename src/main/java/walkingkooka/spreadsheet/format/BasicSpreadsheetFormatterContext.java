@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -44,7 +43,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final int cellCharacterWidth,
                                                  final int generalFormatNumberDigitCount,
                                                  final SpreadsheetFormatter formatter,
-                                                 final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
+                                                 final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                  final SpreadsheetConverterContext context) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
@@ -73,7 +72,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                              final int cellCharacterWidth,
                                              final int generalFormatNumberDigitCount,
                                              final SpreadsheetFormatter formatter,
-                                             final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
+                                             final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                              final SpreadsheetConverterContext context) {
         super();
 
@@ -112,11 +111,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private final Function<SpreadsheetColorName, Optional<Color>> nameToColor;
 
     @Override
-    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
-        return this.spreadsheetExpressionEvaluationContext.apply(cell);
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
+        return this.spreadsheetExpressionEvaluationContext.apply(value);
     }
 
-    private final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext;
+    private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext;
 
     // Converter........................................................................................................
 

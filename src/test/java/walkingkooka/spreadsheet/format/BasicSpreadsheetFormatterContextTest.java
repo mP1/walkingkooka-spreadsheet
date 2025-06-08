@@ -29,7 +29,6 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -74,7 +73,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
 
-    private final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
+    private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
             (cell) -> {
                 Objects.requireNonNull(cell, "cell");
                 throw new UnsupportedOperationException();
@@ -195,7 +194,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                            final int width,
                            final int generalNumberFormatDigitCount,
                            final SpreadsheetFormatter formatter,
-                           final Function<Optional<SpreadsheetCell>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
+                           final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                            final SpreadsheetConverterContext converterContext) {
         assertThrows(
                 NullPointerException.class,
