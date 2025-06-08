@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
@@ -56,7 +57,8 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
 
-public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ExpressionSpreadsheetFormatter> {
+public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ExpressionSpreadsheetFormatter>,
+        HashCodeEqualsDefinedTesting2<ExpressionSpreadsheetFormatter> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -220,6 +222,26 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
             }
         };
     }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentExpression() {
+        this.checkNotEquals(
+                ExpressionSpreadsheetFormatter.with(
+                        Expression.value("Different2")
+                )
+        );
+    }
+
+    @Override
+    public ExpressionSpreadsheetFormatter createObject() {
+        return ExpressionSpreadsheetFormatter.with(
+                Expression.value("Hello1")
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<ExpressionSpreadsheetFormatter> type() {
