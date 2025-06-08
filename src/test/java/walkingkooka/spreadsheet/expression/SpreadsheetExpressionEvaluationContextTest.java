@@ -35,6 +35,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext> {
 
     @Test
+    public void testAddLocalVariableWithNullReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new FakeSpreadsheetExpressionEvaluationContext()
+                        .addLocalVariable(
+                                null,
+                                Optional.empty()
+                        )
+        );
+    }
+
+    @Test
+    public void testAddLocalVariableWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new FakeSpreadsheetExpressionEvaluationContext()
+                        .addLocalVariable(
+                                SpreadsheetSelection.labelName("Hello"),
+                                null
+                        )
+        );
+    }
+
+    @Test
     public void testCellOrFail() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,

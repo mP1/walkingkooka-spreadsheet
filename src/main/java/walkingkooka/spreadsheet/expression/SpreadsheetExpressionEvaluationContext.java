@@ -47,6 +47,7 @@ import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContext;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -86,6 +87,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      */
     default SpreadsheetExpressionEvaluationContext addLocalVariable(final ExpressionReference reference,
                                                                     final Optional<Object> value) {
+        Objects.requireNonNull(reference, "reference");
+        Objects.requireNonNull(value, "value");
+
         return this.enterScope(
                 (final ExpressionReference expressionReference) -> Optional.ofNullable(
                         expressionReference.equals(reference) ?
