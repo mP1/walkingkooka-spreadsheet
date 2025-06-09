@@ -18,11 +18,18 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.set.ImmutableSortedSet;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.store.Store;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -39,6 +46,53 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     private TreeMapSpreadsheetLabelReferencesStore() {
         this.store = SpreadsheetExpressionReferenceStores.treeMap();
     }
+
+    @Override
+    public Set<SpreadsheetLabelName> findLabelsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                   final int offset,
+                                                                   final int count) {
+        Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
+        Store.checkOffsetAndCount(
+                offset,
+                count
+        );
+
+        return 0 == count ?
+                Sets.empty() :
+                this.findLabelsWithCellOrCellRangeNonZeroCount(
+                        cellOrCellRange,
+                        offset,
+                        count
+                );
+    }
+
+    private Set<SpreadsheetLabelName> findLabelsWithCellOrCellRangeNonZeroCount(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                                final int offset,
+                                                                                final int count) {
+        final Set<SpreadsheetLabelName> labels = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+        // potentially slow for large ranges with gaps.
+        for (final SpreadsheetCellReference reference : cellOrCellRange.toCellRange()) {
+            labels.addAll(
+                    this.findReferencesWithCell(
+                            reference,
+                            0,
+                            Integer.MAX_VALUE
+                    )
+            );
+        }
+
+        return Sets.readOnly(
+                labels.stream()
+                        .skip(offset)
+                        .limit(count)
+                        .collect(
+                                ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
+                        )
+        );
+    }
+
+    // SpreadsheetExpressionReferenceStore..............................................................................
 
     @Override
     public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {

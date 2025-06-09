@@ -17,11 +17,21 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+
+import java.util.Set;
 
 public class FakeSpreadsheetLabelReferencesStore extends FakeSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> implements SpreadsheetLabelReferencesStore{
 
     public FakeSpreadsheetLabelReferencesStore() {
         super();
+    }
+
+    @Override
+    public Set<SpreadsheetLabelName> findLabelsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                   final int offset,
+                                                                   final int count) {
+        throw new UnsupportedOperationException();
     }
 }
