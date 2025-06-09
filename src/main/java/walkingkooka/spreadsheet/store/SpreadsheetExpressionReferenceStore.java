@@ -71,6 +71,11 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
 
     /**
+     * Adds a {@link Consumer watcher} which receives all removed reference events.
+     */
+    Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);
+
+    /**
      * Finds any {@link SpreadsheetCellReference} with the provided reference.
      */
     Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
@@ -81,11 +86,6 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * Counts the number of cells with the given reference.
      */
     int countCellsWithReference(final T reference);
-
-    /**
-     * Adds a {@link Consumer watcher} which receives all removed reference events.
-     */
-    Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);
 
     /**
      * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference cell}.
