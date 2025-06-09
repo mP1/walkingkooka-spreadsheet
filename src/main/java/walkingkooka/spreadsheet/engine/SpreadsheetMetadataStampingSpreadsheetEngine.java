@@ -356,11 +356,11 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta findCellsWithReferences(final SpreadsheetExpressionReference reference,
-                                                    final int offset,
-                                                    final int count,
-                                                    final SpreadsheetEngineContext context) {
-        return this.engine.findCellsWithReferences(
+    public SpreadsheetDelta findCellsWithReference(final SpreadsheetExpressionReference reference,
+                                                   final int offset,
+                                                   final int count,
+                                                   final SpreadsheetEngineContext context) {
+        return this.engine.findCellsWithReference(
                 reference,
                 offset,
                 count,
