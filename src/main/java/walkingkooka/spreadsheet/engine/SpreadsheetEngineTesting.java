@@ -2233,14 +2233,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // findCellsWithReferences..........................................................................................
+    // findCellsWithReference..........................................................................................
 
     @Test
-    default void testFindCellsWithReferencesWithNullReferencesFails() {
+    default void testFindCellsWithReferenceWithNullReferenceFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findCellsWithReferences(
+                        .findCellsWithReference(
                                 null,
                                 0, // offset
                                 0, // count,
@@ -2254,7 +2254,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findCellsWithReferences(
+                        .findCellsWithReference(
                                 SpreadsheetSelection.A1,
                                 -1, // offset
                                 0, // count,
@@ -2268,7 +2268,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findCellsWithReferences(
+                        .findCellsWithReference(
                                 SpreadsheetSelection.A1,
                                 0, // offset
                                 -1, // count,
@@ -2282,7 +2282,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findCellsWithReferences(
+                        .findCellsWithReference(
                                 SpreadsheetSelection.A1,
                                 0, // offset
                                 0, // count,
@@ -2291,21 +2291,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void findCellsWithReferencesAndCheck(final SpreadsheetEngine engine,
-                                                 final SpreadsheetExpressionReference reference,
-                                                 final int offset,
-                                                 final int count,
-                                                 final SpreadsheetEngineContext context,
-                                                 final SpreadsheetDelta expected) {
+    default void findCellsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                final SpreadsheetExpressionReference reference,
+                                                final int offset,
+                                                final int count,
+                                                final SpreadsheetEngineContext context,
+                                                final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
-                engine.findCellsWithReferences(
+                engine.findCellsWithReference(
                         reference,
                         offset,
                         count,
                         context
                 ),
-                () -> "findCellsWithReferences " + reference + " offset=" + offset + " count=" + count
+                () -> "findCellsWithReference " + reference + " offset=" + offset + " count=" + count
         );
     }
 

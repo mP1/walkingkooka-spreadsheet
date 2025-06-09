@@ -272,10 +272,10 @@ public interface SpreadsheetEngine {
      * Note the {@link SpreadsheetDelta#cells()} should not include the {@link SpreadsheetCellReference} unless its formula
      * contains a cycle.
      */
-    SpreadsheetDelta findCellsWithReferences(final SpreadsheetExpressionReference reference,
-                                             final int offset,
-                                             final int count,
-                                             final SpreadsheetEngineContext context);
+    SpreadsheetDelta findCellsWithReference(final SpreadsheetExpressionReference reference,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context);
 
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,

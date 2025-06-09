@@ -16375,7 +16375,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithReferences() {
+    public void testFindCellsWithReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19293,7 +19293,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findCellsWithReferencesAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 0, // offset
@@ -19360,7 +19360,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // b2 skipped by offset, d4= not included by count
-        this.findCellsWithReferencesAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 1, // offset
@@ -19418,7 +19418,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findCellsWithReferencesAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 0, // offset
@@ -19482,7 +19482,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findCellsWithReferencesAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 engine,
                 label,
                 0, // offset
@@ -19529,7 +19529,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findCellsWithReferencesAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 0, // offset
