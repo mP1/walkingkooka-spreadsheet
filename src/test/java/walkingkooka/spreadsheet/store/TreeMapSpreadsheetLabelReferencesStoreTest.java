@@ -28,6 +28,447 @@ import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetLabelReferencesStoreTest implements SpreadsheetLabelReferencesStoreTesting<TreeMapSpreadsheetLabelReferencesStore> {
 
+    // findCellsWithCellOrCellRange.....................................................................................
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWithZeroCount() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label,
+                        reference
+                )
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                0,
+                0
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereCellWithCellReference() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label,
+                        reference
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label,
+                0,
+                2,
+                reference
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                0,
+                2,
+                label
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereLabelsWithCellReferences() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        reference
+                )
+        );
+
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        reference
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        reference
+                )
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                0,
+                3,
+                label1,
+                label2
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereLabelsWithReferencesWithOffset() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        reference
+                )
+        );
+
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        reference
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        reference
+                )
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                1,
+                3,
+                //label1, skipped because offset=1
+                label2
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereLabelsWithReferencesWithCount() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        reference
+                )
+        );
+
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        reference
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        reference
+                )
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                0,
+                1,
+                label1
+                //label2 not included because of count=1
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReference() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label,
+                        b2
+                )
+        );
+
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label,
+                        c3
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label,
+                0,
+                3,
+                b2,
+                c3
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("B2:C3"),
+                0,
+                2,
+                label
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReferences() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        b2
+                )
+        );
+
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        c3
+                )
+        );
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        c3
+                )
+        );
+
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        d4
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                0,
+                3,
+                b2,
+                c3
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label2,
+                0,
+                3,
+                c3,
+                d4
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("B2:C3"),
+                0,
+                3,
+                label1,
+                label2
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReferences2() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        b2
+                )
+        );
+
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        c3
+                )
+        );
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        c3
+                )
+        );
+
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        d4
+                )
+        );
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label3,
+                        d4
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                0,
+                3,
+                b2,
+                c3
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label2,
+                0,
+                3,
+                c3,
+                d4
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("B2:C3"),
+                0,
+                3,
+                label1,
+                label2
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithCellOrCellRangeWhereCellWithCellRangeReferencesAndOffsetAndCount() {
+        final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        b2
+                )
+        );
+
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        c3
+                )
+        );
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        c3
+                )
+        );
+
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        d4
+                )
+        );
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label3,
+                        d4
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                0,
+                3,
+                b2,
+                c3
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label2,
+                0,
+                3,
+                c3,
+                d4
+        );
+
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("B2:e5"),
+                1, // skips label111
+                1, // stops before label333
+                label2
+        );
+    }
+
     // SpreadsheetEngine................................................................................................
 
     @Test

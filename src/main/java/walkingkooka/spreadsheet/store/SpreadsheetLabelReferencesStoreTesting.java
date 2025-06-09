@@ -17,7 +17,15 @@
 
 package walkingkooka.spreadsheet.store;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetLabelReferencesStoreTesting<S extends SpreadsheetLabelReferencesStore> extends SpreadsheetExpressionReferenceStoreTesting<S, SpreadsheetLabelName> {
 
@@ -34,6 +42,77 @@ public interface SpreadsheetLabelReferencesStoreTesting<S extends SpreadsheetLab
     @Override
     default void testAddDeleteWatcherAndDelete() {
         throw new UnsupportedOperationException();
+    }
+
+    // findLabelsWithCellOrCellRange....................................................................................
+
+    @Test
+    default void testFindCellsWithCellOrCellRangeWithNullCellOrCellRangesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .findLabelsWithCellOrCellRange(
+                                null, // reference
+                                0, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithCellOrCellRangeWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findLabelsWithCellOrCellRange(
+                                SpreadsheetSelection.A1,
+                                -1, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithCellOrCellRangeWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findLabelsWithCellOrCellRange(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                -1 // count
+                        )
+        );
+    }
+
+    default void findLabelsWithCellOrCellRangeAndCheck(final SpreadsheetLabelReferencesStore store,
+                                                       final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                       final int offset,
+                                                       final int count,
+                                                       final SpreadsheetLabelName... expected) {
+        this.findLabelsWithCellOrCellRangeAndCheck(
+                store,
+                cellOrCellRange,
+                offset,
+                count,
+                Sets.of(expected)
+        );
+    }
+
+    default void findLabelsWithCellOrCellRangeAndCheck(final SpreadsheetLabelReferencesStore store,
+                                                       final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                       final int offset,
+                                                       final int count,
+                                                       final Set<SpreadsheetLabelName> expected) {
+        this.checkEquals(
+                expected,
+                store.findLabelsWithCellOrCellRange(
+                        cellOrCellRange,
+                        offset,
+                        count
+                ),
+                "findLabelsWithCellOrCellRange " + cellOrCellRange + " offset=" + offset + ", count=" + count
+        );
     }
 
     // TypeNameTesting..................................................................................................

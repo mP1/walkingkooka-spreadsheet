@@ -17,7 +17,17 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
+import java.util.Set;
+
 public interface SpreadsheetLabelReferencesStore extends SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> {
+
+    /**
+     * Finds any {@link SpreadsheetLabelName} with the provided {@link SpreadsheetCellReferenceOrRange}.
+     */
+    Set<SpreadsheetLabelName> findLabelsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                            final int offset,
+                                                            final int count);
 }

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
@@ -116,6 +117,19 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     static class TestSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore {
+
+        @Override
+        public Set<SpreadsheetLabelName> findLabelsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                       final int offset,
+                                                                       final int count) {
+            Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
+            Store.checkOffsetAndCount(
+                    offset,
+                    count
+            );
+            return Set.of();
+        }
+
         @Override
         public void saveCells(final SpreadsheetLabelName label,
                               final Set<SpreadsheetCellReference> cells) {
