@@ -19364,8 +19364,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findCellsWithReferenceAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
-                1, // offset
-                3, // count
+                1, // offset skips B2
+                2, // count gathers C3,D4 stops before E5
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
