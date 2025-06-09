@@ -24,14 +24,13 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
@@ -58,7 +57,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetFormStore forms,
                                                    final SpreadsheetGroupStore groups,
                                                    final SpreadsheetLabelStore labels,
-                                                   final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
+                                                   final SpreadsheetLabelReferencesStore labelReferences,
                                                    final SpreadsheetMetadataStore metadatas,
                                                    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                    final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,

@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -32,7 +31,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
@@ -141,7 +140,7 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     }
 
     @Override
-    public SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
+    public SpreadsheetLabelReferencesStore labelReferences() {
         return this.repository.labelReferences();
     }
 

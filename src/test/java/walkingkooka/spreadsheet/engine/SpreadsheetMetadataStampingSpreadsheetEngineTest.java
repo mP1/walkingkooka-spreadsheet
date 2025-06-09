@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
@@ -53,8 +52,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStores;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
@@ -414,7 +413,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetCellReferencesStore cellReferences = SpreadsheetCellReferencesStores.treeMap();
         final SpreadsheetColumnStore columns = SpreadsheetColumnStores.treeMap();
         final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetLabelReferencesStore labelReferences = SpreadsheetLabelReferencesStores.treeMap();
         final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap(
                 SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
                 LocalDateTime::now
@@ -456,7 +455,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                     }
 
                     @Override
-                    public SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
+                    public SpreadsheetLabelReferencesStore labelReferences() {
                         return labelReferences;
                     }
 

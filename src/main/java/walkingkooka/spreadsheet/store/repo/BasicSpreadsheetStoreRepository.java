@@ -20,14 +20,13 @@ package walkingkooka.spreadsheet.store.repo;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
@@ -47,7 +46,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetFormStore forms,
                                                 final SpreadsheetGroupStore groups,
                                                 final SpreadsheetLabelStore labels,
-                                                final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
+                                                final SpreadsheetLabelReferencesStore labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
@@ -91,7 +90,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetFormStore forms,
                                             final SpreadsheetGroupStore groups,
                                             final SpreadsheetLabelStore labels,
-                                            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
+                                            final SpreadsheetLabelReferencesStore labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
@@ -156,11 +155,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetLabelStore labels;
 
     @Override
-    public SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
+    public SpreadsheetLabelReferencesStore labelReferences() {
         return this.labelReferences;
     }
 
-    private final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences;
+    private final SpreadsheetLabelReferencesStore labelReferences;
 
     @Override
     public SpreadsheetMetadataStore metadatas() {
