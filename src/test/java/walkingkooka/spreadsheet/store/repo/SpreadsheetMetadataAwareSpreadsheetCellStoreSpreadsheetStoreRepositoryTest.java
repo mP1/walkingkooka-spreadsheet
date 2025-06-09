@@ -36,7 +36,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStores;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
@@ -233,7 +233,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetFormStores.treeMap(),
                         SpreadsheetGroupStores.treeMap(),
                         SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetExpressionReferenceStores.treeMap(),
+                        SpreadsheetLabelReferencesStores.treeMap(),
                         metadatas,
                         SpreadsheetCellRangeStores.treeMap(),
                         SpreadsheetCellRangeStores.treeMap(),
