@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -104,27 +105,27 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     private Set<SpreadsheetCellReference> findCellsWithCellOrCellRangeNonZeroCount(final SpreadsheetCellReferenceOrRange cellOrCellRange,
                                                                                    final int offset,
                                                                                    final int count) {
-        int skipCountDown = offset;
-
         final Set<SpreadsheetCellReference> references = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         // potentially slow for large ranges with gaps.
-        for (final SpreadsheetCellReference reference : cellOrCellRange.toCellRange()) {
-            for (final SpreadsheetCellReference referenceForCell : this.findCellsWithReference(
-                    reference,
-                    0,
-                    count - references.size()
-            )) {
-                if (--skipCountDown < 0) {
-                    references.add(referenceForCell);
-                    if (references.size() >= count) {
-                        break;
-                    }
-                }
-            }
+        for (final SpreadsheetCellReference cell : cellOrCellRange.toCellRange()) {
+            references.addAll(
+                    this.findCellsWithReference(
+                            cell,
+                            0,
+                            Integer.MAX_VALUE
+                    )
+            );
         }
 
-        return Sets.readOnly(references);
+        return Sets.readOnly(
+                references.stream()
+                        .skip(offset)
+                        .limit(count)
+                        .collect(
+                                ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
+                        )
+        );
     }
 
     @Override
