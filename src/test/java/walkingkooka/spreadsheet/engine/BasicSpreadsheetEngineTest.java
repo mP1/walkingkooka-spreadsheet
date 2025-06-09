@@ -19256,10 +19256,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // findReferencesWithCell...........................................................................................
+    // findCellWithReferences...........................................................................................
 
     @Test
-    public void testFindReferencesWithCellWithCell() {
+    public void testFindCellsWithReferencesWithCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19320,7 +19320,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellWithCellAndOffsetAndCount() {
+    public void testFindCellsWithReferencesWithCellAndOffsetAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19384,7 +19384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellWithCellRange() {
+    public void testFindCellsWithReferencesWithCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19441,7 +19441,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellWithLabelToCellRange() {
+    public void testFindCellsWithReferencesWithLabelToCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -19505,7 +19505,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellWithCellWhereFormulaIncludesCycle() {
+    public void testFindCellsWithReferencesWithCellWhereFormulaIncludesCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
