@@ -151,18 +151,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
             return Set.of();
         }
 
-//        @Override
-//        public Set<SpreadsheetCellReference> findCellsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
-//                                                                          final int offset,
-//                                                                          final int count) {
-//            Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
-//            Store.checkOffsetAndCount(
-//                    offset,
-//                    count
-//            );
-//            return Set.of();
-//        }
-
         @Override
         public int countCellsWithReference(final SpreadsheetLabelName label) {
             Objects.requireNonNull(label, "label");
