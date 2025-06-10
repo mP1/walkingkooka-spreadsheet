@@ -26,7 +26,14 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.FakeConverter;
+import walkingkooka.convert.provider.ConverterAlias;
+import walkingkooka.convert.provider.ConverterAliasSet;
+import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.convert.provider.FakeConverterProvider;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -131,6 +138,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.Validator;
@@ -4791,6 +4799,171 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 PROVIDER_CONTEXT
                                         ).format(
                                                 Optional.of(VALIDATOR_PASS_NUMBER),
+                                                SPREADSHEET_TEXT_FORMAT_CONTEXT
+                                        ).get()
+                                )
+                                .root()
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithValueValidatorUsesValidatorConverter() {
+        final Object converterInput = this;
+        final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = Cast.to(
+                ValidationErrorList.empty()
+                .concat(
+                        ValidationError.with(
+                                SpreadsheetSelection.A1,
+                                "ValidationConverterErrorMessage"
+                        )
+                )
+        );
+
+        final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
+        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("TestValidatorConverter");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.CONVERTERS,
+                        ConverterAliasSet.EMPTY
+                                .concat(
+                                        ConverterAlias.parse(formulaConverterSelector.text())
+                                ).concat(
+                                        ConverterAlias.parse(validatorConverterSelector.text())
+                                )
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                        formulaConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                        formulaConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                        validatorConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATORS,
+                        ValidatorAliasSet.parse(validatorSelector.valueText())
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        ValidatorAliasSet.parse(validatorSelector.valueText())
+                ),
+                SpreadsheetStoreRepositories.basic(
+                        SpreadsheetCellStores.treeMap(),
+                        SpreadsheetCellReferencesStores.treeMap(),
+                        SpreadsheetColumnStores.treeMap(),
+                        SpreadsheetFormStores.treeMap(),
+                        SpreadsheetGroupStores.fake(),
+                        SpreadsheetLabelStores.treeMap(),
+                        SpreadsheetLabelReferencesStores.treeMap(),
+                        SpreadsheetMetadataStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetRowStores.treeMap(),
+                        StorageStores.fake(),
+                        SpreadsheetUserStores.fake()
+                ),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        new FakeConverterProvider() {
+                            @Override
+                            public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                       final List<?> values,
+                                                                                       final ProviderContext context) {
+                                if(formulaConverterSelector.name().equals(name)) {
+                                    return Cast.to(
+                                            SpreadsheetConverters.nullToNumber()
+                                    );
+                                }
+                                if(validatorConverterSelector.name().equals(name)) {
+                                    return new FakeConverter<>() {
+
+                                        @Override
+                                        public <T> Either<T, String> convert(final Object value,
+                                                                             final Class<T> type,
+                                                                             final C context) {
+
+
+                                            return this.successfulConversion(
+                                                    type.cast(converterOutput),
+                                                    type
+                                            );
+                                        }
+                                    };
+                                }
+                                throw new IllegalArgumentException("Unknown converter " + name);
+                            }
+                        },
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        new FakeValidatorProvider() {
+                            @Override
+                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                            final ProviderContext context) {
+                                if (validatorSelector.equals(selector)) {
+                                    return Cast.to(
+                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                                      final SpreadsheetValidatorContext context) {
+                                                    return context.convertOrFail(
+                                                        converterInput,
+                                                        ValidationErrorList.class
+                                                    );
+                                                }
+                                            }
+                                    );
+                                }
+                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                            }
+                        }
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final Object value = "Value123";
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setValidator(
+                        Optional.of(validatorSelector)
+                ).setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.replace(
+                                        METADATA.spreadsheetFormatter(
+                                                SPREADSHEET_FORMATTER_PROVIDER,
+                                                PROVIDER_CONTEXT
+                                        ).format(
+                                                Optional.of(value),
                                                 SPREADSHEET_TEXT_FORMAT_CONTEXT
                                         ).get()
                                 )
