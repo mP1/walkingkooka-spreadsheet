@@ -38,7 +38,6 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -78,6 +77,8 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         );
     }
 
+    private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
+
     @Override
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                       final Optional<SpreadsheetCell> cell) {
@@ -95,13 +96,11 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                          final SpreadsheetExpressionReferenceLoader loader) {
-        Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(loader, "loader");
-
-        return this.spreadsheetExpressionEvaluationContext.setCell(cell);
+        return this.spreadsheetEngineContext.spreadsheetExpressionEvaluationContext(
+                cell,
+                loader
+        );
     }
-
-    private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
 
     @Override
     public Optional<TextNode> formatValue(final SpreadsheetCell cell,
