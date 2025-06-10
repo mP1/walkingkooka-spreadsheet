@@ -141,6 +141,16 @@ public interface SpreadsheetEngine {
                                final SpreadsheetEngineContext context);
 
     /**
+     * Finds all the {@link SpreadsheetCellReference references} for the given {@link SpreadsheetExpressionReference}.
+     * Note the {@link SpreadsheetDelta#cells()} should not include the {@link SpreadsheetCellReference} unless its formula
+     * contains a cycle.
+     */
+    SpreadsheetDelta findCellsWithReference(final SpreadsheetExpressionReference reference,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context);
+
+    /**
      * Loads all the references mentioned in the {@link walkingkooka.spreadsheet.formula.SpreadsheetFormula#text()} for
      * the given {@link SpreadsheetCellReference}.
      * If the cell has not been saved or was deleted it will return no {@link SpreadsheetDelta#cells()}.
@@ -265,16 +275,6 @@ public interface SpreadsheetEngine {
                                              final int offset,
                                              final int count,
                                              final SpreadsheetEngineContext context);
-
-    /**
-     * Finds all the {@link SpreadsheetCellReference references} for the given {@link SpreadsheetExpressionReference}.
-     * Note the {@link SpreadsheetDelta#cells()} should not include the {@link SpreadsheetCellReference} unless its formula
-     * contains a cycle.
-     */
-    SpreadsheetDelta findCellsWithReference(final SpreadsheetExpressionReference reference,
-                                            final int offset,
-                                            final int count,
-                                            final SpreadsheetEngineContext context);
 
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,
