@@ -4956,19 +4956,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of(validatorSelector)
                 ).setStyle(STYLE);
 
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
-                Optional.of(
-                        STYLE.replace(
-                                        METADATA.spreadsheetFormatter(
-                                                SPREADSHEET_FORMATTER_PROVIDER,
-                                                PROVIDER_CONTEXT
-                                        ).format(
-                                                Optional.of(value),
-                                                SPREADSHEET_TEXT_FORMAT_CONTEXT
-                                        ).get()
-                                )
-                                .root()
-                )
+        // https://github.com/mP1/walkingkooka-spreadsheet/issues/6765
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
+                a1Cell.formula()
+                        .setError(
+                                SpreadsheetError.validationErrors(converterOutput)
+                        )
+        ).setFormattedValue(
+                Optional.of(TextNode.EMPTY_TEXT)
         );
 
         this.saveCellAndCheck(
