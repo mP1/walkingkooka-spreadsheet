@@ -311,7 +311,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         .spreadsheetFormatterContext(
                                 Optional.of(cell),
                                 (final Optional<Object> v) -> this.spreadsheetEngineContext(
-                                        SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS
+                                        SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
                                 ).spreadsheetExpressionEvaluationContext(
                                         Optional.of(cell),
                                         SpreadsheetExpressionReferenceLoaders.fake()
