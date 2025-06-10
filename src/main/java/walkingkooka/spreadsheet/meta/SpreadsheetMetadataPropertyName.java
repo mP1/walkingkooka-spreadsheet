@@ -217,6 +217,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterAliasSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMATTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormatting.instance());
@@ -226,11 +231,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * an expression while formatting.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMATTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterAliasSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code>
