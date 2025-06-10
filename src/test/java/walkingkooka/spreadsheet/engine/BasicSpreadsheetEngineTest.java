@@ -201,7 +201,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static char PERMILL_SYMBOL = '^';
     private final static char POSITIVE_SIGN = '+';
     private final static char ZERO_DIGIT = '0';
-    
+
     private static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
         TestSpreadsheetFormatterContext(final DateTimeSymbols dateTimeSymbols,
@@ -359,7 +359,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             null,
             ARABIC_DECIMAL_NUMBER_SYMBOLS
     );
-    
+
     private final static SpreadsheetFormatterContext FRANCE_DATE_ARABIC_NUMBER_FORMATTER_CONTEXT = new TestSpreadsheetFormatterContext(
             FRANCE_DATE_TIME_SYMBOLS,
             ARABIC_DECIMAL_NUMBER_SYMBOLS
@@ -472,8 +472,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                     final List<?> values,
-                                                                                     final ProviderContext context) {
+                                                                                                final List<?> values,
+                                                                                                final ProviderContext context) {
             switch (name.value()) {
                 case TEST_FILTER_CELLS_PREDICATE:
                     return new FakeExpressionFunction<>() {
@@ -4899,12 +4899,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Object converterInput = this;
         final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = Cast.to(
                 ValidationErrorList.empty()
-                .concat(
-                        ValidationError.with(
-                                SpreadsheetSelection.A1,
-                                "ValidationConverterErrorMessage"
+                        .concat(
+                                ValidationError.with(
+                                        SpreadsheetSelection.A1,
+                                        "ValidationConverterErrorMessage"
+                                )
                         )
-                )
         );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
@@ -4960,12 +4960,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
                                                                                        final List<?> values,
                                                                                        final ProviderContext context) {
-                                if(formulaConverterSelector.name().equals(name)) {
+                                if (formulaConverterSelector.name().equals(name)) {
                                     return Cast.to(
                                             SpreadsheetConverters.nullToNumber()
                                     );
                                 }
-                                if(validationConverterSelector.name().equals(name)) {
+                                if (validationConverterSelector.name().equals(name)) {
                                     return new FakeConverter<>() {
 
                                         @Override
@@ -5002,8 +5002,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
                                                                                                                       final SpreadsheetValidatorContext context) {
                                                     return context.convertOrFail(
-                                                        converterInput,
-                                                        ValidationErrorList.class
+                                                            converterInput,
+                                                            ValidationErrorList.class
                                                     );
                                                 }
                                             }
@@ -5479,9 +5479,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
     }
-
-
-
 
     @Test
     public void testSaveCellWithMetadataMissingDecimalNumberSymbols() {
