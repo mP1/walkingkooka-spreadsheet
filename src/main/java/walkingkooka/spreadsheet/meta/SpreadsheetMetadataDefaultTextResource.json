@@ -122,10 +122,10 @@
     "word-wrap": "NORMAL"
   },
   "twoDigitYear": 20,
-  "validatorConverter": "collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)",
-  "validatorFormHandler": "non-null",
-  "validatorFunctions": "@",
-  "validatorValidators": "",
+  "validationConverter": "collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)",
+  "validationFormHandler": "non-null",
+  "validationFunctions": "@",
+  "validationValidators": "",
   "validators": "",
   "viewport": {
     "rectangle": "A1:100:100"

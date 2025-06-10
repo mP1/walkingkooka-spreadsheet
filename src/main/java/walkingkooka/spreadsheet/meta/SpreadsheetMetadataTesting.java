@@ -325,16 +325,16 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.VALIDATORS,
                     ValidatorAliasSet.EMPTY
             ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                    SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)")
             ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
+                    SpreadsheetMetadataPropertyName.VALIDATION_FORM_HANDLER,
                     FormHandlerSelector.parse("non-null")
             ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                    SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                    SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                     ValidatorAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.numberedColor(1),

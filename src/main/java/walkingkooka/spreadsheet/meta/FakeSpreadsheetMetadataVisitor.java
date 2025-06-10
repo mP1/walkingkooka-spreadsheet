@@ -322,22 +322,22 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitValidatorConverter(final ConverterSelector selector) {
+    protected void visitValidationConverter(final ConverterSelector selector) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitValidatorFormHandler(final FormHandlerSelector selector) {
+    protected void visitValidationFormHandler(final FormHandlerSelector selector) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitValidatorFunctions(final ExpressionFunctionAliasSet aliases) {
+    protected void visitvalidationFunctions(final ExpressionFunctionAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitValidatorValidators(final ValidatorAliasSet aliases) {
+    protected void visitvalidationValidators(final ValidatorAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

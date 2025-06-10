@@ -2120,10 +2120,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
                         50
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                        SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                         ConverterSelector.parse("never")
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.EMPTY
                 ).spreadsheetValidatorContext(
                         cellOrLabel,
@@ -2491,19 +2491,19 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 ConverterSelector.parse("validator-converter-123")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
+                SpreadsheetMetadataPropertyName.VALIDATION_FORM_HANDLER,
                 FormHandlerSelector.parse("hello-form-handler")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                 ValidatorAliasSet.parse("hello")
         );
         properties.put(SpreadsheetMetadataPropertyName.VALIDATORS, ValidatorAliasSet.EMPTY);

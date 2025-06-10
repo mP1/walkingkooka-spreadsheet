@@ -228,8 +228,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                     if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
                         converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
                     } else {
-                        if (SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS.equals(functionAliases)) {
-                            converterSelector = SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER;
+                        if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
+                            converterSelector = SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER;
                         } else {
                             throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
                         }
@@ -248,7 +248,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
             if(null == this.formHandlerContext) {
                 final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
-                if(SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS.equals(functionAliases)) {
+                if(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
                     // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
                     // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
                     formHandlerContext = FormHandlerContexts.fake();

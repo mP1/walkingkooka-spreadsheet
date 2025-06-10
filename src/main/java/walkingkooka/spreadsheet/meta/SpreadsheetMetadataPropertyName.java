@@ -360,22 +360,22 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values by a {@link SpreadsheetCell#validator()}.
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATOR_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidator.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATION_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidation.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerSelector}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
      */
-    public static final SpreadsheetMetadataPropertyName<FormHandlerSelector> VALIDATOR_FORM_HANDLER = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator.instance());
+    public static final SpreadsheetMetadataPropertyName<FormHandlerSelector> VALIDATION_FORM_HANDLER = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within validator expressions.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATOR_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATION_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be the validator for the {@link SpreadsheetFormula#errorOrValue}
      */
-    public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATOR_VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators.instance());
+    public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATION_VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be used to pick available validators within {@link SpreadsheetCell#validator()}.

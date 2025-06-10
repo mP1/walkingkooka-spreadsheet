@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 
-public final class SpreadsheetMetadataPropertyNameFormHandlerSelectorValidatorTest extends SpreadsheetMetadataPropertyNameFormHandlerSelectorTestCase<SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator> {
+public final class SpreadsheetMetadataPropertyNameFormHandlerSelectorValidationTest extends SpreadsheetMetadataPropertyNameFormHandlerSelectorTestCase<SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation> {
 
     @Override
-    SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator createName() {
-        return SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator.instance();
+    SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation createName() {
+        return SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation.instance();
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class SpreadsheetMetadataPropertyNameFormHandlerSelectorValidatorTe
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator> type() {
-        return SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator.class;
+    public Class<SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation> type() {
+        return SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation.class;
     }
 }

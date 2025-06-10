@@ -24,27 +24,27 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet} used during
  * the evaluation of a validator function.
  */
-final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
+final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator instance() {
-        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator();
+    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation instance() {
+        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator() {
+    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation() {
         super(
-                "validatorFunctions"
+                "validationFunctions"
         );
     }
 
     @Override
     void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitValidatorFunctions(aliases);
+        visitor.visitvalidationFunctions(aliases);
     }
 }
