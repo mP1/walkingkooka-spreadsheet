@@ -355,20 +355,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 SpreadsheetCellQuery.parse("1+2")
         );
     }
-
-    @Test
-    public void testVisitFormatConverter() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitFormatConverter(final ConverterSelector s) {
-                this.visited = s;
-            }
-        }.accept(
-                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                ConverterSelector.parse("general")
-        );
-    }
-
+    
     @Test
     public void testVisitFormatterFunctions() {
         new TestSpreadsheetMetadataVisitor() {
@@ -379,6 +366,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS,
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
+        );
+    }
+
+    @Test
+    public void testVisitFormattingConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormattingConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+                ConverterSelector.parse("general")
         );
     }
 
