@@ -45,6 +45,6 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorFormatting extends S
     @Override
     void accept(final ConverterSelector selector,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFormatConverter(selector);
+        visitor.visitFormattingConverter(selector);
     }
 }
