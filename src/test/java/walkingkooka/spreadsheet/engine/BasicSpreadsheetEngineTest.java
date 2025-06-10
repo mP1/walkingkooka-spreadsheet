@@ -4731,54 +4731,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorFails() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
-                Optional.of(VALIDATOR_FAIL_NUMBER)
-        );
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
-                .setValidator(
-                        Optional.of(VALIDATOR)
-                ).setStyle(STYLE);
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                a1Cell.setFormula(
-                                        a1Formula.setError(
-                                                Optional.of(
-                                                        SpreadsheetErrorKind.MISSING_PREFIX.setMessageAndValue(
-                                                                VALIDATION_MESSAGE,
-                                                                SpreadsheetSelection.A1
-                                                        )
-                                                )
-                                        )
-                                ).setFormattedValue(
-                                        Optional.of(
-                                                STYLE.replace(
-                                                        TextNode.text("#ERROR FORMATTED_PATTERN_SUFFIX")
-                                                )
-                                        )
-                                )
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
-        );
-    }
-
-    @Test
     public void testSaveCellWithValueValidatorPass() {
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector validatorConverterSelector = ConverterSelector.parse("fake");
@@ -4892,6 +4844,146 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(a1Cell)
                                 )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithValueValidatorFails() {
+        final ValidationErrorList<SpreadsheetExpressionReference> validationError = Cast.to(
+                ValidationErrorList.empty()
+                        .concat(
+                                ValidationError.with(
+                                        SpreadsheetSelection.A1,
+                                        "ValidationConverterErrorMessage"
+                                )
+                        )
+        );
+
+        final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
+        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("fake");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.CONVERTERS,
+                        ConverterAliasSet.EMPTY
+                                .concat(
+                                        ConverterAlias.parse(formulaConverterSelector.text())
+                                )
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                        formulaConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                        formulaConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                        validatorConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATORS,
+                        ValidatorAliasSet.parse(validatorSelector.valueText())
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        ValidatorAliasSet.parse(validatorSelector.valueText())
+                ),
+                SpreadsheetStoreRepositories.basic(
+                        SpreadsheetCellStores.treeMap(),
+                        SpreadsheetCellReferencesStores.treeMap(),
+                        SpreadsheetColumnStores.treeMap(),
+                        SpreadsheetFormStores.treeMap(),
+                        SpreadsheetGroupStores.fake(),
+                        SpreadsheetLabelStores.treeMap(),
+                        SpreadsheetLabelReferencesStores.treeMap(),
+                        SpreadsheetMetadataStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetRowStores.treeMap(),
+                        StorageStores.fake(),
+                        SpreadsheetUserStores.fake()
+                ),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        new FakeConverterProvider() {
+                            @Override
+                            public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                       final List<?> values,
+                                                                                       final ProviderContext context) {
+                                if (formulaConverterSelector.name().equals(name)) {
+                                    return Cast.to(
+                                            SpreadsheetConverters.nullToNumber()
+                                    );
+                                }
+                                if (validatorConverterSelector.name().equals(name)) {
+                                    return Converters.fake();
+                                }
+                                throw new IllegalArgumentException("Unknown converter " + name);
+                            }
+                        },
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        new FakeValidatorProvider() {
+                            @Override
+                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                            final ProviderContext context) {
+                                if (validatorSelector.equals(selector)) {
+                                    return Cast.to(
+                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                                      final SpreadsheetValidatorContext context) {
+                                                    return validationError;
+                                                }
+                                            }
+                                    );
+                                }
+                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                            }
+                        }
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final Object value = "Value123";
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setValidator(
+                        Optional.of(validatorSelector)
+                ).setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
+                a1Cell.formula()
+                        .setError(
+                                SpreadsheetError.validationErrors(validationError)
+                        )
+        ).setFormattedValue(
+                Optional.of(TextNode.EMPTY_TEXT)
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
