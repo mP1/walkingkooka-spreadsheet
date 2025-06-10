@@ -535,6 +535,72 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // findFormulaReferences............................................................................................
+
+    @Override
+    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference cell,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
+        Objects.requireNonNull(properties, "properties");
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                properties,
+                context
+        );
+
+        try {
+            final SpreadsheetStoreRepository repository = context.storeRepository();
+            final SpreadsheetCellReferencesStore cellReferencesStore = repository.cellReferences();
+
+            int skipCount = 0;
+            int loadedCount = 0;
+
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
+            for (final SpreadsheetCellReference reference : cellReferencesStore.findCellsWithReference(
+                    cell,
+                    0, // offset
+                    FIND_REFERENCES_COUNT // count
+            )) {
+                if (skipCount < offset) {
+                    skipCount++;
+                    continue;
+                }
+
+                if (loadedCount >= count) {
+                    break;
+                }
+
+                changes.getOrCreateCellCache(
+                        reference.toCell(),
+                        BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+                );
+
+                loadedCount++;
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    // SORT CELLS.......................................................................................................
+
     @Override
     public SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
                                       final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
@@ -661,70 +727,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context // ProviderContext
                 )
         );
-    }
-
-    // loadFormulaReferences............................................................................................
-
-    @Override
-    public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference cell,
-                                                  final int offset,
-                                                  final int count,
-                                                  final Set<SpreadsheetDeltaProperties> properties,
-                                                  final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cell, "cell");
-        SpreadsheetEngine.checkOffsetAndCount(
-                offset,
-                count
-        );
-        Objects.requireNonNull(properties, "properties");
-        Objects.requireNonNull(context, "context");
-
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
-                this,
-                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                properties,
-                context
-        );
-
-        try {
-            final SpreadsheetStoreRepository repository = context.storeRepository();
-            final SpreadsheetCellReferencesStore cellReferencesStore = repository.cellReferences();
-
-            int skipCount = 0;
-            int loadedCount = 0;
-
-            // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
-            for (final SpreadsheetCellReference reference : cellReferencesStore.findCellsWithReference(
-                    cell,
-                    0, // offset
-                    FIND_REFERENCES_COUNT // count
-            )) {
-                if (skipCount < offset) {
-                    skipCount++;
-                    continue;
-                }
-
-                if (loadedCount >= count) {
-                    break;
-                }
-
-                changes.getOrCreateCellCache(
-                        reference.toCell(),
-                        BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
-                );
-
-                loadedCount++;
-            }
-
-            changes.commit();
-
-            return this.prepareResponse(
-                    changes,
-                    context
-            );
-        } finally {
-            changes.close();
-        }
     }
 
     // LOAD COLUMNS.....................................................................................................

@@ -194,12 +194,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference reference,
+    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference reference,
                                                   final int offset,
                                                   final int count,
                                                   final Set<SpreadsheetDeltaProperties> properties,
                                                   final SpreadsheetEngineContext context) {
-        return this.engine.loadFormulaReferences(
+        return this.engine.findFormulaReferences(
                 reference,
                 offset,
                 count,
