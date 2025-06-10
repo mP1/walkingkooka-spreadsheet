@@ -1110,7 +1110,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             formatSpreadsheetConverterContext = this.spreadsheetConverterContext(
                     cell,
                     NO_VALIDATION_REFERENCE,
-                    SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                    SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                     labelNameResolver,
                     converterProvider,
                     providerContext

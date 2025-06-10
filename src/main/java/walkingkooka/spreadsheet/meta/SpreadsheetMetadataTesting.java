@@ -251,7 +251,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
-                    SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                    SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS,

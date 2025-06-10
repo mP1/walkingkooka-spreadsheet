@@ -364,7 +364,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 ConverterSelector.parse("general")
         );
     }
