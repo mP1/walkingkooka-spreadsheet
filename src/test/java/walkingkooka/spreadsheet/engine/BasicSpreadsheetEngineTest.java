@@ -4693,18 +4693,107 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithExpressionValueValidatorPass() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
+    public void testSaveCellWithMetadataValidatorPass() {
+        final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
+        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("fake");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
-        final SpreadsheetCell a1Cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of(VALIDATOR_PASS_NUMBER)
-                )
-        ).setValidator(
-                Optional.of(VALIDATOR)
-        ).setStyle(STYLE);
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.CONVERTERS,
+                        ConverterAliasSet.EMPTY
+                                .concat(
+                                        ConverterAlias.parse(formulaConverterSelector.text())
+                                )
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                        formulaConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                        validatorConverterSelector
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATORS,
+                        ValidatorAliasSet.parse(validatorSelector.valueText())
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        ValidatorAliasSet.parse(validatorSelector.valueText())
+                ),
+                SpreadsheetStoreRepositories.basic(
+                        SpreadsheetCellStores.treeMap(),
+                        SpreadsheetCellReferencesStores.treeMap(),
+                        SpreadsheetColumnStores.treeMap(),
+                        SpreadsheetFormStores.treeMap(),
+                        SpreadsheetGroupStores.fake(),
+                        SpreadsheetLabelStores.treeMap(),
+                        SpreadsheetLabelReferencesStores.treeMap(),
+                        SpreadsheetMetadataStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetRowStores.treeMap(),
+                        StorageStores.fake(),
+                        SpreadsheetUserStores.fake()
+                ),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        new FakeConverterProvider() {
+                            @Override
+                            public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                       final List<?> values,
+                                                                                       final ProviderContext context) {
+                                if (formulaConverterSelector.name().equals(name)) {
+                                    return Cast.to(
+                                            SpreadsheetConverters.nullToNumber()
+                                    );
+                                }
+                                if (validatorConverterSelector.name().equals(name)) {
+                                    return Cast.to(
+                                            Converters.fake()
+                                    );
+                                }
+                                return CONVERTER_PROVIDER.converter(
+                                        name,
+                                        values,
+                                        context
+                                );
+                            }
+                        },
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        new FakeValidatorProvider() {
+                            @Override
+                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                            final ProviderContext context) {
+                                if (validatorSelector.equals(selector)) {
+                                    return Cast.to(
+                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                                      final SpreadsheetValidatorContext context) {
+                                                    return this.noValidationErrors();
+                                                }
+                                            }
+                                    );
+                                }
+                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                            }
+                        }
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final Object value = "Value123";
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setStyle(STYLE);
 
         this.saveCellAndCheck(
                 engine,
@@ -4713,10 +4802,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formatCell(
-                                                a1Cell,
-                                                VALIDATOR_PASS_NUMBER
-                                        )
+                                        this.formatCell(a1Cell)
                                 )
                         ).setColumnWidths(
                                 columnWidths("A")
