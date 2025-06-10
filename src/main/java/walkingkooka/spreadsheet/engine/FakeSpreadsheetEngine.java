@@ -117,7 +117,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference cell,
+    public SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference cell,
                                                   final int offset,
                                                   final int count,
                                                   final Set<SpreadsheetDeltaProperties> properties,

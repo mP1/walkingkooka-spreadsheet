@@ -1142,14 +1142,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // loadFormulaReferences............................................................................................
+    // findFormulaReferences............................................................................................
 
     @Test
-    default void testLoadFormulaReferencesWithNullCellRangeFails() {
+    default void testFindFormulaReferencesWithNullCellRangeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadFormulaReferences(
+                        .findFormulaReferences(
                                 null, // cell
                                 0, // offset
                                 1, // count
@@ -1160,11 +1160,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testLoadFormulaReferencesWithInvalidOffsetFails() {
+    default void testFindFormulaReferencesWithInvalidOffsetFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadFormulaReferences(
+                        .findFormulaReferences(
                                 SpreadsheetSelection.A1, // cell
                                 -1, // offset
                                 1, // count
@@ -1175,11 +1175,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testLoadFormulaReferencesWithInvalidCountFails() {
+    default void testFindFormulaReferencesWithInvalidCountFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadFormulaReferences(
+                        .findFormulaReferences(
                                 SpreadsheetSelection.A1, // cell
                                 0, // offset
                                 -1, // count
@@ -1190,11 +1190,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testLoadFormulaReferencesWithNullPropertiesFails() {
+    default void testFindFormulaReferencesWithNullPropertiesFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadFormulaReferences(
+                        .findFormulaReferences(
                                 SpreadsheetSelection.A1, // cell
                                 0, // offset
                                 1, // count
@@ -1205,11 +1205,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testLoadFormulaReferencesWithNullContextFails() {
+    default void testFindFormulaReferencesWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .loadFormulaReferences(
+                        .findFormulaReferences(
                                 SpreadsheetSelection.A1, // cell
                                 0, // offset
                                 1, // count
@@ -1219,7 +1219,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void loadFormulaReferencesAndCheck(final SpreadsheetEngine engine,
+    default void findFormulaReferencesAndCheck(final SpreadsheetEngine engine,
                                                final SpreadsheetCellReference cell,
                                                final int offset,
                                                final int count,
@@ -1228,14 +1228,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
-                engine.loadFormulaReferences(
+                engine.findFormulaReferences(
                         cell,
                         offset,
                         count,
                         properties,
                         context
                 ),
-                () -> "loadFormulaReferences cell=" + cell + ", offset=" + offset + ", count=" + count + ", properties=" + properties
+                () -> "findFormulaReferences cell=" + cell + ", offset=" + offset + ", count=" + count + ", properties=" + properties
         );
     }
 

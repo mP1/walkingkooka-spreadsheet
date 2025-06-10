@@ -141,23 +141,22 @@ public interface SpreadsheetEngine {
                                final SpreadsheetEngineContext context);
 
     /**
+     * Loads all the references mentioned in the {@link walkingkooka.spreadsheet.formula.SpreadsheetFormula#text()} for
+     * the given {@link SpreadsheetCellReference}.
+     * If the cell has not been saved or was deleted it will return no {@link SpreadsheetDelta#cells()}.
+     */
+    SpreadsheetDelta findFormulaReferences(final SpreadsheetCellReference cell,
+                                           final int offset,
+                                           final int count,
+                                           final Set<SpreadsheetDeltaProperties> properties,
+                                           final SpreadsheetEngineContext context);
+    /**
      * Sorts the selection of cells using the provided {@link walkingkooka.spreadsheet.compare.SpreadsheetComparator comparators}.
      */
     SpreadsheetDelta sortCells(final SpreadsheetCellRangeReference cellRange,
                                final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
-
-    /**
-     * Loads all the references mentioned in the {@link walkingkooka.spreadsheet.formula.SpreadsheetFormula#text()} for
-     * the given {@link SpreadsheetCellReference}.
-     * If the cell has not been saved or was deleted it will return no {@link SpreadsheetDelta#cells()}.
-     */
-    SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference cell,
-                                           final int offset,
-                                           final int count,
-                                           final Set<SpreadsheetDeltaProperties> properties,
-                                           final SpreadsheetEngineContext context);
 
     /**
      * Loads the given {@link SpreadsheetColumn}
