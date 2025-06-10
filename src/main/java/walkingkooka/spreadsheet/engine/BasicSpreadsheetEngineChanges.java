@@ -335,9 +335,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                         spreadsheetCell,
                         this.evaluation,
                         this, // SpreadsheetExpressionReferenceLoader
-                        this.spreadsheetEngineContext(
-                                spreadsheetCell,
-                                evaluationContextFunction.apply(spreadsheetCell)
+                        BasicSpreadsheetEngineSpreadsheetEngineContext.with(
+                                this.context, // SpreadsheetEngineContext
+                                evaluationContextFunction.apply(spreadsheetCell) // SpreadsheetExpressionEvaluationContext
                         )
                 );
 
@@ -688,14 +688,6 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     BasicSpreadsheetEngineChangesMode mode;
 
     // SpreadsheetEngineContext.........................................................................................
-
-    private SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetCell cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-        return BasicSpreadsheetEngineSpreadsheetEngineContext.with(
-                this.context, // SpreadsheetEngineContext
-                context // SpreadsheetExpressionEvaluationContext
-        );
-    }
 
     final SpreadsheetEngineContext context;
 

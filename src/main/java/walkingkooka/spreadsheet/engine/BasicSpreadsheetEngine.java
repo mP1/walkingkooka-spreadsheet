@@ -1603,13 +1603,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext =
                 (final Object v,
-                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
-                        Optional.of(cell),
-                        loader
-                ).addLocalVariable(
-                        SpreadsheetValidatorContext.VALUE,
-                        value
-                );
+                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS)
+                        .spreadsheetExpressionEvaluationContext(
+                                Optional.of(cell),
+                                loader
+                        ).addLocalVariable(
+                                SpreadsheetValidatorContext.VALUE,
+                                value
+                        );
 
         return cell.setFormula(
                 formula.setError(

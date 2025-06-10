@@ -131,6 +131,8 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.Length;
@@ -5031,6 +5033,171 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ).setFormattedValue(
                 Optional.of(TextNode.EMPTY_TEXT)
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithValueValidatorUsesValidatorFunction() {
+        final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = ValidationErrorList.<SpreadsheetExpressionReference>empty()
+                .concat(
+                        ValidationError.with(
+                                SpreadsheetSelection.A1,
+                                "ValidationConverterErrorMessage"
+                        )
+                );
+
+
+        final String functionName = "TestValidatorFunction";
+        final ExpressionFunctionSelector validatorFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+                        )
+                        .set(
+                                SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                                SpreadsheetExpressionFunctions.parseAliasSet(
+                                        validatorFunctionSelector.text()
+                                )
+                        ).set(
+                                SpreadsheetMetadataPropertyName.VALIDATORS,
+                                ValidatorAliasSet.parse(validatorSelector.valueText())
+                        ).set(
+                                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                                ValidatorAliasSet.parse(validatorSelector.valueText())
+                        ),
+                SpreadsheetStoreRepositories.basic(
+                        SpreadsheetCellStores.treeMap(),
+                        SpreadsheetCellReferencesStores.treeMap(),
+                        SpreadsheetColumnStores.treeMap(),
+                        SpreadsheetFormStores.treeMap(),
+                        SpreadsheetGroupStores.fake(),
+                        SpreadsheetLabelStores.treeMap(),
+                        SpreadsheetLabelReferencesStores.treeMap(),
+                        SpreadsheetMetadataStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetRowStores.treeMap(),
+                        StorageStores.fake(),
+                        SpreadsheetUserStores.fake()
+                ),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        ExpressionFunctionProviders.basic(
+                                Url.parseAbsolute("https://example.com/functions"),
+                                SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
+                                Sets.of(
+                                        new FakeExpressionFunction<>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return validationErrors;
+                                            }
+
+                                            @Override
+                                            public Class<Object> returnType() {
+                                                return Object.class;
+                                            }
+
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                                                return NO_PARAMETERS;
+                                            }
+
+                                            @Override
+                                            public Optional<ExpressionFunctionName> name() {
+                                                return Optional.of(
+                                                        SpreadsheetExpressionFunctions.name(functionName)
+                                                );
+                                            }
+                                        }
+                                )
+                        ),
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        new FakeValidatorProvider() {
+                            @Override
+                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                            final ProviderContext context) {
+                                if (validatorSelector.equals(selector)) {
+                                    return Cast.to(
+                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                                      final SpreadsheetValidatorContext context) {
+                                                    return Cast.to(
+                                                            context.expressionEvaluationContext(value)
+                                                                    .evaluateExpression(
+                                                                            Expression.call(
+                                                                                    Expression.namedFunction(
+                                                                                            SpreadsheetExpressionFunctions.name(functionName)
+                                                                                    ),
+                                                                                    Lists.empty()
+                                                                            )
+                                                                    )
+                                                    );
+                                                }
+                                            }
+                                    );
+                                }
+                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                            }
+                        }
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final Object value = "Value123";
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setValidator(
+                        Optional.of(validatorSelector)
+                ).setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
+                a1Cell.formula()
+                        .setError(
+                                SpreadsheetError.validationErrors(validationErrors)
+                        )
+        ).setFormattedValue(
+                Optional.of(
+                        TextNode.text(
+                                SpreadsheetError.validationErrors(validationErrors)
+                                        .get()
+                                        .text() +
+                                        ' ' +
+                                        FORMATTED_PATTERN_SUFFIX
+                        ).setTextStyle(STYLE)
+                )
         );
 
         this.saveCellAndCheck(
