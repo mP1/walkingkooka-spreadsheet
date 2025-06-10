@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
@@ -173,11 +172,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitFindHighlighting(final boolean value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitFormatterFunctions(final ExpressionFunctionAliasSet functions) {
         throw new UnsupportedOperationException();
     }
 
