@@ -21,11 +21,11 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
-public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidatorTest extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator> {
+public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidationTest extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation> {
 
     @Override
-    SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator createName() {
-        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.instance();
+    SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation createName() {
+        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation.instance();
     }
 
     @Override
@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetVali
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator> type() {
-        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.class;
+    public Class<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation> type() {
+        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation.class;
     }
 }

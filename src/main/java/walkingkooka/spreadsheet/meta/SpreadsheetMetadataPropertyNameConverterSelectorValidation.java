@@ -25,27 +25,27 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterSelector} used during
  * {@link SpreadsheetCell#validator()} expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameConverterSelectorValidator extends SpreadsheetMetadataPropertyNameConverterSelector {
+final class SpreadsheetMetadataPropertyNameConverterSelectorValidation extends SpreadsheetMetadataPropertyNameConverterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameConverterSelectorValidator instance() {
-        return new SpreadsheetMetadataPropertyNameConverterSelectorValidator();
+    static SpreadsheetMetadataPropertyNameConverterSelectorValidation instance() {
+        return new SpreadsheetMetadataPropertyNameConverterSelectorValidation();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameConverterSelectorValidator() {
+    private SpreadsheetMetadataPropertyNameConverterSelectorValidation() {
         super(
-                "validatorConverter"
+                "validationConverter"
         );
     }
 
     @Override
     void accept(final ConverterSelector selector,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitValidatorConverter(selector);
+        visitor.visitValidationConverter(selector);
     }
 }

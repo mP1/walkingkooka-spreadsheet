@@ -311,19 +311,19 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitValidatorConverter(final ConverterSelector selector) {
+    protected void visitValidationConverter(final ConverterSelector selector) {
         // nop
     }
 
-    protected void visitValidatorFormHandler(final FormHandlerSelector selector) {
+    protected void visitValidationFormHandler(final FormHandlerSelector selector) {
         // nop
     }
 
-    protected void visitValidatorFunctions(final ExpressionFunctionAliasSet aliases) {
+    protected void visitvalidationFunctions(final ExpressionFunctionAliasSet aliases) {
         // nop
     }
 
-    protected void visitValidatorValidators(final ValidatorAliasSet aliases) {
+    protected void visitvalidationValidators(final ValidatorAliasSet aliases) {
         // nop
     }
 

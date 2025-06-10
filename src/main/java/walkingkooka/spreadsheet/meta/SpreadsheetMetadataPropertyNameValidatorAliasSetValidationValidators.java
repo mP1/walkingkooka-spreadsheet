@@ -20,25 +20,25 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
-final class SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators extends SpreadsheetMetadataPropertyNameValidatorAliasSet {
+final class SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators extends SpreadsheetMetadataPropertyNameValidatorAliasSet {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators instance() {
-        return new SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators();
+    static SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators instance() {
+        return new SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators() {
-        super("validatorValidators");
+    private SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators() {
+        super("validationValidators");
     }
 
     @Override
     void accept(final ValidatorAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitValidatorValidators(aliases);
+        visitor.visitvalidationValidators(aliases);
     }
 }

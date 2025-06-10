@@ -1072,10 +1072,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validatorConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"validatorFormHandler\": \"non-null\",\n" +
-                        "  \"validatorFunctions\": \"@\",\n" +
-                        "  \"validatorValidators\": \"\",\n" +
+                        "  \"validationConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"validationFormHandler\": \"non-null\",\n" +
+                        "  \"validationFunctions\": \"@\",\n" +
+                        "  \"validationValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
@@ -1304,10 +1304,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validatorConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"validatorFormHandler\": \"non-null\",\n" +
-                        "  \"validatorFunctions\": \"@\",\n" +
-                        "  \"validatorValidators\": \"\",\n" +
+                        "  \"validationConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"validationFormHandler\": \"non-null\",\n" +
+                        "  \"validationFunctions\": \"@\",\n" +
+                        "  \"validationValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +

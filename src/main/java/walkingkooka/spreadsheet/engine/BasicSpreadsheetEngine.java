@@ -1579,7 +1579,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         cell,
                         validatorSelector,
                         loader,
-                        context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS)
+                        context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS)
                 );
             }
         }
@@ -1603,7 +1603,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext =
                 (final Object v,
-                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS)
+                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS)
                         .spreadsheetExpressionEvaluationContext(
                                 Optional.of(cell),
                                 loader

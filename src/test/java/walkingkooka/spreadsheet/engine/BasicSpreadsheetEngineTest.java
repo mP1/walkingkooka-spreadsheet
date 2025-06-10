@@ -4631,7 +4631,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithValueValidatorPass() {
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
-        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("fake");
+        final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -4647,13 +4647,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         formulaConverterSelector
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
-                        validatorConverterSelector
+                        SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+                        validationConverterSelector
                 ).set(
                         SpreadsheetMetadataPropertyName.VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ),
                 SpreadsheetStoreRepositories.basic(
@@ -4683,7 +4683,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                             SpreadsheetConverters.nullToNumber()
                                     );
                                 }
-                                if (validatorConverterSelector.name().equals(name)) {
+                                if (validationConverterSelector.name().equals(name)) {
                                     return Cast.to(
                                             Converters.fake()
                                     );
@@ -4767,7 +4767,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
-        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("fake");
+        final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -4786,13 +4786,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                         formulaConverterSelector
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
-                        validatorConverterSelector
+                        SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+                        validationConverterSelector
                 ).set(
                         SpreadsheetMetadataPropertyName.VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ),
                 SpreadsheetStoreRepositories.basic(
@@ -4822,7 +4822,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                             SpreadsheetConverters.nullToNumber()
                                     );
                                 }
-                                if (validatorConverterSelector.name().equals(name)) {
+                                if (validationConverterSelector.name().equals(name)) {
                                     return Converters.fake();
                                 }
                                 throw new IllegalArgumentException("Unknown converter " + name);
@@ -4895,7 +4895,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorUsesValidatorConverter() {
+    public void testSaveCellWithValueValidatorUsesValidationConverter() {
         final Object converterInput = this;
         final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = Cast.to(
                 ValidationErrorList.empty()
@@ -4908,7 +4908,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
-        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("TestValidatorConverter");
+        final ConverterSelector validationConverterSelector = ConverterSelector.parse("TestValidationConverter");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -4920,7 +4920,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 .concat(
                                         ConverterAlias.parse(formulaConverterSelector.text())
                                 ).concat(
-                                        ConverterAlias.parse(validatorConverterSelector.text())
+                                        ConverterAlias.parse(validationConverterSelector.text())
                                 )
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -4929,13 +4929,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                         formulaConverterSelector
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
-                        validatorConverterSelector
+                        SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+                        validationConverterSelector
                 ).set(
                         SpreadsheetMetadataPropertyName.VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                        SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ),
                 SpreadsheetStoreRepositories.basic(
@@ -4965,7 +4965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                             SpreadsheetConverters.nullToNumber()
                                     );
                                 }
-                                if(validatorConverterSelector.name().equals(name)) {
+                                if(validationConverterSelector.name().equals(name)) {
                                     return new FakeConverter<>() {
 
                                         @Override
@@ -5055,7 +5055,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorUsesValidatorFunction() {
+    public void testSaveCellWithValueValidatorUsesvalidationFunction() {
         final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = ValidationErrorList.<SpreadsheetExpressionReference>empty()
                 .concat(
                         ValidationError.with(
@@ -5065,8 +5065,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 );
 
 
-        final String functionName = "TestValidatorFunction";
-        final ExpressionFunctionSelector validatorFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
+        final String functionName = "TestvalidationFunction";
+        final ExpressionFunctionSelector validationFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -5077,15 +5077,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetExpressionFunctions.parseAliasSet(functionName)
                         )
                         .set(
-                                SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                                SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
                                 SpreadsheetExpressionFunctions.parseAliasSet(
-                                        validatorFunctionSelector.text()
+                                        validationFunctionSelector.text()
                                 )
                         ).set(
                                 SpreadsheetMetadataPropertyName.VALIDATORS,
                                 ValidatorAliasSet.parse(validatorSelector.valueText())
                         ).set(
-                                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                                 ValidatorAliasSet.parse(validatorSelector.valueText())
                         ),
                 SpreadsheetStoreRepositories.basic(

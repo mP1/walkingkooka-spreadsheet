@@ -742,53 +742,53 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitValidatorConverter() {
+    public void testVisitValidationConverter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitValidatorConverter(final ConverterSelector s) {
+            protected void visitValidationConverter(final ConverterSelector s) {
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 ConverterSelector.parse("hello-converter")
         );
     }
 
     @Test
-    public void testVisitValidatorFormHandler() {
+    public void testVisitValidationFormHandler() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitValidatorFormHandler(final FormHandlerSelector s) {
+            protected void visitValidationFormHandler(final FormHandlerSelector s) {
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
+                SpreadsheetMetadataPropertyName.VALIDATION_FORM_HANDLER,
                 FormHandlerSelector.parse("hello-form-handler")
         );
     }
 
     @Test
-    public void testVisitValidatorFunctions() {
+    public void testVisitvalidationFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitValidatorFunctions(final ExpressionFunctionAliasSet a) {
+            protected void visitvalidationFunctions(final ExpressionFunctionAliasSet a) {
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
                 SpreadsheetExpressionFunctions.parseAliasSet("requiredFormFields")
         );
     }
 
     @Test
-    public void testVisitValidatorValidators() {
+    public void testVisitvalidationValidators() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitValidatorValidators(final ValidatorAliasSet a) {
+            protected void visitvalidationValidators(final ValidatorAliasSet a) {
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                 ValidatorAliasSet.parse("first-validator, second-validator")
         );
     }
