@@ -1778,7 +1778,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSpreadsheetFormatterContext() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER)
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
                 .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
@@ -1809,7 +1809,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSpreadsheetFormatterProviderSamplesContext() {
-        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER)
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
                 .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
@@ -2418,7 +2418,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetCellQuery.parse("help()")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 ConverterSelector.parse("general")
         );
         properties.put(

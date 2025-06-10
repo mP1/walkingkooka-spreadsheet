@@ -219,7 +219,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormat.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMATTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormatting.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will declare functions available within

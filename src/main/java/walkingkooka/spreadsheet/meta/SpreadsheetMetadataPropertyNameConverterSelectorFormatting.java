@@ -24,21 +24,21 @@ import walkingkooka.convert.provider.ConverterSelector;
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterSelector} used during
  * expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameConverterSelectorFormat extends SpreadsheetMetadataPropertyNameConverterSelector {
+final class SpreadsheetMetadataPropertyNameConverterSelectorFormatting extends SpreadsheetMetadataPropertyNameConverterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameConverterSelectorFormat instance() {
-        return new SpreadsheetMetadataPropertyNameConverterSelectorFormat();
+    static SpreadsheetMetadataPropertyNameConverterSelectorFormatting instance() {
+        return new SpreadsheetMetadataPropertyNameConverterSelectorFormatting();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameConverterSelectorFormat() {
+    private SpreadsheetMetadataPropertyNameConverterSelectorFormatting() {
         super(
-                "formatConverter"
+                "formattingConverter"
         );
     }
 

@@ -4783,7 +4783,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         formulaConverterSelector
                 ).set(
-                        SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                        SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                         formulaConverterSelector
                 ).set(
                         SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
@@ -4926,7 +4926,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         formulaConverterSelector
                 ).set(
-                        SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                        SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                         formulaConverterSelector
                 ).set(
                         SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
