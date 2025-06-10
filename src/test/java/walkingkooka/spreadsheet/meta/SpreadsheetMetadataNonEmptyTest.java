@@ -2422,7 +2422,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("general")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.FORMATTER_FUNCTIONS,
+                SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
         properties.put(

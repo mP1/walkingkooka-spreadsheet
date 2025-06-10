@@ -186,15 +186,15 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFormatterFunctions(final ExpressionFunctionAliasSet functions) {
-        // nop
-    }
-
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
         // nop
     }
 
     protected void visitFormattingConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitFormattingFunctions(final ExpressionFunctionAliasSet functions) {
         // nop
     }
 

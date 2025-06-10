@@ -225,7 +225,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will declare functions available within
      * an expression while formatting.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMATTER_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatter.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMATTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterAliasSet}</code>

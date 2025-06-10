@@ -25,27 +25,27 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet} used during the execution of
  * expressions within a formatter.
  */
-final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatter extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
+final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatter instance() {
-        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatter();
+    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting instance() {
+        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatter() {
+    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting() {
         super(
-                "formatterFunctions"
+                "formattingFunctions"
         );
     }
 
     @Override
     void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFormatterFunctions(aliases);
+        visitor.visitFormattingFunctions(aliases);
     }
 }
