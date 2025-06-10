@@ -630,14 +630,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
     };
 
-    private final static ValidatorSelector VALIDATOR = ValidatorSelector.parse("TestValidator");
-
-    private final static Object VALIDATOR_FAIL_NUMBER = EXPRESSION_NUMBER_KIND.create(123);
-
-    private final static Object VALIDATOR_PASS_NUMBER = EXPRESSION_NUMBER_KIND.create(999);
-
-    private final static String VALIDATION_MESSAGE = "Hello Validation Message";
-
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
@@ -693,9 +685,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
-                ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATORS,
-                        ValidatorAliasSet.parse("" + VALIDATOR)
                 );
     }
 
@@ -4634,185 +4623,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 expected,
                 result,
                 () -> "saveCell " + a1Cell
-        );
-    }
-
-    @Test
-    public void testSaveCellWithExpressionValueValidatorFails() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
-                Optional.of(VALIDATOR_FAIL_NUMBER)
-        );
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
-                .setValidator(
-                        Optional.of(VALIDATOR)
-                ).setStyle(STYLE);
-
-        final SpreadsheetError error = SpreadsheetErrorKind.MISSING_PREFIX.setMessageAndValue(
-                VALIDATION_MESSAGE,
-                SpreadsheetSelection.A1
-        );
-
-        final SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
-                a1Formula.setError(
-                        Optional.of(error)
-                )
-        ).setFormattedValue(
-                Optional.of(
-                        STYLE.replace(
-                                        METADATA.spreadsheetFormatter(
-                                                SPREADSHEET_FORMATTER_PROVIDER,
-                                                PROVIDER_CONTEXT
-                                        ).format(
-                                                Optional.of(error),
-                                                SPREADSHEET_TEXT_FORMAT_CONTEXT
-                                        ).get()
-                                )
-                                .root()
-                )
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(a1FormattedCell)
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
-        );
-    }
-
-    @Test
-    public void testSaveCellWithMetadataValidatorPass() {
-        final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
-        final ConverterSelector validatorConverterSelector = ConverterSelector.parse("fake");
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-                SERVER_URL,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.CONVERTERS,
-                        ConverterAliasSet.EMPTY
-                                .concat(
-                                        ConverterAlias.parse(formulaConverterSelector.text())
-                                )
-                ).set(
-                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                        formulaConverterSelector
-                ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
-                        validatorConverterSelector
-                ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATORS,
-                        ValidatorAliasSet.parse(validatorSelector.valueText())
-                ).set(
-                        SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
-                        ValidatorAliasSet.parse(validatorSelector.valueText())
-                ),
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.treeMap(),
-                        SpreadsheetGroupStores.fake(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        SpreadsheetMetadataStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.fake(),
-                        SpreadsheetUserStores.fake()
-                ),
-                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                SpreadsheetProviders.basic(
-                        new FakeConverterProvider() {
-                            @Override
-                            public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                                       final List<?> values,
-                                                                                       final ProviderContext context) {
-                                if (formulaConverterSelector.name().equals(name)) {
-                                    return Cast.to(
-                                            SpreadsheetConverters.nullToNumber()
-                                    );
-                                }
-                                if (validatorConverterSelector.name().equals(name)) {
-                                    return Cast.to(
-                                            Converters.fake()
-                                    );
-                                }
-                                return CONVERTER_PROVIDER.converter(
-                                        name,
-                                        values,
-                                        context
-                                );
-                            }
-                        },
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_EXPORTER_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
-                        SPREADSHEET_IMPORTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        new FakeValidatorProvider() {
-                            @Override
-                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
-                                                                                                                            final ProviderContext context) {
-                                if (validatorSelector.equals(selector)) {
-                                    return Cast.to(
-                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
-                                                @Override
-                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
-                                                                                                                      final SpreadsheetValidatorContext context) {
-                                                    return this.noValidationErrors();
-                                                }
-                                            }
-                                    );
-                                }
-                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
-                            }
-                        }
-                ), // SpreadsheetProvider
-                PROVIDER_CONTEXT
-        );
-
-        final Object value = "Value123";
-        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
-                Optional.of(value)
-        );
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
-                .setStyle(STYLE);
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(a1Cell)
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        )
         );
     }
 
@@ -24125,62 +23935,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        new FakeValidatorProvider() {
-                            @Override
-                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector validatorSelector,
-                                                                                                                            final ProviderContext context) {
-                                if (VALIDATOR.equals(validatorSelector)) {
-                                    return Cast.to(
-                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
-                                                @Override
-                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
-                                                                                                                      final SpreadsheetValidatorContext context) {
-                                                    checkEquals(
-                                                            EXPRESSION_NUMBER_KIND.create(1 + 200),
-                                                            context.expressionEvaluationContext(value)
-                                                                    .evaluateExpression(
-                                                                            Expression.add(
-                                                                                    Expression.value(
-                                                                                            EXPRESSION_NUMBER_KIND.create(1)
-                                                                                    ),
-                                                                                    Expression.value(
-                                                                                            EXPRESSION_NUMBER_KIND.create(200)
-                                                                                    )
-                                                                            )
-                                                                    ),
-                                                            "SpreadsheetValidationContext.expressionEvaluationContext.evaluateExpression 1 + 200"
-                                                    );
-
-                                                    // https://github.com/mP1/walkingkooka-validation/pull/70 ValidatorContext.expressionEvaluationContext value parameter added
-                                                    // Validate that a validator function can "read" the VALUE being validated.
-                                                    checkEquals(
-                                                            value,
-                                                            context.expressionEvaluationContext(value)
-                                                                    .evaluateExpression(
-                                                                            Expression.reference(SpreadsheetSelection.labelName("VALUE"))
-                                                                    )
-                                                    );
-
-                                                    if (VALIDATOR_PASS_NUMBER.equals(value)) {
-                                                        return Lists.empty();
-                                                    }
-                                                    if (VALIDATOR_FAIL_NUMBER.equals(value)) {
-                                                        return Lists.of(
-                                                                context.validationError(
-                                                                        SpreadsheetErrorKind.VALUE.setMessage(VALIDATION_MESSAGE)
-                                                                                .toString()
-                                                                )
-                                                        );
-                                                    }
-
-                                                    throw new UnsupportedOperationException("Unexpected value being validated " + value);
-                                                }
-                                            }
-                                    );
-                                }
-                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
-                            }
-                        }
+                        VALIDATOR_PROVIDER
                 ), // SpreadsheetProvider
                 PROVIDER_CONTEXT
         );
