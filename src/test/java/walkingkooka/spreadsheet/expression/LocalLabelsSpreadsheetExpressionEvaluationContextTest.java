@@ -524,6 +524,11 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testResolveLabelWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // class............................................................................................................
 
     @Override

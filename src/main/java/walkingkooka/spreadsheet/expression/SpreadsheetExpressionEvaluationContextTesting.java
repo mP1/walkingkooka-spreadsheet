@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextTesting;
@@ -43,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
+        SpreadsheetLabelNameResolverTesting<C>,
         ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
 
     // parseExpression......................................................................................................
@@ -355,6 +357,13 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 expected,
                 context.nextEmptyRow(column)
         );
+    }
+
+    // SpreadsheetLabelNameResolverTesting..............................................................................
+
+    @Override
+    default C createSpreadsheetLabelNameResolver() {
+        return this.createContext();
     }
 
     // class............................................................................................................
