@@ -164,37 +164,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 });
     }
 
-    default void loadCellFailCheck(final SpreadsheetCellReference cell,
-                                   final SpreadsheetEngineEvaluation evaluation) {
-        this.loadCellFailCheck(cell, evaluation, this.createContext());
-    }
-
-    default void loadCellFailCheck(final SpreadsheetCellReference cell,
-                                   final SpreadsheetEngineEvaluation evaluation,
-                                   final SpreadsheetEngineContext context) {
-        this.loadCellFailCheck(
-                this.createSpreadsheetEngine(),
-                cell,
-                evaluation,
-                context
-        );
-    }
-
-    default void loadCellFailCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellReference cell,
-                                   final SpreadsheetEngineContext context) {
-        this.loadCellFailCheck(
-                engine,
-                cell,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                context
-        );
-    }
-
-    default void loadCellFailCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellReference cell,
-                                   final SpreadsheetEngineEvaluation evaluation,
-                                   final SpreadsheetEngineContext context) {
+    default void loadCellFailsCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetCellReference cell,
+                                    final SpreadsheetEngineEvaluation evaluation,
+                                    final SpreadsheetEngineContext context) {
         final SpreadsheetDelta loaded = engine.loadCells(
                 cell,
                 evaluation,
