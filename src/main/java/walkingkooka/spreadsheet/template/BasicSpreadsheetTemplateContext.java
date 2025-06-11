@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -82,6 +83,11 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     @Override
     public Optional<SpreadsheetCell> cell() {
         return this.spreadsheetExpressionEvaluationContext.cell();
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        return this.spreadsheetExpressionEvaluationContext.loadCell(cell);
     }
 
     @Override
