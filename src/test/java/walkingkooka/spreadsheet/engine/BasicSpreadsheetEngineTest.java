@@ -16453,8 +16453,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetValueType.ANY,
                 Expression.call(
                         Expression.namedFunction(
-                                ExpressionFunctionName.with(TEST_FILTER_CELLS_PREDICATE)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                SpreadsheetExpressionFunctions.name(TEST_FILTER_CELLS_PREDICATE)
                         ),
                         Expression.NO_CHILDREN
                 ),

@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -1140,7 +1141,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testIsPureWithPureFunction() {
-        final ExpressionFunctionName functionName = ExpressionFunctionName.with("Hello");
+        final ExpressionFunctionName functionName = SpreadsheetExpressionFunctions.name("Hello");
 
         this.isPureAndCheck(
                 SpreadsheetFormula.EMPTY.setText("Hello")
@@ -1166,7 +1167,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setExpression(
                                 Optional.of(
                                         Expression.namedFunction(
-                                                ExpressionFunctionName.with("Hello")
+                                                SpreadsheetExpressionFunctions.name("Hello")
                                         )
                                 )
                         ),
