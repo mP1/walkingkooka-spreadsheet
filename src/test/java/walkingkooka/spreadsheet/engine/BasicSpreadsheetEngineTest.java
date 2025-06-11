@@ -1125,7 +1125,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(this.cell(b2, "1/2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, b2, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
-        this.cellFormulaValueAndCheck(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
+        this.cellFormulaErrorOrValueAndCheck(
+                first,
+                LocalDate.of(
+                        DEFAULT_YEAR,
+                        2,
+                        1
+                )
+        );
 
         final int defaultYear = DEFAULT_YEAR + 100;
 
@@ -1137,7 +1144,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
 
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 second,
                 LocalDate.of(1900, 2, 1)
         );
@@ -1163,7 +1170,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context
         );
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 first,
                 LocalDate.of(DEFAULT_YEAR, 2, 1)
         );
@@ -1179,7 +1186,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
 
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 second,
                 LocalDate.of(1900, 2, 1)
         );
@@ -1213,7 +1220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context
         );
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 first,
                 value
         );
@@ -1231,7 +1238,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context
         );
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 second,
                 value2
         );
@@ -1292,7 +1299,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context
         );
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 first,
                 LocalDate.of(
                         DEFAULT_YEAR,
@@ -1314,9 +1321,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         assertNotSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 second,
-                LocalDate.of(defaultYear, 2, 1)
+                LocalDate.of(
+                        defaultYear,
+                        2,
+                        1
+                )
         );
         this.cellFormattedValueAndCheck(
                 second,
