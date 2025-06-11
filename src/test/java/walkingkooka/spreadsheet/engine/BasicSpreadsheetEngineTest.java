@@ -4809,7 +4809,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetError.validationErrors(validationError)
                         )
         ).setFormattedValue(
-                Optional.of(TextNode.EMPTY_TEXT)
+                Optional.of(
+                        TextNode.text(
+                            SpreadsheetError.formatterNotFound(value)
+                                    .text()
+                        )
+                )
         );
 
         this.saveCellAndCheck(
@@ -4955,7 +4960,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetError.validationErrors(converterOutput)
                         )
         ).setFormattedValue(
-                Optional.of(TextNode.EMPTY_TEXT)
+                Optional.of(
+                        TextNode.text(
+                                SpreadsheetError.formatterNotFound(value)
+                                        .text()
+                        )
+                )
         );
 
         this.saveCellAndCheck(
