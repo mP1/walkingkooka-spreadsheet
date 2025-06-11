@@ -119,6 +119,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -708,6 +709,28 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final ExpressionNumberKind expressionNumberKind() {
         return this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
     }
+
+    // FormHandlerContext...............................................................................................
+
+    /**
+     * Returns a {@link FormHandlerProvider} that honours {@link SpreadsheetMetadataPropertyName#FORM_HANDLERS}.
+     */
+    public final FormHandlerProvider formHandlerProvider(final FormHandlerProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
+
+        final FormHandlerAliasSet aliases = missing.getOrNull(SpreadsheetMetadataPropertyName.FORM_HANDLERS);
+
+        missing.reportIfMissing();
+
+        return FormHandlerProviders.aliases(
+                aliases,
+                provider
+        );
+    }
+
+    // GeneralConverter.................................................................................................
 
     /**
      * Returns a general {@link Converter} using the required properties.
