@@ -119,6 +119,10 @@ public interface SpreadsheetEngine {
      * kept if the {@link Expression} returns true.
      * <br>
      * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
+     * <br>
+     * Note that the {@link Expression} can only execute {@link walkingkooka.tree.expression.function.ExpressionFunction}
+     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#FIND_FUNCTIONS}.
+     * <br>
      */
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
                                      final String valueType,
