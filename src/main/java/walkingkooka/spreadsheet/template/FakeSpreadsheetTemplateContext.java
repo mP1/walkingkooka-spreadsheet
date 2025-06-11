@@ -17,26 +17,13 @@
 
 package walkingkooka.spreadsheet.template;
 
-import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.template.TemplateValueName;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
-import walkingkooka.validation.ValidationError;
-import walkingkooka.validation.form.FormField;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEvaluationContext
         implements SpreadsheetTemplateContext {
@@ -46,33 +33,7 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
     }
 
     @Override
-    public Optional<SpreadsheetCell> cell() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public FakeSpreadsheetTemplateContext setCell(final Optional<SpreadsheetCell> cell) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        Objects.requireNonNull(range, "range");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-        Objects.requireNonNull(labelName, "labelName");
-
         throw new UnsupportedOperationException();
     }
 
@@ -83,17 +44,6 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
 
     @Override
     public char valueSeparator() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<ValidationError<SpreadsheetExpressionReference>> validateFormFields(final List<FormField<SpreadsheetExpressionReference>> fields) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
-                                                               final TextCursor cursor) {
         throw new UnsupportedOperationException();
     }
 
