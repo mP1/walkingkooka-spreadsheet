@@ -21923,12 +21923,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetMetadata metadata = METADATA.setOrRemove(
                 SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
                 frozenColumns > 0 ?
-                        SpreadsheetReferenceKind.RELATIVE.firstColumn().columnRange(SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)) :
+                        SpreadsheetReferenceKind.RELATIVE.firstColumn()
+                                .columnRange(
+                                        SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)
+                                ) :
                         null
         ).setOrRemove(
                 SpreadsheetMetadataPropertyName.FROZEN_ROWS,
                 frozenRows > 0 ?
-                        SpreadsheetReferenceKind.RELATIVE.firstRow().rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows - 1)) :
+                        SpreadsheetReferenceKind.RELATIVE.firstRow()
+                                .rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows - 1)
+                                ) :
                         null
         );
 
@@ -22054,8 +22059,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 viewport,
                 context,
-                SpreadsheetSelection.A1.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
+                SpreadsheetSelection.A1.viewportRectangle(
+                        VIEWPORT_WIDTH,
+                        VIEWPORT_HEIGHT
+                ).viewport()
         );
     }
 
@@ -22468,7 +22475,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         ).setValue(
                                                 Optional.of("Initial value")
                                         ).setValidator(
-                                                Optional.of(ValidatorSelector.parse("Validator123"))
+                                                Optional.of(
+                                                        ValidatorSelector.parse("Validator123")
+                                                )
                                         )
                         )
                 );
@@ -23162,7 +23171,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         ).setValue(
                                                 Optional.of("Initial value")
                                         ).setValidator(
-                                                Optional.of(ValidatorSelector.parse("Validator123"))
+                                                Optional.of(
+                                                        ValidatorSelector.parse("Validator123")
+                                                )
                                         )
                         )
                 );
@@ -24327,7 +24338,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                    final E cell,
                                                                                                    final SpreadsheetCellReference... out) {
         this.checkEquals(
-                Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
+                Optional.ofNullable(
+                        out.length == 0 ?
+                                null :
+                                Sets.of(out)
+                ),
                 store.load(cell),
                 () -> "references to " + cell
         );
@@ -24374,12 +24389,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore store = context.storeRepository()
                 .cells();
 
-        store.addSaveWatcher((ignored) -> {
-            throw new UnsupportedOperationException();
-        });
-        store.addDeleteWatcher((ignored) -> {
-            throw new UnsupportedOperationException();
-        });
+        store.addSaveWatcher(
+                (ignored) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
+        store.addDeleteWatcher(
+                (ignored) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
     }
 
     private SpreadsheetCell loadCellAndFormulaAndValueCheck(final SpreadsheetEngine engine,
