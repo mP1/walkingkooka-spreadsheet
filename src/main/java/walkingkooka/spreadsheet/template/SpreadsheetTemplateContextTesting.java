@@ -30,15 +30,6 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
         SpreadsheetExpressionEvaluationContextTesting<C> {
 
     @Test
-    default void testCellFails() {
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createContext()
-                        .cell()
-        );
-    }
-
-    @Test
     default void testLoadCellRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
