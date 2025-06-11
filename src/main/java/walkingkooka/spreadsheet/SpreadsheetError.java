@@ -86,6 +86,17 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
+     * Creates a {@link SpreadsheetError} reporting that no {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter}
+     * matched a given value during a format.
+     */
+    public static SpreadsheetError formatterNotFound(final Object value) {
+        return SpreadsheetErrorKind.ERROR.setMessageAndValue(
+                "Formatter not found",
+                value
+        );
+    }
+
+    /**
      * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
      */
     public static SpreadsheetError functionNotFound(final ExpressionFunctionName function) {
