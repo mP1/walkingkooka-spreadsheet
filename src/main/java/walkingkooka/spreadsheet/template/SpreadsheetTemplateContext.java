@@ -27,9 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.cursor.TextCursor;
@@ -87,13 +85,6 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     @Override
     default Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        Objects.requireNonNull(labelName, "labelName");
 
         throw new UnsupportedOperationException();
     }
