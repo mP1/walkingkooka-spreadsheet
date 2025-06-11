@@ -26,6 +26,10 @@ import walkingkooka.validation.form.FormHandlerContext;
 
 import java.util.Comparator;
 
+/**
+ * A type-safe {@link FormHandlerContext} using {@link SpreadsheetExpressionReference} as the {@link walkingkooka.validation.ValidationReference}.
+ * No new methods are added.
+ */
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     /**
