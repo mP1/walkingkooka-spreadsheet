@@ -687,9 +687,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testLoadMultipleCellRangesCellWhenEmpty() {
-        this.loadCellFailCheck(
+        this.loadCellFailsCheck(
+                this.createSpreadsheetEngine(),
                 SpreadsheetSelection.A1,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.createContext()
         );
     }
 
@@ -7203,9 +7205,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // cell B2 in hidden column B should not load.
-        this.loadCellFailCheck(
+        this.loadCellFailsCheck(
                 engine,
                 cell.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context
         );
 
@@ -8360,9 +8363,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // cell B2 in hidden row B should not load.
-        this.loadCellFailCheck(
+        this.loadCellFailsCheck(
                 engine,
                 cell.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context
         );
 
