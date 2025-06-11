@@ -30,6 +30,13 @@ import walkingkooka.validation.form.FormHandlerContext;
 public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper {
 
     /**
+     * {@see FakeSpreadsheetFormHandlerContext}
+     */
+    public static SpreadsheetFormHandlerContext fake() {
+        return new FakeSpreadsheetFormHandlerContext();
+    }
+
+    /**
      * {@see SpreadsheetEngineFormHandlerContext}
      */
     static SpreadsheetFormHandlerContext spreadsheetEngine(final Form<SpreadsheetExpressionReference> form,
