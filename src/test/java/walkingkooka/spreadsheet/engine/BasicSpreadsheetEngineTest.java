@@ -171,7 +171,6 @@ import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -447,8 +446,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * 5;
 
-    private final static String TEST_FILTER_CELLS_PREDICATE = "BasicSpreadsheetEngineTestFilterCellsPredicate";
-
     private final static String TEST_NUMBER_PARAMETER = "BasicSpreadsheetEngineTestNumberParameter";
 
     private final static String TEST_STRING_PARAMETER = "BasicSpreadsheetEngineTestStringParameter";
@@ -464,37 +461,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                 final List<?> values,
                                                                                                 final ProviderContext context) {
             switch (name.value()) {
-                case TEST_FILTER_CELLS_PREDICATE:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            assertEquals(
-                                    Lists.empty(),
-                                    parameters,
-                                    "parameters"
-                            );
-
-                            return Boolean.valueOf(
-                                    context.cellOrFail()
-                                            .formula()
-                                            .text()
-                            );
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                            .variable(Object.class)
-                            );
-                        }
-
-                        @Override
-                        public boolean isPure(final ExpressionPurityContext context) {
-                            return false;
-                        }
-                    };
                 case TEST_NUMBER_PARAMETER:
                     return new FakeExpressionFunction<>() {
                         @Override
@@ -599,7 +565,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
             return SpreadsheetExpressionFunctions.infoSet(
                     Sets.of(
-                            info(TEST_FILTER_CELLS_PREDICATE),
                             info(TEST_NUMBER_PARAMETER),
                             info(TEST_STRING_PARAMETER),
                             info(TEST_SUM),
@@ -650,9 +615,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
                 .set(
                         SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                        SpreadsheetExpressionFunctions.parseAliasSet(
-                                TEST_FILTER_CELLS_PREDICATE
-                        )
+                        SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                         SpreadsheetExpressionFunctions.parseAliasSet(
@@ -16444,6 +16407,69 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetFormula.EMPTY.setText("false")
                 );
 
+        final String functionName = "TestQuery";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FUNCTIONS,
+                        SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+                ).set(
+                        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+                        SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        ExpressionFunctionProviders.basic(
+                                Url.parseAbsolute("https://example.com/functions"),
+                                SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
+                                Sets.of(
+                                        new FakeExpressionFunction<>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return Boolean.parseBoolean(
+                                                        context.cell()
+                                                                .map(c -> c.formula().text())
+                                                                .orElse(null)
+                                                );
+                                            }
+
+                                            @Override
+                                            public Class<Object> returnType() {
+                                                return Object.class;
+                                            }
+
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                                                return NO_PARAMETERS;
+                                            }
+
+                                            @Override
+                                            public Optional<ExpressionFunctionName> name() {
+                                                return Optional.of(
+                                                        SpreadsheetExpressionFunctions.name(functionName)
+                                                );
+                                            }
+                                        }
+                                )
+                        ),
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
         this.filterCellsAndCheck(
                 this.createSpreadsheetEngine(),
                 Sets.of(
@@ -16453,11 +16479,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetValueType.ANY,
                 Expression.call(
                         Expression.namedFunction(
-                                SpreadsheetExpressionFunctions.name(TEST_FILTER_CELLS_PREDICATE)
+                                SpreadsheetExpressionFunctions.name(functionName)
                         ),
                         Expression.NO_CHILDREN
                 ),
-                this.createContext(),
+                context,
                 a1
         );
     }
