@@ -184,6 +184,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
 
     /**
+     * Constant holding a no cell response
+     */
+    Optional<SpreadsheetCell> NO_CELL = Optional.empty();
+
+    /**
      * Returns the current cell that owns the expression or formula being executed.
      */
     Optional<SpreadsheetCell> cell();
