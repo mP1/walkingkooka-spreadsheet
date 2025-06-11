@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.template;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.template.TemplateValueName;
@@ -33,6 +34,7 @@ import walkingkooka.validation.form.FormField;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEvaluationContext
         implements SpreadsheetTemplateContext {
@@ -54,6 +56,13 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+        Objects.requireNonNull(range, "range");
 
         throw new UnsupportedOperationException();
     }

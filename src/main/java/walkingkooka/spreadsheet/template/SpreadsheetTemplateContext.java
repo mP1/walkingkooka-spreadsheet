@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -76,13 +75,6 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     @Override
     default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                 final TextCursor cursor) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        Objects.requireNonNull(range, "range");
-
         throw new UnsupportedOperationException();
     }
 

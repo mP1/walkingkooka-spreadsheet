@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.template;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
@@ -28,17 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplateContext> extends SpreadsheetParserContextTesting<C>,
         SpreadsheetExpressionEvaluationContextTesting<C> {
-
-    @Test
-    default void testLoadCellRangeFails() {
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createContext()
-                        .loadCellRange(
-                                SpreadsheetSelection.A1.toCellRange()
-                        )
-        );
-    }
 
     @Override
     default void testSetCellWithNullCellFails() {
