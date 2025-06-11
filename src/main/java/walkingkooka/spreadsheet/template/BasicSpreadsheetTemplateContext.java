@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -76,6 +77,11 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
                 this::reference
         );
         this.templateValueNameToExpression = templateValueNameToExpression;
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        return this.spreadsheetExpressionEvaluationContext.cell();
     }
 
     @Override

@@ -75,11 +75,6 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
-    default Optional<SpreadsheetCell> cell() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                 final TextCursor cursor) {
         throw new UnsupportedOperationException();

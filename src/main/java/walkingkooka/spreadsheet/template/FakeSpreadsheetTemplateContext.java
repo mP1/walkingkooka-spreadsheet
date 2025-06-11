@@ -40,6 +40,11 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
     }
 
     @Override
+    public Optional<SpreadsheetCell> cell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public FakeSpreadsheetTemplateContext setCell(final Optional<SpreadsheetCell> cell) {
         throw new UnsupportedOperationException();
     }
