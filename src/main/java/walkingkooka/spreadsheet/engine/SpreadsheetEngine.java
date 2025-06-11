@@ -129,6 +129,9 @@ public interface SpreadsheetEngine {
      * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
      * the given {@link Expression}.
      * <br>
+     * Note that the {@link Expression} can only execute {@link walkingkooka.tree.expression.function.ExpressionFunction}
+     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#FIND_FUNCTIONS}.
+     * <br>
      * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
      */
     SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
