@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
@@ -100,6 +101,11 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetExpressionEvaluationContext.loadLabel(labelName);
+    }
+
+    @Override
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.spreadsheetExpressionEvaluationContext.resolveLabel(labelName);
     }
 
     @Override

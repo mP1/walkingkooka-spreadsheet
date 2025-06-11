@@ -75,7 +75,11 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
             return Optional.empty();
         }
 
-
+        @Override
+        public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+            Objects.requireNonNull(labelName, "labelName");
+            throw new UnsupportedOperationException();
+        }
     };
 
     @Override
@@ -274,6 +278,35 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 ),
                 label,
                 mapping
+        );
+    }
+
+    // resolveLabel.....................................................................................................
+
+    @Test
+    public void testResolveLabel() {
+        final SpreadsheetSelection resolved = SpreadsheetSelection.A1;
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.resolveLabelAndCheck(
+                BasicSpreadsheetTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        new FakeSpreadsheetExpressionEvaluationContext() {
+
+                            @Override
+                            public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+                                return this;
+                            }
+
+                            @Override
+                            public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                                return Optional.of(resolved);
+                            }
+                        },
+                        NAME_TO_EXPRESSION
+                ),
+                label,
+                resolved
         );
     }
 
