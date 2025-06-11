@@ -101,6 +101,31 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
+    // cell.............................................................................................................
+
+    default void cellAndCheck(final C context) {
+        this.cellAndCheck(
+                context,
+                SpreadsheetExpressionEvaluationContext.NO_CELL
+        );
+    }
+
+    default void cellAndCheck(final C context,
+                              final SpreadsheetCell expected) {
+        this.cellAndCheck(
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void cellAndCheck(final C context,
+                              final Optional<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                context.cell()
+        );
+    }
+
     // loadCell.........................................................................................................
 
     @Test
