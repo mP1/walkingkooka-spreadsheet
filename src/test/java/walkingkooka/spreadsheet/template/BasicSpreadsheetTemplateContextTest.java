@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.template;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -25,6 +26,7 @@ import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationCo
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
@@ -34,6 +36,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import java.math.MathContext;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,12 +60,13 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
             Objects.requireNonNull(c, "cell");
             return NO_CELL;
         }
-    };
 
-    @Override
-    public void testLoadCellRangeWithNullRangeFails() {
-        throw new UnsupportedOperationException();
-    }
+        @Override
+        public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference r) {
+            Objects.requireNonNull(r, "cellRange");
+            return Sets.empty();
+        }
+    };
 
     @Override
     public void testLoadLabelWithNullLabelFails() {
@@ -194,6 +198,48 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 ),
                 cell.reference(),
                 Optional.of(cell)
+        );
+    }
+
+    // loadCellRange....................................................................................................
+
+    @Test
+    public void testLoadCellRange() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("Hello123")
+        );
+
+        this.loadCellRangeAndCheck(
+                BasicSpreadsheetTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        new FakeSpreadsheetExpressionEvaluationContext() {
+
+                            @Override
+                            public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+                                return this;
+                            }
+
+                            @Override
+                            public Optional<SpreadsheetCell> cell() {
+                                return Optional.of(cell);
+                            }
+
+                            @Override
+                            public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference c) {
+                                return Sets.of(
+                                        cell.reference()
+                                                .toCellRange()
+                                                .equalsIgnoreReferenceKind(c) ?
+                                                cell :
+                                                null
+                                );
+                            }
+                        },
+                        NAME_TO_EXPRESSION
+                ),
+                cell.reference()
+                        .toCellRange(),
+                cell
         );
     }
 
