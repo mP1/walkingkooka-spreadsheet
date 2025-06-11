@@ -343,31 +343,44 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 .formula();
         final Optional<Object> value = formula.errorOrValue();
 
-        return this.applyConditionalRules(
-                cell.setFormattedValue(
-                        Optional.of(
-                                this.formatValue(
-                                                cell,
-                                                value,
-                                                formatter.orElse(
-                                                        this.spreadsheetMetadata()
-                                                                .spreadsheetFormatter(
-                                                                        this.spreadsheetProvider, // SpreadsheetFormatterProvider,
-                                                                        this // ProviderContext
-                                                                )
-                                                )
-                                        )
-                                        .map(
-                                                f -> cell.style()
-                                                        .replace(f)
-                                        )
-                                        .orElse(
-                                                TextNode.text(
-                                                        SpreadsheetError.formatterNotFound(value)
-                                                )
+        SpreadsheetCell formattedCell = cell;
+        Optional<TextNode> formatted = this.formatValue(
+                        cell,
+                        value,
+                        formatter.orElse(
+                                this.spreadsheetMetadata()
+                                        .spreadsheetFormatter(
+                                                this.spreadsheetProvider, // SpreadsheetFormatterProvider,
+                                                this // ProviderContext
                                         )
                         )
                 )
+                .map(
+                        f -> cell.style()
+                                .replace(f)
+                );
+
+        SpreadsheetError error = null;
+
+        // if format was unsuccessful probably "formatter not found" and there is no error replace error
+        if (false == formatted.isPresent()) {
+            error = SpreadsheetError.formatterNotFound(value);
+            formatted = Optional.of(
+                    TextNode.text(error.text())
+            );
+        }
+
+        // if no ERROR save new "formatted not found" ERROR if no error was present.
+        if (null != error && false == formula.error().isPresent()) {
+            formattedCell = formattedCell.setFormula(
+                    formula.setError(
+                            Optional.of(error)
+                    )
+            );
+        }
+
+        return this.applyConditionalRules(
+                formattedCell.setFormattedValue(formatted)
         );
     }
 
