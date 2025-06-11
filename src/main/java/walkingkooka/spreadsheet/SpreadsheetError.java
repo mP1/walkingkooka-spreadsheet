@@ -67,25 +67,6 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
-     * Creates a {@link SpreadsheetError} reporting that a cell was deleted.
-     */
-    public static SpreadsheetError selectionDeleted() {
-        return SpreadsheetErrorKind.REF.toError();
-    }
-
-    /**
-     * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
-     */
-    public static SpreadsheetError selectionNotFound(final SpreadsheetExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        return SpreadsheetErrorKind.NAME.setMessageAndValue(
-                reference.notFoundText(),
-                reference
-        );
-    }
-
-    /**
      * Creates a {@link SpreadsheetError} reporting that no {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter}
      * matched a given value during a format.
      */
@@ -133,6 +114,25 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
                 text,
+                reference
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetError} reporting that a cell was deleted.
+     */
+    public static SpreadsheetError selectionDeleted() {
+        return SpreadsheetErrorKind.REF.toError();
+    }
+
+    /**
+     * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
+     */
+    public static SpreadsheetError selectionNotFound(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return SpreadsheetErrorKind.NAME.setMessageAndValue(
+                reference.notFoundText(),
                 reference
         );
     }
