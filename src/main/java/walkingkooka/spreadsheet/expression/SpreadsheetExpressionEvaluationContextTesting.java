@@ -207,6 +207,25 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     }
 
     default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labelName) {
+        this.loadLabelAndCheck(
+                context,
+                labelName,
+                Optional.empty()
+        );
+    }
+
+    default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labelName,
+                                   final SpreadsheetLabelMapping expected) {
+        this.loadLabelAndCheck(
+                context,
+                labelName,
+                Optional.of(expected)
+        );
+    }
+
+    default void loadLabelAndCheck(final C context,
                                    final SpreadsheetLabelName labelName,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
