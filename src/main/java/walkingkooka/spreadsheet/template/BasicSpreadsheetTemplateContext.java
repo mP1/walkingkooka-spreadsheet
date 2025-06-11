@@ -99,7 +99,7 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
 
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-        return SpreadsheetTemplateContext.super.loadLabel(labelName);
+        return this.spreadsheetExpressionEvaluationContext.loadLabel(labelName);
     }
 
     @Override

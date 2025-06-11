@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
@@ -66,12 +68,13 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
             Objects.requireNonNull(r, "cellRange");
             return Sets.empty();
         }
-    };
 
-    @Override
-    public void testLoadLabelWithNullLabelFails() {
-        throw new UnsupportedOperationException();
-    }
+        @Override
+        public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+            Objects.requireNonNull(labelName, "labelName");
+            return Optional.empty();
+        }
+    };
 
     @Override
     public void testExpressionFunctionWithNullFunctionNameFails() {
@@ -240,6 +243,35 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 cell.reference()
                         .toCellRange(),
                 cell
+        );
+    }
+
+    // cell.............................................................................................................
+
+    @Test
+    public void testLoadLabel() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(SpreadsheetSelection.A1);
+
+        this.loadLabelAndCheck(
+                BasicSpreadsheetTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        new FakeSpreadsheetExpressionEvaluationContext() {
+
+                            @Override
+                            public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+                                return this;
+                            }
+
+                            @Override
+                            public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+                                return Optional.of(mapping);
+                            }
+                        },
+                        NAME_TO_EXPRESSION
+                ),
+                label,
+                mapping
         );
     }
 
