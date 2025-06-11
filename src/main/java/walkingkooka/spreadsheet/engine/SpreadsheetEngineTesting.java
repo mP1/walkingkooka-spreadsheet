@@ -299,13 +299,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                               final Object value,
                                               final String formattedValueText,
                                               final String errorContains) {
-        final SpreadsheetCell spreadsheetCell = this.loadCellAndValueCheck(
+        final SpreadsheetCell spreadsheetCell1 = this.loadCellOrFail(
                 engine,
                 cell,
                 evaluation,
-                context,
+                context
+        );
+        this.cellFormulaErrorOrValueAndCheck(
+                spreadsheetCell1,
                 value
         );
+        final SpreadsheetCell spreadsheetCell = spreadsheetCell1;
 
         this.cellFormattedValueAndCheck(spreadsheetCell, formattedValueText);
 
@@ -330,24 +334,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             );
         }
 
-        return spreadsheetCell;
-    }
-
-    default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
-                                                  final SpreadsheetCellReference cell,
-                                                  final SpreadsheetEngineEvaluation evaluation,
-                                                  final SpreadsheetEngineContext context,
-                                                  final Object value) {
-        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
-                engine,
-                cell,
-                evaluation,
-                context
-        );
-        this.cellFormulaErrorOrValueAndCheck(
-                spreadsheetCell,
-                value
-        );
         return spreadsheetCell;
     }
 
