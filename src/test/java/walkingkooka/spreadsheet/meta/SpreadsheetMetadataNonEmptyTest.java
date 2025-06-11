@@ -44,7 +44,6 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -98,13 +97,7 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.WordWrap;
-import walkingkooka.validation.form.provider.FakeFormHandlerProvider;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
-import walkingkooka.validation.form.provider.FormHandlerInfo;
-import walkingkooka.validation.form.provider.FormHandlerInfoSet;
-import walkingkooka.validation.form.provider.FormHandlerName;
-import walkingkooka.validation.form.provider.FormHandlerProvider;
-import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -787,66 +780,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ),
                 textStylePropertyName,
                 wordWrap
-        );
-    }
-
-    // FormHandlerProvider..............................................................................................
-
-    @Test
-    public void testFormHandlerProviderMissingFormHandlersPropertyFails() {
-        final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject()
-                        .remove(SpreadsheetMetadataPropertyName.FORM_HANDLERS)
-                        .formHandlerProvider(FormHandlerProviders.fake())
-        );
-
-        this.checkEquals(
-                "Metadata missing: formHandlers",
-                thrown.getMessage()
-        );
-    }
-
-    @Test
-    public void testFormHandlerProvider() {
-        final FormHandlerInfo formHandlerInfo1 = FormHandlerInfo.with(
-                Url.parseAbsolute("https://example.com/FormHandler1"),
-                FormHandlerName.with("FormHandler1")
-        );
-
-        final FormHandlerProvider provider = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(
-                        formHandlerInfo1.name()
-                                .text()
-                )
-        ).formHandlerProvider(
-                new FakeFormHandlerProvider() {
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                                Sets.of(
-                                        formHandlerInfo1,
-                                        FormHandlerInfo.with(
-                                                Url.parseAbsolute("https://example.com/FormHandler2"),
-                                                FormHandlerName.with("FormHandler2")
-                                        ),
-                                        FormHandlerInfo.with(
-                                                Url.parseAbsolute("https://example.com/FormHandler3"),
-                                                FormHandlerName.with("FormHandler3")
-                                        )
-                                )
-                        );
-                    }
-                }
-        );
-
-        this.checkEquals(
-                Sets.of(
-                        formHandlerInfo1
-                ),
-                provider.formHandlerInfos()
         );
     }
 
