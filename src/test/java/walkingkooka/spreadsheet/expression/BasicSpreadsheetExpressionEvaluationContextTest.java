@@ -289,7 +289,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         }
                 ),
                 cell,
-                Optional.of(spreadsheetCell)
+                spreadsheetCell
         );
     }
 
