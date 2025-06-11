@@ -141,6 +141,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDefaultFormHandler(final FormHandlerSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitDefaultYear(final int defaultYear) {
         throw new UnsupportedOperationException();
     }
@@ -323,11 +328,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitValidationConverter(final ConverterSelector selector) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitValidationFormHandler(final FormHandlerSelector selector) {
         throw new UnsupportedOperationException();
     }
 

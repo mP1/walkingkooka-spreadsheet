@@ -23,27 +23,27 @@ import walkingkooka.validation.form.provider.FormHandlerSelector;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds the default {@link FormHandlerSelector}.
  */
-final class SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation extends SpreadsheetMetadataPropertyNameFormHandlerSelector {
+final class SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault extends SpreadsheetMetadataPropertyNameFormHandlerSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation instance() {
-        return new SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation();
+    static SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault instance() {
+        return new SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation() {
+    private SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault() {
         super(
-                "validationFormHandler"
+                "defaultFormHandler"
         );
     }
 
     @Override
     void accept(final FormHandlerSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitValidationFormHandler(value);
+        visitor.visitDefaultFormHandler(value);
     }
 }

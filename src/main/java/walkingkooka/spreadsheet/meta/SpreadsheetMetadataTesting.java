@@ -235,6 +235,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                     DECIMAL_NUMBER_SYMBOLS
             ).set(
+                    SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                    FormHandlerSelector.parse("non-null")
+            ).set(
                     SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
                     2000
             ).set(
@@ -327,9 +330,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                     ConverterSelector.parse("collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)")
-            ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATION_FORM_HANDLER,
-                    FormHandlerSelector.parse("non-null")
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
