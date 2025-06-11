@@ -251,12 +251,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    default SpreadsheetCell loadCellAndFormulaAndValueCheck(final SpreadsheetEngine engine,
-                                                            final SpreadsheetCellReference cell,
-                                                            final SpreadsheetEngineEvaluation evaluation,
-                                                            final SpreadsheetEngineContext context,
-                                                            final String formulaText,
-                                                            final Object value) {
+    default SpreadsheetCell loadCellAndFormulaErrorOrValueCheck(final SpreadsheetEngine engine,
+                                                                final SpreadsheetCellReference cell,
+                                                                final SpreadsheetEngineEvaluation evaluation,
+                                                                final SpreadsheetEngineContext context,
+                                                                final String formulaText,
+                                                                final Object value) {
         final SpreadsheetCell spreadsheetCell = this.loadCellAndFormulaTextCheck(
                 engine,
                 cell,
