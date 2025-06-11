@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationCo
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
@@ -63,6 +65,13 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+        Objects.requireNonNull(labelName, "labelName");
 
         throw new UnsupportedOperationException();
     }

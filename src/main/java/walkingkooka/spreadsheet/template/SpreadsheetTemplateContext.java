@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -94,11 +93,6 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
 
     @Override
     default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 
