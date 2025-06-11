@@ -97,7 +97,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
-     * Creates a {@link SpreadsheetError} reporting that a cell or label was not found.
+     * Creates a {@link SpreadsheetError} reporting that a {@link ExpressionFunctionName function} was not found.
      */
     public static SpreadsheetError functionNotFound(final ExpressionFunctionName function) {
         Objects.requireNonNull(function, "function");
