@@ -667,17 +667,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // FormHandlerProvider..............................................................................................
-
-    @Test
-    public final void testFormHandlerProviderWithNullFormHandlerProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .formHandlerProvider(null)
-        );
-    }
-
     // HasMathContext...................................................................................................
 
     @Test
