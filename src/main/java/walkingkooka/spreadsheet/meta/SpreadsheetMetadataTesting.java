@@ -236,7 +236,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     DECIMAL_NUMBER_SYMBOLS
             ).set(
                     SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                    FormHandlerSelector.parse("non-null")
+                    FormHandlerSelector.parse("basic")
             ).set(
                     SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
                     2000
