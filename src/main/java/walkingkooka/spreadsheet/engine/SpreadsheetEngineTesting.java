@@ -1832,6 +1832,45 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // deleteForm.......................................................................................................
+
+    @Test
+    default void testDeleteFormWithNullFormFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteForm(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testDeleteFormWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteForm(
+                                FormName.with("HelloForm123"),
+                                null
+                        )
+        );
+    }
+
+    default void deleteFormAndCheck(final SpreadsheetEngine engine,
+                                    final FormName form,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.deleteForm(
+                        form,
+                        context
+                )
+        );
+    }
+
     // loadForms........................................................................................................
 
     @Test

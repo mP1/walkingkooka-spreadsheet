@@ -251,6 +251,13 @@ public interface SpreadsheetEngine {
                               final SpreadsheetEngineContext context);
 
     /**
+     * Attempts to delete a form with the given {@link FormName}.
+     * The spreadsheet cells are not updated or refreshed.
+     */
+    SpreadsheetDelta deleteForm(final FormName name,
+                                final SpreadsheetEngineContext context);
+
+    /**
      * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not
      * have affected and updated cells.
      */
