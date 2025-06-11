@@ -77,6 +77,7 @@ import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
@@ -373,18 +374,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetSelection.parseCell("Z99");
 
     private final static double COLUMN_WIDTH = 50;
-
-    /**
-     * Helper that converts a CSV of cell references into a {@link Set} of {@link SpreadsheetCellReference}.
-     */
-    private static Set<SpreadsheetCellReference> cells(final String cells) {
-        return Arrays.stream(
-                        cells.split(",")
-                ).map(SpreadsheetSelection::parseCell)
-                .collect(Collectors.toCollection(
-                        () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR))
-                );
-    }
 
     /**
      * Helper that converts a references string into a map.
@@ -1826,13 +1815,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             this.checkNotEquals(
                     Sets.empty(),
                     delta.cells(),
-                    () -> "cells should have cell, " + deltaProperties
+                    () -> "SpreadsheetCellReferenceSet.parse should have cell, " + deltaProperties
             );
         } else {
             this.checkEquals(
                     Sets.empty(),
                     delta.cells(),
-                    () -> "cells should be empty, " + deltaProperties
+                    () -> "SpreadsheetCellReferenceSet.parse should be empty, " + deltaProperties
             );
         }
 
@@ -2125,7 +2114,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("B3,C2")
+                                SpreadsheetCellReferenceSet.parse("B3,C2")
                         ).setColumnWidths(
                                 columnWidths("B,C")
                         ).setRowHeights(
@@ -3793,7 +3782,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         )
                 ).setDeletedCells(
-                        cells("B1,C1,A2,C2,A3,B3")
+                        SpreadsheetCellReferenceSet.parse("B1,C1,A2,C2,A3,B3")
                 ).setReferences(
                         references("A1=B2,C3")
                 ).setColumnWidths(
@@ -3921,7 +3910,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     )
                             )
                     ).setDeletedCells(
-                            cells("B1,C1,A2,C2,A3,B3")
+                            SpreadsheetCellReferenceSet.parse("B1,C1,A2,C2,A3,B3")
                     ).setReferences(
                             references("A1=B2,C3")
                     ).setColumnWidths(
@@ -3992,7 +3981,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     )
                             )
                     ).setDeletedCells(
-                            cells("B1,C1,A2,C2,A3,B3")
+                            SpreadsheetCellReferenceSet.parse("B1,C1,A2,C2,A3,B3")
                     ).setReferences(
                             references("A1=B2;B2=C3")
                     ).setColumnWidths(
@@ -4188,7 +4177,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 b2Mapping
                         )
                 ).setDeletedCells(
-                        cells("B1,C1,A2,C2,A3,B3")
+                        SpreadsheetCellReferenceSet.parse("B1,C1,A2,C2,A3,B3")
                 ).setReferences(
                         references("A1=A1LABEL;B2=B2LABEL")
                 ).setColumnWidths(
@@ -11602,7 +11591,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        // A1 not included in cells because the A1.value did not change
+        // A1 not included in SpreadsheetCellReferenceSet.parse because the A1.value did not change
         final int count = 1;
         this.insertColumnsAndCheck(
                 engine,
@@ -13651,7 +13640,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setDeletedCells(
-                        cells("A1,B1,A2,B2")
+                        SpreadsheetCellReferenceSet.parse("A1,B1,A2,B2")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -13707,7 +13696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("B3,C2")
+                                SpreadsheetCellReferenceSet.parse("B3,C2")
                         ).setColumnWidths(
                                 columnWidths("B,C")
                         ).setRowHeights(
@@ -13775,7 +13764,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("A2,B1,B2,D5,E4,E5")
+                                SpreadsheetCellReferenceSet.parse("A2,B1,B2,D5,E4,E5")
                         ).setColumnWidths(
                                 columnWidths("A,B,D,E")
                         ).setRowHeights(
@@ -13820,7 +13809,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setDeletedCells(
-                                cells("B2,C2,B3,C3")
+                                SpreadsheetCellReferenceSet.parse("B2,C2,B3,C3")
                         ).setColumns(
                                 Sets.of(c)
                         ).setColumnWidths(
@@ -13861,7 +13850,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 label.setLabelMappingReference(b2)
                         )
                 ).setDeletedCells(
-                        cells("B2,C2,B3,C3")
+                        SpreadsheetCellReferenceSet.parse("B2,C2,B3,C3")
                 ).setReferences(
                         references("C3=C3LABEL")
                 ).setColumnWidths(
@@ -13909,7 +13898,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY.setRows(
                         Sets.of(c)
                 ).setDeletedCells(
-                        cells("B2,C2,B3,C3")
+                        SpreadsheetCellReferenceSet.parse("B2,C2,B3,C3")
                 ).setColumnWidths(
                         columnWidths("B,C")
                 ).setRowHeights(
@@ -14047,7 +14036,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("C2,B3")
+                                SpreadsheetCellReferenceSet.parse("C2,B3")
                         ).setReferences(
                                 references("C3=B2")
                         ).setColumnWidths(
@@ -14144,7 +14133,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("B1,C1,A2,C2,A3,B3")
+                                SpreadsheetCellReferenceSet.parse("B1,C1,A2,C2,A3,B3")
                         ).setReferences(
                                 references("b2=a1;c3=b2")
                         ).setColumnWidths(
@@ -14240,7 +14229,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("B1,C1,A2,C2,A3,B3")
+                                SpreadsheetCellReferenceSet.parse("B1,C1,A2,C2,A3,B3")
                         ).setReferences(
                                 references("c3=a1;A1=B2")
                         ).setColumnWidths(
@@ -14349,7 +14338,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("D3,C4")
+                                SpreadsheetCellReferenceSet.parse("D3,C4")
                         ).setLabels(
                                 Sets.of(
                                         d4Label.setLabelMappingReference(d4Cell.reference())
@@ -14394,7 +14383,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setLabels(
                                 Sets.of(c3Mapping)
                         ).setDeletedCells(
-                                cells("B2,C2,D2,B3,C3,D3,B4,C4,D4")
+                                SpreadsheetCellReferenceSet.parse("B2,C2,D2,B3,C3,D3,B4,C4,D4")
                         ).setReferences(
                                 references("C3=C3LABEL")
                         ).setColumnWidths(
@@ -14436,7 +14425,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setLabels(
                                 Sets.of(c3d4Mapping)
                         ).setDeletedCells(
-                                cells("B2,C2,D2,E2,B3,C3,D3,E3,B4,C4,D4,E4,B5,C5,D5,E5")
+                                SpreadsheetCellReferenceSet.parse("B2,C2,D2,E2,B3,C3,D3,E3,B4,C4,D4,E4,B5,C5,D5,E5")
                         ).setReferences(
                                 references("C3=C3D4LABEL;D3=C3D4LABEL;C4=C3D4LABEL;D4=C3D4LABEL")
                         ).setColumnWidths(
@@ -14511,7 +14500,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setLabels(
                                 Sets.of(c3Mapping)
                         ).setDeletedCells(
-                                cells("B2,C2,D2,E2,B3,C3,D3,E3,B4,C4,D4,E4,B5,C5,D5,E5")
+                                SpreadsheetCellReferenceSet.parse("B2,C2,D2,E2,B3,C3,D3,E3,B4,C4,D4,E4,B5,C5,D5,E5")
                         ).setReferences(
                                 references("C3=C3LABEL")
                         ).setColumnWidths(
@@ -14598,7 +14587,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 d4Label.setLabelMappingReference(d4Cell)
                         )
                 ).setDeletedCells(
-                        cells("D3,C4,D4")
+                        SpreadsheetCellReferenceSet.parse("D3,C4,D4")
                 ).setReferences(
                         references("D4=D4LABEL")
                 ).setColumnWidths(
@@ -14675,7 +14664,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("A1,B1,C1,A2,C2,A3,B3")
+                                SpreadsheetCellReferenceSet.parse("A1,B1,C1,A2,C2,A3,B3")
                         ).setColumns(
                                 Sets.of(
                                         bHidden,
@@ -14755,7 +14744,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                cells("A1,B1,C1,A2,C2,A3,B3")
+                                SpreadsheetCellReferenceSet.parse("A1,B1,C1,A2,C2,A3,B3")
                         ).setRows(
                                 Sets.of(
                                         row2Hidden,
@@ -15023,7 +15012,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // fill save with missing cells......................................................................................
+    // fill save with missing SpreadsheetCellReferenceSet.parse......................................................................................
 
     @Test
     public void testFillWithCellsSaveWithMissingCells() {
@@ -16170,7 +16159,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(
                 engine,
-                Lists.of(l22CellL), // cells
+                Lists.of(l22CellL), // SpreadsheetCellReferenceSet.parse
                 l22.cellRange(l22), // from
                 ae41.cellRange(ae41), // to
                 context,
@@ -18007,7 +17996,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        // because the cells were not moved the result should have no cells.
+        // because the SpreadsheetCellReferenceSet.parse were not moved the result should have no SpreadsheetCellReferenceSet.parse.
         this.findFormulaReferencesAndCheck(
                 engine,
                 b2Cell.reference(),
@@ -18289,7 +18278,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        // because the cells were not moved the result should have no cells.
+        // because the SpreadsheetCellReferenceSet.parse were not moved the result should have no SpreadsheetCellReferenceSet.parse.
         this.sortCellsAndCheck(
                 engine,
                 "A1:B2", // cell-range
@@ -22493,7 +22482,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY.setForms(
                         Sets.of(form)
                 ).setDeletedCells(
-                        cells("A1")
+                        SpreadsheetCellReferenceSet.parse("A1")
                 ).setColumnWidths(
                         columnWidths("A")
                 ).setRowHeights(
@@ -23189,7 +23178,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY.setForms(
                         Sets.of(form)
                 ).setDeletedCells(
-                        cells("A1")
+                        SpreadsheetCellReferenceSet.parse("A1")
                 ).setColumnWidths(
                         columnWidths("A")
                 ).setRowHeights(
@@ -23246,7 +23235,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 form.clearErrors()
                         )
                 ).setDeletedCells(
-                        cells("A1")
+                        SpreadsheetCellReferenceSet.parse("A1")
                 ).setColumnWidths(
                         columnWidths("A")
                 ).setRowHeights(
@@ -24321,7 +24310,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.checkEquals(
                 Lists.of(cells),
                 store.all(),
-                () -> "loaded all cells in " + store
+                () -> "loaded all SpreadsheetCellReferenceSet.parse in " + store
         );
     }
 
