@@ -230,7 +230,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             );
         }
 
-        private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
                 Lists.of(
                         Converters.simple()
                                 .cast(SpreadsheetConverterContext.class),
@@ -247,7 +247,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                         Converters.objectToString()
                 )
-        ).cast(SpreadsheetConverterContext.class);
+        );
 
         @Override
         public ExpressionNumberKind expressionNumberKind() {
