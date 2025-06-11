@@ -20,10 +20,13 @@ package walkingkooka.spreadsheet.template;
 import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -119,6 +122,37 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         null
                 )
+        );
+    }
+
+    // cell.............................................................................................................
+
+    @Test
+    public void testCell() {
+        final Optional<SpreadsheetCell> cell = Optional.of(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("Hello123")
+                )
+        );
+
+        this.cellAndCheck(
+                BasicSpreadsheetTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        new FakeSpreadsheetExpressionEvaluationContext() {
+
+                            @Override
+                            public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+                                return this;
+                            }
+
+                            @Override
+                            public Optional<SpreadsheetCell> cell() {
+                                return cell;
+                            }
+                        },
+                        NAME_TO_EXPRESSION
+                ),
+                cell
         );
     }
 
