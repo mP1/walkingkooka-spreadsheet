@@ -8937,7 +8937,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndFormulaErrorOrValueCheck(
+        this.loadCellAndFormulaTextAndErrorOrValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -9526,7 +9526,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
 
-        this.loadCellAndFormulaErrorOrValueCheck(
+        this.loadCellAndFormulaTextAndErrorOrValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -10381,7 +10381,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndFormulaErrorOrValueCheck(
+        this.loadCellAndFormulaTextAndErrorOrValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -10947,7 +10947,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0
         );
 
-        this.loadCellAndFormulaErrorOrValueCheck(
+        this.loadCellAndFormulaTextAndErrorOrValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -24400,7 +24400,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                   final SpreadsheetEngineContext context,
                                                                   final String formulaText,
                                                                   final Number value) {
-        return this.loadCellAndFormulaErrorOrValueCheck(
+        return this.loadCellAndFormulaTextAndErrorOrValueCheck(
                 engine,
                 reference,
                 evaluation,
