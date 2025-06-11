@@ -701,8 +701,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.evaluateAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
                         ),
                         Lists.empty()
                 ),
