@@ -264,7 +264,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context,
                 formulaText
         );
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 spreadsheetCell,
                 value
         );
@@ -371,7 +371,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context
         );
-        this.cellFormulaValueAndCheck(
+        this.cellFormulaErrorOrValueAndCheck(
                 spreadsheetCell,
                 value
         );
@@ -2621,8 +2621,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void cellFormulaValueAndCheck(final SpreadsheetCell cell,
-                                          final Object value) {
+    default void cellFormulaErrorOrValueAndCheck(final SpreadsheetCell cell,
+                                                 final Object value) {
         this.checkEquals(
                 value,
                 cell.formula()
