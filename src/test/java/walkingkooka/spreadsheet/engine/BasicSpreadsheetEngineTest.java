@@ -17488,6 +17488,117 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testFindCellsWithFunction() {
+        final String functionName = "TestFindFunction";
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+                        ).set(
+                                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+                        ).set(
+                            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+                            SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+                        ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        ExpressionFunctionProviders.basic(
+                                Url.parseAbsolute("https://example.com/functions"),
+                                SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
+                                Sets.of(
+                                        new FakeExpressionFunction<>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return SpreadsheetSelection.A1.equalsIgnoreReferenceKind(
+                                                        context.cell()
+                                                        .map(SpreadsheetCell::reference)
+                                                                .orElse(null)
+                                                );
+                                            }
+
+                                            @Override
+                                            public Class<Object> returnType() {
+                                                return Object.class;
+                                            }
+
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                                                return NO_PARAMETERS;
+                                            }
+
+                                            @Override
+                                            public Optional<ExpressionFunctionName> name() {
+                                                return Optional.of(
+                                                        SpreadsheetExpressionFunctions.name(functionName)
+                                                );
+                                            }
+                                        }
+                                )
+                        ),
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a1.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:C3"),
+                SpreadsheetCellRangeReferencePath.RLBU,
+                0, // offset
+                3, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.call(
+                        Expression.namedFunction(
+                                SpreadsheetExpressionFunctions.name(functionName)
+                        ),
+                        Lists.empty() // no parameters
+                ), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a1).get()
+                                )
+                        ).setColumnWidths(columnWidths("A"))
+                        .setRowHeights(rowHeights("1"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(3))
+        );
+    }
+
     // findCellWithReferences...........................................................................................
 
     @Test
