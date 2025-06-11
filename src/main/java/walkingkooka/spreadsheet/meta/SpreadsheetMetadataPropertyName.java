@@ -182,6 +182,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = registerConstant(SpreadsheetMetadataPropertyNameDecimalNumberSymbols.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerSelector}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
+     */
+    public static final SpreadsheetMetadataPropertyName<FormHandlerSelector> DEFAULT_FORM_HANDLER = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance());
@@ -361,11 +366,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values by a {@link SpreadsheetCell#validator()}.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATION_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidation.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerSelector}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
-     */
-    public static final SpreadsheetMetadataPropertyName<FormHandlerSelector> VALIDATION_FORM_HANDLER = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerSelectorValidation.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within validator expressions.

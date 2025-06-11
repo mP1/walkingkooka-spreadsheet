@@ -158,6 +158,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDefaultFormHandler(final FormHandlerSelector selector) {
+        // nop
+    }
+
     protected void visitDefaultYear(final int defaultYear) {
         // nop
     }
@@ -312,10 +316,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitValidationConverter(final ConverterSelector selector) {
-        // nop
-    }
-
-    protected void visitValidationFormHandler(final FormHandlerSelector selector) {
         // nop
     }
 

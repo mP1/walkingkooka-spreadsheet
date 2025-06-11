@@ -298,6 +298,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDefaultFormHandler() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDefaultFormHandler(final FormHandlerSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                FormHandlerSelector.parse("hello-form-handler")
+        );
+    }
+
+    @Test
     public void testVisitDefaultYear() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -751,19 +764,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 ConverterSelector.parse("hello-converter")
-        );
-    }
-
-    @Test
-    public void testVisitValidationFormHandler() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitValidationFormHandler(final FormHandlerSelector s) {
-                this.visited = s;
-            }
-        }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATION_FORM_HANDLER,
-                FormHandlerSelector.parse("hello-form-handler")
         );
     }
 

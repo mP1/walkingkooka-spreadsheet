@@ -1007,6 +1007,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"percentSymbol\": \"#\",\n" +
                         "    \"permillSymbol\": \"^\"\n" +
                         "  },\n" +
+                        "  \"defaultFormHandler\": \"non-null\",\n" +
                         "  \"defaultYear\": 1900,\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
@@ -1072,7 +1073,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validationConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"validationFormHandler\": \"non-null\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
@@ -1239,6 +1239,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"percentSymbol\": \"#\",\n" +
                         "    \"permillSymbol\": \"^\"\n" +
                         "  },\n" +
+                        "  \"defaultFormHandler\": \"non-null\",\n" +
                         "  \"defaultYear\": 1900,\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
@@ -1304,7 +1305,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validationConverter\": \"collection(null-to-number, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"validationFormHandler\": \"non-null\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +

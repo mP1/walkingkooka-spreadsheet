@@ -2395,6 +2395,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS, DATE_TIME_SYMBOLS);
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS);
+        properties.put(
+                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                FormHandlerSelector.parse("hello-form-handler")
+        );
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(
@@ -2493,10 +2497,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 ConverterSelector.parse("validator-converter-123")
-        );
-        properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATION_FORM_HANDLER,
-                FormHandlerSelector.parse("hello-form-handler")
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
