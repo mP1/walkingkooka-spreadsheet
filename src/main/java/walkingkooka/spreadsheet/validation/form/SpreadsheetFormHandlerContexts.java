@@ -39,9 +39,9 @@ public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper 
     /**
      * {@see SpreadsheetEngineFormHandlerContext}
      */
-    static SpreadsheetFormHandlerContext spreadsheetEngine(final Form<SpreadsheetExpressionReference> form,
-                                                           final SpreadsheetEngine engine,
-                                                           final SpreadsheetEngineContext context) {
+    public static SpreadsheetFormHandlerContext spreadsheetEngine(final Form<SpreadsheetExpressionReference> form,
+                                                                  final SpreadsheetEngine engine,
+                                                                  final SpreadsheetEngineContext context) {
         return SpreadsheetEngineFormHandlerContext.with(
                 form,
                 engine,
