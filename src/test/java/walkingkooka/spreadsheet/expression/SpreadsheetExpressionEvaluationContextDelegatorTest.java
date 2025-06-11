@@ -197,6 +197,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+            Objects.requireNonNull(labelName, "labelName");
             throw new UnsupportedOperationException();
         }
 

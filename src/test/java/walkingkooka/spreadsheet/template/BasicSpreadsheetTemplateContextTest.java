@@ -74,6 +74,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
             Objects.requireNonNull(labelName, "labelName");
             return Optional.empty();
         }
+
+
     };
 
     @Override
