@@ -4656,21 +4656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ),
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.treeMap(),
-                        SpreadsheetGroupStores.fake(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        SpreadsheetMetadataStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.fake(),
-                        SpreadsheetUserStores.fake()
-                ),
+                spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 SpreadsheetProviders.basic(
                         new FakeConverterProvider() {
@@ -4795,21 +4781,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ),
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.treeMap(),
-                        SpreadsheetGroupStores.fake(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        SpreadsheetMetadataStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.fake(),
-                        SpreadsheetUserStores.fake()
-                ),
+                spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 SpreadsheetProviders.basic(
                         new FakeConverterProvider() {
@@ -4938,21 +4910,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                         ValidatorAliasSet.parse(validatorSelector.valueText())
                 ),
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.treeMap(),
-                        SpreadsheetGroupStores.fake(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        SpreadsheetMetadataStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.fake(),
-                        SpreadsheetUserStores.fake()
-                ),
+                spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 SpreadsheetProviders.basic(
                         new FakeConverterProvider() {
@@ -5088,21 +5046,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                                 ValidatorAliasSet.parse(validatorSelector.valueText())
                         ),
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.treeMap(),
-                        SpreadsheetGroupStores.fake(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        SpreadsheetMetadataStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.fake(),
-                        SpreadsheetUserStores.fake()
-                ),
+                spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
@@ -24442,6 +24386,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 (Object) EXPRESSION_NUMBER_KIND.create(value)
         );
     }
+
+    /**
+     * Creates a {@link SpreadsheetStoreRepository} with TreeMap stores
+     */
+    private static SpreadsheetStoreRepository spreadsheetStoreRepository() {
+        return SpreadsheetStoreRepositories.basic(
+                SpreadsheetCellStores.treeMap(),
+                SpreadsheetCellReferencesStores.treeMap(),
+                SpreadsheetColumnStores.treeMap(),
+                SpreadsheetFormStores.treeMap(),
+                SpreadsheetGroupStores.fake(),
+                SpreadsheetLabelStores.treeMap(),
+                SpreadsheetLabelReferencesStores.treeMap(),
+                SpreadsheetMetadataStores.fake(),
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetRowStores.treeMap(),
+                StorageStores.fake(),
+                SpreadsheetUserStores.fake()
+        );
+    }
+
     // class............................................................................................................
 
     @Override
