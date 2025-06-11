@@ -761,7 +761,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String errorMessage = error.message();
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -783,7 +783,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText("=Z99")));
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -804,7 +804,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText("=2+Z99")));
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -868,7 +868,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -894,7 +894,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1016,7 +1016,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                                 .setFormatter(formatter)
                 );
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1104,7 +1104,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -1406,7 +1406,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -1516,7 +1516,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         VALUE = 100;
 
         // dont need to load C2, because B2 was unchanged.
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1594,7 +1594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         // should only load B2,
         // C2, D2 will not have changed and shouldnt be loaded.
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1981,7 +1981,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setStyle(STYLE)
                 );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -2022,7 +2022,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -2058,7 +2058,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setStyle(STYLE)
                 );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -2829,7 +2829,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 a1Cell.reference(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -2856,7 +2856,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2Cell.reference(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7162,7 +7162,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -7226,7 +7226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -8317,7 +8317,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -8383,7 +8383,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -14859,7 +14859,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         ); // a deleted
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 k11,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -14985,7 +14985,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 1); // a&b deleted, leaving c
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 k11,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -15070,7 +15070,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2
         ); // a + b saved
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -15096,7 +15096,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 c3,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -15188,7 +15188,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3
         ); // a + b saved + c
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -15214,7 +15214,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // fill should have evaluated.
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 c3,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -15240,7 +15240,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 k11,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -15316,7 +15316,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2); // a + c, b deleted
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -15342,7 +15342,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b3,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -15428,7 +15428,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndCheck(
+        this.loadCellsAndCheck(
                 engine,
                 b3,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -24054,7 +24054,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                              final SpreadsheetEngineEvaluation evaluation,
                                              final SpreadsheetEngineContext context,
                                              final Number value) {
-        return this.loadCellAndCheck(
+        return this.loadCellsAndCheck(
                 engine,
                 reference,
                 evaluation,

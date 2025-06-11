@@ -302,13 +302,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default SpreadsheetCell loadCellAndCheck(final SpreadsheetEngine engine,
-                                             final SpreadsheetCellReference cell,
-                                             final SpreadsheetEngineEvaluation evaluation,
-                                             final SpreadsheetEngineContext context,
-                                             final Object value,
-                                             final String formattedValueText) {
-        return this.loadCellAndCheck(
+    default SpreadsheetCell loadCellsAndCheck(final SpreadsheetEngine engine,
+                                              final SpreadsheetCellReference cell,
+                                              final SpreadsheetEngineEvaluation evaluation,
+                                              final SpreadsheetEngineContext context,
+                                              final Object value,
+                                              final String formattedValueText) {
+        return this.loadCellsAndCheck(
                 engine,
                 cell,
                 evaluation,
@@ -319,13 +319,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default SpreadsheetCell loadCellAndCheck(final SpreadsheetEngine engine,
-                                             final SpreadsheetCellReference cell,
-                                             final SpreadsheetEngineEvaluation evaluation,
-                                             final SpreadsheetEngineContext context,
-                                             final Object value,
-                                             final String formattedValueText,
-                                             final String errorContains) {
+    default SpreadsheetCell loadCellsAndCheck(final SpreadsheetEngine engine,
+                                              final SpreadsheetCellReference cell,
+                                              final SpreadsheetEngineEvaluation evaluation,
+                                              final SpreadsheetEngineContext context,
+                                              final Object value,
+                                              final String formattedValueText,
+                                              final String errorContains) {
         final SpreadsheetCell spreadsheetCell = this.loadCellAndValueCheck(
                 engine,
                 cell,
@@ -378,12 +378,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return spreadsheetCell;
     }
 
-    default void loadCellAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetCellReference cell,
-                                  final SpreadsheetEngineEvaluation evaluation,
-                                  final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                  final SpreadsheetEngineContext context,
-                                  final SpreadsheetDelta loaded) {
+    default void loadCellsAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetCellReference cell,
+                                   final SpreadsheetEngineEvaluation evaluation,
+                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta loaded) {
         this.checkEquals(
                 loaded,
                 engine.loadCells(
