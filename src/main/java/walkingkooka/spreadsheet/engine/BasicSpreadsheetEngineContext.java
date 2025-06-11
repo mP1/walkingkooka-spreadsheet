@@ -25,6 +25,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -360,7 +361,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                                 f -> cell.style()
                                                         .replace(f)
                                         )
-                                        .orElse(TextNode.EMPTY_TEXT)
+                                        .orElse(
+                                                TextNode.text(
+                                                        SpreadsheetError.formatterNotFound(value)
+                                                )
+                                        )
                         )
                 )
         );
