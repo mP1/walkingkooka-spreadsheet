@@ -160,6 +160,28 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.checkValue(error, Optional.of(label));
     }
 
+    // formatterNotFound................................................................................................
+
+    @Test
+    public void testFormatterNotFoundAndNullValue() {
+        final Object value = null;
+
+        final SpreadsheetError error = SpreadsheetError.formatterNotFound(value);
+        this.checkKind(error, SpreadsheetErrorKind.ERROR);
+        this.checkMessage(error, "Formatter not found");
+        this.checkValue(error, Optional.ofNullable(value));
+    }
+
+    @Test
+    public void testFormatterNotFoundAndValue() {
+        final Object value = 123;
+
+        final SpreadsheetError error = SpreadsheetError.formatterNotFound(value);
+        this.checkKind(error, SpreadsheetErrorKind.ERROR);
+        this.checkMessage(error, "Formatter not found");
+        this.checkValue(error, Optional.ofNullable(value));
+    }
+
     // functionNotFound.................................................................................................
 
     @Test
