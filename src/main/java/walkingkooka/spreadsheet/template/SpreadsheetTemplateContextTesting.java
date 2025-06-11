@@ -39,15 +39,6 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
     }
 
     @Test
-    default void testLoadCellFails() {
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createContext()
-                        .loadCell(SpreadsheetSelection.A1)
-        );
-    }
-
-    @Test
     default void testLoadCellRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
