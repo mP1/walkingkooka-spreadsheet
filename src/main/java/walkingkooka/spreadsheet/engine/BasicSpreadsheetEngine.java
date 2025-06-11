@@ -1098,6 +1098,30 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
+    public SpreadsheetDelta deleteForm(final FormName name,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                context
+        );
+        try {
+            context.storeRepository()
+                    .forms()
+                    .delete(name);
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
     public SpreadsheetDelta loadForms(final int offset,
                                       final int count,
                                       final SpreadsheetEngineContext context) {

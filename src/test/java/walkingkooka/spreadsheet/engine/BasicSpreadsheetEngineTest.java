@@ -149,6 +149,7 @@ import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormName;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.FakeValidatorProvider;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -4650,7 +4651,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         new FakeValidatorProvider() {
@@ -4769,7 +4770,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         new FakeValidatorProvider() {
@@ -4916,7 +4917,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         new FakeValidatorProvider() {
@@ -5058,7 +5059,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         new FakeValidatorProvider() {
@@ -16472,7 +16473,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -17581,7 +17582,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -24042,6 +24043,75 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // DELETE FORM......................................................................................................
+
+    @Test
+    public void testDeleteFormWithUnknown() {
+        this.deleteFormAndCheck(
+                this.createSpreadsheetEngine(),
+                FormName.with("UnknownForm404"),
+                this.createContext(),
+                SpreadsheetDelta.EMPTY.setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+    }
+
+    @Test
+    public void testDeleteForm() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        engine.saveCell(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                ),
+                context
+        );
+
+        final FormName formName = FormName.with("Form111");
+        engine.saveForm(
+                Form.<SpreadsheetExpressionReference>with(formName)
+                        .setFields(
+                                Lists.of(
+                                        FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
+                                                .setLabel("FirstField111")
+                                )
+                        ),
+                context
+        );
+
+        engine.saveForm(
+                Form.<SpreadsheetExpressionReference>with(FormName.with("Form222"))
+                        .setFields(
+                                Lists.of(
+                                        FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
+                                                .setLabel("FirstField222")
+                                )
+                        ),
+                context
+        );
+
+        this.deleteFormAndCheck(
+                engine,
+                formName,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        this.countAndCheck(
+                context.storeRepository()
+                        .forms(),
+                1
+        );
+    }
+
     // loadForms........................................................................................................
 
     @Test
@@ -24201,7 +24271,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER

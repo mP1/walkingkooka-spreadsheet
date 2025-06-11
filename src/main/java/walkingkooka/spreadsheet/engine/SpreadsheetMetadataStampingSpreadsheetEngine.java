@@ -297,6 +297,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta deleteForm(final FormName name,
+                                       final SpreadsheetEngineContext context) {
+        return this.engine.deleteForm(
+                name,
+                context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta loadForms(final int offset,
                                       final int count,
                                       final SpreadsheetEngineContext context) {
