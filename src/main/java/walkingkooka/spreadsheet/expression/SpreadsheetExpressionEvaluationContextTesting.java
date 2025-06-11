@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.set.SortedSets;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -182,7 +182,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         this.loadCellRangeAndCheck(
                 context,
                 range,
-                SortedSets.of(expected)
+                Sets.of(expected)
         );
     }
 
