@@ -467,7 +467,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     }
 
     @Override
-    public void testUser() {
+    public void testUserNotNull() {
         throw new UnsupportedOperationException();
     }
 
