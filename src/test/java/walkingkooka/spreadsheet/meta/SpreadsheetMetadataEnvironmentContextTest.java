@@ -128,7 +128,7 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
         );
     }
 
-    @Override
+    @Test
     public void testUser() {
         this.userAndCheck(USER);
     }
