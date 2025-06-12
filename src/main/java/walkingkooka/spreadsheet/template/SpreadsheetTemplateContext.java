@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.template;
 
-import walkingkooka.InvalidCharacterException;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -30,8 +29,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.template.TemplateValueName;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -66,12 +63,6 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
 
     @Override
     default SpreadsheetTemplateContext setCell(final Optional<SpreadsheetCell> cell) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
-                                                                final TextCursor cursor) {
         throw new UnsupportedOperationException();
     }
 

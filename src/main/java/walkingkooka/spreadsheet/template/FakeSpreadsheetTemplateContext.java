@@ -17,9 +17,12 @@
 
 package walkingkooka.spreadsheet.template;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -30,6 +33,12 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
     
     public FakeSpreadsheetTemplateContext() {
         super();
+    }
+
+    @Override
+    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                               final TextCursor cursor) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
