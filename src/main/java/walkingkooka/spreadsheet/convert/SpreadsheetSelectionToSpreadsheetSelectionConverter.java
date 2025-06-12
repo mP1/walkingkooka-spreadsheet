@@ -70,7 +70,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
                 result = cellRangeToCell(selection.toCellRange());
             } else {
                 if (isCellOrCellRange(value, type)) {
-                    result = context.resolveIfLabel(selection);
+                    result = context.resolveIfLabelOrFail(selection);
                 } else {
                     if (isExpressionReference(value, type)) {
                         result = selection;

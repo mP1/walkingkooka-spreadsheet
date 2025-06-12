@@ -149,7 +149,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             this.loadCellRange(
-                    context.resolveIfLabel(selection)
+                    context.resolveIfLabelOrFail(selection)
                             .toCellRange(),
                     changes,
                     context
@@ -354,7 +354,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context.storeRepository()
                     .cells()
                     .deleteCells(
-                            context.resolveIfLabel(selection)
+                            context.resolveIfLabelOrFail(selection)
                                     .toCellRange()
                     );
 
@@ -550,7 +550,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(context, "context");
 
         return this.findCellsWithReferenceWithCellOrCellRange(
-                context.resolveIfLabel(reference)
+                context.resolveIfLabelOrFail(reference)
                         .toCellOrCellRange(),
                 offset,
                 count,
@@ -1841,7 +1841,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return this.windowNonLabelSelection(
                 viewportRectangle,
                 includeFrozenColumnsRows,
-                selection.map(context::resolveIfLabel),
+                selection.map(context::resolveIfLabelOrFail),
                 context
         );
     }
@@ -1912,7 +1912,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         // non frozen viewport
-        SpreadsheetCellReference nonFrozenHome = context.resolveIfLabel(
+        SpreadsheetCellReference nonFrozenHome = context.resolveIfLabelOrFail(
                 viewportRectangle.home()
         ).toCell();
         if (null != frozenColumns) {

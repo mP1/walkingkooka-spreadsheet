@@ -97,7 +97,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
                 Sets.of(SpreadsheetDeltaProperties.CELLS),
                 context
         ).cell(
-                context.resolveIfLabel(reference).toCell()
+                context.resolveIfLabelOrFail(reference).toCell()
         );
 
         // Dont think a ValidationContext should ever need to load another cell.

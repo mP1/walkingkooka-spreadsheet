@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
@@ -283,18 +284,22 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         Optional<Optional<Object>> value = Optional.empty();
 
-        ExpressionReference expressionReference = reference;
-        if (expressionReference instanceof SpreadsheetExpressionReference) {
-            expressionReference = this.resolveIfLabel(
-                    (SpreadsheetExpressionReference)expressionReference
-            ).toExpressionReference();
-        }
-        if (expressionReference instanceof SpreadsheetExpressionReference) {
-            value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
-                    (SpreadsheetExpressionReference) reference,
-                    this.spreadsheetExpressionReferenceLoader,
-                    this
-            );
+        if (reference instanceof SpreadsheetExpressionReference) {
+            SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) reference;
+            final SpreadsheetSelection selection = this.resolveIfLabel(reference)
+                    .orElse(null);
+
+            if (null != selection) {
+                spreadsheetExpressionReference = selection.toExpressionReference();
+            }
+            //}
+            if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
+                value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+                        (SpreadsheetExpressionReference) reference,
+                        this.spreadsheetExpressionReferenceLoader,
+                        this
+                );
+            }
         }
 
         return value;
