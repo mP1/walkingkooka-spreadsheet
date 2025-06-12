@@ -47,43 +47,58 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
 
     @Test
     default void testResolveIfLabelWithCell() {
-        this.resolveIfLabelAndCheck(
+        this.resolveIfLabelAndCheckSame(
                 SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
+    default void testResolveIfLabelWithCellRange() {
+        this.resolveIfLabelAndCheckSame(
+                SpreadsheetSelection.parseCellRange("C3:D4")
+        );
+    }
+
+    @Test
     default void testResolveIfLabelWithColumn() {
-        this.resolveIfLabelAndCheck(
+        this.resolveIfLabelAndCheckSame(
                 SpreadsheetSelection.parseColumn("Z")
         );
     }
 
     @Test
     default void testResolveIfLabelWithColumnRange() {
-        this.resolveIfLabelAndCheck(
+        this.resolveIfLabelAndCheckSame(
                 SpreadsheetSelection.parseColumnRange("X:Y")
         );
     }
 
     @Test
     default void testResolveIfLabelWithRow() {
-        this.resolveIfLabelAndCheck(
+        this.resolveIfLabelAndCheckSame(
                 SpreadsheetSelection.parseRow("2")
         );
     }
 
     @Test
     default void testResolveIfLabelWithRowRange() {
-        this.resolveIfLabelAndCheck(
+        this.resolveIfLabelAndCheckSame(
                 SpreadsheetSelection.parseRowRange("3:4")
+        );
+    }
+
+    default void resolveIfLabelAndCheckSame(final SpreadsheetSelection selection) {
+        this.resolveIfLabelAndCheck(
+                selection,
+                selection
         );
     }
 
     default void resolveIfLabelAndCheck(final SpreadsheetSelection selection) {
         this.resolveIfLabelAndCheck(
+                this.createSpreadsheetLabelNameResolver(),
                 selection,
-                selection
+                Optional.empty()
         );
     }
 
@@ -116,21 +131,12 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
         );
     }
 
-    // resolveIfLabelFails..............................................................................................
-
-    default void resolveIfLabelFails(final SpreadsheetSelection selection) {
-        this.resolveIfLabelFails(
-                this.createSpreadsheetLabelNameResolver(),
-                selection
-        );
-    }
-
-    default void resolveIfLabelFails(final SpreadsheetLabelNameResolver resolver,
-                                     final SpreadsheetSelection selection) {
-        assertThrows(
-                LabelNotFoundException.class,
-                () -> resolver.resolveIfLabel(selection),
-                () -> "resolveIfLabelFalls " + selection
+    default void resolveIfLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
+                                        final SpreadsheetSelection selection) {
+        this.resolveIfLabelAndCheck(
+                resolver,
+                selection,
+                Optional.empty()
         );
     }
 
