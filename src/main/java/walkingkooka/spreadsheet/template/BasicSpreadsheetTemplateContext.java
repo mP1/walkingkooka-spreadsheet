@@ -51,7 +51,11 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
@@ -65,26 +69,31 @@ import java.util.function.Function;
  */
 final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContext,
         SpreadsheetParserContextDelegator,
-        EnvironmentContextDelegator {
+        EnvironmentContextDelegator,
+        JsonNodeMarshallUnmarshallContextDelegator {
 
     static BasicSpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
                                                 final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                final Function<TemplateValueName, Expression> templateValueNameToExpression) {
+                                                final Function<TemplateValueName, Expression> templateValueNameToExpression,
+                                                final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return new BasicSpreadsheetTemplateContext(
                 Objects.requireNonNull(spreadsheetParserContext, "spreadsheetParserContext"),
                 Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
-                Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression")
+                Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression"),
+                Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext")
         );
     }
 
     private BasicSpreadsheetTemplateContext(final SpreadsheetParserContext spreadsheetParserContext,
                                             final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                            final Function<TemplateValueName, Expression> templateValueNameToExpression) {
+                                            final Function<TemplateValueName, Expression> templateValueNameToExpression,
+                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         this.spreadsheetParserContext = spreadsheetParserContext;
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.enterScope(
                 this::reference
         );
         this.templateValueNameToExpression = templateValueNameToExpression;
+        this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
     }
 
     @Override
@@ -105,6 +114,11 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetExpressionEvaluationContext.loadLabel(labelName);
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return this.spreadsheetExpressionEvaluationContext.mathContext();
     }
 
     @Override
@@ -300,6 +314,30 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
 
     private final Function<TemplateValueName, Expression> templateValueNameToExpression;
 
+    // JsonNodeMarshallUnmarshallContext................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final JsonNodeMarshallUnmarshallContext before = this.jsonNodeMarshallUnmarshallContext;
+        final JsonNodeMarshallUnmarshallContext after = before.setPreProcessor(processor);
+
+        return before.equals(after) ?
+                this :
+                BasicSpreadsheetTemplateContext.with(
+                        this.spreadsheetParserContext,
+                        this.spreadsheetExpressionEvaluationContext,
+                        this.templateValueNameToExpression,
+                        after
+                );
+    }
+
+    @Override
+    public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
+        return this.jsonNodeMarshallUnmarshallContext;
+    }
+
+    private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
+
     // toString.........................................................................................................
 
     @Override
@@ -308,6 +346,8 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
                 " " +
                 this.spreadsheetParserContext +
                 " " +
-                this.templateValueNameToExpression;
+                this.templateValueNameToExpression +
+                " " +
+                this.jsonNodeMarshallUnmarshallContext;
     }
 }

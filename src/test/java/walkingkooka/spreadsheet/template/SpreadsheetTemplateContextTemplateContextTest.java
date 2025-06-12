@@ -40,6 +40,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.FormHandlerContexts;
 
@@ -263,7 +264,11 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                             }
 
                             throw new AssertionError("Unknown template value name: " + t);
-                        }
+                        },
+                        JsonNodeMarshallUnmarshallContexts.basic(
+                                JSON_NODE_MARSHALL_CONTEXT,
+                                JSON_NODE_UNMARSHALL_CONTEXT
+                        )
                 )
         );
     }

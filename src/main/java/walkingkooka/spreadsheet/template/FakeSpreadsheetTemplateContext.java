@@ -23,8 +23,6 @@ import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationCo
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Optional;
 
@@ -53,16 +51,6 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetExpressionEva
 
     @Override
     public char valueSeparator() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetTemplateContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetTemplateContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
         throw new UnsupportedOperationException();
     }
 }

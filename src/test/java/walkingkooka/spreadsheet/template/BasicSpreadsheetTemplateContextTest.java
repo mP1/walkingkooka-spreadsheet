@@ -37,6 +37,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.MathContext;
 import java.util.Map;
@@ -90,6 +92,11 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public MathContext mathContext() {
+            return SPREADSHEET_PARSER_CONTEXT.mathContext();
+        }
+
         // EnvironmentContext...........................................................................................
 
         @Override
@@ -116,6 +123,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
             return Optional.of(USER);
         }
     };
+
+    private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.fake();
 
     @Override
     public void testExpressionFunctionWithNullFunctionNameFails() {
@@ -146,7 +155,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 () -> BasicSpreadsheetTemplateContext.with(
                         null,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 )
         );
     }
@@ -158,7 +168,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 () -> BasicSpreadsheetTemplateContext.with(
                         SPREADSHEET_PARSER_CONTEXT,
                         null,
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 )
         );
     }
@@ -170,6 +181,20 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 () -> BasicSpreadsheetTemplateContext.with(
                         SPREADSHEET_PARSER_CONTEXT,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        null,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullJsonNodeMarshallUnmarshallContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        NAME_TO_EXPRESSION,
                         null
                 )
         );
@@ -200,7 +225,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                                 return cell;
                             }
                         },
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
                 cell
         );
@@ -238,7 +264,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                                 );
                             }
                         },
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
                 cell.reference(),
                 Optional.of(cell)
@@ -279,7 +306,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                                 );
                             }
                         },
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
                 cell.reference()
                         .toCellRange(),
@@ -309,7 +337,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                                 return Optional.of(mapping);
                             }
                         },
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
                 label,
                 mapping
@@ -338,7 +367,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                                 return Optional.of(resolved);
                             }
                         },
-                        NAME_TO_EXPRESSION
+                        NAME_TO_EXPRESSION,
+                        JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
                 ),
                 label,
                 resolved
@@ -374,7 +404,8 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
         return BasicSpreadsheetTemplateContext.with(
                 SPREADSHEET_PARSER_CONTEXT,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                NAME_TO_EXPRESSION
+                NAME_TO_EXPRESSION,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         );
     }
 
