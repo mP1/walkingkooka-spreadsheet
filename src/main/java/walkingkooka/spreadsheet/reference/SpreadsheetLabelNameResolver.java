@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.tree.expression.ExpressionReference;
+
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,15 +29,38 @@ import java.util.Optional;
 public interface SpreadsheetLabelNameResolver {
 
     /**
-     * Resolves a {@link SpreadsheetSelection} if it is a {@link SpreadsheetLabelName} otherwise returning the target.
-     * This must never return a {@link SpreadsheetLabelName}.
+     * Helper that resolves labels into a {@link SpreadsheetSelection}. Non {@link SpreadsheetExpressionReference}
+     * return an {@link Optional#empty()}.
      */
-    default SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+    default Optional<SpreadsheetSelection> resolveIfLabel(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return reference instanceof SpreadsheetExpressionReference ?
+                this.resolveIfLabel((SpreadsheetSelection) reference) :
+                Optional.empty();
+    }
+
+    /**
+     * Resolves a {@link SpreadsheetSelection} never returning a {@link SpreadsheetLabelName}, resolving labels to their
+     * target {@link SpreadsheetSelection}.
+     * If a label was not found an {@link Optional#empty()}.
+     */
+    default Optional<SpreadsheetSelection> resolveIfLabel(final SpreadsheetSelection selection) {
         Objects.requireNonNull(selection, "selection");
 
         return selection.isLabelName() ?
-                this.resolveLabelOrFail(selection.toLabelName()) :
-                selection;
+                this.resolveLabel(selection.toLabelName()) :
+                Optional.of(selection);
+    }
+
+    /**
+     * Resolves a {@link SpreadsheetSelection} into a non {@link SpreadsheetLabelName} reference.
+     */
+    default SpreadsheetSelection resolveIfLabelOrFail(final SpreadsheetSelection selection) {
+        return this.resolveIfLabel(selection)
+                .orElseThrow(
+                        () -> this.labelNotFound(selection.toLabelName())
+                );
     }
 
     /**
@@ -49,6 +74,15 @@ public interface SpreadsheetLabelNameResolver {
      */
     default SpreadsheetSelection resolveLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.resolveLabel(labelName)
-                .orElseThrow(() -> new LabelNotFoundException(labelName));
+                .orElseThrow(
+                        () -> this.labelNotFound(labelName)
+                );
+    }
+
+    /**
+     * Reports a {@link SpreadsheetLabelName} was not found.
+     */
+    default LabelNotFoundException labelNotFound(final SpreadsheetLabelName labelName) {
+        return new LabelNotFoundException(labelName);
     }
 }

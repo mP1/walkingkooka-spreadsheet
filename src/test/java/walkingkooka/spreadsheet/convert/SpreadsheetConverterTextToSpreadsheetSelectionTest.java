@@ -230,7 +230,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
             private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
 
             @Override
-            public SpreadsheetSelection resolveIfLabel(final SpreadsheetSelection selection) {
+            public SpreadsheetSelection resolveIfLabelOrFail(final SpreadsheetSelection selection) {
                 return resolveIfLabel.apply(selection);
             }
         };

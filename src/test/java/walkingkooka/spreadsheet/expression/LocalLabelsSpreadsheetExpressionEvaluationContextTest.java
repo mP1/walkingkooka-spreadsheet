@@ -276,7 +276,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         );
     }
 
-    // resolveIfLabel...................................................................................................
+    // resolveIfLabelOrFail...................................................................................................
 
     @Test
     public void testResolveIfLabelLocalLabelFails() {
@@ -284,7 +284,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
 
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> context.resolveIfLabel(SpreadsheetSelection.labelName(NAME))
+                () -> context.resolveIfLabelOrFail(SpreadsheetSelection.labelName(NAME))
         );
 
         this.checkEquals(

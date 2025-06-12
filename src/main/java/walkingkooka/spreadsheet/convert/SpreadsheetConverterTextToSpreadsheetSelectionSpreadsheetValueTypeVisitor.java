@@ -71,7 +71,9 @@ final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVi
         final String string = this.string;
 
         this.selection = SpreadsheetSelection.isLabelText(string) ?
-                this.context.resolveIfLabel(SpreadsheetSelection.labelName(string)) :
+                this.context.resolveIfLabelOrFail(
+                        SpreadsheetSelection.labelName(string)
+                ) :
                 parse.apply(string);
     }
 
