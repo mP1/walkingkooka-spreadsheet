@@ -475,6 +475,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SPREADSHEET_CELL_TO),
                     converterInfo(SELECTION_TO_SELECTION),
                     converterInfo(SELECTION_TO_TEXT),
+                    converterInfo(NUMBER_TO_NUMBER),
                     converterInfo(TEXT_TO_ERROR),
                     converterInfo(TEXT_TO_EXPRESSION),
                     converterInfo(TEXT_TO_FORM_NAME),
