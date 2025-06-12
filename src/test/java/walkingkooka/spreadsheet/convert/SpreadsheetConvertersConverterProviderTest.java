@@ -226,6 +226,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithSimple() {
+        this.converterAndCheck(
+                "simple",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.simple()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToExpression() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION + "",
