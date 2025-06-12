@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.template;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -36,6 +39,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -50,6 +54,11 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
     private final static Function<TemplateValueName, Expression> NAME_TO_EXPRESSION = (n) -> {
         throw new UnsupportedOperationException();
     };
+
+    private final static EnvironmentValueName<Object> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with("test123");
+
+    private final static Object ENVIRONMENT_VALUE = "testValue123";
+
     private static final FakeSpreadsheetExpressionEvaluationContext SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = new FakeSpreadsheetExpressionEvaluationContext() {
 
         @Override
@@ -79,6 +88,32 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
         public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
             Objects.requireNonNull(labelName, "labelName");
             throw new UnsupportedOperationException();
+        }
+
+        // EnvironmentContext...........................................................................................
+
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            Objects.requireNonNull(name, "name");
+
+            return Optional.ofNullable(
+                    (T)this.environmentValues.get(name)
+            );
+        }
+
+        @Override
+        public Set<EnvironmentValueName<?>> environmentValueNames() {
+            return this.environmentValues.keySet();
+        }
+
+        private final Map<EnvironmentValueName<?>, Object> environmentValues = Maps.of(
+                ENVIRONMENT_VALUE_NAME,
+                ENVIRONMENT_VALUE
+        );
+
+        @Override
+        public Optional<EmailAddress> user() {
+            return Optional.of(USER);
         }
     };
 
@@ -308,6 +343,28 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
                 label,
                 resolved
         );
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Test
+    public void testEnvironmentValue() {
+        this.environmentValueAndCheck(
+                ENVIRONMENT_VALUE_NAME,
+                ENVIRONMENT_VALUE
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueNames() {
+        this.environmentValueNamesAndCheck(
+                ENVIRONMENT_VALUE_NAME
+        );
+    }
+
+    @Test
+    public void testUser2() {
+        this.userAndCheck(USER);
     }
 
     // SpreadsheetTemplateContext.......................................................................................

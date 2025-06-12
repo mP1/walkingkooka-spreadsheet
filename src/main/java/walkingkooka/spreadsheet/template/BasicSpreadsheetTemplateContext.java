@@ -21,6 +21,8 @@ import walkingkooka.Either;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -50,6 +52,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -61,7 +64,8 @@ import java.util.function.Function;
  * {@link SpreadsheetExpressionEvaluationContext} and template values from a {@link Function}.
  */
 final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContext,
-        SpreadsheetParserContextDelegator {
+        SpreadsheetParserContextDelegator,
+        EnvironmentContextDelegator {
 
     static BasicSpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
                                                 final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
@@ -136,6 +140,18 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     }
 
     private final SpreadsheetParserContext spreadsheetParserContext;
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.spreadsheetExpressionEvaluationContext;
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.spreadsheetExpressionEvaluationContext.now();
+    }
 
     // ExpressionEvaluationContext......................................................................................
 
