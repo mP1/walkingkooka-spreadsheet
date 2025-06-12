@@ -70,11 +70,6 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
     }
 
     @Override
-    default void testUser() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     default void testValidateFormWithNullFormFieldsFails() {
         throw new UnsupportedOperationException();
     }

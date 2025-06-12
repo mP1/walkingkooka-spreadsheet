@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.template;
 
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -100,25 +98,6 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
 
     @Override
     default Optional<Object> validationValue() {
-        throw new UnsupportedOperationException();
-    }
-
-    // EnvironmentContext...............................................................................................
-
-    @Override
-    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        Objects.requireNonNull(name, "name");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default Set<EnvironmentValueName<?>> environmentValueNames() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default Optional<EmailAddress> user() {
         throw new UnsupportedOperationException();
     }
 
