@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.template.TemplateContext;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 
 import java.util.function.Function;
 
@@ -34,13 +33,11 @@ public final class SpreadsheetTemplateContexts implements PublicStaticHelper {
      */
     public static SpreadsheetTemplateContext basic(final SpreadsheetParserContext spreadsheetParserContext,
                                                    final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                   final Function<TemplateValueName, Expression> templateValueNameToExpression,
-                                                   final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
+                                                   final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         return BasicSpreadsheetTemplateContext.with(
                 spreadsheetParserContext,
                 spreadsheetExpressionEvaluationContext,
-                templateValueNameToExpression,
-                jsonNodeMarshallUnmarshallContext
+                templateValueNameToExpression
         );
     }
 
