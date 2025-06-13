@@ -197,6 +197,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+
+    @Test
+    public void testConverterSelectorWithHasStyleToStyle() {
+        this.converterAndCheck(
+                "has-style-to-style",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.hasTextStyleToTextStyle()
+        );
+    }
+
     @Test
     public void testConverterSelectorWithJsonTo() {
         this.converterAndCheck(
