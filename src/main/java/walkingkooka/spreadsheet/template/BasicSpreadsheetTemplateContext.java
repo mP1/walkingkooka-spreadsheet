@@ -74,26 +74,22 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
 
     static BasicSpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
                                                 final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                final Function<TemplateValueName, Expression> templateValueNameToExpression,
-                                                final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
+                                                final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         return new BasicSpreadsheetTemplateContext(
                 Objects.requireNonNull(spreadsheetParserContext, "spreadsheetParserContext"),
                 Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
-                Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression"),
-                Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext")
+                Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression")
         );
     }
 
     private BasicSpreadsheetTemplateContext(final SpreadsheetParserContext spreadsheetParserContext,
                                             final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                            final Function<TemplateValueName, Expression> templateValueNameToExpression,
-                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
+                                            final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         this.spreadsheetParserContext = spreadsheetParserContext;
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.enterScope(
                 this::reference
         );
         this.templateValueNameToExpression = templateValueNameToExpression;
-        this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
     }
 
     @Override
@@ -318,25 +314,22 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
 
     @Override
     public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final JsonNodeMarshallUnmarshallContext before = this.jsonNodeMarshallUnmarshallContext;
-        final JsonNodeMarshallUnmarshallContext after = before.setPreProcessor(processor);
+        final SpreadsheetExpressionEvaluationContext before = this.spreadsheetExpressionEvaluationContext;
+        final SpreadsheetExpressionEvaluationContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
                 this :
                 BasicSpreadsheetTemplateContext.with(
                         this.spreadsheetParserContext,
-                        this.spreadsheetExpressionEvaluationContext,
-                        this.templateValueNameToExpression,
-                        after
+                        after,
+                        this.templateValueNameToExpression
                 );
     }
 
     @Override
     public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
-        return this.jsonNodeMarshallUnmarshallContext;
+        return this.spreadsheetExpressionEvaluationContext;
     }
-
-    private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
     // toString.........................................................................................................
 
@@ -346,8 +339,6 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
                 " " +
                 this.spreadsheetParserContext +
                 " " +
-                this.templateValueNameToExpression +
-                " " +
-                this.jsonNodeMarshallUnmarshallContext;
+                this.templateValueNameToExpression;
     }
 }
