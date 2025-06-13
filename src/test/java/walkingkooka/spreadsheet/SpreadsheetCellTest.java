@@ -59,6 +59,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.HasTextStyleTesting;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -82,6 +83,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         ClassTesting2<SpreadsheetCell>,
         CanReplaceReferencesTesting<SpreadsheetCell>,
         HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+        HasTextStyleTesting,
         HasTextTesting,
         ParseStringTesting<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
@@ -3066,6 +3068,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(
                 cell.setFormula(SpreadsheetFormula.EMPTY),
                 cell
+        );
+    }
+
+    // HasTextStyle.....................................................................................................
+
+    @Test
+    public void testHasTextStyle() {
+        final TextStyle textStyle = TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.LEFT
+        );
+
+        this.textStyleAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(textStyle),
+                textStyle
         );
     }
 
