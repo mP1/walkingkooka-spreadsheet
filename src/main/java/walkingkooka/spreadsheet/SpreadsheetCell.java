@@ -53,6 +53,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
+import walkingkooka.tree.text.HasTextStyle;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.ValidationValueTypeName;
@@ -77,6 +78,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         HasSpreadsheetReference<SpreadsheetCellReference>,
         HateosResource<SpreadsheetCellReference>,
         Patchable<SpreadsheetCell>,
+        HasTextStyle,
         HasText,
         TreePrintable,
         UsesToStringBuilder {
@@ -417,6 +419,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * The cell style that is used to format the output of the formula.
      */
     private final TextStyle style;
+
+    // HasTextStyle.....................................................................................................
+
+    @Override
+    public TextStyle textStyle() {
+        return this.style;
+    }
 
     // formatted .......................................................................................................
 
