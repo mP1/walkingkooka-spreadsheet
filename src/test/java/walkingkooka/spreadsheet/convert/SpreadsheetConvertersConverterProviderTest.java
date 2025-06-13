@@ -338,6 +338,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToTemplateValueName() {
+        this.converterAndCheck(
+                "text-to-template-value-name",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToTemplateValueName()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToTextNode() {
         this.converterAndCheck(
                 "text-to-text-node",
