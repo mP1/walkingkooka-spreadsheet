@@ -4333,37 +4333,53 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchCellsWithStyleMerging() {
-        final TextStyle beforeStyle = TextStyle.EMPTY
-                .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
+        final TextStyle beforeStyle1 = TextStyle.EMPTY
+                .set(
+                        TextStylePropertyName.COLOR,
+                        Color.parse("#111111")
+                );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(beforeStyle);
+                .setStyle(beforeStyle1);
+
+        final TextStyle beforeStyle2 = TextStyle.EMPTY
+                .set(
+                        TextStylePropertyName.COLOR,
+                        Color.parse("#222222")
+                );
+
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
                 .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(beforeStyle);
+                .setStyle(beforeStyle2);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
                 .setCells(
-                        Sets.of(a1, a2)
+                        Sets.of(
+                                a1,
+                                a2
+                        )
                 ).setWindow(
                         SpreadsheetViewportWindows.parse("A1:A2")
                 );
 
-        final JsonNode stylePatch = TextStylePropertyName.COLOR.stylePatch(
-                Color.parse("#123456")
-        );
-        final TextStyle patchStyle = beforeStyle.patch(
-                stylePatch,
-                this.createPatchContext()
+        final TextStyle patchStyle = TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
         );
 
-        final TextStyle patchedStyle = beforeStyle.merge(patchStyle);
+        final JsonNode stylePatch = TextStylePropertyName.TEXT_ALIGN.stylePatch(
+                TextAlign.CENTER
+        );
 
         final SpreadsheetDelta after = before.setCells(
                 Sets.of(
-                        a1.setStyle(patchedStyle),
-                        a2.setStyle(patchedStyle)
+                        a1.setStyle(
+                                beforeStyle1.merge(patchStyle)
+                        ),
+                        a2.setStyle(
+                                beforeStyle2.merge(patchStyle)
+                        )
                 )
         );
 
