@@ -315,9 +315,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final TextStyle effectiveStyle() {
         if (null == this.effectiveStyle) {
             final TextStyle style = this.getStyleOrEmpty();
-            final TextStyle defaultStyle = this.defaults().getStyleOrEmpty();
+            final TextStyle defaultStyle = this.defaults()
+                    .getStyleOrEmpty();
 
-            this.effectiveStyle = style.merge(defaultStyle);
+            this.effectiveStyle = defaultStyle.merge(style);
         }
 
         return this.effectiveStyle;
