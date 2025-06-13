@@ -124,6 +124,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeTextConverters#hasTextStyleToTextStyle}
+     */
+    public static Converter<SpreadsheetConverterContext> hasTextStyleToTextStyle() {
+        return TreeTextConverters.hasTextStyleToTextStyle();
+    }
+
+    /**
      * {@see JsonNodeConverters#jsonNodeTo}
      */
     public static Converter<SpreadsheetConverterContext> jsonTo() {
