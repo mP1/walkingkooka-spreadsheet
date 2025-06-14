@@ -68,7 +68,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
 
         final SpreadsheetFormula formula = SpreadsheetFormula.parse(
                 TextCursors.charSequence(
-                                this.parseExpressionText(text)
+                                this.parseTemplateExpression0(text)
                         ),
                 EXPRESSION_PARSER,
                 this.context
@@ -91,7 +91,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     /**
      * Consumes the expression text, ready to be parsed by {@link SpreadsheetFormulaParsers#expression()}.
      */
-    private CharSequence parseExpressionText(final TextCursor text) {
+    private CharSequence parseTemplateExpression0(final TextCursor text) {
         final TextCursorSavePoint save = text.save();
 
         while (true) {
