@@ -80,6 +80,7 @@ import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1217,22 +1218,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             count
                     );
 
-            final SpreadsheetDelta delta = this.prepareResponse(
+            return this.prepareResponse(
                     changes,
                     context
+            ).setForms(
+                    new HashSet<>(forms)
             );
-
-            final Set<Form<SpreadsheetExpressionReference>> validatedForms = SortedSets.tree(Form.nameComparator());
-            for (final Form<SpreadsheetExpressionReference> form : forms) {
-                validatedForms.add(
-                        this.validateFormFields(
-                                form,
-                                context
-                        )
-                );
-            }
-
-            return delta.setForms(validatedForms);
         } finally {
             changes.close();
         }
