@@ -66,13 +66,26 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     public Template parseTemplateExpression(final TextCursor text) {
         Objects.requireNonNull(text, "text");
 
-        final Expression expression = this.parseExpression(
+        final SpreadsheetFormula formula = SpreadsheetFormula.parse(
                 TextCursors.charSequence(
-                        this.parseExpressionText(text)
-                )
+                                this.parseExpressionText(text)
+                        ),
+                EXPRESSION_PARSER,
+                this.context
         );
 
-        return Templates.expression(expression);
+        formula.error()
+                .ifPresent(e -> {
+                            throw new IllegalArgumentException(e.message());
+                        }
+                );
+
+        return Templates.expression(
+                formula.token()
+                        .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
+                        .toExpression(this.context)
+                        .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
+        );
     }
 
     /**
@@ -109,25 +122,6 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     }
 
     private final static Parser<SpreadsheetParserContext> DOUBLE_QUOTE = Parsers.doubleQuoted();
-
-    private Expression parseExpression(final TextCursor text) {
-        SpreadsheetFormula formula = SpreadsheetFormula.parse(
-                text,
-                EXPRESSION_PARSER,
-                this.context
-        );
-
-        formula.error()
-                .ifPresent(e -> {
-                            throw new IllegalArgumentException(e.message());
-                        }
-                );
-
-        return formula.token()
-                .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
-                .toExpression(this.context)
-                .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"));
-    }
 
     private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER = SpreadsheetFormulaParsers.templateExpression()
             .orFailIfCursorNotEmpty(
