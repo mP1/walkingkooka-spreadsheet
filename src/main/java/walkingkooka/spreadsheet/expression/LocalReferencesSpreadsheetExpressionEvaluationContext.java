@@ -67,12 +67,10 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * A {@link SpreadsheetExpressionEvaluationContext} that wraps another delegating most method calls, except for a few
- * directly related to labels and resolving references to values. Some labels in an executed expression may actually be
- * local parameters scoped to just this context and that logic is handled by this class, basically everything else is
- * forwarded to the wrapped {@link SpreadsheetExpressionEvaluationContext}.
+ * A {@link SpreadsheetExpressionEvaluationContext} that uses a {@link Function} to try and verify if a reference
+ * has a local value.
  */
-final class LocalLabelsSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+final class LocalReferencesSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
@@ -80,22 +78,22 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         JsonNodeUnmarshallContextDelegator,
         UsesToStringBuilder {
 
-    static LocalLabelsSpreadsheetExpressionEvaluationContext with(
-            final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
+    static LocalReferencesSpreadsheetExpressionEvaluationContext with(
+            final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
             final SpreadsheetExpressionEvaluationContext context) {
-        Objects.requireNonNull(labelToValues, "labelToValues");
+        Objects.requireNonNull(localReferenceToValues, "localReferenceToValues");
         Objects.requireNonNull(context, "context");
 
-        return new LocalLabelsSpreadsheetExpressionEvaluationContext(
-                labelToValues,
+        return new LocalReferencesSpreadsheetExpressionEvaluationContext(
+                localReferenceToValues,
                 context
         );
     }
 
-    private LocalLabelsSpreadsheetExpressionEvaluationContext(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
+    private LocalReferencesSpreadsheetExpressionEvaluationContext(final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
+                                                                  final SpreadsheetExpressionEvaluationContext context) {
         super();
-        this.labelToValues = labelToValues;
+        this.localReferenceToValues = localReferenceToValues;
         this.context = context;
     }
 
@@ -207,7 +205,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
      */
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        if (this.findLocalLabel(labelName).isPresent()) {
+        if (this.findLocalReference(labelName).isPresent()) {
             throw new IllegalArgumentException("Label " + labelName + " has a value");
         }
 
@@ -221,17 +219,9 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        Optional<Optional<Object>> value = null;
+        Optional<Optional<Object>> value = this.findLocalReference(reference);
 
-        if (reference instanceof SpreadsheetLabelName) {
-            value = this.findLocalLabel((SpreadsheetLabelName) reference);
-
-            if (!value.isPresent()) {
-                value = null;
-            }
-        }
-
-        if (null == value) {
+        if (false == value.isPresent()) {
             value = this.context.reference(reference);
         }
 
@@ -239,16 +229,16 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     /**
-     * Finds the unevaluated value if the reference is a {@link SpreadsheetLabelName} otherwise returns {@link Optional#empty()}.
+     * Attempts to find if the given {@link ExpressionReference} has a value.
      */
-    private Optional<Optional<Object>> findLocalLabel(final SpreadsheetLabelName label) {
-        return this.labelToValues.apply(label);
+    private Optional<Optional<Object>> findLocalReference(final ExpressionReference reference) {
+        return this.localReferenceToValues.apply(reference);
     }
 
     /**
      * Provides the value for a given {@link SpreadsheetLabelName}.
      */
-    private final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues;
+    private final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues;
 
     @Override
     public boolean isPure(final ExpressionFunctionName functionName) {
@@ -260,7 +250,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
 
     private void failIfParameterName(final ExpressionFunctionName functionName) {
         final String text = functionName.value();
-        if (SpreadsheetSelection.isLabelText(text) && this.findLocalLabel(SpreadsheetSelection.labelName(text)).isPresent()) {
+        if (/*SpreadsheetSelection.isLabelText(text) && */this.findLocalReference(SpreadsheetSelection.labelName(text)).isPresent()) {
             throw new IllegalArgumentException("Function name " + functionName + " is a parameter and not an actual function");
         }
     }
@@ -365,8 +355,8 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
 
         return before.equals(after) ?
                 this :
-                new LocalLabelsSpreadsheetExpressionEvaluationContext(
-                        this.labelToValues,
+                new LocalReferencesSpreadsheetExpressionEvaluationContext(
+                        this.localReferenceToValues,
                         after
                 );
     }
@@ -385,7 +375,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.value(this.labelToValues);
+        builder.value(this.localReferenceToValues);
         builder.value(this.context);
     }
 }

@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -101,8 +100,8 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
-        return SpreadsheetExpressionEvaluationContexts.localLabels(
-                Cast.to(scoped),
+        return SpreadsheetExpressionEvaluationContexts.localReferences(
+                scoped,
                 this
         );
     }

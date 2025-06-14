@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -94,13 +93,13 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see LocalLabelsSpreadsheetExpressionEvaluationContext}
+     * {@see LocalReferencesSpreadsheetExpressionEvaluationContext}
      */
-    public static SpreadsheetExpressionEvaluationContext localLabels(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
-                                                                     final SpreadsheetExpressionEvaluationContext context) {
+    public static SpreadsheetExpressionEvaluationContext localReferences(final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValues,
+                                                                         final SpreadsheetExpressionEvaluationContext context) {
 
-        return LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                labelToValues,
+        return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                referenceToValues,
                 context
         );
     }
