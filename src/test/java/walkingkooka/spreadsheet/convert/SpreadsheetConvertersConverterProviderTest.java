@@ -46,19 +46,19 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         SpreadsheetMetadataTesting {
 
     @Test
-    public void testConverterSelectorWithBasicSpreadsheetConverter() {
+    public void testConverterNameWithBasic() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER + "",
+                SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER,
+                Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.basic()
         );
     }
 
     @Test
-    public void testConverterNameWithBasicSpreadsheetConverter() {
+    public void testConverterSelectorWithBasic() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER,
-                Lists.empty(),
+                SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER + "",
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.basic()
         );
@@ -81,36 +81,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                                 )
                         )
                 )
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithErrorThrowing() {
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.ERROR_THROWING + "",
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.errorThrowing()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithErrorThrowing() {
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
-                Lists.empty(),
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.errorThrowing()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithFormatPatternToString() {
-        final String pattern = "#.##";
-
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.FORMAT_PATTERN_TO_STRING + " (\"" + pattern + "\")",
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.formatPatternToString(pattern)
         );
     }
 
@@ -146,6 +116,36 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 Lists.empty(),
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.errorToNumber()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithErrorThrowing() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
+                Lists.empty(),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.errorThrowing()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithErrorThrowing() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.ERROR_THROWING + "",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.errorThrowing()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithFormatPatternToString() {
+        final String pattern = "#.##";
+
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.FORMAT_PATTERN_TO_STRING + " (\"" + pattern + "\")",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.formatPatternToString(pattern)
         );
     }
 
@@ -217,6 +217,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithSelectionToSelection() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION,
+                Lists.empty(),
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.selectionToSelection()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithSelectionToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION + "",
@@ -226,12 +236,21 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithSelectionToSelection() {
+    public void testConverterNameWithSelectionToText() {
         this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT,
                 Lists.empty(),
                 PROVIDER_CONTEXT,
-                SpreadsheetConverters.selectionToSelection()
+                SpreadsheetConverters.selectionToText()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithSelectionToText() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT + "",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.selectionToText()
         );
     }
 
@@ -295,25 +314,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME + "",
                 PROVIDER_CONTEXT,
                 SpreadsheetConverters.textToSpreadsheetMetadataPropertyName()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithSelectionToText() {
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT,
-                Lists.empty(),
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.selectionToText()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithSelectionToText() {
-        this.converterAndCheck(
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT + "",
-                PROVIDER_CONTEXT,
-                SpreadsheetConverters.selectionToText()
         );
     }
 
@@ -448,13 +448,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetConvertersConverterProvider> type() {
         return SpreadsheetConvertersConverterProvider.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
