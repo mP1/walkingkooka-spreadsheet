@@ -1151,7 +1151,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "      Form111\n" +
                         "      fields:\n" +
                         "        FormField\n" +
-                        "          cell A1\n" +
+                        "          reference:\n" +
+                        "            cell A1\n" +
                         "          label:\n" +
                         "            \"Label111\"\n" +
                         "          type:\n" +
@@ -1589,7 +1590,8 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "      Form111\n" +
                         "      fields:\n" +
                         "        FormField\n" +
-                        "          cell A1\n" +
+                        "          reference:\n" +
+                        "            cell A1\n" +
                         "          label:\n" +
                         "            \"Label111\"\n" +
                         "          type:\n" +
