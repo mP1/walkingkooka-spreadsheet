@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -38,6 +39,30 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
             "https://github.com/mP1/walkingkooka-spreadsheet/" + Converter.class.getSimpleName()
     );
+
+    public final static ConverterAliasSet FIND = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
+
+    public final static ConverterAliasSet FORMATTING = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR);
+
+    public final static ConverterAliasSet FORMULA = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
+
+    public final static ConverterAliasSet SORT = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_TEXT_NODE)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
+            .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
     /**
      * {@see SpreadsheetConvertersConverterProvider}

@@ -479,7 +479,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         return INFOS;
     }
 
-    private final static ConverterInfoSet INFOS = ConverterInfoSet.with(
+    // @see SpreadsheetConverters constants
+    final static ConverterInfoSet INFOS = ConverterInfoSet.with(
             Sets.of(
                     converterInfo(BASIC_SPREADSHEET_CONVERTER),
                     converterInfo(COLLECTION),
