@@ -244,7 +244,7 @@ public interface SpreadsheetEngine {
                               final SpreadsheetEngineContext context);
 
     /**
-     * Loads the given range of {@link Form}.
+     * Loads the given range of {@link Form} in their original form, without preparing or validation.
      */
     SpreadsheetDelta loadForms(final int offset,
                                final int count,
