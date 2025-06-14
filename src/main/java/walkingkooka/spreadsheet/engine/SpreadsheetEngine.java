@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormName;
 
 import java.util.Collection;
@@ -228,11 +229,18 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
-     * Loads the given {@link FormName} and also returns the cells mentioned.
-     * If the {@link walkingkooka.validation.form.Form} contains {@link walkingkooka.validation.form.FormField} with
-     * duplicate references errors will be added.
+     * Constant for {@link #loadForm(FormName, Optional, SpreadsheetEngineContext)}.
+     */
+    Optional<SpreadsheetExpressionReference> NO_FORM_SELECTION = Optional.empty();
+
+    /**
+     * Loads the {@link Form} with the given {@link FormName}.
+     * If the selection is empty the form is returned in its original form.
+     * When the selection is present the {@link FormField#reference()} will be updated using the selected
+     * {@link walkingkooka.validation.form.FormHandler}.
      */
     SpreadsheetDelta loadForm(final FormName name,
+                              final Optional<SpreadsheetExpressionReference> selection,
                               final SpreadsheetEngineContext context);
 
     /**

@@ -280,9 +280,11 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
     @Override
     public SpreadsheetDelta loadForm(final FormName name,
+                                     final Optional<SpreadsheetExpressionReference> selection,
                                      final SpreadsheetEngineContext context) {
         return this.engine.loadForm(
                 name,
+                selection,
                 context
         );
     }

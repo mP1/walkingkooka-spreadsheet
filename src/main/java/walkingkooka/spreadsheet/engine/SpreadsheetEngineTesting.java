@@ -1761,6 +1761,20 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .loadForm(
                                 null,
+                                SpreadsheetEngine.NO_FORM_SELECTION,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormWithNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadForm(
+                                FormName.with("HelloForm"),
+                                null,
                                 this.createContext()
                         )
         );
@@ -1773,6 +1787,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .loadForm(
                                 FormName.with("HelloForm123"),
+                                SpreadsheetEngine.NO_FORM_SELECTION,
                                 null
                         )
         );
@@ -1782,10 +1797,39 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final FormName formName,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta expected) {
+        this.loadFormAndCheck(
+                engine,
+                formName,
+                SpreadsheetEngine.NO_FORM_SELECTION,
+                context,
+                expected
+        );
+    }
+
+    default void loadFormAndCheck(final SpreadsheetEngine engine,
+                                  final FormName formName,
+                                  final SpreadsheetExpressionReference selection,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetDelta expected) {
+        this.loadFormAndCheck(
+                engine,
+                formName,
+                Optional.of(selection),
+                context,
+                expected
+        );
+    }
+
+    default void loadFormAndCheck(final SpreadsheetEngine engine,
+                                  final FormName formName,
+                                  final Optional<SpreadsheetExpressionReference> selection,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
                 engine.loadForm(
                         formName,
+                        selection,
                         context
                 )
         );

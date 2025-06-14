@@ -110,6 +110,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContext;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
@@ -140,16 +141,26 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.FakeValidator;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
+import walkingkooka.validation.form.FakeFormHandler;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
+import walkingkooka.validation.form.FormHandler;
+import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormName;
+import walkingkooka.validation.form.provider.FakeFormHandlerProvider;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerInfo;
+import walkingkooka.validation.form.provider.FormHandlerInfoSet;
+import walkingkooka.validation.form.provider.FormHandlerName;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.FakeValidatorProvider;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -22597,9 +22608,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadFormMissingCell() {
+    public void testLoadFormWithoutFormSelection() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
+        final SpreadsheetEngineContext context = this.createContext(
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.EMPTY
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse("invalidFormHandler")
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATORS,
+                        ValidatorAliasSet.EMPTY
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+                        ValidatorAliasSet.parse("InvalidValidator")
+                )
+        );
 
         final SpreadsheetExpressionReference cell = SpreadsheetSelection.A1;
 
@@ -22609,14 +22634,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setFields(
                         Lists.of(
                                 FormField.with(cell)
-                                        .setLabel("A1Label")
+                                        .setLabel("FormField1")
                                         .setType(
                                                 Optional.of(ValidationValueTypeName.TEXT)
                                         ).setValue(
-                                                Optional.of("Initial value")
+                                                Optional.of("InitialFormValue1")
                                         ).setValidator(
                                                 Optional.of(
-                                                        ValidatorSelector.parse("Validator123")
+                                                        ValidatorSelector.parse("FormField1Validator")
                                                 )
                                         )
                         )
@@ -22626,18 +22651,182 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .forms()
                 .save(form);
 
+        // form is returned without field values modified or validated.
         this.loadFormAndCheck(
                 engine,
                 formName,
                 context,
                 SpreadsheetDelta.EMPTY.setForms(
                         Sets.of(form)
+                )
+        );
+    }
+
+    @Test
+    public void testLoadFormWithSquareSelectionFails() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA,
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final FormName formName = FormName.with("Form123");
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                .setFields(
+                        Lists.of(
+                                FormField.<SpreadsheetExpressionReference>with(
+                                                SpreadsheetSelection.labelName("UnknownLabel404")
+                                        ).setLabel("TextLabel111")
+                                        .setValue(
+                                                Optional.of("InitialFormFieldValue1")
+                                        )
+                        )
+                );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.loadForm(
+                            formName,
+                            Optional.of(
+                                    SpreadsheetSelection.parseCellRange("B2:C3")
+                            ),
+                            context
+                    )
+        );
+
+        this.checkEquals(
+                "Form cell range must be either a column or row",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testLoadFormWithSelectionAndMissingCell() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if(formHandler.equals(selector.toString())) {
+                                    return new FakeFormHandler<>() {
+                                        @Override
+                                        public Form<R> prepareForm(final Form<R> form,
+                                                                   final C context) {
+                                            return form;
+                                        }
+
+                                        @Override
+                                        public List<ValidationError<R>> validateForm(final Form<R> form,
+                                                                                     final C context) {
+                                            return ValidationErrorList.empty();
+                                        }
+                                    };
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                        FormHandlerInfo.with(
+                                                Url.parseAbsolute("https://example.com/FormHandler"),
+                                                FormHandlerName.with(formHandler)
+                                        )
+                                    )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final FormName formName = FormName.with("Form123");
+
+        final FormField<SpreadsheetExpressionReference> field = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("UnknownLabel404")
+                ).setLabel("TextLabel111")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                .setFields(
+                        Lists.of(field)
+                );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        this.loadFormAndCheck(
+                engine,
+                formName,
+                SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+                context,
+                SpreadsheetDelta.EMPTY.setForms(
+                        Sets.of(
+                                form.setFields(
+                                        Lists.of(
+                                                field.setReference(
+                                                        SpreadsheetSelection.parseCell("B2")
+                                                )
+                                        )
+                                )
+                        )
                 ).setDeletedCells(
-                        SpreadsheetCellReferenceSet.parse("A1")
+                        SpreadsheetCellReferenceSet.parse("B2")
                 ).setColumnWidths(
-                        columnWidths("A")
+                        columnWidths("B")
                 ).setRowHeights(
-                        rowHeights("1")
+                        rowHeights("2")
                 ).setColumnCount(
                         OptionalInt.of(0)
                 ).setRowCount(
@@ -22647,645 +22836,599 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadFormMissingLabel() {
+    public void testLoadFormWithSelectionAndExistingCell() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel404");
+        final String formHandler = "TestFormHandler";
 
-        final FormName formName = FormName.with("Form123");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(label)
-                                        .setLabel("TextLabel111")
-                                        .setType(
-                                                Optional.of(ValidationValueTypeName.TEXT)
-                                        ).setValue(
-                                                Optional.of("Initial value")
-                                        ).setValidator(
-                                                Optional.of(ValidatorSelector.parse("Validator111"))
-                                        )
-                        )
+        final FormField<SpreadsheetExpressionReference> field = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("UnknownLabel404")
+                ).setLabel("TextLabel111")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
                 );
 
-        context.storeRepository()
-                .forms()
-                .save(form);
+        final Optional<Object> cellValue = Optional.of("CellValue1");
 
-        this.loadFormAndCheck(
-                engine,
-                formName,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(form)
-                ).setDeletedLabels(
-                        Sets.of(label)
-                ).setColumnCount(
-                        OptionalInt.of(0)
-                ).setRowCount(
-                        OptionalInt.of(0)
-                )
-        );
-    }
-
-    @Test
-    public void testLoadFormExistingCell() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("Value")
-                )
-        ).setStyle(STYLE);
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
-        );
-
-        final FormName formName = FormName.with("Form123");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1Label")
-                                        .setType(
-                                                Optional.of(ValidationValueTypeName.TEXT)
-                                        ).setValue(
-                                                Optional.of("Initial value")
-                                        ).setValidator(
-                                                Optional.of(ValidatorSelector.parse("Validator123"))
-                                        )
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.loadFormAndCheck(
-                engine,
-                formName,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(form)
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
-        );
-    }
-
-    @Test
-    public void testLoadFormMissingCellMissingLabelExistingCellExistingLabel() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("B2Value")
-                        )
-                ).setStyle(STYLE);
-
-        this.saveCellsAndCheck(
-                engine,
-                Sets.of(
-                        a1Cell,
-                        b2Cell
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
                 ),
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                                @Override
+                                                public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                        final SpreadsheetFormHandlerContext context) {
+                                                    return form.setFields(
+                                                            form.fields()
+                                                                    .stream()
+                                                                    .map(f -> f.setValue(cellValue))
+                                                                    .collect(Collectors.toList())
+                                                    );
+                                                }
 
-        final SpreadsheetLabelMapping a1Label = SpreadsheetSelection.labelName("A1LABEL")
-                .setLabelMappingReference(a1Cell.reference());
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return ValidationErrorList.empty();
+                                                }
+                                            }
+                                    );
+                                }
 
-        this.saveLabelAndCheck(
-                engine,
-                a1Label,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Label)
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
 
-        final SpreadsheetCellReference c3CellMissing = SpreadsheetSelection.parseCell("C3");
-        final SpreadsheetLabelName d4LabelMissing = SpreadsheetSelection.labelName("D4Label");
-
         final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
                 .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Label.reference())
-                                        .setLabel("A1LabelText"),
-                                FormField.<SpreadsheetExpressionReference>with(b2Cell.reference())
-                                        .setLabel("B2LabelText"),
-                                FormField.<SpreadsheetExpressionReference>with(c3CellMissing)
-                                        .setLabel("MissingC3Cell"),
-                                FormField.<SpreadsheetExpressionReference>with(d4LabelMissing)
-                                        .setLabel("MissingD4Label")
-                        )
+                        Lists.of(field)
                 );
 
         context.storeRepository()
                 .forms()
                 .save(form);
 
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(cellValue)
+        ).setStyle(STYLE);
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
         this.loadFormAndCheck(
                 engine,
                 formName,
+                SpreadsheetSelection.A1.toCellRange(), // 1 cells
                 context,
                 SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(form)
+                        Sets.of(
+                                form.setFields(
+                                        Lists.of(
+                                                field.setReference(SpreadsheetSelection.A1)
+                                                        .setValue(cellValue)
+                                        )
+                                )
+                        )
                 ).setCells(
                         Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
+                                formatCell(cell)
                         )
-                ).setLabels(
-                        Sets.of(a1Label)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testLoadFormWithSelectionAndExistingCellWithValidator() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidatorSelector");
+
+        final FormField<SpreadsheetExpressionReference> field = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("UnknownLabel404")
+                ).setLabel("TextLabel111")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                ).setValidator(
+                        Optional.of(validatorSelector)
+                );
+
+        final Optional<Object> cellValue = Optional.of("CellValue1");
+
+        final String message = "ValidationErrorMessage1";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                                @Override
+                                                public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                        final SpreadsheetFormHandlerContext context) {
+                                                    return form.setFields(
+                                                            form.fields()
+                                                                    .stream()
+                                                                    .map(f -> f.setValue(cellValue))
+                                                                    .collect(Collectors.toList())
+                                                    );
+                                                }
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return context.validateFormFields(
+                                                            form.fields()
+                                                    );
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        new FakeValidatorProvider() {
+                            @Override
+                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector, 
+                                                                                                                            final ProviderContext context) {
+                                if(selector.equals(validatorSelector)) {
+                                    return new FakeValidator<>() {
+                                        @Override
+                                        public List<ValidationError<R>> validate(final Object value,
+                                                                                 final C context) {
+                                            return Lists.of(
+                                                context.validationError(message)
+                                                        .setValue(
+                                                            Optional.of(value)
+                                                        )
+                                            );
+                                        }
+                                    };
+                                }
+                                throw new IllegalArgumentException("Unknown Validator " + selector);
+                            }
+                        }
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final FormName formName = FormName.with("Form123");
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                .setFields(
+                        Lists.of(field)
+                );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(cellValue)
+        ).setStyle(STYLE);
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        this.loadFormAndCheck(
+                engine,
+                formName,
+                SpreadsheetSelection.A1.toCellRange(), // 1 cells
+                context,
+                SpreadsheetDelta.EMPTY.setForms(
+                        Sets.of(
+                                form.setFields(
+                                        Lists.of(
+                                                field.setReference(SpreadsheetSelection.A1)
+                                                        .setValue(cellValue)
+                                        )
+                                ).setErrors(
+                                        Lists.of(
+                                                ValidationError.<SpreadsheetExpressionReference>with(
+                                                        SpreadsheetSelection.A1,
+                                                        message
+                                                ).setValue(
+                                                        Optional.of(cellValue)
+                                                )
+                                        )
+                                )
+                        )
+                ).setCells(
+                        Sets.of(
+                                formatCell(cell)
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testLoadFormWithColumnSelection() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+
+        final FormField<SpreadsheetExpressionReference> field1 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("FormField1")
+                ).setLabel("TextLabel111")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final FormField<SpreadsheetExpressionReference> field2 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("FormField2")
+                ).setLabel("TextLabel222")
+                .setValue(
+                        Optional.of("InitialFormFieldValue2")
+                );
+
+        final Optional<Object> cellValue1 = Optional.of("CellValue1");
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                                @Override
+                                                public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                        final SpreadsheetFormHandlerContext context) {
+                                                    return form.setFields(
+                                                            form.fields()
+                                                                    .stream()
+                                                                    .map(f -> f.setValue(
+                                                                                    f.value().toString().contains("1") ?
+                                                                                            cellValue1 :
+                                                                                            f.value()
+                                                                            )
+                                                                    ).collect(Collectors.toList())
+                                                    );
+                                                }
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return ValidationErrorList.empty();
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final FormName formName = FormName.with("Form123");
+
+        context.storeRepository()
+                .forms()
+                .save(
+                        Form.<SpreadsheetExpressionReference>with(formName)
+                                .setFields(
+                                        Lists.of(
+                                                field1,
+                                                field2
+                                        )
+                                )
+                );
+
+        final Optional<Object> cellValue = Optional.of("CellValue1");
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(cellValue)
+        ).setStyle(STYLE);
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        this.loadFormAndCheck(
+                engine,
+                formName,
+                SpreadsheetSelection.parseCellRange("A1:A2"),
+                context,
+                SpreadsheetDelta.EMPTY.setForms(
+                        Sets.of(
+                                Form.<SpreadsheetExpressionReference>with(formName)
+                                        .setFields(
+                                                Lists.of(
+                                                        field1.setReference(SpreadsheetSelection.A1)
+                                                                .setValue(cellValue1),
+                                                        field2.setReference(
+                                                                SpreadsheetSelection.parseCell("A2")
+                                                        )
+                                                )
+                                        )
+                        )
+                ).setCells(
+                        Sets.of(
+                                formatCell(cell)
+                        )
                 ).setDeletedCells(
-                        Sets.of(c3CellMissing)
-                ).setDeletedLabels(
-                        Sets.of(d4LabelMissing)
-                ).setReferences(
-                        references("A1=A1LABEL")
+                        SpreadsheetCellReferenceSet.parse("A2")
                 ).setColumnWidths(
-                        columnWidths("A,B,C")
+                        columnWidths("A")
                 ).setRowHeights(
-                        rowHeights("1,2,3")
+                        rowHeights("1,2")
                 ).setColumnCount(
-                        OptionalInt.of(2)
+                        OptionalInt.of(1)
                 ).setRowCount(
-                        OptionalInt.of(2)
+                        OptionalInt.of(1)
                 )
         );
     }
 
     @Test
-    public void testLoadFormIncludesDuplicateCellReferences() {
+    public void testLoadFormWithRowSelection() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
+        final String formHandler = "TestFormHandler";
 
-        final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("B2Value")
-                        )
-                ).setStyle(STYLE);
+        final FormField<SpreadsheetExpressionReference> field1 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("FormField1")
+                ).setLabel("TextLabel111")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
 
-        this.saveCellsAndCheck(
-                engine,
-                Sets.of(
-                        a1Cell,
-                        b2Cell
+        final FormField<SpreadsheetExpressionReference> field2 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("FormField2")
+                ).setLabel("TextLabel222")
+                .setValue(
+                        Optional.of("InitialFormFieldValue2")
+                );
+
+        final Optional<Object> cellValue1 = Optional.of("CellValue1");
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
                 ),
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                                @Override
+                                                public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                        final SpreadsheetFormHandlerContext context) {
+                                                    return form.setFields(
+                                                            form.fields()
+                                                                    .stream()
+                                                                    .map(f -> f.setValue(
+                                                                                    f.value().toString().contains("1") ?
+                                                                                            cellValue1 :
+                                                                                            f.value()
+                                                                            )
+                                                                    ).collect(Collectors.toList())
+                                                    );
+                                                }
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return ValidationErrorList.empty();
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(b2Cell.reference())
-                                        .setLabel("B2LabelText3")
-                        )
-                );
-
         context.storeRepository()
                 .forms()
-                .save(form);
+                .save(
+                        Form.<SpreadsheetExpressionReference>with(formName)
+                                .setFields(
+                                        Lists.of(
+                                                field1,
+                                                field2
+                                        )
+                                )
+                );
+
+        final Optional<Object> cellValue = Optional.of("CellValue1");
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(cellValue)
+        ).setStyle(STYLE);
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
 
         this.loadFormAndCheck(
                 engine,
                 formName,
+                SpreadsheetSelection.parseCellRange("A1:B1"),
                 context,
                 SpreadsheetDelta.EMPTY.setForms(
                         Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        a1Cell.reference(),
-                                                        "Multiple fields with same reference"
+                                Form.<SpreadsheetExpressionReference>with(formName)
+                                        .setFields(
+                                                Lists.of(
+                                                        field1.setReference(SpreadsheetSelection.A1)
+                                                                .setValue(cellValue1),
+                                                        field2.setReference(SpreadsheetSelection.parseCell("B1"))
                                                 )
                                         )
-                                )
                         )
                 ).setCells(
                         Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
+                                formatCell(cell)
                         )
+                ).setDeletedCells(
+                        SpreadsheetCellReferenceSet.parse("B1")
                 ).setColumnWidths(
                         columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-    }
-
-    @Test
-    public void testLoadFormIncludesDuplicateUnknownLabels() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
                 ).setRowHeights(
                         rowHeights("1")
                 ).setColumnCount(
                         OptionalInt.of(1)
                 ).setRowCount(
                         OptionalInt.of(1)
-                )
-        );
-
-        final FormName formName = FormName.with("Form123");
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DuplicateLabel2");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(label)
-                                        .setLabel("B2LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(label)
-                                        .setLabel("B2LabelText3")
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.loadFormAndCheck(
-                engine,
-                formName,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        label,
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setDeletedLabels(
-                        Sets.of(label)
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
-        );
-    }
-
-    @Test
-    public void testLoadFormIncludesDuplicateLabelsWithCells() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
-        final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(SpreadsheetSelection.A1);
-
-        this.saveLabelAndCheck(
-                engine,
-                a1Mapping,
-                context,
-                SpreadsheetDelta.EMPTY.setLabels(
-                        Sets.of(a1Mapping)
-                ).setColumnCount(
-                        OptionalInt.of(0)
-                ).setRowCount(
-                        OptionalInt.of(0)
-                )
-        );
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("B2Value")
-                        )
-                ).setStyle(STYLE);
-
-        this.saveCellsAndCheck(
-                engine,
-                Sets.of(
-                        a1Cell,
-                        b2Cell
-                ),
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-
-        final FormName formName = FormName.with("Form123");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(b2Cell.reference())
-                                        .setLabel("B2LabelText3")
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.loadFormAndCheck(
-                engine,
-                formName,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        a1Cell.reference(),
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-    }
-
-    @Test
-    public void testLoadFormIncludesDuplicateLabelToCell() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
-        final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(SpreadsheetSelection.A1);
-
-        this.saveLabelAndCheck(
-                engine,
-                a1Mapping,
-                context,
-                SpreadsheetDelta.EMPTY.setLabels(
-                        Sets.of(a1Mapping)
-                ).setColumnCount(
-                        OptionalInt.of(0)
-                ).setRowCount(
-                        OptionalInt.of(0)
-                )
-        );
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("B2Value")
-                        )
-                ).setStyle(STYLE);
-
-        this.saveCellsAndCheck(
-                engine,
-                Sets.of(
-                        a1Cell,
-                        b2Cell
-                ),
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-
-        final FormName formName = FormName.with("Form123");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(b2Cell.reference())
-                                        .setLabel("B2LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(a1Label)
-                                        .setLabel("A1LabelText3")
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.loadFormAndCheck(
-                engine,
-                formName,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        a1Cell.reference(),
-                                                        "Multiple fields with same reference"
-                                                ),
-                                                ValidationError.with(
-                                                        a1Label,
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
                 )
         );
     }

@@ -179,6 +179,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta loadForm(final FormName name,
+                                     final Optional<SpreadsheetExpressionReference> selection,
                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
