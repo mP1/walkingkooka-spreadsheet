@@ -1217,15 +1217,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             count
                     );
 
-            for (final Form<SpreadsheetExpressionReference> form : forms) {
-                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
-                    BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor.acceptFormField(
-                            field,
-                            changes
-                    );
-                }
-            }
-
             final SpreadsheetDelta delta = this.prepareResponse(
                     changes,
                     context
