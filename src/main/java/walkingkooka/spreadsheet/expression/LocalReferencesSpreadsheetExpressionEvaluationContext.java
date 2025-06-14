@@ -246,7 +246,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
 
     private void failIfParameterName(final ExpressionFunctionName functionName) {
         final String text = functionName.value();
-        if (/*SpreadsheetSelection.isLabelText(text) && */this.findLocalReference(SpreadsheetSelection.labelName(text)).isPresent()) {
+        if (this.findLocalReference(SpreadsheetSelection.labelName(text)).isPresent()) {
             throw new IllegalArgumentException("Function name " + functionName + " is a parameter and not an actual function");
         }
     }
