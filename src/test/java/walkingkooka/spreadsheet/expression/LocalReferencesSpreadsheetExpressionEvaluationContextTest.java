@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -52,13 +53,16 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<LocalLabelsSpreadsheetExpressionEvaluationContext>,
-        ToStringTesting<LocalLabelsSpreadsheetExpressionEvaluationContext> {
+public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<LocalReferencesSpreadsheetExpressionEvaluationContext>,
+        ToStringTesting<LocalReferencesSpreadsheetExpressionEvaluationContext> {
 
     private final static String NAME = "Name1234";
+    
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName(NAME);
-
-    private final static String LOCAL_VALUE = "abc123";
+    private final static String LABEL_LOCAL_VALUE = "LabelLocalValue";
+    
+    private final static TemplateValueName TEMPLATE_VALUE_NAME = TemplateValueName.with("TemplateValue");
+    private final static String TEMPLATE_LOCAL_VALUE = "TemplateLocalValue123";
 
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL128;
 
@@ -75,12 +79,12 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     private final static char POSITIVE_SYMBOL = 'P';
     private final static char ZERO = '0';
 
-    private final Function<SpreadsheetLabelName, Optional<Optional<Object>>> LABEL_TO_VALUES = new Function<>() {
+    private final Function<ExpressionReference, Optional<Optional<Object>>> REFERENCE_TO_VALUES = new Function<>() {
         @Override
-        public Optional<Optional<Object>> apply(final SpreadsheetLabelName label) {
-            return this.map.containsKey(label) ?
+        public Optional<Optional<Object>> apply(final ExpressionReference reference) {
+            return this.map.containsKey(reference) ?
                     Optional.of(
-                            Optional.ofNullable(this.map.get(label))
+                            Optional.ofNullable(this.map.get(reference))
                     ) :
                     Optional.empty();
         }
@@ -92,17 +96,19 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                     .build();
         }
 
-        private final Map<SpreadsheetLabelName, Object> map = Maps.of(
+        private final Map<ExpressionReference, Object> map = Maps.of(
                 LABEL,
-                LOCAL_VALUE
+                LABEL_LOCAL_VALUE,
+                TEMPLATE_VALUE_NAME,
+                TEMPLATE_LOCAL_VALUE
         );
     };
 
     @Test
-    public void testWithNullNamesAndValuesFails() {
+    public void testWithNullReferenceToValuesFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> LocalLabelsSpreadsheetExpressionEvaluationContext.with(
+                () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
                         null,
                         SpreadsheetExpressionEvaluationContexts.fake()
                 )
@@ -113,8 +119,8 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     public void testWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        LABEL_TO_VALUES,
+                () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                        REFERENCE_TO_VALUES,
                         null
                 )
         );
@@ -136,9 +142,9 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Test
-    public void testEvaluateFunctionContextReferenceInheritedLabel() {
+    public void testEvaluateFunctionContextReferenceWithLocalLabel() {
         this.checkEquals(
-                LOCAL_VALUE,
+                LABEL_LOCAL_VALUE,
                 this.createContext()
                         .evaluateFunction(
                                 new FakeExpressionFunction<>() {
@@ -160,9 +166,33 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Test
-    public void testEvaluateFunctionParameterInheritedLabel() {
+    public void testEvaluateFunctionContextReferenceWithLocalTemplateValue() {
         this.checkEquals(
-                LOCAL_VALUE,
+                TEMPLATE_LOCAL_VALUE,
+                this.createContext()
+                        .evaluateFunction(
+                                new FakeExpressionFunction<>() {
+
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.empty();
+                                    }
+
+                                    @Override
+                                    public Object apply(final List<Object> values,
+                                                        final ExpressionEvaluationContext context) {
+                                        return context.referenceOrFail(TEMPLATE_VALUE_NAME);
+                                    }
+                                },
+                                ExpressionFunction.NO_PARAMETER_VALUES
+                        )
+        );
+    }
+
+    @Test
+    public void testEvaluateFunctionParameterWithLocalLabel() {
+        this.checkEquals(
+                LABEL_LOCAL_VALUE,
                 this.createContext()
                         .evaluateFunction(
                                 new FakeExpressionFunction<>() {
@@ -221,16 +251,16 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     // reference........................................................................................................
 
     @Test
-    public void testReferenceLocalLabelNonNullValue() {
+    public void testReferenceWithLocalLabelNonNullValue() {
         this.referenceAndCheck3(
-                LABEL_TO_VALUES,
+                REFERENCE_TO_VALUES,
                 LABEL,
-                Optional.of(LOCAL_VALUE)
+                Optional.of(LABEL_LOCAL_VALUE)
         );
     }
 
     @Test
-    public void testReferenceLocalLabelNullValue() {
+    public void testReferenceWithLocalLabelNullValue() {
         this.referenceAndCheck3(
                 (r) -> {
                     this.checkEquals(LABEL, r);
@@ -242,13 +272,13 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Test
-    public void testReferenceLocalLabelAbsent() {
+    public void testReferenceWithLocalLabelAbsent() {
         final Optional<Optional<Object>> value = Optional.of(
-                Optional.of("abc123")
+                Optional.of(LABEL_LOCAL_VALUE)
         );
 
         this.referenceAndCheck2(
-                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
+                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
                         (r) -> Optional.empty(),
                         new FakeSpreadsheetExpressionEvaluationContext() {
                             @Override
@@ -263,12 +293,12 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         );
     }
 
-    private void referenceAndCheck3(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
+    private void referenceAndCheck3(final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValues,
                                     final ExpressionReference reference,
                                     final Optional<Object> expected) {
         this.referenceAndCheck(
-                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        labelToValues,
+                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                        referenceToValues,
                         SpreadsheetExpressionEvaluationContexts.fake()
                 ),
                 reference,
@@ -280,7 +310,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
 
     @Test
     public void testResolveIfLabelLocalLabelFails() {
-        final LocalLabelsSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final LocalReferencesSpreadsheetExpressionEvaluationContext context = this.createContext();
 
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
@@ -295,11 +325,11 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
 
     @Test
     public void testResolveLocalLabelFails() {
-        final LocalLabelsSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final LocalReferencesSpreadsheetExpressionEvaluationContext context = this.createContext();
 
         this.checkEquals(
                 Optional.of(
-                        Optional.of(LOCAL_VALUE)
+                        Optional.of(LABEL_LOCAL_VALUE)
                 ),
                 context.reference(SpreadsheetSelection.labelName(NAME))
         );
@@ -312,18 +342,18 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.toStringAndCheck(
-                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        LABEL_TO_VALUES,
+                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                        REFERENCE_TO_VALUES,
                         context
                 ),
-                "Name1234=\"abc123\" " + context
+                "Name1234=\"LabelLocalValue\", TemplateValue=\"TemplateLocalValue123\" " + context
         );
     }
 
     @Override
-    public LocalLabelsSpreadsheetExpressionEvaluationContext createContext() {
-        return LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                LABEL_TO_VALUES,
+    public LocalReferencesSpreadsheetExpressionEvaluationContext createContext() {
+        return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
                 new FakeSpreadsheetExpressionEvaluationContext() {
 
                     @Override
@@ -532,7 +562,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     // class............................................................................................................
 
     @Override
-    public Class<LocalLabelsSpreadsheetExpressionEvaluationContext> type() {
-        return LocalLabelsSpreadsheetExpressionEvaluationContext.class;
+    public Class<LocalReferencesSpreadsheetExpressionEvaluationContext> type() {
+        return LocalReferencesSpreadsheetExpressionEvaluationContext.class;
     }
 }
