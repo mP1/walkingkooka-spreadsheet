@@ -210,7 +210,9 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                                                 .getOrFail(values, 0);
                                     }
 
-                                    private final ExpressionFunctionParameter<String> PARAMETER = ExpressionFunctionParameter.STRING.setKinds(ExpressionFunctionParameterKind.EVALUATE_RESOLVE_REFERENCES);
+                                    private final ExpressionFunctionParameter<String> PARAMETER = ExpressionFunctionParameter.STRING.setKinds(
+                                            ExpressionFunctionParameterKind.EVALUATE_RESOLVE_REFERENCES
+                                    );
                                 },
                                 Lists.of(
                                         Expression.reference(LABEL)
@@ -306,7 +308,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         );
     }
 
-    // resolveIfLabelOrFail...................................................................................................
+    // resolveIfLabelOrFail.............................................................................................
 
     @Test
     public void testResolveIfLabelLocalLabelFails() {
@@ -332,21 +334,6 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                         Optional.of(LABEL_LOCAL_VALUE)
                 ),
                 context.reference(SpreadsheetSelection.labelName(NAME))
-        );
-    }
-
-    // toString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
-
-        this.toStringAndCheck(
-                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                        REFERENCE_TO_VALUES,
-                        context
-                ),
-                "Name1234=\"LabelLocalValue\", TemplateValue=\"TemplateLocalValue123\" " + context
         );
     }
 
@@ -557,6 +544,21 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     @Override
     public void testResolveLabelWithNullFails() {
         throw new UnsupportedOperationException();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
+
+        this.toStringAndCheck(
+                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                        REFERENCE_TO_VALUES,
+                        context
+                ),
+                "Name1234=\"LabelLocalValue\", TemplateValue=\"TemplateLocalValue123\" " + context
+        );
     }
 
     // class............................................................................................................
