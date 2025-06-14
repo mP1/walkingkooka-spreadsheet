@@ -135,7 +135,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
             ).cast();
 
     @Override
-    public String evaluate(final Expression expression) {
+    public String evaluateAsString(final Expression expression) {
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetExpressionEvaluationContext evaluationContext = this.context.enterScope(
