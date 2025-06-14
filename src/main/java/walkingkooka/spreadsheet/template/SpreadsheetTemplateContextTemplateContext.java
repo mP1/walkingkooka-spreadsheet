@@ -63,7 +63,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
      * Uses the {@link SpreadsheetFormulaParsers#expression()} to parse the expression text into a {@link Expression}.
      */
     @Override
-    public Template expression(final TextCursor text) {
+    public Template parseTemplateExpression(final TextCursor text) {
         Objects.requireNonNull(text, "text");
 
         final Expression expression = this.parseExpression(
