@@ -85,7 +85,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
         );
     }
 
-    // parseAndRenderToString...........................................................................................
+    // parseTemplateAndRenderToString...................................................................................
 
     @Test
     public void testSpreadsheetMetadataTestingSpreadsheetFormatterContextFormatNumber() {
@@ -102,72 +102,72 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     }
 
     @Test
-    public void testParseAndRenderWithNumberParameter() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithNumberParameter() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "Apple ${TemplateValue111} Banana",
                 "Apple 111. Banana"
         );
     }
 
     @Test
-    public void testParseAndRenderWithStringParameter() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithStringParameter() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "Apple ${TemplateValue222} Banana",
                 "Apple Hello Banana"
         );
     }
 
     @Test
-    public void testParseAndRenderWithStringParameterWithTrailingSpace() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithStringParameterWithTrailingSpace() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "Apple ${  TemplateValue222 } Banana",
                 "Apple Hello Banana"
         );
     }
 
     @Test
-    public void testParseAndRenderWithTemplateValueReferencingAnother() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithTemplateValueReferencingAnother() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "Apple ${TemplateValue333} Carrot",
                 "Apple 12. Carrot"
         );
     }
 
     @Test
-    public void testParseAndRenderWithNumber() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithNumber() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "${123}",
                 "123."
         );
     }
 
     @Test
-    public void testParseAndRenderWithNumberTrailingWhitespace() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithNumberTrailingWhitespace() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "${123   }",
                 "123."
         );
     }
 
     @Test
-    public void testParseAndRenderWithMathExpression() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithMathExpression() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "${1+2}",
                 "3."
         );
     }
 
     @Test
-    public void testParseAndRenderWithMathExpressionIncludesExtraWhitespace() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithMathExpressionIncludesExtraWhitespace() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "${  1  +  2  }",
                 "3."
         );
     }
 
     @Test
-    public void testParseAndRenderWithFunctionCall() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithFunctionCall() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "${hello(\"a1\", \"b2\", \"c3\")}",
                 "a1, b2, c3"
         );
@@ -175,13 +175,12 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
 
     // verifies that '}' with double quote doesnt confuse expression parsing
     @Test
-    public void testParseAndRenderWithFunctionCall2() {
-        this.parseAndRenderToStringAndCheck(
+    public void testParseTemplateAndRenderWithFunctionCall2() {
+        this.parseTemplateAndRenderToStringAndCheck(
                 "${hello(\"}}\", \"b2\", \"c3\")}",
                 "}}, b2, c3"
         );
     }
-
 
     // TemplateContext..................................................................................................
 

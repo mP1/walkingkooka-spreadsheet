@@ -55,8 +55,8 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     }
 
     @Override
-    public Template parse(final TextCursor text) {
-        return this.parseTextCursor(text);
+    public Template parseTemplate(final TextCursor text) {
+        return this.parseTemplateWithBackslashEscaping(text);
     }
 
     /**
