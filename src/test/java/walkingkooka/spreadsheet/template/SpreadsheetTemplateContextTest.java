@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetTemplateContextTemplateContextTest implements TemplateContextTesting2<SpreadsheetTemplateContextTemplateContext>,
+public final class SpreadsheetTemplateContextTest implements TemplateContextTesting2<SpreadsheetTemplateContext>,
         SpreadsheetMetadataTesting {
 
     private static final SpreadsheetExpressionEvaluationContext SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = SpreadsheetExpressionEvaluationContexts.fake();
@@ -87,7 +87,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     public void testWithNullSpreadsheetParserContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetTemplateContextTemplateContext.with(
+                () -> SpreadsheetTemplateContext.with(
                         null,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         NAME_TO_EXPRESSION
@@ -99,7 +99,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     public void testWithNullSpreadsheetExpressionEvaluationContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetTemplateContextTemplateContext.with(
+                () -> SpreadsheetTemplateContext.with(
                         SPREADSHEET_PARSER_CONTEXT,
                         null,
                         NAME_TO_EXPRESSION
@@ -111,7 +111,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     public void testWithNullTemplateValueNameToExpressionFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetTemplateContextTemplateContext.with(
+                () -> SpreadsheetTemplateContext.with(
                         SPREADSHEET_PARSER_CONTEXT,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         null
@@ -219,8 +219,8 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     // TemplateContext..................................................................................................
 
     @Override
-    public SpreadsheetTemplateContextTemplateContext createContext() {
-        return SpreadsheetTemplateContextTemplateContext.with(
+    public SpreadsheetTemplateContext createContext() {
+        return SpreadsheetTemplateContext.with(
                 SPREADSHEET_PARSER_CONTEXT,
                 SpreadsheetExpressionEvaluationContexts.basic(
                         Optional.empty(), // no cell
@@ -302,8 +302,8 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetTemplateContextTemplateContext> type() {
-        return SpreadsheetTemplateContextTemplateContext.class;
+    public Class<SpreadsheetTemplateContext> type() {
+        return SpreadsheetTemplateContext.class;
     }
 
     @Override

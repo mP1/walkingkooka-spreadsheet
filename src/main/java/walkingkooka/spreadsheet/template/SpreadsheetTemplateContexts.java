@@ -29,12 +29,12 @@ import java.util.function.Function;
 public final class SpreadsheetTemplateContexts implements PublicStaticHelper {
 
     /**
-     * {@see SpreadsheetTemplateContextTemplateContext}
+     * {@see SpreadsheetTemplateContext}
      */
-    public static TemplateContext templateContext(final SpreadsheetParserContext spreadsheetParserContext,
-                                                  final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                  final Function<TemplateValueName, Expression> templateValueNameToExpression) {
-        return SpreadsheetTemplateContextTemplateContext.with(
+    public static TemplateContext spreadsheet(final SpreadsheetParserContext spreadsheetParserContext,
+                                              final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
+                                              final Function<TemplateValueName, Expression> templateValueNameToExpression) {
+        return SpreadsheetTemplateContext.with(
                 spreadsheetParserContext,
                 spreadsheetExpressionEvaluationContext,
                 templateValueNameToExpression
