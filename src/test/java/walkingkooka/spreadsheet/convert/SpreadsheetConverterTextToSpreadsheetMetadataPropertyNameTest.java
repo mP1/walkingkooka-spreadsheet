@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.tree.text.HasTextStyle;
 
 public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadataPropertyName>
         implements SpreadsheetMetadataTesting {
@@ -30,6 +31,14 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest
         this.convertFails(
                 null,
                 SpreadsheetMetadataPropertyName.class
+        );
+    }
+
+    @Test
+    public void testConvertWithInterfaceType() {
+        this.convertFails(
+                null,
+                HasTextStyle.class
         );
     }
 

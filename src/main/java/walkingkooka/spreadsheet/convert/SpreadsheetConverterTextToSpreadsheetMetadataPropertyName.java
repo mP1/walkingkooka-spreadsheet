@@ -53,7 +53,7 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends Sp
 
         Class<?> temp = type;
 
-        while (Object.class != temp) {
+        while (null != temp && Object.class != temp) {
             subClass = SpreadsheetMetadataPropertyName.class == temp;
             if (subClass) {
                 break;
