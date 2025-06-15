@@ -41,7 +41,8 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends Sp
     public boolean isTargetType(final Object value,
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
-        return isMetadataPropertyNameSubClass(type);
+        return null != type &&
+                isMetadataPropertyNameSubClass(type);
     }
 
     /**
