@@ -60,6 +60,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.validation.form.DuplicateFormFieldReferencesException;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -1816,6 +1817,36 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 ),
                                 null
                         )
+        );
+    }
+
+    default void saveFormWithDuplicateFieldsCheck(final SpreadsheetEngine engine,
+                                                  final Form<SpreadsheetExpressionReference> form,
+                                                  final SpreadsheetEngineContext context,
+                                                  final SpreadsheetExpressionReference... expected) {
+        this.saveFormWithDuplicateFieldsCheck(
+                engine,
+                form,
+                context,
+                Sets.of(expected)
+        );
+    }
+
+    default void saveFormWithDuplicateFieldsCheck(final SpreadsheetEngine engine,
+                                                  final Form<SpreadsheetExpressionReference> form,
+                                                  final SpreadsheetEngineContext context,
+                                                  final Set<SpreadsheetExpressionReference> expected) {
+        final DuplicateFormFieldReferencesException thrown = assertThrows(
+                DuplicateFormFieldReferencesException.class,
+                () -> engine.saveForm(
+                        form,
+                        context
+                )
+        );
+
+        this.checkEquals(
+                expected,
+                thrown.references()
         );
     }
 
