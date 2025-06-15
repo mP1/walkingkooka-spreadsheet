@@ -59,7 +59,6 @@ final class SpreadsheetTemplateContext implements TemplateContext {
                                        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
                                        final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         this.spreadsheetParserContext = spreadsheetParserContext;
-        //this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
 
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.enterScope(
                 this::expressionReferenceToTemplateValue
@@ -145,10 +144,6 @@ final class SpreadsheetTemplateContext implements TemplateContext {
     @Override
     public String evaluateAsString(final Expression expression) {
         Objects.requireNonNull(expression, "expression");
-
-//        final SpreadsheetExpressionEvaluationContext evaluationContext = this.spreadsheetExpressionEvaluationContext.enterScope(
-//                this::expressionReferenceToTemplateValue
-//        );
 
         final SpreadsheetExpressionEvaluationContext evaluationContext = this.spreadsheetExpressionEvaluationContext;
 
