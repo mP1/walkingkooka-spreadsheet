@@ -242,8 +242,8 @@ public interface SpreadsheetEngine {
 
     /**
      * Saves the given {@link Form} replacing an existing form with the same {@link FormName} if one exists.
-     * If the form includes duplicate form fields, the form returned in {@link SpreadsheetDelta#forms} will contain
-     * {@link walkingkooka.validation.ValidationError}.
+     * If the form contains duplicate {@link SpreadsheetExpressionReference} a {@link walkingkooka.validation.form.DuplicateFormFieldReferencesException}
+     * will be thrown.
      */
     SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
                               final SpreadsheetEngineContext context);

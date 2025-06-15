@@ -22719,63 +22719,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveFormMissingCellClearsPreviousErrors() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetExpressionReference cell = SpreadsheetSelection.A1;
-
-        final FormName formName = FormName.with("Form123");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.with(cell)
-                                        .setLabel("A1Label")
-                                        .setType(
-                                                Optional.of(ValidationValueTypeName.TEXT)
-                                        ).setValue(
-                                                Optional.of("Initial value")
-                                        ).setValidator(
-                                                Optional.of(ValidatorSelector.parse("Validator123"))
-                                        )
-                        )
-                ).setErrors(
-                        Lists.of(
-                                ValidationError.with(
-                                        cell,
-                                        "This error should be lost"
-                                )
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.saveFormAndCheck(
-                engine,
-                form,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.clearErrors()
-                        )
-                ).setDeletedCells(
-                        SpreadsheetCellReferenceSet.parse("A1")
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(0)
-                ).setRowCount(
-                        OptionalInt.of(0)
-                )
-        );
-    }
-
-    @Test
     public void testSaveFormMissingLabel() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
@@ -23070,118 +23013,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .forms()
                 .save(form);
 
-        this.saveFormAndCheck(
+        this.saveFormWithDuplicateFieldsCheck(
                 engine,
                 form,
                 context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        a1Cell.reference(),
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-    }
-
-    @Test
-    public void testSaveFormIncludesDuplicateUnknownLabels() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
-        );
-
-        final FormName formName = FormName.with("Form123");
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DuplicateLabel2");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(label)
-                                        .setLabel("B2LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(label)
-                                        .setLabel("B2LabelText3")
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.saveFormAndCheck(
-                engine,
-                form,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        label,
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell)
-                        )
-                ).setDeletedLabels(
-                        Sets.of(label)
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(1)
-                ).setRowCount(
-                        OptionalInt.of(1)
-                )
+                SpreadsheetSelection.A1
         );
     }
 
@@ -23206,57 +23042,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("B2Value")
-                        )
-                ).setStyle(STYLE);
-
-        this.saveCellsAndCheck(
-                engine,
-                Sets.of(
-                        a1Cell,
-                        b2Cell
-                ),
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
+        final SpreadsheetExpressionReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetExpressionReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetExpressionReference label1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetExpressionReference label2 = SpreadsheetSelection.labelName("Label2");
 
         final FormName formName = FormName.with("Form123");
 
         final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
                 .setFields(
                         Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
+                                FormField.with(a1)
                                         .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
+                                FormField.with(a1)
                                         .setLabel("A1LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(b2Cell.reference())
-                                        .setLabel("B2LabelText3")
+                                FormField.with(b2)
+                                        .setLabel("B2LabelText3"),
+                                FormField.with(label1)
+                                        .setLabel("B2LabelText4"),
+                                FormField.with(label1)
+                                        .setLabel("B2LabelText5"),
+                                FormField.with(label2)
+                                        .setLabel("B2LabelText6")
                         )
                 );
 
@@ -23264,158 +23071,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .forms()
                 .save(form);
 
-        this.saveFormAndCheck(
+        this.saveFormWithDuplicateFieldsCheck(
                 engine,
                 form,
                 context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        a1Cell.reference(),
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-    }
-
-    @Test
-    public void testSaveFormIncludesDuplicateLabelToCell() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
-        final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(SpreadsheetSelection.A1);
-
-        this.saveLabelAndCheck(
-                engine,
-                a1Mapping,
-                context,
-                SpreadsheetDelta.EMPTY.setLabels(
-                        Sets.of(a1Mapping)
-                ).setColumnCount(
-                        OptionalInt.of(0)
-                ).setRowCount(
-                        OptionalInt.of(0)
-                )
-        );
-
-        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of("A1Value")
-                )
-        ).setStyle(STYLE);
-
-        final SpreadsheetCell b2Cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("B2Value")
-                        )
-                ).setStyle(STYLE);
-
-        this.saveCellsAndCheck(
-                engine,
-                Sets.of(
-                        a1Cell,
-                        b2Cell
-                ),
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
-        );
-
-        final FormName formName = FormName.with("Form123");
-
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
-                .setFields(
-                        Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
-                                        .setLabel("A1LabelText1"),
-                                FormField.<SpreadsheetExpressionReference>with(b2Cell.reference())
-                                        .setLabel("B2LabelText2"),
-                                FormField.<SpreadsheetExpressionReference>with(a1Label)
-                                        .setLabel("A1LabelText3")
-                        )
-                );
-
-        context.storeRepository()
-                .forms()
-                .save(form);
-
-        this.saveFormAndCheck(
-                engine,
-                form,
-                context,
-                SpreadsheetDelta.EMPTY.setForms(
-                        Sets.of(
-                                form.setErrors(
-                                        Lists.of(
-                                                ValidationError.with(
-                                                        a1Cell.reference(),
-                                                        "Multiple fields with same reference"
-                                                ),
-                                                ValidationError.with(
-                                                        a1Label,
-                                                        "Multiple fields with same reference"
-                                                )
-                                        )
-                                )
-                        )
-                ).setCells(
-                        Sets.of(
-                                this.formatCell(a1Cell),
-                                this.formatCell(b2Cell)
-                        )
-                ).setLabels(
-                        Sets.of(a1Mapping)
-                ).setReferences(
-                        references("A1=A1LABEL")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1,2")
-                ).setColumnCount(
-                        OptionalInt.of(2)
-                ).setRowCount(
-                        OptionalInt.of(2)
-                )
+                a1,
+                label1
         );
     }
 
