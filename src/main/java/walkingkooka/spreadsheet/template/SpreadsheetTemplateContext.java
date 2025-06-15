@@ -43,21 +43,21 @@ import java.util.function.Function;
  * A {@link TemplateContext} that uses {@link SpreadsheetFormulaParsers#expression()} to parse expressions within a template.
  * Expression {@link SpreadsheetLabelName} are then converted into {@link TemplateValueName} for value lookups.
  */
-final class SpreadsheetTemplateContextTemplateContext implements TemplateContext {
+final class SpreadsheetTemplateContext implements TemplateContext {
 
-    static SpreadsheetTemplateContextTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
-                                                          final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                          final Function<TemplateValueName, Expression> templateValueNameToExpression) {
-        return new SpreadsheetTemplateContextTemplateContext(
+    static SpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
+                                           final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
+                                           final Function<TemplateValueName, Expression> templateValueNameToExpression) {
+        return new SpreadsheetTemplateContext(
                 Objects.requireNonNull(spreadsheetParserContext, "spreadsheetParserContext"),
                 Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
                 Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression")
         );
     }
 
-    private SpreadsheetTemplateContextTemplateContext(final SpreadsheetParserContext spreadsheetParserContext,
-                                                      final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                      final Function<TemplateValueName, Expression> templateValueNameToExpression) {
+    private SpreadsheetTemplateContext(final SpreadsheetParserContext spreadsheetParserContext,
+                                       final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
+                                       final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         this.spreadsheetParserContext = spreadsheetParserContext;
         //this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
 
