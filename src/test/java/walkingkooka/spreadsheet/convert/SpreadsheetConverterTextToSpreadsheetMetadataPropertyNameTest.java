@@ -26,6 +26,14 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest
         implements SpreadsheetMetadataTesting {
 
     @Test
+    public void testConvertWithNull() {
+        this.convertFails(
+                null,
+                SpreadsheetMetadataPropertyName.class
+        );
+    }
+
+    @Test
     public void testConvertEmptyString() {
         this.convertFails(
                 SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
