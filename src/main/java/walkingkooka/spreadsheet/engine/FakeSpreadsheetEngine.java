@@ -179,7 +179,6 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta loadForm(final FormName name,
-                                     final Optional<SpreadsheetExpressionReference> selection,
                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
@@ -200,6 +199,13 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public SpreadsheetDelta loadForms(final int offset,
                                       final int count,
                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta prepareForm(final FormName name,
+                                        final SpreadsheetExpressionReference selection,
+                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
