@@ -47,12 +47,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTemplateContextTemplateContextTest implements TemplateContextTesting2<SpreadsheetTemplateContextTemplateContext>,
         SpreadsheetMetadataTesting {
+
+    private static final SpreadsheetExpressionEvaluationContext SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = SpreadsheetExpressionEvaluationContexts.fake();
+
+    private final static Function<TemplateValueName, Expression> NAME_TO_EXPRESSION = (n) -> {
+        throw new UnsupportedOperationException();
+    };
 
     private final static TemplateValueName TEMPLATE_NAME_1 = TemplateValueName.with("TemplateValue111");
 
@@ -66,20 +73,47 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
 
     private final static TemplateValueName TEMPLATE_NAME_3 = TemplateValueName.with("TemplateValue333");
 
-    private final static Expression TEMPLATE_VALUE_3 = Expression.subtract(
+    // 99 + 111
+    private final static Expression TEMPLATE_VALUE_3 = Expression.add(
+            Expression.value(99),
             Expression.reference(
                     TEMPLATE_NAME_1
-            ),
-            Expression.value(99)
+            )
     );
 
     // with.............................................................................................................
 
     @Test
-    public void testWithNullContextFails() {
+    public void testWithNullSpreadsheetParserContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetTemplateContextTemplateContext.with(
+                        null,
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        NAME_TO_EXPRESSION
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetExpressionEvaluationContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetTemplateContextTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        null,
+                        NAME_TO_EXPRESSION
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullTemplateValueNameToExpressionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetTemplateContextTemplateContext.with(
+                        SPREADSHEET_PARSER_CONTEXT,
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         null
                 )
         );
@@ -129,7 +163,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     public void testParseTemplateAndRenderWithTemplateValueReferencingAnother() {
         this.parseTemplateAndRenderToStringAndCheck(
                 "Apple ${TemplateValue333} Carrot",
-                "Apple 12. Carrot"
+                "Apple 210. Carrot"
         );
     }
 
@@ -187,83 +221,81 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
     @Override
     public SpreadsheetTemplateContextTemplateContext createContext() {
         return SpreadsheetTemplateContextTemplateContext.with(
-                SpreadsheetTemplateContexts.basic(
-                        SPREADSHEET_PARSER_CONTEXT,
-                        SpreadsheetExpressionEvaluationContexts.basic(
-                                Optional.empty(), // no cell
-                                SpreadsheetExpressionReferenceLoaders.fake(),
-                                Url.parseAbsolute("https://example.com"), // serverUrl
-                                SpreadsheetMetadata.EMPTY,
-                                new FakeSpreadsheetStoreRepository() {
-                                    @Override
-                                    public StorageStore storage() {
-                                        return this.storage;
-                                    }
-
-                                    private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
-                                },
-                                SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
-                                FormHandlerContexts.fake(),
-                                new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
-                                    @Override
-                                    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                                            final List<?> values,
-                                                                                                                            final ProviderContext context) {
-                                        checkEquals(
-                                                "hello",
-                                                name.value(),
-                                                "function name"
-                                        );
-
-                                        return Cast.to(
-                                                new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
-                                                    @Override
-                                                    public String apply(final List<Object> values,
-                                                                        final SpreadsheetExpressionEvaluationContext context) {
-                                                        return values.stream()
-                                                                .map(Objects::toString)
-                                                                .collect(Collectors.joining(", "));
-                                                    }
-
-                                                    @Override
-                                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                        return Collections.nCopies(
-                                                                3,
-                                                                ExpressionFunctionParameter.STRING.setKinds(
-                                                                        Sets.of(ExpressionFunctionParameterKind.EVALUATE)
-                                                                )
-                                                        );
-                                                    }
-
-                                                    @Override
-                                                    public Class<String> returnType() {
-                                                        return String.class;
-                                                    }
-
-                                                    @Override
-                                                    public Optional<ExpressionFunctionName> name() {
-                                                        return Optional.of(name);
-                                                    }
-                                                }
-                                        );
-                                    }
-                                },
-                                PROVIDER_CONTEXT
-                        ),
-                        (t) -> {
-                            if (t.equals(TEMPLATE_NAME_1)) {
-                                return TEMPLATE_VALUE_1;
-                            }
-                            if (t.equals(TEMPLATE_NAME_2)) {
-                                return TEMPLATE_VALUE_2;
-                            }
-                            if (t.equals(TEMPLATE_NAME_3)) {
-                                return TEMPLATE_VALUE_3;
+                SPREADSHEET_PARSER_CONTEXT,
+                SpreadsheetExpressionEvaluationContexts.basic(
+                        Optional.empty(), // no cell
+                        SpreadsheetExpressionReferenceLoaders.fake(),
+                        Url.parseAbsolute("https://example.com"), // serverUrl
+                        SpreadsheetMetadata.EMPTY,
+                        new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public StorageStore storage() {
+                                return this.storage;
                             }
 
-                            throw new AssertionError("Unknown template value name: " + t);
-                        }
-                )
+                            private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
+                        },
+                        SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
+                        FormHandlerContexts.fake(),
+                        new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
+                            @Override
+                            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                                    final List<?> values,
+                                                                                                                    final ProviderContext context) {
+                                checkEquals(
+                                        "hello",
+                                        name.value(),
+                                        "function name"
+                                );
+
+                                return Cast.to(
+                                        new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
+                                            @Override
+                                            public String apply(final List<Object> values,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                return values.stream()
+                                                        .map(Objects::toString)
+                                                        .collect(Collectors.joining(", "));
+                                            }
+
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Collections.nCopies(
+                                                        3,
+                                                        ExpressionFunctionParameter.STRING.setKinds(
+                                                                Sets.of(ExpressionFunctionParameterKind.EVALUATE)
+                                                        )
+                                                );
+                                            }
+
+                                            @Override
+                                            public Class<String> returnType() {
+                                                return String.class;
+                                            }
+
+                                            @Override
+                                            public Optional<ExpressionFunctionName> name() {
+                                                return Optional.of(name);
+                                            }
+                                        }
+                                );
+                            }
+                        },
+                        PROVIDER_CONTEXT
+                ),
+                (t) -> {
+                    if (t.equals(TEMPLATE_NAME_1)) {
+                        return TEMPLATE_VALUE_1;
+                    }
+                    if (t.equals(TEMPLATE_NAME_2)) {
+                        return TEMPLATE_VALUE_2;
+                    }
+                    if (t.equals(TEMPLATE_NAME_3)) {
+                        return TEMPLATE_VALUE_3;
+                    }
+
+                    throw new AssertionError("Unknown template value name: " + t);
+                }
         );
     }
 

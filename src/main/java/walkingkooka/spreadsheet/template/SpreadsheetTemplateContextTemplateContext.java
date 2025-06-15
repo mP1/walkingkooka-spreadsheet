@@ -37,6 +37,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link TemplateContext} that uses {@link SpreadsheetFormulaParsers#expression()} to parse expressions within a template.
@@ -44,14 +45,27 @@ import java.util.Optional;
  */
 final class SpreadsheetTemplateContextTemplateContext implements TemplateContext {
 
-    static SpreadsheetTemplateContextTemplateContext with(final SpreadsheetTemplateContext context) {
+    static SpreadsheetTemplateContextTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
+                                                          final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
+                                                          final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         return new SpreadsheetTemplateContextTemplateContext(
-                Objects.requireNonNull(context, "context")
+                Objects.requireNonNull(spreadsheetParserContext, "spreadsheetParserContext"),
+                Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
+                Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression")
         );
     }
 
-    private SpreadsheetTemplateContextTemplateContext(final SpreadsheetTemplateContext context) {
-        this.context = context;
+    private SpreadsheetTemplateContextTemplateContext(final SpreadsheetParserContext spreadsheetParserContext,
+                                                      final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
+                                                      final Function<TemplateValueName, Expression> templateValueNameToExpression) {
+        this.spreadsheetParserContext = spreadsheetParserContext;
+        //this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
+
+        this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.enterScope(
+                this::expressionReferenceToTemplateValue
+        );
+
+        this.templateValueNameToExpression = templateValueNameToExpression;
     }
 
     @Override
@@ -71,7 +85,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
                                 this.parseTemplateExpression0(text)
                         ),
                 EXPRESSION_PARSER,
-                this.context
+                this.spreadsheetParserContext
         );
 
         formula.error()
@@ -83,7 +97,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
         return Templates.expression(
                 formula.token()
                         .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
-                        .toExpression(this.context)
+                        .toExpression(this.spreadsheetExpressionEvaluationContext)
                         .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
         );
     }
@@ -101,7 +115,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
 
             if (DOUBLE_QUOTE.parse(
                     text,
-                    this.context
+                    this.spreadsheetParserContext
             ).isPresent()
             ) {
                 continue;
@@ -132,9 +146,11 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     public String evaluateAsString(final Expression expression) {
         Objects.requireNonNull(expression, "expression");
 
-        final SpreadsheetExpressionEvaluationContext evaluationContext = this.context.enterScope(
-                this::expressionReferenceToTemplateValue
-        );
+//        final SpreadsheetExpressionEvaluationContext evaluationContext = this.spreadsheetExpressionEvaluationContext.enterScope(
+//                this::expressionReferenceToTemplateValue
+//        );
+
+        final SpreadsheetExpressionEvaluationContext evaluationContext = this.spreadsheetExpressionEvaluationContext;
 
         Object value = evaluationContext.evaluateExpression(expression);
 
@@ -163,7 +179,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     }
 
     private Optional<Optional<Object>> expressionReferenceToTemplateValue(final ExpressionReference reference) {
-        Optional<Optional<Object>> value;
+        final Optional<Optional<Object>> value;
 
         if (reference instanceof TemplateValueName) {
             value = Optional.of(
@@ -182,13 +198,22 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
 
     @Override
     public String templateValue(final TemplateValueName name) {
-        return this.context.templateValue(name);
+        return this.spreadsheetExpressionEvaluationContext.convertOrFail(
+                this.spreadsheetExpressionEvaluationContext.evaluateExpression(
+                        this.templateValueNameToExpression.apply(name)
+                ),
+                String.class
+        );
     }
+
+    private final Function<TemplateValueName, Expression> templateValueNameToExpression;
 
     @Override
     public String toString() {
-        return this.context.toString();
+        return "spreadsheetParserContext: " + this.spreadsheetParserContext +
+                ", spreadsheetExpressionEvaluationContext: " + this.spreadsheetExpressionEvaluationContext;
     }
 
-    private final SpreadsheetTemplateContext context;
+    private final SpreadsheetParserContext spreadsheetParserContext;
+    private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
 }
