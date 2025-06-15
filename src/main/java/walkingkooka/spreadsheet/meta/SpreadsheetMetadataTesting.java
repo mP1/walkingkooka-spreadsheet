@@ -255,7 +255,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, text-to-template-value-name, selection-to-selection, selection-to-text, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -268,7 +268,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     FormHandlerAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, text-to-template-value-name, selection-to-selection, selection-to-text, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
