@@ -23203,6 +23203,45 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // prepareForm......................................................................................................
 
     @Test
+    public void testPrepareFormWithUnknownFormNameFails() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA,
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.prepareForm(
+                        FormName.with("Form123"),
+                        SpreadsheetSelection.parseCellRange("B2:C3"),
+                        context
+                )
+        );
+
+        this.checkEquals(
+                "Form not found",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+    
+    @Test
     public void testPrepareFormWithSquareSelectionFails() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
