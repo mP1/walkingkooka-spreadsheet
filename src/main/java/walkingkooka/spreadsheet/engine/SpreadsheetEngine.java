@@ -256,9 +256,8 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
-     * Loads the {@link Form} with the given {@link FormName}.
-     * The {@link walkingkooka.validation.form.FormHandler} in the field or the default when absent will be used to
-     * prepare fields.
+     * Loads the {@link Form} with the given {@link FormName} and prepares the form fields using the selected or
+     * default {@link walkingkooka.validation.form.FormHandler}.
      */
     SpreadsheetDelta prepareForm(final FormName name,
                                  final SpreadsheetExpressionReference selection,
