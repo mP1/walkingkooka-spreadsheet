@@ -23303,6 +23303,88 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testPrepareFormWithUnknownFormHandler() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "UnknownFormHandler";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final FormName formName = FormName.with("Form123");
+
+        final FormField<SpreadsheetExpressionReference> field = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("UnknownLabel404")
+                ).setLabel("TextLabel111")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                .setFields(
+                        Lists.of(field)
+                );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+        
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.prepareForm(
+                        formName,
+                        SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+                        context 
+                )
+        );
+
+        this.checkEquals(
+                "Unknown form handler UnknownFormHandler",
+                thrown.getMessage()
+        );
+    }
+    
+    @Test
     public void testPrepareFormWithMissingCell() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
