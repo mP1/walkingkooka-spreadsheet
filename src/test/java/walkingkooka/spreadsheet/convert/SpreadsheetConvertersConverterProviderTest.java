@@ -264,6 +264,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToColor() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR + "",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToColor()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToExpression() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION + "",
