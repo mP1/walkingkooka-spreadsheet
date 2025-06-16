@@ -1205,89 +1205,78 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             Form<SpreadsheetExpressionReference> form = context.storeRepository()
                     .forms()
                     .load(name)
-                    .orElse(null);
+                    .orElseThrow(() -> new IllegalArgumentException("Form not found"));
 
-            SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
+            final SpreadsheetCellRangeReference cellRange = context.resolveIfLabelOrFail(selection)
+                    .toCellRange();
 
-            if (null != form) {
-                final SpreadsheetCellRangeReference cellRange = context.resolveIfLabelOrFail(selection)
-                        .toCellRange();
-
-                // verify the selected range is a column or row.
-                final int width = cellRange.width();
-                final int height = cellRange.height();
-                if (1 != width && 1 != height) {
-                    throw new IllegalArgumentException("Form cell range must be either a column or row");
-                }
-
-                SpreadsheetCellReference cell = cellRange.toCell();
-                final int columnDelta = width == 1 ?
-                        0 :
-                        1;
-                final int rowDelta = height == 1 ?
-                        0 :
-                        1;
-
-                {
-                    // fix the reference for each field.
-                    final List<FormField<SpreadsheetExpressionReference>> fields = Lists.array();
-
-                    for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
-                        fields.add(
-                                field.setReference(cell)
-                        );
-
-                        cell = cell.add(
-                                columnDelta,
-                                rowDelta
-                        );
-                    }
-
-                    form = form.setFields(fields);
-                }
-
-                // Create FormHandlerContext and prepare fields.
-                final FormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
-                        form.handler()
-                                .orElseGet(
-                                        () -> context.spreadsheetMetadata()
-                                                .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
-                                ),
-                        context // ProviderContext
-                );
-
-                final SpreadsheetFormHandlerContext formHandlerContext = SpreadsheetFormHandlerContexts.spreadsheetEngine(
-                        form,
-                        this,
-                        context
-                );
-
-                form = handler.prepareForm(
-                        form,
-                        formHandlerContext
-                );
-
-                form = form.setErrors(
-                        handler.validateForm(
-                                form,
-                                formHandlerContext
-                        )
-                );
-
-                delta = this.prepareResponse(
-                        changes,
-                        context
-                );
+            // verify the selected range is a column or row.
+            final int width = cellRange.width();
+            final int height = cellRange.height();
+            if (1 != width && 1 != height) {
+                throw new IllegalArgumentException("Form cell range must be either a column or row");
             }
 
-            // form loaded, add to SpreadsheetDelta#forms
-            if (null != form) {
-                delta = delta.setForms(
-                        Sets.of(form)
-                );
+            SpreadsheetCellReference cell = cellRange.toCell();
+            final int columnDelta = width == 1 ?
+                    0 :
+                    1;
+            final int rowDelta = height == 1 ?
+                    0 :
+                    1;
+
+            {
+                // fix the reference for each field.
+                final List<FormField<SpreadsheetExpressionReference>> fields = Lists.array();
+
+                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
+                    fields.add(
+                            field.setReference(cell)
+                    );
+
+                    cell = cell.add(
+                            columnDelta,
+                            rowDelta
+                    );
+                }
+
+                form = form.setFields(fields);
             }
 
-            return delta;
+            // Create FormHandlerContext and prepare fields.
+            final FormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
+                    form.handler()
+                            .orElseGet(
+                                    () -> context.spreadsheetMetadata()
+                                            .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
+                            ),
+                    context // ProviderContext
+            );
+
+            final SpreadsheetFormHandlerContext formHandlerContext = SpreadsheetFormHandlerContexts.spreadsheetEngine(
+                    form,
+                    this,
+                    context
+            );
+
+            form = handler.prepareForm(
+                    form,
+                    formHandlerContext
+            );
+
+            form = form.setErrors(
+                    handler.validateForm(
+                            form,
+                            formHandlerContext
+                    )
+            );
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            ).setForms(
+                    Sets.of(form)
+            );
         } finally {
             changes.close();
         }
