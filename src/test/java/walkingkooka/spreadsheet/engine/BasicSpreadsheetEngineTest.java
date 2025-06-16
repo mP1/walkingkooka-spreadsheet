@@ -23291,7 +23291,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         @Override
                                         public Form<R> prepareForm(final Form<R> form,
                                                                    final C context) {
-                                            return form;
+                                            return form.setFields(
+                                                    form.fields()
+                                                            .stream()
+                                                            .map(f -> {
+                                                                final Optional<Object> value = context.loadFormFieldValue(f.reference());
+                                                                return value.isPresent() ?
+                                                                        f.setValue(value) :
+                                                                        f;
+                                                            }).collect(Collectors.toList())
+                                            );
                                         }
 
                                         @Override
@@ -23357,12 +23366,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         )
-                ).setDeletedCells(
-                        SpreadsheetCellReferenceSet.parse("B2")
-                ).setColumnWidths(
-                        columnWidths("B")
-                ).setRowHeights(
-                        rowHeights("2")
                 ).setColumnCount(
                         OptionalInt.of(0)
                 ).setRowCount(
@@ -23485,14 +23488,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         )
-                ).setCells(
-                        Sets.of(
-                                formatCell(cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
                 ).setColumnCount(
                         OptionalInt.of(1)
                 ).setRowCount(
@@ -23651,14 +23646,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         )
-                ).setCells(
-                        Sets.of(
-                                formatCell(cell)
-                        )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
                 ).setColumnCount(
                         OptionalInt.of(1)
                 ).setRowCount(
@@ -23801,16 +23788,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 )
                                         )
                         )
-                ).setCells(
-                        Sets.of(
-                                formatCell(cell)
-                        )
-                ).setDeletedCells(
-                        SpreadsheetCellReferenceSet.parse("A2")
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1,2")
                 ).setColumnCount(
                         OptionalInt.of(1)
                 ).setRowCount(
@@ -23951,16 +23928,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 )
                                         )
                         )
-                ).setCells(
-                        Sets.of(
-                                formatCell(cell)
-                        )
-                ).setDeletedCells(
-                        SpreadsheetCellReferenceSet.parse("B1")
-                ).setColumnWidths(
-                        columnWidths("A,B")
-                ).setRowHeights(
-                        rowHeights("1")
                 ).setColumnCount(
                         OptionalInt.of(1)
                 ).setRowCount(
