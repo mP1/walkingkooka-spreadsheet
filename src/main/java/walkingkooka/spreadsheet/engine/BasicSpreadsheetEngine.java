@@ -305,13 +305,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(context, "context");
 
-        return cells.isEmpty() ?
-                SpreadsheetDelta.EMPTY :
-                this.saveCellsNotEmpty(cells, context);
-    }
-
-    private SpreadsheetDelta saveCellsNotEmpty(final Set<SpreadsheetCell> cells,
-                                               final SpreadsheetEngineContext context) {
         // save all cells.
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,

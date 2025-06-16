@@ -5906,8 +5906,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.saveCellsAndCheck(
                 this.createSpreadsheetEngine(),
                 SpreadsheetDelta.NO_CELLS,
-                SpreadsheetEngineContexts.fake(),
-                SpreadsheetDelta.EMPTY
+                this.createContext(),
+                SpreadsheetDelta.EMPTY.setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
     }
 
