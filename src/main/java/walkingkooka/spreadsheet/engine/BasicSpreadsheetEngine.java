@@ -1210,26 +1210,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
 
             if (null != form) {
-                // for each field set the reference and attempt to load
                 final SpreadsheetCellRangeReference cellRange = context.resolveIfLabelOrFail(selection)
                         .toCellRange();
 
+                // verify the selected range is a column or row.
                 final int width = cellRange.width();
                 final int height = cellRange.height();
                 if (1 != width && 1 != height) {
                     throw new IllegalArgumentException("Form cell range must be either a column or row");
                 }
-
-                this.loadCellRange(
-                        cellRange,
-                        changes,
-                        context
-                );
-
-                delta = this.prepareResponse(
-                        changes,
-                        context
-                );
 
                 SpreadsheetCellReference cell = cellRange.toCell();
                 final int columnDelta = width == 1 ?
@@ -1283,6 +1272,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 form,
                                 formHandlerContext
                         )
+                );
+
+                delta = this.prepareResponse(
+                        changes,
+                        context
                 );
             }
 
