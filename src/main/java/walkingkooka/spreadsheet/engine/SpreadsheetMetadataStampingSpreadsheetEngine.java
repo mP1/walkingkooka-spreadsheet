@@ -328,6 +328,17 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                         final SpreadsheetExpressionReference selection,
+                                         final SpreadsheetEngineContext context) {
+        return this.engine.submitForm(
+                form,
+                selection,
+                context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
                                       final SpreadsheetEngineContext context) {
         return this.engine.loadLabel(name, context);

@@ -24060,7 +24060,796 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
     }
-    
+
+    // submitForm.......................................................................................................
+
+    @Test
+    public void testSubmitFormWithUnknownFormNameFails() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA,
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.submitForm(
+                        Form.with(
+                                FormName.with("UnknownForm123")
+                        ),
+                        SpreadsheetSelection.parseCellRange("B2:C3"),
+                        context
+                )
+        );
+
+        this.checkEquals(
+                "Form not found",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithSquareSelectionFails() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA,
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final FormName formName = FormName.with("Form123");
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                .setFields(
+                        Lists.of(
+                                FormField.<SpreadsheetExpressionReference>with(
+                                                SpreadsheetSelection.labelName("FormField1")
+                                        ).setLabel("TextLabel111")
+                                        .setValue(
+                                                Optional.of("InitialFormFieldValue1")
+                                        )
+                        )
+                );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.submitForm(
+                        form,
+                        SpreadsheetSelection.parseCellRange("B2:C3"),
+                        context
+                )
+        );
+
+        this.checkEquals(
+                "Form cell range must be either a column or row",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithUnknownDefaultFormHandler() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "UnknownDefaultFormHandler";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final Form<SpreadsheetExpressionReference> form = Form.with(
+                FormName.with("Form123")
+        );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.submitForm(
+                        form,
+                        SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+                        context
+                )
+        );
+
+        this.checkEquals(
+                "Unknown form handler UnknownDefaultFormHandler",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithUnknownFormHandler() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "UnknownFormHandler";
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.EMPTY
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+                FormName.with("Form123")
+        ).setHandler(
+                Optional.of(
+                        FormHandlerSelector.parse(formHandler)
+                )
+        );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.submitForm(
+                        form,
+                        SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+                        context
+                )
+        );
+
+        this.checkEquals(
+                "Unknown form handler UnknownFormHandler",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithValidationError() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+
+        final List<ValidationError<SpreadsheetExpressionReference>> errors = Lists.of(
+                ValidationError.with(
+                        cellReference,
+                        "ValidationError1"
+                )
+        );
+
+        final FormField<SpreadsheetExpressionReference> field = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("Field1")
+                ).setLabel("TextLabel1")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+                FormName.with("Form123")
+        ).setFields(
+                Lists.of(
+                        field.setReference(cellReference)
+                                .setValue(
+                                        Optional.of("SubmitValue1")
+                                )
+                )
+        );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY.setForms(
+                Sets.of(
+                        form.setErrors(errors)
+                )
+        ).setColumnCount(
+                OptionalInt.of(0)
+        ).setRowCount(
+                OptionalInt.of(0)
+        );
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return errors;
+                                                }
+
+                                                @Override
+                                                public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                   final SpreadsheetFormHandlerContext context) {
+                                                    return expected;
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        this.submitFormAndCheck(
+                engine,
+                form,
+                cellReference.toCellRange(), // 1 cells
+                context,
+                expected
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithMissingField() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+                FormName.with("Form123")
+        );
+
+        final FormField<SpreadsheetExpressionReference> field = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("Field1")
+                ).setLabel("TextLabel1")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY.setForms(
+                Sets.of(
+                        form.setFields(
+                                Lists.of(field)
+                        )
+                )
+        ).setColumnCount(
+                OptionalInt.of(0)
+        ).setRowCount(
+                OptionalInt.of(0)
+        );
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return Lists.empty(); // no errors
+                                                }
+
+                                                @Override
+                                                public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                   final SpreadsheetFormHandlerContext context) {
+                                                    return expected;
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        this.submitFormAndCheck(
+                engine,
+                form,
+                cellReference.toCellRange(), // 1 cells
+                context,
+                expected
+        );
+
+        this.checkNotEquals(
+                form,
+                expected.form(
+                        form.name()
+                ).get(),
+                "returned form will have an extra field that was not submitted"
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithMissingField2() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+
+        final FormField<SpreadsheetExpressionReference> field1 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("Field1")
+                ).setLabel("TextLabel1")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+                FormName.with("Form123")
+        ).setFields(
+                Lists.of(field1)
+        );
+
+        final FormField<SpreadsheetExpressionReference> field2 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("Field2")
+                ).setLabel("TextLabel2")
+                .setValue(
+                        Optional.of("InitialFormFieldValue2")
+                );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY.setForms(
+                Sets.of(
+                        form.setFields(
+                                Lists.of(
+                                        field1.setReference(cellReference), // A1
+                                        field2.setReference(cellReference.add(0, 1)) // B1
+                                )
+                        )
+                )
+        ).setColumnCount(
+                OptionalInt.of(0)
+        ).setRowCount(
+                OptionalInt.of(0)
+        );
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return Lists.empty(); // no errors
+                                                }
+
+                                                @Override
+                                                public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                   final SpreadsheetFormHandlerContext context) {
+                                                    return expected;
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        this.submitFormAndCheck(
+                engine,
+                form,
+                SpreadsheetSelection.parseCellRange("A1:B1"),
+                context,
+                expected
+        );
+
+        this.checkNotEquals(
+                form,
+                expected.form(
+                        form.name()
+                ).get(),
+                "returned form will have an extra field that was not submitted"
+        );
+    }
+
+    @Test
+    public void testSubmitFormWithFields() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final String formHandler = "TestFormHandler";
+        final SpreadsheetCellReference cellReference1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference cellReference2 = SpreadsheetSelection.parseCell("B1");
+
+        final String loadedValue1 = "LoadedFormFieldValue1";
+        final String loadedValue2 = "LoadedFormFieldValue2";
+
+        final FormField<SpreadsheetExpressionReference> field1 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("Field1")
+                ).setLabel("TextLabel1")
+                .setValue(
+                        Optional.of("InitialFormFieldValue1")
+                );
+
+        final FormField<SpreadsheetExpressionReference> field2 = FormField.<SpreadsheetExpressionReference>with(
+                        SpreadsheetSelection.labelName("Field2")
+                ).setLabel("TextLabel2")
+                .setValue(
+                        Optional.of("InitialFormFieldValue2")
+                );
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+                FormName.with("Form123")
+        ).setFields(
+                Lists.of(
+                        field1,
+                        field2
+                )
+        );
+
+        final String submittedValue1 = "SubmittedFormFieldValue1";
+        final String submittedValue2 = "SubmittedFormFieldValue2";
+
+        final Form<SpreadsheetExpressionReference> submittedForm = form.setFields(
+                Lists.of(
+                        field1.setReference(cellReference1)
+                                .setValue(
+                                        Optional.of(submittedValue1)
+                                ), // A1
+                        field2.setReference(cellReference2)
+                                .setValue(
+                                        Optional.of(submittedValue2)
+                                )// B1
+                )
+        );
+
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse(formHandler)
+                ).set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+                        FormHandlerSelector.parse(formHandler)
+                ),
+                spreadsheetStoreRepository(),
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        new FakeFormHandlerProvider() {
+                            @Override
+                            public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                           final ProviderContext context) {
+                                if (formHandler.equals(selector.toString())) {
+                                    return Cast.to(
+                                            new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+
+                                                @Override
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                          final SpreadsheetFormHandlerContext context) {
+                                                    return Lists.empty(); // no errors
+                                                }
+
+                                                @Override
+                                                public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                   final SpreadsheetFormHandlerContext context) {
+                                                    return context.saveFormFieldValues(
+                                                            form.fields()
+                                                    );
+                                                    //return expected;
+                                                }
+                                            }
+                                    );
+                                }
+
+                                throw new IllegalArgumentException("Unknown form handler " + selector);
+                            }
+
+                            @Override
+                            public FormHandlerInfoSet formHandlerInfos() {
+                                return FormHandlerInfoSet.with(
+                                        Sets.of(
+                                                FormHandlerInfo.with(
+                                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                                        FormHandlerName.with(formHandler)
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        cellReference1.setFormula(
+                                SpreadsheetFormula.EMPTY.setValue(
+                                        Optional.of(loadedValue1)
+                                )
+                        ).setStyle(STYLE),
+                        cellReference2.setFormula(
+                                SpreadsheetFormula.EMPTY.setValue(
+                                        Optional.of(loadedValue2)
+                                )
+                        ).setStyle(STYLE)
+                ),
+                context
+        );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                        this.formatCell(
+                                cellReference1.setFormula(
+                                        SpreadsheetFormula.EMPTY.setValue(
+                                                Optional.of(submittedValue1)
+                                        )
+                                ).setStyle(STYLE)
+                        ),
+                        this.formatCell(
+                                cellReference2.setFormula(
+                                        SpreadsheetFormula.EMPTY.setValue(
+                                                Optional.of(submittedValue2)
+                                        )
+                                ).setStyle(STYLE)
+                        )
+                )
+        ).setColumnWidths(
+                columnWidths("A,B")
+        ).setRowHeights(
+                rowHeights("1")
+        ).setColumnCount(
+                OptionalInt.of(2)
+        ).setRowCount(
+                OptionalInt.of(1)
+        );
+
+        this.submitFormAndCheck(
+                engine,
+                submittedForm,
+                cellReference1.cellRange(cellReference2),
+                context,
+                expected
+        );
+
+        this.checkNotEquals(
+                form,
+                submittedForm,
+                "returned form will have an extra field that was not submitted"
+        );
+
+        this.loadCellsAndCheck(
+                engine,
+                cellReference1.cellRange(cellReference2),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                expected
+        );
+    }
+
     //  helpers.........................................................................................................
 
     @Override

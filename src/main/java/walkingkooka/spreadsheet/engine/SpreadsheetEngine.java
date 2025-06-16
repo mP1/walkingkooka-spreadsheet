@@ -263,6 +263,13 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta prepareForm(final FormName name,
                                  final SpreadsheetExpressionReference selection,
                                  final SpreadsheetEngineContext context);
+
+    /**
+     * Submits a form for validation and then saving using the selected or default {@link walkingkooka.validation.form.FormHandler}.
+     */
+    SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                final SpreadsheetExpressionReference selection,
+                                final SpreadsheetEngineContext context);
     /**
      * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not
      * have affected and updated cells.

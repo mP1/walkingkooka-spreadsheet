@@ -71,6 +71,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.form.DuplicateFormFieldReferencesException;
 import walkingkooka.validation.form.Form;
@@ -1269,6 +1270,108 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             ).setForms(
                     Sets.of(form)
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                       final SpreadsheetExpressionReference selection,
+                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(form, "form");
+        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                context
+        );
+        try {
+            Form<SpreadsheetExpressionReference> loaded = context.storeRepository()
+                    .forms()
+                    .load(form.name())
+                    .orElseThrow(() -> new IllegalArgumentException("Form not found"));
+
+            final SpreadsheetCellRangeReference cellRange = context.resolveIfLabelOrFail(selection)
+                    .toCellRange();
+
+            // verify the selected range is a column or row.
+            final int width = cellRange.width();
+            final int height = cellRange.height();
+            if (1 != width && 1 != height) {
+                throw new IllegalArgumentException("Form cell range must be either a column or row");
+            }
+
+            {
+                SpreadsheetCellReference cell = cellRange.toCell();
+                final int columnDelta = width == 1 ?
+                        0 :
+                        1;
+                final int rowDelta = height == 1 ?
+                        0 :
+                        1;
+
+                // build a map of submitted form fields.
+                final Map<SpreadsheetExpressionReference, FormField<SpreadsheetExpressionReference>> referenceToFields = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
+                    referenceToFields.put(
+                            field.reference(),
+                            field
+                    );
+                }
+
+                // fix the reference for each field & copy the values from the submitted form.
+                final List<FormField<SpreadsheetExpressionReference>> fields = Lists.array();
+
+                for (FormField<SpreadsheetExpressionReference> field : loaded.fields()) {
+                    field = field.setReference(cell);
+
+                    final FormField<SpreadsheetExpressionReference> submittedField = referenceToFields.get(cell);
+                    if (null != submittedField) {
+                        field = field.setValue(
+                                submittedField.value()
+                        );
+                    }
+
+                    fields.add(field);
+
+                    cell = cell.add(
+                            columnDelta,
+                            rowDelta
+                    );
+                }
+
+                loaded = loaded.setFields(fields);
+            }
+
+            // Create FormHandlerContext and prepare fields.
+            final FormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
+                    form.handler()
+                            .orElseGet(
+                                    () -> context.spreadsheetMetadata()
+                                            .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
+                            ),
+                    context // ProviderContext
+            );
+
+            final SpreadsheetFormHandlerContext formHandlerContext = SpreadsheetFormHandlerContexts.spreadsheetEngine(
+                    form,
+                    this,
+                    context
+            );
+
+            final List<ValidationError<SpreadsheetExpressionReference>> errors = handler.validateForm(
+                    form,
+                    formHandlerContext
+            );
+            loaded = loaded.setErrors(errors);
+
+            return handler.submitForm(
+                    loaded,
+                    formHandlerContext
             );
         } finally {
             changes.close();
