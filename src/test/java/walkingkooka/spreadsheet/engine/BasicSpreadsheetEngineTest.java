@@ -111,6 +111,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContext;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
@@ -4719,10 +4720,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellWithValueValidatorFails() {
-        final ValidationErrorList<SpreadsheetExpressionReference> validationError = Cast.to(
-                ValidationErrorList.empty()
-                        .concat(
-                                ValidationError.with(
+        final ValidationErrorList<SpreadsheetExpressionReference> validationError = SpreadsheetForms.errorList(
+                Lists.of(
+                                SpreadsheetForms.error(
                                         SpreadsheetSelection.A1,
                                         "ValidationConverterErrorMessage"
                                 )
@@ -4851,14 +4851,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithValueValidatorUsesValidationConverter() {
         final Object converterInput = this;
-        final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = Cast.to(
-                ValidationErrorList.empty()
-                        .concat(
-                                ValidationError.with(
-                                        SpreadsheetSelection.A1,
-                                        "ValidationConverterErrorMessage"
-                                )
+        final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = SpreadsheetForms.errorList(
+                Lists.of(
+                        SpreadsheetForms.error(
+                                SpreadsheetSelection.A1,
+                                "ValidationConverterErrorMessage"
                         )
+                )
         );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
@@ -5000,15 +4999,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorUsesvalidationFunction() {
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = ValidationErrorList.<SpreadsheetExpressionReference>empty()
-                .concat(
-                        ValidationError.with(
+    public void testSaveCellWithValueValidatorUsesValidationFunction() {
+        final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = SpreadsheetForms.errorList(
+                Lists.of(
+                        SpreadsheetForms.error(
                                 SpreadsheetSelection.A1,
                                 "ValidationConverterErrorMessage"
                         )
-                );
-
+                )
+        );
 
         final String functionName = "TestvalidationFunction";
         final ExpressionFunctionSelector validationFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
@@ -22634,10 +22633,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
-                                FormField.with(cell)
+                                SpreadsheetForms.field(cell)
                                         .setLabel("FormField1")
                                         .setType(
                                                 Optional.of(ValidationValueTypeName.TEXT)
@@ -22681,10 +22680,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
-                                FormField.with(cell)
+                                SpreadsheetForms.field(cell)
                                         .setLabel("A1Label")
                                         .setType(
                                                 Optional.of(ValidationValueTypeName.TEXT)
@@ -22731,7 +22730,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(label)
@@ -22798,7 +22797,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
@@ -22909,7 +22908,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c3CellMissing = SpreadsheetSelection.parseCell("C3");
         final SpreadsheetLabelName d4LabelMissing = SpreadsheetSelection.labelName("D4Label");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(a1Label.reference())
@@ -23001,7 +23000,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
@@ -23053,20 +23052,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
-                                FormField.with(a1)
+                                SpreadsheetForms.field(a1)
                                         .setLabel("A1LabelText1"),
-                                FormField.with(a1)
+                                SpreadsheetForms.field(a1)
                                         .setLabel("A1LabelText2"),
-                                FormField.with(b2)
+                                SpreadsheetForms.field(b2)
                                         .setLabel("B2LabelText3"),
-                                FormField.with(label1)
+                                SpreadsheetForms.field(label1)
                                         .setLabel("B2LabelText4"),
-                                FormField.with(label1)
+                                SpreadsheetForms.field(label1)
                                         .setLabel("B2LabelText5"),
-                                FormField.with(label2)
+                                SpreadsheetForms.field(label2)
                                         .setLabel("B2LabelText6")
                         )
                 );
@@ -23114,7 +23113,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form111");
         engine.saveForm(
-                Form.<SpreadsheetExpressionReference>with(formName)
+                SpreadsheetForms.form(formName)
                         .setFields(
                                 Lists.of(
                                         FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
@@ -23125,7 +23124,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         engine.saveForm(
-                Form.<SpreadsheetExpressionReference>with(FormName.with("Form222"))
+                SpreadsheetForms.form(FormName.with("Form222"))
                         .setFields(
                                 Lists.of(
                                         FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
@@ -23165,7 +23164,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         for (int i = 1; i < 1 + 5; i++) {
             final FormName formName = FormName.with("Form" + i);
 
-            final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+            final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                     .setFields(
                             Lists.of(
                                     FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.labelName("FormField" + i))
@@ -23270,7 +23269,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(
@@ -23360,7 +23359,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of("InitialFormFieldValue1")
                 );
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(field)
                 );
@@ -23467,7 +23466,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of("InitialFormFieldValue1")
                 );
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(field)
                 );
@@ -23582,7 +23581,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(field)
                 );
@@ -23731,7 +23730,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(field)
                 );
@@ -23876,7 +23875,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         context.storeRepository()
                 .forms()
                 .save(
-                        Form.<SpreadsheetExpressionReference>with(formName)
+                        SpreadsheetForms.form(formName)
                                 .setFields(
                                         Lists.of(
                                                 field1,
@@ -23902,7 +23901,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setForms(
                         Sets.of(
-                                Form.<SpreadsheetExpressionReference>with(formName)
+                                SpreadsheetForms.form(formName)
                                         .setFields(
                                                 Lists.of(
                                                         field1.setReference(SpreadsheetSelection.A1)
@@ -24018,7 +24017,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         context.storeRepository()
                 .forms()
                 .save(
-                        Form.<SpreadsheetExpressionReference>with(formName)
+                        SpreadsheetForms.form(formName)
                                 .setFields(
                                         Lists.of(
                                                 field1,
@@ -24044,7 +24043,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setForms(
                         Sets.of(
-                                Form.<SpreadsheetExpressionReference>with(formName)
+                                SpreadsheetForms.form(formName)
                                         .setFields(
                                                 Lists.of(
                                                         field1.setReference(SpreadsheetSelection.A1)
@@ -24129,7 +24128,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(
@@ -24282,7 +24281,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 PROVIDER_CONTEXT
         );
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
                 FormName.with("Form123")
         ).setHandler(
                 Optional.of(
@@ -24316,10 +24315,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String formHandler = "TestFormHandler";
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
-        final List<ValidationError<SpreadsheetExpressionReference>> errors = Lists.of(
-                ValidationError.with(
-                        cellReference,
-                        "ValidationError1"
+        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList(
+                Lists.of(
+                        SpreadsheetForms.error(
+                                cellReference,
+                                "ValidationError1"
+                        )
                 )
         );
 
@@ -24330,7 +24331,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of("InitialFormFieldValue1")
                 );
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
                 FormName.with("Form123")
         ).setFields(
                 Lists.of(
@@ -24433,7 +24434,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String formHandler = "TestFormHandler";
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
                 FormName.with("Form123")
         );
 
@@ -24553,7 +24554,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of("InitialFormFieldValue1")
                 );
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
                 FormName.with("Form123")
         ).setFields(
                 Lists.of(field1)
@@ -24689,7 +24690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of("InitialFormFieldValue2")
                 );
 
-        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(
+        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
                 FormName.with("Form123")
         ).setFields(
                 Lists.of(
