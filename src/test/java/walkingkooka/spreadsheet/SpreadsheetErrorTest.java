@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -51,6 +52,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         HashCodeEqualsDefinedTesting2<SpreadsheetError>,
         JsonNodeMarshallingTesting<SpreadsheetError>,
         HasTextTesting,
+        HasConvertErrorTesting,
         TreePrintableTesting,
         ToStringTesting<SpreadsheetError> {
 
@@ -676,7 +678,33 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                 )
         );
     }
-    
+
+    // HasConvertError..................................................................................................
+
+    @Test
+    public void testHasConvertErrorWithNULL() {
+        this.convertErrorMessageAndCheck(
+                SpreadsheetErrorKind.NULL.setMessage("Null blah blah")
+        );
+    }
+
+    @Test
+    public void testHasConvertErrorWithERROR() {
+        this.convertErrorMessageAndCheck(
+                SpreadsheetErrorKind.ERROR.setMessage("Null blah blah")
+        );
+    }
+
+    @Test
+    public void testHasConvertErrorWithValue() {
+        final String message = "Hello123";
+
+        this.convertErrorMessageAndCheck(
+                SpreadsheetErrorKind.VALUE.setMessage(message),
+                message
+        );
+    }
+
     // TreePrintable...................................................................................................
 
     @Test

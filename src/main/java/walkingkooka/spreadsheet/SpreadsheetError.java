@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
+import walkingkooka.convert.HasConvertError;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -50,7 +51,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         HasText,
         TreePrintable,
         HasSpreadsheetErrorKind,
-        UsesToStringBuilder {
+        UsesToStringBuilder,
+        HasConvertError {
 
     public static final Optional<Object> NO_VALUE = Optional.empty();
 
@@ -393,6 +395,17 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     @Override
     public SpreadsheetErrorKind spreadsheetErrorKind() {
         return this.kind();
+    }
+
+    // HasConvertError..................................................................................................
+
+    @Override
+    public Optional<String> convertErrorMessage() {
+        return Optional.ofNullable(
+                SpreadsheetErrorKind.VALUE == this.kind && false == CharSequences.isNullOrEmpty(this.message) ?
+                        this.message :
+                        null
+        );
     }
 
     // TreePrintable....................................................................................................
