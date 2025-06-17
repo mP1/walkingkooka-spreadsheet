@@ -2014,7 +2014,67 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 )
         );
     }
-    
+
+    // submitForm.......................................................................................................
+
+    @Test
+    default void testSubmitFormWithNullFormNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .submitForm(
+                                null,
+                                SpreadsheetSelection.A1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSubmitFormWithNullSelectionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .submitForm(
+                                Form.with(
+                                        FormName.with("Form1")
+                                ),
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSubmitFormWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .submitForm(
+                                Form.with(
+                                        FormName.with("Form1")
+                                ),
+                                SpreadsheetSelection.A1,
+                                null
+                        )
+        );
+    }
+
+    default void submitFormAndCheck(final SpreadsheetEngine engine,
+                                      final Form<SpreadsheetExpressionReference> form,
+                                      final SpreadsheetExpressionReference selection,
+                                      final SpreadsheetEngineContext context,
+                                      final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.submitForm(
+                        form,
+                        selection,
+                        context
+                )
+        );
+    }
+
     // saveLabel........................................................................................................
 
     @Test
