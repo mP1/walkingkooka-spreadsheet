@@ -339,7 +339,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellReference cell,
+                                   final SpreadsheetSelection cell,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                    final SpreadsheetEngineContext context,
