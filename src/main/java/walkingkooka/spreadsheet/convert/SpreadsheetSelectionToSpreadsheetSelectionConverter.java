@@ -64,10 +64,10 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
         final SpreadsheetSelection selection = (SpreadsheetSelection) value;
 
         if (isCellToCellRange(value, type)) {
-            result = selection.toCell().toCellRange();
+            result = selection.toCellRange();
         } else {
             if (isCellRangeToCell(value, type)) {
-                result = selection.toCellRange().toCell();
+                result = selection.toCell();
             } else {
                 if (isCellOrCellRange(value, type)) {
                     result = context.resolveIfLabelOrFail(selection);
