@@ -201,6 +201,7 @@ to allow user customisation of that value type along with a single color.
 
 - dd/mm/yyyy [date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
 - dd/mm/yyyy hh:mm:ss [date-time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
+- default text [default-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/pattern/SpreadsheetPattern.java#L1163)
 - General [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
 - $0.00 [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterNumber.java)
 - @ [text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterText.java)
