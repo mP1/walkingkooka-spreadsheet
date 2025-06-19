@@ -64,10 +64,10 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
         final SpreadsheetSelection selection = (SpreadsheetSelection) value;
 
         if (isCellToCellRange(value, type)) {
-            result = cellToCellRange(selection.toCell());
+            result = selection.toCell().toCellRange();
         } else {
             if (isCellRangeToCell(value, type)) {
-                result = cellRangeToCell(selection.toCellRange());
+                result = selection.toCellRange().toCell();
             } else {
                 if (isCellOrCellRange(value, type)) {
                     result = context.resolveIfLabelOrFail(selection);
@@ -120,14 +120,6 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
     private static boolean isSelection(final Object value,
                                        final Class<?> type) {
         return value instanceof SpreadsheetSelection && SpreadsheetSelection.class == type;
-    }
-
-    private static SpreadsheetCellRangeReference cellToCellRange(final SpreadsheetCellReference cell) {
-        return cell.toCellRange();
-    }
-
-    private static SpreadsheetCellReference cellRangeToCell(final SpreadsheetCellRangeReference range) {
-        return range.toCell();
     }
 
     @Override
