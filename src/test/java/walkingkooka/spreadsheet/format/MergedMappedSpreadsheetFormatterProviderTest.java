@@ -249,7 +249,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
     // https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern new-date-format-pattern
     @Test
     public void testSpreadsheetInfos() {
-        final SpreadsheetFormatterInfoSet spreadsheetFormatPattern = SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        final SpreadsheetFormatterInfoSet spreadsheetFormatPattern = SpreadsheetFormatterProviders.spreadsheetFormatters()
                 .spreadsheetFormatterInfos();
 
         final SpreadsheetFormatterInfoSet withRename = SpreadsheetFormatterInfoSet.with(
@@ -276,7 +276,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
 
     @Override
     public MergedMappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return MergedMappedSpreadsheetFormatterProvider.with(
                 SpreadsheetFormatterInfoSet.with(

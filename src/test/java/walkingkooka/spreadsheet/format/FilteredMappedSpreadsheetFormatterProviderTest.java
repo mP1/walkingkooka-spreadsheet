@@ -261,7 +261,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
 
     @Override
     public FilteredMappedSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
-        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return FilteredMappedSpreadsheetFormatterProvider.with(
                 SpreadsheetFormatterInfoSet.with(

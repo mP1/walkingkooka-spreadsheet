@@ -137,7 +137,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     }
 
     private static SpreadsheetFormatterProvider spreadsheetFormatPatternSpreadsheetFormatterProvider() {
-        return SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        return SpreadsheetFormatterProviders.spreadsheetFormatters();
     }
 
     // class............................................................................................................

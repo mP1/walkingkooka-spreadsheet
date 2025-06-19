@@ -138,7 +138,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetExporterProvider SPREADSHEET_EXPORTER_PROVIDER = SpreadsheetExporterProviders.spreadsheetExport();
 
-    SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
     FormHandlerProvider FORM_HANDLER_PROVIDER = FormHandlerProviders.validation();
 

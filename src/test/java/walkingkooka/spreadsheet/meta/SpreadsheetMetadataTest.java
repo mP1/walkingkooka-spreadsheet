@@ -966,11 +966,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ),
                 SpreadsheetComparatorProviders.spreadsheetComparators(),
                 SpreadsheetExporterProviders.spreadsheetExport(),
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetFormatterProviders.spreadsheetFormatters(),
                 FormHandlerProviders.validation(),
                 SpreadsheetImporterProviders.spreadsheetImport(),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        SpreadsheetFormatterProviders.spreadsheetFormatters()
                 ),
                 ValidatorProviders.validators()
         );
@@ -1336,7 +1336,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     private static SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
-        return SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+        return SpreadsheetFormatterProviders.spreadsheetFormatters();
     }
 
     private static SpreadsheetParserProvider spreadsheetParserProvider() {

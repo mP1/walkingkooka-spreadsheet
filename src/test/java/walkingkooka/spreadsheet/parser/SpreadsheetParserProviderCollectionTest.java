@@ -111,7 +111,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
 
     private static SpreadsheetParserProvider spreadsheetParsePatternSpreadsheetParserProvider() {
         return SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                SpreadsheetFormatterProviders.spreadsheetFormatters()
         );
     }
 

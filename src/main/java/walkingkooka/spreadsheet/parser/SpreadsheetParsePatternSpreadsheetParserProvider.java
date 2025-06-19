@@ -229,7 +229,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                 .findFirst();
     }
 
-    private final static SpreadsheetFormatterProvider FORMAT_PATTERN_SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+    private final static SpreadsheetFormatterProvider FORMAT_PATTERN_SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
     private SpreadsheetFormatterSelector SpreadsheetFormatterSelector(final AbsoluteUrl url,
                                                                       final String text) {

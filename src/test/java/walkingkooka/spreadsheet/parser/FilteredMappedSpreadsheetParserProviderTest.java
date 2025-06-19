@@ -90,7 +90,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
         this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        SpreadsheetFormatterProviders.spreadsheetFormatters()
                 ).spreadsheetParserNextToken(
                         SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
                 )
@@ -102,7 +102,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
         this.spreadsheetFormatterSelectorAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        SpreadsheetFormatterProviders.spreadsheetFormatters()
                 ).spreadsheetFormatterSelector(
                         SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
                 )
@@ -122,7 +122,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
     @Override
     public FilteredMappedSpreadsheetParserProvider createSpreadsheetParserProvider() {
         final SpreadsheetParserProvider provider = SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                SpreadsheetFormatterProviders.spreadsheetFormatters()
         );
 
         return FilteredMappedSpreadsheetParserProvider.with(
