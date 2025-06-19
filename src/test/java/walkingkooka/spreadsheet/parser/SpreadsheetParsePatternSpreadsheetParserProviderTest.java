@@ -710,7 +710,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Override
     public SpreadsheetParsePatternSpreadsheetParserProvider createSpreadsheetParserProvider() {
         return SpreadsheetParsePatternSpreadsheetParserProvider.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                SpreadsheetFormatterProviders.spreadsheetFormatters()
         );
     }
 

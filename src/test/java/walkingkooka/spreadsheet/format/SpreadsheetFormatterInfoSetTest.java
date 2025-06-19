@@ -59,7 +59,7 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
 
     @Override
     public SpreadsheetFormatterInfoSet createSet() {
-        return SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+        return SpreadsheetFormatterProviders.spreadsheetFormatters()
                 .spreadsheetFormatterInfos();
     }
 

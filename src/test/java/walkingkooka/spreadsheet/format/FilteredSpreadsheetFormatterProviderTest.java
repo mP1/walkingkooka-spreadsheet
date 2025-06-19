@@ -41,7 +41,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
                 name,
                 values,
                 CONTEXT,
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                SpreadsheetFormatterProviders.spreadsheetFormatters()
                         .spreadsheetFormatter(
                                 name,
                                 values,
@@ -57,7 +57,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
         final List<?> values = Lists.of(pattern);
 
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetFormatterProviders.spreadsheetFormatters(),
                 name,
                 values,
                 CONTEXT,
@@ -85,7 +85,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
     @Override
     public FilteredSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         return FilteredSpreadsheetFormatterProvider.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetFormatterProviders.spreadsheetFormatters(),
                 SpreadsheetFormatterInfoSet.EMPTY.concat(
                         SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
                 )
@@ -98,7 +98,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
     public void testToString() {
         this.toStringAndCheck(
                 this.createSpreadsheetFormatterProvider(),
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                SpreadsheetFormatterProviders.spreadsheetFormatters()
                         .toString()
         );
     }
