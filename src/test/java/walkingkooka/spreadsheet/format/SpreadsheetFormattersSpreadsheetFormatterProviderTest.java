@@ -948,6 +948,14 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    @Test
+    public void testSpreadsheetFormatterSamplesExpression() {
+        this.spreadsheetFormatterSamplesAndCheck(
+                SpreadsheetFormatterName.EXPRESSION,
+                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
+        );
+    }
+
     // General
     //  general
     //  Text "123.5"
