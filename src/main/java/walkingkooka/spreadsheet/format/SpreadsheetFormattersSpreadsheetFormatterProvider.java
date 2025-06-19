@@ -404,6 +404,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         )
                 );
                 break;
+            case SpreadsheetFormatterName.EXPRESSION_STRING:
+                samples = NO_SPREADSHEET_FORMATTER_SAMPLES;
+                break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 samples = Lists.of(
                         generalSample(
