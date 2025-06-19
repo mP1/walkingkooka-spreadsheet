@@ -117,26 +117,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSelectorWithDefaultText() {
-        this.spreadsheetFormatterAndCheck(
-                "default-text",
-                CONTEXT,
-                SpreadsheetFormatters.defaultText()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithExpression() {
-        this.spreadsheetFormatterAndCheck(
-                "expression (\"Hello\")",
-                CONTEXT,
-                SpreadsheetFormatters.expression(
-                        Expression.value("Hello")
-                )
-        );
-    }
-
-    @Test
     public void testSpreadsheetFormatterSelectorNextTokenCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
                 SpreadsheetFormatterSelector.parse(
@@ -473,6 +453,27 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                                         "ss"
                                 )
                         )
+                )
+        );
+    }
+
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithDefaultText() {
+        this.spreadsheetFormatterAndCheck(
+                "default-text",
+                CONTEXT,
+                SpreadsheetFormatters.defaultText()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithExpression() {
+        this.spreadsheetFormatterAndCheck(
+                "expression (\"Hello\")",
+                CONTEXT,
+                SpreadsheetFormatters.expression(
+                        Expression.value("Hello")
                 )
         );
     }
