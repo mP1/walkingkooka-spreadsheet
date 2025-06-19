@@ -31,8 +31,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
-public final class SpreadsheetFormatSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatSpreadsheetFormatterProvider>,
-        ToStringTesting<SpreadsheetFormatSpreadsheetFormatterProvider>,
+public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
+        ToStringTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = new FakeProviderContext() {
@@ -1140,8 +1140,8 @@ public final class SpreadsheetFormatSpreadsheetFormatterProviderTest implements 
     }
 
     @Override
-    public SpreadsheetFormatSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
-        return SpreadsheetFormatSpreadsheetFormatterProvider.INSTANCE;
+    public SpreadsheetFormattersSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
+        return SpreadsheetFormattersSpreadsheetFormatterProvider.INSTANCE;
     }
 
     // ToString.........................................................................................................
@@ -1205,8 +1205,8 @@ public final class SpreadsheetFormatSpreadsheetFormatterProviderTest implements 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetFormatSpreadsheetFormatterProvider> type() {
-        return SpreadsheetFormatSpreadsheetFormatterProvider.class;
+    public Class<SpreadsheetFormattersSpreadsheetFormatterProvider> type() {
+        return SpreadsheetFormattersSpreadsheetFormatterProvider.class;
     }
 
     @Override
