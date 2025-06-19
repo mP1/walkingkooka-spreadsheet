@@ -71,6 +71,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
+            case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.EXPRESSION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
@@ -148,6 +149,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                                 .map(c -> (SpreadsheetFormatter) c)
                                 .collect(Collectors.toList())
                 );
+                break;
+            case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
+                if (0 != count) {
+                    throw new IllegalArgumentException("Expected 0 value(s) got " + count);
+                }
+                formatter = SpreadsheetFormatters.defaultText();
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
                 if (1 != count) {
@@ -238,6 +245,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         selector,
                         SpreadsheetFormatParserTokenKind::isDateTime
                 );
+                break;
+            case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
+                next = null;
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
                 next = null;
@@ -382,6 +392,15 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                                 "Full",
                                 DateFormat.FULL,
                                 context
+                        )
+                );
+                break;
+            case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
+                samples = Lists.of(
+                        SpreadsheetFormatterSample.with(
+                                "Default",
+                                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
+                                TextNode.text("Hello 123")
                         )
                 );
                 break;
@@ -617,6 +636,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
+                    spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
                     spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),

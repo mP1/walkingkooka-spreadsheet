@@ -1015,7 +1015,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                        "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-template-value-name, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-template-value-name, text-to-error, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -1247,7 +1247,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"findFunctions\": \"@\",\n" +
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                        "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-template-value-name, text-to-expression, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-template-value-name, text-to-error, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
