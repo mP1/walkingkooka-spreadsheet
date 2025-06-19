@@ -48,14 +48,14 @@ import java.util.stream.Collectors;
  * A {link SpreadsheetFormatterProvider} that supports creating {@link SpreadsheetFormatter} for each of the
  * available {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern}.
  */
-final class SpreadsheetFormatSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
+final class SpreadsheetFormattersSpreadsheetFormatterProvider implements SpreadsheetFormatterProvider {
 
     /**
      * Singleton
      */
-    final static SpreadsheetFormatSpreadsheetFormatterProvider INSTANCE = new SpreadsheetFormatSpreadsheetFormatterProvider();
+    final static SpreadsheetFormattersSpreadsheetFormatterProvider INSTANCE = new SpreadsheetFormattersSpreadsheetFormatterProvider();
 
-    private SpreadsheetFormatSpreadsheetFormatterProvider() {
+    private SpreadsheetFormattersSpreadsheetFormatterProvider() {
         super();
     }
 
