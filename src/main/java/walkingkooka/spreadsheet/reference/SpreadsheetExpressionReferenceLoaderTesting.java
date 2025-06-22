@@ -59,6 +59,29 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
 
     default void loadCellAndCheck(final T loader,
                                   final SpreadsheetCellReference cellReference,
+                                  final SpreadsheetExpressionEvaluationContext context) {
+        this.loadCellAndCheck(
+                loader,
+                cellReference,
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void loadCellAndCheck(final T loader,
+                                  final SpreadsheetCellReference cellReference,
+                                  final SpreadsheetExpressionEvaluationContext context,
+                                  final SpreadsheetCell expected) {
+        this.loadCellAndCheck(
+                loader,
+                cellReference,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void loadCellAndCheck(final T loader,
+                                  final SpreadsheetCellReference cellReference,
                                   final SpreadsheetExpressionEvaluationContext context,
                                   final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
