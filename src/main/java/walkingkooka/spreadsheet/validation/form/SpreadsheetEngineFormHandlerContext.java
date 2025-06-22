@@ -91,7 +91,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
 
         final SpreadsheetEngineContext context = this.context;
 
-        Optional<SpreadsheetCell> cell = this.engine.loadCells(
+        final Optional<SpreadsheetCell> cell = this.engine.loadCells(
                 reference,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE, // DONT want to evaluate cell's formula working with input values.
                 Sets.of(SpreadsheetDeltaProperties.CELLS),
@@ -138,7 +138,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
                 context
         );
 
-        SpreadsheetSelection maybeCell = reference.isCell() ?
+        final SpreadsheetSelection maybeCell = reference.isCell() ?
                 reference :
                 context.resolveLabel(reference.toLabelName())
                         .orElse(null);
