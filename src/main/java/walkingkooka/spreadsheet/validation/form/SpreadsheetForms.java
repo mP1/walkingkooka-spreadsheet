@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidationError;
@@ -31,6 +32,11 @@ import java.util.List;
  * Type safe factory methods for creating forms and fields.
  */
 public final class SpreadsheetForms implements PublicStaticHelper {
+
+    /**
+     * A {@link Form} with a type parameter of {@link SpreadsheetExpressionReference}.
+     */
+    public final Class<Form<SpreadsheetExpressionReference>> FORM_CLASS = Cast.to(Form.class);
 
     /**
      * {@see ValidationError}
