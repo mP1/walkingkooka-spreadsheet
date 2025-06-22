@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 
 import java.util.Optional;
@@ -70,8 +69,9 @@ public interface SpreadsheetExpressionReferenceLoader extends Context {
     default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.loadLabel(
                 labelName
-        ).orElseThrow(() -> new SpreadsheetErrorException(
-                SpreadsheetError.selectionNotFound(labelName))
+        ).orElseThrow(
+                () -> SpreadsheetError.selectionNotFound(labelName)
+                        .exception()
         );
     }
 }
