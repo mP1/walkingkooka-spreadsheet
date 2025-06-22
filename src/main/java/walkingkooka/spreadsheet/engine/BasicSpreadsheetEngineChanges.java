@@ -251,7 +251,6 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     /**
      * Commits a loaded cell. References to the cell will be extracted at a later stage.
      */
-    // TODO inline within findCells
     void onCellLoading(final SpreadsheetCell cell) {
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
                 cell.reference(),
