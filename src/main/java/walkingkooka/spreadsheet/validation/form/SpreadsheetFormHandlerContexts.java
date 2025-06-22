@@ -18,11 +18,16 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormHandlerContext;
+
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * A collection of factory methods to create {@link FormHandlerContext}
@@ -30,23 +35,25 @@ import walkingkooka.validation.form.FormHandlerContext;
 public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper {
 
     /**
+     * {@see BasicSpreadsheetFormHandlerContext}
+     */
+    public static SpreadsheetFormHandlerContext basic(final Form<SpreadsheetExpressionReference> form,
+                                                      final SpreadsheetExpressionReferenceLoader loader,
+                                                      final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
+                                                      final SpreadsheetEngineContext context) {
+        return BasicSpreadsheetFormHandlerContext.with(
+                form,
+                loader,
+                cellsSaver,
+                context
+        );
+    }
+
+    /**
      * {@see FakeSpreadsheetFormHandlerContext}
      */
     public static SpreadsheetFormHandlerContext fake() {
         return new FakeSpreadsheetFormHandlerContext();
-    }
-
-    /**
-     * {@see SpreadsheetEngineFormHandlerContext}
-     */
-    public static SpreadsheetFormHandlerContext spreadsheetEngine(final Form<SpreadsheetExpressionReference> form,
-                                                                  final SpreadsheetEngine engine,
-                                                                  final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineFormHandlerContext.with(
-                form,
-                engine,
-                context
-        );
     }
 
     /**

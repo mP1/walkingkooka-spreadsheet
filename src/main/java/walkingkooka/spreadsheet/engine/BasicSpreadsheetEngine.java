@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -1247,9 +1248,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context // ProviderContext
             );
 
-            final SpreadsheetFormHandlerContext formHandlerContext = SpreadsheetFormHandlerContexts.spreadsheetEngine(
+            final SpreadsheetFormHandlerContext formHandlerContext = this.formHandlerContext(
                     form,
-                    this,
                     context
             );
 
@@ -1357,9 +1357,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context // ProviderContext
             );
 
-            final SpreadsheetFormHandlerContext formHandlerContext = SpreadsheetFormHandlerContexts.spreadsheetEngine(
+            final SpreadsheetFormHandlerContext formHandlerContext = this.formHandlerContext(
                     form,
-                    this,
                     context
             );
 
@@ -1376,6 +1375,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         } finally {
             changes.close();
         }
+    }
+
+    private SpreadsheetFormHandlerContext formHandlerContext(final Form<SpreadsheetExpressionReference> form,
+                                                             final SpreadsheetEngineContext context) {
+        return SpreadsheetFormHandlerContexts.basic(
+                form,
+                SpreadsheetExpressionReferenceLoaders.spreadsheetStoreRepository(context.storeRepository()),
+                (Set<SpreadsheetCell> cells) -> this.saveCells(cells, context), // cellsSaver
+                context
+        );
     }
 
     // SAVE LABEL.......................................................................................................

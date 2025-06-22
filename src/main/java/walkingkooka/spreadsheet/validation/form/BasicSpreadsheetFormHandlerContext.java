@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
@@ -26,18 +25,16 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -49,26 +46,35 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
-final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandlerContext,
+/**
+ * A {@link SpreadsheetFormHandlerContext} that mixes some custom logic and calls to load and save cells from the provided
+ * dependencies.
+ */
+final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandlerContext,
         CanConvertDelegator,
         EnvironmentContextDelegator {
 
-    static SpreadsheetEngineFormHandlerContext with(final Form<SpreadsheetExpressionReference> form,
-                                                    final SpreadsheetEngine engine,
-                                                    final SpreadsheetEngineContext context) {
-        return new SpreadsheetEngineFormHandlerContext(
+    static BasicSpreadsheetFormHandlerContext with(final Form<SpreadsheetExpressionReference> form,
+                                                   final SpreadsheetExpressionReferenceLoader loader,
+                                                   final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
+                                                   final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetFormHandlerContext(
                 Objects.requireNonNull(form, "form"),
-                Objects.requireNonNull(engine, "engine"),
+                Objects.requireNonNull(loader, "loader"),
+                Objects.requireNonNull(cellsSaver, "cellsSaver"),
                 Objects.requireNonNull(context, "context")
         );
     }
 
-    private SpreadsheetEngineFormHandlerContext(final Form<SpreadsheetExpressionReference> form,
-                                                final SpreadsheetEngine engine,
-                                                final SpreadsheetEngineContext context) {
+    private BasicSpreadsheetFormHandlerContext(final Form<SpreadsheetExpressionReference> form,
+                                               final SpreadsheetExpressionReferenceLoader loader,
+                                               final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
+                                               final SpreadsheetEngineContext context) {
         this.form = form;
-        this.engine = engine;
+        this.loader = loader;
+        this.cellsSaver = cellsSaver;
         this.context = context;
     }
 
@@ -85,20 +91,9 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
     @Override
     public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
-        if (false == reference.isCell() && false == reference.isLabelName()) {
-            throw new IllegalArgumentException("Invalid reference " + reference + " expected only cell or label");
-        }
 
+        final Optional<SpreadsheetCell> cell = this.loadCell(reference);
         final SpreadsheetEngineContext context = this.context;
-
-        final Optional<SpreadsheetCell> cell = this.engine.loadCells(
-                reference,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // DONT want to evaluate cell's formula working with input values.
-                Sets.of(SpreadsheetDeltaProperties.CELLS),
-                context
-        ).cell(
-                context.resolveIfLabelOrFail(reference).toCell()
-        );
 
         // Dont think a ValidationContext should ever need to load another cell.
         return SpreadsheetValidatorContexts.basic(
@@ -127,32 +122,8 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
             throw new IllegalArgumentException("Invalid reference " + reference + " expected only cell or label");
         }
 
-        final SpreadsheetEngineContext context = this.context;
-
-        final SpreadsheetDelta delta = this.engine.loadCells(
-                reference,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // only interested in SpreadsheetCell#value
-                Sets.of(
-                        SpreadsheetDeltaProperties.CELLS
-                ),
-                context
-        );
-
-        final SpreadsheetSelection maybeCell = reference.isCell() ?
-                reference :
-                context.resolveLabel(reference.toLabelName())
-                        .orElse(null);
-
-        Object value = null;
-
-        // cell may be present and may or may not have an value.
-        if (null != maybeCell) {
-            value = delta.cell(maybeCell.toCell())
-                    .flatMap(c -> c.formula().value())
-                    .orElse(null);
-        }
-
-        return Optional.ofNullable(value);
+        return this.loadCell(reference)
+                .flatMap((SpreadsheetCell cell) -> cell.formula().value());
     }
 
     @Override
@@ -165,12 +136,11 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
     }
 
     private SpreadsheetDelta saveFormFieldValues0(final FormFieldList<SpreadsheetExpressionReference> fields) {
-        final SpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
         // build a map of cell or label to cell
         final Map<SpreadsheetExpressionReference, SpreadsheetCellReference> cellOrLabelToCell = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-        final Set<SpreadsheetCellRangeReference> loadCells = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetCell> loadedCellToSpreadsheetCell = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final FormField<SpreadsheetExpressionReference> field : fields) {
             SpreadsheetExpressionReference cellOrLabel = field.reference();
@@ -203,21 +173,10 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
                 throw new IllegalArgumentException("Multiple fields with same name " + CharSequences.quoteAndEscape(cellOrLabel.text()));
             }
 
-            loadCells.add(cell.toCellRange());
-        }
-
-        // try and load each of the cells in $loadCells
-        final SpreadsheetDelta loaded = engine.loadMultipleCellRanges(
-                loadCells,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // Only interested in SpreadsheetFormula#value not formula expression values
-                Sets.of(SpreadsheetDeltaProperties.CELLS),
-                context
-        );
-        final Map<SpreadsheetCellReference, SpreadsheetCell> loadedCellToSpreadsheetCell = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-        for (final SpreadsheetCell cell : loaded.cells()) {
             loadedCellToSpreadsheetCell.put(
-                    cell.reference(),
-                    cell
+                    cell,
+                    this.loadCell(cell)
+                            .orElse(null)
             );
         }
 
@@ -237,11 +196,34 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
             );
         }
 
-        return engine.saveCells(
-                saving,
-                context
-        );
+        return this.cellsSaver.apply(saving);
     }
+
+    /**
+     * Attempts to load single cell for the given {@link SpreadsheetExpressionReference}, which includes resolving labels.
+     */
+    private Optional<SpreadsheetCell> loadCell(final SpreadsheetExpressionReference reference) {
+        final SpreadsheetExpressionReferenceLoader loader = this.loader;
+        final SpreadsheetEngineContext context = this.context;
+
+        final SpreadsheetCellReference cellReference = context.resolveIfLabel((ExpressionReference) reference)
+                .map(SpreadsheetSelection::toCell)
+                .orElse(null);
+
+        return null == cellReference ?
+                Optional.empty() :
+                loader.loadCell(
+                        cellReference,
+                        context.spreadsheetExpressionEvaluationContext(
+                                SpreadsheetEngineContext.NO_CELL,
+                                loader
+                        )
+                );
+    }
+
+    private final SpreadsheetExpressionReferenceLoader loader;
+
+    private final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver;
 
     // CanConvertDelegator..............................................................................................
 
@@ -257,14 +239,12 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
         return this.context;
     }
 
-    private final SpreadsheetEngine engine;
-
     private final SpreadsheetEngineContext context;
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.engine + " " + this.context;
+        return this.loader + " " + this.cellsSaver + " " + this.context;
     }
 }
