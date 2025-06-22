@@ -36,7 +36,7 @@ public final class SpreadsheetForms implements PublicStaticHelper {
     /**
      * A {@link Form} with a type parameter of {@link SpreadsheetExpressionReference}.
      */
-    public final Class<Form<SpreadsheetExpressionReference>> FORM_CLASS = Cast.to(Form.class);
+    public final static Class<Form<SpreadsheetExpressionReference>> FORM_CLASS = Cast.to(Form.class);
 
     /**
      * {@see ValidationError}
