@@ -158,6 +158,25 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
     }
 
     default void loadLabelAndCheck(final T loader,
+                                   final SpreadsheetLabelName labelName) {
+        this.loadLabelAndCheck(
+                loader,
+                labelName,
+                Optional.empty()
+        );
+    }
+
+    default void loadLabelAndCheck(final T loader,
+                                   final SpreadsheetLabelName labelName,
+                                   final SpreadsheetLabelMapping expected) {
+        this.loadLabelAndCheck(
+                loader,
+                labelName,
+                Optional.of(expected)
+        );
+    }
+
+    default void loadLabelAndCheck(final T loader,
                                    final SpreadsheetLabelName labelName,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
