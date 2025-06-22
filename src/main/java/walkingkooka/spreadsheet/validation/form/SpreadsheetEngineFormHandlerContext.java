@@ -131,7 +131,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
 
         final SpreadsheetDelta delta = this.engine.loadCells(
                 reference,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // only interested in SpreadsheetCell#inputValue
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // only interested in SpreadsheetCell#value
                 Sets.of(
                         SpreadsheetDeltaProperties.CELLS
                 ),
@@ -145,7 +145,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
 
         Object value = null;
 
-        // cell may be present and may or may not have an inputValue.
+        // cell may be present and may or may not have an value.
         if (null != maybeCell) {
             value = delta.cell(maybeCell.toCell())
                     .flatMap(c -> c.formula().value())
@@ -209,7 +209,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
         // try and load each of the cells in $loadCells
         final SpreadsheetDelta loaded = engine.loadMultipleCellRanges(
                 loadCells,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // Only interested in SpreadsheetFormula#inputValue not formula expression values
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // Only interested in SpreadsheetFormula#value not formula expression values
                 Sets.of(SpreadsheetDeltaProperties.CELLS),
                 context
         );
