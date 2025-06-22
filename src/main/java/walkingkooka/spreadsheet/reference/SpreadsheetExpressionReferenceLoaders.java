@@ -26,6 +26,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetExpressionReferenceLoaders implements PublicStaticHelper {
 
     /**
+     * {@see BasicSpreadsheetExpressionReferenceLoader}
+     */
+    public static SpreadsheetExpressionReferenceLoader basic() {
+        return BasicSpreadsheetExpressionReferenceLoader.INSTANCE;
+    }
+
+    /**
      * {@see FakeSpreadsheetExpressionReferenceLoader}
      */
     public static SpreadsheetExpressionReferenceLoader fake() {
