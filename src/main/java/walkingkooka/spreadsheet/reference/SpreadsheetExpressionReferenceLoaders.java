@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 /**
  * Collection of factory methods returning {@link SpreadsheetExpressionReferenceLoader}.
@@ -37,6 +38,13 @@ public final class SpreadsheetExpressionReferenceLoaders implements PublicStatic
      */
     public static SpreadsheetExpressionReferenceLoader fake() {
         return new FakeSpreadsheetExpressionReferenceLoader();
+    }
+
+    /**
+     * {@see SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader}
+     */
+    public static SpreadsheetExpressionReferenceLoader spreadsheetStoreRepository(final SpreadsheetStoreRepository repository) {
+        return SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repository);
     }
 
     /**
