@@ -192,7 +192,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
 
             // complain if CELLRANGE only allow CELL or LABEL to a CELL
             if (cellOrLabel.isCellRange()) {
-                throw new IllegalArgumentException("Field with range " + CharSequences.quote(cellOrLabel.toString()) + " expected only cell or label");
+                throw new IllegalArgumentException("Field with cell-range " + CharSequences.quote(cellOrLabel.toString()) + " expected only cell or label");
             }
 
             final SpreadsheetCellReference duplicate = cellOrLabelToCell.put(
