@@ -26,6 +26,7 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
@@ -187,7 +188,12 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
                     field.reference()
             ).toCell();
 
-            final SpreadsheetCell spreadsheetCell = loadedCellToSpreadsheetCell.get(cell);
+            // cell might be missing.
+            SpreadsheetCell spreadsheetCell = loadedCellToSpreadsheetCell.get(cell);
+            if(null == spreadsheetCell) {
+                spreadsheetCell = cell.setFormula(SpreadsheetFormula.EMPTY);
+            }
+
             saving.add(
                     spreadsheetCell.setFormula(
                             spreadsheetCell.formula()
