@@ -31,6 +31,9 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextTesting;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
@@ -119,6 +122,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         HasUrlFragmentTesting,
         JsonNodeMarshallingTesting<SpreadsheetMetadata>,
+        LocaleContextTesting,
         PatchableTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 
@@ -295,6 +299,24 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         spreadsheetParserProvider(),
                         PROVIDER_CONTEXT
                 );
+    }
+
+    // localeContext....................................................................................................
+
+    @Test
+    public void testLocaleContext() {
+        final Locale locale = Locale.GERMANY;
+
+        final LocaleContext context = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
+                .localeContext(
+                        LocaleContexts.jre()
+                );
+
+        this.checkEquals(
+                locale,
+                context.locale()
+        );
     }
 
     // setOrRemove......................................................................................................
