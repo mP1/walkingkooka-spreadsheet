@@ -319,6 +319,33 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     // saveFormFieldValues..............................................................................................
 
     @Test
+    public void testSaveFormFieldValuesWithFormFieldWithMissingCell() {
+        final BasicSpreadsheetFormHandlerContext context = this.createContext();
+
+        final SpreadsheetCellReference missingCell = SpreadsheetSelection.parseCell("Z99");
+        final String value = "Value111";
+
+        this.saveFormFieldValuesAndCheck(
+                context,
+                Lists.of(
+                        FormField.<SpreadsheetExpressionReference>with(missingCell)
+                                .setValue(
+                                        Optional.of(value)
+                                )
+                ),
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                missingCell.setFormula(
+                                        SpreadsheetFormula.EMPTY.setValue(
+                                                Optional.of(value)
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testSaveFormFieldValuesWithFormFieldWithCell() {
         final BasicSpreadsheetFormHandlerContext context = this.createContext();
 
@@ -345,13 +372,14 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         );
     }
 
+    private final static SpreadsheetCellReference A1_CELL = SpreadsheetSelection.A1;
+
     private final static SpreadsheetLabelName A1LABEL = SpreadsheetSelection.labelName("A1LABEL");
 
     @Test
     public void testSaveFormFieldValuesWithFormFieldWithLabel() {
         final BasicSpreadsheetFormHandlerContext context = this.createContext();
 
-        final SpreadsheetCellReference a1Cell = SpreadsheetSelection.A1;
         final String a1Value = "A1Value111";
 
         this.saveFormFieldValuesAndCheck(
@@ -364,7 +392,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 ),
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                a1Cell.setFormula(
+                                A1_CELL.setFormula(
                                         SpreadsheetFormula.EMPTY.setValue(
                                                 Optional.of(a1Value)
                                         )
@@ -408,17 +436,23 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                     @Override
                     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
                                                               final SpreadsheetExpressionEvaluationContext context) {
-                        return Optional.of(
-                                cell.setFormula(SpreadsheetFormula.EMPTY)
+                        return Optional.ofNullable(
+                                A1_CELL.equalsIgnoreReferenceKind(cell) ?
+                                        cell.setFormula(SpreadsheetFormula.EMPTY) :
+                                        null
                         );
                     }
 
                     @Override
                     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
                                                               final SpreadsheetExpressionEvaluationContext context) {
-                        return Sets.of(
-                                cellRange.toCell().setFormula(SpreadsheetFormula.EMPTY)
-                        );
+                        final SpreadsheetCell cell = this.loadCell(
+                                cellRange.toCell(),
+                                context
+                        ).orElse(null);
+                        return null == cell ?
+                                Sets.empty() :
+                                Sets.of(cell);
                     }
                 },
                 (Set<SpreadsheetCell> cells) -> SpreadsheetDelta.EMPTY.setCells(cells),
