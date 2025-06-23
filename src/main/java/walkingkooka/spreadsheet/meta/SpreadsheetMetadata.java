@@ -42,6 +42,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasMathContext;
+import walkingkooka.naming.HasOptionalName;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.ProviderContext;
@@ -152,6 +153,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         HasExpressionNumberKind,
         HasLocale,
         HasMathContext,
+        HasOptionalName<SpreadsheetName>,
         HateosResource<SpreadsheetId>,
         Patchable<SpreadsheetMetadata>,
         TreePrintable,
@@ -853,9 +855,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return new MathContext(precision, roundingMode);
     }
 
+    // HasOptionalName..................................................................................................
+
     /**
      * Returns the {@link SpreadsheetName} if one is present.
      */
+    @Override
     public Optional<SpreadsheetName> name() {
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME);
     }
