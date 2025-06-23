@@ -237,7 +237,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> Optional<V> get(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.getOrGetDefaults(
-                checkPropertyName(propertyName)
+                Objects.requireNonNull(propertyName, "propertyName")
         );
     }
 
@@ -260,9 +260,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * subclasses will fetch the property returning the value.
      */
     public final <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
-        Objects.requireNonNull(propertyName, "propertyName");
-
-        return this.getIgnoringDefaults0(propertyName);
+        return this.getIgnoringDefaults0(
+                Objects.requireNonNull(propertyName, "propertyName")
+        );
     }
 
     abstract <V> Optional<V> getIgnoringDefaults0(final SpreadsheetMetadataPropertyName<V> propertyName);
@@ -342,7 +342,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName,
                                              final V value) {
         return this.set0(
-                checkPropertyName(propertyName),
+                Objects.requireNonNull(
+                        propertyName,
+                        "propertyName"
+                ),
                 propertyName.checkValue(value) // necessary because absolute references values are made relative
         );
     }
@@ -392,15 +395,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetMetadata remove(final SpreadsheetMetadataPropertyName<?> propertyName) {
         return this.remove0(
-                checkPropertyName(propertyName)
+                Objects.requireNonNull(
+                        propertyName,
+                        "propertyName"
+                )
         );
     }
 
     abstract SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName);
-
-    private static <T> SpreadsheetMetadataPropertyName<T> checkPropertyName(final SpreadsheetMetadataPropertyName<T> propertyName) {
-        return Objects.requireNonNull(propertyName, "propertyName");
-    }
 
     // setOrRemove......................................................................................................
 
