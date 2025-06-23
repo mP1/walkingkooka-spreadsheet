@@ -20,6 +20,7 @@
     <inherits name="walkingkooka.j2cl.java.util.locale.Locale"/>
     <inherits name="walkingkooka.convert.provider.ConvertProvider"/>
     <inherits name="walkingkooka.environment.Environment"/>
+    <inherits name="walkingkooka.locale.Locale"/>
     <inherits name="walkingkooka.net.convert.WalkingkookaNetConvert"/>
     <inherits name="walkingkooka.net.http.server.hateos.Hateos"/>
     <inherits name="walkingkooka.storage.expression.function.StorageExpressionFunction"/>
