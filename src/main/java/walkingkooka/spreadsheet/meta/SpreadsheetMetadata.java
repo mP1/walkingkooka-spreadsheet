@@ -38,6 +38,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.HasLocale;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -832,6 +833,18 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public final Locale locale() {
         return this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
+    }
+
+    // LocaleContext....................................................................................................
+
+    /**
+     * Returns a {@link LocaleContext}, with the given {@link SpreadsheetMetadataPropertyName#LOCALE}.
+     */
+    public final LocaleContext localeContext(final LocaleContext context) {
+        return SpreadsheetMetadataLocaleContext.with(
+                context,
+                this.locale()
+        );
     }
 
     // HasMathContext...................................................................................................
