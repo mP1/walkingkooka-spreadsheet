@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -55,7 +56,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.form.Form;
-import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormName;
 
 import java.util.ArrayList;
@@ -677,7 +677,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 FormName.with("Form111")
         ).setFields(
                 Lists.of(
-                        FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
+                        SpreadsheetForms.field(SpreadsheetSelection.A1)
                                 .setLabel("Label111")
                                 .setType(
                                         Optional.of(ValidationValueTypeName.TEXT)

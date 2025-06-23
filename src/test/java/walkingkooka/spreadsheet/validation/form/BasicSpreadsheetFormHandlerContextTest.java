@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoad
 import walkingkooka.spreadsheet.reference.LabelNotFoundException;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -47,7 +46,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.ReferenceExpression;
 import walkingkooka.validation.form.Form;
-import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
@@ -328,7 +326,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         this.saveFormFieldValuesAndCheck(
                 context,
                 Lists.of(
-                        FormField.<SpreadsheetExpressionReference>with(missingCell)
+                        SpreadsheetForms.field(missingCell)
                                 .setValue(
                                         Optional.of(value)
                                 )
@@ -355,7 +353,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         this.saveFormFieldValuesAndCheck(
                 context,
                 Lists.of(
-                        FormField.<SpreadsheetExpressionReference>with(a1Cell)
+                        SpreadsheetForms.field(a1Cell)
                                 .setValue(
                                         Optional.of(a1Value)
                                 )
@@ -385,7 +383,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         this.saveFormFieldValuesAndCheck(
                 context,
                 Lists.of(
-                        FormField.<SpreadsheetExpressionReference>with(A1LABEL)
+                        SpreadsheetForms.field(A1LABEL)
                                 .setValue(
                                         Optional.of(a1Value)
                                 )
@@ -413,7 +411,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 LabelNotFoundException.class,
                 () -> context.saveFormFieldValues(
                         Lists.of(
-                                FormField.<SpreadsheetExpressionReference>with(
+                                SpreadsheetForms.field(
                                                 SpreadsheetSelection.labelName("UNKNOWNLABEL")
                                         )
                                         .setValue(
