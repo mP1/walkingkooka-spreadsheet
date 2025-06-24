@@ -21,6 +21,8 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
@@ -67,7 +69,8 @@ import java.util.Set;
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         SpreadsheetProviderDelegator,
-        ProviderContextDelegator {
+        ProviderContextDelegator,
+        LocaleContextDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
@@ -76,12 +79,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetMetadata metadata,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                              final LocaleContext localeContext,
                                               final SpreadsheetProvider spreadsheetProvider,
                                               final ProviderContext providerContext) {
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
+        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -91,6 +96,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 metadata,
                 storeRepository,
                 functionAliases,
+                localeContext,
                 spreadsheetProvider,
                 providerContext
         );
@@ -103,6 +109,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetMetadata metadata,
                                           final SpreadsheetStoreRepository storeRepository,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                          final LocaleContext localeContext,
                                           final SpreadsheetProvider spreadsheetProvider,
                                           final ProviderContext providerContext) {
         super();
@@ -118,6 +125,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
 
         this.functionAliases = functionAliases;
+
+        this.localeContext = localeContext;
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
     }
@@ -151,6 +160,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         this.metadata,
                         this.storeRepository,
                         functionAliases,
+                        this.localeContext,
                         this.spreadsheetProvider,
                         this.providerContext
                 );
@@ -436,6 +446,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private final SpreadsheetStoreRepository storeRepository;
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    private final LocaleContext localeContext;
 
     // SpreadsheetProvider..............................................................................................
 

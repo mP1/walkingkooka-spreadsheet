@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
@@ -46,7 +48,8 @@ import java.util.Optional;
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
         ProviderContextDelegator,
-        SpreadsheetProviderDelegator {
+        SpreadsheetProviderDelegator,
+        LocaleContextDelegator {
 
     @Override
     default  AbsoluteUrl serverUrl() {
@@ -139,6 +142,11 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
 
     @Override
     default ProviderContext providerContext() {
+        return this.spreadsheetEngineContext();
+    }
+
+    @Override
+    default LocaleContext localeContext() {
         return this.spreadsheetEngineContext();
     }
 

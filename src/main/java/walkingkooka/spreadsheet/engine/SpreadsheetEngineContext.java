@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
@@ -56,6 +57,7 @@ public interface SpreadsheetEngineContext extends Context,
         ExpressionPurityContext,
         HasSpreadsheetMetadata,
         HasNow,
+        LocaleContext,
         SpreadsheetProvider,
         ProviderContext,
         SpreadsheetLabelNameResolver,

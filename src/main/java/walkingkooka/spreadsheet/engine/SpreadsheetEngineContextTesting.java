@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
-import walkingkooka.locale.HasLocaleTesting;
+import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
         ParserTesting,
-        HasLocaleTesting,
+        LocaleContextTesting2<C>,
         SpreadsheetProviderTesting<C>,
         SpreadsheetLabelNameResolverTesting<C> {
 

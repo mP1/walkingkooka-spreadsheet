@@ -37,6 +37,8 @@ import walkingkooka.convert.provider.FakeConverterProvider;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -658,6 +660,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetMetadata METADATA;
 
     private static Object VALUE;
+
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
 
     // loadCells........................................................................................................
 
@@ -4636,6 +4640,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         new FakeConverterProvider() {
                             @Override
@@ -4760,6 +4765,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         new FakeConverterProvider() {
                             @Override
@@ -4893,6 +4899,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         new FakeConverterProvider() {
                             @Override
@@ -5034,6 +5041,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         ExpressionFunctionProviders.basic(
@@ -16448,6 +16456,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         ExpressionFunctionProviders.basic(
@@ -17557,6 +17566,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         ExpressionFunctionProviders.basic(
@@ -23214,6 +23224,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 METADATA,
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23253,6 +23264,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 METADATA,
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23318,6 +23330,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23400,6 +23413,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23524,6 +23538,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23651,6 +23666,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23811,6 +23827,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -23953,6 +23970,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24071,6 +24089,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 METADATA,
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24112,6 +24131,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 METADATA,
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24177,6 +24197,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24249,6 +24270,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24363,6 +24385,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24468,6 +24491,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24593,6 +24617,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24726,6 +24751,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 spreadsheetStoreRepository(),
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -24920,6 +24946,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
                 storeRepository,
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
