@@ -609,10 +609,34 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // HasDateTimeContext...............................................................................................
+    // DateTimeContext..................................................................................................
 
     @Test
-    public final void testHasDateTimeContextRequiredPropertiesAbsentFails() {
+    public final void testDateTimeContextWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .dateTimeContext(
+                                null,
+                                LocalDateTime::now
+                        )
+        );
+    }
+
+    @Test
+    public final void testDateTimeContextWithNullNowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .dateTimeContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public final void testDateTimeContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
@@ -626,6 +650,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 "Metadata missing: defaultYear, locale, twoDigitYear"
         );
     }
+
+    // DecimalNumberContext.............................................................................................
 
     @Test
     public final void testDecimalNumberContextWithNullCellFails() {
