@@ -29,6 +29,8 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
@@ -358,6 +360,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
             NOW,
             Optional.of(USER)
     );
+
+    LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/6223
     // SpreadsheetMetadataTesting.PROVIDER_CONTEXT requires real CanConvert
