@@ -22,7 +22,10 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.FakeDateTimeContext;
+import walkingkooka.locale.FakeLocaleContext;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -89,6 +92,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -322,6 +326,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
     };
 
+    private final static LocaleContext LOCALE_CONTEXT = new FakeLocaleContext() {
+        @Override
+        public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+    };
+
     // with.............................................................................................................
 
     @Test
@@ -333,6 +351,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         METADATA,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
+                        LOCALE_CONTEXT,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -348,6 +367,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
+                        LOCALE_CONTEXT,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -363,6 +383,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         METADATA,
                         null,
                         FUNCTION_ALIASES,
+                        LOCALE_CONTEXT,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -377,6 +398,23 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SERVER_URL,
                         METADATA,
                         STORE_REPOSITORY,
+                        null,
+                        LOCALE_CONTEXT,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        METADATA,
+                        STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         null,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
@@ -393,6 +431,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         METADATA,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
+                        LOCALE_CONTEXT,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -408,6 +447,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         METADATA,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
+                        LOCALE_CONTEXT,
                         SPREADSHEET_PROVIDER,
                         null
                 )
@@ -1398,6 +1438,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 metadata,
                 repository,
                 FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,

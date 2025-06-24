@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
@@ -46,7 +48,8 @@ import java.util.Optional;
  */
 final class BasicSpreadsheetEngineSpreadsheetEngineContext implements SpreadsheetEngineContext,
         SpreadsheetProviderDelegator,
-        ProviderContextDelegator {
+        ProviderContextDelegator,
+        LocaleContextDelegator {
 
     static BasicSpreadsheetEngineSpreadsheetEngineContext with(final SpreadsheetEngineContext spreadsheetEngineContext,
                                                                final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext) {
@@ -140,6 +143,13 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     @Override
     public boolean isPure(final ExpressionFunctionName expressionFunctionName) {
         return this.spreadsheetEngineContext.isPure(expressionFunctionName);
+    }
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.spreadsheetEngineContext;
     }
 
     // SpreadsheetProviderDelegator.....................................................................................
