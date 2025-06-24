@@ -30,9 +30,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataLocaleContextTest implements LocaleContextTesting2<SpreadsheetMetadataLocaleContext>,
         ToStringTesting<SpreadsheetMetadataLocaleContext> {
 
-    private final static LocaleContext CONTEXT = LocaleContexts.jre();
-
     private final static Locale LOCALE = Locale.ENGLISH;
+
+    private final static LocaleContext CONTEXT = LocaleContexts.jre(LOCALE);
 
     @Test
     public void testWithNullContextFails() {
@@ -70,7 +70,7 @@ public final class SpreadsheetMetadataLocaleContextTest implements LocaleContext
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "locale=en context=JRE"
+                "locale=en context=JRE en"
         );
     }
 
