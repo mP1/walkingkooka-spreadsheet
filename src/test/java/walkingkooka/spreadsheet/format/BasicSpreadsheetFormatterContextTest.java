@@ -272,7 +272,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testLocale() {
-        this.hasLocaleAndCheck(this.createContext(), LOCALE);
+        this.localeAndCheck(
+                this.createContext(),
+                LOCALE
+        );
     }
 
     @Test

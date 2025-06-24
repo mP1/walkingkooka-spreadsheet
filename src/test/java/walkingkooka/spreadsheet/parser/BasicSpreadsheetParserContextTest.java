@@ -128,7 +128,10 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
 
     @Test
     public void testLocale() {
-        this.hasLocaleAndCheck(this.createContext(), LOCALE);
+        this.localeAndCheck(
+                this.createContext(),
+                LOCALE
+        );
     }
 
     @Test
