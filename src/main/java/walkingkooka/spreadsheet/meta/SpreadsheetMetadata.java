@@ -530,7 +530,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // HasDateTimeContext...............................................................................................
+    // DateTimeContext..................................................................................................
 
     /**
      * Constant holding no {@link SpreadsheetCell}.
@@ -544,7 +544,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final DateTimeContext dateTimeContext(final Optional<SpreadsheetCell> cell,
                                                  final HasNow now) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(cell, "now");
+        Objects.requireNonNull(now, "now");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
