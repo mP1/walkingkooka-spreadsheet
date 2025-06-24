@@ -126,7 +126,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.functionAliases = functionAliases;
 
-        this.localeContext = localeContext;
+        this.localeContext = metadata.localeContext(localeContext);
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
     }
