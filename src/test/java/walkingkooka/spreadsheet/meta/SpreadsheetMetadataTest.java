@@ -310,7 +310,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final LocaleContext context = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
                 .localeContext(
-                        LocaleContexts.jre()
+                        LocaleContexts.jre(Locale.FRANCE)
                 );
 
         this.checkEquals(
