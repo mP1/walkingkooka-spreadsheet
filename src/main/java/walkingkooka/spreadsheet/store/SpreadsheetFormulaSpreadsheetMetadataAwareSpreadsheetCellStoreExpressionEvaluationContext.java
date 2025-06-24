@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -51,22 +52,26 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetCell cell,
                                                                                                           final SpreadsheetMetadata metadata,
-                                                                                                          final HasNow now) {
+                                                                                                          final HasNow now,
+                                                                                                          final LocaleContext localeContext) {
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(
                 cell,
                 metadata,
-                now
+                now,
+                localeContext
         );
     }
 
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(final SpreadsheetCell cell,
                                                                                                       final SpreadsheetMetadata metadata,
-                                                                                                      final HasNow now) {
+                                                                                                      final HasNow now,
+                                                                                                      final LocaleContext localeContext) {
         super();
 
         this.cell = cell;
         this.metadata = metadata;
         this.now = now;
+        this.localeContext = metadata.localeContext(localeContext);
     }
 
     @Override
@@ -134,7 +139,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         if(null == this.dateTimeContext) {
             this.dateTimeContext = this.metadata.dateTimeContext(
                     Optional.of(this.cell),
-                    this.now
+                    this.now,
+                    this.localeContext
             );
         }
         return this.dateTimeContext;
@@ -152,11 +158,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     public DecimalNumberContext decimalNumberContext() {
         if(null == this.decimalNumberContext) {
             this.decimalNumberContext = this.metadata.decimalNumberContext(
-                    Optional.of(this.cell)
+                    Optional.of(this.cell),
+                    this.localeContext
             );
         }
         return this.decimalNumberContext;
     }
+
+    private final LocaleContext localeContext;
 
     private DecimalNumberContext decimalNumberContext;
 

@@ -191,6 +191,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         formula,
                         this.metadata.spreadsheetParserContext(
                                 cell,
+                                this, // LocaleContext
                                 this // HasNow
                         )
                 ).get()
@@ -253,6 +254,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         converterSelector,
                         this, // SpreadsheetLabelNameResolver,
                         spreadsheetProvider, // SpreadsheetConverterProvider
+                        this, // LocaleContext
                         this.providerContext
                 );
             }
@@ -278,6 +280,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.spreadsheetConverterContext,
                 FormHandlerContexts.fake(),
                 this.expressionFunctionProvider,
+                this.localeContext,
                 this // ProviderContext
         );
     }
@@ -333,6 +336,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                 this, // SpreadsheetLabelNameResolver,
                                 this.spreadsheetProvider, // ConverterProvider,
                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,
+                                this, // LocaleContext
                                 this // ProviderContext
                         )
         );

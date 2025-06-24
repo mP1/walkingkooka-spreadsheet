@@ -194,6 +194,7 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER
                 ),
+                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
         );
     }

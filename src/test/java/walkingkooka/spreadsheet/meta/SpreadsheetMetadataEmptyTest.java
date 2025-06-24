@@ -149,7 +149,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testExpressionNumberContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.expressionNumberContext(SpreadsheetMetadata.NO_CELL)
+                () -> SpreadsheetMetadata.EMPTY.expressionNumberContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        LOCALE_CONTEXT
+                )
         );
         this.checkEquals(
                 "Metadata missing: expressionNumberKind, locale, precision, roundingMode",
@@ -199,6 +202,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(
                         SpreadsheetMetadata.NO_CELL,
+                        LOCALE_CONTEXT,
                         LocalDateTime::now
                 )
         );
@@ -216,6 +220,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 () -> SpreadsheetMetadata.EMPTY
                         .spreadsheetParserContext(
                                 SpreadsheetMetadata.NO_CELL,
+                                LOCALE_CONTEXT,
                                 LocalDateTime::now
                         )
         );
@@ -243,6 +248,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                         },
                         LABEL_NAME_RESOLVER,
                         CONVERTER_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );

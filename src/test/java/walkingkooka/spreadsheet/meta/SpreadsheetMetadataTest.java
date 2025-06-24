@@ -126,6 +126,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         PatchableTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
+
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     // NON_LOCALE_DEFAULTS..............................................................................................
@@ -734,6 +736,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -749,6 +752,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -764,6 +768,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         null,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -779,6 +784,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         null,
                         ConverterProviders.fake(),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -793,6 +799,23 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
+                        null,
+                        LOCALE_CONTEXT,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -809,6 +832,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
+                        LOCALE_CONTEXT,
                         null
                 )
         );
@@ -824,6 +848,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -894,6 +919,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 SpreadsheetLabelNameResolvers.fake(),
                 ConverterProviders.converters(),
+                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
         );
 

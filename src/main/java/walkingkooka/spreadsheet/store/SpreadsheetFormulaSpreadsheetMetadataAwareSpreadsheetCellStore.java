@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -51,10 +52,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore with(final SpreadsheetCellStore store,
                                                                                final SpreadsheetMetadata metadata,
                                                                                final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                                               final LocaleContext localeContext,
                                                                                final ProviderContext providerContext) {
         Objects.requireNonNull(store, "store");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
+        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         return store instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore ?
@@ -62,12 +65,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
                         metadata,
                         spreadsheetParserProvider,
+                        localeContext,
                         providerContext
                 ) :
                 new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
                         store,
                         metadata,
                         spreadsheetParserProvider,
+                        localeContext,
                         providerContext
                 );
     }
@@ -80,6 +85,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
             final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
             final SpreadsheetMetadata metadata,
             final SpreadsheetParserProvider spreadsheetParserProvider,
+            final LocaleContext localeContext,
             final ProviderContext providerContext) {
 
         return metadata.equals(store.metadata) ?
@@ -88,6 +94,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         store.store,
                         metadata,
                         spreadsheetParserProvider,
+                        localeContext,
                         providerContext
                 );
     }
@@ -95,10 +102,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetCellStore store,
                                                                            final SpreadsheetMetadata metadata,
                                                                            final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                                           final LocaleContext localeContext,
                                                                            final ProviderContext providerContext) {
         this.store = store;
         this.metadata = metadata;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
+
+        this.localeContext = localeContext;
         this.providerContext = providerContext;
     }
 
@@ -178,6 +188,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         text,
                         metadata.spreadsheetParserContext(
                                 Optional.of(cell),
+                                this.localeContext,
                                 providerContext
                         )
                 ).cast(SpreadsheetFormulaParserToken.class);
@@ -344,7 +355,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                     cell,
                     token,
                     this.metadata,
-                    this.providerContext // HasNow
+                    this.providerContext, // HasNow
+                    this.localeContext
             );
             final String text = token.text();
             if (!formula.text().equals(text)) {
@@ -368,7 +380,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(
                 cell,
                 this.metadata,
-                this.providerContext // HasNow
+                this.providerContext, // HasNow
+                this.localeContext
         );
     }
 
@@ -380,10 +393,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     final SpreadsheetParserProvider spreadsheetParserProvider;
 
+    final LocaleContext localeContext;
+
     final ProviderContext providerContext;
 
     @Override
     public String toString() {
-        return this.metadata + " " + this.store + " " + this.spreadsheetParserProvider + " " + this.providerContext;
+        return this.metadata + " " + this.store + " " + this.spreadsheetParserProvider + " " + this.localeContext + " " + this.providerContext;
     }
 }

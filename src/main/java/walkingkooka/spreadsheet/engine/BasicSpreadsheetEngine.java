@@ -787,6 +787,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 metadata.sortSpreadsheetComparatorContext(
                         context, // ConverterProvider
                         context, // SpreadsheetLabelNameResolver
+                        context, // LocaleContext
                         context // ProviderContext
                 )
         );
@@ -1634,6 +1635,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     ),
                             metadata.spreadsheetParserContext(
                                     Optional.of(cell),
+                                    context,
                                     context
                             )
                     );
@@ -1797,6 +1799,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 referenceToExpressionEvaluationContext,
                                                 context, // SpreadsheetLabelNameResolver
                                                 context, // ConverterProvider
+                                                context, // LocaleContext
                                                 context // ProviderContext
                                         )
                                 )

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.CanConvert;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -76,6 +77,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                             final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                            final LocaleContext localeContext,
                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
@@ -85,6 +87,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(formHandlerContext, "formHandlerContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
+        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
@@ -96,6 +99,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetConverterContext,
                 formHandlerContext,
                 expressionFunctionProvider,
+                localeContext,
                 providerContext
         );
     }
@@ -108,6 +112,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                        final LocaleContext localeContext,
                                                         final ProviderContext providerContext) {
         super();
         this.cell = cell;
@@ -120,6 +125,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         this.spreadsheetConverterContext = spreadsheetConverterContext;
         this.expressionFunctionProvider = expressionFunctionProvider;
+        this.localeContext = localeContext;
         this.providerContext = providerContext;
     }
 
@@ -170,6 +176,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
                 .spreadsheetParserContext(
                         this.cell,
+                        this.localeContext,
                         this.spreadsheetConverterContext
                 );
 
@@ -179,6 +186,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .get()
                 .cast(SpreadsheetFormulaParserToken.class);
     }
+
+    private final LocaleContext localeContext;
 
     @Override
     public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
@@ -363,6 +372,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                         after,
                         this.formHandlerContext,
                         this.expressionFunctionProvider,
+                        this.localeContext,
                         this.providerContext
                 );
     }

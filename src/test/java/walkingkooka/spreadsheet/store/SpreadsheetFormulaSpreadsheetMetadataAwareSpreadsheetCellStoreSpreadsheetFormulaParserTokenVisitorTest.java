@@ -31,6 +31,7 @@ public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStor
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(
                 null,
                 null,
+                null,
                 null
         );
     }

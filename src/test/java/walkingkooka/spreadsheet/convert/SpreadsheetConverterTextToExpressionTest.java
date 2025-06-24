@@ -98,6 +98,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                                 SPREADSHEET_FORMATTER_CONTEXT,
                                 FormHandlerContexts.fake(),
                                 ExpressionFunctionProviders.fake(),
+                                LOCALE_CONTEXT,
                                 ProviderContexts.fake()
                         )
                 )

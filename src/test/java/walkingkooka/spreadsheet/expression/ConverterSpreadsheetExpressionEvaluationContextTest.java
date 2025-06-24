@@ -83,6 +83,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_STORE_CONTEXT;
 
 public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
@@ -546,6 +547,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
+                                LOCALE_CONTEXT,
                                 PROVIDER_CONTEXT
                         ),
                         new FakeFormHandlerContext<>() {
@@ -580,6 +582,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                             }
                         },
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );

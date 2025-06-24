@@ -26,6 +26,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
@@ -214,6 +215,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                                         }
                                 )
                         ),
+                        LocaleContexts.fake(),
                         ProviderContexts.fake()
                 ).addLocalVariable(
                         SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
