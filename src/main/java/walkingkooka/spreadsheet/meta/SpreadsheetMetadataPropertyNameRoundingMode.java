@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
+
 import java.math.RoundingMode;
-import java.util.Locale;
 import java.util.Optional;
 
 final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetadataPropertyName<RoundingMode> {
@@ -55,7 +56,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     }
 
     @Override
-    Optional<RoundingMode> extractLocaleAwareValue(final Locale locale) {
+    Optional<RoundingMode> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty(); // RoundingMode have nothing todo with Locales
     }
 

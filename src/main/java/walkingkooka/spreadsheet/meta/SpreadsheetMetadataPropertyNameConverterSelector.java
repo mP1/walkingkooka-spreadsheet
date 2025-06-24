@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.locale.LocaleContext;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -48,7 +48,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterSelector extends Spreadsh
     }
 
     @Override
-    final Optional<ConverterSelector> extractLocaleAwareValue(final Locale locale) {
+    final Optional<ConverterSelector> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

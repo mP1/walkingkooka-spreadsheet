@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 
 import java.util.Locale;
@@ -35,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameSortComparatorsTest extends Sp
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                Locale.ENGLISH,
+                LocaleContexts.jre(Locale.ENGLISH),
                 null
         );
     }

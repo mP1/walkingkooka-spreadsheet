@@ -26,6 +26,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
@@ -551,7 +552,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Some properties support providing a value for the given Locale for the parent {@link SpreadsheetMetadata} to be updated.
      */
-    abstract Optional<T> extractLocaleAwareValue(final Locale locale);
+    abstract Optional<T> extractLocaleAwareValue(final LocaleContext context);
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

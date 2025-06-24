@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -54,9 +54,11 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate exte
     }
 
     @Override
-    Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
+    Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final LocaleContext context) {
         return Optional.of(
-                SpreadsheetPattern.dateFormatPatternLocale(locale)
+                SpreadsheetPattern.dateFormatPatternLocale(
+                        context.locale()
+                )
         );
     }
 }

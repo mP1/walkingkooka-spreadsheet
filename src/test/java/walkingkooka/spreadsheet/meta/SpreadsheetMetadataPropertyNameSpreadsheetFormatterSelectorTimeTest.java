@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
@@ -33,7 +34,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                Locale.ENGLISH,
+                LocaleContexts.jre(Locale.ENGLISH),
                 SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
                         .spreadsheetFormatterSelector()
         );
@@ -43,8 +44,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
     public void testExtractLocaleAwareValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance()
-                .extractLocaleAwareValue(locale)
-                .get()
+                .extractLocaleAwareValue(
+                        LocaleContexts.jre(locale)
+                ).get()
                 .spreadsheetFormatPattern()
                 .get();
 

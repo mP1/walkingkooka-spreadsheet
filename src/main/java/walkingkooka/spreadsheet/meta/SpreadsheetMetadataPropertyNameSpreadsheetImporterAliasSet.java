@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -49,7 +49,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extend
     }
 
     @Override
-    final Optional<SpreadsheetImporterAliasSet> extractLocaleAwareValue(final Locale locale) {
+    final Optional<SpreadsheetImporterAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

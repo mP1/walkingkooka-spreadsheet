@@ -18,10 +18,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -61,7 +61,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    Optional<SpreadsheetColumnRangeReference> extractLocaleAwareValue(final Locale locale) {
+    Optional<SpreadsheetColumnRangeReference> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

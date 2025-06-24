@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -49,7 +49,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
     }
 
     @Override
-    final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final Locale locale) {
+    final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

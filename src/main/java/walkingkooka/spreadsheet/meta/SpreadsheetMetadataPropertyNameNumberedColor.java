@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.text.CharSequences;
 
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -90,7 +90,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     }
 
     @Override
-    Optional<Color> extractLocaleAwareValue(final Locale locale) {
+    Optional<Color> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty(); // colours are not Locale aware
     }
 

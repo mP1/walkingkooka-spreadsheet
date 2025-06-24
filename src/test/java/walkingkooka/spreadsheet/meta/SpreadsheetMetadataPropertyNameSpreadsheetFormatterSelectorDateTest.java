@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -37,8 +38,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
     public void testExtractLocaleAwareValue() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance()
-                .extractLocaleAwareValue(locale)
-                .get()
+                .extractLocaleAwareValue(
+                        LocaleContexts.jre(locale)
+                ).get()
                 .spreadsheetFormatPattern()
                 .get();
 

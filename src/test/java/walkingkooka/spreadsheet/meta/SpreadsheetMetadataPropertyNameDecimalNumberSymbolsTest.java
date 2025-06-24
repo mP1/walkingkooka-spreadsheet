@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 
 import java.text.DecimalFormatSymbols;
@@ -37,7 +38,7 @@ public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest exten
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                Locale.ENGLISH,
+                LocaleContexts.jre(Locale.ENGLISH),
                 this.propertyValue()
         );
     }

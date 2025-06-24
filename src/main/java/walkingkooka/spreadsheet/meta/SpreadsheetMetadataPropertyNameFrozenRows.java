@@ -19,10 +19,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -62,7 +62,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    Optional<SpreadsheetRowRangeReference> extractLocaleAwareValue(final Locale locale) {
+    Optional<SpreadsheetRowRangeReference> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

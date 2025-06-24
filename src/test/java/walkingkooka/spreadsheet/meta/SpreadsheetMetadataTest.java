@@ -235,10 +235,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // loadFromLocale...................................................................................................
 
     @Test
-    public void testLoadFromLocaleNullFails() {
+    public void testLoadFromLocaleWithNullLocaleContextFails() {
         assertThrows(
-                SpreadsheetMetadataPropertyValueException.class,
-                SpreadsheetMetadata.EMPTY::loadFromLocale
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.loadFromLocale(null)
         );
     }
 
@@ -282,7 +282,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.EMPTY.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         locale
-                ).loadFromLocale()
+                ).loadFromLocale(
+                        LocaleContexts.jre(locale)
+                )
         );
     }
 
@@ -290,10 +292,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testNonLocaleDefaultsGeneralConverter() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
         SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
+                .loadFromLocale(
+                        LocaleContexts.jre(locale)
+                ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
                 .generalConverter(
                         spreadsheetFormatterProvider(),
                         spreadsheetParserProvider(),
@@ -588,11 +593,15 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testConverter() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(
                         SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("EN-AU")
-                ).loadFromLocale();
+                        locale
+                ).loadFromLocale(
+                        LocaleContexts.jre(locale)
+                );
 
         final Converter<SpreadsheetConverterContext> converter = metadata
                 .converter(
@@ -694,12 +703,15 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testGeneralConverter() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(
                         SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("EN-AU")
-                ).loadFromLocale()
-                .generalConverter(
+                        locale
+                ).loadFromLocale(
+                        LocaleContexts.jre(locale)
+                ).generalConverter(
                         spreadsheetFormatterProvider(),
                         spreadsheetParserProvider(),
                         PROVIDER_CONTEXT
@@ -851,8 +863,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         locale
-                ).loadFromLocale()
-                .set(
+                ).loadFromLocale(
+                        LocaleContexts.jre(locale)
+                ).set(
                         SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
                         Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
                 ).set(
