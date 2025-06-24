@@ -23,10 +23,8 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -45,7 +43,6 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
 
@@ -81,162 +78,162 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testWithNullCellFails() {
-        this.withFails(
-                null,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                //REFERENCE_TO_VALUE,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        null,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
-        this.withFails(
-                CELL,
-                null,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        null,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullServerUrlFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                null,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        null,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullMetadataFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                null,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        null,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullStorageFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                null,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        null,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetConverterContextFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                null,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
-
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        null,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullFormHandlerContextFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                null,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        null,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullExpressionFunctionProviderFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                null,
-                PROVIDER_CONTEXT
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        null,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public void testWithNullProviderContextFails() {
-        this.withFails(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                null
-        );
-    }
-
-    private void withFails(final Optional<SpreadsheetCell> cell,
-                           final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                           final AbsoluteUrl serverUrl,
-                           final SpreadsheetMetadata spreadsheetMetadata,
-                           final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                           final SpreadsheetConverterContext spreadsheetConverterContext,
-                           final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
-                           final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                           final ProviderContext providerContext) {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                        cell,
-                        spreadsheetExpressionReferenceLoader,
-                        serverUrl,
-                        spreadsheetMetadata,
-                        spreadsheetStoreRepository,
-                        spreadsheetConverterContext,
-                        formHandlerContext,
-                        expressionFunctionProvider,
-                        providerContext
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        null
                 )
         );
     }
