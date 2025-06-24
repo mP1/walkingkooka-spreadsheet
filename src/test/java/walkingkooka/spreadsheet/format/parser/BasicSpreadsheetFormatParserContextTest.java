@@ -53,7 +53,7 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
 
     @Test
     public void testLocale() {
-        this.hasLocaleAndCheck(
+        this.localeAndCheck(
                 this.createContext(),
                 this.decimalNumberContext()
                         .locale()
