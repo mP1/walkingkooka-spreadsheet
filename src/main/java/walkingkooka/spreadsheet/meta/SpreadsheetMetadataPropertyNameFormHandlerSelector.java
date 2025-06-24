@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -48,7 +48,7 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerSelector extends Spread
     }
 
     @Override
-    final Optional<FormHandlerSelector> extractLocaleAwareValue(final Locale locale) {
+    final Optional<FormHandlerSelector> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

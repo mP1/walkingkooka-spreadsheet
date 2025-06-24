@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.JavaVisibility;
@@ -35,7 +36,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
-import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -165,13 +165,13 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
     // extractLocaleAwareValue...............................................................................................
 
-    final void extractLocaleValueAwareAndCheck(final Locale locale,
+    final void extractLocaleValueAwareAndCheck(final LocaleContext context,
                                                final V value) {
         final N propertyName = this.createName();
         this.checkEquals(
                 Optional.ofNullable(value),
-                propertyName.extractLocaleAwareValue(locale),
-                propertyName + " extractLocaleAwareValue for locale " + locale
+                propertyName.extractLocaleAwareValue(context),
+                propertyName + " extractLocaleAwareValue for locale " + context.locale()
         );
     }
 

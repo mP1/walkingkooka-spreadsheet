@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -48,7 +48,7 @@ abstract class SpreadsheetMetadataPropertyNameValidatorAliasSet extends Spreadsh
     }
 
     @Override
-    final Optional<ValidatorAliasSet> extractLocaleAwareValue(final Locale locale) {
+    final Optional<ValidatorAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

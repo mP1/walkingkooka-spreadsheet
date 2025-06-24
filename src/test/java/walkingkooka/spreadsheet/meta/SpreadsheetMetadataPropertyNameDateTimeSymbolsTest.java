@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 
 import java.text.DateFormatSymbols;
 import java.util.Locale;
@@ -37,7 +38,7 @@ public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends Sp
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                Locale.ENGLISH,
+                LocaleContexts.jre(Locale.ENGLISH),
                 this.propertyValue()
         );
     }

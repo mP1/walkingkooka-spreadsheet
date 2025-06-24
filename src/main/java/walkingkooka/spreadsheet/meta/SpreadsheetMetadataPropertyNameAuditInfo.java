@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleContext;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -61,7 +61,7 @@ final class SpreadsheetMetadataPropertyNameAuditInfo extends SpreadsheetMetadata
     }
 
     @Override
-    Optional<AuditInfo> extractLocaleAwareValue(final Locale locale) {
+    Optional<AuditInfo> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

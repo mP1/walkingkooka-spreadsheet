@@ -26,6 +26,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.locale.FakeLocaleContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -289,8 +290,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-            .loadFromLocale()
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
+            .loadFromLocale(
+                    LocaleContexts.jre(LOCALE)
+            ).set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
             .set(
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,

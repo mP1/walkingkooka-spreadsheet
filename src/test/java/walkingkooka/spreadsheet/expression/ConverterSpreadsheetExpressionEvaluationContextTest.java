@@ -27,6 +27,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
@@ -103,8 +104,9 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
-            .loadFromLocale()
-            .set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
+            .loadFromLocale(
+                    LocaleContexts.jre(Locale.forLanguageTag("EN-US"))
+            ).set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)

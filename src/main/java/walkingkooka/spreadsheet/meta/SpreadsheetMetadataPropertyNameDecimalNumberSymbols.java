@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Optional;
 
 final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends SpreadsheetMetadataPropertyName<DecimalNumberSymbols> {
@@ -57,11 +57,13 @@ final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends Spreadsh
     }
 
     @Override
-    Optional<DecimalNumberSymbols> extractLocaleAwareValue(final Locale locale) {
+    Optional<DecimalNumberSymbols> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.of(
                 DecimalNumberSymbols.fromDecimalFormatSymbols(
                         '+',
-                        new DecimalFormatSymbols(locale)
+                        new DecimalFormatSymbols(
+                                context.locale()
+                        )
                 )
         );
     }

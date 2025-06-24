@@ -188,6 +188,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
 
+    LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
@@ -195,7 +197,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     LOCALE
-            ).loadFromLocale()
+            ).loadFromLocale(LOCALE_CONTEXT)
             .set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.with(
@@ -360,8 +362,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
             NOW,
             Optional.of(USER)
     );
-
-    LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/6223
     // SpreadsheetMetadataTesting.PROVIDER_CONTEXT requires real CanConvert

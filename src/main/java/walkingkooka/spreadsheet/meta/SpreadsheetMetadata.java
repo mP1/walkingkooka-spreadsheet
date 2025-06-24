@@ -810,13 +810,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Date, DateTime and Time defaults are loaded parse {@link java.text.DateFormat} using the provided locale, formats pick the FULL style,
      * while parse pattern will include all patterns with all styles.
      */
-    public final SpreadsheetMetadata loadFromLocale() {
-        final Locale locale = this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
+    public final SpreadsheetMetadata loadFromLocale(final LocaleContext context) {
+        return loadFromLocale0(
+                this.localeContext(
+                        Objects.requireNonNull(context, "context")
+                )
+        );
+    }
 
+    private SpreadsheetMetadata loadFromLocale0(final LocaleContext context) {
         SpreadsheetMetadata updated = this;
 
         for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
-            final Optional<?> localeAwareValue = propertyName.extractLocaleAwareValue(locale);
+            final Optional<?> localeAwareValue = propertyName.extractLocaleAwareValue(context);
             if (localeAwareValue.isPresent()) {
                 updated = updated.set(
                         propertyName,

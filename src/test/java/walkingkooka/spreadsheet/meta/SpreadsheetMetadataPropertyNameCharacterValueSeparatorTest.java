@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.locale.LocaleContexts;
 
 import java.util.Locale;
 
@@ -25,7 +26,12 @@ public final class SpreadsheetMetadataPropertyNameCharacterValueSeparatorTest ex
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(Locale.forLanguageTag("EN-AU"), ',');
+        this.extractLocaleValueAwareAndCheck(
+                LocaleContexts.jre(
+                        Locale.forLanguageTag("EN-AU")
+                ),
+                ','
+        );
     }
 
     @Test

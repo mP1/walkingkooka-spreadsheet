@@ -17,7 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import java.util.Locale;
+import walkingkooka.locale.LocaleContext;
+
 import java.util.Optional;
 
 abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadataPropertyName<Integer> {
@@ -39,7 +40,7 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
     }
 
     @Override
-    final Optional<Integer> extractLocaleAwareValue(final Locale locale) {
+    final Optional<Integer> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty(); // Dont think width/precison/twoYearDigit are locale aware.
     }
 

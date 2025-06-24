@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -69,8 +70,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                                              final ExpressionNumberKind kind) throws ParseException {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetParserSelector parserSelector = SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance()
-                .extractLocaleAwareValue(locale)
-                .get();
+                .extractLocaleAwareValue(
+                        LocaleContexts.jre(locale)
+                ).get();
 
         final ExpressionNumber value = SpreadsheetConverters.textToNumber(
                 SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(

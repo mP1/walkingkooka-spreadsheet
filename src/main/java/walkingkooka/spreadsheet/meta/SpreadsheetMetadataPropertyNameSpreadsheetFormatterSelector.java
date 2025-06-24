@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
@@ -55,8 +56,8 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector exten
     }
 
     @Override
-    final Optional<SpreadsheetFormatterSelector> extractLocaleAwareValue(final Locale locale) {
-        return this.extractLocaleAwareValueSpreadsheetFormatPattern(locale)
+    final Optional<SpreadsheetFormatterSelector> extractLocaleAwareValue(final LocaleContext context) {
+        return this.extractLocaleAwareValueSpreadsheetFormatPattern(context)
                 .map(SpreadsheetFormatPattern::spreadsheetFormatterSelector);
     }
 
@@ -64,7 +65,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector exten
      * For the given {@link Locale} return the default {@link SpreadsheetFormatPattern}, this will then be
      * converted into its {@link SpreadsheetFormatterSelector} equivalent.
      */
-    abstract Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale);
+    abstract Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final LocaleContext context);
 
     @Override
     public final Class<SpreadsheetFormatterSelector> type() {

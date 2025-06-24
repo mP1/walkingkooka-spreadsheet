@@ -24,6 +24,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -69,8 +70,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                                             final String expected) {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance()
-                .extractLocaleAwareValue(locale)
-                .get()
+                .extractLocaleAwareValue(
+                        LocaleContexts.jre(locale)
+                ).get()
                 .spreadsheetFormatPattern()
                 .get();
 

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -79,10 +80,12 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
+
     private final static SpreadsheetMetadata BEFORE = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
             .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-            .loadFromLocale()
-            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
+            .loadFromLocale(
+                    LocaleContexts.jre(Locale.forLanguageTag("EN-AU"))
+            ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
             .set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.with(
