@@ -52,21 +52,29 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
@@ -896,6 +904,75 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 pattern.spreadsheetParserSelector(),
                 pattern.toFormat()
                         .spreadsheetFormatterSelector()
+        );
+    }
+
+    // locale...........................................................................................................
+
+    @Test
+    public void testLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkEquals(
+                locale,
+                this.createContext(locale)
+                        .locale()
+        );
+    }
+
+    @Test
+    public void testLocaleContextLocale() {
+        final Locale locale = Locale.GERMANY;
+
+        this.checkEquals(
+                locale,
+                this.createContext(locale)
+                        .localeContext()
+                        .locale()
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final Locale locale) {
+        return BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        locale
+                ),
+                SpreadsheetStoreRepositories.basic(
+                        SpreadsheetCellStores.treeMap(),
+                        SpreadsheetCellReferencesStores.treeMap(),
+                        SpreadsheetColumnStores.treeMap(),
+                        SpreadsheetFormStores.fake(),
+                        SpreadsheetGroupStores.fake(),
+                        SpreadsheetLabelStores.treeMap(),
+                        SpreadsheetLabelReferencesStores.treeMap(),
+                        SpreadsheetMetadataStores.fake(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetCellRangeStores.treeMap(),
+                        SpreadsheetRowStores.treeMap(),
+                        StorageStores.fake(),
+                        SpreadsheetUserStores.fake()
+                ),
+                FUNCTION_ALIASES,
+                new FakeLocaleContext() {
+                    @Override
+                    public Locale locale() {
+                        return locale;
+                    }
+                },
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                ),
+                PROVIDER_CONTEXT
         );
     }
 
