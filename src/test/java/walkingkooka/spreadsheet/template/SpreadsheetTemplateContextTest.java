@@ -281,6 +281,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                                 );
                             }
                         },
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 ),
                 (t) -> {

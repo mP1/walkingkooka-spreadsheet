@@ -89,6 +89,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -107,6 +108,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -125,6 +127,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -143,6 +146,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -161,6 +165,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -179,6 +184,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         null,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -197,6 +203,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         null,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -214,6 +221,26 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
+                        null,
+                        LOCALE_CONTEXT,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -233,6 +260,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         null
                 )
         );
@@ -317,6 +345,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 ),
                 SpreadsheetSelection.parseRow("1"),
@@ -351,6 +380,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 ),
                 SpreadsheetSelection.parseColumn("A"),
@@ -466,6 +496,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
+                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
         );
     }
@@ -520,7 +551,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         return DECIMAL_NUMBER_CONTEXT;
     }
 
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA.decimalNumberContext(SpreadsheetMetadata.NO_CELL);
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA.decimalNumberContext(
+            SpreadsheetMetadata.NO_CELL,
+            LOCALE_CONTEXT
+    );
 
     @Override
     public void testExpressionFunctionWithNullFunctionNameFails() {

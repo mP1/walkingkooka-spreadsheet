@@ -1474,6 +1474,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -1514,7 +1515,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
                             final DateTimeContext context = metadata.dateTimeContext(
                                     SpreadsheetMetadata.NO_CELL,
-                                    NOW
+                                    NOW,
+                                    LOCALE_CONTEXT
                             );
                             this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
                             this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
@@ -1543,7 +1545,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final DateTimeContext context = metadata.dateTimeContext(
                 SpreadsheetMetadata.NO_CELL,
-                NOW
+                NOW,
+                LOCALE_CONTEXT
         );
 
         this.checkEquals(
@@ -1559,8 +1562,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY
-                .decimalNumberContext(SpreadsheetMetadata.NO_CELL)
+                () -> SpreadsheetMetadata.EMPTY.decimalNumberContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        LOCALE_CONTEXT
+                )
         );
         this.checkEquals(
                 "Metadata missing: locale, precision, roundingMode",
@@ -1623,7 +1628,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                         .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
-                        .expressionNumberContext(SpreadsheetMetadata.NO_CELL)
+                        .expressionNumberContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                LOCALE_CONTEXT
+                        )
         );
         this.checkEquals(
                 "Metadata missing: locale, roundingMode",
@@ -1639,7 +1647,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                         .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
-                        .expressionNumberContext(SpreadsheetMetadata.NO_CELL)
+                        .expressionNumberContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                LOCALE_CONTEXT
+                        )
         );
         this.checkEquals(
                 "Metadata missing: locale, precision",
@@ -1658,7 +1669,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
-                .expressionNumberContext(SpreadsheetMetadata.NO_CELL);
+                .expressionNumberContext(
+                        SpreadsheetMetadata.NO_CELL,
+                        LOCALE_CONTEXT
+                );
         this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
         this.checkNotEquals(null, context.mathContext(), "mathContext");
     }
@@ -1800,6 +1814,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -1830,6 +1845,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SPREADSHEET_PARSER_PROVIDER
                         ),
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -2027,6 +2043,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         this.metadataWithSpreadsheetParserContext()
                                 .spreadsheetParserContext(
                                         SpreadsheetMetadata.NO_CELL,
+                                        LOCALE_CONTEXT,
                                         NOW
                                 )
                 ).orElseThrow(() -> new AssertionError("parser failed"));
@@ -2057,6 +2074,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 null,
                 metadata.spreadsheetParserContext(
                         SpreadsheetMetadata.NO_CELL,
+                        LOCALE_CONTEXT,
                         NOW
                 )
         );
@@ -2136,6 +2154,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         },
                         LABEL_NAME_RESOLVER,
                         ConverterProviders.converters(),
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 );
 

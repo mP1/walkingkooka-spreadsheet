@@ -29,6 +29,8 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
@@ -90,6 +92,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
+            Locale.forLanguageTag("EN-AU")
+    );
 
     final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -618,7 +624,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .dateTimeContext(
                                 null,
-                                LocalDateTime::now
+                                LocalDateTime::now,
+                                LOCALE_CONTEXT
                         )
         );
     }
@@ -630,6 +637,20 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .dateTimeContext(
                                 SpreadsheetMetadata.NO_CELL,
+                                null,
+                                LOCALE_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testDateTimeContextWithNullLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .dateTimeContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                LocalDateTime::now,
                                 null
                         )
         );
@@ -642,7 +663,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .dateTimeContext(
                                 SpreadsheetMetadata.NO_CELL,
-                                LocalDateTime::now
+                                LocalDateTime::now,
+                                LOCALE_CONTEXT
                         )
         );
         checkMessage(
@@ -658,7 +680,22 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
-                        .decimalNumberContext(null)
+                        .decimalNumberContext(
+                                null,
+                                LOCALE_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testDecimalNumberContextWithNullLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .decimalNumberContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                null
+                        )
         );
     }
 
@@ -667,7 +704,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
-                        .decimalNumberContext(SpreadsheetMetadata.NO_CELL)
+                        .decimalNumberContext(
+                                SpreadsheetMetadata.NO_CELL,
+                                LOCALE_CONTEXT
+                        )
         );
         checkMessage(
                 thrown,
@@ -719,6 +759,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
+                                LOCALE_CONTEXT,
                                 PROVIDER_CONTEXT
                         )
         );
@@ -735,6 +776,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
+                                LOCALE_CONTEXT,
                                 PROVIDER_CONTEXT
                         )
         );
@@ -751,6 +793,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 null,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
+                                LOCALE_CONTEXT,
                                 PROVIDER_CONTEXT
                         )
         );
@@ -767,6 +810,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 null,
                                 CONVERTER_PROVIDER,
+                                LOCALE_CONTEXT,
                                 PROVIDER_CONTEXT
                         )
         );
@@ -782,6 +826,24 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 VALIDATOR_SELECTOR_TO_VALIDATOR,
                                 VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
+                                null,
+                                LOCALE_CONTEXT,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .spreadsheetValidatorContext(
+                                SpreadsheetSelection.A1,
+                                VALIDATOR_SELECTOR_TO_VALIDATOR,
+                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                LABEL_NAME_RESOLVER,
+                                CONVERTER_PROVIDER,
                                 null,
                                 PROVIDER_CONTEXT
                         )
@@ -799,6 +861,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
+                                LOCALE_CONTEXT,
                                 null
                         )
         );

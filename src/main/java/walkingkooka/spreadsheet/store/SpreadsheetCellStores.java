@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -40,11 +41,13 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
     public static SpreadsheetCellStore spreadsheetFormulaSpreadsheetMetadataAware(final SpreadsheetCellStore store,
                                                                                   final SpreadsheetMetadata metadata,
                                                                                   final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                                                  final LocaleContext localeContext,
                                                                                   final ProviderContext providerContext) {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 store,
                 metadata,
                 spreadsheetParserProvider,
+                localeContext,
                 providerContext
         );
     }

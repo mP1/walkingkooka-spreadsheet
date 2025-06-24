@@ -128,8 +128,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -542,9 +540,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * {@link DateTimeSymbols} and then the {@link SpreadsheetMetadataPropertyName#LOCALE}.
      */
     public final DateTimeContext dateTimeContext(final Optional<SpreadsheetCell> cell,
-                                                 final HasNow now) {
+                                                 final HasNow now,
+                                                 final LocaleContext context) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(now, "now");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
@@ -568,9 +568,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         if (null == dateTimeSymbols) {
-            dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(locale)
-            );
+            dateTimeSymbols = context.dateTimeSymbolsForLocale(locale)
+                    // Missing DateTimeSymbols for locale EN-AU
+                    .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
         }
 
         return DateTimeContexts.basic(
@@ -596,8 +596,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * <li>{@link SpreadsheetMetadataPropertyName#LOCALE} which may provide some defaults if some of the above properties are missing.</li>
      * </ul>
      */
-    public final DecimalNumberContext decimalNumberContext(final Optional<SpreadsheetCell> cell) {
+    public final DecimalNumberContext decimalNumberContext(final Optional<SpreadsheetCell> cell,
+                                                           final LocaleContext context) {
         Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
@@ -626,10 +628,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         if (null == decimalNumberSymbols) {
-            decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
-                    '+',
-                    new DecimalFormatSymbols(locale)
-            );
+            decimalNumberSymbols = context.decimalNumberSymbolsForLocale(locale)
+                    .orElseThrow(
+                        // Missing DecimalNumberSymbols for locale EN-AU
+                            () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
+                    );
         }
 
         return DecimalNumberContexts.basic(
@@ -685,8 +688,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
      * </ul>
      */
-    public final ExpressionNumberContext expressionNumberContext(final Optional<SpreadsheetCell> cell) {
+    public final ExpressionNumberContext expressionNumberContext(final Optional<SpreadsheetCell> cell,
+                                                                 final LocaleContext context) {
         Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
@@ -694,7 +699,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         DecimalNumberContext decimalNumberContext;
         try {
-            decimalNumberContext = this.decimalNumberContext(cell);
+            decimalNumberContext = this.decimalNumberContext(
+                    cell,
+                    context
+            );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
             decimalNumberContext = null;
@@ -937,11 +945,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final SpreadsheetProvider spreadsheetProvider,
+                                                                               final LocaleContext localeContext,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
                 this.sortSpreadsheetConverterContext(
                         resolveIfLabel,
                         spreadsheetProvider, // ConverterProvider
+                        localeContext,
                         providerContext // ProviderContext
                 )
         );
@@ -952,6 +962,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     private SpreadsheetConverterContext sortSpreadsheetConverterContext(final SpreadsheetLabelNameResolver labelNameResolver,
                                                                         final ConverterProvider converterProvider,
+                                                                        final LocaleContext localeContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
                 NO_CELL,
@@ -959,6 +970,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                 labelNameResolver,
                 converterProvider,
+                localeContext,
                 providerContext
         );
     }
@@ -984,12 +996,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
+                                                                         final LocaleContext localeContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
-        Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1010,7 +1024,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         try {
             dateTimeContext = this.dateTimeContext(
                     cell,
-                    providerContext // now
+                    providerContext, // now
+                    localeContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1019,7 +1034,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         DecimalNumberContext decimalNumberContext;
         try {
-            decimalNumberContext = this.decimalNumberContext(cell);
+            decimalNumberContext = this.decimalNumberContext(
+                    cell,
+                    localeContext
+            );
         } catch (final MissingMetadataPropertiesException cause) {
             decimalNumberContext = null;
             missing.addMissing(cause);
@@ -1111,12 +1129,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                         final LocaleContext localeContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1140,6 +1160,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                     labelNameResolver,
                     converterProvider,
+                    localeContext,
                     providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1172,6 +1193,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final ConverterProvider converterProvider,
                                                                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                                                       final LocaleContext localeContext,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
                 this.spreadsheetFormatterContext(
@@ -1180,6 +1202,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         labelNameResolver,
                         converterProvider,
                         spreadsheetFormatterProvider,
+                        localeContext,
                         providerContext
                 )
         );
@@ -1223,7 +1246,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link SpreadsheetParserContext}.
      */
     public final SpreadsheetParserContext spreadsheetParserContext(final Optional<SpreadsheetCell> cell,
+                                                                   final LocaleContext localeContext,
                                                                    final HasNow now) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(now, "now");
+
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         // DateTimeContext
@@ -1231,7 +1259,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         try {
             dateTimeContext = this.dateTimeContext(
                 cell,
-                now
+                now,
+                localeContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1241,7 +1270,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         // ExpressionNumberContext
         ExpressionNumberContext expressionNumberContext;
         try {
-            expressionNumberContext = this.expressionNumberContext(cell);
+            expressionNumberContext = this.expressionNumberContext(
+                    cell,
+                    localeContext
+            );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
             expressionNumberContext = null;
@@ -1270,6 +1302,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
+                                                                         final LocaleContext localeContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
@@ -1288,6 +1321,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                     labelNameResolver,
                     converterProvider,
+                    localeContext,
                     providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {

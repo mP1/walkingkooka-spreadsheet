@@ -28,8 +28,11 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -310,6 +313,7 @@ public class J2clTest {
                                         formula,
                                         metadata.spreadsheetParserContext(
                                                 cell,
+                                                this.localeContext,
                                                 NOW
                                         )
                                 ) // TODO should fetch parse metadata prop
@@ -353,6 +357,7 @@ public class J2clTest {
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                         LABEL_NAME_RESOLVER,
                                         converterProvider,
+                                        this.localeContext,
                                         PROVIDER_CONTEXT
                                 )
                         )
@@ -417,10 +422,25 @@ public class J2clTest {
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 spreadsheetFormatterProvider,
+                                this.localeContext,
                                 PROVIDER_CONTEXT
                         )
                 );
             }
+
+            @Override
+            public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+                return this.localeContext.dateTimeSymbolsForLocale(locale);
+            }
+
+            @Override
+            public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+                return this.localeContext.decimalNumberSymbolsForLocale(locale);
+            }
+
+            private final LocaleContext localeContext = LocaleContexts.jre(
+                    Locale.forLanguageTag("EN-AU")
+            );
 
             @Override
             public SpreadsheetStoreRepository storeRepository() {

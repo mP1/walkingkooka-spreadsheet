@@ -388,6 +388,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
+            LOCALE_CONTEXT,
             PROVIDER_CONTEXT
     );
 
@@ -407,6 +408,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
+            LOCALE_CONTEXT,
             PROVIDER_CONTEXT
     );
 
@@ -415,6 +417,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
+            LOCALE_CONTEXT,
             PROVIDER_CONTEXT
     );
 
@@ -424,6 +427,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
             SpreadsheetMetadata.NO_CELL,
+            LOCALE_CONTEXT,
             NOW
     );
 

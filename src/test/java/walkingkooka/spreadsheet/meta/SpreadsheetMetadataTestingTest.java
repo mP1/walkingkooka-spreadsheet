@@ -104,6 +104,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 },
                 CONVERTER_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
+                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
         );
     }
@@ -121,6 +122,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         METADATA_EN_AU
                 .spreadsheetParserContext(
                         SpreadsheetMetadata.NO_CELL,
+                        LOCALE_CONTEXT,
                         LocalDateTime::now
                 );
     }

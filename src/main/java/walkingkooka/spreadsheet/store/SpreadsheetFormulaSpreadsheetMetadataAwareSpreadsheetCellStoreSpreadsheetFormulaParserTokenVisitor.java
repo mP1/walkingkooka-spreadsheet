@@ -22,6 +22,7 @@ import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.parser.AdditionSpreadsheetFormulaParserToken;
@@ -122,11 +123,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     static SpreadsheetFormulaParserToken update(final SpreadsheetCell cell,
                                                 final SpreadsheetFormulaParserToken token,
                                                 final SpreadsheetMetadata metadata,
-                                                final HasNow now) {
+                                                final HasNow now,
+                                                final LocaleContext localeContext) {
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor visitor = new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(
                 cell,
                 metadata,
-                now
+                now,
+                localeContext
         );
         visitor.accept(token);
         return visitor.children.get(0).cast(SpreadsheetFormulaParserToken.class);
@@ -134,12 +137,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(final SpreadsheetCell cell,
                                                                                                        final SpreadsheetMetadata metadata,
-                                                                                                       final HasNow now) {
+                                                                                                       final HasNow now,
+                                                                                                       final LocaleContext localeContext) {
         super();
 
         this.cell = cell;
         this.metadata = metadata;
         this.now = now;
+        this.localeContext = localeContext;
     }
 
     @Override
@@ -805,17 +810,19 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         if (null == this.dateTimeContext) {
             this.dateTimeContext = this.metadata.dateTimeContext(
                     Optional.of(this.cell),
-                    this.now
+                    this.now,
+                    this.localeContext
             );
         }
         return this.dateTimeContext;
     }
+    private DateTimeContext dateTimeContext;
 
     private final SpreadsheetCell cell;
 
     private final HasNow now;
 
-    private DateTimeContext dateTimeContext;
+    private final LocaleContext localeContext;
 
     @Override
     public String toString() {

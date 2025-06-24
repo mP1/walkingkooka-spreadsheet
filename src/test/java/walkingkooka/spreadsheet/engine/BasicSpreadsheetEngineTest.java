@@ -661,7 +661,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private static Object VALUE;
 
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     // loadCells........................................................................................................
 

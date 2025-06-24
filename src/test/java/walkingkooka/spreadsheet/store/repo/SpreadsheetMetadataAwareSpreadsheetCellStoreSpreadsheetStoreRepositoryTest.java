@@ -71,6 +71,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         null,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -84,6 +85,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 )
         );
@@ -96,6 +98,21 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                         ID,
                         REPOSITORY,
+                        null,
+                        LOCALE_CONTEXT,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                        ID,
+                        REPOSITORY,
+                        SPREADSHEET_PARSER_PROVIDER,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -110,6 +127,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
+                        LOCALE_CONTEXT,
                         null
                 )
         );
@@ -213,9 +231,10 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
+                        LOCALE_CONTEXT,
                         PROVIDER_CONTEXT
                 ),
-                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + PROVIDER_CONTEXT
+                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + LOCALE_CONTEXT + " " + PROVIDER_CONTEXT
         );
     }
 
@@ -242,6 +261,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetUserStores.treeMap()
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
         );
     }
