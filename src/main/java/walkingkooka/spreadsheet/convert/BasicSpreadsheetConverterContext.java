@@ -91,7 +91,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         return this.spreadsheetMetadata.orElseThrow(() -> new IllegalStateException("No SpreadsheetMetadata available"));
     }
 
-    private Optional<SpreadsheetMetadata> spreadsheetMetadata;
+    private final Optional<SpreadsheetMetadata> spreadsheetMetadata;
 
     // ValidationReference..............................................................................................
 
