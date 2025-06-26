@@ -91,7 +91,10 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
 
     @Test
     public void testToString() {
-
+        this.toStringAndCheck(
+                this.createComparator(),
+                COMPARATOR.toString()
+        );
     }
 
     @Override
