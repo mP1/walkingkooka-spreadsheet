@@ -677,7 +677,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
         );
     }
 
-    final SpreadsheetParserContext createContext(final DecimalNumberContext decimalNumberContext) {
+    SpreadsheetParserContext createContext(final DecimalNumberContext decimalNumberContext) {
         return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
