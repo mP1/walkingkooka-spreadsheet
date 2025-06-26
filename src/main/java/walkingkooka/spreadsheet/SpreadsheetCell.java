@@ -796,7 +796,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
 
     /**
-     * Converts the {@Optional} holding {@link HasText} into a token or returns an empty string.
+     * Converts the {@link Optional} holding {@link HasText} into a token or returns an empty string.
      */
     private static String toText(final Optional<? extends HasText> hasText) {
         return hasText.map(HasText::text)
