@@ -264,9 +264,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 if(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
                     // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
                     // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
-                    formHandlerContext = FormHandlerContexts.fake();
+                    this.formHandlerContext = FormHandlerContexts.fake();
                 } else {
-                    formHandlerContext = FormHandlerContexts.fake();
+                    this.formHandlerContext = FormHandlerContexts.fake();
                 }
             }
         }
@@ -278,7 +278,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 metadata,
                 this.storeRepository,
                 this.spreadsheetConverterContext,
-                FormHandlerContexts.fake(),
+                this.formHandlerContext,
                 this.expressionFunctionProvider,
                 this.localeContext,
                 this // ProviderContext
