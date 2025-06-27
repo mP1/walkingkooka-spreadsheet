@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -41,7 +43,10 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationReference;
+import walkingkooka.validation.Validator;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContext;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
 
@@ -51,8 +56,16 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
+ * An enhanced {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * expression execution.
+ * <br>
+ * This context can be used when executing functions each with different goals.
+ * <ul>
+ * <li>A formula which produces a value</li>
+ * <li>A {@link Converter} trying to convert values</li>
+ * <li>A {@link SpreadsheetFormatter} which produces {@link TextNode}</li>
+ * <li>A {@link Validator} which may return zero or more {@link ValidationError}</li>
+ * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
         SpreadsheetConverterContext,
