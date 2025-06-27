@@ -22,7 +22,11 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -45,6 +49,7 @@ import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -463,6 +468,18 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
 
                         throw new UnsupportedOperationException();
                     }
+
+                    @Override
+                    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+                        return this.localeContext.dateTimeSymbolsForLocale(locale);
+                    }
+
+                    @Override
+                    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+                        return this.localeContext.decimalNumberSymbolsForLocale(locale);
+                    }
+
+                    private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
                 }
         );
     }

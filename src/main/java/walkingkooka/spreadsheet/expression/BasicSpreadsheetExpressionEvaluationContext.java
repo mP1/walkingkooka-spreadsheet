@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -61,12 +62,14 @@ import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContextDelegator;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
         FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+        LocaleContextDelegator,
         SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
@@ -186,8 +189,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .get()
                 .cast(SpreadsheetFormulaParserToken.class);
     }
-
-    private final LocaleContext localeContext;
 
     @Override
     public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
@@ -313,6 +314,21 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         return value;
     }
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    @Override
+    public Locale locale() {
+        return this.localeContext()
+                .locale();
+    }
+
+    private final LocaleContext localeContext;
 
     // SpreadsheetConverterContextDelegator.............................................................................
 

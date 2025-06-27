@@ -22,7 +22,6 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -37,24 +36,27 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonString;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class FakeSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetConverterContext implements SpreadsheetExpressionEvaluationContext {
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext
+        implements SpreadsheetExpressionEvaluationContext {
 
     public FakeSpreadsheetExpressionEvaluationContext() {
         super();
@@ -116,6 +118,36 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetC
     }
 
     @Override
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> environmentValueName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionReference validationReference() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Converter<SpreadsheetConverterContext> converter() {
         throw new UnsupportedOperationException();
     }
@@ -141,23 +173,124 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetC
     }
 
     @Override
-    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
-                                  final Object value) {
+    public JsonNodeMarshallContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Object handleException(final RuntimeException cause) {
+    public JsonNode marshall(final Object value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+    public JsonNode marshallEnumSet(Set<? extends Enum<?>> set) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public CaseSensitivity stringEqualsCaseSensitivity() {
+    public JsonNode marshallWithType(final Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JsonNode marshallOptional(final Optional<?> optional) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JsonNode marshallOptionalWithType(final Optional<?> optional) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JsonNode marshallCollection(final Collection<?> collection) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JsonNode marshallMap(final Map<?, ?> map) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JsonNode marshallCollectionWithType(final Collection<?> collection) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public JsonNode marshallMapWithType(final Map<?, ?> map) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T unmarshall(final JsonNode jsonNode, Class<T> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T extends Enum<T>> Set<T> unmarshallEnumSet(final JsonNode jsonNode,
+                                                        final Class<T> type,
+                                                        final Function<String, T> function) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Optional<T> unmarshallOptional(final JsonNode jsonNode,
+                                              final Class<T> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Optional<T> unmarshallOptionalWithType(final JsonNode jsonNode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> List<T> unmarshallList(final JsonNode jsonNode,
+                                      final Class<T> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Set<T> unmarshallSet(final JsonNode jsonNode,
+                                    final Class<T> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <K, V> Map<K, V> unmarshallMap(final JsonNode jsonNode,
+                                          final Class<K> type,
+                                          final Class<V> type1) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T unmarshallWithType(final JsonNode jsonNode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> List<T> unmarshallListWithType(final JsonNode jsonNode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Set<T> unmarshallSetWithType(final JsonNode jsonNode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <K, V> Map<K, V> unmarshallMapWithType(final JsonNode jsonNode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Class<?>> registeredType(final JsonString string) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<JsonString> typeName(final Class<?> type) {
         throw new UnsupportedOperationException();
     }
 
@@ -172,47 +305,12 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetC
     }
 
     @Override
-    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> values) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isPure(final ExpressionFunctionName name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Form<SpreadsheetExpressionReference> form() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<EnvironmentValueName<?>> environmentValueNames() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
         throw new UnsupportedOperationException();
     }
 }

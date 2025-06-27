@@ -22,6 +22,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -48,7 +49,8 @@ import java.util.function.Function;
  */
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext,
         DateTimeContextDelegator,
-        DecimalNumberContextDelegator {
+        DecimalNumberContextDelegator,
+        LocaleContextDelegator {
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetCell cell,
                                                                                                           final SpreadsheetMetadata metadata,
@@ -165,9 +167,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         return this.decimalNumberContext;
     }
 
-    private final LocaleContext localeContext;
-
     private DecimalNumberContext decimalNumberContext;
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    private final LocaleContext localeContext;
 
     @Override
     public Locale locale() {

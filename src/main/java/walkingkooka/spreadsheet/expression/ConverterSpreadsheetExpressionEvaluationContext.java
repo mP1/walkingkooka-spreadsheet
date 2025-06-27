@@ -22,6 +22,8 @@ import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
@@ -81,7 +83,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         JsonNodeMarshallContextDelegator,
-        JsonNodeUnmarshallContextDelegator {
+        JsonNodeUnmarshallContextDelegator,
+        LocaleContextDelegator {
 
     static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -458,6 +461,13 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
                         this.converter,
                         after
                 );
+    }
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.context;
     }
 
     // Object...........................................................................................................

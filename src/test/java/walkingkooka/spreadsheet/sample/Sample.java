@@ -357,7 +357,8 @@ public final class Sample {
                                         converterProvider,
                                         this.localeContext,
                                         PROVIDER_CONTEXT
-                                )
+                                ),
+                                LocaleContexts.fake()
                         )
                 );
             }
