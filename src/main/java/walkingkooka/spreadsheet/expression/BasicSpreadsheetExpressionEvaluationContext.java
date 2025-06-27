@@ -269,6 +269,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         );
     }
 
+    private final ProviderContext providerContext;
+
     @Override
     public boolean isPure(final ExpressionFunctionName name) {
         return this.expressionFunction(name)
@@ -348,11 +350,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final SpreadsheetConverterContext spreadsheetConverterContext;
-
-    /**
-     * ProviderContext required by the numerous {@link walkingkooka.plugin.Provider providers}
-     */
-    private final ProviderContext providerContext;
 
     // FormHandlerContext...............................................................................................
 
