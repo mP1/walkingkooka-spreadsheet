@@ -359,7 +359,8 @@ public class J2clTest {
                                         converterProvider,
                                         this.localeContext,
                                         PROVIDER_CONTEXT
-                                )
+                                ),
+                                LocaleContexts.fake()
                         )
                 );
             }

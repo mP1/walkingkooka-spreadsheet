@@ -29,6 +29,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -3940,7 +3941,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                             throw new UnsupportedOperationException();
                                         },
                                         CaseSensitivity.SENSITIVE,
-                                        ConverterContexts.fake()
+                                        ConverterContexts.fake(),
+                                        LocaleContexts.fake()
                                 )
                         ).map(Object::toString)
                         .orElse("")

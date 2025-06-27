@@ -23,6 +23,8 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
@@ -72,6 +74,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         DecimalNumberContextDelegator,
         FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
         JsonNodeMarshallUnmarshallContextDelegator,
+        LocaleContextDelegator,
         UsesToStringBuilder {
 
     static LocalReferencesSpreadsheetExpressionEvaluationContext with(
@@ -343,6 +346,13 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
                         this.localReferenceToValues,
                         after
                 );
+    }
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.context;
     }
 
     // Object...........................................................................................................

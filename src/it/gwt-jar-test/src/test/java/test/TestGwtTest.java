@@ -345,7 +345,8 @@ public class TestGwtTest extends GWTTestCase {
                                         converterProvider,
                                         this.localeContext,
                                         PROVIDER_CONTEXT
-                                )
+                                ),
+                                LocaleContexts.fake()
                         )
                 );
             }
