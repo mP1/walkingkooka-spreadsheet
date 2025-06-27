@@ -61,25 +61,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
     /**
-     * Within a {@link SpreadsheetExpressionEvaluationContext} contains the name of value being formatted.
-     * This may be passed to {@link SpreadsheetExpressionEvaluationContext#reference(ExpressionReference)}.
-     */
-    SpreadsheetLabelName FORMAT_VALUE = SpreadsheetSelection.labelName("VALUE");
-
-    /**
-     * Getter that retrieves the value being formatted by a {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter}
-     */
-    default Optional<Object> formatValue() {
-        return this.reference(FORMAT_VALUE)
-                .orElse(Optional.empty());
-    }
-
-    /**
-     * A label that may be used to get the value being validated.
-     */
-    SpreadsheetLabelName VALIDATION_VALUE = SpreadsheetValidatorContext.VALUE;
-
-    /**
      * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}
      * with a parameter such as a Validator.
      */
@@ -207,6 +188,29 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
      */
     void setSpreadsheetMetadata(final SpreadsheetMetadata metadata);
+
+    // formatting.......................................................................................................
+
+    /**
+     * Within a {@link SpreadsheetExpressionEvaluationContext} contains the name of value being formatted.
+     * This may be passed to {@link SpreadsheetExpressionEvaluationContext#reference(ExpressionReference)}.
+     */
+    SpreadsheetLabelName FORMAT_VALUE = SpreadsheetSelection.labelName("VALUE");
+
+    /**
+     * Getter that retrieves the value being formatted by a {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter}
+     */
+    default Optional<Object> formatValue() {
+        return this.reference(FORMAT_VALUE)
+                .orElse(Optional.empty());
+    }
+
+    // validation.......................................................................................................
+
+    /**
+     * A label that may be used to get the value being validated.
+     */
+    SpreadsheetLabelName VALIDATION_VALUE = SpreadsheetValidatorContext.VALUE;
 
     /**
      * Returns the next empty column for the requested {@link SpreadsheetRowReference}.
