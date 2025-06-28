@@ -28,6 +28,8 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.util.Locale;
+
 /**
  * A {@link Converter} that supports converting a {@link SpreadsheetCell} to various target types, where each type maps
  * to a property within a {@link SpreadsheetCell}, such as {@link TextStyle} extracting the {@link SpreadsheetCell#style()}.
@@ -55,6 +57,7 @@ final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuiting
                 Object.class == type || // formula.value
                 DateTimeSymbols.class == type ||
                 DecimalNumberSymbols.class == type ||
+                Locale.class == type ||
                 SpreadsheetFormatterSelector.class == type || // formatter format-pattern etc.
                 SpreadsheetParserSelector.class == type || // parser parse-pattern etc
                 ValidatorSelector.class == type ||
@@ -98,26 +101,31 @@ final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuiting
                             value = cell.decimalNumberSymbols()
                                     .orElse(null);
                         } else {
-                            if (SpreadsheetFormatterSelector.class == type) {
-                                value = cell.formatter()
+                            if(Locale.class == type) {
+                                value = cell.locale()
                                         .orElse(null);
                             } else {
-                                if (SpreadsheetParserSelector.class == type) {
-                                    value = cell.parser()
+                                if (SpreadsheetFormatterSelector.class == type) {
+                                    value = cell.formatter()
                                             .orElse(null);
                                 } else {
-                                    if (ValidatorSelector.class == type) {
-                                        value = cell.validator()
+                                    if (SpreadsheetParserSelector.class == type) {
+                                        value = cell.parser()
                                                 .orElse(null);
                                     } else {
-                                        if (TextStyle.class == type) {
-                                            value = cell.style();
+                                        if (ValidatorSelector.class == type) {
+                                            value = cell.validator()
+                                                    .orElse(null);
                                         } else {
-                                            if (TextNode.class == type) {
-                                                value = cell.formattedValue()
-                                                        .orElse(null);
+                                            if (TextStyle.class == type) {
+                                                value = cell.style();
                                             } else {
-                                                throw new IllegalArgumentException("Unexpected target type " + type.getName());
+                                                if (TextNode.class == type) {
+                                                    value = cell.formattedValue()
+                                                            .orElse(null);
+                                                } else {
+                                                    throw new IllegalArgumentException("Unexpected target type " + type.getName());
+                                                }
                                             }
                                         }
                                     }
