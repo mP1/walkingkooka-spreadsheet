@@ -833,6 +833,16 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         );
     }
 
+    // Locale...........................................................................................................
+
+    @Test
+    public void testConvertLocaleToString() {
+        this.convertAndCheck(
+                Locale.forLanguageTag("en-AU"),
+                "en-AU"
+        );
+    }
+
     // Number...........................................................................................................
 
     @Test

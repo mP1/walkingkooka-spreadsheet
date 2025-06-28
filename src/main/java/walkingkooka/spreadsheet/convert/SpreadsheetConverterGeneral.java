@@ -32,6 +32,7 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -453,9 +454,11 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                         targetType
                 ) :
                 convertNonNull0(
-                        value instanceof HasText && false == value instanceof SpreadsheetSelection ?
-                                ((HasText) value).text() :
-                                value,
+                        value instanceof Locale ?
+                                ((Locale) value).toLanguageTag() :
+                                value instanceof HasText && false == value instanceof SpreadsheetSelection ?
+                                        ((HasText) value).text() :
+                                        value,
                         targetType,
                         context
                 );
