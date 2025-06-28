@@ -81,27 +81,33 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testWithNullNumberToColorFails() {
-        this.withFails(
-                null,
-                this.nameToColor(),
-                CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                this.formatter(),
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                this.converterContext()
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatterContext.with(
+                        null,
+                        this.nameToColor(),
+                        CELL_CHARACTER_WIDTH,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        this.converterContext()
+                )
         );
     }
 
     @Test
     public void testWithNullNameToColorFails() {
-        this.withFails(
-                this.numberToColor(),
-                null,
-                CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                this.formatter(),
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                this.converterContext()
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatterContext.with(
+                        this.numberToColor(),
+                        null,
+                        CELL_CHARACTER_WIDTH,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        this.converterContext()
+                )
         );
     }
 
@@ -165,47 +171,33 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testWithNullFormatterFails() {
-        this.withFails(
-                this.numberToColor(),
-                this.nameToColor(),
-                CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                null,
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                this.converterContext()
+        final SpreadsheetConverterContext converterContext = this.converterContext();
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatterContext.with(
+                        this.numberToColor(),
+                        this.nameToColor(),
+                        CELL_CHARACTER_WIDTH,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        null,
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        converterContext
+                )
         );
     }
 
     @Test
     public void testWIthNullConverterContextFails() {
-        this.withFails(
-                this.numberToColor(),
-                this.nameToColor(),
-                CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                this.formatter(),
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                null
-        );
-    }
-
-    private void withFails(final Function<Integer, Optional<Color>> numberToColor,
-                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                           final int width,
-                           final int generalNumberFormatDigitCount,
-                           final SpreadsheetFormatter formatter,
-                           final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                           final SpreadsheetConverterContext converterContext) {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetFormatterContext.with(
-                        numberToColor,
-                        nameToColor,
-                        width,
-                        generalNumberFormatDigitCount,
-                        formatter,
-                        spreadsheetExpressionEvaluationContext,
-                        converterContext
+                        this.numberToColor(),
+                        this.nameToColor(),
+                        CELL_CHARACTER_WIDTH,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        this.formatter(),
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        null
                 )
         );
     }
