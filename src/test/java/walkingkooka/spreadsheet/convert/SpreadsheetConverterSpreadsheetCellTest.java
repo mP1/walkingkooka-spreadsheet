@@ -161,6 +161,30 @@ public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetCo
     }
 
     @Test
+    public void testConvertSpreadsheetCellToLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setLocale(
+                                Optional.of(locale)
+                        )
+                ,
+                Locale.class,
+                locale
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToLocaleWhenMissing() {
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                Locale.class,
+                null
+        );
+    }
+
+    @Test
     public void testConvertSpreadsheetCellToSpreadsheetFormatterSelectorWhenAbsent() {
         this.convertAndCheck(
                 SpreadsheetSelection.A1.setFormula(
