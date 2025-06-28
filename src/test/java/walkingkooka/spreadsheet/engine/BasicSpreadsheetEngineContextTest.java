@@ -766,7 +766,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.formatValueAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
                 BigDecimal.valueOf(-125.25),
-                SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"").formatter(),
+                SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"")
+                        .spreadsheetFormatterSelector(),
                 SpreadsheetText.with(
                         MINUS + "125" + DECIMAL + "3Abc123"
                 )
@@ -792,7 +793,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 cell,
                 SpreadsheetPattern.parseNumberFormatPattern("#.00")
-                        .formatter(),
+                        .spreadsheetFormatterSelector(),
                 cell.setFormattedValue(
                         Optional.of(
                                 TextNode.text("1.00")
@@ -818,7 +819,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 cell,
                 SpreadsheetPattern.parseNumberFormatPattern("$#.00")
-                        .formatter(),
+                        .spreadsheetFormatterSelector(),
                 cell.setFormattedValue(
                         Optional.of(
                                 TextNode.text("CURR1:00")
@@ -865,7 +866,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 cell,
                 SpreadsheetPattern.parseNumberFormatPattern("$#.00")
-                        .formatter(),
+                        .spreadsheetFormatterSelector(),
                 cell.setFormattedValue(
                         Optional.of(
                                 TextNode.text("CURR1:00")

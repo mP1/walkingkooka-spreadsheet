@@ -22,7 +22,7 @@ import walkingkooka.ContextTesting;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -301,7 +301,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                         .formatValue(
                                 null,
                                 Optional.of("1"),
-                                null
+                                SpreadsheetEngineContext.NO_SPREADSHEET_FORMATTER_SELECTOR
                         )
         );
     }
@@ -313,14 +313,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 () -> this.createContext()
                         .formatValue(
                                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                Optional.of("1"),
-                                null
+                                null,
+                                SpreadsheetEngineContext.NO_SPREADSHEET_FORMATTER_SELECTOR
                         )
         );
     }
 
     @Test
-    default void testFormatValueNullFormatterFails() {
+    default void testFormatValueNullSpreadsheetFormatterSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
@@ -334,7 +334,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final SpreadsheetCell cell,
                                      final Object value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
                 cell,
@@ -346,7 +346,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final SpreadsheetCell cell,
                                      final Optional<Object> value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
                 cell,
@@ -358,7 +358,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final SpreadsheetCell cell,
                                      final Object value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 cell,
@@ -370,7 +370,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final SpreadsheetCell cell,
                                      final Optional<Object> value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 cell,
@@ -382,7 +382,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final SpreadsheetCell cell,
                                      final Object value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
                 cell,
@@ -394,7 +394,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatValueAndCheck(final SpreadsheetCell cell,
                                      final Optional<Object> value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
                 this.createContext(),
@@ -408,7 +408,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
                                      final SpreadsheetCell cell,
                                      final Object value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 context,
@@ -422,7 +422,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
                                      final SpreadsheetCell cell,
                                      final Optional<Object> value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 context,
@@ -436,7 +436,21 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
                                      final SpreadsheetCell cell,
                                      final Optional<Object> value,
-                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetFormatterSelector formatter,
+                                     final Optional<TextNode> expected) {
+        this.formatValueAndCheck(
+                context,
+                cell,
+                value,
+                Optional.of(formatter),
+                expected
+        );
+    }
+
+    default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell cell,
+                                     final Optional<Object> value,
+                                     final Optional<SpreadsheetFormatterSelector> formatter,
                                      final Optional<TextNode> expected) {
         this.checkEquals(
                 expected,
@@ -478,7 +492,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatAndStyleAndCheck(final SpreadsheetCell cell,
-                                        final SpreadsheetFormatter formatter,
+                                        final SpreadsheetFormatterSelector formatter,
                                         final SpreadsheetCell expected) {
         this.formatAndStyleAndCheck(
                 this.createContext(),
@@ -490,7 +504,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatAndStyleAndCheck(final SpreadsheetEngineContext context,
                                         final SpreadsheetCell cell,
-                                        final SpreadsheetFormatter formatter,
+                                        final SpreadsheetFormatterSelector formatter,
                                         final SpreadsheetCell expected) {
         this.formatAndStyleAndCheck(
                 context,
@@ -504,7 +518,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatAndStyleAndCheck(final SpreadsheetEngineContext context,
                                         final SpreadsheetCell cell,
-                                        final Optional<SpreadsheetFormatter> formatter,
+                                        final Optional<SpreadsheetFormatterSelector> formatter,
                                         final SpreadsheetCell expected) {
         this.checkEquals(
                 expected,
@@ -512,7 +526,8 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                         cell,
                         formatter
                 ),
-                () -> "formatValueAndStyle " + cell + " " + formatter);
+                () -> "formatValueAndStyle " + cell + " " + formatter
+        );
     }
 
     // TypeNameTesting .................................................................................................

@@ -32,9 +32,9 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -366,40 +366,27 @@ public class TestGwtTest extends GWTTestCase {
             }
 
             @Override
-            public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                                       final Optional<SpreadsheetFormatter> formatter) {
-                return cell.setFormattedValue(
-                        Optional.of(
-                                this.formatValue(
-                                        cell,
-                                        cell.formula()
-                                                .errorOrValue(),
-                                        formatter.orElse(
-                                                this.spreadsheetMetadata()
-                                                        .spreadsheetFormatter(
-                                                                spreadsheetFormatterProvider,
-                                                                PROVIDER_CONTEXT
-                                                        )
-                                        )
-                                ).map(
-                                        f -> cell.style()
-                                                .replace(f)
-                                ).orElse(TextNode.EMPTY_TEXT)
-                        )
-                );
-            }
-
-            @Override
             public Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                                   final Optional<Object> value,
-                                                  final SpreadsheetFormatter formatter) {
+                                                  final Optional<SpreadsheetFormatterSelector> formatter) {
                 checkEquals(
                         false,
                         value.orElse(null) instanceof Optional,
                         "Value must not be optional" + value
                 );
 
-                return formatter.format(
+                return formatter.map(
+                        (SpreadsheetFormatterSelector s) ->
+                                spreadsheetFormatterProvider.spreadsheetFormatter(
+                                        s,
+                                        PROVIDER_CONTEXT
+                                )
+                ).orElseGet(
+                        () -> metadata.spreadsheetFormatter(
+                                spreadsheetFormatterProvider,
+                                PROVIDER_CONTEXT
+                        )
+                ).format(
                         value,
                         metadata.spreadsheetFormatterContext(
                                 Optional.of(cell),
@@ -411,6 +398,24 @@ public class TestGwtTest extends GWTTestCase {
                                 spreadsheetFormatterProvider,
                                 this.localeContext,
                                 PROVIDER_CONTEXT
+                        )
+                );
+            }
+
+            @Override
+            public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                                       final Optional<SpreadsheetFormatterSelector> formatter) {
+                return cell.setFormattedValue(
+                        Optional.of(
+                                this.formatValue(
+                                        cell,
+                                        cell.formula()
+                                                .errorOrValue(),
+                                        formatter
+                                ).map(
+                                        f -> cell.style()
+                                                .replace(f)
+                                ).orElse(TextNode.EMPTY_TEXT)
                         )
                 );
             }

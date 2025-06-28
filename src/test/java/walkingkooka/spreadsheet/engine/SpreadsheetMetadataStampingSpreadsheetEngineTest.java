@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -540,7 +540,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             @Override
             public Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                                   final Optional<Object> value,
-                                                  final SpreadsheetFormatter formatter) {
+                                                  final Optional<SpreadsheetFormatterSelector> formatter) {
                 checkEquals(
                         FORMULA_VALUE,
                         value.orElse(null),
@@ -554,15 +554,16 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
             @Override
             public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                                       final Optional<SpreadsheetFormatter> formatter) {
+                                                       final Optional<SpreadsheetFormatterSelector> formatter) {
                 return cell.setFormattedValue(
                         this.formatValue(
                                 cell,
                                 cell.formula()
                                         .errorOrValue(),
-                                formatter.orElse(
-                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
-                                )
+//                                formatter.orElse(
+//                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
+//                                )
+                                formatter
                         )
                 );
             }
