@@ -26,6 +26,7 @@ import java.util.Optional;
 
 /**
  * A {@link Converter} which formats a value to {@link String text} using the given {@link SpreadsheetFormatter}.
+ * Note attempts by the {@link SpreadsheetFormatter} to evaluate an expression will fail.
  */
 final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConverterContext> {
 
