@@ -29,6 +29,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -59,6 +60,34 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<BasicSpreadsheetFormatterContext> {
 
+    private final static Color COLOR = Color.fromRgb(0x123456);
+
+    private final static Function<Integer, Optional<Color>> NUMBER_TO_COLOR = new Function<>() {
+
+        @Override
+        public Optional<Color> apply(final Integer number) {
+            return Optional.of(COLOR);
+        }
+
+        @Override
+        public String toString() {
+            return 1 + "=" + COLOR;
+        }
+    };
+
+    private final static Function<SpreadsheetColorName, Optional<Color>> NAME_TO_COLOR = new Function<>() {
+
+        @Override
+        public Optional<Color> apply(final SpreadsheetColorName name) {
+            return Optional.of(COLOR);
+        }
+
+        @Override
+        public String toString() {
+            return "bingo=" + COLOR;
+        }
+    };
+
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.FRANCE;
 
@@ -73,6 +102,142 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
 
+    private final static SpreadsheetFormatter FORMATTER = new FakeSpreadsheetFormatter() {
+
+        @Override
+        public Optional<TextNode> format(final Optional<Object> value,
+                                         final SpreadsheetFormatterContext context) {
+            return Optional.of(
+                    SpreadsheetText.with(
+                            new DecimalFormat("000.000")
+                                    .format(
+                                            value.orElse(null)
+                                    )
+                    ).toTextNode()
+            );
+        }
+
+        @Override
+        public String toString() {
+            return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".formatter()";
+        }
+    };
+
+    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
+            DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(LOCALE)
+            ),
+            LOCALE,
+            1900,
+            50,
+            LocalDateTime::now
+    );
+
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = new FakeDecimalNumberContext() {
+        @Override
+        public Locale locale() {
+            return LOCALE;
+        }
+
+        @Override
+        public String currencySymbol() {
+            return "$$";
+        }
+
+        @Override
+        public char decimalSeparator() {
+            return '!';
+        }
+
+        @Override
+        public String exponentSymbol() {
+            return "EE";
+        }
+
+        @Override
+        public char groupSeparator() {
+            return '/';
+        }
+
+        @Override
+        public String infinitySymbol() {
+            return "Infinity!";
+        }
+
+        @Override
+        public MathContext mathContext() {
+            return MathContext.DECIMAL32;
+        }
+
+        @Override
+        public char monetaryDecimalSeparator() {
+            return '*';
+        }
+
+        @Override
+        public String nanSymbol() {
+            return "Nan!";
+        }
+
+        @Override
+        public char negativeSign() {
+            return ';';
+        }
+
+        @Override
+        public char percentSymbol() {
+            return ':';
+        }
+
+        @Override
+        public char permillSymbol() {
+            return '>';
+        }
+
+        @Override
+        public char positiveSign() {
+            return '^';
+        }
+
+        @Override
+        public char zeroDigit() {
+            return '0';
+        }
+
+        @Override
+        public String toString() {
+            return "TestDecimalNumberContext";
+        }
+    };
+
+    private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            Converters.collection(
+                    Cast.to(
+                            Lists.of(
+                                    SpreadsheetConverters.textToText(),
+                                    Converters.numberToBoolean(),
+                                    SpreadsheetConverters.errorToNumber()
+                            )
+                    )
+            ),
+            LABEL_NAME_RESOLVER,
+            JsonNodeConverterContexts.basic(
+                    ExpressionNumberConverterContexts.basic(
+                            Converters.fake(),
+                            ConverterContexts.basic(
+                                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                                    Converters.fake(),
+                                    DATE_TIME_CONTEXT,
+                                    DECIMAL_NUMBER_CONTEXT
+                            ),
+                            EXPRESSION_NUMBER_KIND
+                    ),
+                    JsonNodeMarshallUnmarshallContexts.fake()
+            )
+    );
+
     private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
             (cell) -> {
                 Objects.requireNonNull(cell, "cell");
@@ -85,12 +250,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NullPointerException.class,
                 () -> BasicSpreadsheetFormatterContext.with(
                         null,
-                        this.nameToColor(),
+                        NAME_TO_COLOR,
                         CELL_CHARACTER_WIDTH,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        this.converterContext()
+                        CONVERTER_CONTEXT
                 )
         );
     }
@@ -100,13 +265,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetFormatterContext.with(
-                        this.numberToColor(),
+                        NUMBER_TO_COLOR,
                         null,
                         CELL_CHARACTER_WIDTH,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        this.converterContext()
+                        CONVERTER_CONTEXT
                 )
         );
     }
@@ -115,13 +280,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidCellCharacterWidthFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                        this.nameToColor(),
+                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
                         -1,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        this.converterContext()
+                        CONVERTER_CONTEXT
                 )
         );
     }
@@ -130,13 +295,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidCellCharacterWidthFails2() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                        this.nameToColor(),
+                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
                         0,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        this.converterContext())
+                        CONVERTER_CONTEXT)
         );
     }
 
@@ -144,13 +309,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidGeneralFormatNumberDigitCountFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                        this.nameToColor(),
+                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
                         CELL_CHARACTER_WIDTH,
                         -1,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        this.converterContext()
+                        CONVERTER_CONTEXT
                 )
         );
     }
@@ -159,29 +324,28 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidGeneralFormatNumberDigitCountFails2() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                        this.nameToColor(),
+                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
                         CELL_CHARACTER_WIDTH,
                         0,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        this.converterContext())
+                        CONVERTER_CONTEXT)
         );
     }
 
     @Test
     public void testWithNullFormatterFails() {
-        final SpreadsheetConverterContext converterContext = this.converterContext();
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetFormatterContext.with(
-                        this.numberToColor(),
-                        this.nameToColor(),
+                        NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
                         CELL_CHARACTER_WIDTH,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         null,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        converterContext
+                        CONVERTER_CONTEXT
                 )
         );
     }
@@ -191,11 +355,11 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetFormatterContext.with(
-                        this.numberToColor(),
-                        this.nameToColor(),
+                        NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
                         CELL_CHARACTER_WIDTH,
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        this.formatter(),
+                        FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                         null
                 )
@@ -204,14 +368,20 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testColorNumber() {
-        this.colorNumberAndCheck(this.createContext(), 1, Optional.of(this.color()));
+        this.colorNumberAndCheck(
+                this.createContext(),
+                1,
+                Optional.of(COLOR)
+        );
     }
 
     @Test
     public void testColorName() {
-        this.colorNameAndCheck(this.createContext(),
+        this.colorNameAndCheck(
+                this.createContext(),
                 SpreadsheetColorName.with("bingo"),
-                Optional.of(this.color()));
+                Optional.of(COLOR)
+        );
     }
 
     @Test
@@ -270,128 +440,20 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         );
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Character or CharSequence or HasText or String to Character or CharSequence or String | Number to Boolean | SpreadsheetError to Number FakeSpreadsheetLabelNameResolver symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign=';' positiveSign='^' zeroDigit='0' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"EE\" groupSeparator='/' infinitySymbol=\"Infinity!\" monetaryDecimalSeparator='*' nanSymbol=\"Nan!\" percentSymbol=':' permillSymbol='>' fr_FR precisi"
-        );
-    }
-
     @Override
     public BasicSpreadsheetFormatterContext createContext() {
         return BasicSpreadsheetFormatterContext.with(
-                this.numberToColor(),
-                this.nameToColor(),
+                NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                this.formatter(),
+                FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                this.converterContext()
+                CONVERTER_CONTEXT
         );
-    }
-
-    private Function<Integer, Optional<Color>> numberToColor() {
-        return new Function<>() {
-
-            @Override
-            public Optional<Color> apply(final Integer number) {
-                checkEquals(number, 1, "color number");
-                return Optional.of(BasicSpreadsheetFormatterContextTest.this.color());
-            }
-
-            @Override
-            public String toString() {
-                return 1 + "=" + BasicSpreadsheetFormatterContextTest.this.color();
-            }
-        };
-    }
-
-    private Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
-        return new Function<>() {
-
-            @Override
-            public Optional<Color> apply(final SpreadsheetColorName name) {
-                checkEquals(name, SpreadsheetColorName.with("bingo"), "color name");
-                return Optional.of(BasicSpreadsheetFormatterContextTest.this.color());
-            }
-
-            @Override
-            public String toString() {
-                return "bingo=" + BasicSpreadsheetFormatterContextTest.this.color();
-            }
-        };
-    }
-
-    private Color color() {
-        return Color.fromRgb(0x123456);
     }
 
     private final static int CELL_CHARACTER_WIDTH = 1;
-
-    private SpreadsheetFormatter formatter() {
-        return new FakeSpreadsheetFormatter() {
-
-            @Override
-            public Optional<TextNode> format(final Optional<Object> value,
-                                             final SpreadsheetFormatterContext context) {
-                return Optional.of(
-                        SpreadsheetText.with(
-                                new DecimalFormat("000.000")
-                                        .format(
-                                                value.orElse(null)
-                                        )
-                        ).toTextNode()
-                );
-            }
-
-            @Override
-            public String toString() {
-                return BasicSpreadsheetFormatterContextTest.class.getSimpleName() + ".formatter()";
-            }
-        };
-    }
-
-    private SpreadsheetConverterContext converterContext() {
-        return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                Converters.collection(
-                        Cast.to(
-                                Lists.of(
-                                        SpreadsheetConverters.textToText(),
-                                        Converters.numberToBoolean(),
-                                        SpreadsheetConverters.errorToNumber()
-                                )
-                        )
-                ),
-                LABEL_NAME_RESOLVER,
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        this.dateTimeContext(),
-                                        this.decimalNumberContext()),
-                                EXPRESSION_NUMBER_KIND
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
-        );
-    }
-
-    private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(LOCALE)
-                ),
-                LOCALE,
-                1900,
-                50,
-                LocalDateTime::now
-        );
-    }
 
     private DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
@@ -416,68 +478,69 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Override
     public String currencySymbol() {
-        return "$$";
+        return DECIMAL_NUMBER_CONTEXT.currencySymbol();
     }
 
     @Override
     public char decimalSeparator() {
-        return '!';
+        return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
     }
 
     @Override
     public String exponentSymbol() {
-        return "EE";
+        return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
     }
 
     @Override
     public char groupSeparator() {
-        return '/';
+        return DECIMAL_NUMBER_CONTEXT.groupSeparator();
     }
 
     @Override
     public String infinitySymbol() {
-        return "Infinity!";
+        return DECIMAL_NUMBER_CONTEXT.infinitySymbol();
     }
 
     @Override
     public MathContext mathContext() {
-        return MathContext.DECIMAL32;
+        return DECIMAL_NUMBER_CONTEXT.mathContext();
     }
 
     @Override
     public char monetaryDecimalSeparator() {
-        return '*';
+        return DECIMAL_NUMBER_CONTEXT.monetaryDecimalSeparator();
     }
 
     @Override
     public String nanSymbol() {
-        return "Nan!";
+        return DECIMAL_NUMBER_CONTEXT.nanSymbol();
     }
 
     @Override
     public char negativeSign() {
-        return ';';
+        return DECIMAL_NUMBER_CONTEXT.negativeSign();
     }
 
     @Override
     public char percentSymbol() {
-        return ':';
+        return DECIMAL_NUMBER_CONTEXT.percentSymbol();
     }
 
     @Override
     public char permillSymbol() {
-        return '>';
+        return DECIMAL_NUMBER_CONTEXT.permillSymbol();
     }
 
     @Override
     public char positiveSign() {
-        return '^';
+        return DECIMAL_NUMBER_CONTEXT.positiveSign();
     }
 
     @Override
     public char zeroDigit() {
-        return '0';
+        return DECIMAL_NUMBER_CONTEXT.zeroDigit();
     }
+
     // ClassTesting.....................................................................................................
 
     @Override
