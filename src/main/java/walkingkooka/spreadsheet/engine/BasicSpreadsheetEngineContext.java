@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -279,6 +280,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 metadata,
                 this.storeRepository,
                 this.spreadsheetConverterContext,
+                (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
                 this.formHandlerContext,
                 this.expressionFunctionProvider,
                 this.localeContext,
@@ -318,44 +320,30 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                           final Optional<Object> value,
                                           final Optional<SpreadsheetFormatterSelector> formatter) {
-    Objects.requireNonNull(formatter, "formatter");
+        Objects.requireNonNull(formatter, "formatter");
 
-    final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-    final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+        final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
 
-    final SpreadsheetFormatter spreadsheetFormatter = formatter
-            .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
-                            selector,
-                            this
-                    )
-            ).orElseGet(
-                    () -> metadata.spreadsheetFormatter(
-                            spreadsheetProvider,
-                            this // ProviderContext
-                    )
-            );
+        final SpreadsheetFormatter spreadsheetFormatter = formatter
+                .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
+                                selector,
+                                this
+                        )
+                ).orElseGet(
+                        () -> metadata.spreadsheetFormatter(
+                                spreadsheetProvider,
+                                this // ProviderContext
+                        )
+                );
 
-    return spreadsheetFormatter.format(
-            value,
-            metadata.spreadsheetFormatterContext(
-                    Optional.of(cell),
-                    (final Optional<Object> v) -> this.spreadsheetEngineContext(
-                            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
-                    ).spreadsheetExpressionEvaluationContext(
-                            Optional.of(cell),
-                            SpreadsheetExpressionReferenceLoaders.fake()
-                    ).addLocalVariable(
-                            SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
-                            v
-                    ),
-                    this, // SpreadsheetLabelNameResolver,
-                    spreadsheetProvider, // ConverterProvider,
-                    spreadsheetProvider, // SpreadsheetFormatterProvider,
-                    this, // LocaleContext
-                    this // ProviderContext
-            )
-    );
-}
+        return spreadsheetFormatter.format(
+                value,
+                this.spreadsheetFormatterContext(
+                        Optional.of(cell)
+                )
+        );
+    };
 
     // FORMAT .........................................................................................................
 
@@ -449,6 +437,28 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             }
         }
         return formatted;
+    }
+
+    private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
+
+        return this.metadata.spreadsheetFormatterContext(
+                cell,
+                (final Optional<Object> v) -> this.spreadsheetEngineContext(
+                        SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
+                ).spreadsheetExpressionEvaluationContext(
+                        cell,
+                        SpreadsheetExpressionReferenceLoaders.fake()
+                ).addLocalVariable(
+                        SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
+                        v
+                ),
+                this, // SpreadsheetLabelNameResolver,
+                spreadsheetProvider, // ConverterProvider,
+                spreadsheetProvider, // SpreadsheetFormatterProvider,
+                this, // LocaleContext
+                this // ProviderContext
+        );
     }
 
     // Store............................................................................................................

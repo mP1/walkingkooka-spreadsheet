@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -217,6 +218,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         return this.reference(FORMAT_VALUE)
                 .orElse(Optional.empty());
     }
+
+    /**
+     * Creates a {@link SpreadsheetFormatterContext} which can be used by a function to format a value.
+     */
+    SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell);
 
     // validation.......................................................................................................
 

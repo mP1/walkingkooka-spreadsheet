@@ -30,6 +30,7 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -180,6 +181,9 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                         metadata,
                         SpreadsheetStoreRepositories.fake(),
                         converterContext,
+                        ((Optional<SpreadsheetCell> c) -> {
+                            throw new UnsupportedOperationException();
+                        }),
                         FormHandlerContexts.fake(),
                         ExpressionFunctionProviders.basic(
                                 Url.parseAbsolute("https://example.com/function"),

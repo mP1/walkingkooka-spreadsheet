@@ -26,6 +26,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
@@ -51,6 +52,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                                final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                               final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                                final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                final LocaleContext localeContext,
@@ -62,6 +64,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 spreadsheetMetadata,
                 spreadsheetStoreRepository,
                 spreadsheetConverterContext,
+                spreadsheetFormatterContextFactory,
                 formHandlerContext,
                 expressionFunctionProvider,
                 localeContext,

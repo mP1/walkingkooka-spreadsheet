@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -236,6 +237,9 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                             private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
                         },
                         SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
+                        (Optional<SpreadsheetCell> cell) -> {
+                            throw new UnsupportedOperationException();
+                        },
                         FormHandlerContexts.fake(),
                         new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
                             @Override

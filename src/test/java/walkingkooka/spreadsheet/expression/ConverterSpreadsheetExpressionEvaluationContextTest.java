@@ -550,6 +550,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                                 LOCALE_CONTEXT,
                                 PROVIDER_CONTEXT
                         ),
+                        ((Optional<SpreadsheetCell> cell) -> {
+                            Objects.requireNonNull(cell, "cell");
+                            throw new UnsupportedOperationException();
+                        }),
                         new FakeFormHandlerContext<>() {
                             @Override
                             public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {

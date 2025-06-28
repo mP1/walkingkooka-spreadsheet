@@ -359,6 +359,17 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
+    // spreadsheetFormatterContext......................................................................................
+
+    @Test
+    default void testSpreadsheetFormatterContextWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .spreadsheetFormatterContext(null)
+        );
+    }
+
     // SpreadsheetLabelNameResolverTesting..............................................................................
 
     @Override

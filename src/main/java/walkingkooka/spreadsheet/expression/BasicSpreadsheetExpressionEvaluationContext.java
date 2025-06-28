@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -66,6 +67,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
         FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
@@ -78,6 +80,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                            final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                             final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                             final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                             final LocaleContext localeContext,
@@ -88,6 +91,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(spreadsheetStoreRepository, "spreadsheetStoreRepository");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
+        Objects.requireNonNull(spreadsheetFormatterContextFactory, "spreadsheetFormatterContextFactory");
         Objects.requireNonNull(formHandlerContext, "formHandlerContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(localeContext, "localeContext");
@@ -100,6 +104,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetMetadata,
                 spreadsheetStoreRepository,
                 spreadsheetConverterContext,
+                spreadsheetFormatterContextFactory,
                 formHandlerContext,
                 expressionFunctionProvider,
                 localeContext,
@@ -113,6 +118,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                        final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                         final LocaleContext localeContext,
@@ -123,6 +129,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
 
+        this.spreadsheetFormatterContextFactory = spreadsheetFormatterContextFactory;
         this.formHandlerContext = formHandlerContext;
         this.spreadsheetStoreRepository = spreadsheetStoreRepository;
 
@@ -235,6 +242,13 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final AbsoluteUrl serverUrl;
+
+    @Override
+    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        return this.spreadsheetFormatterContextFactory.apply(cell);
+    }
+
+    private final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory;
 
     @Override
     public Optional<Object> validationValue() {
@@ -383,6 +397,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                         this.spreadsheetMetadata,
                         this.spreadsheetStoreRepository,
                         after,
+                        this.spreadsheetFormatterContextFactory,
                         this.formHandlerContext,
                         this.expressionFunctionProvider,
                         this.localeContext,

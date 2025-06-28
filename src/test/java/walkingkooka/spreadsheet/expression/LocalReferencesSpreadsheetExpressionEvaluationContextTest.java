@@ -30,6 +30,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -480,6 +481,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                     }
 
                     private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
+
+                    @Override
+                    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+                        Objects.requireNonNull(cell, "cell");
+                        return super.spreadsheetFormatterContext(cell);
+                    }
                 }
         );
     }

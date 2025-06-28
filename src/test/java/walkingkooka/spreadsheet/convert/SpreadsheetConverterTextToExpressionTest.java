@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
@@ -96,6 +97,9 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                                 METADATA_EN_AU,
                                 SpreadsheetStoreRepositories.fake(),
                                 SPREADSHEET_FORMATTER_CONTEXT,
+                                (Optional<SpreadsheetCell> c) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 FormHandlerContexts.fake(),
                                 ExpressionFunctionProviders.fake(),
                                 LOCALE_CONTEXT,

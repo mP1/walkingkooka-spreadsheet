@@ -26,6 +26,7 @@ import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -47,7 +48,9 @@ import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.math.MathContext;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -71,6 +74,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             SpreadsheetId.with(1)
     );
 
+    private final static Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> SPREADSHEET_FORMATTER_CONTEXT_FACTORY = (Optional<SpreadsheetCell> cell) -> {
+        Objects.requireNonNull(cell, "cell");
+        throw new UnsupportedOperationException();
+    };
+
     private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     private final static FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> FORM_HANDLER_CONTEXT = FormHandlerContexts.fake();
@@ -87,6 +95,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -106,6 +115,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -125,6 +135,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -144,6 +155,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         null,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -163,6 +175,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         null,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -181,6 +194,27 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         SERVER_URL,
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
+                        null,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                        FORM_HANDLER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        LOCALE_CONTEXT,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetFormatterContextFactoryFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                        SERVER_URL,
+                        METADATA,
+                        SPREADSHEET_STORE_REPOSITORY,
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                         null,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -201,6 +235,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         null,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -220,6 +255,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         null,
                         LOCALE_CONTEXT,
@@ -239,6 +275,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         null,
@@ -258,6 +295,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         METADATA,
                         SPREADSHEET_STORE_REPOSITORY,
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -343,6 +381,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             }
                         },
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -378,6 +417,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             }
                         },
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                         FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         LOCALE_CONTEXT,
@@ -494,6 +534,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 LOCALE_CONTEXT,
