@@ -536,8 +536,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final static Optional<SpreadsheetCell> NO_CELL = Optional.empty();
 
     /**
-     * Returns a {@link DateTimeContext} trying {@link SpreadsheetMetadataPropertyName#DATE_TIME_SYMBOLS} as the source of
-     * {@link DateTimeSymbols} and then the {@link SpreadsheetMetadataPropertyName#LOCALE}.
+     * Returns a {@link DateTimeContext} using a combination of {@link SpreadsheetCell} and {@link SpreadsheetMetadata}
+     * properties in the following order:
+     * <ol>
+     *    <li>If the given cell has {@link DateTimeSymbols} that will be used</li>
+     *    <li>If the given cell has {@link Locale} that will be used</li>
+     *    <li>With the {@link SpreadsheetMetadataPropertyName#LOCALE} from this metadata</li>
+     * </ol>
      */
     public final DateTimeContext dateTimeContext(final Optional<SpreadsheetCell> cell,
                                                  final HasNow now,
@@ -557,9 +562,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         DateTimeSymbols dateTimeSymbols = null;
 
         if (cell.isPresent()) {
-            dateTimeSymbols = cell.get()
-                    .dateTimeSymbols()
+            final SpreadsheetCell spreadsheetCell = cell.get();
+
+            dateTimeSymbols = spreadsheetCell.dateTimeSymbols()
                     .orElse(null);
+
+            if (null == dateTimeSymbols) {
+                final Locale spreadsheetCellLocale = spreadsheetCell.locale()
+                        .orElse(null);
+                if (null != spreadsheetCellLocale) {
+                    dateTimeSymbols = context.dateTimeSymbolsForLocale(spreadsheetCellLocale)
+                            .orElse(null);
+                }
+            }
         }
 
         if (null == dateTimeSymbols) {
