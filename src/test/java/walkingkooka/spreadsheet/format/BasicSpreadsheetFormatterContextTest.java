@@ -28,6 +28,8 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -242,6 +244,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 throw new UnsupportedOperationException();
             };
 
+    private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.fake();
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testWithNullNumberToColorFails() {
         assertThrows(
@@ -253,7 +259,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -269,7 +277,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -284,7 +294,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -299,7 +311,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT)
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
@@ -313,7 +328,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         -1,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -328,7 +345,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         0,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT)
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
         );
     }
 
@@ -343,13 +363,15 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         null,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
 
     @Test
-    public void testWIthNullConverterContextFails() {
+    public void testWithNullConverterContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetFormatterContext.with(
@@ -359,6 +381,44 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                         FORMATTER,
                         SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        null,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetFormatterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatterContext.with(
+                        NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
+                        CELL_CHARACTER_WIDTH,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        FORMATTER,
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        CONVERTER_CONTEXT,
+                        null,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatterContext.with(
+                        NUMBER_TO_COLOR,
+                        NAME_TO_COLOR,
+                        CELL_CHARACTER_WIDTH,
+                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        FORMATTER,
+                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                        CONVERTER_CONTEXT,
+                        SPREADSHEET_FORMATTER_PROVIDER,
                         null
                 )
         );
@@ -447,7 +507,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 

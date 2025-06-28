@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -44,7 +45,9 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final int generalFormatNumberDigitCount,
                                                  final SpreadsheetFormatter formatter,
                                                  final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                                 final SpreadsheetConverterContext context) {
+                                                 final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                 final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                 final ProviderContext providerContext) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (cellCharacterWidth <= 0) {
@@ -55,7 +58,9 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         }
         Objects.requireNonNull(formatter, "formatter");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
-        Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetFormatterContext(
                 numberToColor,
@@ -64,7 +69,9 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 generalFormatNumberDigitCount,
                 formatter,
                 spreadsheetExpressionEvaluationContext,
-                context
+                spreadsheetConverterContext,
+                spreadsheetFormatterProvider,
+                providerContext
         );
     }
 
@@ -74,7 +81,9 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                              final int generalFormatNumberDigitCount,
                                              final SpreadsheetFormatter formatter,
                                              final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                             final SpreadsheetConverterContext context) {
+                                             final SpreadsheetConverterContext spreadsheetConverterContext,
+                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                             final ProviderContext providerContext) {
         super();
 
         this.numberToColor = numberToColor;
@@ -85,7 +94,10 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.formatter = formatter;
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
 
-        this.context = context;
+        this.spreadsheetConverterContext = spreadsheetConverterContext;
+
+        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
+        this.providerContext = providerContext;
     }
 
     // BasicSpreadsheetFormatterContext................................................................................
@@ -155,6 +167,20 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private final SpreadsheetFormatter formatter;
 
     @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        return this.spreadsheetFormatterProvider.spreadsheetFormatter(
+                selector,
+                this.providerContext
+        );
+    }
+
+    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
+
+    private final ProviderContext providerContext;
+
+    @Override
     public int generalFormatNumberDigitCount() {
         return this.generalFormatNumberDigitCount;
     }
@@ -165,7 +191,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.context.spreadsheetMetadata();
+        return this.spreadsheetConverterContext.spreadsheetMetadata();
     }
 
     @Override
@@ -175,13 +201,15 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {
-        return this.context;
+        return this.spreadsheetConverterContext;
     }
+
+    private final SpreadsheetConverterContext spreadsheetConverterContext;
 
     @Override
     public SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetConverterContext before = this.context;
-        final SpreadsheetConverterContext after = this.context.setPreProcessor(processor);
+        final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
+        final SpreadsheetConverterContext after = this.spreadsheetConverterContext.setPreProcessor(processor);
 
         return before.equals(after) ?
                 this :
@@ -192,11 +220,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                         this.generalFormatNumberDigitCount,
                         this.formatter,
                         this.spreadsheetExpressionEvaluationContext,
-                        after
+                        after,
+                        this.spreadsheetFormatterProvider,
+                        this.providerContext
                 );
     }
-
-    private final SpreadsheetConverterContext context;
 
     // Object...........................................................................................................
 
@@ -206,7 +234,10 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 .label("cellCharacterWidth").value(this.cellCharacterWidth)
                 .label("numberToColor").value(this.numberToColor)
                 .label("nameToColor").value(this.nameToColor)
-                .label("context").value(this.context)
+                .label("spreadsheetConverterContext").value(this.spreadsheetConverterContext)
+                .label("spreadsheetFormatterProvider").value(this.spreadsheetFormatterProvider)
+                .label("providerContext").value(this.providerContext)
+
                 .build();
     }
 }

@@ -1180,7 +1180,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 generalNumberFormatDigitCount,
                 spreadsheetFormatter,
                 spreadsheetExpressionEvaluationContext,
-                formatSpreadsheetConverterContext
+                formatSpreadsheetConverterContext,
+                spreadsheetFormatterProvider,
+                providerContext
         );
     }
 

@@ -78,6 +78,11 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value);
 
     /**
+     * Helper that gets a {@link SpreadsheetFormatter} given its a {@link SpreadsheetFormatterSelector}.
+     */
+    SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector);
+
+    /**
      * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetExpressionReference} being validated.
      */
     @Override

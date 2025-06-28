@@ -18,10 +18,12 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.Color;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -229,7 +231,9 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                                         (final Optional<Object> v) -> {
                                             throw new UnsupportedOperationException();
                                         },
-                                        this.context
+                                        this.context, // SpreadsheetConverterContext
+                                        SpreadsheetFormatterProviders.empty(),
+                                        ProviderContexts.fake()
                                 )
                         ).text()
         );
