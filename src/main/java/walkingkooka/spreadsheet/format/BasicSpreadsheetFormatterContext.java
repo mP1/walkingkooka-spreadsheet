@@ -53,8 +53,9 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         if (generalFormatNumberDigitCount <= 0) {
             throw new IllegalArgumentException("Invalid generalFormatNumberDigitCount " + generalFormatNumberDigitCount + " <= 0");
         }
-        Objects.requireNonNull(context, "context");
         Objects.requireNonNull(formatter, "formatter");
+        Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
+        Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetFormatterContext(
                 numberToColor,
@@ -62,7 +63,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 cellCharacterWidth,
                 generalFormatNumberDigitCount,
                 formatter,
-                Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
+                spreadsheetExpressionEvaluationContext,
                 context
         );
     }
