@@ -63,6 +63,8 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
                                 new DecimalFormatSymbols(Locale.FRANCE)
                         )
                 )
+        ).setLocale(
+                Optional.of(Locale.ENGLISH)
         ).setFormatter(
                 Optional.of(
                         SpreadsheetFormatterSelector.parse("hello-formatter")
