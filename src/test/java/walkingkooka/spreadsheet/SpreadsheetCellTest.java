@@ -134,6 +134,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(cell);
         this.parserAndCheck(cell);
         this.styleAndCheck(cell);
@@ -153,6 +154,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -170,6 +172,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -197,6 +200,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -223,6 +227,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheckNone(cell);
         this.formatterAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
@@ -262,6 +267,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different, this.formula());
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.referenceAndCheck(cell);
         this.checkEquals(
                 cell.parser(),
@@ -345,6 +351,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -372,6 +379,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -438,6 +446,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 differentDateTimeSymbols
         );
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -510,6 +519,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 differentDecimalNumberSymbols
         );
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -543,6 +553,93 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 decimalNumberSymbols,
                 cell.decimalNumberSymbols(),
                 "decimalNumberSymbols"
+        );
+    }
+
+    // setLocale........................................................................................................
+
+    @Test
+    public void testSetLocaleNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setLocale(null)
+        );
+    }
+
+    @Test
+    public void testSetLocaleSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(
+                cell,
+                cell.setLocale(
+                        cell.locale()
+                )
+        );
+    }
+
+    @Test
+    public void testSetLocaleDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+
+        final Optional<Locale> differentLocale = this.differentLocale();
+        final SpreadsheetCell different = cell.setLocale(differentLocale);
+        assertNotSame(
+                cell,
+                different
+        );
+
+        this.referenceAndCheck(
+                different,
+                REFERENCE
+        );
+        this.formulaAndCheck(
+                different,
+                this.formula()
+        );
+        this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
+        this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
+        this.validatorAndCheck(different);
+        this.formattedValueAndCheck(
+                different,
+                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+        );
+    }
+
+    private Optional<Locale> locale() {
+        return SpreadsheetCell.NO_LOCALE;
+    }
+
+    private Optional<Locale> differentLocale() {
+        return Optional.ofNullable(
+                Locale.FRANCE
+        );
+    }
+
+    private void localeAndCheck(final SpreadsheetCell cell) {
+        this.localeAndCheck(
+                cell,
+                this.locale()
+        );
+    }
+
+    private void localeAndCheckNone(final SpreadsheetCell cell) {
+        this.localeAndCheck(
+                cell,
+                Optional.empty()
+        );
+    }
+
+    private void localeAndCheck(final SpreadsheetCell cell,
+                                final Optional<Locale> expected) {
+        this.checkEquals(
+                expected,
+                cell.locale(),
+                "locale"
         );
     }
     
@@ -590,6 +687,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(
                 different,
                 differentFormatter
@@ -610,6 +708,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheckNone(different);
         this.styleAndCheck(different);
@@ -712,6 +811,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(
                 different,
@@ -751,6 +851,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different, formula);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different, differentParser);
         this.styleAndCheck(different);
@@ -850,6 +951,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(
@@ -919,6 +1021,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -1001,6 +1104,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck(cell);
         this.formatterAndCheck(
                 different,
                 this.formatter()
@@ -1100,7 +1204,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTextWhenReferenceAndEmptyFormulaText() {
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                "A1,,,,,,,,,,"
+                "A1,,,,,,,,,,,"
         );
     }
 
@@ -1108,7 +1212,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testTextWhenReferenceAndNonEmptyFormulaText() {
         this.textAndCheck(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2+magic(\"hello\")")),
-                "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,"
+                "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,,"
         );
     }
 
@@ -1131,7 +1235,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         ).toTextNode()
                         )
                 ),
-                "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
+                "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
         );
     }
 
@@ -1167,6 +1271,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         new DecimalFormatSymbols(Locale.ENGLISH)
                                 )
                         )
+                ).setLocale(
+                        Optional.of(LOCALE)
                 ).setFormattedValue(
                         Optional.of(
                                 SpreadsheetText.with("Formatted-value-text")
@@ -1177,7 +1283,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         ).toTextNode()
                         )
                 ),
-                "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
+                "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
         );
     }
 
@@ -1339,6 +1445,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 this.createObject()
                         .setDecimalNumberSymbols(
                                 this.decimalNumberSymbols(Locale.FRANCE)
+                        )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLocale() {
+        this.checkNotEquals(
+                this.createObject()
+                        .setLocale(
+                                Optional.of(Locale.FRANCE)
                         )
         );
     }
@@ -1613,6 +1729,29 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         reference(),
                         SpreadsheetFormula.EMPTY
                 ).setDecimalNumberSymbols(decimalNumberSymbols)
+        );
+    }
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Test
+    public void testUnmarshallObjectLocale() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(JsonPropertyName.with(reference().toString()),
+                                JsonNode.object()
+                                        .set(
+                                                SpreadsheetCell.LOCALE_PROPERTY,
+                                                context.marshall(LOCALE)
+                                        )
+                        ),
+                SpreadsheetCell.with(
+                        reference(),
+                        SpreadsheetFormula.EMPTY
+                ).setLocale(
+                        Optional.of(LOCALE)
+                )
         );
     }
 
@@ -2026,6 +2165,27 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         .marshall(dateTimeSymbols.get())
                         ),
                 cell.setDateTimeSymbols(dateTimeSymbols)
+        );
+    }
+
+    @Test
+    public void testPatchLocale() {
+        final Optional<Locale> locale = Optional.of(LOCALE);
+
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                formula("=1")
+        );
+
+        this.patchAndCheck(
+                cell,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.LOCALE_PROPERTY,
+                                marshallContext()
+                                        .marshall(locale.get())
+                        ),
+                cell.setLocale(locale)
         );
     }
 
@@ -2759,6 +2919,24 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testTreePrintableFormulaLocale() {
+        this.treePrintAndCheck(
+                SpreadsheetCell.with(
+                        SpreadsheetSelection.parseCell("$A$1"),
+                        formula(FORMULA_TEXT)
+                ).setLocale(
+                        Optional.of(LOCALE)
+                ),
+                "Cell A1\n" +
+                        "  Formula\n" +
+                        "    text:\n" +
+                        "      \"=1+2\"\n" +
+                        "  locale:\n" +
+                        "    en_AU (java.util.Locale)\n"
+        );
+    }
+
+    @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleParser() {
         this.treePrintAndCheck(
                 SpreadsheetSelection.parseCell("$A$1")
@@ -3010,6 +3188,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         this.formula()
                 ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
                 "A1 =1+2 ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\""
+        );
+    }
+
+    @Test
+    public void testToStringWithLocale() {
+        this.toStringAndCheck(
+                SpreadsheetCell.with(
+                        REFERENCE,
+                        this.formula()
+                ).setLocale(
+                        Optional.of(LOCALE)
+                ),
+                "A1 =1+2 en_AU"
         );
     }
 
