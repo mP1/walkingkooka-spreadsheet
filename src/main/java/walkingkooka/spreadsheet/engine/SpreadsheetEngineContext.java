@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -110,13 +110,13 @@ public interface SpreadsheetEngineContext extends Context,
      */
     Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                    final Optional<Object> value,
-                                   final SpreadsheetFormatter formatter);
+                                   final Optional<SpreadsheetFormatterSelector> formatter);
 
     /**
      * Combines formatting of any present value along with possibly applying conditional rules.
      */
     SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                        final Optional<SpreadsheetFormatter> formatter);
+                                        final Optional<SpreadsheetFormatterSelector> formatter);
 
     /**
      * Formats the {@link Throwable} into text and styles it as an error.

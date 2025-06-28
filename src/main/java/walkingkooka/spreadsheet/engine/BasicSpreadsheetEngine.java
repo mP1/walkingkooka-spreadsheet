@@ -1722,11 +1722,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             result = context.formatValueAndStyle(
                     result,
                     cell.formatter()
-                            .map(f -> context.spreadsheetFormatter(
-                                            f,
-                                            context // ProviderContext
-                                    )
-                            )
             );
         } catch (final Exception cause) {
             result = context.formatThrowableAndStyle(

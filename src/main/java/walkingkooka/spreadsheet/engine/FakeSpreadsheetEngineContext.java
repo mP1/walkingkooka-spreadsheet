@@ -26,7 +26,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -117,13 +117,13 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                           final Optional<Object> value,
-                                          final SpreadsheetFormatter formatter) {
+                                          final Optional<SpreadsheetFormatterSelector> formatter) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                               final Optional<SpreadsheetFormatter> formatter) {
+                                               final Optional<SpreadsheetFormatterSelector> formatter) {
         throw new UnsupportedOperationException();
     }
 

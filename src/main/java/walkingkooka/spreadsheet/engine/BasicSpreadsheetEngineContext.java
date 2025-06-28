@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -316,31 +317,45 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                           final Optional<Object> value,
-                                          final SpreadsheetFormatter formatter) {
-        Objects.requireNonNull(formatter, "formatter");
+                                          final Optional<SpreadsheetFormatterSelector> formatter) {
+    Objects.requireNonNull(formatter, "formatter");
 
-        return formatter.format(
-                value,
-                this.spreadsheetMetadata()
-                        .spreadsheetFormatterContext(
-                                Optional.of(cell),
-                                (final Optional<Object> v) -> this.spreadsheetEngineContext(
-                                        SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
-                                ).spreadsheetExpressionEvaluationContext(
-                                        Optional.of(cell),
-                                        SpreadsheetExpressionReferenceLoaders.fake()
-                                ).addLocalVariable(
-                                        SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
-                                        v
-                                ),
-                                this, // SpreadsheetLabelNameResolver,
-                                this.spreadsheetProvider, // ConverterProvider,
-                                this.spreadsheetProvider, // SpreadsheetFormatterProvider,
-                                this, // LocaleContext
-                                this // ProviderContext
-                        )
-        );
-    }
+    final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+    final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
+
+    final SpreadsheetFormatter spreadsheetFormatter = formatter
+            .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
+                            selector,
+                            this
+                    )
+            ).orElseGet(
+                    () -> metadata.spreadsheetFormatter(
+                            spreadsheetProvider,
+                            this // ProviderContext
+                    )
+            );
+
+    return spreadsheetFormatter.format(
+            value,
+            metadata.spreadsheetFormatterContext(
+                    Optional.of(cell),
+                    (final Optional<Object> v) -> this.spreadsheetEngineContext(
+                            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
+                    ).spreadsheetExpressionEvaluationContext(
+                            Optional.of(cell),
+                            SpreadsheetExpressionReferenceLoaders.fake()
+                    ).addLocalVariable(
+                            SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
+                            v
+                    ),
+                    this, // SpreadsheetLabelNameResolver,
+                    spreadsheetProvider, // ConverterProvider,
+                    spreadsheetProvider, // SpreadsheetFormatterProvider,
+                    this, // LocaleContext
+                    this // ProviderContext
+            )
+    );
+}
 
     // FORMAT .........................................................................................................
 
@@ -349,7 +364,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      */
     @Override
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                               final Optional<SpreadsheetFormatter> formatter) {
+                                               final Optional<SpreadsheetFormatterSelector> formatter) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(formatter, "formatter");
 
@@ -361,18 +376,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Optional<TextNode> formatted = this.formatValue(
                         cell,
                         value,
-                        formatter.orElse(
-                                this.spreadsheetMetadata()
-                                        .spreadsheetFormatter(
-                                                this.spreadsheetProvider, // SpreadsheetFormatterProvider,
-                                                this // ProviderContext
-                                        )
-                        )
-                )
-                .map(
+                        formatter
+                ).map(
                         f -> cell.style()
                                 .replace(f)
                 );
+
 
         SpreadsheetError error = null;
 

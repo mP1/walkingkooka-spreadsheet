@@ -24,7 +24,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -108,7 +108,7 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     @Override
     public Optional<TextNode> formatValue(final SpreadsheetCell cell,
                                           final Optional<Object> value,
-                                          final SpreadsheetFormatter formatter) {
+                                          final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.spreadsheetEngineContext.formatValue(
                 cell,
                 value,
@@ -118,7 +118,7 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
 
     @Override
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                               final Optional<SpreadsheetFormatter> formatter) {
+                                               final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.spreadsheetEngineContext.formatValueAndStyle(
                 cell,
                 formatter
