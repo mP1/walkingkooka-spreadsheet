@@ -597,19 +597,16 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // HasDecimalNumberContext..........................................................................................
+    // DecimalNumberContext.............................................................................................
 
     /**
-     * Returns a {@link DecimalNumberContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_NUMBER_SYMBOLS}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
-     * </ul>
-     * or
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE} which may provide some defaults if some of the above properties are missing.</li>
-     * </ul>
+     * Returns a {@link DecimalNumberContext} using a combination of {@link SpreadsheetCell} and {@link SpreadsheetMetadata}
+     * properties in the following order:
+     * <ol>
+     *    <li>If the given cell has {@link DecimalNumberSymbols} that will be used</li>
+     *    <li>If the given cell has {@link Locale} that will be used</li>
+     *    <li>With the {@link SpreadsheetMetadataPropertyName#LOCALE} from this metadata</li>
+     * </ol>
      */
     public final DecimalNumberContext decimalNumberContext(final Optional<SpreadsheetCell> cell,
                                                            final LocaleContext context) {
@@ -632,9 +629,18 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         DecimalNumberSymbols decimalNumberSymbols = null;
         if (cell.isPresent()) {
-            decimalNumberSymbols = cell.get()
-                    .decimalNumberSymbols()
+            final SpreadsheetCell spreadsheetCell = cell.get();
+            decimalNumberSymbols = spreadsheetCell.decimalNumberSymbols()
                     .orElse(null);
+
+            if (null == decimalNumberSymbols) {
+                final Locale spreadsheetCellLocale = spreadsheetCell.locale()
+                        .orElse(null);
+                if (null != spreadsheetCellLocale) {
+                    decimalNumberSymbols = context.decimalNumberSymbolsForLocale(spreadsheetCellLocale)
+                            .orElse(null);
+                }
+            }
         }
 
         if (null == decimalNumberSymbols) {
@@ -645,7 +651,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         if (null == decimalNumberSymbols) {
             decimalNumberSymbols = context.decimalNumberSymbolsForLocale(locale)
                     .orElseThrow(
-                        // Missing DecimalNumberSymbols for locale EN-AU
+                            // Missing DecimalNumberSymbols for locale EN-AU
                             () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
                     );
         }

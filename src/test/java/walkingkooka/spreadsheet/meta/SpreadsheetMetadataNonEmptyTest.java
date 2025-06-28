@@ -1712,6 +1712,118 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 );
     }
 
+    @Test
+    public void testDecimalNumberContextWithSpreadsheetCellWithDecimalNumberSymbols() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkNotEquals(
+                locale,
+                LOCALE
+        );
+
+        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(locale)
+        );
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        final DecimalNumberContext context = metadata.decimalNumberContext(
+                Optional.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setDecimalNumberSymbols(
+                                        Optional.of(decimalNumberSymbols)
+                                )
+                ),
+                LOCALE_CONTEXT
+        );
+
+        this.checkEquals(
+                decimalNumberSymbols,
+                context.decimalNumberSymbols(),
+                "decimalNumberSymbols"
+        );
+    }
+
+    @Test
+    public void testDecimalNumberContextWithSpreadsheetCellWithDecimalNumberSymbolsAndLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkNotEquals(
+                locale,
+                LOCALE
+        );
+
+        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(locale)
+        );
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        final DecimalNumberContext context = metadata.decimalNumberContext(
+                Optional.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setDecimalNumberSymbols(
+                                        Optional.of(decimalNumberSymbols)
+                                ).setLocale(
+                                        Optional.of(
+                                                Locale.GERMANY
+                                        )
+                                )
+                ),
+                LOCALE_CONTEXT
+        );
+
+        this.checkEquals(
+                decimalNumberSymbols,
+                context.decimalNumberSymbols(),
+                "decimalNumberSymbols"
+        );
+    }
+
+    @Test
+    public void testDecimalNumberContextWithSpreadsheetCellWithLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkNotEquals(
+                locale,
+                LOCALE
+        );
+
+        final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(locale)
+        );
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+
+        final DecimalNumberContext context = metadata.decimalNumberContext(
+                Optional.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setLocale(
+                                        Optional.of(locale)
+                                )
+                ),
+                LOCALE_CONTEXT
+        );
+
+        this.checkEquals(
+                decimalNumberSymbols,
+                context.decimalNumberSymbols(),
+                "decimalNumberSymbols"
+        );
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Test
