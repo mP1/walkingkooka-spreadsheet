@@ -188,6 +188,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToJson();
                 break;
+            case TEXT_TO_LOCALE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToLocale();
+                break;
             case TEXT_TO_SELECTION_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -404,6 +409,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
 
+    private final static String TEXT_TO_LOCALE_STRING = "text-to-locale";
+
+    final static ConverterName TEXT_TO_LOCALE = ConverterName.with(TEXT_TO_LOCALE_STRING);
+
     private final static String TEXT_TO_SELECTION_STRING = "text-to-selection";
 
     final static ConverterName TEXT_TO_SELECTION = ConverterName.with(TEXT_TO_SELECTION_STRING);
@@ -519,6 +528,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(TEXT_TO_EXPRESSION),
                     converterInfo(TEXT_TO_FORM_NAME),
                     converterInfo(TEXT_TO_JSON),
+                    converterInfo(TEXT_TO_LOCALE),
                     converterInfo(TEXT_TO_SELECTION),
                     converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
                     converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),

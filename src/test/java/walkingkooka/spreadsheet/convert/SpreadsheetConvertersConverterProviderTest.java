@@ -291,6 +291,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToLocale() {
+        this.converterAndCheck(
+                "text-to-locale",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.textToLocale()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION + "",
