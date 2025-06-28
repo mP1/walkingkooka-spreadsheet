@@ -64,6 +64,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
@@ -1545,6 +1546,121 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final DateTimeContext context = metadata.dateTimeContext(
                 SpreadsheetMetadata.NO_CELL,
+                NOW,
+                LOCALE_CONTEXT
+        );
+
+        this.checkEquals(
+                dateTimeSymbols,
+                context.dateTimeSymbols(),
+                "dateTimeSymbols"
+        );
+    }
+
+    @Test
+    public void testDateTimeContextWithSpreadsheetCellWithDateTimeSymbols() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkNotEquals(
+                locale,
+                LOCALE
+        );
+
+        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+        );
+
+        final int twoDigitYear = 49;
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
+
+        final DateTimeContext context = metadata.dateTimeContext(
+                Optional.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setDateTimeSymbols(
+                                        Optional.of(dateTimeSymbols)
+                                )
+                ),
+                NOW,
+                LOCALE_CONTEXT
+        );
+
+        this.checkEquals(
+                dateTimeSymbols,
+                context.dateTimeSymbols(),
+                "dateTimeSymbols"
+        );
+    }
+
+    @Test
+    public void testDateTimeContextWithSpreadsheetCellWithDateTimeSymbolsAndLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkNotEquals(
+                locale,
+                LOCALE
+        );
+
+        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+        );
+
+        final int twoDigitYear = 49;
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
+
+        final DateTimeContext context = metadata.dateTimeContext(
+                Optional.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setDateTimeSymbols(
+                                        Optional.of(dateTimeSymbols)
+                                ).setLocale(
+                                        Optional.of(
+                                                Locale.GERMANY
+                                        )
+                                )
+                ),
+                NOW,
+                LOCALE_CONTEXT
+        );
+
+        this.checkEquals(
+                dateTimeSymbols,
+                context.dateTimeSymbols(),
+                "dateTimeSymbols"
+        );
+    }
+
+    @Test
+    public void testDateTimeContextWithSpreadsheetCellWithLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.checkNotEquals(
+                locale,
+                LOCALE
+        );
+
+        final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+        );
+
+        final int twoDigitYear = 49;
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
+
+        final DateTimeContext context = metadata.dateTimeContext(
+                Optional.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setLocale(
+                                        Optional.of(locale)
+                                )
+                ),
                 NOW,
                 LOCALE_CONTEXT
         );
