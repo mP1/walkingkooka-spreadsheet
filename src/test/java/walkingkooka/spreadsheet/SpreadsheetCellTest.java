@@ -341,10 +341,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different
         );
 
-        this.referenceAndCheck(
-                different,
-                REFERENCE
-        );
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 differentFormula
@@ -369,7 +366,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         assertNotSame(cell, different);
 
-        this.referenceAndCheck(different, REFERENCE);
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 SpreadsheetFormula.EMPTY
@@ -589,10 +586,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different
         );
 
-        this.referenceAndCheck(
-                different,
-                REFERENCE
-        );
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
@@ -676,10 +670,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setFormatter(differentFormatter);
         assertNotSame(cell, different);
 
-        this.referenceAndCheck(
-                different,
-                REFERENCE
-        );
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
@@ -800,10 +791,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
-        this.referenceAndCheck(
-                different,
-                REFERENCE
-        );
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
@@ -847,7 +835,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
-        this.referenceAndCheck(different, REFERENCE);
+        this.referenceAndCheck(different);
         this.formulaAndCheck(different, formula);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
@@ -941,10 +929,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different
         );
 
-        this.referenceAndCheck(
-                different,
-                REFERENCE
-        );
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
@@ -1011,10 +996,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different
         );
 
-        this.referenceAndCheck(
-                different,
-                REFERENCE
-        );
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
@@ -1097,7 +1079,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setFormattedValue(differentFormatted);
         assertNotSame(cell, different);
 
-        this.referenceAndCheck(different, REFERENCE);
+        this.referenceAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
