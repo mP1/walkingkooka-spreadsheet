@@ -257,6 +257,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToLocale}
+     */
+    public static Converter<SpreadsheetConverterContext> textToLocale() {
+        return SpreadsheetConverterTextToLocale.INSTANCE;
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetFormulaParserToken} and converting
      * that into a {@link Number}.
      */
