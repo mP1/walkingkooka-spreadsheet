@@ -24,6 +24,7 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -81,6 +82,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
     @Override
     public void testSetCellWithSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSpreadsheetFormatterContextWithNullFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -159,6 +165,9 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                     METADATA_EN_AU,
                     SpreadsheetStoreRepositories.fake(),
                     SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                    ((Optional<SpreadsheetCell> c) -> {
+                        throw new UnsupportedOperationException();
+                    }),
                     new FakeFormHandlerContext<>() {
                         @Override
                         public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
@@ -194,6 +203,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                     LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
             );
+        }
+
+        @Override
+        public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+            throw new UnsupportedOperationException();
         }
 
         @Override

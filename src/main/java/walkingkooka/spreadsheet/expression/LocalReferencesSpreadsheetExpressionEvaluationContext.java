@@ -31,6 +31,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -157,6 +158,11 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public AbsoluteUrl serverUrl() {
         return this.context.serverUrl();
+    }
+
+    @Override
+    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        return this.context.spreadsheetFormatterContext(cell);
     }
 
     @Override

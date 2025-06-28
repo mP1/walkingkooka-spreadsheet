@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -89,6 +90,11 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         return this.context.reference(reference);
+    }
+
+    @Override
+    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        return this.context.spreadsheetFormatterContext(cell);
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................

@@ -31,6 +31,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -256,6 +257,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         this.context.setSpreadsheetMetadata(metadata);
+    }
+
+    @Override
+    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        return this.context.spreadsheetFormatterContext(cell);
     }
 
     @Override
