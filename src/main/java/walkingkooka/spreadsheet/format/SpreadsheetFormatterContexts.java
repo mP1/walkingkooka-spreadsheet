@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -36,7 +37,9 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                                                     final int generalFormatNumberDigitCount,
                                                     final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                     final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                                    final SpreadsheetConverterContext context) {
+                                                    final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                    final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                    final ProviderContext providerContext) {
         return BasicSpreadsheetFormatterContext.with(
                 numberToColor,
                 nameToColor,
@@ -44,7 +47,9 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                 generalFormatNumberDigitCount,
                 defaultSpreadsheetFormatter,
                 spreadsheetExpressionEvaluationContext,
-                context
+                spreadsheetConverterContext,
+                spreadsheetFormatterProvider,
+                providerContext
         );
     }
 

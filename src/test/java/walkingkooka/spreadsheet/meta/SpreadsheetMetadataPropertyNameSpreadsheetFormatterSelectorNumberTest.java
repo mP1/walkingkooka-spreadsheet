@@ -26,10 +26,12 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
@@ -150,7 +152,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                                 ),
                                 JsonNodeMarshallUnmarshallContexts.fake()
                         )
-                )
+                ),
+                SpreadsheetFormatterProviders.fake(),
+                ProviderContexts.fake()
         );
     }
 

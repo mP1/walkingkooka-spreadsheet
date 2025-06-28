@@ -136,6 +136,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
     // DateTimeContext..................................................................................................
 
     @Override

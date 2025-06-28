@@ -59,6 +59,11 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
     }
 
     @Override
+    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         throw new UnsupportedOperationException();
     }
