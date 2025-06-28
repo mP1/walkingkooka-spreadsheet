@@ -295,6 +295,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToSpreadsheetFormatterSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetFormatterSelector() {
+        return SpreadsheetConverterTextToSpreadsheetFormatterSelector.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetId}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetId() {
