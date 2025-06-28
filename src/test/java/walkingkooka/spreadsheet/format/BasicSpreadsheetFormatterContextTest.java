@@ -27,8 +27,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -454,27 +452,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private final static int CELL_CHARACTER_WIDTH = 1;
-
-    private DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic(
-                DecimalNumberSymbols.with(
-                        this.negativeSign(),
-                        this.positiveSign(),
-                        this.zeroDigit(),
-                        this.currencySymbol(),
-                        this.decimalSeparator(),
-                        this.exponentSymbol(),
-                        this.groupSeparator(),
-                        this.infinitySymbol(),
-                        this.monetaryDecimalSeparator(),
-                        this.nanSymbol(),
-                        this.percentSymbol(),
-                        this.permillSymbol()
-                ),
-                LOCALE,
-                this.mathContext()
-        );
-    }
 
     @Override
     public String currencySymbol() {
