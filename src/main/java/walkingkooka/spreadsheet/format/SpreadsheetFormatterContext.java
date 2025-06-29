@@ -49,7 +49,7 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     Optional<Color> colorName(final SpreadsheetColorName name);
 
     /**
-     * Provides a default format text.
+     * Formats the given value using the default {@link SpreadsheetFormatter}.
      */
     Optional<TextNode> format(final Optional<Object> value);
 
