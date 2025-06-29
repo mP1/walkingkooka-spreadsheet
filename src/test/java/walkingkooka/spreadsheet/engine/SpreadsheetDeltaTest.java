@@ -1042,6 +1042,154 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    // cellsLocalePatch.................................................................................................
+
+    @Test
+    public void testCellsLocalePatchWithNullCellsToLocaleFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsLocalePatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testCellsLocalePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.cellsLocalePatch(
+                        Maps.empty(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testCellsLocalePatch() {
+        final Locale locale = Locale.FRANCE;
+
+        this.cellsLocalePatchAndCheck(
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        Optional.of(locale)
+                ),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("locale"),
+                                                                marshall(locale)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsLocalePatchEmptyCells() {
+        this.cellsLocalePatchAndCheck(
+                Maps.empty(),
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                        )
+        );
+    }
+
+    @Test
+    public void testCellsLocalePatchMultipleCells() {
+        final Locale locale1 = Locale.ENGLISH;
+        final Locale locale2 = Locale.FRANCE;
+        final Locale locale3 = null;
+
+        final Map<SpreadsheetCellReference, Optional<Locale>> cellToSymbols = Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(locale1),
+                SpreadsheetSelection.parseCell("A2"),
+                Optional.of(locale2),
+                SpreadsheetSelection.parseCell("A3"),
+                Optional.ofNullable(locale3)
+        );
+
+        this.cellsLocalePatchAndCheck(
+                cellToSymbols,
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.CELLS_PROPERTY,
+                                JsonNode.object()
+                                        .set(
+                                                JsonPropertyName.with("A1"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("locale"),
+                                                                marshall(locale1)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A2"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("locale"),
+                                                                marshall(locale2)
+                                                        )
+                                        ).set(
+                                                JsonPropertyName.with("A3"),
+                                                JsonNode.object()
+                                                        .set(
+                                                                JsonPropertyName.with("locale"),
+                                                                marshall(null)
+                                                        )
+                                        )
+                        )
+        );
+    }
+
+    private void cellsLocalePatchAndCheck(final Map<SpreadsheetCellReference, Optional<Locale>> cellToLocale,
+                                          final JsonObject expected) {
+        final JsonNode patch = SpreadsheetDelta.cellsLocalePatch(
+                cellToLocale,
+                MARSHALL_CONTEXT
+        );
+
+        this.checkEquals(
+                expected,
+                patch
+        );
+
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        );
+
+        for (final Map.Entry<SpreadsheetCellReference, Optional<Locale>> cellAndLocale : cellToLocale.entrySet()) {
+            final SpreadsheetCellReference cellReference = cellAndLocale.getKey();
+
+            final SpreadsheetCell cell = cellReference.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("'Patched over")
+            ).setStyle(style);
+
+
+            beforePatchCells.add(cell);
+            patchedCells.add(
+                    cell.setLocale(cellAndLocale.getValue())
+            );
+        }
+
+        this.patchAndCheck(
+                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+                patch,
+                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+        );
+    }
+    
     // cellsParserPatch.................................................................................................
 
     @Test
