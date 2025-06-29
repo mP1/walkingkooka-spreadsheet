@@ -71,6 +71,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -1143,6 +1144,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToFormatters,
                 FORMATTER_PROPERTY,
+                context::marshallOptional
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
+    public static JsonNode cellsLocalePatch(final Map<SpreadsheetCellReference, Optional<Locale>> cellToLocales,
+                                            final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToLocales, "cellToLocales");
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+                cellToLocales,
+                LOCALE_PROPERTY,
                 context::marshallOptional
         );
     }
@@ -2918,6 +2934,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
     private final static String FORMS_PROPERTY_STRING = "forms";
     private final static String LABELS_PROPERTY_STRING = "labels";
+    private final static String LOCALE_PROPERTY_STRING = "locale";
     private final static String PARSER_PROPERTY_STRING = "parser";
     private final static String REFERENCES_PROPERTY_STRING = "references";
     private final static String ROWS_PROPERTY_STRING = "rows";
@@ -2963,6 +2980,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName FORMS_PROPERTY = JsonPropertyName.with(FORMS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
+
+    // @VisibleForTesting
+    final static JsonPropertyName LOCALE_PROPERTY = JsonPropertyName.with(LOCALE_PROPERTY_STRING);
+
     // @VisibleForTesting
     final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
     // @VisibleForTesting
