@@ -2925,104 +2925,134 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private final static String VIEWPORT_SELECTION_PROPERTY_STRING = "viewport";
-    private final static String CELLS_PROPERTY_STRING = "cells";
-    private final static String COLUMNS_PROPERTY_STRING = "columns";
-    private final static String DATE_TIME_SYMBOLS_STRING = "dateTimeSymbols";
-    private final static String DECIMAL_NUMBER_SYMBOLS_STRING = "decimalNumberSymbols";
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
-    private final static String FORMULA_PROPERTY_STRING = "formula";
-    private final static String FORMATTER_PROPERTY_STRING = "formatter";
-    private final static String FORMS_PROPERTY_STRING = "forms";
-    private final static String LABELS_PROPERTY_STRING = "labels";
-    private final static String LOCALE_PROPERTY_STRING = "locale";
-    private final static String PARSER_PROPERTY_STRING = "parser";
-    private final static String REFERENCES_PROPERTY_STRING = "references";
-    private final static String ROWS_PROPERTY_STRING = "rows";
-    private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
-    private final static String VALUE_TYPE_PROPERTY_STRING = "valueType"; // only used by patchCells
-    private final static String VALIDATOR_PROPERTY_STRING = "validator"; // only used by patchCells
-
-    private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
-    private final static String DELETED_COLUMNS_PROPERTY_STRING = "deletedColumns";
-    private final static String DELETED_ROWS_PROPERTY_STRING = "deletedRows";
-
-    private final static String DELETED_LABELS_PROPERTY_STRING = "deletedLabels";
-
-    private final static String MATCHED_CELLS_PROPERTY_STRING = "matchedCells";
-
-    private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
-    private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
-
-    private final static String COLUMN_COUNT_PROPERTY_STRING = "columnCount";
-    private final static String ROW_COUNT_PROPERTY_STRING = "rowCount";
-
-    private final static String WINDOW_PROPERTY_STRING = "window";
 
     // @VisibleForTesting
     final static JsonPropertyName VIEWPORT_SELECTION_PROPERTY = JsonPropertyName.with(VIEWPORT_SELECTION_PROPERTY_STRING);
+
+    private final static String CELLS_PROPERTY_STRING = "cells";
+
     // @VisibleForTesting
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
+
+    private final static String COLUMNS_PROPERTY_STRING = "columns";
+
     // @VisibleForTesting
     final static JsonPropertyName COLUMNS_PROPERTY = JsonPropertyName.with(COLUMNS_PROPERTY_STRING);
+
+    private final static String DATE_TIME_SYMBOLS_STRING = "dateTimeSymbols";
 
     // @VisibleForTesting
     final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_STRING);
 
+    private final static String DECIMAL_NUMBER_SYMBOLS_STRING = "decimalNumberSymbols";
+
     // @VisibleForTesting
     final static JsonPropertyName DECIMAL_NUMBER_SYMBOLS_PROPERTY = JsonPropertyName.with(DECIMAL_NUMBER_SYMBOLS_STRING);
+
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
+
+    private final static String FORMATTER_PROPERTY_STRING = "formatter";
+
+    private final static String FORMULA_PROPERTY_STRING = "formula";
 
     // @VisibleForTesting
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
 
     // @VisibleForTesting
     final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
+
+    private final static String FORMS_PROPERTY_STRING = "forms";
+
     // @VisibleForTesting
     final static JsonPropertyName FORMS_PROPERTY = JsonPropertyName.with(FORMS_PROPERTY_STRING);
+
+    private final static String LABELS_PROPERTY_STRING = "labels";
+
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
+
+    private final static String LOCALE_PROPERTY_STRING = "locale";
 
     // @VisibleForTesting
     final static JsonPropertyName LOCALE_PROPERTY = JsonPropertyName.with(LOCALE_PROPERTY_STRING);
 
+    private final static String PARSER_PROPERTY_STRING = "parser";
     // @VisibleForTesting
     final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
-    // @VisibleForTesting
-    final static JsonPropertyName ROWS_PROPERTY = JsonPropertyName.with(ROWS_PROPERTY_STRING);
+
+    private final static String REFERENCES_PROPERTY_STRING = "references";
 
     // @VisibleForTesting
     final static JsonPropertyName REFERENCES_PROPERTY = JsonPropertyName.with(REFERENCES_PROPERTY_STRING);
 
-    // @VisibleForTesting
-    final static JsonPropertyName DELETED_CELLS_PROPERTY = JsonPropertyName.with(DELETED_CELLS_PROPERTY_STRING);
-    // @VisibleForTesting
-    final static JsonPropertyName DELETED_COLUMNS_PROPERTY = JsonPropertyName.with(DELETED_COLUMNS_PROPERTY_STRING);
-    // @VisibleForTesting
-    final static JsonPropertyName DELETED_ROWS_PROPERTY = JsonPropertyName.with(DELETED_ROWS_PROPERTY_STRING);
+    private final static String ROWS_PROPERTY_STRING = "rows";
 
     // @VisibleForTesting
-    final static JsonPropertyName DELETED_LABELS_PROPERTY = JsonPropertyName.with(DELETED_LABELS_PROPERTY_STRING);
+    final static JsonPropertyName ROWS_PROPERTY = JsonPropertyName.with(ROWS_PROPERTY_STRING);
 
-    // @VisibleForTesting
-    final static JsonPropertyName MATCHED_CELLS_PROPERTY = JsonPropertyName.with(MATCHED_CELLS_PROPERTY_STRING);
-
-    // @VisibleForTesting
-    final static JsonPropertyName COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(COLUMN_WIDTHS_PROPERTY_STRING);
-    // @VisibleForTesting
-    final static JsonPropertyName ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(ROW_HEIGHTS_PROPERTY_STRING);
-
-    // @VisibleForTesting
-    final static JsonPropertyName COLUMN_COUNT_PROPERTY = JsonPropertyName.with(COLUMN_COUNT_PROPERTY_STRING);
-    // @VisibleForTesting
-    final static JsonPropertyName ROW_COUNT_PROPERTY = JsonPropertyName.with(ROW_COUNT_PROPERTY_STRING);
+    private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
 
     // @VisibleForTesting
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING); // only used by patchCells
 
-    // @VisibleForTesting
-    final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING); // only used by patchCells
+    private final static String VALUE_TYPE_PROPERTY_STRING = "valueType"; // only used by patchCells
 
     // @VisibleForTesting
     final static JsonPropertyName VALUE_TYPE_PROPERTY = JsonPropertyName.with(VALUE_TYPE_PROPERTY_STRING); // only used by patchCells
+
+
+    private final static String VALIDATOR_PROPERTY_STRING = "validator"; // only used by patchCells
+
+    // @VisibleForTesting
+    final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING); // only used by patchCells
+
+
+    private final static String DELETED_CELLS_PROPERTY_STRING = "deletedCells";
+
+    // @VisibleForTesting
+    final static JsonPropertyName DELETED_CELLS_PROPERTY = JsonPropertyName.with(DELETED_CELLS_PROPERTY_STRING);
+
+    private final static String DELETED_COLUMNS_PROPERTY_STRING = "deletedColumns";
+
+    // @VisibleForTesting
+    final static JsonPropertyName DELETED_COLUMNS_PROPERTY = JsonPropertyName.with(DELETED_COLUMNS_PROPERTY_STRING);
+
+    private final static String DELETED_ROWS_PROPERTY_STRING = "deletedRows";
+
+    // @VisibleForTesting
+    final static JsonPropertyName DELETED_ROWS_PROPERTY = JsonPropertyName.with(DELETED_ROWS_PROPERTY_STRING);
+
+    private final static String DELETED_LABELS_PROPERTY_STRING = "deletedLabels";
+
+    // @VisibleForTesting
+    final static JsonPropertyName DELETED_LABELS_PROPERTY = JsonPropertyName.with(DELETED_LABELS_PROPERTY_STRING);
+
+    private final static String MATCHED_CELLS_PROPERTY_STRING = "matchedCells";
+
+    // @VisibleForTesting
+    final static JsonPropertyName MATCHED_CELLS_PROPERTY = JsonPropertyName.with(MATCHED_CELLS_PROPERTY_STRING);
+
+    private final static String COLUMN_WIDTHS_PROPERTY_STRING = "columnWidths";
+
+    // @VisibleForTesting
+    final static JsonPropertyName COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(COLUMN_WIDTHS_PROPERTY_STRING);
+
+    private final static String ROW_HEIGHTS_PROPERTY_STRING = "rowHeights";
+
+    // @VisibleForTesting
+    final static JsonPropertyName ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(ROW_HEIGHTS_PROPERTY_STRING);
+
+    private final static String COLUMN_COUNT_PROPERTY_STRING = "columnCount";
+
+    // @VisibleForTesting
+    final static JsonPropertyName COLUMN_COUNT_PROPERTY = JsonPropertyName.with(COLUMN_COUNT_PROPERTY_STRING);
+
+    private final static String ROW_COUNT_PROPERTY_STRING = "rowCount";
+
+    // @VisibleForTesting
+    final static JsonPropertyName ROW_COUNT_PROPERTY = JsonPropertyName.with(ROW_COUNT_PROPERTY_STRING);
+
+    private final static String WINDOW_PROPERTY_STRING = "window";
 
     // @VisibleForTesting
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
