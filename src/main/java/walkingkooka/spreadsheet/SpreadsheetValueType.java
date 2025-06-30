@@ -42,33 +42,33 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static String ANY = "*";
 
-    public final static String BOOLEAN = "boolean";
+    public final static String BOOLEAN = ValidationValueTypeName.BOOLEAN_STRING;
 
     public final static String CELL = "cell";
 
-    public final static String CELL_RANGE = "cell-range";
+    public final static String CELL_RANGE = "cellRange";
 
     public final static String COLUMN = "column";
 
-    public final static String COLUMN_RANGE = "column-range";
+    public final static String COLUMN_RANGE = "columnRange";
 
-    public final static String DATE = "date";
+    public final static String DATE = ValidationValueTypeName.DATE_STRING;
 
-    public final static String DATE_TIME = "date-time";
+    public final static String DATE_TIME = ValidationValueTypeName.DATE_TIME_STRING;
 
     public final static String ERROR = "error";
 
     public final static String LABEL = "label";
 
-    public final static String NUMBER = "number";
+    public final static String NUMBER =ValidationValueTypeName.NUMBER_STRING;
 
     public final static String ROW = "row";
 
-    public final static String ROW_RANGE = "row-range";
+    public final static String ROW_RANGE = "rowRange";
 
-    public final static String TEXT = "text";
+    public final static String TEXT = ValidationValueTypeName.TEXT_STRING;
 
-    public final static String TIME = "time";
+    public final static String TIME = ValidationValueTypeName.TIME_STRING;
 
     /**
      * For the given type returns the value type name, or {@link Optional#empty()} if the type is unknown.
