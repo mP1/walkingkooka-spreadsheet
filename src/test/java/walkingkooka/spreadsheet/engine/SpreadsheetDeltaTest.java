@@ -2162,6 +2162,66 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
         );
     }
+
+    // localePatch......................................................................................................
+
+    @Test
+    public void testLocalePatchWithNullLocaleFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.localePatch(
+                        null,
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testLocalePatchWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDelta.localePatch(
+                        Optional.of(
+                                Locale.ENGLISH
+                        ),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testLocalePatch() {
+        final Locale locale = Locale.forLanguageTag("en-AU");
+
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.LOCALE_PROPERTY,
+                                marshall(locale)
+                        )
+                ,
+                SpreadsheetDelta.localePatch(
+                        Optional.of(locale),
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testLocalePatchWithEmptyLocale() {
+        this.checkEquals(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetDelta.LOCALE_PROPERTY,
+                                JsonNode.nullNode()
+                        )
+                ,
+                SpreadsheetDelta.localePatch(
+                        Optional.empty(),
+                        MARSHALL_CONTEXT
+                )
+        );
+    }
     
     // parserPatch......................................................................................................
 

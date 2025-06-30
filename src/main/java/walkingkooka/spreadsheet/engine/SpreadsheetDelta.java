@@ -1335,6 +1335,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
+     * Creates a {@link Locale} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
+     */
+    public static JsonNode localePatch(final Optional<Locale> locale,
+                                       final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(locale, "locale");
+        Objects.requireNonNull(context, "context");
+
+        return makePatch(
+                LOCALE_PROPERTY,
+                context.marshallOptional(locale)
+        );
+    }
+
+    /**
      * Creates a {@link SpreadsheetParserSelector} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
      */
     public static JsonNode parserPatch(final Optional<SpreadsheetParserSelector> parser,
