@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.spreadsheet.SpreadsheetValues;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.IllegalColumnArgumentException;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -83,7 +83,7 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
     }
 
     private final static Optional<ValidationValueTypeName> COLUMN = Optional.of(
-            SpreadsheetValues.COLUMN
+            SpreadsheetValueType.COLUMN
     );
 
     @Override

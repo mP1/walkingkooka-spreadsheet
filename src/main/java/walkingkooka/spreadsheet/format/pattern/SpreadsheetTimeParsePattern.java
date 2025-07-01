@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetValues;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
@@ -52,7 +52,7 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
 
     @Override
     public ValidationValueTypeName valueType() {
-        return SpreadsheetValues.TIME;
+        return SpreadsheetValueType.TIME;
     }
 
     @Override

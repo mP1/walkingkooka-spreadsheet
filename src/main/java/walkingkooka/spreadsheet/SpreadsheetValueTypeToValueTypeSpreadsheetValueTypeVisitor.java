@@ -42,122 +42,122 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
 
     @Override
     protected void visitBigDecimal() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitBigInteger() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitBoolean() {
-        this.valueType(SpreadsheetValueType.BOOLEAN);
+        this.valueType(SpreadsheetValueType.BOOLEAN_STRING);
     }
 
     @Override
     protected void visitByte() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitCellRange() {
-        this.valueType(SpreadsheetValueType.CELL_RANGE);
+        this.valueType(SpreadsheetValueType.CELL_RANGE_STRING);
     }
 
     @Override
     protected void visitCellReference() {
-        this.valueType(SpreadsheetValueType.CELL);
+        this.valueType(SpreadsheetValueType.CELL_STRING);
     }
 
     @Override
     protected void visitCharacter() {
-        this.valueType(SpreadsheetValueType.TEXT);
+        this.valueType(SpreadsheetValueType.TEXT_STRING);
     }
 
     @Override
     protected void visitColumnReference() {
-        this.valueType(SpreadsheetValueType.COLUMN);
+        this.valueType(SpreadsheetValueType.COLUMN_STRING);
     }
 
     @Override
     protected void visitColumnRangeReference() {
-        this.valueType(SpreadsheetValueType.COLUMN_RANGE);
+        this.valueType(SpreadsheetValueType.COLUMN_RANGE_STRING);
     }
 
     @Override
     protected void visitDouble() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitExpressionNumber() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitFloat() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitInteger() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitLabel() {
-        this.valueType(SpreadsheetValueType.LABEL);
+        this.valueType(SpreadsheetValueType.LABEL_STRING);
     }
 
     @Override
     protected void visitLocalDate() {
-        this.valueType(SpreadsheetValueType.DATE);
+        this.valueType(SpreadsheetValueType.DATE_STRING);
     }
 
     @Override
     protected void visitLocalDateTime() {
-        this.valueType(SpreadsheetValueType.DATE_TIME);
+        this.valueType(SpreadsheetValueType.DATE_TIME_STRING);
     }
 
     @Override
     protected void visitLocalTime() {
-        this.valueType(SpreadsheetValueType.TIME);
+        this.valueType(SpreadsheetValueType.TIME_STRING);
     }
 
     @Override
     protected void visitLong() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitNumber() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitRowReference() {
-        this.valueType(SpreadsheetValueType.ROW);
+        this.valueType(SpreadsheetValueType.ROW_STRING);
     }
 
     @Override
     protected void visitRowRangeReference() {
-        this.valueType(SpreadsheetValueType.ROW_RANGE);
+        this.valueType(SpreadsheetValueType.ROW_RANGE_STRING);
     }
 
     @Override
     protected void visitSpreadsheetError() {
-        this.valueType(SpreadsheetValueType.ERROR);
+        this.valueType(SpreadsheetValueType.ERROR_STRING);
     }
 
     @Override
     protected void visitShort() {
-        this.valueType(SpreadsheetValueType.NUMBER);
+        this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
 
     @Override
     protected void visitString() {
-        this.valueType(SpreadsheetValueType.TEXT);
+        this.valueType(SpreadsheetValueType.TEXT_STRING);
     }
 
     private void valueType(final String typeName) {

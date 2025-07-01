@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -35,12 +36,32 @@ import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
 
+    @Test
+    public void testAll() {
+        this.checkEquals(
+                Lists.of(
+                        SpreadsheetValueType.BOOLEAN,
+                        SpreadsheetValueType.DATE,
+                        SpreadsheetValueType.DATE_TIME,
+                        SpreadsheetValueType.NUMBER,
+                        SpreadsheetValueType.TEXT,
+                        SpreadsheetValueType.TIME
+                ),
+                new ArrayList<>(
+                        SpreadsheetValueType.ALL
+                )
+        );
+    }
+
+    // toValueType......................................................................................................
+    
     @Test
     public void testToValueTypeWithNullFails() {
         assertThrows(

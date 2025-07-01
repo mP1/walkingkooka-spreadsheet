@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.spreadsheet.SpreadsheetValues;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -68,7 +68,7 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     }
 
     private final static Optional<ValidationValueTypeName> ROW = Optional.of(
-            SpreadsheetValues.ROW
+            SpreadsheetValueType.ROW
     );
 
     @Override

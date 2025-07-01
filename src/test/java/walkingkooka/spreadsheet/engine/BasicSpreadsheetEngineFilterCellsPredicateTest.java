@@ -87,7 +87,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
     @Test
     public void testTestTrueSameValueType() {
         this.testTrue(
-                this.createPredicate(SpreadsheetValueType.TEXT),
+                this.createPredicate(SpreadsheetValueType.TEXT_STRING),
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=\"hello\"")
                                 .setValue(
@@ -120,7 +120,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
                 cell
         );
         this.testFalse(
-                this.createPredicate(SpreadsheetValueType.NUMBER),
+                this.createPredicate(SpreadsheetValueType.NUMBER_STRING),
                 cell
         );
     }
