@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +29,8 @@ import java.util.Set;
 /**
  * Part of a report about a Converter and value and type that was not supported by a {@link walkingkooka.convert.Converter}.
  */
-public final class MissingConverter implements Comparable<MissingConverter> {
+public final class MissingConverter implements Comparable<MissingConverter>,
+        TreePrintable {
 
     public static MissingConverter with(final ConverterName name,
                                         final Set<MissingConverterValue> values) {
@@ -91,5 +94,22 @@ public final class MissingConverter implements Comparable<MissingConverter> {
     @Override
     public int compareTo(final MissingConverter other) {
         return this.name.compareTo(other.name);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.name.value());
+        printer.indent();
+        {
+            for (final Object value : this.values) {
+                TreePrintable.printTreeOrToString(
+                        value,
+                        printer
+                );
+            }
+        }
+        printer.outdent();
     }
 }
