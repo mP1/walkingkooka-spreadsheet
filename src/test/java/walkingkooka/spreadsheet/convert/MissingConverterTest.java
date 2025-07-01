@@ -27,6 +27,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Set;
 
@@ -36,7 +37,8 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
         HashCodeEqualsDefinedTesting2<MissingConverter>,
         ComparableTesting2<MissingConverter>,
         IteratorTesting,
-        ToStringTesting<MissingConverter> {
+        ToStringTesting<MissingConverter>,
+        TreePrintableTesting {
 
     private final static ConverterName NAME = ConverterName.BOOLEAN_TO_NUMBER;
 
@@ -168,6 +170,18 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Override
     public MissingConverter createComparable() {
         return this.createObject();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+                this.createComparable(),
+                "boolean-to-number\n" +
+                        "  \"Hello\"\n" +
+                        "    java.lang.String\n"
+        );
     }
 
     // class............................................................................................................
