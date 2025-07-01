@@ -20,7 +20,10 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -31,6 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterTest implements ClassTesting2<MissingConverter>,
         HashCodeEqualsDefinedTesting2<MissingConverter>,
+        ComparableTesting2<MissingConverter>,
+        IteratorTesting,
         ToStringTesting<MissingConverter> {
 
     private final static ConverterName NAME = ConverterName.BOOLEAN_TO_NUMBER;
@@ -126,6 +131,43 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
                 this.createObject(),
                 "boolean-to-number \"Hello\" java.lang.String"
         );
+    }
+
+    // Comparable.......................................................................................................
+
+    @Test
+    public void testComparableSort() {
+        final MissingConverter apple = MissingConverter.with(
+                ConverterName.with("apple"),
+                VALUES
+        );
+
+        final MissingConverter banana = MissingConverter.with(
+                ConverterName.with("banana"),
+                VALUES
+        );
+
+        final MissingConverter carrot = MissingConverter.with(
+                ConverterName.with("carrot"),
+                VALUES
+        );
+
+        final Set<MissingConverter> treeSet = SortedSets.tree();
+        treeSet.add(apple);
+        treeSet.add(carrot);
+        treeSet.add(banana);
+
+        this.iterateAndCheck(
+                treeSet.iterator(),
+                apple,
+                banana,
+                carrot
+        );
+    }
+
+    @Override
+    public MissingConverter createComparable() {
+        return this.createObject();
     }
 
     // class............................................................................................................

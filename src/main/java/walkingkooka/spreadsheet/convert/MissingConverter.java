@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * Part of a report about a Converter and value and type that was not supported by a {@link walkingkooka.convert.Converter}.
  */
-public final class MissingConverter {
+public final class MissingConverter implements Comparable<MissingConverter> {
 
     public static MissingConverter with(final ConverterName name,
                                         final Set<MissingConverterValue> values) {
@@ -84,5 +84,12 @@ public final class MissingConverter {
                 .value(this.name)
                 .value(this.values)
                 .build();
+    }
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final MissingConverter other) {
+        return this.name.compareTo(other.name);
     }
 }
