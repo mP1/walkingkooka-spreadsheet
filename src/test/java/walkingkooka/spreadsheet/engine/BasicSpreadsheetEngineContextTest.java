@@ -1195,7 +1195,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"\",\n" +
-                        "  \"validators\": \"collection, expression, non-null\",\n" +
+                        "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
@@ -1427,7 +1427,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"\",\n" +
-                        "  \"validators\": \"collection, expression, non-null\",\n" +
+                        "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
