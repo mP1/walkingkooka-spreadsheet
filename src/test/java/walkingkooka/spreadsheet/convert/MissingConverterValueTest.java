@@ -33,7 +33,7 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
 
     private final static Object VALUE = "Hello";
 
-    private final static Class<?> TYPE = String.class;
+    private final static String TYPE = String.class.getName();
 
     @Test
     public void testWithNullTypeFails() {
@@ -42,6 +42,17 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
                 () -> MissingConverterValue.with(
                         VALUE,
                         null
+                )
+        );
+    }
+
+    @Test
+    public void testWithEmptyTypeFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> MissingConverterValue.with(
+                        VALUE,
+                        ""
                 )
         );
     }
@@ -101,7 +112,7 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
         this.checkNotEquals(
                 MissingConverterValue.with(
                         VALUE,
-                        Void.class
+                        Void.class.getName()
                 )
         );
     }
@@ -140,7 +151,7 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
         this.treePrintAndCheck(
                 MissingConverterValue.with(
                         null,
-                        String.class
+                        String.class.getName()
                 ),
                 "null\n" +
                         "  java.lang.String\n"
