@@ -20,16 +20,21 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterValueTest implements ClassTesting2<MissingConverterValue>,
         HashCodeEqualsDefinedTesting2<MissingConverterValue>,
         ToStringTesting<MissingConverterValue>,
-        TreePrintableTesting {
+        TreePrintableTesting,
+        JsonNodeMarshallingTesting<MissingConverterValue> {
 
     private final static Object VALUE = "Hello";
 
@@ -156,6 +161,66 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
                 "null\n" +
                         "  java.lang.String\n"
         );
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshallWithNullValue() {
+        this.marshallAndCheck(
+                MissingConverterValue.with(
+                        null,
+                        Void.class.getName()
+                ),
+                "{\n" +
+                        "  \"type\": \"java.lang.Void\"\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallWithNonNullValue() {
+        this.marshallAndCheck(
+                MissingConverterValue.with(
+                        VALUE,
+                        Void.class.getName()
+                ),
+                "{\n" +
+                        "  \"value\": \"Hello\",\n" +
+                        "  \"type\": \"java.lang.Void\"\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testMarshallWithNonNullValue2() {
+        this.marshallAndCheck(
+                MissingConverterValue.with(
+                        Url.parse("https://example.com/123"),
+                        Void.class.getName()
+                ),
+                "{\n" +
+                        "  \"value\": {\n" +
+                        "    \"type\": \"url\",\n" +
+                        "    \"value\": \"https://example.com/123\"\n" +
+                        "  },\n" +
+                        "  \"type\": \"java.lang.Void\"\n" +
+                        "}"
+        );
+    }
+
+    @Override
+    public MissingConverterValue unmarshall(final JsonNode json,
+                                            final JsonNodeUnmarshallContext context) {
+        return MissingConverterValue.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public MissingConverterValue createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // class............................................................................................................
