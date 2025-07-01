@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Value;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 
-public final class MissingConverterValue implements Value<Object> {
+public final class MissingConverterValue implements Value<Object>, TreePrintable {
 
     public static  MissingConverterValue with(final Object value,
                                               final Class<?> type) {
@@ -75,5 +77,20 @@ public final class MissingConverterValue implements Value<Object> {
     @Override
     public String toString() {
         return CharSequences.quoteIfChars(this.value) + " " + this.type.getName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        TreePrintable.printTreeOrToString(
+                this.value,
+                printer
+        );
+        printer.indent();
+        {
+            printer.println(this.type.getName());
+        }
+        printer.outdent();
     }
 }
