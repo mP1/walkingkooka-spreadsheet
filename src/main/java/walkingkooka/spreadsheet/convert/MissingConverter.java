@@ -179,7 +179,7 @@ public final class MissingConverter implements Comparable<MissingConverter>,
     private final static String NAME_PROPERTY_STRING = "name";
     final static JsonPropertyName NAME_PROPERTY = JsonPropertyName.with(NAME_PROPERTY_STRING);
 
-    private final static String VALUES_PROPERTY_STRING = "value";
+    private final static String VALUES_PROPERTY_STRING = "values";
     final static JsonPropertyName VALUES_PROPERTY = JsonPropertyName.with(VALUES_PROPERTY_STRING);
 
     static {
