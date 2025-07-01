@@ -125,7 +125,7 @@
   "twoDigitYear": 20,
   "validationConverter": "collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)",
   "validationFunctions": "@",
-  "validationValidators": "",
+  "validationValidators": "collection, expression, non-null, text-length",
   "validators": "",
   "viewport": {
     "rectangle": "A1:100:100"
