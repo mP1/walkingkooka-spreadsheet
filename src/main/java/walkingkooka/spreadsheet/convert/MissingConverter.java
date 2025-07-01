@@ -22,6 +22,11 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.Set;
@@ -111,5 +116,78 @@ public final class MissingConverter implements Comparable<MissingConverter>,
             }
         }
         printer.outdent();
+    }
+
+    // json.............................................................................................................
+
+    static MissingConverter unmarshall(final JsonNode node,
+                                       final JsonNodeUnmarshallContext context) {
+        ConverterName converterName = null;
+        Set<MissingConverterValue> values = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case NAME_PROPERTY_STRING:
+                    converterName = context.unmarshall(
+                            child,
+                            ConverterName.class
+                    );
+                    break;
+                case VALUES_PROPERTY_STRING:
+                    values = context.unmarshallSet(
+                            child,
+                            MissingConverterValue.class
+                    );
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
+            }
+        }
+
+        if (converterName == null) {
+            JsonNodeUnmarshallContext.missingProperty(
+                    NAME_PROPERTY,
+                    node
+            );
+        }
+        if (values == null) {
+            JsonNodeUnmarshallContext.missingProperty(
+                    VALUES_PROPERTY,
+                    node
+            );
+        }
+
+        return with(
+                converterName,
+                values
+        );
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.object()
+                .set(
+                        NAME_PROPERTY,
+                        context.marshall(this.name)
+                ).set(
+                        VALUES_PROPERTY,
+                        context.marshallCollection(this.values)
+                );
+    }
+
+    private final static String NAME_PROPERTY_STRING = "name";
+    final static JsonPropertyName NAME_PROPERTY = JsonPropertyName.with(NAME_PROPERTY_STRING);
+
+    private final static String VALUES_PROPERTY_STRING = "value";
+    final static JsonPropertyName VALUES_PROPERTY = JsonPropertyName.with(VALUES_PROPERTY_STRING);
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(MissingConverter.class),
+                MissingConverter::unmarshall,
+                MissingConverter::marshall,
+                MissingConverter.class
+        );
     }
 }
