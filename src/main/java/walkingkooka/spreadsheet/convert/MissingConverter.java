@@ -77,8 +77,8 @@ public final class MissingConverter implements Comparable<MissingConverter>,
     }
 
     private boolean equals0(final MissingConverter other) {
-        return this.name == other.name &&
-                this.values == other.values;
+        return this.name.equals(other.name) &&
+                this.values.equals(other.values);
     }
 
     @Override
