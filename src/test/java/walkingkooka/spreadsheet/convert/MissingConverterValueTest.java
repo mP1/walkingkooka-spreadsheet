@@ -22,12 +22,14 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterValueTest implements ClassTesting2<MissingConverterValue>,
         HashCodeEqualsDefinedTesting2<MissingConverterValue>,
-        ToStringTesting<MissingConverterValue> {
+        ToStringTesting<MissingConverterValue>,
+        TreePrintableTesting {
 
     private final static Object VALUE = "Hello";
 
@@ -119,6 +121,29 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
         this.toStringAndCheck(
                 this.createObject(),
                 "\"Hello\" java.lang.String"
+        );
+    }
+
+    // treePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+                this.createObject(),
+                "\"Hello\"\n" +
+                        "  java.lang.String\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableWithNullValue() {
+        this.treePrintAndCheck(
+                MissingConverterValue.with(
+                        null,
+                        String.class
+                ),
+                "null\n" +
+                        "  java.lang.String\n"
         );
     }
 
