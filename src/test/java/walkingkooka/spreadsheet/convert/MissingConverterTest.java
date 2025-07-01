@@ -28,6 +28,9 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Set;
 
@@ -38,7 +41,8 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
         ComparableTesting2<MissingConverter>,
         IteratorTesting,
         ToStringTesting<MissingConverter>,
-        TreePrintableTesting {
+        TreePrintableTesting,
+        JsonNodeMarshallingTesting<MissingConverter> {
 
     private final static ConverterName NAME = ConverterName.BOOLEAN_TO_NUMBER;
 
@@ -182,6 +186,38 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
                         "  \"Hello\"\n" +
                         "    java.lang.String\n"
         );
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                this.createJsonNodeMarshallingValue(),
+                "{\n" +
+                        "  \"name\": \"boolean-to-number\",\n" +
+                        "  \"value\": [\n" +
+                        "    {\n" +
+                        "      \"value\": \"Hello\",\n" +
+                        "      \"type\": \"java.lang.String\"\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}"
+        );
+    }
+
+    @Override
+    public MissingConverter unmarshall(final JsonNode json,
+                                       final JsonNodeUnmarshallContext context) {
+        return MissingConverter.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public MissingConverter createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // class............................................................................................................
