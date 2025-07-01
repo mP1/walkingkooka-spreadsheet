@@ -45,7 +45,7 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     private final static Set<MissingConverterValue> VALUES = Sets.of(
             MissingConverterValue.with(
                     "Hello",
-                    String.class
+                    String.class.getName()
             )
     );
 
@@ -110,7 +110,7 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
                         Sets.of(
                                 MissingConverterValue.with(
                                         "Different",
-                                        String.class
+                                        String.class.getName()
                                 )
                         )
                 )

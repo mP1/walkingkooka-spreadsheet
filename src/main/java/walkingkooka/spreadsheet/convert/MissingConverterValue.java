@@ -24,18 +24,21 @@ import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 
+/**
+ * Captures an unsupported value and type, with type being the class name, because GWT doesnt support {@link Class} serialization.
+ */
 public final class MissingConverterValue implements Value<Object>, TreePrintable {
 
     public static  MissingConverterValue with(final Object value,
-                                              final Class<?> type) {
+                                              final String type) {
         return new MissingConverterValue(
                 value,
-                Objects.requireNonNull(type, "type")
+                CharSequences.failIfNullOrEmpty(type, "type")
         );
     }
 
     private MissingConverterValue(final Object value,
-                                  final Class<?> type) {
+                                  final String type) {
         this.value = value;
         this.type = type;
     }
@@ -47,11 +50,11 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
 
     private final Object value;
 
-    public Class<?> type() {
+    public String type() {
         return this.type;
     }
 
-    private final Class<?> type;
+    private final String type;
 
     // Object...........................................................................................................
 
@@ -76,7 +79,7 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
 
     @Override
     public String toString() {
-        return CharSequences.quoteIfChars(this.value) + " " + this.type.getName();
+        return CharSequences.quoteIfChars(this.value) + " " + this.type;
     }
 
     // TreePrintable....................................................................................................
@@ -89,7 +92,7 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
         );
         printer.indent();
         {
-            printer.println(this.type.getName());
+            printer.println(this.type);
         }
         printer.outdent();
     }
