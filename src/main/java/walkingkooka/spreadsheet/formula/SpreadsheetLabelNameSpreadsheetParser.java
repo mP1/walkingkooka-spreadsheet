@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.formula;
 
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.SpreadsheetValues;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.parser.LabelSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -139,7 +139,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
     }
 
     private final static Optional<ValidationValueTypeName> LABEL_VALUE_TYPE = Optional.of(
-            SpreadsheetValues.LABEL
+            SpreadsheetValueType.LABEL
     );
 
     @Override

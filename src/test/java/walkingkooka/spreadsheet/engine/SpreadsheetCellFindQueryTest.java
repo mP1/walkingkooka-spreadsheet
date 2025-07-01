@@ -272,7 +272,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetValueTypeDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         final Optional<String> valueType = Optional.of(
-                SpreadsheetValueType.TEXT
+                SpreadsheetValueType.TEXT_STRING
         );
 
         this.checkNotEquals(
@@ -395,7 +395,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                 SpreadsheetCellFindQuery.empty()
                         .setValueType(
                                 Optional.of(
-                                        SpreadsheetValueType.NUMBER)
+                                        SpreadsheetValueType.NUMBER_STRING)
                         ),
                 "value-type=number"
         );
@@ -686,7 +686,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         PATH,
                         OFFSET,
                         COUNT,
-                        Optional.of(SpreadsheetValueType.DATE),
+                        Optional.of(SpreadsheetValueType.DATE_STRING),
                         QUERY
                 )
         );
@@ -755,7 +755,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
         this.urlFragmentAndCheck(
                 SpreadsheetCellFindQuery.empty()
                         .setValueType(
-                                Optional.of(SpreadsheetValueType.NUMBER)
+                                Optional.of(SpreadsheetValueType.NUMBER_STRING)
                         ),
                 UrlFragment.parse("/value-type/number")
         );
@@ -799,7 +799,9 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         Optional.of(SpreadsheetCellRangeReferencePath.BULR),
                         OptionalInt.of(123), // offset
                         OptionalInt.of(456), // count
-                        Optional.of(SpreadsheetValueType.NUMBER),
+                        Optional.of(
+                                SpreadsheetValueType.NUMBER_STRING
+                        ),
                         Optional.of(
                                 SpreadsheetCellQuery.parse("query789()")
                         )

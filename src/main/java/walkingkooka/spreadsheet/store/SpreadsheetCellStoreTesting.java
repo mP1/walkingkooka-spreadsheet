@@ -279,7 +279,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 NullPointerException.class,
                 () -> this.createStore().findCellsWithValueType(
                         null,
-                        SpreadsheetValueType.TEXT,
+                        SpreadsheetValueType.TEXT_STRING,
                         1
                 )
         );
@@ -303,7 +303,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 IllegalArgumentException.class,
                 () -> this.createStore().findCellsWithValueType(
                         SpreadsheetSelection.ALL_CELLS,
-                        SpreadsheetValueType.TEXT,
+                        SpreadsheetValueType.TEXT_STRING,
                         -1
                 )
         );
@@ -314,7 +314,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         this.findCellsWithValueTypeAndCheck(
                 this.createStore(),
                 SpreadsheetSelection.ALL_CELLS,
-                SpreadsheetValueType.TEXT,
+                SpreadsheetValueType.TEXT_STRING,
                 0
         );
     }
@@ -357,7 +357,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                 NullPointerException.class,
                 () -> this.createStore().countCellsWithValueType(
                         null,
-                        SpreadsheetValueType.TEXT
+                        SpreadsheetValueType.TEXT_STRING
                 )
         );
     }

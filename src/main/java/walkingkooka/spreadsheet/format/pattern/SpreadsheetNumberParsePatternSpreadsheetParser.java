@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.SpreadsheetValues;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -101,7 +101,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     }
 
     private final static Optional<ValidationValueTypeName> NUMBER = Optional.of(
-            SpreadsheetValues.NUMBER
+            SpreadsheetValueType.NUMBER
     );
 
     // Object...........................................................................................................

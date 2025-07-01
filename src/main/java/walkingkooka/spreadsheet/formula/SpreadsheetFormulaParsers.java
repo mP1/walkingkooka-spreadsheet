@@ -24,7 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.SpreadsheetValues;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -94,7 +94,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         .and(row())
                         .transform(SpreadsheetFormulaParsers::transformCell)
                         .setToString("CELL"),
-                Optional.of(SpreadsheetValues.CELL)
+                Optional.of(SpreadsheetValueType.CELL)
         );
         CELL = cell;
 
@@ -111,7 +111,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         .and(cell)
                         .transform(SpreadsheetFormulaParsers::transformCellRange)
                         .setToString("CELL_RANGE"),
-                Optional.of(SpreadsheetValues.CELL)
+                Optional.of(SpreadsheetValueType.CELL)
         );
 
         CELL_RANGE = cellRange;
@@ -122,7 +122,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         .or(cellRange)
                         .or(cell),
                         //.setToString("CELL_OR_CELL_RANGE_OR_LABEL")
-                Optional.of(SpreadsheetValues.CELL)
+                Optional.of(SpreadsheetValueType.CELL)
         );
     }
 
@@ -203,7 +203,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 resolveParsers(value)
                         .apply(CONDITION_RIGHT_PARSER_IDENTIFIER)
                         .transform(SpreadsheetFormulaParsers::transformConditionRight),
-                Optional.of(SpreadsheetValues.CONDITION)
+                Optional.of(SpreadsheetValueType.CONDITION)
         );
     }
 
@@ -303,7 +303,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                                 .map(SpreadsheetFormulaParsers::errorParser0)
                                 .collect(Collectors.toList())
                 ),
-                Optional.of(SpreadsheetValues.ERROR)
+                Optional.of(SpreadsheetValueType.ERROR)
         );
     }
 
@@ -611,7 +611,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 resolveParsers(value)
                         .apply(VALUE_OR_EXPRESSION_IDENTIFIER)
                         .transform(SpreadsheetFormulaParsers::transformValueOrExpression),
-                Optional.of(SpreadsheetValues.VALUE_OR_EXPRESSION)
+                Optional.of(SpreadsheetValueType.VALUE_OR_EXPRESSION)
         );
     }
 
@@ -760,7 +760,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 SpreadsheetParsers.parser(
                         TemplateValueName.PARSER.setToString("TEMPLATE_VALUE_NAME")
                                 .cast(),
-                        Optional.of(SpreadsheetValues.TEMPLATE_VALUE_NAME)
+                        Optional.of(SpreadsheetValueType.TEMPLATE_VALUE_NAME)
                 ).transform(
                         (t, x) -> SpreadsheetFormulaParserToken.templateValueName(
                                 TemplateValueName.with(t.text()),

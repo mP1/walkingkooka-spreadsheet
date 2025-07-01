@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -33,6 +34,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A list of possible(supported) spreadsheet value types.
@@ -42,33 +44,85 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static String ANY = "*";
 
-    public final static String BOOLEAN = ValidationValueTypeName.BOOLEAN_STRING;
+    public static final String BOOLEAN_STRING = ValidationValueTypeName.BOOLEAN_STRING;
 
-    public final static String CELL = "cell";
+    public static final ValidationValueTypeName BOOLEAN = ValidationValueTypeName.BOOLEAN;
 
-    public final static String CELL_RANGE = "cellRange";
+    public static final String CELL_STRING = "cell";
 
-    public final static String COLUMN = "column";
+    public static final ValidationValueTypeName CELL = ValidationValueTypeName.with(CELL_STRING);
 
-    public final static String COLUMN_RANGE = "columnRange";
+    public static final String CELL_RANGE_STRING = "cellRange";
 
-    public final static String DATE = ValidationValueTypeName.DATE_STRING;
+    public static final ValidationValueTypeName CELL_RANGE = ValidationValueTypeName.with(CELL_RANGE_STRING);
 
-    public final static String DATE_TIME = ValidationValueTypeName.DATE_TIME_STRING;
+    public static final String COLUMN_STRING = "column";
 
-    public final static String ERROR = "error";
+    public static final ValidationValueTypeName COLUMN = ValidationValueTypeName.with(COLUMN_STRING);
 
-    public final static String LABEL = "label";
+    public static final String COLUMN_RANGE_STRING = "columnRange";
+    
+    public static final ValidationValueTypeName COLUMN_RANGE = ValidationValueTypeName.with(COLUMN_RANGE_STRING);
 
-    public final static String NUMBER =ValidationValueTypeName.NUMBER_STRING;
+    public static final String CONDITION_STRING = "condition";
 
-    public final static String ROW = "row";
+    public static final ValidationValueTypeName CONDITION = ValidationValueTypeName.with(CONDITION_STRING);
 
-    public final static String ROW_RANGE = "rowRange";
+    public static final String DATE_STRING = ValidationValueTypeName.DATE_STRING;
+    
+    public static final ValidationValueTypeName DATE = ValidationValueTypeName.DATE;
 
-    public final static String TEXT = ValidationValueTypeName.TEXT_STRING;
+    public static final String DATE_TIME_STRING = ValidationValueTypeName.DATE_TIME_STRING;
+    
+    public static final ValidationValueTypeName DATE_TIME = ValidationValueTypeName.DATE_TIME;
 
-    public final static String TIME = ValidationValueTypeName.TIME_STRING;
+    public static final String ERROR_STRING = "error";
+    
+    public static final ValidationValueTypeName ERROR = ValidationValueTypeName.with(ERROR_STRING);
+
+    public static final String LABEL_STRING = "label";
+    
+    public static final ValidationValueTypeName LABEL = ValidationValueTypeName.with(LABEL_STRING);
+
+    public static final String NUMBER_STRING = ValidationValueTypeName.NUMBER_STRING;
+    
+    public static final ValidationValueTypeName NUMBER = ValidationValueTypeName.NUMBER;
+
+    public static final String ROW_STRING = "row";
+
+    public static final ValidationValueTypeName ROW = ValidationValueTypeName.with(ROW_STRING);
+
+    public static final String ROW_RANGE_STRING = "rowRange";
+    
+    public static final ValidationValueTypeName ROW_RANGE = ValidationValueTypeName.with(ROW_RANGE_STRING);
+
+    public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
+    
+    public static final ValidationValueTypeName TEMPLATE_VALUE_NAME = ValidationValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
+
+    public static final String TEXT_STRING = ValidationValueTypeName.TEXT_STRING;
+
+    public static final ValidationValueTypeName TEXT = ValidationValueTypeName.TEXT;
+
+    public static final String TIME_STRING = ValidationValueTypeName.TIME_STRING;
+
+    public static final ValidationValueTypeName TIME = ValidationValueTypeName.TIME;
+
+    public static final String VALUE_OR_EXPRESSION_STRING = "valueOrExpression";
+
+    public static final ValidationValueTypeName VALUE_OR_EXPRESSION = ValidationValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
+
+    /**
+     * Does not include all types, only those that typically appear in a cell
+     */
+    public static final Set<ValidationValueTypeName> ALL = Sets.of(
+            BOOLEAN,
+            DATE,
+            DATE_TIME,
+            NUMBER,
+            TEXT,
+            TIME
+    );
 
     /**
      * For the given type returns the value type name, or {@link Optional#empty()} if the type is unknown.
@@ -87,46 +141,46 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         final Class<?> javaType;
 
         switch (valueType.text()) {
-            case BOOLEAN:
+            case BOOLEAN_STRING:
                 javaType = Boolean.class;
                 break;
-            case CELL:
+            case CELL_STRING:
                 javaType = SpreadsheetCellReference.class;
                 break;
-            case CELL_RANGE:
+            case CELL_RANGE_STRING:
                 javaType = SpreadsheetCellRangeReference.class;
                 break;
-            case COLUMN:
+            case COLUMN_STRING:
                 javaType = SpreadsheetColumnReference.class;
                 break;
-            case COLUMN_RANGE:
+            case COLUMN_RANGE_STRING:
                 javaType = SpreadsheetColumnRangeReference.class;
                 break;
-            case DATE:
+            case DATE_STRING:
                 javaType = LocalDate.class;
                 break;
-            case DATE_TIME:
+            case DATE_TIME_STRING:
                 javaType = LocalDateTime.class;
                 break;
-            case ERROR:
+            case ERROR_STRING:
                 javaType = SpreadsheetError.class;
                 break;
-            case LABEL:
+            case LABEL_STRING:
                 javaType = SpreadsheetLabelName.class;
                 break;
-            case NUMBER:
+            case NUMBER_STRING:
                 javaType = ExpressionNumber.class;
                 break;
-            case ROW:
+            case ROW_STRING:
                 javaType = SpreadsheetRowReference.class;
                 break;
-            case ROW_RANGE:
+            case ROW_RANGE_STRING:
                 javaType = SpreadsheetRowRangeReference.class;
                 break;
-            case TEXT:
+            case TEXT_STRING:
                 javaType = String.class;
                 break;
-            case TIME:
+            case TIME_STRING:
                 javaType = LocalTime.class;
                 break;
             default:
