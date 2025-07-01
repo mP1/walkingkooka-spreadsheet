@@ -196,7 +196,7 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
                 this.createJsonNodeMarshallingValue(),
                 "{\n" +
                         "  \"name\": \"boolean-to-number\",\n" +
-                        "  \"value\": [\n" +
+                        "  \"values\": [\n" +
                         "    {\n" +
                         "      \"value\": \"Hello\",\n" +
                         "      \"type\": \"java.lang.String\"\n" +
