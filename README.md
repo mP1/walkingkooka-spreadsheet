@@ -41,8 +41,8 @@ A wide variety of items are stored for each spreadsheet including but not limite
   - [locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameLocale.java)
   - It is possible to replace the initial `Locale` symbols used when formatting numbers and dates.
     - Date
-      - User provided names for the days of the week [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4129)
-      - User provided names for the months of the
+      - User provided names for the days/months of the week [SpreadsheetCell](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/SpreadsheetCell.java#L305)
+      - Custom decimal number symbols for each cell [SpreadsheetCell](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/SpreadsheetCell.java#L342)
         year [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4130)
     - Numbers
       - [Currency symbol](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameCurrencySymbol.java)
