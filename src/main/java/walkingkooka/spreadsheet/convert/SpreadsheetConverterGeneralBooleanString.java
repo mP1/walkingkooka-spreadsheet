@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 
 /**
  * Pipes the result of converting {@link Boolean} to {@link String} and then to the text formatter.
@@ -28,12 +27,14 @@ final class SpreadsheetConverterGeneralBooleanString implements Converter<Spread
 
     static SpreadsheetConverterGeneralBooleanString with(final Converter<SpreadsheetConverterContext> booleanString,
                                                          final Converter<SpreadsheetConverterContext> textFormatter) {
-        return new SpreadsheetConverterGeneralBooleanString(booleanString.cast(ConverterContext.class),
-                textFormatter.cast(ConverterContext.class));
+        return new SpreadsheetConverterGeneralBooleanString(
+                booleanString,
+                textFormatter
+        );
     }
 
-    private SpreadsheetConverterGeneralBooleanString(final Converter<ConverterContext> booleanString,
-                                                     final Converter<ConverterContext> textFormatter) {
+    private SpreadsheetConverterGeneralBooleanString(final Converter<SpreadsheetConverterContext> booleanString,
+                                                     final Converter<SpreadsheetConverterContext> textFormatter) {
         super();
         this.booleanString = booleanString;
         this.textFormatter = textFormatter;
@@ -50,15 +51,23 @@ final class SpreadsheetConverterGeneralBooleanString implements Converter<Spread
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
                                          final SpreadsheetConverterContext context) {
-        Either<T, String> result = this.booleanString.convert(value, type, context);
+        Either<T, String> result = this.booleanString.convert(
+                value,
+                type,
+                context
+        );
         if (result.isLeft()) {
-            result = this.textFormatter.convert(result.leftValue(), type, context);
+            result = this.textFormatter.convert(
+                    result.leftValue(),
+                    type,
+                    context
+            );
         }
         return result;
     }
 
-    private final Converter<ConverterContext> booleanString;
-    private final Converter<ConverterContext> textFormatter;
+    private final Converter<SpreadsheetConverterContext> booleanString;
+    private final Converter<SpreadsheetConverterContext> textFormatter;
 
     @Override
     public String toString() {
