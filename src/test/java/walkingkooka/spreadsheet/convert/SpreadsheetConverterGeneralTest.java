@@ -1274,6 +1274,150 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         );
     }
 
+    @Test
+    public void testConvertWithStringTrueToByteFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Byte.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToByteFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Byte.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToShortFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Short.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToShortFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Short.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToIntegerFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Integer.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToIntegerFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Integer.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToLongFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Long.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToLongFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Long.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToFloatFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Float.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToFloatFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Float.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToDoubleFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Double.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToDoubleFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Double.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToBigIntegerFails() {
+        this.convertFails(
+                STRING_TRUE,
+                BigInteger.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToBigIntegerFails() {
+        this.convertFails(
+                STRING_FALSE,
+                BigInteger.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToBigDecimalFails() {
+        this.convertFails(
+                STRING_TRUE,
+                BigDecimal.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToBigDecimalFails() {
+        this.convertFails(
+                STRING_FALSE,
+                BigDecimal.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToExpressionNumberFails() {
+        this.convertFails(
+                STRING_TRUE,
+                ExpressionNumber.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToExpressionNumberFails() {
+        this.convertFails(
+                STRING_FALSE,
+                ExpressionNumber.class
+        );
+    }
+
     // Time.............................................................................................................
 
     @Test
