@@ -19,7 +19,10 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -36,6 +39,20 @@ import java.util.Set;
  */
 public final class MissingConverter implements Comparable<MissingConverter>,
         TreePrintable {
+
+    /**
+     * Tests if the given {@link Converter} is able to convert a minimum of all expected values, creating a {@link MissingConverterSet}
+     * or none.
+     */
+    public static Set<MissingConverter> verify(final Converter<SpreadsheetConverterContext> converter,
+                                               final SpreadsheetMetadataPropertyName<ConverterSelector> selector,
+                                               final SpreadsheetConverterContext context) {
+        return MissingConverterVerifier.verify(
+                converter,
+                selector,
+                context
+        );
+    }
 
     public static MissingConverter with(final ConverterName name,
                                         final Set<MissingConverterValue> values) {
@@ -61,6 +78,21 @@ public final class MissingConverter implements Comparable<MissingConverter>,
 
     public Set<MissingConverterValue> values() {
         return this.values;
+    }
+
+    MissingConverter add(final MissingConverterValue value) {
+        Objects.requireNonNull(value, "value");
+
+        final Set<MissingConverterValue> newValues = Sets.ordered();
+        newValues.addAll(this.values);
+        newValues.add(value);
+
+        return this.values.equals(newValues) ?
+                this :
+                MissingConverter.with(
+                        this.name,
+                        newValues
+                );
     }
 
     private final Set<MissingConverterValue> values;
