@@ -272,7 +272,7 @@ final class MissingConverterVerifier {
 
         // spreadsheet-cell-to..........................................................................................
         if(formatting){
-            final Locale locale = Locale.ENGLISH;
+            final Locale locale = context.locale();
 
             final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
                             SpreadsheetFormula.EMPTY.setText("=1+2")
