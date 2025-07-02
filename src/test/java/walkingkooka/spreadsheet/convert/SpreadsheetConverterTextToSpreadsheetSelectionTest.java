@@ -23,12 +23,22 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Function;
 
 public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetSelection> {
+
+    @Test
+    public void testConvertWithStringToSpreadsheetSelectionFails() {
+        this.convertFails(
+                "A1",
+                SpreadsheetSelection.class
+        );
+    }
 
     @Test
     public void testConvertWithStringToCell() {
@@ -166,6 +176,38 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
+    public void testConvertWithStringToColumnWithCellFails() {
+        this.convertFails(
+                "A1",
+                SpreadsheetColumnReference.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToColumnWithCellRangeFails() {
+        this.convertFails(
+                "A1:B2",
+                SpreadsheetColumnReference.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToColumnWithRowFails() {
+        this.convertFails(
+                "1",
+                SpreadsheetColumnReference.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToColumnWithRowRangeFails() {
+        this.convertFails(
+                "2:3",
+                SpreadsheetColumnReference.class
+        );
+    }
+
+    @Test
     public void testConvertWithStringToColumnRange() {
         this.convertAndCheck2(
                 "E:F",
@@ -194,6 +236,38 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         this.convertAndCheck2(
                 "7:8",
                 SpreadsheetSelection::parseRowRange
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToRowWithCellFails() {
+        this.convertFails(
+                "A1",
+                SpreadsheetRowReference.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToRowRangeWithCellRangeFails() {
+        this.convertFails(
+                "B2:C3",
+                SpreadsheetRowReference.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToRowWithColumnFails() {
+        this.convertFails(
+                "A",
+                SpreadsheetRowReference.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringToRowRangeWithColumnRangeFails() {
+        this.convertFails(
+                "B:C",
+                SpreadsheetRowReference.class
         );
     }
 
