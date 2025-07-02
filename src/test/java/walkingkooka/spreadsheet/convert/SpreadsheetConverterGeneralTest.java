@@ -318,8 +318,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
-    private final static int NUMBER_TRUE = 1;
-    private final static int NUMBER_FALSE = 0;
+    private final static Integer NUMBER_TRUE = 1;
+    private final static Integer NUMBER_FALSE = 0;
 
     private final static LocalDate DATE = LocalDate.of(2000, 12, 31);
     private final static LocalDate DATE_TRUE = LocalDate.ofEpochDay(NUMBER_TRUE + DATE_OFFSET);
@@ -522,21 +522,149 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithBooleanTrueToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithBooleanTrueToByte() {
+        this.convertAndCheck(
                 true,
-                NUMBER_TRUE
+                (byte)1
         );
     }
 
     @Test
-    public void testConvertWithBooleanFalseToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithBooleanFalseToByte() {
+        this.convertAndCheck(
                 false,
-                NUMBER_FALSE
+                (byte)0
         );
     }
 
+    @Test
+    public void testConvertWithBooleanTrueToShort() {
+        this.convertAndCheck(
+                true,
+                (short)1
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToShort() {
+        this.convertAndCheck(
+                false,
+                (short)0
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToInteger() {
+        this.convertAndCheck(
+                true,
+                1
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToInteger() {
+        this.convertAndCheck(
+                false,
+                0
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToLong() {
+        this.convertAndCheck(
+                true,
+                1L
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToLong() {
+        this.convertAndCheck(
+                false,
+                0L
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToFloat() {
+        this.convertAndCheck(
+                true,
+                1f
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToFloat() {
+        this.convertAndCheck(
+                false,
+                0f
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToDouble() {
+        this.convertAndCheck(
+                true,
+                1.0
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToDouble() {
+        this.convertAndCheck(
+                false,
+                0.0
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToExpressionNumber() {
+        this.convertAndCheck(
+                true,
+                EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToExpressionNumber() {
+        this.convertAndCheck(
+                false,
+                EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToBigInteger() {
+        this.convertAndCheck(
+                true,
+                BigInteger.ONE
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToBigInteger() {
+        this.convertAndCheck(
+                false,
+                BigInteger.ZERO
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanTrueToBigDecimal() {
+        this.convertAndCheck(
+                true,
+                BigDecimal.ONE
+        );
+    }
+
+    @Test
+    public void testConvertWithBooleanFalseToBigDecimal() {
+        this.convertAndCheck(
+                false,
+                BigDecimal.ZERO
+        );
+    }
+    
     @Test
     public void testConvertWithBooleanTrueToString() {
         this.convertAndCheck(
@@ -682,27 +810,114 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithDateTrueToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithDateTrueToByte() {
+        this.convertAndCheck(
                 DATE_TRUE,
-                NUMBER_TRUE
+                NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithDateFalseToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithDateFalseToByte() {
+        this.convertAndCheck(
                 DATE_FALSE,
-                NUMBER_FALSE
+                NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithDateToAllNumberTypes() {
-        final int value = 100;
-        this.convertToAllNumberTypesAndCheck(
-                LocalDate.ofEpochDay(value),
-                value
+    public void testConvertWithDateTrueToShort() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                NUMBER_TRUE.shortValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateFalseToShort() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                NUMBER_FALSE.shortValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTrueToInteger() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                NUMBER_TRUE.intValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateFalseToInteger() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                NUMBER_FALSE.intValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTrueToLong() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                NUMBER_TRUE.longValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateFalseToLong() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                NUMBER_FALSE.longValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTrueToFloat() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                NUMBER_TRUE.floatValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateFalseToFloat() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                NUMBER_FALSE.floatValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTrueToDouble() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                NUMBER_TRUE.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateFalseToDouble() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                NUMBER_FALSE.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTrueToExpressionNumber() {
+        this.convertAndCheck(
+                DATE_TRUE,
+                EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateFalseToExpressionNumber() {
+        this.convertAndCheck(
+                DATE_FALSE,
+                EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
@@ -754,30 +969,114 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithDateTimeTrueToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithDateTimeTrueToByte() {
+        this.convertAndCheck(
                 DATE_TIME_TRUE,
-                NUMBER_TRUE
+                NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithDateTimeFalseToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithDateTimeFalseToByte() {
+        this.convertAndCheck(
                 DATE_TIME_FALSE,
-                NUMBER_FALSE
+                NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithDateTimeToAllNumberTypes() {
-        final int value = 100;
-        this.convertToAllNumberTypesAndCheck(
-                LocalDateTime.of(
-                        LocalDate.ofEpochDay(value),
-                        LocalTime.MIDNIGHT
-                ),
-                value
+    public void testConvertWithDateTimeTrueToShort() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                NUMBER_TRUE.shortValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeFalseToShort() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                NUMBER_FALSE.shortValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeTrueToInteger() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                NUMBER_TRUE.intValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeFalseToInteger() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                NUMBER_FALSE.intValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeTrueToLong() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                NUMBER_TRUE.longValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeFalseToLong() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                NUMBER_FALSE.longValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeTrueToFloat() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                NUMBER_TRUE.floatValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeFalseToFloat() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                NUMBER_FALSE.floatValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeTrueToDouble() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                NUMBER_TRUE.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeFalseToDouble() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                NUMBER_FALSE.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeTrueToExpressionNumber() {
+        this.convertAndCheck(
+                DATE_TIME_TRUE,
+                EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testConvertWithDateTimeFalseToExpressionNumber() {
+        this.convertAndCheck(
+                DATE_TIME_FALSE,
+                EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
@@ -1453,30 +1752,117 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithTimeTrueToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithTimeTrueToByte() {
+        this.convertAndCheck(
                 TIME_TRUE,
-                NUMBER_TRUE
+                NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeFalseToAllNumberTypes() {
-        this.convertToAllNumberTypesAndCheck(
+    public void testConvertWithTimeFalseToByte() {
+        this.convertAndCheck(
                 TIME_FALSE,
-                NUMBER_FALSE
+                NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeToAllNumberTypes() {
-        final int value = 123;
-        this.convertToAllNumberTypesAndCheck(
-                LocalTime.ofSecondOfDay(value),
-                value
+    public void testConvertWithTimeTrueToShort() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                NUMBER_TRUE.shortValue()
         );
     }
 
+    @Test
+    public void testConvertWithTimeFalseToShort() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                NUMBER_FALSE.shortValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeTrueToInteger() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                NUMBER_TRUE.intValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeFalseToInteger() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                NUMBER_FALSE.intValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeTrueToLong() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                NUMBER_TRUE.longValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeFalseToLong() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                NUMBER_FALSE.longValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeTrueToFloat() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                NUMBER_TRUE.floatValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeFalseToFloat() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                NUMBER_FALSE.floatValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeTrueToDouble() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                NUMBER_TRUE.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeFalseToDouble() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                NUMBER_FALSE.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeTrueToExpressionNumber() {
+        this.convertAndCheck(
+                TIME_TRUE,
+                EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testConvertWithTimeFalseToExpressionNumber() {
+        this.convertAndCheck(
+                TIME_FALSE,
+                EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+    
     @Test
     public void testConvertWithDateTrueToString2() {
         this.convertAndCheck(
@@ -1565,85 +1951,6 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                      final Object expected) {
         this.convertAndCheck(value, expected);
         this.convertAndCheck(expected, value);
-    }
-
-    private void convertToAllNumberTypesAndCheck(final Object value,
-                                                 final double expected) {
-        final Converter<SpreadsheetConverterContext> converter = this.createConverter();
-        final SpreadsheetConverterContext context = this.createContext();
-
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        BigDecimal.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        BigInteger.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        Byte.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        Double.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        Float.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        Integer.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        Long.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        Short.class,
-                        context
-                )
-        );
-        this.convertAndBackCheck(
-                value,
-                converter.convertOrFail(
-                        expected,
-                        ExpressionNumber.class,
-                        context
-                )
-        );
     }
 
     // toString.........................................................................................................
