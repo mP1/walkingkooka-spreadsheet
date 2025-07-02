@@ -123,7 +123,7 @@
     "word-wrap": "NORMAL"
   },
   "twoDigitYear": 20,
-  "validationConverter": "collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, to-json, text-to-form-name, text-to-validation-error, text-to-value-type, general)",
+  "validationConverter": "collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)",
   "validationFunctions": "@",
   "validationValidators": "collection, expression, non-null, text-length",
   "validators": "",
