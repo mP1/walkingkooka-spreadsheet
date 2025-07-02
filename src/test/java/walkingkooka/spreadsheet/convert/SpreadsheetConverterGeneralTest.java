@@ -76,164 +76,166 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterTestCase<SpreadsheetConverterGeneral> {
 
-    // with.............................................................................................................
+// with.............................................................................................................
 
     @Test
     public void testWithNullDateFormatterFails() {
-        withFails(
-                null,
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        null,
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullDateParserFails() {
-        withFails(
-                dateFormatter(),
-                null,
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        null,
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullDateTimeFormatterFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                null,
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        null,
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullDateTimeParserFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                null,
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        null,
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullNumberFormatterFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                null,
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        null,
+                        this.numberParser(),
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullNumberParserFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                null,
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        null,
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullTextFormatterFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                null,
-                timeFormatter(),
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        null,
+                        this.timeFormatter(),
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullTimeFormatterFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                null,
-                timeParser()
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetConverterGeneral.with(
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        this.textFormatter(),
+                        null,
+                        this.timeParser()
+                )
         );
     }
 
     @Test
     public void testWithNullTimeParserFails() {
-        withFails(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                null
-        );
-    }
-
-    private void withFails(final SpreadsheetFormatter dateFormatter,
-                           final Parser<SpreadsheetParserContext> dateParser,
-                           final SpreadsheetFormatter dateTimeFormatter,
-                           final Parser<SpreadsheetParserContext> dateTimeParser,
-                           final SpreadsheetFormatter numberFormatter,
-                           final Parser<SpreadsheetParserContext> numberParser,
-                           final SpreadsheetFormatter textFormatter,
-                           final SpreadsheetFormatter timeFormatter,
-                           final Parser<SpreadsheetParserContext> timeParser) {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        dateFormatter,
-                        dateParser,
-                        dateTimeFormatter,
-                        dateTimeParser,
-                        numberFormatter,
-                        numberParser,
-                        textFormatter,
-                        timeFormatter,
-                        timeParser
+                        this.dateFormatter(),
+                        this.dateParser(),
+                        this.dateTimeFormatter(),
+                        this.dateTimeParser(),
+                        this.numberFormatter(),
+                        this.numberParser(),
+                        this.textFormatter(),
+                        this.timeFormatter(),
+                        null
                 )
         );
     }
