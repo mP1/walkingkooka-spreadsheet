@@ -1683,6 +1683,22 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
+    public void testConvertWithStringTrueToNumberFails() {
+        this.convertFails(
+                STRING_TRUE,
+                Number.class
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToNumberFails() {
+        this.convertFails(
+                STRING_FALSE,
+                Number.class
+        );
+    }
+
+    @Test
     public void testConvertWithStringTrueToExpressionNumber() {
         this.convertAndCheck(
                 STRING_TRUE,
