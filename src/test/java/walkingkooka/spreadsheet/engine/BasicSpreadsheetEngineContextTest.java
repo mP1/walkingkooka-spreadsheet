@@ -1136,8 +1136,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-template-value-name, text-to-expression, text-to-locale, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-template-value-name, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, general)\",\n" +
+                        "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
@@ -1151,7 +1151,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"roundingMode\": \"HALF_UP\",\n" +
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"backgroundColor\": \"white\",\n" +
                         "    \"borderBottomColor\": \"black\",\n" +
@@ -1192,7 +1192,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, to-json, text-to-form-name, text-to-validation-error, text-to-value-type, general)\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                         "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
@@ -1368,8 +1368,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"findHighlighting\": false,\n" +
                         "  \"formHandlers\": \"basic\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-template-value-name, text-to-expression, text-to-locale, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-template-value-name, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, general)\",\n" +
+                        "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, general)\",\n" +
                         "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
@@ -1383,7 +1383,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"roundingMode\": \"HALF_UP\",\n" +
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"backgroundColor\": \"white\",\n" +
                         "    \"borderBottomColor\": \"black\",\n" +
@@ -1424,7 +1424,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)\",\n" +
+                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, to-json, text-to-form-name, text-to-validation-error, text-to-value-type, general)\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                         "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
