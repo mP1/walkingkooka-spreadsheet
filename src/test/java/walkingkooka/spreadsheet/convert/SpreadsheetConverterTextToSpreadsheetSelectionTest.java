@@ -31,7 +31,7 @@ import java.util.function.Function;
 public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetSelection> {
 
     @Test
-    public void testConvertStringToCell() {
+    public void testConvertWithStringToCell() {
         this.convertAndCheck2(
                 "A1",
                 SpreadsheetSelection::parseCell
@@ -39,7 +39,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToSpreadsheetExpressionReferenceCell() {
+    public void testConvertWithStringToCellAndTargetSpreadsheetExpressionReference() {
         this.convertSpreadsheetExpressionReferenceAndCheck(
                 "A1",
                 SpreadsheetSelection::parseCell
@@ -47,7 +47,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertCharSequenceToCell() {
+    public void testConvertWithCharSequenceToCell() {
         this.convertAndCheck(
                 new StringBuilder("A1"),
                 SpreadsheetSelection.A1
@@ -55,7 +55,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringLabelToSpreadsheetCellWithLabel() {
+    public void testConvertWithStringToLabelAndSpreadsheetCellWithLabel() {
         final String label = "Label123";
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
@@ -68,7 +68,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToCellRange() {
+    public void testConvertWithStringToCellRange() {
         this.convertAndCheck2(
                 "B2:C3",
                 SpreadsheetSelection::parseCellRange
@@ -76,7 +76,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToSpreadsheetExpressionReferenceCellRange() {
+    public void testConvertWithStringToCellRangeAndTargetSpreadsheetExpressionReference() {
         this.convertSpreadsheetExpressionReferenceAndCheck(
                 "B2:C3",
                 SpreadsheetSelection::parseCellRange
@@ -84,7 +84,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToSpreadsheetCellOrCellRangeWithCell() {
+    public void testConvertWithStringToCellOrCellRangeWithCell() {
         this.convertAndCheck(
                 "A1",
                 SpreadsheetCellReferenceOrRange.class,
@@ -93,7 +93,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringLabelToSpreadsheetCellOrCellRangeWithCell() {
+    public void testConvertWithStringToLabelToCellOrCellRangeWithCell() {
         final String label = "Label123";
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
@@ -106,7 +106,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringLabelToSpreadsheetCellOrCellRangeWithCellRange() {
+    public void testConvertWithStringToLabelToCellOrCellRangeWithCellRange() {
         final String label = "Label123";
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
@@ -119,7 +119,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringLabelToSpreadsheetExpressionReference() {
+    public void testConvertWithStringToLabelAndSpreadsheetExpressionReference() {
         this.convertSpreadsheetExpressionReferenceAndCheck(
                 "Label123",
                 SpreadsheetSelection::labelName
@@ -127,7 +127,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToSpreadsheetCellOrCellRangeWithCellRange() {
+    public void testConvertWithStringToCellOrCellRangeWithCellRange() {
         this.convertAndCheck(
                 "B2:C3",
                 SpreadsheetCellReferenceOrRange.class,
@@ -136,7 +136,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToSpreadsheetCellOrCellRangeWithCellRangeSingle() {
+    public void testConvertWithStringToCellOrCellRangeWithCellRangeSingle() {
         this.convertAndCheck(
                 "D4:D4",
                 SpreadsheetCellReferenceOrRange.class,
@@ -145,7 +145,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringLabelToSpreadsheetCellRangeWithCellRange() {
+    public void testConvertWithStringToLabelToSpreadsheetCellRangeWithCellRange() {
         final String label = "Label123";
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
@@ -158,7 +158,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToColumn() {
+    public void testConvertWithStringToColumn() {
         this.convertAndCheck2(
                 "D",
                 SpreadsheetSelection::parseColumn
@@ -166,7 +166,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToColumnRange() {
+    public void testConvertWithStringToColumnRange() {
         this.convertAndCheck2(
                 "E:F",
                 SpreadsheetSelection::parseColumnRange
@@ -174,7 +174,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToLabel() {
+    public void testConvertWithStringToLabel() {
         this.convertAndCheck2(
                 "Label123",
                 SpreadsheetSelection::labelName
@@ -182,7 +182,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToRow() {
+    public void testConvertWithStringToRow() {
         this.convertAndCheck2(
                 "6",
                 SpreadsheetSelection::parseRow
@@ -190,7 +190,7 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     }
 
     @Test
-    public void testConvertStringToRowRange() {
+    public void testConvertWithStringToRowRange() {
         this.convertAndCheck2(
                 "7:8",
                 SpreadsheetSelection::parseRowRange
