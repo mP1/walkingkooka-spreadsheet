@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -52,7 +53,8 @@ final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetCo
                 type == SpreadsheetColumnRangeReference.class ||
                 type == SpreadsheetLabelName.class ||
                 type == SpreadsheetRowReference.class ||
-                type == SpreadsheetRowRangeReference.class;
+                type == SpreadsheetRowRangeReference.class ||
+                type == SpreadsheetExpressionReference.class;
     }
 
     @Override
