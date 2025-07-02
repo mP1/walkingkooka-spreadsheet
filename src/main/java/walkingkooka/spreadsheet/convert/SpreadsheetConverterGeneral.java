@@ -210,15 +210,15 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                                 Converters.numberToNumber()
                                         ).cast(SpreadsheetConverterContext.class)
                         )
-                ),
+                ), // number
                 characterOrStringTo(
                         toCharacterOrString(
                                 Converters.simple() // String -> String
                         )
-                ),
+                ), // string
                 characterOrStringTo(
                         SpreadsheetConverters.textToTime(timeParser)
-                )
+                ) // time
         );
 
         // LocalTime ->
@@ -395,17 +395,21 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 targetType == LocalDate.class;
     }
 
+    private static boolean isDateOrDateTimeOrTimeOrNumber(final Class<?> type) {
+        return LocalDate.class == type ||
+                LocalDateTime.class == type ||
+                LocalTime.class == type ||
+                ExpressionNumber.isClass(type) ||
+                Number.class == type;
+    }
+
     private static boolean isSupportedType(final Class<?> type) {
         return Object.class == type ||
                 Boolean.class == type ||
                 Character.class == type ||
                 HasText.class == type || // might be useful
-                LocalDate.class == type ||
-                LocalDateTime.class == type ||
-                LocalTime.class == type ||
-                ExpressionNumber.isClass(type) ||
-                Number.class == type ||
-                String.class == type;
+                String.class == type ||
+                isDateOrDateTimeOrTimeOrNumber(type);
     }
 
     @Override
@@ -453,7 +457,19 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                         value,
                         targetType
                 ) :
-                convertNonNull0(
+                TRUE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
+                     this.convertNonNull0(
+                             true,
+                             targetType,
+                             context
+                     ) :
+                     FALSE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
+                        this.convertNonNull0(
+                                false,
+                                targetType,
+                                context
+                        ) :
+                this.convertNonNull0(
                         value instanceof Locale ?
                                 ((Locale) value).toLanguageTag() :
                                 value instanceof HasText && false == value instanceof SpreadsheetSelection ?

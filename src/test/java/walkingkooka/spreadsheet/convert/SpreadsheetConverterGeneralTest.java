@@ -1555,146 +1555,194 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithStringTrueToByteFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToByte() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                Byte.class
+                NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToByteFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToByte() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                Byte.class
+                NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToShortFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToShort() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                Short.class
+                NUMBER_TRUE.shortValue()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToShortFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToShort() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                Short.class
+                NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToIntegerFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToInteger() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                Integer.class
+                NUMBER_TRUE.intValue()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToIntegerFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToInteger() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                Integer.class
+                NUMBER_FALSE.intValue()
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToLongFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToLong() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                Long.class
+                NUMBER_TRUE.longValue()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToLongFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToLong() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                Long.class
+                NUMBER_FALSE.longValue()
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToFloatFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToFloat() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                Float.class
+                NUMBER_TRUE.floatValue()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToFloatFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToFloat() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                Float.class
+                NUMBER_FALSE.floatValue()
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToDoubleFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToDouble() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                Double.class
+                NUMBER_TRUE.doubleValue()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToDoubleFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToDouble() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                Double.class
+                NUMBER_FALSE.doubleValue()
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToBigIntegerFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToBigInteger() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                BigInteger.class
+                new BigInteger(NUMBER_TRUE.toString())
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToBigIntegerFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToBigInteger() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                BigInteger.class
+                new BigInteger(NUMBER_FALSE.toString())
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToBigDecimalFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToBigDecimal() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                BigDecimal.class
+                new BigDecimal(NUMBER_TRUE.toString())
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToBigDecimalFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToBigDecimal() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                BigDecimal.class
+                new BigDecimal(NUMBER_FALSE.toString())
         );
     }
 
     @Test
-    public void testConvertWithStringTrueToExpressionNumberFails() {
-        this.convertFails(
+    public void testConvertWithStringTrueToExpressionNumber() {
+        this.convertAndCheck(
                 STRING_TRUE,
-                ExpressionNumber.class
+                EXPRESSION_NUMBER_KIND.one()
         );
     }
 
     @Test
-    public void testConvertWithStringFalseToExpressionNumberFails() {
-        this.convertFails(
+    public void testConvertWithStringFalseToExpressionNumber() {
+        this.convertAndCheck(
                 STRING_FALSE,
-                ExpressionNumber.class
+                EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToDate() {
+        this.convertAndCheck(
+                STRING_TRUE,
+                DATE_TRUE
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToDate() {
+        this.convertAndCheck(
+                STRING_FALSE,
+                DATE_FALSE
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToDateTime() {
+        this.convertAndCheck(
+                STRING_TRUE,
+                DATE_TIME_TRUE
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToDateTime() {
+        this.convertAndCheck(
+                STRING_FALSE,
+                DATE_TIME_FALSE
+        );
+    }
+
+    @Test
+    public void testConvertWithStringTrueToTime() {
+        this.convertAndCheck(
+                STRING_TRUE,
+                TIME_TRUE
+        );
+    }
+
+    @Test
+    public void testConvertWithStringFalseToTime() {
+        this.convertAndCheck(
+                STRING_FALSE,
+                TIME_FALSE
         );
     }
 
