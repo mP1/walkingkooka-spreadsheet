@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
@@ -1219,167 +1217,150 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     // Number...........................................................................................................
 
     @Test
-    public void testConvertWithAllNumberTypesTrueToBoolean() {
-        this.convertAllNumberTypesAndCheck(
-                1,
+    public void testConvertWithByteTrueToBoolean() {
+        this.convertAndCheck(
+                NUMBER_TRUE.byteValue(),
                 true
         );
     }
 
     @Test
-    public void testConvertWithAllNumberTypesFalseToBoolean() {
-        this.convertAllNumberTypesAndCheck(
-                0,
+    public void testConvertWithByteFalseToBoolean() {
+        this.convertAndCheck(
+                NUMBER_FALSE.byteValue(),
                 false
         );
     }
 
     @Test
-    public void testConvertWithAllNumberTypesTrueToDate() {
-        this.convertAndBackCheck(
-                1,
-                DATE_TRUE
-        );
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesFalseToDate() {
-        this.convertAndBackCheck(
-                0,
-                DATE_FALSE
-        );
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesTrueToDateTime() {
-        this.convertAndBackCheck(
-                1,
-                DATE_TIME_TRUE
-        );
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesFalseToDateTime() {
-        this.convertAndBackCheck(
-                0,
-                DATE_TIME_FALSE
-        );
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToByte() {
-        this.convertAllNumberTypesAndCheck((byte) 123);
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToShort() {
-        this.convertAllNumberTypesAndCheck((short) 123);
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToInteger() {
-        this.convertAllNumberTypesAndCheck(123);
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToLong() {
-        this.convertAllNumberTypesAndCheck(123L);
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToFloat() {
-        this.convertAllNumberTypesAndCheck(123f);
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToDouble() {
-        this.convertAllNumberTypesAndCheck(123.0);
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToBigDecimal() {
-        this.convertAllNumberTypesAndCheck(BigDecimal.valueOf(123));
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToBigInteger() {
-        this.convertAllNumberTypesAndCheck(BigInteger.valueOf(123));
-    }
-
-    @Test
-    public void testConvertWithAllNumberTypesToCharacter() {
+    public void testConvertWithShortTrueToBoolean() {
         this.convertAndCheck(
-                SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        formatter(
-                                "#",
-                                SpreadsheetFormatParsers.numberParse(),
-                                NumberSpreadsheetFormatParserToken.class,
-                                SpreadsheetFormatters::number
-                        ),
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                ),
-                ExpressionNumberKind.DEFAULT.create(1),
-                Character.class,
-                '1'
+                NUMBER_TRUE.shortValue(),
+                true
         );
     }
 
     @Test
-    public void testConvertWithAllNumberTypesTrueToString() {
+    public void testConvertWithShortFalseToBoolean() {
         this.convertAndCheck(
-                -12.5,
-                "N :12*5"
+                NUMBER_FALSE.shortValue(),
+                false
         );
     }
-
+    
     @Test
-    public void testConvertWithAllNumberTypesFalseTOString() {
+    public void testConvertWithIntegerTrueToBoolean() {
         this.convertAndCheck(
-                false,
-                TIME_FALSE
+                NUMBER_TRUE.intValue(),
+                true
         );
     }
 
     @Test
-    public void testConvertWithAllNumberTypesToTime() {
-        this.convertAndBackCheck(
-                Converters.localTimeToNumber()
-                        .convertOrFail(
-                                TIME,
-                                BigDecimal.class,
-                                this.createContext()
-                        ),
-                TIME
+    public void testConvertWithIntegerFalseToBoolean() {
+        this.convertAndCheck(
+                NUMBER_FALSE.intValue(),
+                false
         );
     }
 
-    private void convertAllNumberTypesAndCheck(final Number value) {
-        this.convertAllNumberTypesAndCheck(value, value);
+    @Test
+    public void testConvertWithLongTrueToBoolean() {
+        this.convertAndCheck(
+                NUMBER_TRUE.longValue(),
+                true
+        );
     }
 
-    private void convertAllNumberTypesAndCheck(final Number value,
-                                               final Object expected) {
-        final Converter<ConverterContext> numberNumber = Converters.numberToNumber();
-        final ConverterContext context = this.createContext();
-
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, BigDecimal.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, BigInteger.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, Byte.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, Double.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, Float.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, Integer.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, Long.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convertOrFail(value, Short.class, context), expected);
+    @Test
+    public void testConvertWithLongFalseToBoolean() {
+        this.convertAndCheck(
+                NUMBER_FALSE.longValue(),
+                false
+        );
     }
 
-    // String.............................................................................................................
+    @Test
+    public void testConvertWithFloatTrueToBoolean() {
+        this.convertAndCheck(
+                NUMBER_TRUE.floatValue(),
+                true
+        );
+    }
+
+    @Test
+    public void testConvertWithFloatFalseToBoolean() {
+        this.convertAndCheck(
+                NUMBER_FALSE.floatValue(),
+                false
+        );
+    }
+
+    @Test
+    public void testConvertWithDoubleTrueToBoolean() {
+        this.convertAndCheck(
+                NUMBER_TRUE.doubleValue(),
+                true
+        );
+    }
+
+    @Test
+    public void testConvertWithDoubleFalseToBoolean() {
+        this.convertAndCheck(
+                NUMBER_FALSE.doubleValue(),
+                false
+        );
+    }
+
+    @Test
+    public void testConvertWithExpressionNumberTrueToBoolean() {
+        this.convertAndCheck(
+                EXPRESSION_NUMBER_KIND.one(),
+                true
+        );
+    }
+
+    @Test
+    public void testConvertWithExpressionNumberFalseToBoolean() {
+        this.convertAndCheck(
+                EXPRESSION_NUMBER_KIND.zero(),
+                false
+        );
+    }
+
+    @Test
+    public void testConvertWithBigDecimalTrueToBoolean() {
+        this.convertAndCheck(
+                BigDecimal.ONE,
+                true
+        );
+    }
+
+    @Test
+    public void testConvertWithBigDecimalFalseToBoolean() {
+        this.convertAndCheck(
+                BigDecimal.ZERO,
+                false
+        );
+    }
+    
+    @Test
+    public void testConvertWithBigIntegerTrueToBoolean() {
+        this.convertAndCheck(
+                BigInteger.ONE,
+                true
+        );
+    }
+
+    @Test
+    public void testConvertWithBigIntegerFalseToBoolean() {
+        this.convertAndCheck(
+                BigInteger.ZERO,
+                false
+        );
+    }
+
+    // String...........................................................................................................
 
     @Test
     public void testConvertWithCharacterToString2() {
