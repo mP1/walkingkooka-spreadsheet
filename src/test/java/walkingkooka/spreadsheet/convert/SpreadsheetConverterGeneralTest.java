@@ -457,11 +457,10 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithSpreadsheetErrorToString() {
-        this.convertAndCheck(
+    public void testConvertWithSpreadsheetErrorToStringFails() {
+        this.convertFails(
                 SpreadsheetErrorKind.DIV0.setMessage("Ignored"),
-                String.class,
-                SpreadsheetErrorKind.DIV0.toString()
+                String.class
         );
     }
 
@@ -1097,120 +1096,107 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     // HasText..........................................................................................................
 
     @Test
-    public void testConvertWithHasTextToBooleanFalse() {
-        this.convertAndCheck(
-                text("false"),
-                Boolean.class,
-                false
+    public void testConvertWithHasTextToBooleanFalseFails() {
+        this.convertFails(
+                hasText("false"),
+                Boolean.class
         );
     }
 
     @Test
-    public void testConvertWithHasTextToBooleanTrue() {
-        this.convertAndCheck(
-                text("true"),
-                Boolean.class,
-                true
+    public void testConvertWithHasTextToBooleanTrueFails() {
+        this.convertFails(
+                hasText("true"),
+                Boolean.class
         );
     }
 
     @Test
-    public void testConvertWithHasTextToDate() {
-        this.convertAndCheck(
-                text("D 2000-12-31"),
-                LocalDate.class,
-                DATE
+    public void testConvertWithHasTextToDateFails() {
+        this.convertFails(
+                hasText("D 2000-12-31"),
+                LocalDate.class
         );
     }
 
     @Test
-    public void testConvertWithHasTextToDateTime() {
-        this.convertAndCheck(
-                text("DT 31 12 2000 12 58 59"),
-                LocalDateTime.class,
-                DATE_TIME
+    public void testConvertWithHasTextToDateTimeFails() {
+        this.convertFails(
+                hasText("DT 31 12 2000 12 58 59"),
+                LocalDateTime.class
         );
     }
 
     @Test
-    public void testConvertWithHasTextToExpressionNumber() {
-        this.convertAndCheck(
-                text("N 123"),
-                ExpressionNumber.class,
-                EXPRESSION_NUMBER_KIND.create(123)
+    public void testConvertWithHasTextToExpressionNumberFails() {
+        this.convertFails(
+                hasText("N 123"),
+                ExpressionNumber.class
         );
     }
 
     @Test
-    public void testConvertWithHasTextToTime() {
-        this.convertAndCheck(
-                text("T 12 58 59"),
-                LocalTime.class,
-                TIME
+    public void testConvertWithHasTextToTimeFails() {
+        this.convertFails(
+                hasText("T 12 58 59"),
+                LocalTime.class
         );
     }
 
     @Test
-    public void testConvertWithHasTextToString() {
-        this.convertAndCheck(
-                text("A"),
-                String.class,
-                "A"
+    public void testConvertWithHasTextToStringFails() {
+        this.convertFails(
+                hasText("A"),
+                String.class
         );
     }
 
-    private static TextNode text(final String text) {
+    private static TextNode hasText(final String text) {
         return SpreadsheetText.with(text)
                 .setColor(Optional.of(Color.BLACK))
                 .toTextNode();
     }
 
     @Test
-    public void testConvertWithAbsoluteUrlToString() {
+    public void testConvertWithAbsoluteUrlToStringFailsFails() {
         final String url = "https://example.com";
 
-        this.convertAndCheck(
+        this.convertFails(
                 Url.parseAbsolute(url),
-                String.class,
-                url
+                String.class//,
+                //url
         );
     }
 
     @Test
-    public void testConvertWithColorToString() {
-        final Color color = Color.BLACK;
-
-        this.convertAndCheck(
-                color,
-                String.class,
-                color.text()
+    public void testConvertWithColorToStringFails() {
+        this.convertFails(
+                Color.BLACK,
+                String.class
         );
     }
 
     @Test
-    public void testConvertWithTextStyleToString() {
-        final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
-        ).set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.LEFT
-        );
-
-        this.convertAndCheck(
-                style,
-                String.class,
-                style.text()
+    public void testConvertWithTextStyleToStringFails() {
+        this.convertFails(
+                TextStyle.EMPTY.set(
+                        TextStylePropertyName.COLOR,
+                        Color.BLACK
+                ).set(
+                        TextStylePropertyName.TEXT_ALIGN,
+                        TextAlign.LEFT
+                ),
+                String.class
         );
     }
 
     // Locale...........................................................................................................
 
     @Test
-    public void testConvertWithLocaleToString() {
-        this.convertAndCheck(
+    public void testConvertWithLocaleToStringFails() {
+        this.convertFails(
                 Locale.forLanguageTag("en-AU"),
-                "en-AU"
+                String.class
         );
     }
 

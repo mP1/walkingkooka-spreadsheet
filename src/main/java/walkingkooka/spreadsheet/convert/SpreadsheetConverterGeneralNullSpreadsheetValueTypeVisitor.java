@@ -68,35 +68,35 @@ final class SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor extends S
         this.value = (byte) 0;
     }
 
-    @Override
-    protected void visitCellRange() {
-        this.value = null;
-    }
+//    @Override
+//    protected void visitCellRange() {
+//        this.value = null;
+//    }
+//
+//    @Override
+//    protected void visitCellReference() {
+//        this.value = null;
+//    }
 
-    @Override
-    protected void visitCellReference() {
-        this.value = null;
-    }
-
-    @Override
-    protected void visitCellReferenceOrRange() {
-        this.value = null;
-    }
+//    @Override
+//    protected void visitCellReferenceOrRange() {
+//        this.value = null;
+//    }
 
     @Override
     protected void visitCharacter() {
         this.value = null;
     }
 
-    @Override
-    protected void visitColumnReference() {
-        this.value = null;
-    }
-
-    @Override
-    protected void visitColumnRangeReference() {
-        this.value = null;
-    }
+//    @Override
+//    protected void visitColumnReference() {
+//        this.value = null;
+//    }
+//
+//    @Override
+//    protected void visitColumnRangeReference() {
+//        this.value = null;
+//    }
 
     @Override
     protected void visitDouble() {
@@ -109,10 +109,10 @@ final class SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor extends S
                 .zero();
     }
 
-    @Override
-    protected void visitExpressionReference() {
-        this.value = null;
-    }
+//    @Override
+//    protected void visitExpressionReference() {
+//        this.value = null;
+//    }
 
     @Override
     protected void visitFloat() {
@@ -155,25 +155,25 @@ final class SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor extends S
                 .zero();
     }
 
-    @Override
-    protected void visitRowReference() {
-        this.value = null;
-    }
-
-    @Override
-    protected void visitRowRangeReference() {
-        this.value = null;
-    }
+//    @Override
+//    protected void visitRowReference() {
+//        this.value = null;
+//    }
+//
+//    @Override
+//    protected void visitRowRangeReference() {
+//        this.value = null;
+//    }
 
     @Override
     protected void visitSpreadsheetError() {
         this.value = null;
     }
 
-    @Override
-    protected void visitSpreadsheetSelection() {
-        this.value = null;
-    }
+//    @Override
+//    protected void visitSpreadsheetSelection() {
+//        this.value = null;
+//    }
 
     @Override
     protected void visitShort() {
