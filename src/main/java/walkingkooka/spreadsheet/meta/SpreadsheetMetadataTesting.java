@@ -253,13 +253,24 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     EXPRESSION_NUMBER_KIND
             ).set(
                     SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(" +
+                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, " +
+                            "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
+                            "general)"
+                    )
             ).set(
                     SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-selection, text-to-template-value-name, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(" +
+                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, " +
+                            "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
+                            "text-to-selection, selection-to-selection, selection-to-text, " +
+                            "spreadsheet-cell-to, " +
+                            "has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, " +
+                            "general)"
+                    )
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -272,7 +283,14 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     FormHandlerAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, text-to-template-value-name, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse(
+                            "collection(" +
+                                    "null-to-number, simple, number-to-number, text-to-text, " +
+                                    "error-to-number, error-throwing, text-to-error, " +
+                                    "text-to-selection, selection-to-selection, selection-to-text, " +
+                                    "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
+                                    "general)"
+                    )
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -310,7 +328,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
             ).set(
                     SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-selection, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(" +
+                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, " +
+                            "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
+                            "general)"
+                    )
             ).set(
                     SpreadsheetMetadataPropertyName.STYLE,
                     TextStyle.EMPTY
@@ -333,7 +355,13 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ValidatorAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                    ConverterSelector.parse("collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-selection, text-to-validation-error, selection-to-selection, selection-to-text, general)")
+                    ConverterSelector.parse("collection(" +
+                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, " +
+                            "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
+                            "to-json, " +
+                            "text-to-form-name, text-to-validation-error, text-to-value-type, " +
+                            "general)"
+                    )
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
                     SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
