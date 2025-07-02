@@ -511,7 +511,7 @@ final class MissingConverterVerifier {
         }
 
         // text-to-error................................................................................................
-        if(SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER.equals(propertyName)) {
+        if(validation) {
             finder.addIfConversionFail(
                     error.text(),
                     SpreadsheetError.class,
