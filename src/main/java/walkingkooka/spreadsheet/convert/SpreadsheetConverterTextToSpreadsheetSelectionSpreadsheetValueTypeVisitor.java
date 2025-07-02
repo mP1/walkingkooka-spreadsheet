@@ -88,6 +88,11 @@ final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVi
     }
 
     @Override
+    protected void visitExpressionReference() {
+        this.selection = SpreadsheetSelection.parseExpressionReference(this.string);
+    }
+
+    @Override
     protected void visitLabel() {
         this.selection = SpreadsheetSelection.labelName(this.string);
     }

@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Function;
@@ -32,6 +33,14 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     @Test
     public void testConvertStringToCell() {
         this.convertAndCheck2(
+                "A1",
+                SpreadsheetSelection::parseCell
+        );
+    }
+
+    @Test
+    public void testConvertStringToSpreadsheetExpressionReferenceCell() {
+        this.convertSpreadsheetExpressionReferenceAndCheck(
                 "A1",
                 SpreadsheetSelection::parseCell
         );
@@ -61,6 +70,14 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     @Test
     public void testConvertStringToCellRange() {
         this.convertAndCheck2(
+                "B2:C3",
+                SpreadsheetSelection::parseCellRange
+        );
+    }
+
+    @Test
+    public void testConvertStringToSpreadsheetExpressionReferenceCellRange() {
+        this.convertSpreadsheetExpressionReferenceAndCheck(
                 "B2:C3",
                 SpreadsheetSelection::parseCellRange
         );
@@ -98,6 +115,14 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
                 SpreadsheetCellReferenceOrRange.class,
                 this.createContext(label, range),
                 range
+        );
+    }
+
+    @Test
+    public void testConvertStringLabelToSpreadsheetExpressionReference() {
+        this.convertSpreadsheetExpressionReferenceAndCheck(
+                "Label123",
+                SpreadsheetSelection::labelName
         );
     }
 
@@ -177,6 +202,15 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         this.convertAndCheck(
                 string,
                 parse.apply(string)
+        );
+    }
+
+    private void convertSpreadsheetExpressionReferenceAndCheck(final String string,
+                                                               final Function<String, ? extends SpreadsheetExpressionReference> parser) {
+        this.convertAndCheck(
+                string,
+                SpreadsheetExpressionReference.class,
+                parser.apply(string)
         );
     }
 
