@@ -76,7 +76,79 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterTestCase<SpreadsheetConverterGeneral> {
 
-// with.............................................................................................................
+    private final static String TEXT_SUFFIX = "text-literal-123";
+
+    private final static SpreadsheetFormatter DATE_FORMATTER = dateTimeFormatter(
+            "\\D yyyy-mm-dd",
+            LocalDate.class
+    );
+
+    private final static Parser<SpreadsheetParserContext> DATE_PARSER = SpreadsheetPattern.parseDateParsePattern("\\D yyyy-mm-dd")
+            .parser();
+
+    private final static SpreadsheetFormatter DATE_TIME_FORMATTER = dateTimeFormatter(
+            "\"DT\" yyyy-mm-dd hh-mm",
+            LocalDateTime.class
+    );
+
+    private final static Parser<SpreadsheetParserContext> DATE_TIME_PARSER = SpreadsheetPattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss")
+            .parser();
+
+    private final static SpreadsheetFormatter NUMBER_FORMATTER = formatter(
+            "\\N #.#",
+            SpreadsheetFormatParsers.numberParse(),
+            NumberSpreadsheetFormatParserToken.class,
+            SpreadsheetFormatters::number
+    );
+
+    private final static Parser<SpreadsheetParserContext> NUMBER_PARSER = SpreadsheetPattern.parseNumberParsePattern("\"N\" #;\"N\" #.#")
+            .parser();
+
+    private final static SpreadsheetFormatter TEXT_FORMATTER = formatter(
+            "@\"" + TEXT_SUFFIX + "\"",
+            SpreadsheetFormatParsers.textFormat(),
+            TextSpreadsheetFormatParserToken.class,
+            SpreadsheetFormatters::text
+    );
+
+    private final static SpreadsheetFormatter TIME_FORMATTER = dateTimeFormatter(
+            "\\T hh-mm",
+            LocalTime.class
+    );
+
+    private final static Parser<SpreadsheetParserContext> TIME_PARSER = SpreadsheetPattern.parseTimeParsePattern("\\T hh mm ss")
+            .parser();
+
+    private static SpreadsheetFormatter dateTimeFormatter(final String pattern,
+                                                          final Class<? extends Temporal> type) {
+        return formatter(
+                pattern,
+                SpreadsheetFormatParsers.dateTimeFormat(),
+                DateTimeSpreadsheetFormatParserToken.class,
+                (t) -> SpreadsheetFormatters.dateTime(
+                        t,
+                        type
+                )
+        );
+    }
+
+    private static <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter formatter(final String pattern,
+                                                                                           final Parser<SpreadsheetFormatParserContext> parser,
+                                                                                           final Class<T> token,
+                                                                                           final Function<T, SpreadsheetFormatter> formatterFactory) {
+        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(
+                        TextCursors.charSequence(pattern),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).map(t -> t instanceof SequenceParserToken ?
+                        t.cast(SequenceParserToken.class).value().get(0) :
+                        t
+                ).map(t -> t.cast(token))
+                .map(formatterFactory)
+                .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
+    }
+
+    // with.............................................................................................................
 
     @Test
     public void testWithNullDateFormatterFails() {
@@ -84,14 +156,14 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
                         null,
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
-                        this.numberParser(),
-                        this.textFormatter(),
-                        this.timeFormatter(),
-                        this.timeParser()
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -101,15 +173,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
+                        DATE_FORMATTER,
                         null,
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
-                        this.numberParser(),
-                        this.textFormatter(),
-                        this.timeFormatter(),
-                        this.timeParser()
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -119,15 +191,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
                         null,
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
-                        this.numberParser(),
-                        this.textFormatter(),
-                        this.timeFormatter(),
-                        this.timeParser()
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -137,15 +209,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
                         null,
-                        this.numberFormatter(),
-                        this.numberParser(),
-                        this.textFormatter(),
-                        this.timeFormatter(),
-                        this.timeParser()
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -155,15 +227,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
                         null,
-                        this.numberParser(),
-                        this.textFormatter(),
-                        this.timeFormatter(),
-                        this.timeParser()
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -173,15 +245,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
                         null,
-                        this.textFormatter(),
-                        this.timeFormatter(),
-                        this.timeParser()
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -191,15 +263,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
-                        this.numberParser(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
                         null,
-                        this.timeFormatter(),
-                        this.timeParser()
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 )
         );
     }
@@ -209,15 +281,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
-                        this.numberParser(),
-                        this.textFormatter(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
                         null,
-                        this.timeParser()
+                        TIME_PARSER
                 )
         );
     }
@@ -227,14 +299,14 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetConverterGeneral.with(
-                        this.dateFormatter(),
-                        this.dateParser(),
-                        this.dateTimeFormatter(),
-                        this.dateTimeParser(),
-                        this.numberFormatter(),
-                        this.numberParser(),
-                        this.textFormatter(),
-                        this.timeFormatter(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
+                        NUMBER_FORMATTER,
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
                         null
                 )
         );
@@ -939,20 +1011,20 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public void testConvertAllNumberTypesToCharacter() {
         this.convertAndCheck(
                 SpreadsheetConverterGeneral.with(
-                        dateFormatter(),
-                        dateParser(),
-                        dateTimeFormatter(),
-                        dateTimeParser(),
+                        DATE_FORMATTER,
+                        DATE_PARSER,
+                        DATE_TIME_FORMATTER,
+                        DATE_TIME_PARSER,
                         formatter(
                                 "#",
                                 SpreadsheetFormatParsers.numberParse(),
                                 NumberSpreadsheetFormatParserToken.class,
                                 SpreadsheetFormatters::number
                         ),
-                        numberParser(),
-                        textFormatter(),
-                        timeFormatter(),
-                        timeParser()
+                        NUMBER_PARSER,
+                        TEXT_FORMATTER,
+                        TIME_FORMATTER,
+                        TIME_PARSER
                 ),
                 ExpressionNumberKind.DEFAULT.create(1),
                 Character.class,
@@ -1286,106 +1358,16 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Override
     public SpreadsheetConverterGeneral createConverter() {
         return SpreadsheetConverterGeneral.with(
-                dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser()
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
         );
-    }
-
-    private SpreadsheetFormatter dateFormatter() {
-        return dateTimeFormatter(
-                "\\D yyyy-mm-dd",
-                LocalDate.class
-        );
-    }
-
-    private Parser<SpreadsheetParserContext> dateParser() {
-        return SpreadsheetPattern.parseDateParsePattern("\\D yyyy-mm-dd")
-                .parser();
-    }
-
-    private SpreadsheetFormatter dateTimeFormatter() {
-        return dateTimeFormatter(
-                "\"DT\" yyyy-mm-dd hh-mm",
-                LocalDateTime.class
-        ); // dateTimeFormatter
-    }
-
-    private Parser<SpreadsheetParserContext> dateTimeParser() {
-        return SpreadsheetPattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss")
-                .parser();
-    }
-
-    private SpreadsheetFormatter numberFormatter() {
-        return formatter(
-                "\\N #.#",
-                SpreadsheetFormatParsers.numberParse(),
-                NumberSpreadsheetFormatParserToken.class,
-                SpreadsheetFormatters::number
-        );
-    }
-
-    private Parser<SpreadsheetParserContext> numberParser() {
-        return SpreadsheetPattern.parseNumberParsePattern("\"N\" #;\"N\" #.#")
-                .parser();
-    }
-
-    private SpreadsheetFormatter textFormatter() {
-        return formatter(
-                "@\"" + TEXT_SUFFIX + "\"",
-                SpreadsheetFormatParsers.textFormat(),
-                TextSpreadsheetFormatParserToken.class,
-                SpreadsheetFormatters::text
-        );
-    }
-
-    private final static String TEXT_SUFFIX = "text-literal-123";
-
-    private SpreadsheetFormatter timeFormatter() {
-        return dateTimeFormatter(
-                "\\T hh-mm",
-                LocalTime.class
-        );
-    }
-
-    private Parser<SpreadsheetParserContext> timeParser() {
-        return SpreadsheetPattern.parseTimeParsePattern("\\T hh mm ss")
-                .parser();
-    }
-
-    private SpreadsheetFormatter dateTimeFormatter(final String pattern,
-                                                   final Class<? extends Temporal> type) {
-        return formatter(
-                pattern,
-                SpreadsheetFormatParsers.dateTimeFormat(),
-                DateTimeSpreadsheetFormatParserToken.class,
-                (t) -> SpreadsheetFormatters.dateTime(
-                        t,
-                        type
-                )
-        );
-    }
-
-    private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter formatter(final String pattern,
-                                                                                    final Parser<SpreadsheetFormatParserContext> parser,
-                                                                                    final Class<T> token,
-                                                                                    final Function<T, SpreadsheetFormatter> formatterFactory) {
-        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).map(t -> t instanceof SequenceParserToken ?
-                        t.cast(SequenceParserToken.class).value().get(0) :
-                        t
-                ).map(t -> t.cast(token))
-                .map(formatterFactory)
-                .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
     }
 
     @Override
