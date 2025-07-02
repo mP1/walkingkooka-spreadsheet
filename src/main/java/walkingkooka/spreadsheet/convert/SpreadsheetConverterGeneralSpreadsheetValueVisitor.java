@@ -21,13 +21,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
@@ -134,45 +127,45 @@ final class SpreadsheetConverterGeneralSpreadsheetValueVisitor extends Spreadshe
         this.converter(this.mapping.number);
     }
 
-    @Override
-    protected void visit(final SpreadsheetCellRangeReference value) {
-        // fail
-    }
-
-    @Override
-    protected void visit(final SpreadsheetCellReference value) {
-        // fail
-    }
-
-    @Override
-    protected void visit(final SpreadsheetColumnRangeReference value) {
-        // fail
-    }
-
-    @Override
-    protected void visit(final SpreadsheetColumnReference value) {
-        // fail
-    }
+//    @Override
+//    protected void visit(final SpreadsheetCellRangeReference value) {
+//        // fail
+//    }
+//
+//    @Override
+//    protected void visit(final SpreadsheetCellReference value) {
+//        // fail
+//    }
+//
+//    @Override
+//    protected void visit(final SpreadsheetColumnRangeReference value) {
+//        // fail
+//    }
+//
+//    @Override
+//    protected void visit(final SpreadsheetColumnReference value) {
+//        // fail
+//    }
 
     @Override
     protected void visit(final SpreadsheetError error) {
         // fail
     }
 
-    @Override
-    protected void visit(final SpreadsheetLabelName value) {
-        // fail
-    }
-
-    @Override
-    protected void visit(final SpreadsheetRowRangeReference value) {
-        // fail
-    }
-
-    @Override
-    protected void visit(final SpreadsheetRowReference value) {
-        // fail
-    }
+//    @Override
+//    protected void visit(final SpreadsheetLabelName value) {
+//        // fail
+//    }
+//
+//    @Override
+//    protected void visit(final SpreadsheetRowRangeReference value) {
+//        // fail
+//    }
+//
+//    @Override
+//    protected void visit(final SpreadsheetRowReference value) {
+//        // fail
+//    }
 
     @Override
     protected void visit(final String value) {

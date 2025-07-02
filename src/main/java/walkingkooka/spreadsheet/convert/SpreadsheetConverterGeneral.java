@@ -23,8 +23,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
@@ -32,11 +30,11 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
- * A {@link Converter} that supports converting all but not any {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} the spreadsheet value types to other value types.
+ * A {@link Converter} that supports converting all basic types between each other.
+ * Types like {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection} and {@link walkingkooka.net.Url} are not supported.
  */
 final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
 
@@ -210,15 +208,15 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                                 Converters.numberToNumber()
                                         ).cast(SpreadsheetConverterContext.class)
                         )
-                ), // number
+                ),
                 characterOrStringTo(
                         toCharacterOrString(
                                 Converters.simple() // String -> String
                         )
-                ), // string
+                ),
                 characterOrStringTo(
                         SpreadsheetConverters.textToTime(timeParser)
-                ) // time
+                )
         );
 
         // LocalTime ->
@@ -351,11 +349,6 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 isSupportedValueAndType(
                         value,
                         targetType
-                ) ||
-                SpreadsheetConverterTextToSpreadsheetSelection.INSTANCE.canConvert(
-                        value,
-                        targetType,
-                        context
                 );
     }
 
@@ -407,7 +400,6 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
         return Object.class == type ||
                 Boolean.class == type ||
                 Character.class == type ||
-                HasText.class == type || // might be useful
                 String.class == type ||
                 isDateOrDateTimeOrTimeOrNumber(type);
     }
@@ -470,11 +462,7 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                 context
                         ) :
                 this.convertNonNull0(
-                        value instanceof Locale ?
-                                ((Locale) value).toLanguageTag() :
-                                value instanceof HasText && false == value instanceof SpreadsheetSelection ?
-                                        ((HasText) value).text() :
-                                        value,
+                        value,
                         targetType,
                         context
                 );
