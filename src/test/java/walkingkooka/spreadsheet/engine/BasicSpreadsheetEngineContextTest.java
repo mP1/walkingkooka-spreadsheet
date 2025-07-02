@@ -1192,7 +1192,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, to-json, text-to-form-name, text-to-validation-error, text-to-value-type, general)\",\n" +
+                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                         "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
@@ -1424,7 +1424,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
-                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, to-json, text-to-form-name, text-to-validation-error, text-to-value-type, general)\",\n" +
+                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)\",\n" +
                         "  \"validationFunctions\": \"@\",\n" +
                         "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                         "  \"validators\": \"collection, expression, non-null, text-length\",\n" +

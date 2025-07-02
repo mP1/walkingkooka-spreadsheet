@@ -356,10 +356,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                     ConverterSelector.parse("collection(" +
-                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, " +
+                            "null-to-number, simple, number-to-number, text-to-text, " +
+                            "error-to-number, text-to-error, " +
                             "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
-                            "to-json, " +
-                            "text-to-form-name, text-to-validation-error, text-to-value-type, " +
+                            "text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, " +
                             "general)"
                     )
             ).set(

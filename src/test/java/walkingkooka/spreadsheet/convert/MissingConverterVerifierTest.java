@@ -264,7 +264,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public SpreadsheetExpressionReference validationReference() {
-            throw new UnsupportedOperationException();
+            return SpreadsheetSelection.A1;
         }
 
         @Override
