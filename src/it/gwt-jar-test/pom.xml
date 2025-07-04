@@ -59,8 +59,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>11</source>
+                    <target>11</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>walkingkooka</groupId>
@@ -103,7 +103,7 @@
                 <configuration>
                     <failOnError>true</failOnError>
                     <moduleName>test.Test</moduleName>
-                    <sourceLevel>1.9</sourceLevel>
+                    <sourceLevel>11</sourceLevel>
                     <logLevel>DEBUG</logLevel>
                     <style>PRETTY</style>
                     <!-- If assertions are enabled, Compiler will fail when building AST tree-->
