@@ -670,6 +670,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     // isXXX............................................................................................................
 
     /**
+     * Returns true if this property contains a {@link ConverterSelector}.
+     */
+    public final boolean isConverterSelector() {
+        return this instanceof SpreadsheetMetadataPropertyNameConverterSelector;
+    }
+
+    /**
      * Returns true if this property contains a {@link SpreadsheetFormatterSelector}.
      */
     public final boolean isSpreadsheetFormatterSelector() {

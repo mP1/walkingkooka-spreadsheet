@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -207,6 +208,19 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         }
     }
 
+    // isConverterSelector...................................................................................
+
+    @Test
+    public final void testIsConverterSelector() {
+        final N propertyName = this.createName();
+
+        this.checkEquals(
+                this.propertyValue() instanceof ConverterSelector,
+                propertyName.isConverterSelector(),
+                propertyName::toString
+        );
+    }
+    
     // isSpreadsheetFormatterSelector...................................................................................
 
     @Test
