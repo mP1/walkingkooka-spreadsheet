@@ -83,6 +83,9 @@ import java.util.TreeSet;
 
 /**
  * Helper that may be used to validate a submitted {@link Converter} is able to convert required types.
+ * Note if a {@link UnsupportedOperationException} is thrown, it will be rethrown and the converter test not marked as a
+ * FAIL. This is useful particularly in tests which may be using a {@link FakeSpreadsheetConverterContext} with some
+ * unimplemented methods.
  */
 final class MissingConverterVerifier {
 
@@ -745,6 +748,8 @@ final class MissingConverterVerifier {
                     type,
                     this.context
             ).isRight();
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
         } catch (final SpreadsheetErrorException ignore) {
             failed = !expectedSpreadsheetErrorException;
         } catch (final Exception cause) {
