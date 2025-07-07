@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -38,7 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap, SpreadsheetCellReference, SpreadsheetCell>,
     ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap> {
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap>,
+    HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
@@ -240,6 +242,16 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     @Override
     public SpreadsheetCellReferenceToSpreadsheetCellMap createJsonNodeMarshallingValue() {
         return this.createMap();
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        this.urlFragmentAndCheck(
+            this.createMap(),
+            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=1%22%0A%20%20%20%20%7D%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=2%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+        );
     }
 
     // class............................................................................................................

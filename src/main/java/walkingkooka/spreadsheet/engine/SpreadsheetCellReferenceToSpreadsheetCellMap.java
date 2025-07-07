@@ -19,12 +19,15 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractMap;
@@ -36,7 +39,8 @@ import java.util.Set;
  * An immutable {@link Map} with {@link SpreadsheetCellReference} keys and {@link SpreadsheetCell} values.
  * Its primary utility is for marshalling/unmarshalling to JSON.
  */
-public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends AbstractMap<SpreadsheetCellReference, SpreadsheetCell> {
+public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends AbstractMap<SpreadsheetCellReference, SpreadsheetCell>
+    implements HasUrlFragment {
 
     public static SpreadsheetCellReferenceToSpreadsheetCellMap with(final Map<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell) {
         return cellReferenceToCell instanceof SpreadsheetCellReferenceToSpreadsheetCellMap ?
@@ -130,6 +134,20 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
             SpreadsheetCellReferenceToSpreadsheetCellMap::unmarshall,
             SpreadsheetCellReferenceToSpreadsheetCellMap::marshall,
             SpreadsheetCellReferenceToSpreadsheetCellMap.class
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    /**
+     * The {@link UrlFragment} will contain the cells within this set marshalled to JSON.
+     */
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(
+            this.marshall(
+                JsonNodeMarshallContexts.basic()
+            ).toString()
         );
     }
 }
