@@ -96,7 +96,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     public final static Optional<SpreadsheetViewport> NO_VIEWPORT = java.util.Optional.empty();
 
-    public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
+    public final static SpreadsheetCellSet NO_CELLS = SpreadsheetCellSet.EMPTY;
     public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
     public final static Set<Form<SpreadsheetExpressionReference>> NO_FORMS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
@@ -145,7 +145,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Package private to limit subclassing.
      */
     SpreadsheetDelta(final Optional<SpreadsheetViewport> viewport,
-                     final Set<SpreadsheetCell> cells,
+                     final SpreadsheetCellSet cells,
                      final Set<SpreadsheetColumn> columns,
                      final Set<Form<SpreadsheetExpressionReference>> forms,
                      final Set<SpreadsheetLabelMapping> labels,
@@ -215,7 +215,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.cells;
     }
 
-    final Set<SpreadsheetCell> cells;
+    final SpreadsheetCellSet cells;
 
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given cells after they are possibly filtered
@@ -224,20 +224,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final SpreadsheetDelta setCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
 
-        final Set<SpreadsheetCell> copy = this.filterCells(cells);
+        final SpreadsheetCellSet copy = this.filterCells(cells);
 
         return setElementEquals(this.cells, copy) ?
             this :
             this.replaceCells(copy);
     }
 
-    abstract SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells);
+    abstract SpreadsheetDelta replaceCells(final SpreadsheetCellSet cells);
 
     /**
      * Takes a copy of the cells, possibly filtering cells in hidden columns and rows, and cells if a window is present.
      * Note filtering of {@link #labels} will happen later.
      */
-    private Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
+    private SpreadsheetCellSet filterCells(final Set<SpreadsheetCell> cells) {
         return filterCellsByWindow(
             cells,
             this.columns,
@@ -250,10 +250,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Filters the given cells there are several rules that could make this happen. Cells within hidden columns or rows,
      * or outside the window if present will be removed.
      */
-    static Set<SpreadsheetCell> filterCellsByWindow(final Set<SpreadsheetCell> cells,
-                                                    final Set<SpreadsheetColumn> columns,
-                                                    final Set<SpreadsheetRow> rows,
-                                                    final SpreadsheetViewportWindows window) {
+    static SpreadsheetCellSet filterCellsByWindow(final Set<SpreadsheetCell> cells,
+                                                  final Set<SpreadsheetColumn> columns,
+                                                  final Set<SpreadsheetRow> rows,
+                                                  final SpreadsheetViewportWindows window) {
         Predicate<SpreadsheetCell> predicate = null;
 
         final int columnCount = null != columns ? columns.size() : 0;
@@ -299,25 +299,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 windowPredicate;
         }
 
-        Set<SpreadsheetCell> result;
-
-        if (null != predicate) {
-            result = filter(
-                cells,
-                predicate,
-                SpreadsheetCell.REFERENCE_COMPARATOR
-            );
-        } else {
-            if (cells instanceof ImmutableSortedSet) {
-                result = cells;
-            } else {
-                final SortedSet<SpreadsheetCell> sortedSet = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-                sortedSet.addAll(cells);
-                result = SortedSets.immutable(sortedSet);
-            }
-        }
-
-        return result;
+        return SpreadsheetCellSet.with(
+            null != predicate ?
+                filter(
+                    cells,
+                    predicate,
+                    SpreadsheetCell.REFERENCE_COMPARATOR
+                ) :
+                cells
+        );
     }
 
     /**
@@ -949,7 +939,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private SpreadsheetDelta setWindow0(final SpreadsheetViewportWindows window) {
         final Optional<SpreadsheetViewport> viewport = this.viewport;
 
-        final Set<SpreadsheetCell> cells = this.cells;
+        final SpreadsheetCellSet cells = this.cells;
         final Set<SpreadsheetColumn> columns = this.columns;
         final Set<Form<SpreadsheetExpressionReference>> forms = this.forms;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
@@ -967,7 +957,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
-        final Set<SpreadsheetCell> filteredCells = filterCellsByWindow(
+        final SpreadsheetCellSet filteredCells = filterCellsByWindow(
             cells,
             columns,
             rows,
@@ -2321,7 +2311,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 printer.outdent();
             }
 
-            printTreeCollectionTreePrinter("cells", this.cells(), printer);
+            if(this.cells.isNotEmpty()) {
+                printer.println("cells:");
+                printer.indent();
+                this.cells.printTree(printer);
+                printer.outdent();
+            }
+
             printTreeCollectionTreePrinter("columns", this.columns(), printer);
             printTreeCollectionTreePrinter("forms", this.forms(), printer);
             printTreeCollectionTreePrinter("labels", this.labels(), printer);

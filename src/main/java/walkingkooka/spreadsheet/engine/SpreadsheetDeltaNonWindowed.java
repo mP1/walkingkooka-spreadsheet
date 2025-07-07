@@ -66,7 +66,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final OptionalInt rowCount) {
         return new SpreadsheetDeltaNonWindowed(
             viewport,
-            cells,
+            SpreadsheetCellSet.with(cells),
             columns,
             forms,
             labels,
@@ -85,7 +85,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewport> viewport,
-                                        final Set<SpreadsheetCell> cells,
+                                        final SpreadsheetCellSet cells,
                                         final Set<SpreadsheetColumn> columns,
                                         final Set<Form<SpreadsheetExpressionReference>> forms,
                                         final Set<SpreadsheetLabelMapping> labels,
@@ -143,7 +143,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells) {
+    SpreadsheetDelta replaceCells(final SpreadsheetCellSet cells) {
         // cells have already been filtered by window
         return new SpreadsheetDeltaNonWindowed(
             this.viewport,
