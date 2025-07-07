@@ -27,8 +27,8 @@ public final class WhitespaceSpreadsheetFormulaParserToken extends SymbolSpreads
 
     static WhitespaceSpreadsheetFormulaParserToken with(final String value, final String text) {
         return new WhitespaceSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

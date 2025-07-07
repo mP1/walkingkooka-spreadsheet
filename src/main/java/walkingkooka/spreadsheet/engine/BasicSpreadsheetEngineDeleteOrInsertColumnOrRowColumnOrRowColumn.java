@@ -55,8 +55,8 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     @Override
     int max() {
         return this.cellStore()
-                .columnCount()
-                - 1;
+            .columnCount()
+            - 1;
     }
 
     @Override
@@ -67,20 +67,20 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     @Override
     void deleteColumnOrRow(final int column) {
         this.deleteColumn(
-                SpreadsheetReferenceKind.RELATIVE.column(column)
+            SpreadsheetReferenceKind.RELATIVE.column(column)
         );
     }
 
     private void deleteColumn(final SpreadsheetColumnReference column) {
         this.columnStore()
-                .delete(column);
+            .delete(column);
     }
 
     @Override
     Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnSpreadsheetFormulaParserToken token) {
         return this.deleteOrInsert.isColumnDeleted(token) ?
-                Optional.empty() :
-                this.fixColumnReferenceParserToken0(token);
+            Optional.empty() :
+            this.fixColumnReferenceParserToken0(token);
     }
 
     private Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken0(final ColumnSpreadsheetFormulaParserToken token) {
@@ -116,7 +116,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     @Override
     void moveColumnOrRows(final int column) {
         this.moveColumn(
-                SpreadsheetReferenceKind.RELATIVE.column(column)
+            SpreadsheetReferenceKind.RELATIVE.column(column)
         );
     }
 
@@ -129,7 +129,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
             store.delete(columnReference);
 
             final SpreadsheetColumn fixed = column.setReference(
-                    this.fixColumnReference(columnReference)
+                this.fixColumnReference(columnReference)
             );
             if (!fixed.equals(column)) {
                 store.save(fixed);

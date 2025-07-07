@@ -66,13 +66,13 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     @Test
     public void testUnmarshallWithoutId() {
         this.unmarshallAndCheck(this.jsonNodeWithoutId(),
-                User.with(Optional.empty(), EMAIL));
+            User.with(Optional.empty(), EMAIL));
     }
 
     @Test
     public void testUnmarshallWithId() {
         this.unmarshallAndCheck(this.jsonNodeWithId(),
-                User.with(this.createId(), EMAIL));
+            User.with(this.createId(), EMAIL));
     }
 
     @Test
@@ -87,7 +87,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
 
     private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(User.EMAIL_PROPERTY, this.marshallContext().marshall(EMAIL));
+            .set(User.EMAIL_PROPERTY, this.marshallContext().marshall(EMAIL));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -95,8 +95,8 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         final JsonNodeMarshallContext context = this.marshallContext();
 
         return JsonNode.object()
-                .set(User.ID_PROPERTY, context.marshall(createId().get()))
-                .set(User.EMAIL_PROPERTY, context.marshall(EMAIL));
+            .set(User.ID_PROPERTY, context.marshall(createId().get()))
+            .set(User.EMAIL_PROPERTY, context.marshall(EMAIL));
     }
 
     @Test

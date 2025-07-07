@@ -24,9 +24,9 @@ public interface HasSpreadsheetReferenceTesting extends Testing {
     default <RR extends Comparable<RR>> void referenceAndCheck(final HasSpreadsheetReference<RR> has,
                                                                final RR expected) {
         this.checkEquals(
-                expected,
-                has.reference(),
-                () -> has + " reference"
+            expected,
+            has.reference(),
+            () -> has + " reference"
         );
     }
 }

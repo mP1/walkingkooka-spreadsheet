@@ -35,7 +35,7 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
      */
     static SpreadsheetTextFormatPattern with(final ParserToken token) {
         SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor.with()
-                .startAccept(token);
+            .startAccept(token);
 
         return new SpreadsheetTextFormatPattern(token);
     }
@@ -73,8 +73,8 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetTextFormatPattern removeColor() {
         return this.removeIf0(
-                COLOR_PREDICATE,
-                SpreadsheetTextFormatPattern::new
+            COLOR_PREDICATE,
+            SpreadsheetTextFormatPattern::new
         );
     }
 
@@ -83,16 +83,16 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetTextFormatPattern setColorName(final SpreadsheetColorName name) {
         return this.setColorName0(
-                name,
-                SpreadsheetPattern::parseTextFormatPattern
+            name,
+            SpreadsheetPattern::parseTextFormatPattern
         );
     }
 
     @Override
     public SpreadsheetTextFormatPattern setColorNumber(final int colorNumber) {
         return this.setColorNumber0(
-                colorNumber,
-                SpreadsheetPattern::parseTextFormatPattern
+            colorNumber,
+            SpreadsheetPattern::parseTextFormatPattern
         );
     }
 
@@ -101,8 +101,8 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetTextFormatPattern removeCondition() {
         return this.removeIf0(
-                CONDITION_PREDICATE,
-                SpreadsheetTextFormatPattern::new
+            CONDITION_PREDICATE,
+            SpreadsheetTextFormatPattern::new
         );
     }
 

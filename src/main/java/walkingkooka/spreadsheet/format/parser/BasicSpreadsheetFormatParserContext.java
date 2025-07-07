@@ -36,11 +36,11 @@ import java.util.function.BiFunction;
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
 final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
-    static BasicSpreadsheetFormatParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory){
+    static BasicSpreadsheetFormatParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         return new BasicSpreadsheetFormatParserContext(
-                Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory")
+            Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory")
         );
     }
 
@@ -64,8 +64,8 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
         return this.invalidCharacterExceptionFactory.apply(
-                parser,
-                cursor
+            parser,
+            cursor
         );
     }
 

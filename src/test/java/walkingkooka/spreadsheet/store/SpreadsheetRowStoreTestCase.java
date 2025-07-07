@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore> implements SpreadsheetRowStoreTesting<S>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     final static SpreadsheetRowReference REFERENCE = SpreadsheetSelection.parseRow("2");
 
@@ -58,16 +58,16 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         final SpreadsheetRowReference reference = REFERENCE.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
         final SpreadsheetRow row = REFERENCE.row();
         this.checkEquals(
-                row,
-                store.save(row),
-                "incorrect row returned"
+            row,
+            store.save(row),
+            "incorrect row returned"
         );
 
         assertSame(
-                row,
-                store.loadOrFail(
-                        reference.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
-                )
+            row,
+            store.loadOrFail(
+                reference.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
+            )
         );
     }
 
@@ -118,9 +118,9 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         store.save(c);
 
         this.idsAndCheck(store,
-                0,
-                3,
-                a.reference(), b.reference(), c.reference());
+            0,
+            3,
+            a.reference(), b.reference(), c.reference());
     }
 
     @Test
@@ -138,9 +138,9 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         store.save(d);
 
         this.idsAndCheck(store,
-                1,
-                2,
-                b.reference(), c.reference());
+            1,
+            2,
+            b.reference(), c.reference());
     }
 
     @Test
@@ -156,12 +156,12 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         store.save(c);
 
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                a,
-                b,
-                c
+            store,
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -180,11 +180,11 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
         store.save(d);
 
         this.valuesAndCheck(
-                store,
-                1,
-                2,
-                b,
-                c
+            store,
+            1,
+            2,
+            b,
+            c
         );
     }
 
@@ -200,7 +200,7 @@ public abstract class SpreadsheetRowStoreTestCase<S extends SpreadsheetRowStore>
 
     private SpreadsheetRow row(final String text) {
         return this.row(
-                SpreadsheetSelection.parseRow(text)
+            SpreadsheetSelection.parseRow(text)
         );
     }
 

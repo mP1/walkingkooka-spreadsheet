@@ -34,45 +34,45 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
     @Test
     default void testCanExportWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporter()
-                        .canExport(
-                                null,
-                                SpreadsheetCellValueKind.CELL,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporter()
+                .canExport(
+                    null,
+                    SpreadsheetCellValueKind.CELL,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testCanExportWithNullValueKindFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporter()
-                        .canExport(
-                                SpreadsheetCellRange.with(
-                                        SpreadsheetSelection.ALL_CELLS,
-                                        Sets.empty()
-                                ),
-                                null,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporter()
+                .canExport(
+                    SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.empty()
+                    ),
+                    null,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testCanExportWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporter()
-                        .canExport(
-                                SpreadsheetCellRange.with(
-                                        SpreadsheetSelection.ALL_CELLS,
-                                        Sets.empty()
-                                ),
-                                SpreadsheetCellValueKind.CELL,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporter()
+                .canExport(
+                    SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.empty()
+                    ),
+                    SpreadsheetCellValueKind.CELL,
+                    null
+                )
         );
     }
 
@@ -80,10 +80,10 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                    final SpreadsheetCellValueKind valueKind,
                                    final boolean expected) {
         this.canExportAndCheck(
-                cells,
-                valueKind,
-                this.createContext(),
-                expected
+            cells,
+            valueKind,
+            this.createContext(),
+            expected
         );
     }
 
@@ -92,11 +92,11 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                    final SpreadsheetExporterContext context,
                                    final boolean expected) {
         this.canExportAndCheck(
-                this.createSpreadsheetExporter(),
-                cells,
-                valueKind,
-                context,
-                expected
+            this.createSpreadsheetExporter(),
+            cells,
+            valueKind,
+            context,
+            expected
         );
     }
 
@@ -106,12 +106,12 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                    final SpreadsheetExporterContext context,
                                    final boolean expected) {
         this.checkEquals(
-                expected,
-                exporter.canExport(
-                        cells,
-                        valueKind,
-                        context
-                )
+            expected,
+            exporter.canExport(
+                cells,
+                valueKind,
+                context
+            )
         );
     }
 
@@ -120,45 +120,45 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
     @Test
     default void testExportCellsWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporter()
-                        .export(
-                                null,
-                                SpreadsheetCellValueKind.CELL,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporter()
+                .export(
+                    null,
+                    SpreadsheetCellValueKind.CELL,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testExportCellsWithNullValueKindFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporter()
-                        .export(
-                                SpreadsheetCellRange.with(
-                                        SpreadsheetSelection.ALL_CELLS,
-                                        Sets.empty()
-                                ),
-                                null,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporter()
+                .export(
+                    SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.empty()
+                    ),
+                    null,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testExportCellsWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporter()
-                        .export(
-                                SpreadsheetCellRange.with(
-                                        SpreadsheetSelection.ALL_CELLS,
-                                        Sets.empty()
-                                ),
-                                SpreadsheetCellValueKind.CELL,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporter()
+                .export(
+                    SpreadsheetCellRange.with(
+                        SpreadsheetSelection.ALL_CELLS,
+                        Sets.empty()
+                    ),
+                    SpreadsheetCellValueKind.CELL,
+                    null
+                )
         );
     }
 
@@ -166,10 +166,10 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                 final SpreadsheetCellValueKind valueKind,
                                 final WebEntity expected) {
         this.exportAndCheck(
-                cells,
-                valueKind,
-                this.createContext(),
-                expected
+            cells,
+            valueKind,
+            this.createContext(),
+            expected
         );
     }
 
@@ -178,11 +178,11 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                 final SpreadsheetExporterContext context,
                                 final WebEntity expected) {
         this.exportAndCheck(
-                this.createSpreadsheetExporter(),
-                cells,
-                valueKind,
-                context,
-                expected
+            this.createSpreadsheetExporter(),
+            cells,
+            valueKind,
+            context,
+            expected
         );
     }
 
@@ -191,11 +191,11 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                 final SpreadsheetCellValueKind valueKind,
                                 final WebEntity expected) {
         this.exportAndCheck(
-                exporter,
-                cells,
-                valueKind,
-                this.createContext(),
-                expected
+            exporter,
+            cells,
+            valueKind,
+            this.createContext(),
+            expected
         );
     }
 
@@ -205,20 +205,20 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                 final SpreadsheetExporterContext context,
                                 final WebEntity expected) {
         this.canExportAndCheck(
-                exporter,
-                cells,
-                valueKind,
-                context,
-                true
+            exporter,
+            cells,
+            valueKind,
+            context,
+            true
         );
 
         this.checkEquals(
-                expected,
-                exporter.export(
-                        cells,
-                        valueKind,
-                        context
-                )
+            expected,
+            exporter.export(
+                cells,
+                valueKind,
+                context
+            )
         );
     }
 
@@ -228,10 +228,10 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                              final SpreadsheetCellValueKind valueKind,
                              final RuntimeException expected) {
         this.exportFails(
-                cells,
-                valueKind,
-                this.createContext(),
-                expected
+            cells,
+            valueKind,
+            this.createContext(),
+            expected
         );
     }
 
@@ -240,11 +240,11 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                              final SpreadsheetCellValueKind valueKind,
                              final RuntimeException expected) {
         this.exportFails(
-                exporter,
-                cells,
-                valueKind,
-                this.createContext(),
-                expected
+            exporter,
+            cells,
+            valueKind,
+            this.createContext(),
+            expected
         );
     }
 
@@ -253,11 +253,11 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                              final SpreadsheetExporterContext context,
                              final RuntimeException expected) {
         this.exportFails(
-                this.createSpreadsheetExporter(),
-                cells,
-                valueKind,
-                context,
-                expected
+            this.createSpreadsheetExporter(),
+            cells,
+            valueKind,
+            context,
+            expected
         );
     }
 
@@ -267,17 +267,17 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                              final SpreadsheetExporterContext context,
                              final RuntimeException expected) {
         final RuntimeException thrown = assertThrows(
-                expected.getClass(),
-                () -> exporter.export(
-                        cells,
-                        valueKind,
-                        context
-                )
+            expected.getClass(),
+            () -> exporter.export(
+                cells,
+                valueKind,
+                context
+            )
         );
         this.checkEquals(
-                expected.getMessage(),
-                thrown.getMessage(),
-                "message"
+            expected.getMessage(),
+            thrown.getMessage(),
+            "message"
         );
     }
 

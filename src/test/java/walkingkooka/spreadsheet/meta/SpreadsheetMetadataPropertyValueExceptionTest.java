@@ -34,11 +34,11 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     @Test
     public void testCreate() {
         final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(MESSAGE,
-                this.name(),
-                this.value());
+            this.name(),
+            this.value());
         this.checkMessage(
-                throwable,
-                "Metadata auditInfo=\"abc123\", message"
+            throwable,
+            "Metadata auditInfo=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
     }
@@ -46,14 +46,14 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     @Test
     public void testCreateWithThrowable() {
         final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(
-                MESSAGE,
-                this.name(),
-                this.value(),
-                CAUSE
+            MESSAGE,
+            this.name(),
+            this.value(),
+            CAUSE
         );
         this.checkMessage(
-                throwable,
-                "Metadata auditInfo=\"abc123\", message"
+            throwable,
+            "Metadata auditInfo=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
         this.checkCause(throwable, CAUSE);

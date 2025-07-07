@@ -33,7 +33,7 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
      * formatter will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetFormatter.class.getSimpleName()
+        "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetFormatter.class.getSimpleName()
     );
 
     /**
@@ -42,8 +42,8 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     public static SpreadsheetFormatterProvider aliases(final SpreadsheetFormatterAliasSet aliases,
                                                        final SpreadsheetFormatterProvider provider) {
         return AliasesSpreadsheetFormatterProvider.with(
-                aliases,
-                provider
+            aliases,
+            provider
         );
     }
 
@@ -74,8 +74,8 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     public static SpreadsheetFormatterProvider filtered(final SpreadsheetFormatterProvider provider,
                                                         final SpreadsheetFormatterInfoSet infos) {
         return FilteredSpreadsheetFormatterProvider.with(
-                provider,
-                infos
+            provider,
+            infos
         );
     }
 
@@ -85,8 +85,8 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     public static SpreadsheetFormatterProvider filteredMapped(final SpreadsheetFormatterInfoSet infos,
                                                               final SpreadsheetFormatterProvider provider) {
         return FilteredMappedSpreadsheetFormatterProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -96,8 +96,8 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     public static SpreadsheetFormatterProvider mergedMapped(final SpreadsheetFormatterInfoSet infos,
                                                             final SpreadsheetFormatterProvider provider) {
         return MergedMappedSpreadsheetFormatterProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 

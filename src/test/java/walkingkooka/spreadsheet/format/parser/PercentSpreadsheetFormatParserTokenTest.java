@@ -72,7 +72,7 @@ public final class PercentSpreadsheetFormatParserTokenTest extends NonSymbolSpre
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.PERCENT
+            SpreadsheetFormatParserTokenKind.PERCENT
         );
     }
 

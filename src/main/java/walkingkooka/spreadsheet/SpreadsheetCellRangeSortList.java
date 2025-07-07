@@ -30,8 +30,8 @@ final class SpreadsheetCellRangeSortList extends AbstractList<SpreadsheetCell> {
     static SpreadsheetCellRangeSortList with(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
                                              final int size) {
         return new SpreadsheetCellRangeSortList(
-                columnOrRow,
-                size
+            columnOrRow,
+            size
         );
     }
 

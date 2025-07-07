@@ -31,10 +31,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterValueTest implements ClassTesting2<MissingConverterValue>,
-        HashCodeEqualsDefinedTesting2<MissingConverterValue>,
-        ToStringTesting<MissingConverterValue>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<MissingConverterValue> {
+    HashCodeEqualsDefinedTesting2<MissingConverterValue>,
+    ToStringTesting<MissingConverterValue>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<MissingConverterValue> {
 
     private final static Object VALUE = "Hello";
 
@@ -43,60 +43,60 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     @Test
     public void testWithNullTypeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MissingConverterValue.with(
-                        VALUE,
-                        null
-                )
+            NullPointerException.class,
+            () -> MissingConverterValue.with(
+                VALUE,
+                null
+            )
         );
     }
 
     @Test
     public void testWithEmptyTypeFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> MissingConverterValue.with(
-                        VALUE,
-                        ""
-                )
+            IllegalArgumentException.class,
+            () -> MissingConverterValue.with(
+                VALUE,
+                ""
+            )
         );
     }
 
     @Test
     public void testWith() {
         final MissingConverterValue missing = MissingConverterValue.with(
-                VALUE,
-                TYPE
+            VALUE,
+            TYPE
         );
 
         this.checkEquals(
-                VALUE,
-                missing.value(),
-                "value"
+            VALUE,
+            missing.value(),
+            "value"
         );
         this.checkEquals(
-                TYPE,
-                missing.type(),
-                "type"
+            TYPE,
+            missing.type(),
+            "type"
         );
     }
 
     @Test
     public void testWithNullValue() {
         final MissingConverterValue missing = MissingConverterValue.with(
-                null,
-                TYPE
+            null,
+            TYPE
         );
 
         this.checkEquals(
-                null,
-                missing.value(),
-                "value"
+            null,
+            missing.value(),
+            "value"
         );
         this.checkEquals(
-                TYPE,
-                missing.type(),
-                "type"
+            TYPE,
+            missing.type(),
+            "type"
         );
     }
 
@@ -105,28 +105,28 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     @Test
     public void testEqualsDifferentValye() {
         this.checkNotEquals(
-                MissingConverterValue.with(
-                        "different",
-                        TYPE
-                )
+            MissingConverterValue.with(
+                "different",
+                TYPE
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentValues() {
         this.checkNotEquals(
-                MissingConverterValue.with(
-                        VALUE,
-                        Void.class.getName()
-                )
+            MissingConverterValue.with(
+                VALUE,
+                Void.class.getName()
+            )
         );
     }
 
     @Override
     public MissingConverterValue createObject() {
         return MissingConverterValue.with(
-                VALUE,
-                TYPE
+            VALUE,
+            TYPE
         );
     }
 
@@ -135,8 +135,8 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createObject(),
-                "\"Hello\" java.lang.String"
+            this.createObject(),
+            "\"Hello\" java.lang.String"
         );
     }
 
@@ -145,21 +145,21 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     @Test
     public void testTreePrintable() {
         this.treePrintAndCheck(
-                this.createObject(),
-                "\"Hello\"\n" +
-                        "  java.lang.String\n"
+            this.createObject(),
+            "\"Hello\"\n" +
+                "  java.lang.String\n"
         );
     }
 
     @Test
     public void testTreePrintableWithNullValue() {
         this.treePrintAndCheck(
-                MissingConverterValue.with(
-                        null,
-                        String.class.getName()
-                ),
-                "null\n" +
-                        "  java.lang.String\n"
+            MissingConverterValue.with(
+                null,
+                String.class.getName()
+            ),
+            "null\n" +
+                "  java.lang.String\n"
         );
     }
 
@@ -168,44 +168,44 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     @Test
     public void testMarshallWithNullValue() {
         this.marshallAndCheck(
-                MissingConverterValue.with(
-                        null,
-                        Void.class.getName()
-                ),
-                "{\n" +
-                        "  \"type\": \"java.lang.Void\"\n" +
-                        "}"
+            MissingConverterValue.with(
+                null,
+                Void.class.getName()
+            ),
+            "{\n" +
+                "  \"type\": \"java.lang.Void\"\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallWithNonNullValue() {
         this.marshallAndCheck(
-                MissingConverterValue.with(
-                        VALUE,
-                        Void.class.getName()
-                ),
-                "{\n" +
-                        "  \"value\": \"Hello\",\n" +
-                        "  \"type\": \"java.lang.Void\"\n" +
-                        "}"
+            MissingConverterValue.with(
+                VALUE,
+                Void.class.getName()
+            ),
+            "{\n" +
+                "  \"value\": \"Hello\",\n" +
+                "  \"type\": \"java.lang.Void\"\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallWithNonNullValue2() {
         this.marshallAndCheck(
-                MissingConverterValue.with(
-                        Url.parse("https://example.com/123"),
-                        Void.class.getName()
-                ),
-                "{\n" +
-                        "  \"value\": {\n" +
-                        "    \"type\": \"url\",\n" +
-                        "    \"value\": \"https://example.com/123\"\n" +
-                        "  },\n" +
-                        "  \"type\": \"java.lang.Void\"\n" +
-                        "}"
+            MissingConverterValue.with(
+                Url.parse("https://example.com/123"),
+                Void.class.getName()
+            ),
+            "{\n" +
+                "  \"value\": {\n" +
+                "    \"type\": \"url\",\n" +
+                "    \"value\": \"https://example.com/123\"\n" +
+                "  },\n" +
+                "  \"type\": \"java.lang.Void\"\n" +
+                "}"
         );
     }
 
@@ -213,8 +213,8 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     public MissingConverterValue unmarshall(final JsonNode json,
                                             final JsonNodeUnmarshallContext context) {
         return MissingConverterValue.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

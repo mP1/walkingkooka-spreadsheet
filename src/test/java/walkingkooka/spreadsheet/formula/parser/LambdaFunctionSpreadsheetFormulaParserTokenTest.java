@@ -45,14 +45,14 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
         final String text = FUNCTION + "(" + PARAMETER + ")(" + ParentSpreadsheetFormulaParserTokenTestCase.NUMBER1 + ")";
         final FunctionNameSpreadsheetFormulaParserToken name = this.functionNameParserToken();
         final LambdaFunctionSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                name,
-                this.functionParameters(
-                        this.label(PARAMETER)
-                ),
-                this.functionParameters(
-                        this.number1()
-                )
+            text,
+            name,
+            this.functionParameters(
+                this.label(PARAMETER)
+            ),
+            this.functionParameters(
+                this.number1()
+            )
         );
         this.textAndCheck(token, text);
     }
@@ -64,22 +64,22 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
         final FunctionNameSpreadsheetFormulaParserToken name = this.functionNameParserToken();
 
         final FunctionParametersSpreadsheetFormulaParserToken parameters = this.functionParameters(
-                this.openParenthesisSymbol(),
-                this.label(PARAMETER),
-                this.closeParenthesisSymbol()
+            this.openParenthesisSymbol(),
+            this.label(PARAMETER),
+            this.closeParenthesisSymbol()
         );
 
         final FunctionParametersSpreadsheetFormulaParserToken parameterValues = this.functionParameters(
-                this.openParenthesisSymbol(),
-                this.number1(),
-                this.closeParenthesisSymbol()
+            this.openParenthesisSymbol(),
+            this.number1(),
+            this.closeParenthesisSymbol()
         );
 
         final LambdaFunctionSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                name,
-                parameters,
-                parameterValues
+            text,
+            name,
+            parameters,
+            parameterValues
         );
         this.textAndCheck(token, text);
         this.checkValue(token, name, parameters, parameterValues);
@@ -92,50 +92,50 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
+            Expression.call(
                 Expression.call(
-                        Expression.call(
-                                Expression.namedFunction(
-                                        SpreadsheetExpressionFunctions.name(FUNCTION)
-                                ),
-                                Lists.of(
-                                        Expression.reference(
-                                                SpreadsheetSelection.labelName(PARAMETER)
-                                        )
-                                )
-                        ),
-                        Lists.of(
-                                Expression.value(
-                                        this.expressionNumber(ParentSpreadsheetFormulaParserTokenTestCase.NUMBER1)
-                                )
+                    Expression.namedFunction(
+                        SpreadsheetExpressionFunctions.name(FUNCTION)
+                    ),
+                    Lists.of(
+                        Expression.reference(
+                            SpreadsheetSelection.labelName(PARAMETER)
                         )
+                    )
+                ),
+                Lists.of(
+                    Expression.value(
+                        this.expressionNumber(ParentSpreadsheetFormulaParserTokenTestCase.NUMBER1)
+                    )
                 )
+            )
         );
     }
 
     private void checkFunctionName(final LambdaFunctionSpreadsheetFormulaParserToken function,
                                    final SpreadsheetFunctionName name) {
         this.checkEquals(
-                name,
-                function.functionName(),
-                "functionName"
+            name,
+            function.functionName(),
+            "functionName"
         );
     }
 
     private void checkParameters(final LambdaFunctionSpreadsheetFormulaParserToken function,
                                  final FunctionParametersSpreadsheetFormulaParserToken parameters) {
         this.checkEquals(
-                parameters,
-                function.parameters(),
-                "parameters"
+            parameters,
+            function.parameters(),
+            "parameters"
         );
     }
 
     private void checkParameterValues(final LambdaFunctionSpreadsheetFormulaParserToken function,
                                       final FunctionParametersSpreadsheetFormulaParserToken parameterValues) {
         this.checkEquals(
-                parameterValues,
-                function.parameterValues(),
-                "parameterValues"
+            parameterValues,
+            function.parameterValues(),
+            "parameterValues"
         );
     }
 
@@ -153,17 +153,17 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                this.functionNameParserToken(),
-                this.functionParameters(
-                        this.openParenthesisSymbol(),
-                        this.label(PARAMETER),
-                        this.closeParenthesisSymbol()
-                ),
-                this.functionParameters(
-                        this.openParenthesisSymbol(),
-                        this.number1(),
-                        this.closeParenthesisSymbol()
-                )
+            this.functionNameParserToken(),
+            this.functionParameters(
+                this.openParenthesisSymbol(),
+                this.label(PARAMETER),
+                this.closeParenthesisSymbol()
+            ),
+            this.functionParameters(
+                this.openParenthesisSymbol(),
+                this.number1(),
+                this.closeParenthesisSymbol()
+            )
         );
     }
 
@@ -173,8 +173,8 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
 
     private FunctionNameSpreadsheetFormulaParserToken functionNameParserToken(final String name) {
         return SpreadsheetFormulaParserToken.functionName(
-                SpreadsheetFunctionName.with(name),
-                name
+            SpreadsheetFunctionName.with(name),
+            name
         );
     }
 
@@ -188,33 +188,33 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
 
     private FunctionParametersSpreadsheetFormulaParserToken functionParameters(final SpreadsheetFormulaParserToken... tokens) {
         return SpreadsheetFormulaParserToken.functionParameters(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+            Lists.of(
+                tokens
+            ),
+            ParserToken.text(
+                Lists.of(tokens)
+            )
         );
     }
 
     private LabelSpreadsheetFormulaParserToken label(final String label) {
         return SpreadsheetFormulaParserToken.label(
-                SpreadsheetSelection.labelName(label),
-                label
+            SpreadsheetSelection.labelName(label),
+            label
         );
     }
 
     @Override
     public LambdaFunctionSpreadsheetFormulaParserToken createDifferentToken() {
         return this.createToken(
-                "lambda()",
-                this.functionNameParserToken("lambda"),
-                this.functionParameters(
-                        this.label("different")
-                ),
-                this.functionParameters(
-                        this.number1()
-                )
+            "lambda()",
+            this.functionNameParserToken("lambda"),
+            this.functionParameters(
+                this.label("different")
+            ),
+            this.functionParameters(
+                this.number1()
+            )
         );
     }
 

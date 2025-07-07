@@ -34,8 +34,8 @@ final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImport
         Objects.requireNonNull(provider, "provider");
 
         return new MergedMappedSpreadsheetImporterProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -43,9 +43,9 @@ final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImport
                                                     final SpreadsheetImporterProvider provider) {
         this.provider = provider;
         this.mapper = MergedProviderMapper.with(
-                infos,
-                provider.spreadsheetImporterInfos(),
-                SpreadsheetImporterPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetImporterInfos(),
+            SpreadsheetImporterPluginHelper.INSTANCE
         );
     }
 
@@ -56,8 +56,8 @@ final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImport
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetImporter(
-                this.mapper.selector(selector),
-                context
+            this.mapper.selector(selector),
+            context
         );
     }
 
@@ -70,9 +70,9 @@ final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImport
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetImporter(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 

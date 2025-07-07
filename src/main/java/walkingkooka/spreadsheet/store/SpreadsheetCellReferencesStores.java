@@ -27,7 +27,7 @@ public final class SpreadsheetCellReferencesStores implements PublicStaticHelper
     /**
      * {@see FakeSpreadsheetCellReferencesStore}
      */
-    public static  SpreadsheetCellReferencesStore fake() {
+    public static SpreadsheetCellReferencesStore fake() {
         return new FakeSpreadsheetCellReferencesStore();
     }
 

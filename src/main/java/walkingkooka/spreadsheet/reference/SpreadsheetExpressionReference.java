@@ -29,7 +29,7 @@ import walkingkooka.validation.ValidationReference;
  * form fields.
  */
 abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference,
-        ValidationReference {
+    ValidationReference {
 
     /**
      * Package private to limit subclassing.
@@ -63,10 +63,10 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     @Override
     public final boolean testParameterName(final ExpressionFunctionParameterName parameterName) {
         return this.isLabelName() &&
-                CASE_SENSITIVITY.equals(
-                        this.toString(),
-                        parameterName.value()
-                );
+            CASE_SENSITIVITY.equals(
+                this.toString(),
+                parameterName.value()
+            );
     }
 
     /**

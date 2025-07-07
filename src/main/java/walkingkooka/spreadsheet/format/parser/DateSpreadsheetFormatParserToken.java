@@ -33,7 +33,7 @@ public final class DateSpreadsheetFormatParserToken extends ParentSpreadsheetFor
      */
     static DateSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new DateSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmpty(text));
+            checkTextNotEmpty(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class DateSpreadsheetFormatParserToken extends ParentSpreadsheetFor
     @Override
     public DateSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                DateSpreadsheetFormatParserToken::with
+            this,
+            children,
+            DateSpreadsheetFormatParserToken::with
         );
     }
 

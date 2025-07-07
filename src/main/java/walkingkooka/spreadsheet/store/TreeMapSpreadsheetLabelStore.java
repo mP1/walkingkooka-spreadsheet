@@ -67,8 +67,8 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Objects.requireNonNull(mapping, "mapping");
 
         TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor.cycleFreeTest(
-                mapping,
-                this
+            mapping,
+            this
         );
 
         final SpreadsheetLabelName key = mapping.label();
@@ -113,10 +113,10 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Store.checkOffsetAndCount(offset, count);
 
         return this.mappings.keySet()
-                .stream()
-                .skip(offset)
-                .limit(count)
-                .collect(Collectors.toCollection(Sets::ordered));
+            .stream()
+            .skip(offset)
+            .limit(count)
+            .collect(Collectors.toCollection(Sets::ordered));
     }
 
     /**
@@ -128,10 +128,10 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Store.checkOffsetAndCount(offset, count);
 
         return this.mappings.values()
-                .stream()
-                .skip(offset)
-                .limit(count)
-                .collect(Collectors.toCollection(Lists::array));
+            .stream()
+            .skip(offset)
+            .limit(count)
+            .collect(Collectors.toCollection(Lists::array));
     }
 
     @Override
@@ -190,10 +190,10 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
             }
 
             this.mappings.values()
-                    .stream()
-                    .filter(l -> contains(text, l))
-                    .limit(count - (null != mapping ? 1 : 0))
-                    .forEach(results::add);
+                .stream()
+                .filter(l -> contains(text, l))
+                .limit(count - (null != mapping ? 1 : 0))
+                .forEach(results::add);
         } while (false);
 
         return results;
@@ -206,7 +206,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     private boolean contains(final String text,
                              final SpreadsheetLabelMapping possible) {
         final String value = possible.label()
-                .value();
+            .value();
         return value.length() != text.length() && SpreadsheetSelection.CASE_SENSITIVITY.contains(value, text);
     }
 
@@ -215,10 +215,10 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Objects.requireNonNull(label, "label");
 
         return Sets.readOnly(
-                TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.gather(
-                        label,
-                        this.mappings
-                )
+            TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.gather(
+                label,
+                this.mappings
+            )
         );
     }
 
@@ -228,15 +228,15 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
                                                                 final int count) {
         Objects.requireNonNull(reference, "reference");
         Store.checkOffsetAndCount(
-                offset,
-                count
+            offset,
+            count
         );
 
         return TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor.gather(
-                this.mappings,
-                reference,
-                offset,
-                count
+            this.mappings,
+            reference,
+            offset,
+            count
         );
     }
 

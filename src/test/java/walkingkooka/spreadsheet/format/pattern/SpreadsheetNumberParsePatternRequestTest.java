@@ -23,22 +23,22 @@ import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.reflect.ClassTesting;
 
 public final class SpreadsheetNumberParsePatternRequestTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternRequest>
-        implements ClassTesting<SpreadsheetNumberParsePatternRequest>,
-        ToStringTesting<SpreadsheetNumberParsePatternRequest> {
+    implements ClassTesting<SpreadsheetNumberParsePatternRequest>,
+    ToStringTesting<SpreadsheetNumberParsePatternRequest> {
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createRequest(),
-                "context=" + decimalNumberContext() + " digitMode=" + SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN
+            this.createRequest(),
+            "context=" + decimalNumberContext() + " digitMode=" + SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN
         );
     }
 
     private SpreadsheetNumberParsePatternRequest createRequest() {
         return SpreadsheetNumberParsePatternRequest.with(
-                Iterators.fake(),
-                SpreadsheetNumberParsePatternMode.VALUE,
-                this.decimalNumberContext()
+            Iterators.fake(),
+            SpreadsheetNumberParsePatternMode.VALUE,
+            this.decimalNumberContext()
         );
     }
 

@@ -65,13 +65,13 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     @Override
     void deleteColumnOrRow(final int row) {
         this.deleteRow(
-                SpreadsheetReferenceKind.RELATIVE.row(row)
+            SpreadsheetReferenceKind.RELATIVE.row(row)
         );
     }
 
     private void deleteRow(final SpreadsheetRowReference row) {
         this.rowStore()
-                .delete(row);
+            .delete(row);
     }
 
     @Override
@@ -83,8 +83,8 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     @Override
     Optional<RowSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowSpreadsheetFormulaParserToken token) {
         return this.deleteOrInsert.isRowDeleted(token) ?
-                Optional.empty() :
-                this.fixRowReferenceParserToken0(token);
+            Optional.empty() :
+            this.fixRowReferenceParserToken0(token);
     }
 
     private Optional<RowSpreadsheetFormulaParserToken> fixRowReferenceParserToken0(final RowSpreadsheetFormulaParserToken token) {
@@ -114,7 +114,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     @Override
     void moveColumnOrRows(final int row) {
         this.moveRow(
-                SpreadsheetReferenceKind.RELATIVE.row(row)
+            SpreadsheetReferenceKind.RELATIVE.row(row)
         );
     }
 
@@ -127,7 +127,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
             store.delete(rowReference);
 
             final SpreadsheetRow fixed = row.setReference(
-                    this.fixRowReference(rowReference)
+                this.fixRowReference(rowReference)
             );
             if (!fixed.equals(row)) {
                 store.save(fixed);

@@ -26,8 +26,8 @@ public final class FunctionNameSpreadsheetFormulaParserToken extends NonSymbolSp
     static FunctionNameSpreadsheetFormulaParserToken with(final SpreadsheetFunctionName value,
                                                           final String text) {
         return new FunctionNameSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

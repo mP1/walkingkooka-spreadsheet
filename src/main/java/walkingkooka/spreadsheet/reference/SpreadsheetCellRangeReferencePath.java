@@ -38,9 +38,9 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     LRTD(
-            false, // xFirst
-            1, // reverseX
-            1 //reverseY,
+        false, // xFirst
+        1, // reverseX
+        1 //reverseY,
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
@@ -51,8 +51,8 @@ public enum SpreadsheetCellRangeReferencePath {
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setColumn(
-                    range.end()
-                            .column()
+                range.end()
+                    .column()
             );
         }
 
@@ -71,25 +71,25 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     RLTD(
-            false, // xFirst
-            -1, // reverseX
-            1//reverseY
+        false, // xFirst
+        -1, // reverseX
+        1//reverseY
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin()
-                    .setColumn(
-                            range.end()
-                                    .column()
-                    );
+                .setColumn(
+                    range.end()
+                        .column()
+                );
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setColumn(
-                    range.begin()
-                            .column()
+                range.begin()
+                    .column()
             );
         }
 
@@ -108,25 +108,25 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     LRBU(
-            false, // xFirst
-            1, // reverseX
-            -1 //reverseY
+        false, // xFirst
+        1, // reverseX
+        -1 //reverseY
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin()
-                    .setRow(
-                            range.end()
-                                    .row()
-                    );
+                .setRow(
+                    range.end()
+                        .row()
+                );
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
-                    range.begin()
-                            .row()
+                range.begin()
+                    .row()
             );
         }
 
@@ -145,9 +145,9 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     RLBU(
-            false, // xFirst
-            -1, // reverseX
-            -1 //reverseY
+        false, // xFirst
+        -1, // reverseX
+        -1 //reverseY
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
@@ -158,8 +158,8 @@ public enum SpreadsheetCellRangeReferencePath {
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
-                    range.begin()
-                            .row()
+                range.begin()
+                    .row()
             );
         }
 
@@ -178,9 +178,9 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     TDLR(
-            true, // xFirst
-            1, // reverseX
-            1 //reverseY
+        true, // xFirst
+        1, // reverseX
+        1 //reverseY
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
@@ -191,8 +191,8 @@ public enum SpreadsheetCellRangeReferencePath {
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
-                    range.end()
-                            .row()
+                range.end()
+                    .row()
             );
         }
 
@@ -211,25 +211,25 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     TDRL(
-            true, // xFirst
-            -1, // reverseX
-            1//reverseY
+        true, // xFirst
+        -1, // reverseX
+        1//reverseY
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.end()
-                    .setRow(
-                            range.begin()
-                                    .row()
-                    );
+                .setRow(
+                    range.begin()
+                        .row()
+                );
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
-                    range.end()
-                            .row()
+                range.end()
+                    .row()
             );
         }
 
@@ -248,25 +248,25 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     BULR(
-            true, // xFirst
-            1, // reverseX
-            -1 //reverseY
+        true, // xFirst
+        1, // reverseX
+        -1 //reverseY
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
             return range.begin()
-                    .setRow(
-                            range.end()
-                                    .row()
-                    );
+                .setRow(
+                    range.end()
+                        .row()
+                );
         }
 
         @Override
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
-                    range.begin()
-                            .row()
+                range.begin()
+                    .row()
             );
         }
 
@@ -285,9 +285,9 @@ public enum SpreadsheetCellRangeReferencePath {
      * </pre>
      */
     BURL(
-            true, // xFirst
-            -1, // reverseX
-            -1 //reverseY"
+        true, // xFirst
+        -1, // reverseX
+        -1 //reverseY"
     ) {
         @Override
         public SpreadsheetCellReference first(final SpreadsheetCellRangeReference range) {
@@ -298,8 +298,8 @@ public enum SpreadsheetCellRangeReferencePath {
         public SpreadsheetCellReference lastColumn(final SpreadsheetCellReference startOfRow,
                                                    final SpreadsheetCellRangeReference range) {
             return startOfRow.setRow(
-                    range.begin()
-                            .row()
+                range.begin()
+                    .row()
             );
         }
 
@@ -316,19 +316,19 @@ public enum SpreadsheetCellRangeReferencePath {
         final String name = this.name();
 
         this.comparator = SpreadsheetCellRangeReferencePathComparator.with(
-                xFirst,
-                reverseX,
-                reverseY,
-                name
+            xFirst,
+            reverseX,
+            reverseY,
+            name
         );
 
         final String nameLower = name.toLowerCase();
 
         this.labelText = (nameLower.substring(0, 2) + " " + nameLower.substring(2))
-                .replace("lr", "left-right")
-                .replace("rl", "right-left")
-                .replace("td", "top-down")
-                .replace("bu", "bottom-up");
+            .replace("lr", "left-right")
+            .replace("rl", "right-left")
+            .replace("td", "top-down")
+            .replace("bu", "bottom-up");
     }
 
     /**
@@ -355,8 +355,8 @@ public enum SpreadsheetCellRangeReferencePath {
      */
     public Iterator<SpreadsheetCellReference> cells(final SpreadsheetCellRangeReference cells) {
         return SpreadsheetCellRangeReferencePathCellsIterator.with(
-                cells,
-                this
+            cells,
+            this
         );
     }
 
@@ -382,8 +382,8 @@ public enum SpreadsheetCellRangeReferencePath {
      */
     public final int width(final SpreadsheetCellRangeReference range) {
         return this.comparator.xFirst ?
-                range.height() :
-                range.width();
+            range.height() :
+            range.width();
     }
 
     /**
@@ -391,8 +391,8 @@ public enum SpreadsheetCellRangeReferencePath {
      */
     public final int height(final SpreadsheetCellRangeReference range) {
         return this.comparator.xFirst ?
-                range.width() :
-                range.height();
+            range.width() :
+            range.height();
     }
 
     /**
@@ -409,13 +409,13 @@ public enum SpreadsheetCellRangeReferencePath {
         }
 
         throw new IllegalArgumentException(
-                "Got " +
-                        CharSequences.quoteAndEscape(text) +
-                        " expected one of " +
-                        Arrays.stream(values)
-                                .map(Enum::name)
-                                .collect(Collectors.joining(", ")
-                                )
+            "Got " +
+                CharSequences.quoteAndEscape(text) +
+                " expected one of " +
+                Arrays.stream(values)
+                    .map(Enum::name)
+                    .collect(Collectors.joining(", ")
+                    )
         );
     }
 }

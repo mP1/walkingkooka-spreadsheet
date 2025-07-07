@@ -31,16 +31,16 @@ final class FilteredSpreadsheetComparatorProvider implements SpreadsheetComparat
     static FilteredSpreadsheetComparatorProvider with(final SpreadsheetComparatorProvider provider,
                                                       final SpreadsheetComparatorInfoSet infos) {
         return new FilteredSpreadsheetComparatorProvider(
-                Objects.requireNonNull(provider, "provider"),
-                Objects.requireNonNull(infos, "infos")
+            Objects.requireNonNull(provider, "provider"),
+            Objects.requireNonNull(infos, "infos")
         );
     }
 
     private FilteredSpreadsheetComparatorProvider(final SpreadsheetComparatorProvider provider,
                                                   final SpreadsheetComparatorInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
-                infos.names(),
-                SpreadsheetComparatorPluginHelper.INSTANCE
+            infos.names(),
+            SpreadsheetComparatorPluginHelper.INSTANCE
         );
 
         this.provider = provider;
@@ -56,10 +56,10 @@ final class FilteredSpreadsheetComparatorProvider implements SpreadsheetComparat
         final SpreadsheetComparatorName name = selector.name();
 
         return this.provider.spreadsheetComparator(
-                selector.setName(
-                        this.guard.name(name)
-                ),
-                context
+            selector.setName(
+                this.guard.name(name)
+            ),
+            context
         );
     }
 
@@ -72,9 +72,9 @@ final class FilteredSpreadsheetComparatorProvider implements SpreadsheetComparat
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetComparator(
-                this.guard.name(name),
-                values,
-                context
+            this.guard.name(name),
+            values,
+            context
         );
     }
 

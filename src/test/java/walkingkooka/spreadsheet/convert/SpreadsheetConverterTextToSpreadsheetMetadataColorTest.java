@@ -33,52 +33,52 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
     @Test
     public void testConvertNotSpreadsheetCellValue() {
         this.convertFails(
-                "[HelloColor]",
-                String.class
+            "[HelloColor]",
+            String.class
         );
     }
 
     @Test
     public void testConvertStringToNotColor() {
         this.convertFails(
-                "[HelloColor]",
-                Void.class
+            "[HelloColor]",
+            Void.class
         );
     }
 
     @Test
     public void testConvertStringColorNameToColor() {
         this.convertAndCheck(
-                "[HelloColor]",
-                Color.class,
-                COLOR
+            "[HelloColor]",
+            Color.class,
+            COLOR
         );
     }
 
     @Test
     public void testConvertCharSequenceColorNameToColor() {
         this.convertAndCheck(
-                new StringBuilder("[HelloColor]"),
-                Color.class,
-                COLOR
+            new StringBuilder("[HelloColor]"),
+            Color.class,
+            COLOR
         );
     }
 
     @Test
     public void testConvertStringColorNumberToColor() {
         this.convertAndCheck(
-                "[COLOR10]",
-                Color.class,
-                COLOR
+            "[COLOR10]",
+            Color.class,
+            COLOR
         );
     }
 
     @Test
     public void testConvertStringColorNumberToColor2() {
         this.convertAndCheck(
-                "[color10]",
-                Color.class,
-                COLOR
+            "[color10]",
+            Color.class,
+            COLOR
         );
     }
 
@@ -95,9 +95,9 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
@@ -105,9 +105,9 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return this.converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -116,17 +116,17 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
             @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
                 return SpreadsheetMetadataTesting.METADATA_EN_AU
-                        .set(
-                                SpreadsheetMetadataPropertyName.namedColor(
-                                        SpreadsheetColorName.with("HelloColor")
-                                ),
-                                10
-                        ).set(
-                                SpreadsheetMetadataPropertyName.numberedColor(
-                                        10
-                                ),
-                                COLOR
-                        );
+                    .set(
+                        SpreadsheetMetadataPropertyName.namedColor(
+                            SpreadsheetColorName.with("HelloColor")
+                        ),
+                        10
+                    ).set(
+                        SpreadsheetMetadataPropertyName.numberedColor(
+                            10
+                        ),
+                        COLOR
+                    );
             }
         };
     }
@@ -136,8 +136,8 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createConverter(),
-                "Text to SpreadsheetMetadata Color"
+            this.createConverter(),
+            "Text to SpreadsheetMetadata Color"
         );
     }
 

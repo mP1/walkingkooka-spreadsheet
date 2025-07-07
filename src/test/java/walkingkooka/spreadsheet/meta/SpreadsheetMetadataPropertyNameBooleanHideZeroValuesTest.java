@@ -25,8 +25,8 @@ public final class SpreadsheetMetadataPropertyNameBooleanHideZeroValuesTest exte
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance(),
-                "hideZeroValues"
+            SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance(),
+            "hideZeroValues"
         );
     }
 

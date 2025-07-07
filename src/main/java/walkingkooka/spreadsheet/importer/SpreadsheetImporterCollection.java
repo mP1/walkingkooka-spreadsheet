@@ -68,21 +68,21 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     public boolean canImport(final WebEntity cells,
                              final SpreadsheetImporterContext context) {
         return this.importers.stream()
-                .anyMatch(e -> e.canImport(
-                                cells,
-                                context
-                        )
-                );
+            .anyMatch(e -> e.canImport(
+                    cells,
+                    context
+                )
+            );
     }
 
     @Override
     public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
                                                        final SpreadsheetImporterContext context) {
         return this.importers.stream()
-                .filter(e -> e.canImport(cells, context))
-                .map(e -> e.doImport(cells, context))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No importer found"));
+            .filter(e -> e.canImport(cells, context))
+            .map(e -> e.doImport(cells, context))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("No importer found"));
     }
 
     final List<SpreadsheetImporter> importers;
@@ -97,8 +97,8 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetImporterCollection &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetImporterCollection &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetImporterCollection other) {
@@ -108,10 +108,10 @@ final class SpreadsheetImporterCollection implements SpreadsheetImporter {
     @Override
     public String toString() {
         return "collection(" +
-                CharacterConstant.COMMA.toSeparatedString(
-                        this.importers,
-                        SpreadsheetImporter::toString
-                ) +
-                ")";
+            CharacterConstant.COMMA.toSeparatedString(
+                this.importers,
+                SpreadsheetImporter::toString
+            ) +
+            ")";
     }
 }

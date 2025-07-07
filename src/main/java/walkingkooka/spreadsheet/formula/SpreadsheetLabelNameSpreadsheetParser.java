@@ -45,7 +45,7 @@ import java.util.Optional;
  * Note {@link #tokens(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TOKENS}.
  */
 final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
-        RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton
@@ -65,13 +65,13 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
         final TextCursorSavePoint save = cursor.save();
         final Optional<ParserToken> stringParserToken = LABEL.parse(cursor, context);
         return Optional.ofNullable(
-                stringParserToken.isPresent() ?
-                        token(
-                                cursor,
-                                stringParserToken.get(),
-                                save
-                        ) :
-                        null
+            stringParserToken.isPresent() ?
+                token(
+                    cursor,
+                    stringParserToken.get(),
+                    save
+                ) :
+                null
         );
     }
 
@@ -85,8 +85,8 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
             final String text = stringParserToken.text();
             if (SpreadsheetSelection.isLabelText(text)) {
                 token = SpreadsheetFormulaParserToken.label(
-                        SpreadsheetSelection.labelName(text),
-                        text
+                    SpreadsheetSelection.labelName(text),
+                    text
                 );
             }
         }
@@ -101,26 +101,26 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
     // @see SpreadsheetLabelName
     static {
         @SuppressWarnings("UnnecessaryLocalVariable") final CharPredicate LETTER = CharPredicates.range(
-                'A',
-                'Z'
+            'A',
+            'Z'
         ).or(
-                CharPredicates.range('a', 'z')
+            CharPredicates.range('a', 'z')
         );
 
         @SuppressWarnings("UnnecessaryLocalVariable") final CharPredicate INITIAL = LETTER;
 
         final CharPredicate DIGIT = CharPredicates.range('0', '9');
         final CharPredicate PART = INITIAL.or(
-                DIGIT.or(
-                        CharPredicates.is('_')
-                )
+            DIGIT.or(
+                CharPredicates.is('_')
+            )
         );
 
         LABEL = Parsers.initialAndPartCharPredicateString(
-                INITIAL,
-                PART,
-                1,
-                SpreadsheetLabelName.MAX_LENGTH
+            INITIAL,
+            PART,
+            1,
+            SpreadsheetLabelName.MAX_LENGTH
         );
     }
 
@@ -139,7 +139,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
     }
 
     private final static Optional<ValidationValueTypeName> LABEL_VALUE_TYPE = Optional.of(
-            SpreadsheetValueType.LABEL
+        SpreadsheetValueType.LABEL
     );
 
     @Override

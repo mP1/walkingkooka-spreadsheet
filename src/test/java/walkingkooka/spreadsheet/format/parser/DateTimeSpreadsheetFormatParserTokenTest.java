@@ -102,11 +102,11 @@ public final class DateTimeSpreadsheetFormatParserTokenTest extends DateDateTime
         }.accept(token);
         this.checkEquals("7137152871628428", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        text, text, text, text, text,
-                        day, day, day, day, day,
-                        token, token, token),
-                visited,
-                "visited");
+                text, text, text, text, text,
+                day, day, day, day, day,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     @Override
@@ -117,7 +117,7 @@ public final class DateTimeSpreadsheetFormatParserTokenTest extends DateDateTime
     @Override
     List<ParserToken> tokens() {
         return Lists.of(this.text1(),
-                SpreadsheetFormatParserToken.day("d", "d").cast(SpreadsheetFormatParserToken.class));
+            SpreadsheetFormatParserToken.day("d", "d").cast(SpreadsheetFormatParserToken.class));
     }
 
     @Override

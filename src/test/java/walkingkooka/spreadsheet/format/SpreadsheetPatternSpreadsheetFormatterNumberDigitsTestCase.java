@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterNumberDigitsTestCase<D extends SpreadsheetPatternSpreadsheetFormatterNumberDigits>
-        extends SpreadsheetPatternSpreadsheetFormatterNumberTestCase<D> {
+    extends SpreadsheetPatternSpreadsheetFormatterNumberTestCase<D> {
 
     SpreadsheetPatternSpreadsheetFormatterNumberDigitsTestCase() {
         super();

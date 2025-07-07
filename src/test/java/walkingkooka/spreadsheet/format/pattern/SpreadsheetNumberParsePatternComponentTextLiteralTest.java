@@ -27,14 +27,14 @@ public final class SpreadsheetNumberParsePatternComponentTextLiteralTest extends
     @Test
     public void testIncompleteFails() {
         this.parseFails(
-                "gh"
+            "gh"
         );
     }
 
     @Test
     public void testEqualsDifferentCaseFails() {
         this.parseFails(
-                TOKEN.toUpperCase()
+            TOKEN.toUpperCase()
         );
     }
 
@@ -42,13 +42,13 @@ public final class SpreadsheetNumberParsePatternComponentTextLiteralTest extends
     public void testMatchingCase() {
         final String text = "ghi";
         this.parseAndCheck2(
+            text,
+            TOKEN,
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.textLiteral(
                 text,
-                TOKEN,
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.textLiteral(
-                        text,
-                        text
-                )
+                text
+            )
         );
     }
 

@@ -74,59 +74,59 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
         switch (valueKind) {
             case CELL:
                 value = (c) -> context.marshall(c)
-                        .children()
-                        .get(0);
+                    .children()
+                    .get(0);
                 contentType = SpreadsheetMediaTypes.JSON_CELLS;
                 break;
             case FORMULA:
                 value = (c) -> context.marshall(
-                        c.formula()
-                                .text()
+                    c.formula()
+                        .text()
                 ).setName(
-                        name(c)
+                    name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMULAS;
                 break;
             case FORMATTER:
                 value = (c) -> context.marshallOptional(
-                        c.formatter()
+                    c.formatter()
                 ).setName(
-                        name(c)
+                    name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMATTERS;
                 break;
             case STYLE:
                 value = (c) -> context.marshall(
-                        c.style()
+                    c.style()
                 ).setName(
-                        name(c)
+                    name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_STYLES;
                 break;
             case PARSER:
                 value = (c) -> context.marshallOptional(
-                        c.parser()
+                    c.parser()
                 ).setName(
-                        name(c)
+                    name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_PARSERS;
                 break;
             case VALUE:
                 value = (c) -> context.marshallOptionalWithType(
-                        c.formattedValue()
+                    c.formattedValue()
                 ).setName(
-                        name(c)
+                    name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMATTED_VALUES;
                 break;
             case VALUE_TYPE:
                 value = (c) -> context.marshall(
-                        OptionalValidationValueTypeName.with(
-                                c.formula()
-                                        .valueType()
-                        )
+                    OptionalValidationValueTypeName.with(
+                        c.formula()
+                            .valueType()
+                    )
                 ).setName(
-                        name(c)
+                    name(c)
                 );
                 contentType = SpreadsheetMediaTypes.JSON_VALUE_TYPE;
                 break;
@@ -135,46 +135,46 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 contentType = null;
 
                 NeverError.unhandledEnum(
-                        valueKind,
-                        SpreadsheetCellValueKind.values()
+                    valueKind,
+                    SpreadsheetCellValueKind.values()
                 );
         }
 
         return WebEntity.empty()
-                .setContentType(
-                        Optional.of(contentType)
-                ).setText(
-                        JsonNode.object()
-                                .setChildren(
-                                        cells.value()
-                                                .stream()
-                                                .map(value)
-                                                .collect(Collectors.toList())
-                                ).toString()
-                ).setFilename(
-                        Optional.of(
-                                WebEntityFileName.with(
-                                        cells.range()
-                                                .toString()
-                                                .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
-                                                "." +
-                                                valueKind.fileExtension() +
-                                                ".json.txt"
-                                )
-                        )
-                );
+            .setContentType(
+                Optional.of(contentType)
+            ).setText(
+                JsonNode.object()
+                    .setChildren(
+                        cells.value()
+                            .stream()
+                            .map(value)
+                            .collect(Collectors.toList())
+                    ).toString()
+            ).setFilename(
+                Optional.of(
+                    WebEntityFileName.with(
+                        cells.range()
+                            .toString()
+                            .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
+                            "." +
+                            valueKind.fileExtension() +
+                            ".json.txt"
+                    )
+                )
+            );
     }
 
     private static JsonPropertyName name(final SpreadsheetCell cell) {
         return JsonPropertyName.with(
-                cell.reference()
-                        .toString()
+            cell.reference()
+                .toString()
         );
     }
 
     @Override
     public String toString() {
         return this.getClass()
-                .getSimpleName();
+            .getSimpleName();
     }
 }

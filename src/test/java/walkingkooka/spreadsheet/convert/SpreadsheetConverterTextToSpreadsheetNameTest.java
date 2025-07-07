@@ -30,8 +30,8 @@ public final class SpreadsheetConverterTextToSpreadsheetNameTest extends Spreads
         final SpreadsheetName name = SpreadsheetName.with("SpreadsheetName222");
 
         this.convertAndCheck(
-                name.toString(),
-                name
+            name.toString(),
+            name
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetConverterTextToSpreadsheetNameTest extends Spreads
         final SpreadsheetName name = SpreadsheetName.with("SpreadsheetName222");
 
         this.convertAndCheck(
-                new StringBuilder(name.toString()),
-                name
+            new StringBuilder(name.toString()),
+            name
         );
     }
 
@@ -58,9 +58,9 @@ public final class SpreadsheetConverterTextToSpreadsheetNameTest extends Spreads
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -68,9 +68,9 @@ public final class SpreadsheetConverterTextToSpreadsheetNameTest extends Spreads
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

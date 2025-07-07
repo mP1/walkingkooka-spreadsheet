@@ -40,15 +40,15 @@ import java.util.Objects;
  * of only formulas as well as PASTING a cell range of entire cells.
  */
 public final class SpreadsheetImporterCellValue implements HasSpreadsheetReference<SpreadsheetCellReference>,
-        Value<Object>,
-        TreePrintable {
+    Value<Object>,
+    TreePrintable {
 
     public static SpreadsheetImporterCellValue cell(final SpreadsheetCell cell) {
         Objects.requireNonNull(cell, "cell");
 
         return new SpreadsheetImporterCellValue(
-                cell.reference(),
-                cell
+            cell.reference(),
+            cell
         );
     }
 
@@ -58,8 +58,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(formula, "formula");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                formula
+            cell,
+            formula
         );
     }
 
@@ -69,8 +69,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(formatterSelector, "formatterSelector");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                formatterSelector
+            cell,
+            formatterSelector
         );
     }
 
@@ -80,8 +80,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(parserSelector, "parserSelector");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                parserSelector
+            cell,
+            parserSelector
         );
     }
 
@@ -91,8 +91,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(textStyle, "textStyle");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                textStyle
+            cell,
+            textStyle
         );
     }
 
@@ -102,8 +102,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(value, "value");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                value
+            cell,
+            value
         );
     }
 
@@ -113,8 +113,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(value, "value");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                value
+            cell,
+            value
         );
     }
 
@@ -124,8 +124,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         Objects.requireNonNull(valueType, "valueType");
 
         return new SpreadsheetImporterCellValue(
-                cell,
-                valueType
+            cell,
+            valueType
         );
     }
 
@@ -158,21 +158,21 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.reference,
-                this.value
+            this.reference,
+            this.value
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetImporterCellValue &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetImporterCellValue &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetImporterCellValue other) {
         return this.reference.equals(other.reference()) &&
-                this.value.equals(other.value);
+            this.value.equals(other.value);
     }
 
     @Override
@@ -189,8 +189,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         printer.indent();
         {
             TreePrintable.printTreeOrToString(
-                    this.value,
-                    printer
+                this.value,
+                printer
             );
             printer.lineStart();
         }

@@ -38,19 +38,19 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     @Test
     public void testWithExtraTextLiteralFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> TextSpreadsheetFormulaParserToken.with(
-                        Lists.of(
-                                textLiteral(),
-                                textLiteral()
-                        ),
-                        textLiteral().text() + textLiteral().text()
-                )
+            IllegalArgumentException.class,
+            () -> TextSpreadsheetFormulaParserToken.with(
+                Lists.of(
+                    textLiteral(),
+                    textLiteral()
+                ),
+                textLiteral().text() + textLiteral().text()
+            )
         );
 
         this.checkEquals(
-                "Extra text literal in \"abc123abc123\"",
-                thrown.getMessage()
+            "Extra text literal in \"abc123abc123\"",
+            thrown.getMessage()
         );
     }
 
@@ -59,11 +59,11 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         final String textValue = "";
 
         this.textValueAndCheck(
-                this.createToken(
-                        ParentSpreadsheetFormulaParserTokenTestCase.APOSTROPHE + textValue,
-                        this.apostropheSymbol()
-                ),
-                textValue
+            this.createToken(
+                ParentSpreadsheetFormulaParserTokenTestCase.APOSTROPHE + textValue,
+                this.apostropheSymbol()
+            ),
+            textValue
         );
     }
 
@@ -79,8 +79,8 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         this.checkValue(token, apostrophe, textLiteral);
 
         this.textValueAndCheck(
-                token,
-                ParentSpreadsheetFormulaParserTokenTestCase.TEXT
+            token,
+            ParentSpreadsheetFormulaParserTokenTestCase.TEXT
         );
     }
 
@@ -97,8 +97,8 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         this.checkValue(token, open, textLiteral, close);
 
         this.textValueAndCheck(
-                token,
-                ParentSpreadsheetFormulaParserTokenTestCase.TEXT
+            token,
+            ParentSpreadsheetFormulaParserTokenTestCase.TEXT
         );
     }
 
@@ -110,57 +110,57 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         final DoubleQuoteSymbolSpreadsheetFormulaParserToken close = doubleQuoteSymbol();
 
         final TextSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                open,
-                close
+            text,
+            open,
+            close
         );
         this.textAndCheck(token, text);
         this.checkValue(
-                token,
-                open,
-                close
+            token,
+            open,
+            close
         );
 
         this.textValueAndCheck(
-                token,
-                ""
+            token,
+            ""
         );
     }
 
     private void textValueAndCheck(final TextSpreadsheetFormulaParserToken token,
                                    final String textValue) {
         this.checkEquals(
-                textValue,
-                token.textValue()
+            textValue,
+            token.textValue()
         );
     }
 
     @Test
     public void testToExpressionApostrophe() {
         this.toExpressionAndCheck(
-                TextSpreadsheetFormulaParserToken.with(
-                        Lists.of(
-                                apostropheSymbol(),
-                                textLiteral()
-                        ),
-                        ParentSpreadsheetFormulaParserTokenTestCase.APOSTROPHE + ParentSpreadsheetFormulaParserTokenTestCase.TEXT
+            TextSpreadsheetFormulaParserToken.with(
+                Lists.of(
+                    apostropheSymbol(),
+                    textLiteral()
                 ),
-                Expression.value(ParentSpreadsheetFormulaParserTokenTestCase.TEXT)
+                ParentSpreadsheetFormulaParserTokenTestCase.APOSTROPHE + ParentSpreadsheetFormulaParserTokenTestCase.TEXT
+            ),
+            Expression.value(ParentSpreadsheetFormulaParserTokenTestCase.TEXT)
         );
     }
 
     @Test
     public void testToExpressionDoubleQuoted() {
         this.toExpressionAndCheck(
-                TextSpreadsheetFormulaParserToken.with(
-                        Lists.of(
-                                doubleQuoteSymbol(),
-                                textLiteral(),
-                                doubleQuoteSymbol()
-                        ),
-                        ParentSpreadsheetFormulaParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetFormulaParserTokenTestCase.TEXT + ParentSpreadsheetFormulaParserTokenTestCase.DOUBLE_QUOTE
+            TextSpreadsheetFormulaParserToken.with(
+                Lists.of(
+                    doubleQuoteSymbol(),
+                    textLiteral(),
+                    doubleQuoteSymbol()
                 ),
-                Expression.value(ParentSpreadsheetFormulaParserTokenTestCase.TEXT)
+                ParentSpreadsheetFormulaParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetFormulaParserTokenTestCase.TEXT + ParentSpreadsheetFormulaParserTokenTestCase.DOUBLE_QUOTE
+            ),
+            Expression.value(ParentSpreadsheetFormulaParserTokenTestCase.TEXT)
         );
     }
 
@@ -177,9 +177,9 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                doubleQuoteSymbol(),
-                textLiteral(),
-                doubleQuoteSymbol()
+            doubleQuoteSymbol(),
+            textLiteral(),
+            doubleQuoteSymbol()
         );
     }
 
@@ -187,9 +187,9 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     public TextSpreadsheetFormulaParserToken createDifferentToken() {
         final String different = "different456";
         return this.createToken(different,
-                doubleQuoteSymbol(),
-                SpreadsheetFormulaParserToken.textLiteral(different, different),
-                doubleQuoteSymbol()
+            doubleQuoteSymbol(),
+            SpreadsheetFormulaParserToken.textLiteral(different, different),
+            doubleQuoteSymbol()
         );
     }
 

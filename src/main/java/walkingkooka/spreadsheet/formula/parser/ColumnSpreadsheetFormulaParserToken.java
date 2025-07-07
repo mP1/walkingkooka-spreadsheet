@@ -23,13 +23,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
  * A token that holds a column reference.
  */
 public final class ColumnSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetColumnReference>
-        implements HasSpreadsheetReference<SpreadsheetColumnReference> {
+    implements HasSpreadsheetReference<SpreadsheetColumnReference> {
 
     static ColumnSpreadsheetFormulaParserToken with(final SpreadsheetColumnReference value,
                                                     final String text) {
         return new ColumnSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

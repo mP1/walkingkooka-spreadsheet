@@ -72,7 +72,7 @@ public final class ExponentSymbolSpreadsheetFormatParserTokenTest extends Symbol
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.EXPONENT
+            SpreadsheetFormatParserTokenKind.EXPONENT
         );
     }
 

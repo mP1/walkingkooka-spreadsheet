@@ -47,46 +47,46 @@ import java.util.Optional;
  * Note {@link #resolveLabel(SpreadsheetLabelName)} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
-        ProviderContextDelegator,
-        SpreadsheetProviderDelegator,
-        LocaleContextDelegator {
+    ProviderContextDelegator,
+    SpreadsheetProviderDelegator,
+    LocaleContextDelegator {
 
     @Override
-    default  AbsoluteUrl serverUrl() {
+    default AbsoluteUrl serverUrl() {
         return this.spreadsheetEngineContext()
-                .serverUrl();
+            .serverUrl();
     }
 
     @Override
     default SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
         return this.spreadsheetEngineContext()
-                .spreadsheetEngineContext(functionAliases);
+            .spreadsheetEngineContext(functionAliases);
     }
 
     @Override
     default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                        final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetEngineContext()
-                .parseFormula(
-                        formula,
-                        cell
-                );
+            .parseFormula(
+                formula,
+                cell
+            );
     }
 
     @Override
     default Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         return this.spreadsheetEngineContext()
-                .toExpression(token);
+            .toExpression(token);
     }
 
     @Override
     default SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                           final SpreadsheetExpressionReferenceLoader loader) {
         return this.spreadsheetEngineContext()
-                .spreadsheetExpressionEvaluationContext(
-                        cell,
-                        loader
-                );
+            .spreadsheetExpressionEvaluationContext(
+                cell,
+                loader
+            );
     }
 
     @Override
@@ -94,45 +94,45 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
                                            final Optional<Object> value,
                                            final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.spreadsheetEngineContext()
-                .formatValue(
-                        cell,
-                        value,
-                        formatter
-                );
+            .formatValue(
+                cell,
+                value,
+                formatter
+            );
     }
 
     @Override
     default SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                 final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.spreadsheetEngineContext()
-                .formatValueAndStyle(
-                        cell,
-                        formatter
-                );
+            .formatValueAndStyle(
+                cell,
+                formatter
+            );
     }
 
     @Override
     default boolean isPure(final ExpressionFunctionName name) {
         return this.spreadsheetEngineContext()
-                .isPure(name);
+            .isPure(name);
     }
 
     @Override
     default LocalDateTime now() {
         return this.spreadsheetEngineContext()
-                .now();
+            .now();
     }
 
     @Override
     default SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetEngineContext()
-                .spreadsheetMetadata();
+            .spreadsheetMetadata();
     }
 
     @Override
     default SpreadsheetStoreRepository storeRepository() {
         return this.spreadsheetEngineContext()
-                .storeRepository();
+            .storeRepository();
     }
 
     @Override

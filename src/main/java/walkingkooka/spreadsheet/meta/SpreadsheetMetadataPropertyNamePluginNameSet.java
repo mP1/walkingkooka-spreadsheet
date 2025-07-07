@@ -44,8 +44,8 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
     @Override
     PluginNameSet checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof PluginNameSet
+            value,
+            v -> v instanceof PluginNameSet
         );
     }
 

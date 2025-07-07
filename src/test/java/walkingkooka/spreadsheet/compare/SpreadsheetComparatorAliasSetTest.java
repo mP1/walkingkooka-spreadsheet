@@ -30,30 +30,30 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLikeTesting<SpreadsheetComparatorName,
-        SpreadsheetComparatorInfo,
-        SpreadsheetComparatorInfoSet,
-        SpreadsheetComparatorSelector,
-        SpreadsheetComparatorAlias,
-        SpreadsheetComparatorAliasSet>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetComparatorAliasSet>,
-        ToStringTesting<SpreadsheetComparatorAliasSet>,
-        JsonNodeMarshallingTesting<SpreadsheetComparatorAliasSet> {
+    SpreadsheetComparatorInfo,
+    SpreadsheetComparatorInfoSet,
+    SpreadsheetComparatorSelector,
+    SpreadsheetComparatorAlias,
+    SpreadsheetComparatorAliasSet>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorAliasSet>,
+    ToStringTesting<SpreadsheetComparatorAliasSet>,
+    JsonNodeMarshallingTesting<SpreadsheetComparatorAliasSet> {
 
     // with.............................................................................................................
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorAliasSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetComparatorAliasSet.with(null)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                SpreadsheetComparatorAliasSet.EMPTY,
-                SpreadsheetComparatorAliasSet.with(SortedSets.empty())
+            SpreadsheetComparatorAliasSet.EMPTY,
+            SpreadsheetComparatorAliasSet.with(SortedSets.empty())
         );
     }
 
@@ -64,35 +64,35 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
         final SpreadsheetComparatorName abs = SpreadsheetComparatorName.with("abs");
 
         this.aliasOrNameAndCheck(
-                this.createSet(),
-                abs,
-                abs
+            this.createSet(),
+            abs,
+            abs
         );
     }
 
     @Test
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
-                this.createSet(),
-                SpreadsheetComparatorName.with("sum-alias"),
-                SpreadsheetComparatorName.with("sum")
+            this.createSet(),
+            SpreadsheetComparatorName.with("sum-alias"),
+            SpreadsheetComparatorName.with("sum")
         );
     }
 
     @Test
     public void testAliasSelectorWithName() {
         this.aliasSelectorAndCheck(
-                this.createSet(),
-                SpreadsheetComparatorName.with("abs")
+            this.createSet(),
+            SpreadsheetComparatorName.with("abs")
         );
     }
 
     @Test
     public void testAliasSelectorWithAlias() {
         this.aliasSelectorAndCheck(
-                this.createSet(),
-                SpreadsheetComparatorName.with("custom-alias"),
-                SpreadsheetComparatorSelector.parse("custom(1)")
+            this.createSet(),
+            SpreadsheetComparatorName.with("custom-alias"),
+            SpreadsheetComparatorSelector.parse("custom(1)")
         );
     }
 
@@ -113,7 +113,7 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-                SpreadsheetComparatorAliasSet.parse("different")
+            SpreadsheetComparatorAliasSet.parse("different")
         );
     }
 
@@ -128,8 +128,8 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     public SpreadsheetComparatorAliasSet unmarshall(final JsonNode json,
                                                     final JsonNodeUnmarshallContext context) {
         return SpreadsheetComparatorAliasSet.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

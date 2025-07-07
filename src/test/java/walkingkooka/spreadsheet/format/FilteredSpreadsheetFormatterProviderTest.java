@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import java.util.List;
 
 public final class FilteredSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<FilteredSpreadsheetFormatterProvider>,
-        ToStringTesting<FilteredSpreadsheetFormatterProvider> {
+    ToStringTesting<FilteredSpreadsheetFormatterProvider> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
@@ -38,15 +38,15 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
         final List<?> values = Lists.of("@@");
 
         this.spreadsheetFormatterAndCheck(
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetFormatterProviders.spreadsheetFormatters()
-                        .spreadsheetFormatter(
-                                name,
-                                values,
-                                CONTEXT
-                        )
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetFormatterProviders.spreadsheetFormatters()
+                .spreadsheetFormatter(
+                    name,
+                    values,
+                    CONTEXT
+                )
         );
     }
 
@@ -57,38 +57,38 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
         final List<?> values = Lists.of(pattern);
 
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterProviders.spreadsheetFormatters(),
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetPattern.parseDateFormatPattern(pattern)
-                        .formatter()
+            SpreadsheetFormatterProviders.spreadsheetFormatters(),
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetPattern.parseDateFormatPattern(pattern)
+                .formatter()
         );
 
 
         this.spreadsheetFormatterFails(
-                name,
-                values,
-                CONTEXT
+            name,
+            values,
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetFormatterInfos() {
         this.spreadsheetFormatterInfosAndCheck(
-                SpreadsheetFormatterInfoSet.EMPTY.concat(
-                        SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
-                )
+            SpreadsheetFormatterInfoSet.EMPTY.concat(
+                SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
+            )
         );
     }
 
     @Override
     public FilteredSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         return FilteredSpreadsheetFormatterProvider.with(
-                SpreadsheetFormatterProviders.spreadsheetFormatters(),
-                SpreadsheetFormatterInfoSet.EMPTY.concat(
-                        SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
-                )
+            SpreadsheetFormatterProviders.spreadsheetFormatters(),
+            SpreadsheetFormatterInfoSet.EMPTY.concat(
+                SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
+            )
         );
     }
 
@@ -97,9 +97,9 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createSpreadsheetFormatterProvider(),
-                SpreadsheetFormatterProviders.spreadsheetFormatters()
-                        .toString()
+            this.createSpreadsheetFormatterProvider(),
+            SpreadsheetFormatterProviders.spreadsheetFormatters()
+                .toString()
         );
     }
 

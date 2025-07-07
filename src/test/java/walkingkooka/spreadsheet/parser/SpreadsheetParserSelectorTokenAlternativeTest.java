@@ -22,14 +22,14 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetParserSelectorTokenAlternativeTest implements PluginSelectorTokenAlternativeLikeTesting<SpreadsheetParserSelectorTokenAlternative>,
-        ClassTesting2<SpreadsheetParserSelectorTokenAlternative> {
+    ClassTesting2<SpreadsheetParserSelectorTokenAlternative> {
 
     @Override
     public SpreadsheetParserSelectorTokenAlternative createPluginSelectorTokenAlternativeLike(final String label,
                                                                                               final String text) {
         return SpreadsheetParserSelectorTokenAlternative.with(
-                label,
-                text
+            label,
+            text
         );
     }
 

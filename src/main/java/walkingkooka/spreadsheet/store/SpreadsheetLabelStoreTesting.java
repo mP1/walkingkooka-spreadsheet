@@ -35,31 +35,31 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     // findSimilar......................................................................................................
 
     @Test
     default void testFindSimilarNullTextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findSimilar(
-                                null,
-                                1
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .findSimilar(
+                    null,
+                    1
+                )
         );
     }
 
     @Test
     default void testFindSimilarInvalidCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findSimilar(
-                                "text",
-                                -1
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findSimilar(
+                    "text",
+                    -1
+                )
         );
     }
 
@@ -77,10 +77,10 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                      final int count,
                                      final SpreadsheetLabelMapping... mappings) {
         this.findSimilarAndCheck(
-                this.createStore(),
-                text,
-                count,
-                mappings
+            this.createStore(),
+            text,
+            count,
+            mappings
         );
     }
 
@@ -89,10 +89,10 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                      final int count,
                                      final SpreadsheetLabelMapping... mappings) {
         this.findSimilarAndCheck(
-                store,
-                text,
-                count,
-                Sets.of(mappings)
+            store,
+            text,
+            count,
+            Sets.of(mappings)
         );
     }
 
@@ -101,12 +101,12 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                      final int count,
                                      final Set<SpreadsheetLabelMapping> mappings) {
         this.checkEquals(
-                mappings,
-                store.findSimilar(
-                        text,
-                        count
-                ),
-                () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
+            mappings,
+            store.findSimilar(
+                text,
+                count
+            ),
+            () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
         );
     }
 
@@ -115,9 +115,9 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     @Test
     default void testLoadCellOrCellRangesNullLabelFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .loadCellOrCellRanges(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .loadCellOrCellRanges(null)
         );
     }
 
@@ -125,8 +125,8 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                               final SpreadsheetLabelName label,
                                               final Set<? super ExpressionReference> referencesOrRanges) {
         this.checkEquals(referencesOrRanges,
-                store.loadCellOrCellRanges(label),
-                () -> "loadCellOrCellRanges for " + label);
+            store.loadCellOrCellRanges(label),
+            () -> "loadCellOrCellRanges for " + label);
     }
 
     // labels...........................................................................................................
@@ -134,39 +134,39 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     @Test
     default void testFindLabelsWithReferenceWithNullReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findLabelsWithReference(
-                                null,
-                                0, // offset
-                                0 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .findLabelsWithReference(
+                    null,
+                    0, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindLabelsWithReferenceWithNegativeOffsetFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findLabelsWithReference(
-                                SpreadsheetSelection.A1,
-                                -1, // offset
-                                0 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findLabelsWithReference(
+                    SpreadsheetSelection.A1,
+                    -1, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindLabelsWithReferenceWithNegativeCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findLabelsWithReference(
-                                SpreadsheetSelection.A1,
-                                0, // offset
-                                -1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findLabelsWithReference(
+                    SpreadsheetSelection.A1,
+                    0, // offset
+                    -1 // count
+                )
         );
     }
 
@@ -174,10 +174,10 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     default void testFindLabelsWithReferenceWithUnknownCell() {
         final S store = this.createStore();
         this.findLabelsWithReferenceAndCheck(
-                store,
-                SpreadsheetSelection.parseCell("Z99"),
-                0,
-                1
+            store,
+            SpreadsheetSelection.parseCell("Z99"),
+            0,
+            1
         );
     }
 
@@ -192,11 +192,11 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         store.save(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("DifferentLabel"), SpreadsheetSelection.A1));
 
         this.findLabelsWithReferenceAndCheck(
-                store,
-                reference,
-                0, // offset
-                1, // count
-                label.setLabelMappingReference(reference)
+            store,
+            reference,
+            0, // offset
+            1, // count
+            label.setLabelMappingReference(reference)
         );
     }
 
@@ -215,13 +215,13 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         final SpreadsheetLabelMapping mapping3 = store.save(SpreadsheetLabelMapping.with(label3, reference));
 
         this.findLabelsWithReferenceAndCheck(
-                store,
-                reference,
-                0, // offset
-                4, // count
-                mapping1,
-                mapping2,
-                mapping3
+            store,
+            reference,
+            0, // offset
+            4, // count
+            mapping1,
+            mapping2,
+            mapping3
         );
     }
 
@@ -237,12 +237,12 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         final SpreadsheetLabelMapping mapping2 = store.save(SpreadsheetLabelMapping.with(label, indirect));
 
         this.findLabelsWithReferenceAndCheck(
-                store,
-                reference,
-                0, // offset
-                3, // count
-                mapping1,
-                mapping2
+            store,
+            reference,
+            0, // offset
+            3, // count
+            mapping1,
+            mapping2
         );
     }
 
@@ -252,11 +252,11 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                                  final int count,
                                                  final SpreadsheetLabelMapping... labels) {
         this.findLabelsWithReferenceAndCheck(
-                store,
-                reference,
-                offset,
-                count,
-                Sets.of(labels)
+            store,
+            reference,
+            offset,
+            count,
+            Sets.of(labels)
         );
     }
 
@@ -266,13 +266,13 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                                  final int count,
                                                  final Set<SpreadsheetLabelMapping> labels) {
         this.checkEquals(
-                labels,
-                store.findLabelsWithReference(
-                        reference,
-                        offset,
-                        count
-                ),
-                () -> "findLabelsWithReferenceAndCheck for " + reference + " offset=" + offset + " count=" + count
+            labels,
+            store.findLabelsWithReference(
+                reference,
+                offset,
+                count
+            ),
+            () -> "findLabelsWithReferenceAndCheck for " + reference + " offset=" + offset + " count=" + count
         );
     }
 
@@ -287,9 +287,9 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label" + i);
             if (!store.load(label).isPresent()) {
                 assertThrows(
-                        MissingStoreException.class,
-                        () -> store.resolveLabelOrFail(label),
-                        () -> "Unknown Label: " + label + " should have failed"
+                    MissingStoreException.class,
+                    () -> store.resolveLabelOrFail(label),
+                    () -> "Unknown Label: " + label + " should have failed"
                 );
                 tested = true;
                 break;

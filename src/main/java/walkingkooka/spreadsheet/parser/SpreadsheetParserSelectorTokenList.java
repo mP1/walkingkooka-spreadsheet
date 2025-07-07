@@ -58,7 +58,7 @@ import java.util.Objects;
  * </pre>
  */
 public final class SpreadsheetParserSelectorTokenList extends AbstractList<SpreadsheetParserSelectorToken>
-        implements ImmutableListDefaults<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken> {
+    implements ImmutableListDefaults<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken> {
 
     public final static SpreadsheetParserSelectorTokenList EMPTY = new SpreadsheetParserSelectorTokenList(Lists.empty());
 
@@ -73,14 +73,14 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
             final List<SpreadsheetParserSelectorToken> copy = Lists.array();
             for (final SpreadsheetParserSelectorToken token : tokens) {
                 copy.add(
-                        Objects.requireNonNull(token, "Includes null token")
+                    Objects.requireNonNull(token, "Includes null token")
                 );
             }
 
             spreadsheetParserSelectorTokens =
-                    copy.isEmpty() ?
-                            EMPTY :
-                            new SpreadsheetParserSelectorTokenList(copy);
+                copy.isEmpty() ?
+                    EMPTY :
+                    new SpreadsheetParserSelectorTokenList(copy);
         }
 
         return spreadsheetParserSelectorTokens;
@@ -111,8 +111,8 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     public SpreadsheetParserSelectorTokenList setElements(final List<SpreadsheetParserSelectorToken> tokens) {
         final SpreadsheetParserSelectorTokenList copy = with(tokens);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     // json.............................................................................................................
@@ -120,10 +120,10 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     static SpreadsheetParserSelectorTokenList unmarshall(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallList(
-                        node,
-                        SpreadsheetParserSelectorToken.class
-                )
+            context.unmarshallList(
+                node,
+                SpreadsheetParserSelectorToken.class
+            )
         );
     }
 
@@ -133,16 +133,16 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
 
     static {
         SpreadsheetParserSelectorToken.with(
-                "", // label
-                "", // text
-                SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+            "", // label
+            "", // text
+            SpreadsheetParserSelectorToken.NO_ALTERNATIVES
         );
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenList.class),
-                SpreadsheetParserSelectorTokenList::unmarshall,
-                SpreadsheetParserSelectorTokenList::marshall,
-                SpreadsheetParserSelectorTokenList.class
+            JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenList.class),
+            SpreadsheetParserSelectorTokenList::unmarshall,
+            SpreadsheetParserSelectorTokenList::marshall,
+            SpreadsheetParserSelectorTokenList.class
         );
     }
 }

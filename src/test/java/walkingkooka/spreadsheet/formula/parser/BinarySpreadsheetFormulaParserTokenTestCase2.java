@@ -25,22 +25,20 @@ public abstract class BinarySpreadsheetFormulaParserTokenTestCase2<T extends Bin
     @Test
     public final void testToExpression() {
         this.toExpressionAndCheck(
-                this.expressionNode(
-                        this.expression1(),
-                        this.expression2()
-                )
+            this.expressionNode(
+                this.expression1(),
+                this.expression2()
+            )
         );
     }
 
     abstract Expression expressionNode(final Expression left, final Expression right);
 
-    @Override
-    final SpreadsheetFormulaParserToken leftToken() {
+    @Override final SpreadsheetFormulaParserToken leftToken() {
         return this.number1();
     }
 
-    @Override
-    final SpreadsheetFormulaParserToken rightToken() {
+    @Override final SpreadsheetFormulaParserToken rightToken() {
         return this.number2();
     }
 }

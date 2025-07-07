@@ -23,13 +23,11 @@ public abstract class SpreadsheetMetadataPropertyNameStringTestCase<N extends Sp
         super();
     }
 
-    @Override
-    final String propertyValue() {
+    @Override final String propertyValue() {
         return "ABC";
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return String.class.getSimpleName();
     }
 }

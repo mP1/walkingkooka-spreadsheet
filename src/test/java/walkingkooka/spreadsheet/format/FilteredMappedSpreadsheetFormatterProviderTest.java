@@ -32,34 +32,34 @@ import walkingkooka.tree.text.TextNode;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<FilteredMappedSpreadsheetFormatterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullInfosFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> FilteredMappedSpreadsheetFormatterProvider.with(
-                        null,
-                        SpreadsheetFormatterProviders.fake()
-                )
+            NullPointerException.class,
+            () -> FilteredMappedSpreadsheetFormatterProvider.with(
+                null,
+                SpreadsheetFormatterProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> FilteredMappedSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterInfoSet.EMPTY.concat(
-                                SpreadsheetFormatterInfo.with(
-                                        SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
-                                        SpreadsheetFormatterName.with("new-date-format-pattern")
-                                )
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> FilteredMappedSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterInfoSet.EMPTY.concat(
+                    SpreadsheetFormatterInfo.with(
+                        SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
+                        SpreadsheetFormatterName.with("new-date-format-pattern")
+                    )
+                ),
+                null
+            )
         );
     }
 
@@ -70,10 +70,10 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         final String pattern = "yyyy/mm/dd";
 
         this.spreadsheetFormatterAndCheck(
-                NEW_FORMATTER_NAME + " " + pattern,
-                CONTEXT,
-                SpreadsheetPattern.parseDateFormatPattern(pattern)
-                        .formatter()
+            NEW_FORMATTER_NAME + " " + pattern,
+            CONTEXT,
+            SpreadsheetPattern.parseDateFormatPattern(pattern)
+                .formatter()
         );
     }
 
@@ -82,116 +82,116 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         final String pattern = "yyyy/mm/dd";
 
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterName.with(NEW_FORMATTER_NAME),
-                Lists.of(pattern),
-                CONTEXT,
-                SpreadsheetPattern.parseDateFormatPattern(pattern)
-                        .formatter()
+            SpreadsheetFormatterName.with(NEW_FORMATTER_NAME),
+            Lists.of(pattern),
+            CONTEXT,
+            SpreadsheetPattern.parseDateFormatPattern(pattern)
+                .formatter()
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNextTokenAutomatic() {
         this.spreadsheetFormatterNextTokenAndCheck(
-                SpreadsheetFormatterSelector.parse("automatic")
+            SpreadsheetFormatterSelector.parse("automatic")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNextTokenDifferentFormatterName() {
         this.spreadsheetFormatterNextTokenAndCheck(
-                SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME),
-                SpreadsheetFormatterSelectorToken.with(
-                        "",
-                        "",
-                        Lists.of(
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "d",
-                                        "d"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "dd",
-                                        "dd"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "ddd",
-                                        "ddd"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "dddd",
-                                        "dddd"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "m",
-                                        "m"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mm",
-                                        "mm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mmm",
-                                        "mmm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mmmm",
-                                        "mmmm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mmmmm",
-                                        "mmmmm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "yy",
-                                        "yy"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "yyyy",
-                                        "yyyy"
-                                )
-                        )
+            SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME),
+            SpreadsheetFormatterSelectorToken.with(
+                "",
+                "",
+                Lists.of(
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "d",
+                        "d"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "dd",
+                        "dd"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "ddd",
+                        "ddd"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "dddd",
+                        "dddd"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "m",
+                        "m"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mm",
+                        "mm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mmm",
+                        "mmm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mmmm",
+                        "mmmm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mmmmm",
+                        "mmmmm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "yy",
+                        "yy"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "yyyy",
+                        "yyyy"
+                    )
                 )
+            )
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNextTokenDifferentFormatterNameNotEmptyText() {
         this.spreadsheetFormatterNextTokenAndCheck(
-                SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME + " dd"),
-                SpreadsheetFormatterSelectorToken.with(
-                        "",
-                        "",
-                        Lists.of(
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "m",
-                                        "m"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mm",
-                                        "mm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mmm",
-                                        "mmm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mmmm",
-                                        "mmmm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "mmmmm",
-                                        "mmmmm"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "yy",
-                                        "yy"
-                                ),
-                                SpreadsheetFormatterSelectorTokenAlternative.with(
-                                        "yyyy",
-                                        "yyyy"
-                                )
-                        )
+            SpreadsheetFormatterSelector.parse("" + NEW_FORMATTER_NAME + " dd"),
+            SpreadsheetFormatterSelectorToken.with(
+                "",
+                "",
+                Lists.of(
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "m",
+                        "m"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mm",
+                        "mm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mmm",
+                        "mmm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mmmm",
+                        "mmmm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "mmmmm",
+                        "mmmmm"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "yy",
+                        "yy"
+                    ),
+                    SpreadsheetFormatterSelectorTokenAlternative.with(
+                        "yyyy",
+                        "yyyy"
+                    )
                 )
+            )
         );
     }
 
@@ -219,28 +219,28 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         final SpreadsheetFormatterName name = SpreadsheetFormatterName.with(NEW_FORMATTER_NAME);
 
         this.spreadsheetFormatterSamplesAndCheck(
-                name,
-                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
-                SpreadsheetFormatterSample.with(
-                        "Short",
-                        name.setValueText("d/m/yy"),
-                        TextNode.text("31/12/99")
-                ),
-                SpreadsheetFormatterSample.with(
-                        "Medium",
-                        name.setValueText("d mmm yyyy"),
-                        TextNode.text("31 Dec. 1999")
-                ),
-                SpreadsheetFormatterSample.with(
-                        "Long",
-                        name.setValueText("d mmmm yyyy"),
-                        TextNode.text("31 December 1999")
-                ),
-                SpreadsheetFormatterSample.with(
-                        "Full",
-                        name.setValueText("dddd, d mmmm yyyy"),
-                        TextNode.text("Friday, 31 December 1999")
-                )
+            name,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Short",
+                name.setValueText("d/m/yy"),
+                TextNode.text("31/12/99")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                name.setValueText("d mmm yyyy"),
+                TextNode.text("31 Dec. 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                name.setValueText("d mmmm yyyy"),
+                TextNode.text("31 December 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                name.setValueText("dddd, d mmmm yyyy"),
+                TextNode.text("Friday, 31 December 1999")
+            )
         );
     }
 
@@ -248,14 +248,14 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetFormatterInfosAndCheck(
-                SpreadsheetFormatterInfo.with(
-                        url("automatic"),
-                        SpreadsheetFormatterName.AUTOMATIC
-                ),
-                SpreadsheetFormatterInfo.with(
-                        url("date-format-pattern"),
-                        SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
-                )
+            SpreadsheetFormatterInfo.with(
+                url("automatic"),
+                SpreadsheetFormatterName.AUTOMATIC
+            ),
+            SpreadsheetFormatterInfo.with(
+                url("date-format-pattern"),
+                SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
+            )
         );
     }
 
@@ -264,19 +264,19 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         final SpreadsheetFormatterProvider provider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return FilteredMappedSpreadsheetFormatterProvider.with(
-                SpreadsheetFormatterInfoSet.with(
-                        Sets.of(
-                                SpreadsheetFormatterInfo.with(
-                                        url("automatic"),
-                                        SpreadsheetFormatterName.AUTOMATIC
-                                ),
-                                SpreadsheetFormatterInfo.with(
-                                        url("date-format-pattern"),
-                                        SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
-                                )
-                        )
-                ),
-                provider
+            SpreadsheetFormatterInfoSet.with(
+                Sets.of(
+                    SpreadsheetFormatterInfo.with(
+                        url("automatic"),
+                        SpreadsheetFormatterName.AUTOMATIC
+                    ),
+                    SpreadsheetFormatterInfo.with(
+                        url("date-format-pattern"),
+                        SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
+                    )
+                )
+            ),
+            provider
         );
     }
 

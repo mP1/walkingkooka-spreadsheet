@@ -52,243 +52,243 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testWithNullCellsFails() {
         this.withFails(
-                null,
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users()
+            null,
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullCellReferencesFails() {
         this.withFails(
-                this.cells(),
-                null,
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users());
+            this.cells(),
+            null,
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users());
     }
 
     @Test
     public void testWithNullColumnsFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                null,
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users());
+            this.cells(),
+            this.cellReferences(),
+            null,
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users());
     }
 
     @Test
     public void testWithNullFormsFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                null,
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users());
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            null,
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users());
     }
 
     @Test
     public void testWithNullGroupsFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                null,
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users());
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            null,
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users());
     }
 
     @Test
     public void testWithNullLabelsFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                null,
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            null,
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullLabelReferencesFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                null,
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            null,
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullMetadatasFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                null,
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            null,
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullRangeToCellsFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                null,
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            null,
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullRangeToConditionalFormattingRulesFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                null,
-                this.rows(),
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            null,
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullRowsFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                null,
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            null,
+            this.storage(),
+            this.users()
         );
     }
 
     @Test
     public void testWithNullStorageFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                null,
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            null,
+            this.users()
         );
     }
 
     @Test
     public void testWithNullUserFails() {
         this.withFails(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                null
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            null
         );
     }
 
@@ -306,22 +306,22 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final StorageStore storage,
                            final SpreadsheetUserStore users) {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetStoreRepository.with(
-                        cells,
-                        cellReferences,
-                        columns,
-                        forms,
-                        groups,
-                        labels,
-                        labelReferences,
-                        metadatas,
-                        rangeToCells,
-                        rangeToConditionalFormattingRules,
-                        rows,
-                        storage,
-                        users
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                cells,
+                cellReferences,
+                columns,
+                forms,
+                groups,
+                labels,
+                labelReferences,
+                metadatas,
+                rangeToCells,
+                rangeToConditionalFormattingRules,
+                rows,
+                storage,
+                users
+            )
         );
     }
 
@@ -342,40 +342,40 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetUserStore users = this.users();
 
         this.toStringAndCheck(
-                BasicSpreadsheetStoreRepository.with(
-                        cells,
-                        cellReferences,
-                        columns,
-                        forms,
-                        groups,
-                        labels,
-                        labelReferences,
-                        metadatas,
-                        rangeToCells,
-                        rangeToConditionalFormattingRules,
-                        rows,
-                        storage,
-                        users
-                ),
-                cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + storage + " " + users);
+            BasicSpreadsheetStoreRepository.with(
+                cells,
+                cellReferences,
+                columns,
+                forms,
+                groups,
+                labels,
+                labelReferences,
+                metadatas,
+                rangeToCells,
+                rangeToConditionalFormattingRules,
+                rows,
+                storage,
+                users
+            ),
+            cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + storage + " " + users);
     }
 
     @Override
     public BasicSpreadsheetStoreRepository createStoreRepository() {
         return BasicSpreadsheetStoreRepository.with(
-                this.cells(),
-                this.cellReferences(),
-                this.columns(),
-                this.forms(),
-                this.groups(),
-                this.labels(),
-                this.labelReferences(),
-                this.metadatas(),
-                this.rangeToCells(),
-                this.rangeToConditionalFormattingRules(),
-                this.rows(),
-                this.storage(),
-                this.users()
+            this.cells(),
+            this.cellReferences(),
+            this.columns(),
+            this.forms(),
+            this.groups(),
+            this.labels(),
+            this.labelReferences(),
+            this.metadatas(),
+            this.rangeToCells(),
+            this.rangeToConditionalFormattingRules(),
+            this.rows(),
+            this.storage(),
+            this.users()
         );
     }
 

@@ -56,7 +56,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         final ParserToken token = pattern.value;
 
         final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(
-                token
+            token
         );
         visitor.accept(token);
 
@@ -70,10 +70,10 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         int i = 0;
         for (final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent component : components) {
             component.prepare(
-                    i,
-                    count,
-                    pattern,
-                    formatters::add
+                i,
+                count,
+                pattern,
+                formatters::add
             );
             i++;
         }
@@ -89,23 +89,23 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final DateSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.dateTime(
-                        SpreadsheetFormatParserToken.dateTime(
-                                token.value(),
-                                token.text()
-                        ),
-                        LocalDate.class
-                )
+            SpreadsheetFormatters.dateTime(
+                SpreadsheetFormatParserToken.dateTime(
+                    token.value(),
+                    token.text()
+                ),
+                LocalDate.class
+            )
         );
     }
 
     @Override
     protected void endVisit(final DateTimeSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.dateTime(
-                        token,
-                        LocalDateTime.class
-                )
+            SpreadsheetFormatters.dateTime(
+                token,
+                LocalDateTime.class
+            )
         );
     }
 
@@ -117,12 +117,12 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final FractionSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.fraction(
-                        token,
-                        (bigDecimal -> {
-                            throw new UnsupportedOperationException();
-                        })
-                )
+            SpreadsheetFormatters.fraction(
+                token,
+                (bigDecimal -> {
+                    throw new UnsupportedOperationException();
+                })
+            )
         );
     }
 
@@ -133,12 +133,12 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         final Optional<ColorSpreadsheetFormatParserToken> color = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor.extractColor(token);
 
         this.saveFormatter(
-                color.map(
-                        t -> SpreadsheetFormatters.color(
-                                t,
-                                generalFormatter
-                        )
-                ).orElse(generalFormatter)
+            color.map(
+                t -> SpreadsheetFormatters.color(
+                    t,
+                    generalFormatter
+                )
+            ).orElse(generalFormatter)
         );
     }
 
@@ -174,27 +174,27 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.number(token)
+            SpreadsheetFormatters.number(token)
         );
     }
 
     @Override
     protected void endVisit(final TextSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.text(token)
+            SpreadsheetFormatters.text(token)
         );
     }
 
     @Override
     protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-                SpreadsheetFormatters.dateTime(
-                        SpreadsheetFormatParserToken.dateTime(
-                                token.value(),
-                                token.text()
-                        ),
-                        LocalTime.class
-                )
+            SpreadsheetFormatters.dateTime(
+                SpreadsheetFormatParserToken.dateTime(
+                    token.value(),
+                    token.text()
+                ),
+                LocalTime.class
+            )
         );
     }
 

@@ -33,8 +33,8 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     @Test
     public final void testAddFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().add(0)
+            UnsupportedOperationException.class,
+            () -> this.createSelection().add(0)
         );
     }
 
@@ -43,8 +43,8 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     @Test
     public final void testAddSaturatedFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().addSaturated(0)
+            UnsupportedOperationException.class,
+            () -> this.createSelection().addSaturated(0)
         );
     }
 
@@ -53,18 +53,18 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     @Test
     public final void testAddIfRelativeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .addIfRelative(0)
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .addIfRelative(0)
         );
     }
 
     @Test
     public final void testAddIfRelative() {
         this.addIfRelativeAndCheck(
-                this.createSelection(),
-                0,
-                0
+            this.createSelection(),
+            0,
+            0
         );
     }
 
@@ -72,12 +72,12 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
                                      final int columnDelta,
                                      final int rowDelta) {
         assertSame(
-                selection,
-                selection.addIfRelative(
-                        columnDelta,
-                        rowDelta
-                ),
-                () -> selection + " addIfRelative " + columnDelta + ", " + selection
+            selection,
+            selection.addIfRelative(
+                columnDelta,
+                rowDelta
+            ),
+            () -> selection + " addIfRelative " + columnDelta + ", " + selection
         );
     }
 
@@ -86,12 +86,12 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
                                      final int rowDelta,
                                      final R expected) {
         this.checkEquals(
-                expected,
-                selection.addIfRelative(
-                        columnDelta,
-                        rowDelta
-                ),
-                () -> selection + " addIfRelative " + columnDelta + ", " + selection
+            expected,
+            selection.addIfRelative(
+                columnDelta,
+                rowDelta
+            ),
+            () -> selection + " addIfRelative " + columnDelta + ", " + selection
         );
     }
 
@@ -125,29 +125,29 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     public final void testEqualsIgnoreReferenceKindSameTrue() {
         final R reference = this.createSelection();
         this.equalsIgnoreReferenceKindAndCheck(reference,
-                reference,
-                true);
+            reference,
+            true);
     }
 
     @Test
     public final void testEqualsIgnoreReferenceKindSameTrue2() {
         this.equalsIgnoreReferenceKindAndCheck(this.createSelection(),
-                this.createSelection(),
-                true);
+            this.createSelection(),
+            true);
     }
 
     final void equalsIgnoreReferenceKindAndCheck(final R reference1,
                                                  final Object other,
                                                  final boolean expected) {
         this.checkEquals(expected,
-                reference1.equalsIgnoreReferenceKind(other),
-                () -> reference1 + " equalsIgnoreReferenceKind " + other
+            reference1.equalsIgnoreReferenceKind(other),
+            () -> reference1 + " equalsIgnoreReferenceKind " + other
         );
         if (other instanceof SpreadsheetExpressionReference) {
             final R reference2 = (R) other;
             this.checkEquals(expected,
-                    reference2.equalsIgnoreReferenceKind(reference1),
-                    () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
+                reference2.equalsIgnoreReferenceKind(reference1),
+                () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
         }
     }
 }

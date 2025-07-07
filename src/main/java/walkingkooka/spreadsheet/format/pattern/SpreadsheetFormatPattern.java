@@ -52,14 +52,14 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     public final SpreadsheetFormatterSelector spreadsheetFormatterSelector() {
 
         final String formatterName = CaseKind.CAMEL.change(
-                this.getClass().getSimpleName()
-                        .substring("Spreadsheet".length()),
-                CaseKind.KEBAB
+            this.getClass().getSimpleName()
+                .substring("Spreadsheet".length()),
+            CaseKind.KEBAB
         );
 
         return SpreadsheetFormatterSelector.with(
-                SpreadsheetFormatterName.with(formatterName),
-                this.text()
+            SpreadsheetFormatterName.with(formatterName),
+            this.text()
         );
     }
 
@@ -78,10 +78,9 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     /**
      * Factory that lazily creates a {@link SpreadsheetFormatter}
      */
-    @Override
-    final SpreadsheetPatternSpreadsheetFormatter createFormatter() {
+    @Override final SpreadsheetPatternSpreadsheetFormatter createFormatter() {
         return SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor.createFormatter(
-                this
+            this
         );
     }
 

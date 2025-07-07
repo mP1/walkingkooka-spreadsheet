@@ -32,31 +32,31 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         final TreeMapSpreadsheetColumnStore store = this.createStore();
 
         final SpreadsheetColumn a = SpreadsheetColumn.with(
-                SpreadsheetSelection.parseColumn("A")
+            SpreadsheetSelection.parseColumn("A")
         );
         store.save(a);
 
         final SpreadsheetColumn b = SpreadsheetColumn.with(
-                SpreadsheetSelection.parseColumn("B")
+            SpreadsheetSelection.parseColumn("B")
         );
         store.save(b);
 
         final SpreadsheetColumn c = SpreadsheetColumn.with(
-                SpreadsheetSelection.parseColumn("C")
+            SpreadsheetSelection.parseColumn("C")
         );
         store.save(c);
 
         final SpreadsheetColumn d = SpreadsheetColumn.with(
-                SpreadsheetSelection.parseColumn("D")
+            SpreadsheetSelection.parseColumn("D")
         );
 
         store.save(d);
 
         this.loadColumnsAndCheck(
-                store,
-                SpreadsheetSelection.parseColumnRange("B:C"),
-                b,
-                c
+            store,
+            SpreadsheetSelection.parseColumnRange("B:C"),
+            b,
+            c
         );
     }
 
@@ -65,19 +65,19 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         final TreeMapSpreadsheetColumnStore store = this.createStore();
 
         final SpreadsheetColumn a = SpreadsheetColumn.with(
-                SpreadsheetSelection.parseColumn("A")
+            SpreadsheetSelection.parseColumn("A")
         );
         final SpreadsheetColumn b = SpreadsheetColumn.with(
-                SpreadsheetSelection.parseColumn("B")
+            SpreadsheetSelection.parseColumn("B")
         );
 
         store.saveColumns(Sets.of(a, b));
 
         this.checkEquals(
-                Sets.of(
-                        a, b
-                ),
-                store.loadColumns(SpreadsheetSelection.parseColumnRange("A:B"))
+            Sets.of(
+                a, b
+            ),
+            store.loadColumns(SpreadsheetSelection.parseColumnRange("A:B"))
         );
     }
 
@@ -87,8 +87,8 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
     public void testToString() {
         final TreeMapSpreadsheetColumnStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.parseColumn("B")
-                        .column()
+            SpreadsheetSelection.parseColumn("B")
+                .column()
         );
 
         this.toStringAndCheck(store, "[B]");

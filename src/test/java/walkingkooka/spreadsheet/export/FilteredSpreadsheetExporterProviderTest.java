@@ -27,7 +27,7 @@ import walkingkooka.reflect.JavaVisibility;
 import java.util.List;
 
 public final class FilteredSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<FilteredSpreadsheetExporterProvider>,
-        ToStringTesting<FilteredSpreadsheetExporterProvider> {
+    ToStringTesting<FilteredSpreadsheetExporterProvider> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
@@ -37,15 +37,15 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
         final List<?> values = Lists.empty();
 
         this.spreadsheetExporterAndCheck(
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetExporterProviders.spreadsheetExport()
-                        .spreadsheetExporter(
-                                name,
-                                values,
-                                CONTEXT
-                        )
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetExporterProviders.spreadsheetExport()
+                .spreadsheetExporter(
+                    name,
+                    values,
+                    CONTEXT
+                )
         );
     }
 
@@ -55,36 +55,36 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
         final List<?> values = Lists.empty();
 
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterProviders.spreadsheetExport(),
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetExporters.empty()
+            SpreadsheetExporterProviders.spreadsheetExport(),
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetExporters.empty()
         );
 
         this.spreadsheetExporterFails(
-                name,
-                values,
-                CONTEXT
+            name,
+            values,
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetExporterInfos() {
         this.spreadsheetExporterInfosAndCheck(
-                SpreadsheetExporterInfoSet.EMPTY.concat(
-                        SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json")
-                )
+            SpreadsheetExporterInfoSet.EMPTY.concat(
+                SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json")
+            )
         );
     }
 
     @Override
     public FilteredSpreadsheetExporterProvider createSpreadsheetExporterProvider() {
         return FilteredSpreadsheetExporterProvider.with(
-                SpreadsheetExporterProviders.spreadsheetExport(),
-                SpreadsheetExporterInfoSet.EMPTY.concat(
-                        SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json")
-                )
+            SpreadsheetExporterProviders.spreadsheetExport(),
+            SpreadsheetExporterInfoSet.EMPTY.concat(
+                SpreadsheetExporterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json")
+            )
         );
     }
 
@@ -93,9 +93,9 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createSpreadsheetExporterProvider(),
-                SpreadsheetExporterProviders.spreadsheetExport()
-                        .toString()
+            this.createSpreadsheetExporterProvider(),
+            SpreadsheetExporterProviders.spreadsheetExport()
+                .toString()
         );
     }
 

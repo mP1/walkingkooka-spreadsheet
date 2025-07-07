@@ -99,8 +99,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     @Override
     public Set<SpreadsheetCellReference> value() {
         return Set.of(
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCell("B2"),
+            SpreadsheetSelection.parseCell("C3")
         );
     }
 
@@ -124,8 +124,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                                                                        final int count) {
             Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -159,8 +159,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                                                                     final int count) {
             Objects.requireNonNull(label, "label");
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -179,12 +179,12 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
 
         @Override
         public Set<SpreadsheetLabelName> findReferencesWithCell(final SpreadsheetCellReference cell,
-                                                                    final int offset,
-                                                                    final int count) {
+                                                                final int offset,
+                                                                final int count) {
             Objects.requireNonNull(cell, "cell");
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -220,8 +220,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         public Set<SpreadsheetLabelName> ids(final int offset,
                                              final int count) {
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -230,8 +230,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         public List<Set<SpreadsheetCellReference>> values(final int offset,
                                                           final int count) {
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return List.of();
         }
@@ -240,8 +240,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         public List<Set<SpreadsheetCellReference>> between(final SpreadsheetLabelName from,
                                                            final SpreadsheetLabelName to) {
             Store.checkBetween(
-                    from,
-                    to
+                from,
+                to
             );
             return List.of();
         }

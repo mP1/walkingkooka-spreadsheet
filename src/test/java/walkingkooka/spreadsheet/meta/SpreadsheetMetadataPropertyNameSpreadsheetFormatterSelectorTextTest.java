@@ -29,16 +29,16 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTe
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance(),
-                "textFormatter"
+            SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance(),
+            "textFormatter"
         );
     }
 
@@ -50,7 +50,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTe
     @Override
     SpreadsheetFormatterSelector propertyValue() {
         return SpreadsheetTextFormatPattern.parseTextFormatPattern("@ \"text-literal 123\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................

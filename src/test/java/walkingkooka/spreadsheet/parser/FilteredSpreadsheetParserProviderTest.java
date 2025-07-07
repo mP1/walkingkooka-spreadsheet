@@ -29,8 +29,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import java.util.List;
 
 public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<FilteredSpreadsheetParserProvider>,
-        SpreadsheetMetadataTesting,
-        ToStringTesting<FilteredSpreadsheetParserProvider> {
+    SpreadsheetMetadataTesting,
+    ToStringTesting<FilteredSpreadsheetParserProvider> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
@@ -40,15 +40,15 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
         final List<?> values = Lists.of("dd/mmm/yyyy");
 
         this.spreadsheetParserAndCheck(
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER)
-                        .spreadsheetParser(
-                                name,
-                                values,
-                                CONTEXT
-                        )
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER)
+                .spreadsheetParser(
+                    name,
+                    values,
+                    CONTEXT
+                )
         );
     }
 
@@ -59,40 +59,40 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
         final List<?> values = Lists.of(pattern);
 
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER),
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetPattern.parseTimeParsePattern(pattern)
-                        .parser()
+            SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER),
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern(pattern)
+                .parser()
         );
 
 
         this.spreadsheetParserFails(
-                name,
-                values,
-                CONTEXT
+            name,
+            values,
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetParserInfos() {
         this.spreadsheetParserInfosAndCheck(
-                SpreadsheetParserInfoSet.EMPTY.concat(
-                        SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern")
-                )
+            SpreadsheetParserInfoSet.EMPTY.concat(
+                SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern")
+            )
         );
     }
 
     @Override
     public FilteredSpreadsheetParserProvider createSpreadsheetParserProvider() {
         return FilteredSpreadsheetParserProvider.with(
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SPREADSHEET_FORMATTER_PROVIDER
-                ),
-                SpreadsheetParserInfoSet.EMPTY.concat(
-                        SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern")
-                )
+            SpreadsheetParserProviders.spreadsheetParsePattern(
+                SPREADSHEET_FORMATTER_PROVIDER
+            ),
+            SpreadsheetParserInfoSet.EMPTY.concat(
+                SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern")
+            )
         );
     }
 
@@ -101,9 +101,9 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createSpreadsheetParserProvider(),
-                SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER)
-                        .toString()
+            this.createSpreadsheetParserProvider(),
+            SpreadsheetParserProviders.spreadsheetParsePattern(SPREADSHEET_FORMATTER_PROVIDER)
+                .toString()
         );
     }
 

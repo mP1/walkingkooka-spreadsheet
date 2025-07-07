@@ -27,8 +27,8 @@ public final class ErrorSpreadsheetFormulaParserToken extends NonSymbolSpreadshe
     static ErrorSpreadsheetFormulaParserToken with(final SpreadsheetError value,
                                                    final String text) {
         return new ErrorSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

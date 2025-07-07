@@ -49,10 +49,10 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
         return isCellOrCellRange(value, type) ||
-                isCellToCellRange(value, type) ||
-                isCellRangeToCell(value, type) ||
-                isExpressionReference(value, type) ||
-                isSelection(value, type);
+            isCellToCellRange(value, type) ||
+            isCellRangeToCell(value, type) ||
+            isExpressionReference(value, type) ||
+            isSelection(value, type);
     }
 
     @Override
@@ -79,9 +79,9 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
                             result = selection;
                         } else {
                             throw new ConversionException(
-                                    "Cant convert " + value + " to " + type.getName(),
-                                    value,
-                                    type
+                                "Cant convert " + value + " to " + type.getName(),
+                                value,
+                                type
                             );
                         }
                     }
@@ -95,11 +95,11 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
     private static boolean isCellOrCellRange(final Object value,
                                              final Class<?> type) {
         return value instanceof SpreadsheetSelection &&
-                (
-                        SpreadsheetCellReference.class == type ||
-                                SpreadsheetCellRangeReference.class == type ||
-                                SpreadsheetCellReferenceOrRange.class == type
-                );
+            (
+                SpreadsheetCellReference.class == type ||
+                    SpreadsheetCellRangeReference.class == type ||
+                    SpreadsheetCellReferenceOrRange.class == type
+            );
     }
 
     private static boolean isCellToCellRange(final Object value,

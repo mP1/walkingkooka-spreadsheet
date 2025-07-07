@@ -106,7 +106,7 @@ final class SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor extends S
     @Override
     protected void visitExpressionNumber() {
         this.value = this.context.expressionNumberKind()
-                .zero();
+            .zero();
     }
 
 //    @Override
@@ -152,7 +152,7 @@ final class SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor extends S
     @Override
     protected void visitNumber() {
         this.value = this.context.expressionNumberKind()
-                .zero();
+            .zero();
     }
 
 //    @Override

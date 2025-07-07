@@ -28,36 +28,36 @@ public final class SpreadsheetCellStoreActionTest implements ClassTesting<Spread
     @Test
     public void testMaxNoneNone() {
         this.maxAndCheck(
-                SpreadsheetCellStoreAction.NONE,
-                SpreadsheetCellStoreAction.NONE,
-                SpreadsheetCellStoreAction.NONE
+            SpreadsheetCellStoreAction.NONE,
+            SpreadsheetCellStoreAction.NONE,
+            SpreadsheetCellStoreAction.NONE
         );
     }
 
     @Test
     public void testMaxNoneParseFormula() {
         this.maxAndCheck(
-                SpreadsheetCellStoreAction.NONE,
-                SpreadsheetCellStoreAction.PARSE_FORMULA,
-                SpreadsheetCellStoreAction.PARSE_FORMULA
+            SpreadsheetCellStoreAction.NONE,
+            SpreadsheetCellStoreAction.PARSE_FORMULA,
+            SpreadsheetCellStoreAction.PARSE_FORMULA
         );
     }
 
     @Test
     public void testMaxNoneEvaluateAndFormat() {
         this.maxAndCheck(
-                SpreadsheetCellStoreAction.NONE,
-                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT,
-                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+            SpreadsheetCellStoreAction.NONE,
+            SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT,
+            SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }
 
     @Test
     public void testMaxParseFormulaEvaluateAndFormat() {
         this.maxAndCheck(
-                SpreadsheetCellStoreAction.PARSE_FORMULA,
-                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT,
-                SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
+            SpreadsheetCellStoreAction.PARSE_FORMULA,
+            SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT,
+            SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }
 
@@ -65,14 +65,14 @@ public final class SpreadsheetCellStoreActionTest implements ClassTesting<Spread
                              final SpreadsheetCellStoreAction second,
                              final SpreadsheetCellStoreAction expected) {
         this.maxAndCheck0(
-                first,
-                second,
-                expected
+            first,
+            second,
+            expected
         );
         this.maxAndCheck0(
-                second,
-                first,
-                expected
+            second,
+            first,
+            expected
         );
     }
 
@@ -80,9 +80,9 @@ public final class SpreadsheetCellStoreActionTest implements ClassTesting<Spread
                               final SpreadsheetCellStoreAction second,
                               final SpreadsheetCellStoreAction expected) {
         this.checkEquals(
-                expected,
-                first.max(second),
-                first + " max " + second
+            expected,
+            first.max(second),
+            first + " max " + second
         );
     }
 

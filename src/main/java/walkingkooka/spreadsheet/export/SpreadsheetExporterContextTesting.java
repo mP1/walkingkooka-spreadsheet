@@ -22,8 +22,8 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 
 public interface SpreadsheetExporterContextTesting<C extends SpreadsheetExporterContext> extends ContextTesting<C>,
-        JsonNodeMarshallContextTesting<C>,
-        TreePrintableTesting {
+    JsonNodeMarshallContextTesting<C>,
+    TreePrintableTesting {
 
     @Override
     default String typeNameSuffix() {

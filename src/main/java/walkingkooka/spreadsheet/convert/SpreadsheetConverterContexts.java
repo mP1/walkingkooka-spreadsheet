@@ -42,11 +42,11 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final JsonNodeConverterContext context) {
         return BasicSpreadsheetConverterContext.with(
-                spreadsheetMetadata,
-                validationReference,
-                converter,
-                spreadsheetLabelNameResolver,
-                context
+            spreadsheetMetadata,
+            validationReference,
+            converter,
+            spreadsheetLabelNameResolver,
+            context
         );
     }
 

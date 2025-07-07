@@ -29,8 +29,8 @@ public final class SpreadsheetImporterSelectorTest implements PluginSelectorLike
     public SpreadsheetImporterSelector createPluginSelectorLike(final SpreadsheetImporterName name,
                                                                 final String text) {
         return SpreadsheetImporterSelector.with(
-                name,
-                text
+            name,
+            text
         );
     }
 
@@ -45,11 +45,11 @@ public final class SpreadsheetImporterSelectorTest implements PluginSelectorLike
         final String text = "@@";
 
         this.parseStringAndCheck(
-                name + " " + text,
-                SpreadsheetImporterSelector.with(
-                        SpreadsheetImporterName.with(name),
-                        text
-                )
+            name + " " + text,
+            SpreadsheetImporterSelector.with(
+                SpreadsheetImporterName.with(name),
+                text
+            )
         );
     }
 
@@ -75,16 +75,16 @@ public final class SpreadsheetImporterSelectorTest implements PluginSelectorLike
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"test-sample-123 @@\""
+            this.createJsonNodeMarshallingValue(),
+            "\"test-sample-123 @@\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"test-sample-123 @@\"",
-                this.createJsonNodeMarshallingValue()
+            "\"test-sample-123 @@\"",
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -92,16 +92,16 @@ public final class SpreadsheetImporterSelectorTest implements PluginSelectorLike
     public SpreadsheetImporterSelector unmarshall(final JsonNode json,
                                                   final JsonNodeUnmarshallContext context) {
         return SpreadsheetImporterSelector.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
     @Override
     public SpreadsheetImporterSelector createJsonNodeMarshallingValue() {
         return SpreadsheetImporterSelector.with(
-                SpreadsheetImporterName.with("test-sample-123"),
-                "@@"
+            SpreadsheetImporterName.with("test-sample-123"),
+            "@@"
         );
     }
 

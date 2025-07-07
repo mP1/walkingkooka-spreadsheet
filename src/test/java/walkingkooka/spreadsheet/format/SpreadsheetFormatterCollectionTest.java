@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterCollectionTest implements SpreadsheetFormatterTesting2<SpreadsheetFormatterCollection>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetFormatterCollection> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetFormatterCollection> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -42,16 +42,16 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatterCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetFormatterCollection.with(null)
         );
     }
 
     @Test
     public void testWithEmptyFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetFormatterCollection.with(Lists.empty())
+            IllegalArgumentException.class,
+            () -> SpreadsheetFormatterCollection.with(Lists.empty())
         );
     }
 
@@ -76,20 +76,20 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                Optional.empty(),
-                Optional.empty()
+            Optional.empty(),
+            Optional.empty()
         );
     }
 
     @Override
     public SpreadsheetFormatterCollection createFormatter() {
         return Cast.to(
-                SpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                this.formatter1(),
-                                this.formatter2()
-                        )
+            SpreadsheetFormatterCollection.with(
+                Lists.of(
+                    this.formatter1(),
+                    this.formatter2()
                 )
+            )
         );
     }
 
@@ -112,11 +112,11 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
                 Objects.requireNonNull(context, "context");
 
                 return Optional.ofNullable(
-                                value.equals(v.orElse(null)) ?
-                                SpreadsheetText.with(text)
-                                        .toTextNode()
-                                :
-                                null
+                    value.equals(v.orElse(null)) ?
+                        SpreadsheetText.with(text)
+                            .toTextNode()
+                        :
+                        null
                 );
             }
 
@@ -149,29 +149,29 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     @Test
     public void testEqualsDifferentFormatters() {
         this.checkNotEquals(
-                SpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                this.formatter1(),
-                                this.formatter2()
-                        )
-                ),
-                SpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                this.formatter1()
-                        )
+            SpreadsheetFormatterCollection.with(
+                Lists.of(
+                    this.formatter1(),
+                    this.formatter2()
                 )
+            ),
+            SpreadsheetFormatterCollection.with(
+                Lists.of(
+                    this.formatter1()
+                )
+            )
         );
     }
 
     @Override
     public SpreadsheetFormatterCollection createObject() {
         return (SpreadsheetFormatterCollection)
-                SpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                SpreadsheetFormatters.defaultText(),
-                                SpreadsheetFormatters.defaultText()
-                        )
-                );
+            SpreadsheetFormatterCollection.with(
+                Lists.of(
+                    SpreadsheetFormatters.defaultText(),
+                    SpreadsheetFormatters.defaultText()
+                )
+            );
     }
 
     // toString.........................................................................................................
@@ -179,8 +179,8 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createFormatter(),
-                VALUE1 + ";" + VALUE2
+            this.createFormatter(),
+            VALUE1 + ";" + VALUE2
         );
     }
 

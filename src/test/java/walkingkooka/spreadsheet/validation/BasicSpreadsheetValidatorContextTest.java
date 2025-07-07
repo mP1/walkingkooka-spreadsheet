@@ -30,13 +30,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetValidatorContextTesting<BasicSpreadsheetValidatorContext>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetValidatorContext.with(null)
+            NullPointerException.class,
+            () -> BasicSpreadsheetValidatorContext.with(null)
         );
     }
 
@@ -47,33 +47,33 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
         final SpreadsheetCellReference different = SpreadsheetSelection.parseCell("$A1");
 
         this.checkNotEquals(
-                different,
-                context.validationReference()
+            different,
+            context.validationReference()
         );
 
         assertSame(
-                context,
-                context.setValidationReference(different)
+            context,
+            context.setValidationReference(different)
         );
     }
 
     @Override
     public BasicSpreadsheetValidatorContext createContext() {
         return Cast.to(
-                BasicSpreadsheetValidatorContext.with(
-                        ValidatorContexts.basic(
-                                SpreadsheetSelection.A1,
-                                (final ValidatorSelector validatorSelector) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                (final Object value,
-                                 final SpreadsheetExpressionReference cellOrLabel) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                SPREADSHEET_FORMATTER_CONTEXT,
-                                PROVIDER_CONTEXT
-                        )
+            BasicSpreadsheetValidatorContext.with(
+                ValidatorContexts.basic(
+                    SpreadsheetSelection.A1,
+                    (final ValidatorSelector validatorSelector) -> {
+                        throw new UnsupportedOperationException();
+                    },
+                    (final Object value,
+                     final SpreadsheetExpressionReference cellOrLabel) -> {
+                        throw new UnsupportedOperationException();
+                    },
+                    SPREADSHEET_FORMATTER_CONTEXT,
+                    PROVIDER_CONTEXT
                 )
+            )
         );
     }
 

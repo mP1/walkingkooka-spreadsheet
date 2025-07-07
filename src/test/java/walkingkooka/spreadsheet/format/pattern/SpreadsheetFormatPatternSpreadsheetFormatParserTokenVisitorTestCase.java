@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 
 public abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor>
-        extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
+    extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
 
     SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTestCase() {
         super();

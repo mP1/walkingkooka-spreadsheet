@@ -40,10 +40,10 @@ abstract public class ConditionSpreadsheetFormatParserToken extends ParentSpread
         }
 
         final Optional<SpreadsheetFormatParserToken> bigDecimal = value.stream()
-                .filter(t -> t instanceof SpreadsheetFormatParserToken)
-                .map(t -> t.cast(SpreadsheetFormatParserToken.class))
-                .filter(SpreadsheetFormatParserToken::isConditionNumber)
-                .findFirst();
+            .filter(t -> t instanceof SpreadsheetFormatParserToken)
+            .map(t -> t.cast(SpreadsheetFormatParserToken.class))
+            .filter(SpreadsheetFormatParserToken::isConditionNumber)
+            .findFirst();
         if (!bigDecimal.isPresent()) {
             throw new IllegalArgumentException("Missing number token got " + value);
         }

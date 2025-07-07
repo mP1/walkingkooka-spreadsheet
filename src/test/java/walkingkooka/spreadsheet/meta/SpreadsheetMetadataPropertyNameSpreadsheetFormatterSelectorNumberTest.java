@@ -55,16 +55,16 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAndCheck(
-                KIND.create(1.25),
-                "1.25"
+            KIND.create(1.25),
+            "1.25"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValueInteger() {
         this.extractLocaleValueAndCheck(
-                KIND.create(789),
-                "789."
+            KIND.create(789),
+            "789."
         );
     }
 
@@ -72,23 +72,23 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                                             final String expected) {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance()
-                .extractLocaleAwareValue(
-                        LocaleContexts.jre(locale)
-                ).get()
-                .spreadsheetFormatPattern()
-                .get();
+            .extractLocaleAwareValue(
+                LocaleContexts.jre(locale)
+            ).get()
+            .spreadsheetFormatPattern()
+            .get();
 
         final String formatted = pattern.formatter()
-                .format(
-                        Optional.of(number),
-                        spreadsheetFormatterContext()
-                ).get()
-                .text();
+            .format(
+                Optional.of(number),
+                spreadsheetFormatterContext()
+            ).get()
+            .text();
 
         this.checkEquals(
-                expected,
-                formatted,
-                pattern::toString
+            expected,
+            formatted,
+            pattern::toString
         );
     }
 
@@ -96,73 +96,73 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
         final Locale locale = Locale.ENGLISH;
 
         return SpreadsheetFormatterContexts.basic(
-                (n -> {
-                    throw new UnsupportedOperationException();
-                }),
-                (n -> {
-                    throw new UnsupportedOperationException();
-                }),
-                1, // cellCharacterWidth
-                8, // generalNumberFormatDigitCount
-                SpreadsheetFormatters.fake(),
-                (final Optional<Object> value) -> {
-                    throw new UnsupportedOperationException();
+            (n -> {
+                throw new UnsupportedOperationException();
+            }),
+            (n -> {
+                throw new UnsupportedOperationException();
+            }),
+            1, // cellCharacterWidth
+            8, // generalNumberFormatDigitCount
+            SpreadsheetFormatters.fake(),
+            (final Optional<Object> value) -> {
+                throw new UnsupportedOperationException();
+            },
+            SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_METADATA,
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+                new FakeConverter<>() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type,
+                                              final SpreadsheetConverterContext context) {
+                        return type.isInstance(value);
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> type,
+                                                         final SpreadsheetConverterContext context) {
+                        return this.successfulConversion(
+                            type.cast(value),
+                            type
+                        );
+                    }
                 },
-                SpreadsheetConverterContexts.basic(
-                        SpreadsheetConverterContexts.NO_METADATA,
-                        SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                        new FakeConverter<>() {
-
-                            @Override
-                            public boolean canConvert(final Object value,
-                                                      final Class<?> type,
-                                                      final SpreadsheetConverterContext context) {
-                                return type.isInstance(value);
-                            }
-
-                            @Override
-                            public <T> Either<T, String> convert(final Object value,
-                                                                 final Class<T> type,
-                                                                 final SpreadsheetConverterContext context) {
-                                return this.successfulConversion(
-                                        type.cast(value),
-                                        type
-                                );
-                            }
-                        },
-                        LABEL_NAME_RESOLVER,
-                        JsonNodeConverterContexts.basic(
-                                ExpressionNumberConverterContexts.basic(
-                                        Converters.fake(),
-                                        ConverterContexts.basic(
-                                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                                Converters.fake(),
-                                                DateTimeContexts.basic(
-                                                        DateTimeSymbols.fromDateFormatSymbols(
-                                                                new DateFormatSymbols(locale)
-                                                        ),
-                                                        locale,
-                                                        1900,
-                                                        20,
-                                                        LocalDateTime::now
-                                                ),
-                                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                                        ),
-                                        ExpressionNumberKind.DEFAULT
+                LABEL_NAME_RESOLVER,
+                JsonNodeConverterContexts.basic(
+                    ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Converters.fake(),
+                            DateTimeContexts.basic(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                    new DateFormatSymbols(locale)
                                 ),
-                                JsonNodeMarshallUnmarshallContexts.fake()
-                        )
-                ),
-                SpreadsheetFormatterProviders.fake(),
-                ProviderContexts.fake()
+                                locale,
+                                1900,
+                                20,
+                                LocalDateTime::now
+                            ),
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        ),
+                        ExpressionNumberKind.DEFAULT
+                    ),
+                    JsonNodeMarshallUnmarshallContexts.fake()
+                )
+            ),
+            SpreadsheetFormatterProviders.fake(),
+            ProviderContexts.fake()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance(),
-                "numberFormatter"
+            SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance(),
+            "numberFormatter"
         );
     }
 
@@ -174,7 +174,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     @Override
     SpreadsheetFormatterSelector propertyValue() {
         return SpreadsheetNumberFormatPattern.parseNumberFormatPattern("#.## \"custom\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................

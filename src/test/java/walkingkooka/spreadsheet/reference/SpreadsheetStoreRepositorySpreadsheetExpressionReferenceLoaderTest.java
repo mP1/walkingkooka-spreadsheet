@@ -41,8 +41,8 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
     @Test
     public void testWithNullSpreadsheetStoreRepositoryFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(null)
         );
     }
 
@@ -59,19 +59,19 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
         };
 
         final SpreadsheetCell cell = CELL.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of(123)
-                )
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(123)
+            )
         );
 
         repo.cells()
-                .save(cell);
+            .save(cell);
 
         this.loadCellAndCheck(
-                SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
-                CELL,
-                this.createContext(),
-                cell
+            SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
+            CELL,
+            this.createContext(),
+            cell
         );
     }
 
@@ -88,29 +88,29 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
         };
 
         final SpreadsheetCell a1 = CELL.setFormula(
-                SpreadsheetFormula.EMPTY.setValue(
-                        Optional.of(111)
-                )
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(111)
+            )
         );
 
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of(222)
-                        )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(222)
+                )
+            );
 
         repo.cells()
-                .save(a1);
+            .save(a1);
         repo.cells()
-                .save(b2);
+            .save(b2);
 
         this.loadCellRangeAndCheck(
-                SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                this.createContext(),
-                a1,
-                b2
+            SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            this.createContext(),
+            a1,
+            b2
         );
     }
 
@@ -127,15 +127,15 @@ public final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoade
         };
 
         final SpreadsheetLabelMapping label = SpreadsheetSelection.labelName("Label123")
-                .setLabelMappingReference(CELL);
+            .setLabelMappingReference(CELL);
 
         repo.labels()
-                .save(label);
+            .save(label);
 
         this.loadLabelAndCheck(
-                SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
-                label.label(),
-                label
+            SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader.with(repo),
+            label.label(),
+            label
         );
     }
 

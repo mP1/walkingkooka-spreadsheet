@@ -29,24 +29,24 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNameTest extends Sp
     @Test
     public void testCheckValueWithInvalidSpreadsheetNameFails() {
         this.checkValueFails(
-                "\r",
-                "Metadata spreadsheetName=\"\\r\", Expected SpreadsheetName"
+            "\r",
+            "Metadata spreadsheetName=\"\\r\", Expected SpreadsheetName"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetName.instance(),
-                "spreadsheetName"
+            SpreadsheetMetadataPropertyNameSpreadsheetName.instance(),
+            "spreadsheetName"
         );
     }
 

@@ -29,10 +29,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
-        extends ClassTesting2<I>,
-        JsonNodeMarshallingTesting<I>,
-        HashCodeEqualsDefinedTesting2<I>,
-        ToStringTesting<I> {
+    extends ClassTesting2<I>,
+    JsonNodeMarshallingTesting<I>,
+    HashCodeEqualsDefinedTesting2<I>,
+    ToStringTesting<I> {
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test

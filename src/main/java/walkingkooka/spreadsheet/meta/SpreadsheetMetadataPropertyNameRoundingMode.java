@@ -41,7 +41,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     @Override
     RoundingMode checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof RoundingMode);
+            v -> v instanceof RoundingMode);
     }
 
     @Override

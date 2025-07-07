@@ -48,7 +48,7 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         @Override
         public int value(final SpreadsheetSelection selection) {
             return selection.toColumn()
-                    .value;
+                .value;
         }
 
         @Override
@@ -70,13 +70,13 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         @Override
         public SpreadsheetColumnReference columnOrRow(final SpreadsheetSelection selection) {
             return checkSelection(selection)
-                    .toColumn();
+                .toColumn();
         }
 
         @Override
         public SpreadsheetColumnRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
             return checkSelection(selection)
-                    .toColumnRange();
+                .toColumnRange();
         }
 
         @Override
@@ -110,7 +110,7 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         @Override
         public int value(final SpreadsheetSelection selection) {
             return selection.toRow()
-                    .value;
+                .value;
         }
 
         @Override
@@ -132,13 +132,13 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         @Override
         public SpreadsheetRowReference columnOrRow(final SpreadsheetSelection selection) {
             return checkSelection(selection)
-                    .toRow();
+                .toRow();
         }
 
         @Override
         public SpreadsheetRowRangeReference columnOrRowRange(final SpreadsheetSelection selection) {
             return checkSelection(selection)
-                    .toRowRange();
+                .toRowRange();
         }
 
         @Override
@@ -210,8 +210,8 @@ public enum SpreadsheetColumnOrRowReferenceKind {
      */
     public final int length(final SpreadsheetSelection selection) {
         return this.length0(
-                checkSelection(selection)
-                        .toCellRange()
+            checkSelection(selection)
+                .toCellRange()
         );
     }
 

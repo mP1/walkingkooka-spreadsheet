@@ -21,12 +21,12 @@ import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTesting<SpreadsheetExporterPluginHelper,
-        SpreadsheetExporterName,
-        SpreadsheetExporterInfo,
-        SpreadsheetExporterInfoSet,
-        SpreadsheetExporterSelector,
-        SpreadsheetExporterAlias,
-        SpreadsheetExporterAliasSet> {
+    SpreadsheetExporterName,
+    SpreadsheetExporterInfo,
+    SpreadsheetExporterInfoSet,
+    SpreadsheetExporterSelector,
+    SpreadsheetExporterAlias,
+    SpreadsheetExporterAliasSet> {
 
     @Override
     public SpreadsheetExporterPluginHelper createPluginHelper() {

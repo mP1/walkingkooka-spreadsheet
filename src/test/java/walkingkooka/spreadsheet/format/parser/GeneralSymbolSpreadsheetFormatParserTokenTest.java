@@ -72,7 +72,7 @@ public final class GeneralSymbolSpreadsheetFormatParserTokenTest extends SymbolS
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.GENERAL
+            SpreadsheetFormatParserTokenKind.GENERAL
         );
     }
 

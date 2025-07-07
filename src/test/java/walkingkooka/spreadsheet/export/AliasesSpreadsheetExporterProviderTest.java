@@ -67,79 +67,79 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
     @Test
     public void testWithUnknownExporterName() {
         AliasesSpreadsheetExporterProvider.with(
-                SpreadsheetExporterAliasSet.parse("unknown-exporter404"),
-                new FakeSpreadsheetExporterProvider() {
-                    @Override
-                    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
-                        return SpreadsheetExporterInfoSet.parse("https://example.com/exporter111 exporter111");
-                    }
+            SpreadsheetExporterAliasSet.parse("unknown-exporter404"),
+            new FakeSpreadsheetExporterProvider() {
+                @Override
+                public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+                    return SpreadsheetExporterInfoSet.parse("https://example.com/exporter111 exporter111");
                 }
+            }
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameWithName() {
         this.spreadsheetExporterAndCheck(
-                NAME1,
-                Lists.empty(),
-                CONTEXT,
-                EXPORTER1
+            NAME1,
+            Lists.empty(),
+            CONTEXT,
+            EXPORTER1
         );
     }
 
     @Test
     public void testSpreadsheetExporterSelectorWithName() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterSelector.parse(NAME1 + ""),
-                CONTEXT,
-                EXPORTER1
+            SpreadsheetExporterSelector.parse(NAME1 + ""),
+            CONTEXT,
+            EXPORTER1
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameWithAlias() {
         this.spreadsheetExporterAndCheck(
-                ALIAS2,
-                Lists.empty(),
-                CONTEXT,
-                EXPORTER2
+            ALIAS2,
+            Lists.empty(),
+            CONTEXT,
+            EXPORTER2
         );
     }
 
     @Test
     public void testSpreadsheetExporterSelectorWithAlias() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterSelector.parse(ALIAS2 + ""),
-                CONTEXT,
-                EXPORTER2
+            SpreadsheetExporterSelector.parse(ALIAS2 + ""),
+            CONTEXT,
+            EXPORTER2
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameWithSelector() {
         this.spreadsheetExporterAndCheck(
-                NAME4,
-                Lists.empty(),
-                CONTEXT,
-                EXPORTER3
+            NAME4,
+            Lists.empty(),
+            CONTEXT,
+            EXPORTER3
         );
     }
 
     @Test
     public void testSpreadsheetExporterSelectorWithSelector() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterSelector.parse(NAME4 + ""),
-                CONTEXT,
-                EXPORTER3
+            SpreadsheetExporterSelector.parse(NAME4 + ""),
+            CONTEXT,
+            EXPORTER3
         );
     }
 
     @Test
     public void testInfos() {
         this.spreadsheetExporterInfosAndCheck(
-                INFO1,
-                INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from SpreadsheetExporterAliasSet
+            INFO1,
+            INFO2.setName(ALIAS2),
+            INFO4.setName(NAME4) // from SpreadsheetExporterAliasSet
         );
     }
 
@@ -148,59 +148,59 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
         final String aliases = "exporter1, alias2 exporter2, custom4 exporter3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
-                NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
-                aliases
+            NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
+            aliases
         );
 
         return AliasesSpreadsheetExporterProvider.with(
-                SpreadsheetExporterAliasSet.parse(aliases),
-                new FakeSpreadsheetExporterProvider() {
-                    @Override
-                    public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
-                                                                   final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
-                                                                   final List<?> values,
-                                                                   final ProviderContext context) {
-                        SpreadsheetExporter exporter;
-
-                        switch (name.toString()) {
-                            case NAME1_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                exporter = EXPORTER1;
-                                break;
-                            case NAME2_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                exporter = EXPORTER2;
-                                break;
-                            case NAME3_STRING:
-                                checkEquals(Lists.of(VALUE3), values, "values");
-                                exporter = EXPORTER3;
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Unknown exporter " + name);
-                        }
-
-                        return exporter;
-                    }
-
-                    @Override
-                    public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
-                        return SpreadsheetExporterInfoSet.with(
-                                Sets.of(
-                                        INFO1,
-                                        INFO2,
-                                        INFO3
-                                )
-                        );
-                    }
+            SpreadsheetExporterAliasSet.parse(aliases),
+            new FakeSpreadsheetExporterProvider() {
+                @Override
+                public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
+                                                               final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
+                                                               final List<?> values,
+                                                               final ProviderContext context) {
+                    SpreadsheetExporter exporter;
+
+                    switch (name.toString()) {
+                        case NAME1_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            exporter = EXPORTER1;
+                            break;
+                        case NAME2_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            exporter = EXPORTER2;
+                            break;
+                        case NAME3_STRING:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            exporter = EXPORTER3;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unknown exporter " + name);
+                    }
+
+                    return exporter;
+                }
+
+                @Override
+                public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+                    return SpreadsheetExporterInfoSet.with(
+                        Sets.of(
+                            INFO1,
+                            INFO2,
+                            INFO3
+                        )
+                    );
+                }
+            }
         );
     }
 

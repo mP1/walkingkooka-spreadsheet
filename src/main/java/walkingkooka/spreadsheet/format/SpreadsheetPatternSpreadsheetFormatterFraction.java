@@ -58,7 +58,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
         this.fractioner = fractioner;
 
         final SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor visitor =
-                SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor.analyze(token);
+            SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParserTokenVisitor.analyze(token);
 
         this.components = visitor.components;
 
@@ -74,22 +74,22 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
         Objects.requireNonNull(context, "context");
 
         final Either<BigDecimal, String> converted = context.convert(
-                value.orElse(null),
-                BigDecimal.class
+            value.orElse(null),
+            BigDecimal.class
         );
         final BigDecimal bigDecimal = converted.isLeft() ?
-                converted.leftValue() :
-                null;
+            converted.leftValue() :
+            null;
 
         return Optional.ofNullable(
-                null != bigDecimal ?
-                        SpreadsheetText.with(
-                                this.formatSpreadsheetTextBigDecimal(
-                                        bigDecimal,
-                                        context
-                                )
-                        ) :
-                        null
+            null != bigDecimal ?
+                SpreadsheetText.with(
+                    this.formatSpreadsheetTextBigDecimal(
+                        bigDecimal,
+                        context
+                    )
+                ) :
+                null
         );
     }
 
@@ -100,11 +100,11 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     private String formatSpreadsheetTextBigDecimal(final BigDecimal value,
                                                    final SpreadsheetFormatterContext context) {
         final BigDecimal rounded = value.multiply(
-                this.multiplier,
-                context.mathContext()
+            this.multiplier,
+            context.mathContext()
         ).setScale(
-                this.denominatorDigitSymbolCount,
-                RoundingMode.HALF_UP
+            this.denominatorDigitSymbolCount,
+            RoundingMode.HALF_UP
         );
 
         final Fraction fraction = this.fractioner.apply(rounded);
@@ -120,29 +120,29 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
         final int places = decimalPlaces(denominator);
         for (int i = this.denominatorDigitSymbolCount; i < places; i++) {
             numerator = numerator.add(FIVE)
-                    .divide(BigInteger.TEN);
+                .divide(BigInteger.TEN);
             denominator = denominator.add(FIVE)
-                    .divide(BigInteger.TEN);
+                .divide(BigInteger.TEN);
         }
 
         final char zeroDigit = context.zeroDigit();
 
         final SpreadsheetPatternSpreadsheetFormatterFractionContext context2 = SpreadsheetPatternSpreadsheetFormatterFractionContext.with(
-                SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.fromSignum(sign),
-                SpreadsheetPatternSpreadsheetFormatterFractionDigits.numerator(
-                        SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.fixDigits(
-                                numerator.toString(),
-                                zeroDigit
-                        )
-                ),
-                SpreadsheetPatternSpreadsheetFormatterFractionDigits.denominator(
-                        SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.fixDigits(
-                                denominator.toString(),
-                                zeroDigit
-                        )
-                ),
-                this,
-                context
+            SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.fromSignum(sign),
+            SpreadsheetPatternSpreadsheetFormatterFractionDigits.numerator(
+                SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.fixDigits(
+                    numerator.toString(),
+                    zeroDigit
+                )
+            ),
+            SpreadsheetPatternSpreadsheetFormatterFractionDigits.denominator(
+                SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.fixDigits(
+                    denominator.toString(),
+                    zeroDigit
+                )
+            ),
+            this,
+            context
         );
 
         this.components.forEach(c -> c.append(context2));
@@ -193,13 +193,13 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterFraction &&
-                        this.equals0((SpreadsheetPatternSpreadsheetFormatterFraction) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterFraction &&
+                this.equals0((SpreadsheetPatternSpreadsheetFormatterFraction) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterFraction other) {
         return this.token.equals(other.token) &&
-                this.fractioner.equals(other.fractioner);
+            this.fractioner.equals(other.fractioner);
     }
 
     @Override

@@ -34,21 +34,18 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerAliasSet extends Spread
         super(name);
     }
 
-    @Override
-    final FormHandlerAliasSet checkValueNonNull(final Object value) {
+    @Override final FormHandlerAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof FormHandlerAliasSet
+            value,
+            v -> v instanceof FormHandlerAliasSet
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return FormHandlerAliasSet.class.getSimpleName();
     }
 
-    @Override
-    final Optional<FormHandlerAliasSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<FormHandlerAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

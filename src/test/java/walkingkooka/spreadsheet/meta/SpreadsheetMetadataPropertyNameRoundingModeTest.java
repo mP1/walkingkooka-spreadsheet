@@ -29,24 +29,24 @@ public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends Sprea
     @Test
     public void testCheckValueWithInvalidRoundingModeFails() {
         this.checkValueFails(
-                "invalid",
-                "Metadata roundingMode=\"invalid\", Expected RoundingMode"
+            "invalid",
+            "Metadata roundingMode=\"invalid\", Expected RoundingMode"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameRoundingMode.instance(),
-                "roundingMode"
+            SpreadsheetMetadataPropertyNameRoundingMode.instance(),
+            "roundingMode"
         );
     }
 

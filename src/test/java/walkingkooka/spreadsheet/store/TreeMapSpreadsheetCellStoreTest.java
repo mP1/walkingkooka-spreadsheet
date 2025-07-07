@@ -53,31 +53,31 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         store.save(a1);
 
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         store.save(b2);
 
         final SpreadsheetCell b4 = SpreadsheetSelection.parseCell("B4")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         store.save(b4);
 
         final SpreadsheetCell c3 = SpreadsheetSelection.parseCell("C3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         store.save(c3);
 
         final SpreadsheetCell d4 = SpreadsheetSelection.parseCell("D4")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         store.save(d4);
 
         this.betweenAndCheck(
-                store,
-                b2.reference(),
-                c3.reference(),
-                b2,
-                c3
+            store,
+            b2.reference(),
+            c3.reference(),
+            b2,
+            c3
         );
     }
 
@@ -88,35 +88,35 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b2 = store.save(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c3 = store.save(
-                SpreadsheetSelection.parseCell("c3")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c3")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d4 = store.save(
-                SpreadsheetSelection.parseCell("d4")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d4")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                4, // count
-                a1,
-                b2,
-                c3,
-                d4
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            4, // count
+            a1,
+            b2,
+            c3,
+            d4
         );
     }
 
@@ -125,35 +125,35 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b2 = store.save(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c3 = store.save(
-                SpreadsheetSelection.parseCell("$C3")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("$C3")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d4 = store.save(
-                SpreadsheetSelection.parseCell("$D$4")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("$D$4")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:$D$4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                4, // count
-                a1,
-                b2,
-                c3,
-                d4
+            store,
+            SpreadsheetSelection.parseCellRange("A1:$D$4"),
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            4, // count
+            a1,
+            b2,
+            c3,
+            d4
         );
     }
 
@@ -163,35 +163,35 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b2 = store.save(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c3 = store.save(
-                SpreadsheetSelection.parseCell("C3")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("C3")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d4 = store.save(
-                SpreadsheetSelection.parseCell("D4")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("D4")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("$A$1:$D$4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                4, // count
-                a1,
-                b2,
-                c3,
-                d4
+            store,
+            SpreadsheetSelection.parseCellRange("$A$1:$D$4"),
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            4, // count
+            a1,
+            b2,
+            c3,
+            d4
         );
     }
 
@@ -200,31 +200,31 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b2 = store.save(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c3 = store.save(
-                SpreadsheetSelection.parseCell("c3")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c3")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d4 = store.save(
-                SpreadsheetSelection.parseCell("d4")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d4")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                0 // count
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            0 // count
         );
     }
 
@@ -233,34 +233,34 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b2 = store.save(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c3 = store.save(
-                SpreadsheetSelection.parseCell("c3")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c3")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d4 = store.save(
-                SpreadsheetSelection.parseCell("d4")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d4")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                3, // count
-                a1,
-                b2,
-                c3
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            3, // count
+            a1,
+            b2,
+            c3
         );
     }
 
@@ -269,35 +269,35 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c1 = store.save(
-                SpreadsheetSelection.parseCell("c1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d1 = store.save(
-                SpreadsheetSelection.parseCell("d1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.RLTD,
-                0, // offset
-                4, // count
-                d1,
-                c1,
-                b1,
-                a1
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.RLTD,
+            0, // offset
+            4, // count
+            d1,
+            c1,
+            b1,
+            a1
         );
     }
 
@@ -306,34 +306,34 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c1 = store.save(
-                SpreadsheetSelection.parseCell("c1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d1 = store.save(
-                SpreadsheetSelection.parseCell("d1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.RLTD,
-                1, // offset
-                3, // count
-                c1,
-                b1,
-                a1
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.RLTD,
+            1, // offset
+            3, // count
+            c1,
+            b1,
+            a1
         );
     }
 
@@ -342,33 +342,33 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c1 = store.save(
-                SpreadsheetSelection.parseCell("c1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d1 = store.save(
-                SpreadsheetSelection.parseCell("d1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.RLTD,
-                2, // offset
-                2, // count
-                b1,
-                a1
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.RLTD,
+            2, // offset
+            2, // count
+            b1,
+            a1
         );
     }
 
@@ -377,34 +377,34 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c1 = store.save(
-                SpreadsheetSelection.parseCell("c1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell d1 = store.save(
-                SpreadsheetSelection.parseCell("d1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("d1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.RLTD,
-                0, // offset
-                3, // count
-                d1,
-                c1,
-                b1
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.RLTD,
+            0, // offset
+            3, // count
+            d1,
+            c1,
+            b1
         );
     }
 
@@ -413,41 +413,41 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("a2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("a2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("a3")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("a3")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("b1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("b1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b2 = store.save(
-                SpreadsheetSelection.parseCell("b2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("b2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:D4"),
-                SpreadsheetCellRangeReferencePath.BULR,
-                0, // offset
-                5, // count
-                a3,
-                a2,
-                a1,
-                b2,
-                b1
+            store,
+            SpreadsheetSelection.parseCellRange("A1:D4"),
+            SpreadsheetCellRangeReferencePath.BULR,
+            0, // offset
+            5, // count
+            a3,
+            a2,
+            a1,
+            b2,
+            b1
         );
     }
 
@@ -456,36 +456,36 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c1 = store.save(
-                SpreadsheetSelection.parseCell("c1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell last = store.save(
-                SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                        .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
-                        ).setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
+                ).setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                4, // count
-                a1,
-                b1,
-                c1,
-                last
+            store,
+            SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            4, // count
+            a1,
+            b1,
+            c1,
+            last
         );
     }
 
@@ -494,36 +494,36 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell b1 = store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell c1 = store.save(
-                SpreadsheetSelection.parseCell("c1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("c1")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCell last = store.save(
-                SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                        .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
-                        ).setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetReferenceKind.RELATIVE.lastColumn()
+                .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
+                ).setFormula(SpreadsheetFormula.EMPTY)
         );
 
         this.loadCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
-                SpreadsheetCellRangeReferencePath.BULR,
-                0, // offset
-                4, // count
-                last,
-                c1,
-                b1,
-                a1
+            store,
+            SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
+            SpreadsheetCellRangeReferencePath.BULR,
+            0, // offset
+            4, // count
+            last,
+            c1,
+            b1,
+            a1
         );
     }
 
@@ -532,7 +532,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testLoadCellRangeWithinSaveCellWithSaveWatcher() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("'Hello")
+            SpreadsheetFormula.EMPTY.setText("'Hello")
         );
 
         final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -540,17 +540,17 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         store.addSaveWatcher(
-                (s) -> loaded.addAll(
-                            store.loadCellRange(
-                                    SpreadsheetSelection.A1.toCellRange()
-                            )
-                    )
+            (s) -> loaded.addAll(
+                store.loadCellRange(
+                    SpreadsheetSelection.A1.toCellRange()
+                )
+            )
         );
         store.save(a1);
 
         this.checkEquals(
-                Sets.of(a1),
-                loaded
+            Sets.of(a1),
+            loaded
         );
     }
 
@@ -561,32 +561,32 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
         store.save(
-                b2.setFormula(SpreadsheetFormula.EMPTY)
+            b2.setFormula(SpreadsheetFormula.EMPTY)
         );
 
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
         store.save(
-                c3.setFormula(SpreadsheetFormula.EMPTY)
+            c3.setFormula(SpreadsheetFormula.EMPTY)
         );
 
         store.save(
-                SpreadsheetSelection.parseCell("D4")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.parseCell("D4")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
 
         store.deleteCells(
-                SpreadsheetSelection.parseCellRange("B2:C3")
+            SpreadsheetSelection.parseCellRange("B2:C3")
         );
 
         this.checkEquals(
-                2,
-                store.count()
+            2,
+            store.count()
         );
 
         this.loadFailCheck(store, b2);
@@ -596,7 +596,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testLoadCellRangeWithinDeleteCellWithDeleteWatcher() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("'Hello")
+            SpreadsheetFormula.EMPTY.setText("'Hello")
         );
 
         final TreeMapSpreadsheetCellStore store = this.createStore();
@@ -605,18 +605,18 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         store.addDeleteWatcher(
-                (s) -> loaded.addAll(
-                        store.loadCellRange(
-                                SpreadsheetSelection.A1.toCellRange()
-                        )
+            (s) -> loaded.addAll(
+                store.loadCellRange(
+                    SpreadsheetSelection.A1.toCellRange()
                 )
+            )
         );
 
         store.delete(a1.reference());
 
         this.checkEquals(
-                Sets.empty(),
-                loaded
+            Sets.empty(),
+            loaded
         );
     }
 
@@ -627,29 +627,29 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell withoutParsedFormula = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("hello()")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("hello()")
+            );
 
         store.save(
-                withoutParsedFormula.setFormula(
-                        withoutParsedFormula.formula()
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.namedFunction(
-                                                        SpreadsheetExpressionFunctions.name("hello")
-                                                )
-                                        )
-                                )
-                )
+            withoutParsedFormula.setFormula(
+                withoutParsedFormula.formula()
+                    .setExpression(
+                        Optional.of(
+                            Expression.namedFunction(
+                                SpreadsheetExpressionFunctions.name("hello")
+                            )
+                        )
+                    )
+            )
         );
 
         store.clearParsedFormulaExpressions();
 
         this.loadAndCheck(
-                store,
-                withoutParsedFormula.reference(),
-                withoutParsedFormula
+            store,
+            withoutParsedFormula.reference(),
+            withoutParsedFormula
         );
     }
 
@@ -658,30 +658,30 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell withoutParsedFormula = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("hello()")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("hello()")
+            );
 
         store.save(
-                withoutParsedFormula.setFormula(
-                        withoutParsedFormula.formula()
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.namedFunction(
-                                                        SpreadsheetExpressionFunctions.name("hello")
-                                                )
-                                        )
-                                )
-                )
+            withoutParsedFormula.setFormula(
+                withoutParsedFormula.formula()
+                    .setExpression(
+                        Optional.of(
+                            Expression.namedFunction(
+                                SpreadsheetExpressionFunctions.name("hello")
+                            )
+                        )
+                    )
+            )
         );
 
         final SpreadsheetCell withoutParsedFormula2 = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("hello2()")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("hello2()")
+            );
 
         store.save(
-                withoutParsedFormula2
+            withoutParsedFormula2
         );
 
         final Set<SpreadsheetCellReference> cleared = Sets.ordered();
@@ -690,14 +690,14 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.clearParsedFormulaExpressions();
 
         this.loadAndCheck(
-                store,
-                withoutParsedFormula.reference(),
-                withoutParsedFormula
+            store,
+            withoutParsedFormula.reference(),
+            withoutParsedFormula
         );
 
         this.checkEquals(
-                Sets.of(withoutParsedFormula.reference()),
-                cleared
+            Sets.of(withoutParsedFormula.reference()),
+            cleared
         );
     }
 
@@ -708,31 +708,31 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell withoutFormatted = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("hello()")
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.namedFunction(
-                                                        SpreadsheetExpressionFunctions.name("hello")
-                                                )
-                                        )
-                                )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("hello()")
+                    .setExpression(
+                        Optional.of(
+                            Expression.namedFunction(
+                                SpreadsheetExpressionFunctions.name("hello")
+                            )
+                        )
+                    )
+            );
 
         store.save(
-                withoutFormatted.setFormattedValue(
-                        Optional.of(
-                                TextNode.text("123")
-                        )
+            withoutFormatted.setFormattedValue(
+                Optional.of(
+                    TextNode.text("123")
                 )
+            )
         );
 
         store.clearFormatted();
 
         this.loadAndCheck(
-                store,
-                withoutFormatted.reference(),
-                withoutFormatted
+            store,
+            withoutFormatted.reference(),
+            withoutFormatted
         );
     }
 
@@ -741,32 +741,32 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell withoutFormatted = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("hello()")
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.namedFunction(
-                                                        SpreadsheetExpressionFunctions.name("hello")
-                                                )
-                                        )
-                                )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("hello()")
+                    .setExpression(
+                        Optional.of(
+                            Expression.namedFunction(
+                                SpreadsheetExpressionFunctions.name("hello")
+                            )
+                        )
+                    )
+            );
 
         store.save(
-                withoutFormatted.setFormattedValue(
-                        Optional.of(
-                                TextNode.text("123")
-                        )
+            withoutFormatted.setFormattedValue(
+                Optional.of(
+                    TextNode.text("123")
                 )
+            )
         );
 
         final SpreadsheetCell withoutFormatted2 = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("hello2()")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("hello2()")
+            );
 
         store.save(
-                withoutFormatted2
+            withoutFormatted2
         );
 
         final Set<SpreadsheetCellReference> cleared = Sets.ordered();
@@ -775,20 +775,20 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         store.clearFormatted();
 
         this.loadAndCheck(
-                store,
-                withoutFormatted.reference(),
-                withoutFormatted
+            store,
+            withoutFormatted.reference(),
+            withoutFormatted
         );
 
         this.loadAndCheck(
-                store,
-                withoutFormatted2.reference(),
-                withoutFormatted2
+            store,
+            withoutFormatted2.reference(),
+            withoutFormatted2
         );
 
         this.checkEquals(
-                Sets.of(withoutFormatted.reference()),
-                cleared
+            Sets.of(withoutFormatted.reference()),
+            cleared
         );
     }
 
@@ -837,12 +837,12 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     private SpreadsheetCell cellWithWidth(final String cellReference,
                                           final double pixels) {
         SpreadsheetCell cell = SpreadsheetSelection.parseCell(cellReference)
-                .setFormula(SpreadsheetFormula.EMPTY
-                        .setText("1+2")
-                );
+            .setFormula(SpreadsheetFormula.EMPTY
+                .setText("1+2")
+            );
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
-                    .set(TextStylePropertyName.WIDTH, Length.pixel(pixels)));
+                .set(TextStylePropertyName.WIDTH, Length.pixel(pixels)));
         }
         return cell;
     }
@@ -851,8 +851,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                         final SpreadsheetColumnReference column,
                                         final double expected) {
         this.checkEquals(expected,
-                store.maxColumnWidth(column),
-                () -> "maxColumnWidth of " + column + " store=" + store);
+            store.maxColumnWidth(column),
+            () -> "maxColumnWidth of " + column + " store=" + store);
     }
 
     // maxRowHeight...................................................................................................
@@ -900,13 +900,13 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     private SpreadsheetCell cellWithHeight(final String cellReference,
                                            final double pixels) {
         SpreadsheetCell cell = SpreadsheetSelection.parseCell(cellReference)
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("1+2")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("1+2")
+            );
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
-                    .set(TextStylePropertyName.HEIGHT, Length.pixel(pixels)));
+                .set(TextStylePropertyName.HEIGHT, Length.pixel(pixels)));
         }
         return cell;
     }
@@ -915,8 +915,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                       final SpreadsheetRowReference row,
                                       final double expected) {
         this.checkEquals(expected,
-                store.maxRowHeight(row),
-                () -> "maxRowHeight of " + row + " store=" + store);
+            store.maxRowHeight(row),
+            () -> "maxRowHeight of " + row + " store=" + store);
     }
 
     // findCellsWithValueType...........................................................................................
@@ -926,71 +926,71 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                                .setValue(
-                                        Optional.of(1)
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(1)
+                    )
+            )
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setValue(
-                                                Optional.of("ABC")
-                                        )
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                        .setValue(
+                            Optional.of("ABC")
                         )
+                )
         );
 
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("A3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
+            SpreadsheetSelection.parseCell("A3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=2+3")
+                        .setValue(
+                            Optional.of(5)
                         )
+                )
         );
 
         // ignored because value wrong type
         final SpreadsheetCell a4 = store.save(
-                SpreadsheetSelection.parseCell("A4")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setValue(
-                                                Optional.of(true)
-                                        )
+            SpreadsheetSelection.parseCell("A4")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=true()")
+                        .setValue(
+                            Optional.of(true)
                         )
+                )
         );
 
         // ignored because value missing
         final SpreadsheetCell a5 = store.save(
-                SpreadsheetSelection.parseCell("A5")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=555")
-                        )
+            SpreadsheetSelection.parseCell("A5")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=555")
+                )
         );
 
         // ignore because out of range
         final SpreadsheetCell a7 = store.save(
-                SpreadsheetSelection.parseCell("A7")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setValue(
-                                                Optional.of(678)
-                                        )
+            SpreadsheetSelection.parseCell("A7")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=678")
+                        .setValue(
+                            Optional.of(678)
                         )
+                )
         );
 
         this.findCellsWithValueTypeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:A6"),
-                SpreadsheetValueType.NUMBER_STRING,
-                100,
-                a1,
-                a3
+            store,
+            SpreadsheetSelection.parseCellRange("A1:A6"),
+            SpreadsheetValueType.NUMBER_STRING,
+            100,
+            a1,
+            a3
         );
     }
 
@@ -999,75 +999,75 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                                .setValue(
-                                        Optional.of(
-                                                ExpressionNumberKind.BIG_DECIMAL.create(5)
-                                        )
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(
+                            ExpressionNumberKind.BIG_DECIMAL.create(5)
+                        )
+                    )
+            )
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setValue(
-                                                Optional.of("ABC")
-                                        )
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                        .setValue(
+                            Optional.of("ABC")
                         )
+                )
         );
 
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("A3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setValue(
-                                                Optional.of(
-                                                        ExpressionNumberKind.DOUBLE.create(5)
-                                                )
-                                        )
+            SpreadsheetSelection.parseCell("A3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=2+3")
+                        .setValue(
+                            Optional.of(
+                                ExpressionNumberKind.DOUBLE.create(5)
+                            )
                         )
+                )
         );
 
         // ignored because value wrong type
         final SpreadsheetCell a4 = store.save(
-                SpreadsheetSelection.parseCell("A4")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setValue(
-                                                Optional.of(true)
-                                        )
+            SpreadsheetSelection.parseCell("A4")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=true()")
+                        .setValue(
+                            Optional.of(true)
                         )
+                )
         );
 
         // ignored because value missing
         final SpreadsheetCell a5 = store.save(
-                SpreadsheetSelection.parseCell("A5")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=555")
-                        )
+            SpreadsheetSelection.parseCell("A5")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=555")
+                )
         );
 
         // ignore because out of range
         final SpreadsheetCell a7 = store.save(
-                SpreadsheetSelection.parseCell("A7")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setValue(
-                                                Optional.of(678)
-                                        )
+            SpreadsheetSelection.parseCell("A7")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=678")
+                        .setValue(
+                            Optional.of(678)
                         )
+                )
         );
 
         this.findCellsWithValueTypeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:A6"),
-                SpreadsheetValueType.NUMBER_STRING,
-                100,
-                a1,
-                a3
+            store,
+            SpreadsheetSelection.parseCellRange("A1:A6"),
+            SpreadsheetValueType.NUMBER_STRING,
+            100,
+            a1,
+            a3
         );
     }
 
@@ -1076,72 +1076,72 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                                .setValue(
-                                        Optional.of(1)
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(1)
+                    )
+            )
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setValue(
-                                                Optional.of("ABC")
-                                        )
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                        .setValue(
+                            Optional.of("ABC")
                         )
+                )
         );
 
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("A3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
+            SpreadsheetSelection.parseCell("A3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=2+3")
+                        .setValue(
+                            Optional.of(5)
                         )
+                )
         );
 
         final SpreadsheetCell a4 = store.save(
-                SpreadsheetSelection.parseCell("A4")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setValue(
-                                                Optional.of(true)
-                                        )
+            SpreadsheetSelection.parseCell("A4")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=true()")
+                        .setValue(
+                            Optional.of(true)
                         )
+                )
         );
 
         // ignored because value missing
         final SpreadsheetCell a5 = store.save(
-                SpreadsheetSelection.parseCell("A5")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=555")
-                        )
+            SpreadsheetSelection.parseCell("A5")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=555")
+                )
         );
 
         // ignore because out of range
         final SpreadsheetCell a7 = store.save(
-                SpreadsheetSelection.parseCell("A7")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setValue(
-                                                Optional.of(678)
-                                        )
+            SpreadsheetSelection.parseCell("A7")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=678")
+                        .setValue(
+                            Optional.of(678)
                         )
+                )
         );
 
         this.findCellsWithValueTypeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:A6"),
-                SpreadsheetValueType.ANY,
-                100,
-                a1,
-                a2,
-                a3,
-                a4
+            store,
+            SpreadsheetSelection.parseCellRange("A1:A6"),
+            SpreadsheetValueType.ANY,
+            100,
+            a1,
+            a2,
+            a3,
+            a4
         );
     }
 
@@ -1150,71 +1150,71 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                                .setValue(
-                                        Optional.of(1)
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(1)
+                    )
+            )
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setValue(
-                                                Optional.of("ABC")
-                                        )
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                        .setValue(
+                            Optional.of("ABC")
                         )
+                )
         );
 
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("A3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
+            SpreadsheetSelection.parseCell("A3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=2+3")
+                        .setValue(
+                            Optional.of(5)
                         )
+                )
         );
 
         final SpreadsheetCell a4 = store.save(
-                SpreadsheetSelection.parseCell("A4")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setValue(
-                                                Optional.of(true)
-                                        )
+            SpreadsheetSelection.parseCell("A4")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=true()")
+                        .setValue(
+                            Optional.of(true)
                         )
+                )
         );
 
         // ignored because value missing
         final SpreadsheetCell a5 = store.save(
-                SpreadsheetSelection.parseCell("A5")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=555")
-                        )
+            SpreadsheetSelection.parseCell("A5")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=555")
+                )
         );
 
         // ignore because out of range
         final SpreadsheetCell a7 = store.save(
-                SpreadsheetSelection.parseCell("A7")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setValue(
-                                                Optional.of(678)
-                                        )
+            SpreadsheetSelection.parseCell("A7")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=678")
+                        .setValue(
+                            Optional.of(678)
                         )
+                )
         );
 
         this.findCellsWithValueTypeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:A6"),
-                SpreadsheetValueType.ANY,
-                3,
-                a1,
-                a2,
-                a3 // a4 excluded because of max
+            store,
+            SpreadsheetSelection.parseCellRange("A1:A6"),
+            SpreadsheetValueType.ANY,
+            3,
+            a1,
+            a2,
+            a3 // a4 excluded because of max
         );
     }
 
@@ -1225,69 +1225,69 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                                .setValue(
-                                        Optional.of(1)
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(1)
+                    )
+            )
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setValue(
-                                                Optional.of("ABC")
-                                        )
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                        .setValue(
+                            Optional.of("ABC")
                         )
+                )
         );
 
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("A3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2+3")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
+            SpreadsheetSelection.parseCell("A3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=2+3")
+                        .setValue(
+                            Optional.of(5)
                         )
+                )
         );
 
         // ignored because value wrong type
         final SpreadsheetCell a4 = store.save(
-                SpreadsheetSelection.parseCell("A4")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=true()")
-                                        .setValue(
-                                                Optional.of(true)
-                                        )
+            SpreadsheetSelection.parseCell("A4")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=true()")
+                        .setValue(
+                            Optional.of(true)
                         )
+                )
         );
 
         // ignored because value missing
         final SpreadsheetCell a5 = store.save(
-                SpreadsheetSelection.parseCell("A5")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=555")
-                        )
+            SpreadsheetSelection.parseCell("A5")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=555")
+                )
         );
 
         // ignore because out of range
         final SpreadsheetCell a7 = store.save(
-                SpreadsheetSelection.parseCell("A7")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=678")
-                                        .setValue(
-                                                Optional.of(678)
-                                        )
+            SpreadsheetSelection.parseCell("A7")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=678")
+                        .setValue(
+                            Optional.of(678)
                         )
+                )
         );
 
         this.countCellsWithValueTypeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:A6"),
-                SpreadsheetValueType.NUMBER_STRING,
-                2
+            store,
+            SpreadsheetSelection.parseCellRange("A1:A6"),
+            SpreadsheetValueType.NUMBER_STRING,
+            2
         );
     }
 
@@ -1296,37 +1296,37 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                                .setValue(
-                                        Optional.of(1)
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(1)
+                    )
+            )
         );
 
         final SpreadsheetCell a2 = store.save(
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                                        .setValue(
-                                                Optional.of("ABC")
-                                        )
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                        .setValue(
+                            Optional.of("ABC")
                         )
+                )
         );
 
         // ignored because has no value
         final SpreadsheetCell a3 = store.save(
-                SpreadsheetSelection.parseCell("A3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("='ABC")
-                        )
+            SpreadsheetSelection.parseCell("A3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("='ABC")
+                )
         );
 
         this.countCellsWithValueTypeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("A1:A6"),
-                SpreadsheetValueType.ANY,
-                2
+            store,
+            SpreadsheetSelection.parseCellRange("A1:A6"),
+            SpreadsheetValueType.ANY,
+            2
         );
     }
 
@@ -1336,17 +1336,17 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testNextEmptyColumnWhenEmptyRow() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1+2")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1+2")
+                )
         );
 
         this.nextEmptyColumnAndCheck(
-                store,
-                SpreadsheetSelection.parseRow("2"),
-                SpreadsheetReferenceKind.RELATIVE.firstColumn()
+            store,
+            SpreadsheetSelection.parseRow("2"),
+            SpreadsheetReferenceKind.RELATIVE.firstColumn()
         );
     }
 
@@ -1354,38 +1354,38 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testNextEmptyColumnWhenSeveralRows() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("22")
-                        )
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("22")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("B3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("222")
-                        )
+            SpreadsheetSelection.parseCell("B3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("222")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("C3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("3")
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("3")
+                )
         );
 
         this.nextEmptyColumnAndCheck(
-                store,
-                SpreadsheetSelection.parseRow("3"),
-                SpreadsheetSelection.parseColumn("D")
+            store,
+            SpreadsheetSelection.parseRow("3"),
+            SpreadsheetSelection.parseColumn("D")
         );
     }
 
@@ -1393,51 +1393,51 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testNextEmptyColumnWhenFull() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseRow("2")
-                        .setColumn(SpreadsheetReferenceKind.RELATIVE.lastColumn())
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("22")
-                        )
+            SpreadsheetSelection.parseRow("2")
+                .setColumn(SpreadsheetReferenceKind.RELATIVE.lastColumn())
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("22")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("C3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("3")
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("3")
+                )
         );
 
         this.nextEmptyColumnAndCheck(
-                store,
-                SpreadsheetSelection.parseRow("2")
+            store,
+            SpreadsheetSelection.parseRow("2")
         );
     }
-    
+
     // nextEmptyRow.....................................................................................................
 
     @Test
     public void testNextEmptyRowWhenEmptyColumn() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1+2")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1+2")
+                )
         );
 
         this.nextEmptyRowAndCheck(
-                store,
-                SpreadsheetSelection.parseColumn("B"),
-                SpreadsheetReferenceKind.RELATIVE.firstRow()
+            store,
+            SpreadsheetSelection.parseColumn("B"),
+            SpreadsheetReferenceKind.RELATIVE.firstRow()
         );
     }
 
@@ -1445,38 +1445,38 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testNextEmptyRowWhenSeveralColumns() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("B1")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("22")
-                        )
+            SpreadsheetSelection.parseCell("B1")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("22")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("B3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("222")
-                        )
+            SpreadsheetSelection.parseCell("B3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("222")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("C3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("3")
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("3")
+                )
         );
 
         this.nextEmptyRowAndCheck(
-                store,
-                SpreadsheetSelection.parseColumn("B"),
-                SpreadsheetSelection.parseRow("4")
+            store,
+            SpreadsheetSelection.parseColumn("B"),
+            SpreadsheetSelection.parseRow("4")
         );
     }
 
@@ -1484,31 +1484,31 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testNextEmptyRowWhenFull() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseColumn("B")
-                        .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow())
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("22")
-                        )
+            SpreadsheetSelection.parseColumn("B")
+                .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow())
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("22")
+                )
         );
         store.save(
-                SpreadsheetSelection.parseCell("C3")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("3")
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("3")
+                )
         );
 
         this.nextEmptyRowAndCheck(
-                store,
-                SpreadsheetSelection.parseColumn("B")
+            store,
+            SpreadsheetSelection.parseColumn("B")
         );
     }
 
@@ -1518,16 +1518,16 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testToString() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1+2")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1+2")
+                )
         );
 
         this.toStringAndCheck(
-                store,
-                "[A1 1+2]"
+            store,
+            "[A1 1+2]"
         );
     }
 

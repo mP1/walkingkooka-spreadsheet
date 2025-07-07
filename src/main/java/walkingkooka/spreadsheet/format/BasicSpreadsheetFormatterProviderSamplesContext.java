@@ -22,14 +22,14 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import java.util.Objects;
 
 final class BasicSpreadsheetFormatterProviderSamplesContext implements SpreadsheetFormatterProviderSamplesContext,
-        SpreadsheetFormatterContextDelegator {
+    SpreadsheetFormatterContextDelegator {
 
     static BasicSpreadsheetFormatterProviderSamplesContext with(final SpreadsheetFormatterContext spreadsheetFormatterContext) {
         return new BasicSpreadsheetFormatterProviderSamplesContext(
-                Objects.requireNonNull(
-                        spreadsheetFormatterContext,
-                        "spreadsheetFormatterContext"
-                )
+            Objects.requireNonNull(
+                spreadsheetFormatterContext,
+                "spreadsheetFormatterContext"
+            )
         );
     }
 
@@ -43,8 +43,8 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
         final SpreadsheetFormatterContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new BasicSpreadsheetFormatterProviderSamplesContext(after);
+            this :
+            new BasicSpreadsheetFormatterProviderSamplesContext(after);
     }
 
     // SpreadsheetFormatterContextDelegator.............................................................................

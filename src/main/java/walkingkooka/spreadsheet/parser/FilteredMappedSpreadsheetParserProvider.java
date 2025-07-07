@@ -36,8 +36,8 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
         Objects.requireNonNull(provider, "provider");
 
         return new FilteredMappedSpreadsheetParserProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -45,9 +45,9 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
                                                     final SpreadsheetParserProvider provider) {
         this.provider = provider;
         this.mapper = FilteredProviderMapper.with(
-                infos,
-                provider.spreadsheetParserInfos(),
-                SpreadsheetParserPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetParserInfos(),
+            SpreadsheetParserPluginHelper.INSTANCE
         );
     }
 
@@ -58,8 +58,8 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
-                this.mapper.selector(selector),
-                context
+            this.mapper.selector(selector),
+            context
         );
     }
 
@@ -72,23 +72,23 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 
     @Override
     public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
         return this.provider.spreadsheetParserNextToken(
-                this.mapper.selector(selector)
+            this.mapper.selector(selector)
         );
     }
 
     @Override
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         return this.provider.spreadsheetFormatterSelector(
-                this.mapper.selector(selector)
+            this.mapper.selector(selector)
         );
     }
 

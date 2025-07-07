@@ -42,7 +42,7 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends Sp
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
         return null != type &&
-                isMetadataPropertyNameSubClass(type);
+            isMetadataPropertyNameSubClass(type);
     }
 
     /**

@@ -82,8 +82,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public static BooleanLiteralSpreadsheetFormulaParserToken booleanLiteral(final boolean value,
                                                                              final String text) {
         return BooleanLiteralSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
@@ -93,8 +93,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public static BooleanSpreadsheetFormulaParserToken booleanValue(final List<ParserToken> value,
                                                                     final String text) {
         return BooleanSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
@@ -293,8 +293,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public static FunctionParametersSpreadsheetFormulaParserToken functionParameters(final List<ParserToken> value,
                                                                                      final String text) {
         return FunctionParametersSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
@@ -360,8 +360,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public static LambdaFunctionSpreadsheetFormulaParserToken lambdaFunction(final List<ParserToken> value,
                                                                              final String text) {
         return LambdaFunctionSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
@@ -462,8 +462,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public static NamedFunctionSpreadsheetFormulaParserToken namedFunction(final List<ParserToken> value,
                                                                            final String text) {
         return NamedFunctionSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
@@ -564,8 +564,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public static TemplateValueNameSpreadsheetFormulaParserToken templateValueName(final TemplateValueName value,
                                                                                    final String text) {
         return TemplateValueNameSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
@@ -1293,8 +1293,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     public final Optional<Expression> toExpression(final ExpressionEvaluationContext context) {
         return SpreadsheetFormulaParserTokenVisitorToExpression.toExpression(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -1308,12 +1308,12 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                null != other && this.getClass() == other.getClass() && this.equals0(Cast.to(other));
+            null != other && this.getClass() == other.getClass() && this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormulaParserToken other) {
         return this.text.equals(other.text) &&
-                this.value().equals(other.value());
+            this.value().equals(other.value());
     }
 
     @Override
@@ -1327,334 +1327,334 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
 
     static {
         registerLeaf(
-                AmPmSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallAmPm
+            AmPmSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallAmPm
         );
 
         registerLeaf(
-                BooleanLiteralSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallBooleanLiteral
+            BooleanLiteralSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallBooleanLiteral
         );
 
         registerLeaf(
-                ColumnSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallColumn
+            ColumnSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallColumn
         );
 
         registerLeaf(
-                DayNameSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDayName
+            DayNameSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDayName
         );
 
         registerLeaf(
-                DayNameAbbreviationSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDayNameAbbreviation
+            DayNameAbbreviationSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDayNameAbbreviation
         );
 
         registerLeaf(
-                DayNumberSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDayNumber
+            DayNumberSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDayNumber
         );
 
         registerLeaf(
-                DigitsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDigits
+            DigitsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDigits
         );
 
         registerLeaf(
-                ErrorSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallError
+            ErrorSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallError
         );
 
         registerLeaf(
-                FunctionNameSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallFunctionName
+            FunctionNameSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallFunctionName
         );
 
         registerLeaf(
-                HourSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallHour
+            HourSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallHour
         );
 
         registerLeaf(
-                LabelSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLabel
+            LabelSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallLabel
         );
 
         registerLeaf(
-                MillisecondSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMillisecond
+            MillisecondSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMillisecond
         );
 
         registerLeaf(
-                MinuteSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMinute
+            MinuteSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMinute
         );
 
         registerLeaf(
-                MonthNameSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMonthName
+            MonthNameSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMonthName
         );
 
         registerLeaf(
-                MonthNameAbbreviationSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMonthNameAbbreviation
+            MonthNameAbbreviationSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMonthNameAbbreviation
         );
 
         registerLeaf(
-                MonthNameInitialSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMonthNameInitial
+            MonthNameInitialSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMonthNameInitial
         );
 
         registerLeaf(
-                MonthNumberSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMonthNumber
+            MonthNumberSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMonthNumber
         );
 
         registerLeaf(
-                RowSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallRow
+            RowSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallRow
         );
 
         registerLeaf(
-                SecondsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallSeconds
+            SecondsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallSeconds
         );
 
         register(
-                TemplateValueNameSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallTemplateValueName,
-                SpreadsheetFormulaParserToken::marshallLeaf
+            TemplateValueNameSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallTemplateValueName,
+            SpreadsheetFormulaParserToken::marshallLeaf
         );
 
         registerLeaf(
-                TextLiteralSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallTextLiteral
+            TextLiteralSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallTextLiteral
         );
 
         registerLeaf(
-                YearSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallYear
+            YearSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallYear
         );
     }
 
     static AmPmSpreadsheetFormulaParserToken unmarshallAmPm(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::amPm
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::amPm
         );
     }
 
     static BooleanLiteralSpreadsheetFormulaParserToken unmarshallBooleanLiteral(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Boolean.class,
-                context,
-                SpreadsheetFormulaParserToken::booleanLiteral
+            node,
+            Boolean.class,
+            context,
+            SpreadsheetFormulaParserToken::booleanLiteral
         );
     }
 
     static ColumnSpreadsheetFormulaParserToken unmarshallColumn(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                SpreadsheetColumnReference.class,
-                context,
-                SpreadsheetFormulaParserToken::column
+            node,
+            SpreadsheetColumnReference.class,
+            context,
+            SpreadsheetFormulaParserToken::column
         );
     }
 
     static DayNameSpreadsheetFormulaParserToken unmarshallDayName(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::dayName
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::dayName
         );
     }
 
     static DayNameAbbreviationSpreadsheetFormulaParserToken unmarshallDayNameAbbreviation(final JsonNode node,
                                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::dayNameAbbreviation
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::dayNameAbbreviation
         );
     }
 
     static DayNumberSpreadsheetFormulaParserToken unmarshallDayNumber(final JsonNode node,
                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::dayNumber
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::dayNumber
         );
     }
 
     static DigitsSpreadsheetFormulaParserToken unmarshallDigits(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                String.class,
-                context,
-                SpreadsheetFormulaParserToken::digits
+            node,
+            String.class,
+            context,
+            SpreadsheetFormulaParserToken::digits
         );
     }
 
     static ErrorSpreadsheetFormulaParserToken unmarshallError(final JsonNode node,
                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                SpreadsheetError.class,
-                context,
-                SpreadsheetFormulaParserToken::error
+            node,
+            SpreadsheetError.class,
+            context,
+            SpreadsheetFormulaParserToken::error
         );
     }
 
     static FunctionNameSpreadsheetFormulaParserToken unmarshallFunctionName(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                SpreadsheetFunctionName.class,
-                context,
-                SpreadsheetFormulaParserToken::functionName
+            node,
+            SpreadsheetFunctionName.class,
+            context,
+            SpreadsheetFormulaParserToken::functionName
         );
     }
 
     static HourSpreadsheetFormulaParserToken unmarshallHour(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::hour
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::hour
         );
     }
 
     static LabelSpreadsheetFormulaParserToken unmarshallLabel(final JsonNode node,
                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                SpreadsheetLabelName.class,
-                context,
-                SpreadsheetFormulaParserToken::label
+            node,
+            SpreadsheetLabelName.class,
+            context,
+            SpreadsheetFormulaParserToken::label
         );
     }
 
     static MillisecondSpreadsheetFormulaParserToken unmarshallMillisecond(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::millisecond
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::millisecond
         );
     }
 
     static MinuteSpreadsheetFormulaParserToken unmarshallMinute(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::minute
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::minute
         );
     }
 
     static MonthNameSpreadsheetFormulaParserToken unmarshallMonthName(final JsonNode node,
                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::monthName
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::monthName
         );
     }
 
     static MonthNameAbbreviationSpreadsheetFormulaParserToken unmarshallMonthNameAbbreviation(final JsonNode node,
                                                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::monthNameAbbreviation
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::monthNameAbbreviation
         );
     }
 
     static MonthNameInitialSpreadsheetFormulaParserToken unmarshallMonthNameInitial(final JsonNode node,
                                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::monthNameInitial
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::monthNameInitial
         );
     }
 
     static MonthNumberSpreadsheetFormulaParserToken unmarshallMonthNumber(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::monthNumber
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::monthNumber
         );
     }
 
     static RowSpreadsheetFormulaParserToken unmarshallRow(final JsonNode node,
                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                SpreadsheetRowReference.class,
-                context,
-                SpreadsheetFormulaParserToken::row
+            node,
+            SpreadsheetRowReference.class,
+            context,
+            SpreadsheetFormulaParserToken::row
         );
     }
 
     static SecondsSpreadsheetFormulaParserToken unmarshallSeconds(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::seconds
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::seconds
         );
     }
 
     static TemplateValueNameSpreadsheetFormulaParserToken unmarshallTemplateValueName(final JsonNode node,
                                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                TemplateValueName.class,
-                context,
-                SpreadsheetFormulaParserToken::templateValueName
+            node,
+            TemplateValueName.class,
+            context,
+            SpreadsheetFormulaParserToken::templateValueName
         );
     }
 
     static TextLiteralSpreadsheetFormulaParserToken unmarshallTextLiteral(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                String.class,
-                context,
-                SpreadsheetFormulaParserToken::textLiteral
+            node,
+            String.class,
+            context,
+            SpreadsheetFormulaParserToken::textLiteral
         );
     }
 
     static YearSpreadsheetFormulaParserToken unmarshallYear(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
-                node,
-                Integer.class,
-                context,
-                SpreadsheetFormulaParserToken::year
+            node,
+            Integer.class,
+            context,
+            SpreadsheetFormulaParserToken::year
         );
     }
 
@@ -1662,199 +1662,199 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
 
     static {
         registerLeaf(
-                ApostropheSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallApostropheSymbol
+            ApostropheSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallApostropheSymbol
         );
 
         registerLeaf(
-                BetweenSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallBetweenSymbol
+            BetweenSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallBetweenSymbol
         );
 
         registerLeaf(
-                CurrencySymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallCurrencySymbol
+            CurrencySymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallCurrencySymbol
         );
 
         registerLeaf(
-                DecimalSeparatorSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDecimalSeparatorSymbol
+            DecimalSeparatorSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDecimalSeparatorSymbol
         );
 
         registerLeaf(
-                DivideSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDivideSymbol
+            DivideSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDivideSymbol
         );
 
         registerLeaf(
-                DoubleQuoteSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDoubleQuoteSymbol
+            DoubleQuoteSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDoubleQuoteSymbol
         );
 
         registerLeaf(
-                EqualsSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallEqualsSymbol
+            EqualsSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallEqualsSymbol
         );
 
         registerLeaf(
-                ExponentSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallExponentSymbol
+            ExponentSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallExponentSymbol
         );
 
         registerLeaf(
-                GreaterThanEqualsSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallGreaterThanEqualsSymbol
+            GreaterThanEqualsSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallGreaterThanEqualsSymbol
         );
 
         registerLeaf(
-                GreaterThanSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallGreaterThanSymbol
+            GreaterThanSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallGreaterThanSymbol
         );
 
         registerLeaf(
-                GroupSeparatorSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallGroupSeparatorSymbol
+            GroupSeparatorSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallGroupSeparatorSymbol
         );
 
         registerLeaf(
-                LessThanEqualsSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLessThanEqualsSymbol
+            LessThanEqualsSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallLessThanEqualsSymbol
         );
 
         registerLeaf(
-                LessThanSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLessThanSymbol
+            LessThanSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallLessThanSymbol
         );
 
         registerLeaf(
-                MinusSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMinusSymbol
+            MinusSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMinusSymbol
         );
 
         registerLeaf(
-                MultiplySymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMultiplySymbol
+            MultiplySymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMultiplySymbol
         );
 
         registerLeaf(
-                NotEqualsSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallNotEqualsSymbol
+            NotEqualsSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallNotEqualsSymbol
         );
 
         registerLeaf(
-                ParenthesisCloseSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallParenthesisCloseSymbol
+            ParenthesisCloseSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallParenthesisCloseSymbol
         );
 
         registerLeaf(
-                ParenthesisOpenSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallParenthesisOpenSymbol
+            ParenthesisOpenSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallParenthesisOpenSymbol
         );
 
         registerLeaf(
-                PercentSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallPercentSymbol
+            PercentSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallPercentSymbol
         );
 
         registerLeaf(
-                PlusSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallPlusSymbol
+            PlusSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallPlusSymbol
         );
 
         registerLeaf(
-                PowerSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallPowerSymbol
+            PowerSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallPowerSymbol
         );
 
         registerLeaf(
-                ValueSeparatorSymbolSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallValueSeparatorSymbol
+            ValueSeparatorSymbolSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallValueSeparatorSymbol
         );
 
         registerLeaf(
-                WhitespaceSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallWhitespace
+            WhitespaceSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallWhitespace
         );
     }
 
     static ApostropheSymbolSpreadsheetFormulaParserToken unmarshallApostropheSymbol(final JsonNode node,
                                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::apostropheSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::apostropheSymbol
         );
     }
 
     static BetweenSymbolSpreadsheetFormulaParserToken unmarshallBetweenSymbol(final JsonNode node,
                                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::betweenSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::betweenSymbol
         );
     }
 
     static CurrencySymbolSpreadsheetFormulaParserToken unmarshallCurrencySymbol(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::currencySymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::currencySymbol
         );
     }
 
     static DecimalSeparatorSymbolSpreadsheetFormulaParserToken unmarshallDecimalSeparatorSymbol(final JsonNode node,
                                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::decimalSeparatorSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::decimalSeparatorSymbol
         );
     }
 
     static DivideSymbolSpreadsheetFormulaParserToken unmarshallDivideSymbol(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::divideSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::divideSymbol
         );
     }
 
     static DoubleQuoteSymbolSpreadsheetFormulaParserToken unmarshallDoubleQuoteSymbol(final JsonNode node,
                                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::doubleQuoteSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::doubleQuoteSymbol
         );
     }
 
     static EqualsSymbolSpreadsheetFormulaParserToken unmarshallEqualsSymbol(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::equalsSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::equalsSymbol
         );
     }
 
     static ExponentSymbolSpreadsheetFormulaParserToken unmarshallExponentSymbol(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::exponentSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::exponentSymbol
         );
     }
 
     static GreaterThanEqualsSymbolSpreadsheetFormulaParserToken unmarshallGreaterThanEqualsSymbol(final JsonNode node,
                                                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::greaterThanEqualsSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::greaterThanEqualsSymbol
         );
     }
 
@@ -1862,126 +1862,126 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     static GreaterThanSymbolSpreadsheetFormulaParserToken unmarshallGreaterThanSymbol(final JsonNode node,
                                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::greaterThanSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::greaterThanSymbol
         );
     }
 
     static GroupSeparatorSymbolSpreadsheetFormulaParserToken unmarshallGroupSeparatorSymbol(final JsonNode node,
                                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::groupSeparatorSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::groupSeparatorSymbol
         );
     }
 
     static LessThanEqualsSymbolSpreadsheetFormulaParserToken unmarshallLessThanEqualsSymbol(final JsonNode node,
                                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::lessThanEqualsSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::lessThanEqualsSymbol
         );
     }
 
     static LessThanSymbolSpreadsheetFormulaParserToken unmarshallLessThanSymbol(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::lessThanSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::lessThanSymbol
         );
     }
 
     static MinusSymbolSpreadsheetFormulaParserToken unmarshallMinusSymbol(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::minusSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::minusSymbol
         );
     }
 
     static MultiplySymbolSpreadsheetFormulaParserToken unmarshallMultiplySymbol(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::multiplySymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::multiplySymbol
         );
     }
 
     static NotEqualsSymbolSpreadsheetFormulaParserToken unmarshallNotEqualsSymbol(final JsonNode node,
                                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::notEqualsSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::notEqualsSymbol
         );
     }
 
     static ParenthesisCloseSymbolSpreadsheetFormulaParserToken unmarshallParenthesisCloseSymbol(final JsonNode node,
                                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::parenthesisCloseSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::parenthesisCloseSymbol
         );
     }
 
     static ParenthesisOpenSymbolSpreadsheetFormulaParserToken unmarshallParenthesisOpenSymbol(final JsonNode node,
                                                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::parenthesisOpenSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::parenthesisOpenSymbol
         );
     }
 
     static PercentSymbolSpreadsheetFormulaParserToken unmarshallPercentSymbol(final JsonNode node,
                                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::percentSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::percentSymbol
         );
     }
 
     static PlusSymbolSpreadsheetFormulaParserToken unmarshallPlusSymbol(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::plusSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::plusSymbol
         );
     }
 
     static PowerSymbolSpreadsheetFormulaParserToken unmarshallPowerSymbol(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::powerSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::powerSymbol
         );
     }
 
     static ValueSeparatorSymbolSpreadsheetFormulaParserToken unmarshallValueSeparatorSymbol(final JsonNode node,
                                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::valueSeparatorSymbol
+            node,
+            context,
+            SpreadsheetFormulaParserToken::valueSeparatorSymbol
         );
     }
 
     static WhitespaceSpreadsheetFormulaParserToken unmarshallWhitespace(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
         return unmarshallSymbol(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::whitespace
+            node,
+            context,
+            SpreadsheetFormulaParserToken::whitespace
         );
     }
 
@@ -1992,10 +1992,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
                                                                               final JsonNodeUnmarshallContext context,
                                                                               final BiFunction<String, String, T> factory) {
         return unmarshallLeaf(
-                node,
-                String.class,
-                context,
-                factory
+            node,
+            String.class,
+            context,
+            factory
         );
     }
 
@@ -2042,9 +2042,9 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     private static <T extends LeafSpreadsheetFormulaParserToken<?>> void registerLeaf(final Class<T> type,
                                                                                       final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
         register(
-                type,
-                from,
-                SpreadsheetFormulaParserToken::marshallLeaf
+            type,
+            from,
+            SpreadsheetFormulaParserToken::marshallLeaf
         );
     }
 
@@ -2052,437 +2052,437 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
 
     static {
         registerParent(
-                AdditionSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallAddition
+            AdditionSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallAddition
         );
 
         registerParent(
-                BooleanSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallBoolean
+            BooleanSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallBoolean
         );
 
         registerParent(
-                CellSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallCell
+            CellSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallCell
         );
 
         registerParent(
-                ConditionRightEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallConditionRightEquals
+            ConditionRightEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallConditionRightEquals
         );
 
         registerParent(
-                ConditionRightGreaterThanSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallConditionRightGreaterThan
+            ConditionRightGreaterThanSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallConditionRightGreaterThan
         );
 
         registerParent(
-                ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallConditionRightGreaterThanEquals
+            ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallConditionRightGreaterThanEquals
         );
 
         registerParent(
-                ConditionRightLessThanSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallConditionRightLessThan
+            ConditionRightLessThanSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallConditionRightLessThan
         );
 
         registerParent(
-                ConditionRightLessThanEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallConditionRightLessThanEquals
+            ConditionRightLessThanEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallConditionRightLessThanEquals
         );
 
         registerParent(
-                ConditionRightNotEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallConditionRightNotEquals
+            ConditionRightNotEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallConditionRightNotEquals
         );
 
         registerParent(
-                DateSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDate
+            DateSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDate
         );
 
         registerParent(
-                DateTimeSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDateTime
+            DateTimeSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDateTime
         );
 
         registerParent(
-                DivisionSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallDivision
+            DivisionSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallDivision
         );
 
         registerParent(
-                EqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallEquals
+            EqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallEquals
         );
 
         registerParent(
-                ExpressionSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallExpression
+            ExpressionSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallExpression
         );
 
         registerParent(
-                FunctionParametersSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallFunctionParameters
+            FunctionParametersSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallFunctionParameters
         );
 
         registerParent(
-                GreaterThanEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallGreaterThanEquals
+            GreaterThanEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallGreaterThanEquals
         );
 
         registerParent(
-                GreaterThanSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallGreaterThan
+            GreaterThanSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallGreaterThan
         );
 
         registerParent(
-                GroupSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallGroup
+            GroupSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallGroup
         );
 
         registerParent(
-                LambdaFunctionSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLambdaFunction
+            LambdaFunctionSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallLambdaFunction
         );
 
         registerParent(
-                LessThanEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLessThanEquals
+            LessThanEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallLessThanEquals
         );
 
         registerParent(
-                LessThanSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLessThan
+            LessThanSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallLessThan
         );
 
         registerParent(
-                MultiplicationSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallMultiplication
+            MultiplicationSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallMultiplication
         );
 
         registerParent(
-                NamedFunctionSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallNamedFunction
+            NamedFunctionSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallNamedFunction
         );
 
         registerParent(
-                NegativeSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallNegative
+            NegativeSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallNegative
         );
 
         registerParent(
-                NotEqualsSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallNotEquals
+            NotEqualsSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallNotEquals
         );
 
         registerParent(
-                NumberSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallNumber
+            NumberSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallNumber
         );
 
         registerParent(
-                PowerSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallPower
+            PowerSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallPower
         );
 
         registerParent(
-                CellRangeSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallCellRange
+            CellRangeSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallCellRange
         );
 
         registerParent(
-                SubtractionSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallSubtraction
+            SubtractionSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallSubtraction
         );
 
         registerParent(
-                TimeSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallTime
+            TimeSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallTime
         );
 
         registerParent(
-                TextSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallText
+            TextSpreadsheetFormulaParserToken.class,
+            SpreadsheetFormulaParserToken::unmarshallText
         );
     }
 
     static AdditionSpreadsheetFormulaParserToken unmarshallAddition(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::addition
+            node,
+            context,
+            SpreadsheetFormulaParserToken::addition
         );
     }
 
     static BooleanSpreadsheetFormulaParserToken unmarshallBoolean(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::booleanValue
+            node,
+            context,
+            SpreadsheetFormulaParserToken::booleanValue
         );
     }
 
     static CellSpreadsheetFormulaParserToken unmarshallCell(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::cell
+            node,
+            context,
+            SpreadsheetFormulaParserToken::cell
         );
     }
 
     static CellRangeSpreadsheetFormulaParserToken unmarshallCellRange(final JsonNode node,
                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::cellRange
+            node,
+            context,
+            SpreadsheetFormulaParserToken::cellRange
         );
     }
 
     static ConditionRightEqualsSpreadsheetFormulaParserToken unmarshallConditionRightEquals(final JsonNode node,
                                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::conditionRightEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::conditionRightEquals
         );
     }
 
     static ConditionRightGreaterThanSpreadsheetFormulaParserToken unmarshallConditionRightGreaterThan(final JsonNode node,
                                                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::conditionRightGreaterThan
+            node,
+            context,
+            SpreadsheetFormulaParserToken::conditionRightGreaterThan
         );
     }
 
     static ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken unmarshallConditionRightGreaterThanEquals(final JsonNode node,
                                                                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::conditionRightGreaterThanEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::conditionRightGreaterThanEquals
         );
     }
 
     static ConditionRightLessThanSpreadsheetFormulaParserToken unmarshallConditionRightLessThan(final JsonNode node,
                                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::conditionRightLessThan
+            node,
+            context,
+            SpreadsheetFormulaParserToken::conditionRightLessThan
         );
     }
 
     static ConditionRightLessThanEqualsSpreadsheetFormulaParserToken unmarshallConditionRightLessThanEquals(final JsonNode node,
                                                                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::conditionRightLessThanEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::conditionRightLessThanEquals
         );
     }
 
     static ConditionRightNotEqualsSpreadsheetFormulaParserToken unmarshallConditionRightNotEquals(final JsonNode node,
                                                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::conditionRightNotEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::conditionRightNotEquals
         );
     }
 
     static DateSpreadsheetFormulaParserToken unmarshallDate(final JsonNode node,
                                                             final JsonNodeUnmarshallContext condate) {
         return unmarshallParent(
-                node,
-                condate,
-                SpreadsheetFormulaParserToken::date
+            node,
+            condate,
+            SpreadsheetFormulaParserToken::date
         );
     }
 
     static DateTimeSpreadsheetFormulaParserToken unmarshallDateTime(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext condateTime) {
         return unmarshallParent(
-                node,
-                condateTime,
-                SpreadsheetFormulaParserToken::dateTime
+            node,
+            condateTime,
+            SpreadsheetFormulaParserToken::dateTime
         );
     }
 
     static DivisionSpreadsheetFormulaParserToken unmarshallDivision(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::division
+            node,
+            context,
+            SpreadsheetFormulaParserToken::division
         );
     }
 
     static EqualsSpreadsheetFormulaParserToken unmarshallEquals(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::equalsSpreadsheetFormulaParserToken
+            node,
+            context,
+            SpreadsheetFormulaParserToken::equalsSpreadsheetFormulaParserToken
         );
     }
 
     static ExpressionSpreadsheetFormulaParserToken unmarshallExpression(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::expression
+            node,
+            context,
+            SpreadsheetFormulaParserToken::expression
         );
     }
 
     static FunctionParametersSpreadsheetFormulaParserToken unmarshallFunctionParameters(final JsonNode node,
                                                                                         final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::functionParameters
+            node,
+            context,
+            SpreadsheetFormulaParserToken::functionParameters
         );
     }
 
     static GreaterThanEqualsSpreadsheetFormulaParserToken unmarshallGreaterThanEquals(final JsonNode node,
                                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::greaterThanEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::greaterThanEquals
         );
     }
 
     static GreaterThanSpreadsheetFormulaParserToken unmarshallGreaterThan(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::greaterThan
+            node,
+            context,
+            SpreadsheetFormulaParserToken::greaterThan
         );
     }
 
     static GroupSpreadsheetFormulaParserToken unmarshallGroup(final JsonNode node,
                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::group
+            node,
+            context,
+            SpreadsheetFormulaParserToken::group
         );
     }
 
     static LambdaFunctionSpreadsheetFormulaParserToken unmarshallLambdaFunction(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::lambdaFunction
+            node,
+            context,
+            SpreadsheetFormulaParserToken::lambdaFunction
         );
     }
 
     static LessThanEqualsSpreadsheetFormulaParserToken unmarshallLessThanEquals(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::lessThanEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::lessThanEquals
         );
     }
 
     static LessThanSpreadsheetFormulaParserToken unmarshallLessThan(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::lessThan
+            node,
+            context,
+            SpreadsheetFormulaParserToken::lessThan
         );
     }
 
     static MultiplicationSpreadsheetFormulaParserToken unmarshallMultiplication(final JsonNode node,
                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::multiplication
+            node,
+            context,
+            SpreadsheetFormulaParserToken::multiplication
         );
     }
 
     static NamedFunctionSpreadsheetFormulaParserToken unmarshallNamedFunction(final JsonNode node,
                                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::namedFunction
+            node,
+            context,
+            SpreadsheetFormulaParserToken::namedFunction
         );
     }
 
     static NegativeSpreadsheetFormulaParserToken unmarshallNegative(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::negative
+            node,
+            context,
+            SpreadsheetFormulaParserToken::negative
         );
     }
 
     static NotEqualsSpreadsheetFormulaParserToken unmarshallNotEquals(final JsonNode node,
                                                                       final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::notEquals
+            node,
+            context,
+            SpreadsheetFormulaParserToken::notEquals
         );
     }
 
     static NumberSpreadsheetFormulaParserToken unmarshallNumber(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::number
+            node,
+            context,
+            SpreadsheetFormulaParserToken::number
         );
     }
 
     static PowerSpreadsheetFormulaParserToken unmarshallPower(final JsonNode node,
                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::power
+            node,
+            context,
+            SpreadsheetFormulaParserToken::power
         );
     }
 
     static SubtractionSpreadsheetFormulaParserToken unmarshallSubtraction(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::subtraction
+            node,
+            context,
+            SpreadsheetFormulaParserToken::subtraction
         );
     }
 
     static TextSpreadsheetFormulaParserToken unmarshallText(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::text
+            node,
+            context,
+            SpreadsheetFormulaParserToken::text
         );
     }
 
     static TimeSpreadsheetFormulaParserToken unmarshallTime(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
-                node,
-                context,
-                SpreadsheetFormulaParserToken::time
+            node,
+            context,
+            SpreadsheetFormulaParserToken::time
         );
     }
 
@@ -2530,24 +2530,24 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     private JsonNode marshallParent(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(
-                        VALUE_PROPERTY,
-                        context.marshallCollectionWithType(
-                                Cast.to(this.value())
-                        )
-                ) // unnecessary to include type.
-                .set(
-                        TEXT_PROPERTY,
-                        JsonNode.string(this.text())
-                );
+            .set(
+                VALUE_PROPERTY,
+                context.marshallCollectionWithType(
+                    Cast.to(this.value())
+                )
+            ) // unnecessary to include type.
+            .set(
+                TEXT_PROPERTY,
+                JsonNode.string(this.text())
+            );
     }
 
     private static <T extends ParentSpreadsheetFormulaParserToken> void registerParent(final Class<T> type,
                                                                                        final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
         register(
-                type,
-                from,
-                SpreadsheetFormulaParserToken::marshallParent
+            type,
+            from,
+            SpreadsheetFormulaParserToken::marshallParent
         );
     }
 
@@ -2555,10 +2555,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
                                                                            final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
                                                                            final BiFunction<T, JsonNodeMarshallContext, JsonNode> to) {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(type),
-                from,
-                to,
-                type
+            JsonNodeContext.computeTypeName(type),
+            from,
+            to,
+            type
         );
     }
 
@@ -2576,7 +2576,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     private JsonNode marshallLeaf(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(VALUE_PROPERTY, context.marshall(this.value())) // unnecessary to include type.
-                .set(TEXT_PROPERTY, JsonNode.string(this.text()));
+            .set(VALUE_PROPERTY, context.marshall(this.value())) // unnecessary to include type.
+            .set(TEXT_PROPERTY, JsonNode.string(this.text()));
     }
 }

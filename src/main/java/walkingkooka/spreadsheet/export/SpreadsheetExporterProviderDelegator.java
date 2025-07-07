@@ -27,10 +27,10 @@ public interface SpreadsheetExporterProviderDelegator extends SpreadsheetExporte
     default SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                     final ProviderContext context) {
         return this.spreadsheetExporterProvider()
-                .spreadsheetExporter(
-                        selector,
-                        context
-                );
+            .spreadsheetExporter(
+                selector,
+                context
+            );
     }
 
     @Override
@@ -38,16 +38,16 @@ public interface SpreadsheetExporterProviderDelegator extends SpreadsheetExporte
                                                     final List<?> values,
                                                     final ProviderContext context) {
         return this.spreadsheetExporterProvider().spreadsheetExporter(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
     }
 
     @Override
     default SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
         return this.spreadsheetExporterProvider()
-                .spreadsheetExporterInfos();
+            .spreadsheetExporterInfos();
     }
 
     SpreadsheetExporterProvider spreadsheetExporterProvider();

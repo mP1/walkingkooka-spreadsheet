@@ -42,8 +42,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime exte
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime() {
         super(
-                "timeFormatter",
-                SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+            "timeFormatter",
+            SpreadsheetPatternKind.TIME_FORMAT_PATTERN
         );
     }
 
@@ -56,9 +56,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime exte
     @Override
     Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final LocaleContext context) {
         return Optional.of(
-                SpreadsheetPattern.timeFormatPatternLocale(
-                        context.locale()
-                )
+            SpreadsheetPattern.timeFormatPatternLocale(
+                context.locale()
+            )
         );
     }
 }

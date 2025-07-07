@@ -36,13 +36,13 @@ import java.util.Optional;
  * The {@link SpreadsheetParser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
  */
 final class SpreadsheetNumberParsePatternSpreadsheetParser implements SpreadsheetParser,
-        RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext> {
 
     static SpreadsheetNumberParsePatternSpreadsheetParser with(final SpreadsheetNumberParsePattern pattern,
                                                                final SpreadsheetNumberParsePatternMode mode) {
         return new SpreadsheetNumberParsePatternSpreadsheetParser(
-                pattern,
-                mode
+            pattern,
+            mode
         );
     }
 
@@ -64,16 +64,16 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
 
         for (final List<SpreadsheetNumberParsePatternComponent> pattern : this.pattern.patternComponents) {
             final SpreadsheetNumberParsePatternRequest request = SpreadsheetNumberParsePatternRequest.with(
-                    pattern.iterator(),
-                    this.mode,
-                    context
+                pattern.iterator(),
+                this.mode,
+                context
             );
             if (request.nextComponent(cursor)) {
                 final List<ParserToken> tokens = request.tokens;
                 if (!tokens.isEmpty()) {
                     token = NumberSpreadsheetFormulaParserToken.number(
-                            tokens,
-                            save.textBetween().toString()
+                        tokens,
+                        save.textBetween().toString()
                     );
                     break;
                 }
@@ -91,7 +91,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetParserSelectorToken.tokens(
-                this.pattern.value()
+            this.pattern.value()
         );
     }
 
@@ -101,7 +101,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     }
 
     private final static Optional<ValidationValueTypeName> NUMBER = Optional.of(
-            SpreadsheetValueType.NUMBER
+        SpreadsheetValueType.NUMBER
     );
 
     // Object...........................................................................................................
@@ -114,7 +114,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetNumberParsePatternSpreadsheetParser && this.equals0((SpreadsheetNumberParsePatternSpreadsheetParser) other);
+            other instanceof SpreadsheetNumberParsePatternSpreadsheetParser && this.equals0((SpreadsheetNumberParsePatternSpreadsheetParser) other);
     }
 
     private boolean equals0(final SpreadsheetNumberParsePatternSpreadsheetParser other) {

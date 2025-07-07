@@ -47,8 +47,8 @@ public final class SpreadsheetNumberParsePatternComponentExponentTest extends Sp
         this.checkEquals(EXPONENT.toUpperCase(), EXPONENT);
 
         this.parseAndCheck2(
-                EXPONENT,
-                ""
+            EXPONENT,
+            ""
         );
     }
 
@@ -57,8 +57,8 @@ public final class SpreadsheetNumberParsePatternComponentExponentTest extends Sp
         this.checkEquals(EXPONENT.toUpperCase(), EXPONENT);
 
         this.parseAndCheck2(
-                EXPONENT,
-                "!"
+            EXPONENT,
+            "!"
         );
     }
 
@@ -67,8 +67,8 @@ public final class SpreadsheetNumberParsePatternComponentExponentTest extends Sp
         this.checkNotEquals(EXPONENT.toLowerCase(), EXPONENT);
 
         this.parseAndCheck2(
-                EXPONENT.toLowerCase(),
-                ""
+            EXPONENT.toLowerCase(),
+            ""
         );
     }
 
@@ -77,26 +77,26 @@ public final class SpreadsheetNumberParsePatternComponentExponentTest extends Sp
         this.checkNotEquals(EXPONENT.toLowerCase(), EXPONENT);
 
         this.parseAndCheck2(
-                EXPONENT.toLowerCase(),
-                "!"
+            EXPONENT.toLowerCase(),
+            "!"
         );
     }
 
     @Test
     public void testCaseUnimportant() {
         this.parseAndCheck2(
-                EXPONENT.toLowerCase().charAt(0) + EXPONENT.toUpperCase().substring(1),
-                ""
+            EXPONENT.toLowerCase().charAt(0) + EXPONENT.toUpperCase().substring(1),
+            ""
         );
     }
 
     void parseAndCheck2(final String text,
                         final String textAfter) {
         this.parseAndCheck2(
-                text,
-                textAfter,
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.exponentSymbol(text, text)
+            text,
+            textAfter,
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.exponentSymbol(text, text)
         );
     }
 

@@ -48,27 +48,27 @@ final class SpreadsheetFormulaReplaceReferencesFunctionExpression extends Spread
 
         if (cellOrRange.isCell()) {
             result = mapper.apply(
-                    cellOrRange.toCell()
+                cellOrRange.toCell()
             ).map(
-                    c -> (Expression) referenceExpression.setValue(c)
+                c -> (Expression) referenceExpression.setValue(c)
 
             ).orElse(SELECTION_DELETED);
         } else {
             if (cellOrRange.isCellRange()) {
                 final SpreadsheetCellRangeReference range = cellOrRange.toCellRange();
                 final Optional<SpreadsheetCellReference> begin = mapper.apply(
-                        range.begin()
+                    range.begin()
                 );
                 if (begin.isPresent()) {
                     final Optional<SpreadsheetCellReference> end = mapper.apply(
-                            range.end()
+                        range.end()
                     );
                     if (end.isPresent()) {
                         result = referenceExpression.setValue(
-                                begin.get()
-                                        .cellRange(
-                                                end.get()
-                                        )
+                            begin.get()
+                                .cellRange(
+                                    end.get()
+                                )
                         );
                     } else {
                         result = SELECTION_DELETED;
@@ -81,6 +81,6 @@ final class SpreadsheetFormulaReplaceReferencesFunctionExpression extends Spread
     }
 
     private final static Expression SELECTION_DELETED = Expression.value(
-            SpreadsheetError.selectionDeleted()
+        SpreadsheetError.selectionDeleted()
     );
 }

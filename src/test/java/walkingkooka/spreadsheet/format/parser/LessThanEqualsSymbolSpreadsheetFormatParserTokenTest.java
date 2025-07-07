@@ -72,7 +72,7 @@ public final class LessThanEqualsSymbolSpreadsheetFormatParserTokenTest extends 
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CONDITION
+            SpreadsheetFormatParserTokenKind.CONDITION
         );
     }
 

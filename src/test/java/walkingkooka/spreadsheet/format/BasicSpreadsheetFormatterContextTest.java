@@ -108,12 +108,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             return Optional.of(
-                    SpreadsheetText.with(
-                            new DecimalFormat("000.000")
-                                    .format(
-                                            value.orElse(null)
-                                    )
-                    ).toTextNode()
+                SpreadsheetText.with(
+                    new DecimalFormat("000.000")
+                        .format(
+                            value.orElse(null)
+                        )
+                ).toTextNode()
             );
         }
 
@@ -124,13 +124,13 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     };
 
     private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
-            DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(LOCALE)
-            ),
-            LOCALE,
-            1900,
-            50,
-            LocalDateTime::now
+        DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(LOCALE)
+        ),
+        LOCALE,
+        1900,
+        50,
+        LocalDateTime::now
     );
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = new FakeDecimalNumberContext() {
@@ -211,38 +211,38 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     };
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContexts.NO_METADATA,
-            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            Converters.collection(
-                    Cast.to(
-                            Lists.of(
-                                    SpreadsheetConverters.textToText(),
-                                    Converters.numberToBoolean(),
-                                    SpreadsheetConverters.errorToNumber()
-                            )
-                    )
-            ),
-            LABEL_NAME_RESOLVER,
-            JsonNodeConverterContexts.basic(
-                    ExpressionNumberConverterContexts.basic(
-                            Converters.fake(),
-                            ConverterContexts.basic(
-                                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                    Converters.fake(),
-                                    DATE_TIME_CONTEXT,
-                                    DECIMAL_NUMBER_CONTEXT
-                            ),
-                            EXPRESSION_NUMBER_KIND
-                    ),
-                    JsonNodeMarshallUnmarshallContexts.fake()
+        SpreadsheetConverterContexts.NO_METADATA,
+        SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+        Converters.collection(
+            Cast.to(
+                Lists.of(
+                    SpreadsheetConverters.textToText(),
+                    Converters.numberToBoolean(),
+                    SpreadsheetConverters.errorToNumber()
+                )
             )
+        ),
+        LABEL_NAME_RESOLVER,
+        JsonNodeConverterContexts.basic(
+            ExpressionNumberConverterContexts.basic(
+                Converters.fake(),
+                ConverterContexts.basic(
+                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    Converters.fake(),
+                    DATE_TIME_CONTEXT,
+                    DECIMAL_NUMBER_CONTEXT
+                ),
+                EXPRESSION_NUMBER_KIND
+            ),
+            JsonNodeMarshallUnmarshallContexts.fake()
+        )
     );
 
     private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =
-            (cell) -> {
-                Objects.requireNonNull(cell, "cell");
-                throw new UnsupportedOperationException();
-            };
+        (cell) -> {
+            Objects.requireNonNull(cell, "cell");
+            throw new UnsupportedOperationException();
+        };
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.fake();
 
@@ -251,257 +251,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Test
     public void testWithNullNumberToColorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterContext.with(
-                        null,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNameToColorFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterContext.with(
-                        NUMBER_TO_COLOR,
-                        null,
-                        CELL_CHARACTER_WIDTH,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithInvalidCellCharacterWidthFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        -1,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithInvalidCellCharacterWidthFails2() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        0,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithInvalidGeneralFormatNumberDigitCountFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        -1,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithInvalidGeneralFormatNumberDigitCountFails2() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        0,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullFormatterFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterContext.with(
-                        NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        null,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullConverterContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterContext.with(
-                        NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        null,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetFormatterProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterContext.with(
-                        NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        null,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullProviderContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterContext.with(
-                        NUMBER_TO_COLOR,
-                        NAME_TO_COLOR,
-                        CELL_CHARACTER_WIDTH,
-                        GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        FORMATTER,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        CONVERTER_CONTEXT,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        null
-                )
-        );
-    }
-
-    @Test
-    public void testColorNumber() {
-        this.colorNumberAndCheck(
-                this.createContext(),
-                1,
-                Optional.of(COLOR)
-        );
-    }
-
-    @Test
-    public void testColorName() {
-        this.colorNameAndCheck(
-                this.createContext(),
-                SpreadsheetColorName.with("bingo"),
-                Optional.of(COLOR)
-        );
-    }
-
-    @Test
-    public void testConvertNumberOneToBoolean() {
-        this.convertAndCheck(
-                1,
-                Boolean.class,
-                Boolean.TRUE
-        );
-    }
-
-    @Test
-    public void testConvertNumberZeroToBoolean() {
-        this.convertAndCheck(
-                0,
-                Boolean.class,
-                Boolean.FALSE
-        );
-    }
-
-    @Test
-    public void testConvertSpreadsheetErrorMissingCellToNumber() {
-        this.convertAndCheck(
-                SpreadsheetError.selectionNotFound(
-                        SpreadsheetSelection.parseCell("Z99")
-                ),
-                ExpressionNumber.class,
-                EXPRESSION_NUMBER_KIND.zero()
-        );
-    }
-
-    @Test
-    public void testConvertSpreadsheetErrorToString() {
-        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
-
-        this.convertAndCheck(
-                kind.setMessage("Message is ignored!"),
-                String.class,
-                kind.text()
-        );
-    }
-
-    @Test
-    public void testFormat() {
-        this.formatAndCheck(
-                BigDecimal.valueOf(12.5),
-                SpreadsheetText.with("012.500")
-        );
-    }
-
-    @Test
-    public void testLocale() {
-        this.localeAndCheck(
-                this.createContext(),
-                LOCALE
-        );
-    }
-
-    @Override
-    public BasicSpreadsheetFormatterContext createContext() {
-        return BasicSpreadsheetFormatterContext.with(
-                NUMBER_TO_COLOR,
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                null,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
@@ -510,6 +262,254 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullNameToColorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                NUMBER_TO_COLOR,
+                null,
+                CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithInvalidCellCharacterWidthFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                -1,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithInvalidCellCharacterWidthFails2() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                0,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithInvalidGeneralFormatNumberDigitCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                -1,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithInvalidGeneralFormatNumberDigitCountFails2() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                0,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullFormatterFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                null,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullConverterContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                null,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetFormatterProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testColorNumber() {
+        this.colorNumberAndCheck(
+            this.createContext(),
+            1,
+            Optional.of(COLOR)
+        );
+    }
+
+    @Test
+    public void testColorName() {
+        this.colorNameAndCheck(
+            this.createContext(),
+            SpreadsheetColorName.with("bingo"),
+            Optional.of(COLOR)
+        );
+    }
+
+    @Test
+    public void testConvertNumberOneToBoolean() {
+        this.convertAndCheck(
+            1,
+            Boolean.class,
+            Boolean.TRUE
+        );
+    }
+
+    @Test
+    public void testConvertNumberZeroToBoolean() {
+        this.convertAndCheck(
+            0,
+            Boolean.class,
+            Boolean.FALSE
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetErrorMissingCellToNumber() {
+        this.convertAndCheck(
+            SpreadsheetError.selectionNotFound(
+                SpreadsheetSelection.parseCell("Z99")
+            ),
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetErrorToString() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
+
+        this.convertAndCheck(
+            kind.setMessage("Message is ignored!"),
+            String.class,
+            kind.text()
+        );
+    }
+
+    @Test
+    public void testFormat() {
+        this.formatAndCheck(
+            BigDecimal.valueOf(12.5),
+            SpreadsheetText.with("012.500")
+        );
+    }
+
+    @Test
+    public void testLocale() {
+        this.localeAndCheck(
+            this.createContext(),
+            LOCALE
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetFormatterContext createContext() {
+        return BasicSpreadsheetFormatterContext.with(
+            NUMBER_TO_COLOR,
+            NAME_TO_COLOR,
+            CELL_CHARACTER_WIDTH,
+            GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+            FORMATTER,
+            SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+            CONVERTER_CONTEXT,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            PROVIDER_CONTEXT
         );
     }
 

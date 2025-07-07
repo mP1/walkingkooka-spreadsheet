@@ -71,22 +71,22 @@ import java.util.function.Function;
  * has a local value.
  */
 final class LocalReferencesSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
-        DateTimeContextDelegator,
-        DecimalNumberContextDelegator,
-        FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
-        JsonNodeMarshallUnmarshallContextDelegator,
-        LocaleContextDelegator,
-        UsesToStringBuilder {
+    DateTimeContextDelegator,
+    DecimalNumberContextDelegator,
+    FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    JsonNodeMarshallUnmarshallContextDelegator,
+    LocaleContextDelegator,
+    UsesToStringBuilder {
 
     static LocalReferencesSpreadsheetExpressionEvaluationContext with(
-            final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
-            final SpreadsheetExpressionEvaluationContext context) {
+        final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
+        final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(localReferenceToValues, "localReferenceToValues");
         Objects.requireNonNull(context, "context");
 
         return new LocalReferencesSpreadsheetExpressionEvaluationContext(
-                localReferenceToValues,
-                context
+            localReferenceToValues,
+            context
         );
     }
 
@@ -115,8 +115,8 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
         return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
+            cell,
+            this
         );
     }
 
@@ -195,8 +195,8 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
                                   final Object value) {
         return this.context.prepareParameter(
-                parameter,
-                value
+            parameter,
+            value
         );
     }
 
@@ -263,7 +263,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public Optional<Object> validationValue() {
         return this.context.reference(VALIDATION_VALUE)
-                .orElse(Optional.empty());
+            .orElse(Optional.empty());
     }
 
     // ConverterContext.................................................................................................
@@ -272,8 +272,8 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.context.canConvert(
-                value,
-                type
+            value,
+            type
         );
     }
 
@@ -347,11 +347,11 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         final SpreadsheetExpressionEvaluationContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new LocalReferencesSpreadsheetExpressionEvaluationContext(
-                        this.localReferenceToValues,
-                        after
-                );
+            this :
+            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+                this.localReferenceToValues,
+                after
+            );
     }
 
     // LocaleContextDelegator...........................................................................................

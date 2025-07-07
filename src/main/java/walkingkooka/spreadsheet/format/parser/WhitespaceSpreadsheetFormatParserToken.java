@@ -25,8 +25,8 @@ public final class WhitespaceSpreadsheetFormatParserToken extends SymbolSpreadsh
 
     static WhitespaceSpreadsheetFormatParserToken with(final String value, final String text) {
         return new WhitespaceSpreadsheetFormatParserToken(
-                checkValue(value),
-                checkTextNotEmpty(text)
+            checkValue(value),
+            checkTextNotEmpty(text)
         );
     }
 

@@ -29,24 +29,24 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
     @Test
     public void testCheckValueWithInvalidSpreadsheetIdFails() {
         this.checkValueFails(
-                "123-invalid",
-                "Metadata spreadsheetId=\"123-invalid\", Expected SpreadsheetId"
+            "123-invalid",
+            "Metadata spreadsheetId=\"123-invalid\", Expected SpreadsheetId"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetId.instance(),
-                "spreadsheetId"
+            SpreadsheetMetadataPropertyNameSpreadsheetId.instance(),
+            "spreadsheetId"
         );
     }
 

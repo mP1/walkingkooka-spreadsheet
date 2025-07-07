@@ -33,33 +33,33 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     @Test
     default void testCanImportWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporter()
-                        .canImport(
-                                null,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporter()
+                .canImport(
+                    null,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testCanImportWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporter()
-                        .canImport(
-                                WebEntity.empty(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporter()
+                .canImport(
+                    WebEntity.empty(),
+                    null
+                )
         );
     }
 
     default void canImportAndCheck(final WebEntity cells,
                                    final boolean expected) {
         this.canImportAndCheck(
-                cells,
-                this.createContext(),
-                expected
+            cells,
+            this.createContext(),
+            expected
         );
     }
 
@@ -67,10 +67,10 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                    final SpreadsheetImporterContext context,
                                    final boolean expected) {
         this.canImportAndCheck(
-                this.createSpreadsheetImporter(),
-                cells,
-                context,
-                expected
+            this.createSpreadsheetImporter(),
+            cells,
+            context,
+            expected
         );
     }
 
@@ -79,11 +79,11 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                    final SpreadsheetImporterContext context,
                                    final boolean expected) {
         this.checkEquals(
-                expected,
-                importer.canImport(
-                        cells,
-                        context
-                )
+            expected,
+            importer.canImport(
+                cells,
+                context
+            )
         );
     }
 
@@ -92,17 +92,17 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     default void doImportAndCheck(final WebEntity cells,
                                   final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
-                cells,
-                Lists.of(expected)
+            cells,
+            Lists.of(expected)
         );
     }
 
     default void doImportAndCheck(final WebEntity cells,
                                   final List<SpreadsheetImporterCellValue> expected) {
         this.doImportAndCheck(
-                cells,
-                this.createContext(),
-                expected
+            cells,
+            this.createContext(),
+            expected
         );
     }
 
@@ -110,9 +110,9 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                   final SpreadsheetImporterContext context,
                                   final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
-                cells,
-                context,
-                Lists.of(expected)
+            cells,
+            context,
+            Lists.of(expected)
         );
     }
 
@@ -120,10 +120,10 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                   final SpreadsheetImporterContext context,
                                   final List<SpreadsheetImporterCellValue> expected) {
         this.doImportAndCheck(
-                this.createSpreadsheetImporter(),
-                cells,
-                context,
-                expected
+            this.createSpreadsheetImporter(),
+            cells,
+            context,
+            expected
         );
     }
 
@@ -131,9 +131,9 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                   final WebEntity cells,
                                   final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
-                importer,
-                cells,
-                Lists.of(expected)
+            importer,
+            cells,
+            Lists.of(expected)
         );
     }
 
@@ -141,10 +141,10 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                   final WebEntity cells,
                                   final List<SpreadsheetImporterCellValue> expected) {
         this.doImportAndCheck(
-                importer,
-                cells,
-                this.createContext(),
-                expected
+            importer,
+            cells,
+            this.createContext(),
+            expected
         );
     }
 
@@ -153,12 +153,12 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                   final SpreadsheetImporterContext context,
                                   final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
-                importer,
-                cells,
-                context,
-                Lists.of(
-                        expected
-                )
+            importer,
+            cells,
+            context,
+            Lists.of(
+                expected
+            )
         );
     }
 
@@ -167,18 +167,18 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                   final SpreadsheetImporterContext context,
                                   final List<SpreadsheetImporterCellValue> expected) {
         this.canImportAndCheck(
-                importer,
-                cells,
-                context,
-                true
+            importer,
+            cells,
+            context,
+            true
         );
 
         this.checkEquals(
-                expected,
-                importer.doImport(
-                        cells,
-                        context
-                )
+            expected,
+            importer.doImport(
+                cells,
+                context
+            )
         );
     }
 
@@ -187,9 +187,9 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     default void doImportFails(final WebEntity cells,
                                final RuntimeException expected) {
         this.doImportFails(
-                cells,
-                this.createContext(),
-                expected
+            cells,
+            this.createContext(),
+            expected
         );
     }
 
@@ -197,10 +197,10 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                final WebEntity cells,
                                final RuntimeException expected) {
         this.doImportFails(
-                importer,
-                cells,
-                this.createContext(),
-                expected
+            importer,
+            cells,
+            this.createContext(),
+            expected
         );
     }
 
@@ -208,10 +208,10 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                final SpreadsheetImporterContext context,
                                final RuntimeException expected) {
         this.doImportFails(
-                this.createSpreadsheetImporter(),
-                cells,
-                context,
-                expected
+            this.createSpreadsheetImporter(),
+            cells,
+            context,
+            expected
         );
     }
 
@@ -220,16 +220,16 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
                                final SpreadsheetImporterContext context,
                                final RuntimeException expected) {
         final RuntimeException thrown = assertThrows(
-                expected.getClass(),
-                () -> importer.doImport(
-                        cells,
-                        context
-                )
+            expected.getClass(),
+            () -> importer.doImport(
+                cells,
+                context
+            )
         );
         this.checkEquals(
-                expected.getMessage(),
-                thrown.getMessage(),
-                "message"
+            expected.getMessage(),
+            thrown.getMessage(),
+            "message"
         );
     }
 

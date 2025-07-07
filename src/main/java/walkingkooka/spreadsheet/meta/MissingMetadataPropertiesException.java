@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-final class MissingMetadataPropertiesException extends IllegalStateException{
+final class MissingMetadataPropertiesException extends IllegalStateException {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,14 +33,14 @@ final class MissingMetadataPropertiesException extends IllegalStateException{
     @Override
     public String getMessage() {
         return this.missing.stream()
-                .map(Object::toString)
-                .collect(
-                        Collectors.joining(
-                                ", ",
-                                "Metadata missing: ",
-                                ""
-                        )
-                );
+            .map(Object::toString)
+            .collect(
+                Collectors.joining(
+                    ", ",
+                    "Metadata missing: ",
+                    ""
+                )
+            );
     }
 
     final Set<SpreadsheetMetadataPropertyName<?>> missing;

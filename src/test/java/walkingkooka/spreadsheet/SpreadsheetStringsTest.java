@@ -31,8 +31,8 @@ public final class SpreadsheetStringsTest implements PublicStaticHelperTesting<S
     @Test
     public void testCaseSensitivity() {
         assertSame(
-                CaseSensitivity.INSENSITIVE,
-                SpreadsheetStrings.CASE_SENSITIVITY
+            CaseSensitivity.INSENSITIVE,
+            SpreadsheetStrings.CASE_SENSITIVITY
         );
     }
 

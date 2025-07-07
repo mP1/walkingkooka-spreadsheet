@@ -24,7 +24,7 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 import java.lang.reflect.Method;
 
 public final class SpreadsheetFormatParserContextsTest implements ClassTesting2<SpreadsheetFormatParserContexts>,
-        PublicStaticHelperTesting<SpreadsheetFormatParserContexts> {
+    PublicStaticHelperTesting<SpreadsheetFormatParserContexts> {
 
     @Override
     public Class<SpreadsheetFormatParserContexts> type() {

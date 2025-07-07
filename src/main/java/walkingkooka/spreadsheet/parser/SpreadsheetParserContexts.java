@@ -36,10 +36,10 @@ public final class SpreadsheetParserContexts implements PublicStaticHelper {
                                                  final ExpressionNumberContext expressionNumberContext,
                                                  final char valueSeparator) {
         return BasicSpreadsheetParserContext.with(
-                invalidCharacterExceptionFactory,
-                dateTimeContext,
-                expressionNumberContext,
-                valueSeparator
+            invalidCharacterExceptionFactory,
+            dateTimeContext,
+            expressionNumberContext,
+            valueSeparator
         );
     }
 

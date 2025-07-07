@@ -69,13 +69,13 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     @Test
     public void testWithUnknownFormatterName() {
         AliasesSpreadsheetFormatterProvider.with(
-                SpreadsheetFormatterAliasSet.parse("unknown-formatter404"),
-                new FakeSpreadsheetFormatterProvider() {
-                    @Override
-                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.parse("https://example.com/formatter111 formatter111");
-                    }
+            SpreadsheetFormatterAliasSet.parse("unknown-formatter404"),
+            new FakeSpreadsheetFormatterProvider() {
+                @Override
+                public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                    return SpreadsheetFormatterInfoSet.parse("https://example.com/formatter111 formatter111");
                 }
+            }
         );
     }
 
@@ -84,57 +84,57 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterNameWithName() {
         this.spreadsheetFormatterAndCheck(
-                NAME1,
-                Lists.empty(),
-                CONTEXT,
-                FORMATTER1
+            NAME1,
+            Lists.empty(),
+            CONTEXT,
+            FORMATTER1
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelectorWithName() {
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterSelector.parse(NAME1 + ""),
-                CONTEXT,
-                FORMATTER1
+            SpreadsheetFormatterSelector.parse(NAME1 + ""),
+            CONTEXT,
+            FORMATTER1
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNameWithAlias() {
         this.spreadsheetFormatterAndCheck(
-                ALIAS2,
-                Lists.empty(),
-                CONTEXT,
-                FORMATTER2
+            ALIAS2,
+            Lists.empty(),
+            CONTEXT,
+            FORMATTER2
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelectorWithAlias() {
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterSelector.parse(ALIAS2 + ""),
-                CONTEXT,
-                FORMATTER2
+            SpreadsheetFormatterSelector.parse(ALIAS2 + ""),
+            CONTEXT,
+            FORMATTER2
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNameWithSelector() {
         this.spreadsheetFormatterAndCheck(
-                NAME4,
-                Lists.empty(),
-                CONTEXT,
-                FORMATTER3
+            NAME4,
+            Lists.empty(),
+            CONTEXT,
+            FORMATTER3
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelectorWithSelector() {
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterSelector.parse(NAME4 + ""),
-                CONTEXT,
-                FORMATTER3
+            SpreadsheetFormatterSelector.parse(NAME4 + ""),
+            CONTEXT,
+            FORMATTER3
         );
     }
 
@@ -143,21 +143,21 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterNextTokenWithUnknown() {
         this.spreadsheetFormatterNextTokenAndCheck(
-                AliasesSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetFormatterProvider() {
+            AliasesSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetFormatterProvider() {
 
-                            @Override
-                            public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                                return SpreadsheetFormatterInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                SpreadsheetFormatterSelector.parse("unknown444")
+                    @Override
+                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                        return SpreadsheetFormatterInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetFormatterSelector.parse("unknown444")
         );
     }
 
@@ -165,34 +165,34 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     public void testSpreadsheetFormatterNextTokenWithName() {
         final SpreadsheetFormatterSelector selector = SpreadsheetFormatterSelector.parse(NAME1_STRING + "(999)");
         final SpreadsheetFormatterSelectorToken token = SpreadsheetFormatterSelectorToken.with(
-                "label1",
-                "text1",
-                Lists.empty()
+            "label1",
+            "text1",
+            Lists.empty()
         );
 
         this.spreadsheetFormatterNextTokenAndCheck(
-                AliasesSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetFormatterProvider() {
+            AliasesSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetFormatterProvider() {
 
-                            @Override
-                            public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector s) {
-                                checkEquals(selector, s, "selector");
-                                return Optional.of(token);
-                            }
+                    @Override
+                    public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector s) {
+                        checkEquals(selector, s, "selector");
+                        return Optional.of(token);
+                    }
 
-                            @Override
-                            public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                                return SpreadsheetFormatterInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                selector,
-                token
+                    @Override
+                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                        return SpreadsheetFormatterInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            selector,
+            token
         );
     }
 
@@ -200,34 +200,34 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     public void testSpreadsheetFormatterNextTokenWithAlias() {
         final String selectorParams = "(999)";
         final SpreadsheetFormatterSelectorToken token = SpreadsheetFormatterSelectorToken.with(
-                "label1",
-                "text1",
-                Lists.empty()
+            "label1",
+            "text1",
+            Lists.empty()
         );
 
         this.spreadsheetFormatterNextTokenAndCheck(
-                AliasesSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterAliasSet.parse(ALIAS2 + " " + NAME2_STRING),
-                        new FakeSpreadsheetFormatterProvider() {
+            AliasesSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterAliasSet.parse(ALIAS2 + " " + NAME2_STRING),
+                new FakeSpreadsheetFormatterProvider() {
 
-                            @Override
-                            public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector s) {
-                                checkEquals(SpreadsheetFormatterSelector.parse(NAME2_STRING + selectorParams), s, "selector");
-                                return Optional.of(token);
-                            }
+                    @Override
+                    public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector s) {
+                        checkEquals(SpreadsheetFormatterSelector.parse(NAME2_STRING + selectorParams), s, "selector");
+                        return Optional.of(token);
+                    }
 
-                            @Override
-                            public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                                return SpreadsheetFormatterInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                SpreadsheetFormatterSelector.parse(ALIAS2 + selectorParams),
-                token
+                    @Override
+                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                        return SpreadsheetFormatterInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetFormatterSelector.parse(ALIAS2 + selectorParams),
+            token
         );
     }
 
@@ -236,22 +236,22 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterSamplesWithUnknown() {
         this.spreadsheetFormatterSamplesAndCheck(
-                AliasesSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetFormatterProvider() {
+            AliasesSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetFormatterProvider() {
 
-                            @Override
-                            public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                                return SpreadsheetFormatterInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                SpreadsheetFormatterName.with("unknown404"),
-                SpreadsheetFormatterProviderSamplesContexts.fake()
+                    @Override
+                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                        return SpreadsheetFormatterInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetFormatterName.with("unknown404"),
+            SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }
 
@@ -261,42 +261,42 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
         final TextNode textNode = TextNode.text("TextNode1");
 
         final SpreadsheetFormatterSample sample = SpreadsheetFormatterSample.with(
-                "LabelSample1",
-                SpreadsheetFormatterSelector.with(
-                        NAME1,
-                        text
-                ),
-                textNode
+            "LabelSample1",
+            SpreadsheetFormatterSelector.with(
+                NAME1,
+                text
+            ),
+            textNode
         );
 
         this.spreadsheetFormatterSamplesAndCheck(
-                AliasesSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetFormatterProvider() {
-                            @Override
-                            public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                                                final SpreadsheetFormatterProviderSamplesContext context) {
-                                switch (name.toString()) {
-                                    case NAME1_STRING:
-                                        return Lists.of(sample);
-                                    default:
-                                        throw new IllegalArgumentException("Unknown formatter " + name);
-                                }
-                            }
-
-                            @Override
-                            public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                                return SpreadsheetFormatterInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
+            AliasesSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetFormatterProvider() {
+                    @Override
+                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+                        switch (name.toString()) {
+                            case NAME1_STRING:
+                                return Lists.of(sample);
+                            default:
+                                throw new IllegalArgumentException("Unknown formatter " + name);
                         }
-                ),
-                NAME1,
-                SpreadsheetFormatterProviderSamplesContexts.fake(),
-                sample
+                    }
+
+                    @Override
+                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                        return SpreadsheetFormatterInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            NAME1,
+            SpreadsheetFormatterProviderSamplesContexts.fake(),
+            sample
         );
     }
 
@@ -307,49 +307,49 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
         final TextNode textNode = TextNode.text("TextNode2");
 
         this.spreadsheetFormatterSamplesAndCheck(
-                AliasesSpreadsheetFormatterProvider.with(
-                        SpreadsheetFormatterAliasSet.parse(ALIAS2 + " " + NAME2),
-                        new FakeSpreadsheetFormatterProvider() {
-                            @Override
-                            public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                                                final SpreadsheetFormatterProviderSamplesContext context) {
-                                switch (name.toString()) {
-                                    case NAME2_STRING:
-                                        return Lists.of(
-                                                SpreadsheetFormatterSample.with(
-                                                        label,
-                                                        SpreadsheetFormatterSelector.with(
-                                                                NAME2,
-                                                                text
-                                                        ),
-                                                        textNode
-                                                )
-                                        );
-                                    default:
-                                        throw new IllegalArgumentException("Unknown formatter " + name);
-                                }
-                            }
-
-                            @Override
-                            public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                                return SpreadsheetFormatterInfoSet.with(
-                                        Sets.of(
-                                                INFO2
-                                        )
+            AliasesSpreadsheetFormatterProvider.with(
+                SpreadsheetFormatterAliasSet.parse(ALIAS2 + " " + NAME2),
+                new FakeSpreadsheetFormatterProvider() {
+                    @Override
+                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+                        switch (name.toString()) {
+                            case NAME2_STRING:
+                                return Lists.of(
+                                    SpreadsheetFormatterSample.with(
+                                        label,
+                                        SpreadsheetFormatterSelector.with(
+                                            NAME2,
+                                            text
+                                        ),
+                                        textNode
+                                    )
                                 );
-                            }
+                            default:
+                                throw new IllegalArgumentException("Unknown formatter " + name);
                         }
+                    }
+
+                    @Override
+                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                        return SpreadsheetFormatterInfoSet.with(
+                            Sets.of(
+                                INFO2
+                            )
+                        );
+                    }
+                }
+            ),
+            ALIAS2,
+            SpreadsheetFormatterProviderSamplesContexts.fake(),
+            SpreadsheetFormatterSample.with(
+                label,
+                SpreadsheetFormatterSelector.with(
+                    ALIAS2,
+                    text
                 ),
-                ALIAS2,
-                SpreadsheetFormatterProviderSamplesContexts.fake(),
-                SpreadsheetFormatterSample.with(
-                        label,
-                        SpreadsheetFormatterSelector.with(
-                                ALIAS2,
-                                text
-                        ),
-                        textNode
-                )
+                textNode
+            )
         );
     }
 
@@ -358,9 +358,9 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
     @Test
     public void testInfos() {
         this.spreadsheetFormatterInfosAndCheck(
-                INFO1,
-                INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from SpreadsheetFormatterAliasSet
+            INFO1,
+            INFO2.setName(ALIAS2),
+            INFO4.setName(NAME4) // from SpreadsheetFormatterAliasSet
         );
     }
 
@@ -369,59 +369,59 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
         final String aliases = "formatter1, alias2 formatter2, custom4 formatter3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
-                NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
-                aliases
+            NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
+            aliases
         );
 
         return AliasesSpreadsheetFormatterProvider.with(
-                SpreadsheetFormatterAliasSet.parse(aliases),
-                new FakeSpreadsheetFormatterProvider() {
-                    @Override
-                    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
-                                                                     final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
-                                                                     final List<?> values,
-                                                                     final ProviderContext context) {
-                        SpreadsheetFormatter formatter;
-
-                        switch (name.toString()) {
-                            case NAME1_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                formatter = FORMATTER1;
-                                break;
-                            case NAME2_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                formatter = FORMATTER2;
-                                break;
-                            case NAME3_STRING:
-                                checkEquals(Lists.of(VALUE3), values, "values");
-                                formatter = FORMATTER3;
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Unknown formatter " + name);
-                        }
-
-                        return formatter;
-                    }
-
-                    @Override
-                    public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
-                        return SpreadsheetFormatterInfoSet.with(
-                                Sets.of(
-                                        INFO1,
-                                        INFO2,
-                                        INFO3
-                                )
-                        );
-                    }
+            SpreadsheetFormatterAliasSet.parse(aliases),
+            new FakeSpreadsheetFormatterProvider() {
+                @Override
+                public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
+                                                                 final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterName name,
+                                                                 final List<?> values,
+                                                                 final ProviderContext context) {
+                    SpreadsheetFormatter formatter;
+
+                    switch (name.toString()) {
+                        case NAME1_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            formatter = FORMATTER1;
+                            break;
+                        case NAME2_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            formatter = FORMATTER2;
+                            break;
+                        case NAME3_STRING:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            formatter = FORMATTER3;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unknown formatter " + name);
+                    }
+
+                    return formatter;
+                }
+
+                @Override
+                public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
+                    return SpreadsheetFormatterInfoSet.with(
+                        Sets.of(
+                            INFO1,
+                            INFO2,
+                            INFO3
+                        )
+                    );
+                }
+            }
         );
     }
 

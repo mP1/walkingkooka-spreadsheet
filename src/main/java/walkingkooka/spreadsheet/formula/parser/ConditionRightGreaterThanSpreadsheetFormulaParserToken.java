@@ -30,8 +30,8 @@ public final class ConditionRightGreaterThanSpreadsheetFormulaParserToken extend
     static ConditionRightGreaterThanSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                                        final String text) {
         return new ConditionRightGreaterThanSpreadsheetFormulaParserToken(
-                Lists.immutable(value),
-                checkText(text)
+            Lists.immutable(value),
+            checkText(text)
         );
     }
 
@@ -43,8 +43,8 @@ public final class ConditionRightGreaterThanSpreadsheetFormulaParserToken extend
     GreaterThanSpreadsheetFormulaParserToken setConditionLeft0(final List<ParserToken> tokens,
                                                                final String text) {
         return greaterThan(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -53,9 +53,9 @@ public final class ConditionRightGreaterThanSpreadsheetFormulaParserToken extend
     @Override
     public ConditionRightGreaterThanSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ConditionRightGreaterThanSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            ConditionRightGreaterThanSpreadsheetFormulaParserToken::with
         );
     }
 

@@ -68,52 +68,52 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Test
     public void testWithNullFormFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormHandlerContext.with(
-                        null,
-                        SpreadsheetExpressionReferenceLoaders.fake(),
-                        CELLS_SAVER,
-                        SpreadsheetEngineContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormHandlerContext.with(
+                null,
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                CELLS_SAVER,
+                SpreadsheetEngineContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        null,
-                        CELLS_SAVER,
-                        SpreadsheetEngineContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                null,
+                CELLS_SAVER,
+                SpreadsheetEngineContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullCellsSaverFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        SpreadsheetExpressionReferenceLoaders.fake(),
-                        null,
-                        SpreadsheetEngineContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                null,
+                SpreadsheetEngineContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetEngineContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        SpreadsheetExpressionReferenceLoaders.fake(),
-                        CELLS_SAVER,
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                CELLS_SAVER,
+                null
+            )
         );
     }
 
@@ -127,9 +127,9 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetValidatorContext validatorContext = context.validatorContext(cell);
 
         this.checkEquals(
-                cell,
-                validatorContext.validationReference(),
-                "validationReference"
+            cell,
+            validatorContext.validationReference(),
+            "validationReference"
         );
 
         final String value = "*VALUE123*";
@@ -137,22 +137,22 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final ExpressionEvaluationContext expressionEvaluationContext = validatorContext.expressionEvaluationContext(value);
 
         this.checkEquals(
-                value,
-                expressionEvaluationContext.evaluateExpression(
-                        ReferenceExpression.reference(SpreadsheetValidatorContext.VALUE)
-                ),
-                "VALUE"
+            value,
+            expressionEvaluationContext.evaluateExpression(
+                ReferenceExpression.reference(SpreadsheetValidatorContext.VALUE)
+            ),
+            "VALUE"
         );
 
         this.checkEquals(
-                EXPRESSION_NUMBER_KIND.create(1 + 23),
-                expressionEvaluationContext.evaluateExpression(
-                        Expression.add(
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(1)),
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(23))
-                        )
-                ),
-                "expressionEvaluationContext.evaluateExpression(1+23)"
+            EXPRESSION_NUMBER_KIND.create(1 + 23),
+            expressionEvaluationContext.evaluateExpression(
+                Expression.add(
+                    Expression.value(EXPRESSION_NUMBER_KIND.create(1)),
+                    Expression.value(EXPRESSION_NUMBER_KIND.create(23))
+                )
+            ),
+            "expressionEvaluationContext.evaluateExpression(1+23)"
         );
     }
 
@@ -161,24 +161,24 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Test
     public void testLoadFormFieldValueCellMissing() {
         this.loadFormFieldValueAndCheck(
-                BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        new FakeSpreadsheetExpressionReferenceLoader() {
-                            @Override
-                            public Optional<SpreadsheetCell> loadCell(SpreadsheetCellReference cell, SpreadsheetExpressionEvaluationContext context) {
-                                return Optional.empty();
-                            }
-                        },
-                        CELLS_SAVER,
-                        new FakeSpreadsheetEngineContext() {
-                            @Override
-                            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                                 final SpreadsheetExpressionReferenceLoader loader) {
-                                return SpreadsheetExpressionEvaluationContexts.fake();
-                            }
-                        }
-                ),
-                SpreadsheetSelection.A1
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                new FakeSpreadsheetExpressionReferenceLoader() {
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(SpreadsheetCellReference cell, SpreadsheetExpressionEvaluationContext context) {
+                        return Optional.empty();
+                    }
+                },
+                CELLS_SAVER,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
+                        return SpreadsheetExpressionEvaluationContexts.fake();
+                    }
+                }
+            ),
+            SpreadsheetSelection.A1
         );
     }
 
@@ -187,27 +187,27 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.loadFormFieldValueAndCheck(
-                BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        new FakeSpreadsheetExpressionReferenceLoader() {
-                            @Override
-                            public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                                      final SpreadsheetExpressionEvaluationContext context) {
-                                return Optional.of(
-                                        cell.setFormula(SpreadsheetFormula.EMPTY)
-                                );
-                            }
-                        },
-                        CELLS_SAVER,
-                        new FakeSpreadsheetEngineContext() {
-                            @Override
-                            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                                 final SpreadsheetExpressionReferenceLoader loader) {
-                                return SpreadsheetExpressionEvaluationContexts.fake();
-                            }
-                        }
-                ),
-                cell
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                new FakeSpreadsheetExpressionReferenceLoader() {
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        return Optional.of(
+                            cell.setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+                },
+                CELLS_SAVER,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
+                        return SpreadsheetExpressionEvaluationContexts.fake();
+                    }
+                }
+            ),
+            cell
         );
     }
 
@@ -217,33 +217,33 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String value = "*VALUE123*";
 
         this.loadFormFieldValueAndCheck(
-                BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        new FakeSpreadsheetExpressionReferenceLoader() {
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                new FakeSpreadsheetExpressionReferenceLoader() {
 
-                            @Override
-                            public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                                      final SpreadsheetExpressionEvaluationContext context) {
-                                return Optional.of(
-                                        cell.setFormula(
-                                                SpreadsheetFormula.EMPTY.setValue(
-                                                        Optional.of(value)
-                                                )
-                                        )
-                                );
-                            }
-                        },
-                        CELLS_SAVER,
-                        new FakeSpreadsheetEngineContext() {
-                            @Override
-                            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                                 final SpreadsheetExpressionReferenceLoader loader) {
-                                return SpreadsheetExpressionEvaluationContexts.fake();
-                            }
-                        }
-                ),
-                cell,
-                value
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        return Optional.of(
+                            cell.setFormula(
+                                SpreadsheetFormula.EMPTY.setValue(
+                                    Optional.of(value)
+                                )
+                            )
+                        );
+                    }
+                },
+                CELLS_SAVER,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
+                        return SpreadsheetExpressionEvaluationContexts.fake();
+                    }
+                }
+            ),
+            cell,
+            value
         );
     }
 
@@ -252,24 +252,24 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel");
 
         this.loadFormFieldValueAndCheck(
-                BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        new FakeSpreadsheetExpressionReferenceLoader() {
-                            @Override
-                            public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
-                                                                      final SpreadsheetExpressionEvaluationContext context) {
-                                return Sets.empty();
-                            }
-                        },
-                        CELLS_SAVER,
-                        new FakeSpreadsheetEngineContext() {
-                            @Override
-                            public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-                                return Optional.empty();
-                            }
-                        }
-                ),
-                label
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                new FakeSpreadsheetExpressionReferenceLoader() {
+                    @Override
+                    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        return Sets.empty();
+                    }
+                },
+                CELLS_SAVER,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                        return Optional.empty();
+                    }
+                }
+            ),
+            label
         );
     }
 
@@ -280,37 +280,37 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String value = "*VALUE123*";
 
         this.loadFormFieldValueAndCheck(
-                BasicSpreadsheetFormHandlerContext.with(
-                        Form.with(FormName.with("Form123")),
-                        new FakeSpreadsheetExpressionReferenceLoader() {
-                            @Override
-                            public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                                      final SpreadsheetExpressionEvaluationContext context) {
-                                return Optional.of(
-                                        cell.setFormula(
-                                                SpreadsheetFormula.EMPTY.setValue(
-                                                        Optional.of(value)
-                                                )
-                                        )
-                                );
-                            }
-                        },
-                        CELLS_SAVER,
-                        new FakeSpreadsheetEngineContext() {
-                            @Override
-                            public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-                                return Optional.of(cell);
-                            }
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(FormName.with("Form123")),
+                new FakeSpreadsheetExpressionReferenceLoader() {
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        return Optional.of(
+                            cell.setFormula(
+                                SpreadsheetFormula.EMPTY.setValue(
+                                    Optional.of(value)
+                                )
+                            )
+                        );
+                    }
+                },
+                CELLS_SAVER,
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                        return Optional.of(cell);
+                    }
 
-                            @Override
-                            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                                 final SpreadsheetExpressionReferenceLoader loader) {
-                                return SpreadsheetExpressionEvaluationContexts.fake();
-                            }
-                        }
-                ),
-                label,
-                value
+                    @Override
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
+                        return SpreadsheetExpressionEvaluationContexts.fake();
+                    }
+                }
+            ),
+            label,
+            value
         );
     }
 
@@ -324,22 +324,22 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String value = "Value111";
 
         this.saveFormFieldValuesAndCheck(
-                context,
-                Lists.of(
-                        SpreadsheetForms.field(missingCell)
-                                .setValue(
-                                        Optional.of(value)
-                                )
-                ),
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                missingCell.setFormula(
-                                        SpreadsheetFormula.EMPTY.setValue(
-                                                Optional.of(value)
-                                        )
-                                )
+            context,
+            Lists.of(
+                SpreadsheetForms.field(missingCell)
+                    .setValue(
+                        Optional.of(value)
+                    )
+            ),
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    missingCell.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                            Optional.of(value)
                         )
+                    )
                 )
+            )
         );
     }
 
@@ -351,22 +351,22 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String a1Value = "A1Value111";
 
         this.saveFormFieldValuesAndCheck(
-                context,
-                Lists.of(
-                        SpreadsheetForms.field(a1Cell)
-                                .setValue(
-                                        Optional.of(a1Value)
-                                )
-                ),
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                a1Cell.setFormula(
-                                        SpreadsheetFormula.EMPTY.setValue(
-                                                Optional.of(a1Value)
-                                        )
-                                )
+            context,
+            Lists.of(
+                SpreadsheetForms.field(a1Cell)
+                    .setValue(
+                        Optional.of(a1Value)
+                    )
+            ),
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    a1Cell.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                            Optional.of(a1Value)
                         )
+                    )
                 )
+            )
         );
     }
 
@@ -381,22 +381,22 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String a1Value = "A1Value111";
 
         this.saveFormFieldValuesAndCheck(
-                context,
-                Lists.of(
-                        SpreadsheetForms.field(A1LABEL)
-                                .setValue(
-                                        Optional.of(a1Value)
-                                )
-                ),
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                A1_CELL.setFormula(
-                                        SpreadsheetFormula.EMPTY.setValue(
-                                                Optional.of(a1Value)
-                                        )
-                                )
+            context,
+            Lists.of(
+                SpreadsheetForms.field(A1LABEL)
+                    .setValue(
+                        Optional.of(a1Value)
+                    )
+            ),
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    A1_CELL.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                            Optional.of(a1Value)
                         )
+                    )
                 )
+            )
         );
     }
 
@@ -408,17 +408,17 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
         final String a1Value = "A1Value111";
 
         assertThrows(
-                LabelNotFoundException.class,
-                () -> context.saveFormFieldValues(
-                        Lists.of(
-                                SpreadsheetForms.field(
-                                                SpreadsheetSelection.labelName("UNKNOWNLABEL")
-                                        )
-                                        .setValue(
-                                                Optional.of(a1Value)
-                                        )
+            LabelNotFoundException.class,
+            () -> context.saveFormFieldValues(
+                Lists.of(
+                    SpreadsheetForms.field(
+                            SpreadsheetSelection.labelName("UNKNOWNLABEL")
+                        )
+                        .setValue(
+                            Optional.of(a1Value)
                         )
                 )
+            )
         );
     }
 
@@ -427,82 +427,82 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Override
     public BasicSpreadsheetFormHandlerContext createContext() {
         return BasicSpreadsheetFormHandlerContext.with(
-                Form.with(
-                        FormName.with("Form123")
-                ),
-                new FakeSpreadsheetExpressionReferenceLoader() {
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        return Optional.ofNullable(
-                                A1_CELL.equalsIgnoreReferenceKind(cell) ?
-                                        cell.setFormula(SpreadsheetFormula.EMPTY) :
-                                        null
-                        );
-                    }
-
-                    @Override
-                    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        final SpreadsheetCell cell = this.loadCell(
-                                cellRange.toCell(),
-                                context
-                        ).orElse(null);
-                        return null == cell ?
-                                Sets.empty() :
-                                Sets.of(cell);
-                    }
-                },
-                (Set<SpreadsheetCell> cells) -> SpreadsheetDelta.EMPTY.setCells(cells),
-                new FakeSpreadsheetEngineContext() {
-                    @Override
-                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
-                        return new FakeSpreadsheetExpressionEvaluationContext() {
-
-                            @Override
-                            public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
-                                return new FakeSpreadsheetExpressionEvaluationContext() {
-
-                                    @Override
-                                    public boolean isText(final Object value) {
-                                        return value instanceof CharSequence;
-                                    }
-
-                                    @Override
-                                    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-                                        return scoped.apply(reference);
-                                    }
-
-                                    @Override
-                                    public <T> Either<T, String> convert(final Object value,
-                                                                         final Class<T> target) {
-                                        return Converters.simple()
-                                                .convert(
-                                                        value,
-                                                        target,
-                                                        ConverterContexts.fake()
-                                                );
-                                    }
-
-                                    @Override
-                                    public MathContext mathContext() {
-                                        return MathContext.DECIMAL32;
-                                    }
-                                };
-                            }
-                        };
-                    }
-
-                    @Override
-                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-                        return Optional.ofNullable(
-                                A1LABEL.equals(labelName) ?
-                                        SpreadsheetSelection.A1 :
-                                        null
-                        );
-                    }
+            Form.with(
+                FormName.with("Form123")
+            ),
+            new FakeSpreadsheetExpressionReferenceLoader() {
+                @Override
+                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    return Optional.ofNullable(
+                        A1_CELL.equalsIgnoreReferenceKind(cell) ?
+                            cell.setFormula(SpreadsheetFormula.EMPTY) :
+                            null
+                    );
                 }
+
+                @Override
+                public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    final SpreadsheetCell cell = this.loadCell(
+                        cellRange.toCell(),
+                        context
+                    ).orElse(null);
+                    return null == cell ?
+                        Sets.empty() :
+                        Sets.of(cell);
+                }
+            },
+            (Set<SpreadsheetCell> cells) -> SpreadsheetDelta.EMPTY.setCells(cells),
+            new FakeSpreadsheetEngineContext() {
+                @Override
+                public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                     final SpreadsheetExpressionReferenceLoader loader) {
+                    return new FakeSpreadsheetExpressionEvaluationContext() {
+
+                        @Override
+                        public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+                            return new FakeSpreadsheetExpressionEvaluationContext() {
+
+                                @Override
+                                public boolean isText(final Object value) {
+                                    return value instanceof CharSequence;
+                                }
+
+                                @Override
+                                public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+                                    return scoped.apply(reference);
+                                }
+
+                                @Override
+                                public <T> Either<T, String> convert(final Object value,
+                                                                     final Class<T> target) {
+                                    return Converters.simple()
+                                        .convert(
+                                            value,
+                                            target,
+                                            ConverterContexts.fake()
+                                        );
+                                }
+
+                                @Override
+                                public MathContext mathContext() {
+                                    return MathContext.DECIMAL32;
+                                }
+                            };
+                        }
+                    };
+                }
+
+                @Override
+                public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                    return Optional.ofNullable(
+                        A1LABEL.equals(labelName) ?
+                            SpreadsheetSelection.A1 :
+                            null
+                    );
+                }
+            }
         );
     }
 

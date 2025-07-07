@@ -33,27 +33,27 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetFormatterSampleListTest implements ListTesting2<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
-        ClassTesting<SpreadsheetFormatterSampleList>,
-        ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
-        JsonNodeMarshallingTesting<SpreadsheetFormatterSampleList> {
+    ClassTesting<SpreadsheetFormatterSampleList>,
+    ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
+    JsonNodeMarshallingTesting<SpreadsheetFormatterSampleList> {
 
     private final static SpreadsheetFormatterSample SAMPLE1 = SpreadsheetFormatterSample.with(
-            "label1",
-            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy").spreadsheetFormatterSelector(),
-            TextNode.text("31/12/1999")
+        "label1",
+        SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy").spreadsheetFormatterSelector(),
+        TextNode.text("31/12/1999")
     );
 
     private final static SpreadsheetFormatterSample SAMPLE2 = SpreadsheetFormatterSample.with(
-            "label1",
-            SpreadsheetPattern.parseTimeFormatPattern("hh/mm").spreadsheetFormatterSelector(),
-            TextNode.text("12/58")
+        "label1",
+        SpreadsheetPattern.parseTimeFormatPattern("hh/mm").spreadsheetFormatterSelector(),
+        TextNode.text("12/58")
     );
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatterSampleList.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetFormatterSampleList.with(null)
         );
     }
 
@@ -61,35 +61,35 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     public void testDoesntDoubleWrap() {
         final SpreadsheetFormatterSampleList list = this.createList();
         assertSame(
-                list,
-                SpreadsheetFormatterSampleList.with(list)
+            list,
+            SpreadsheetFormatterSampleList.with(list)
         );
     }
 
     @Test
     public void testGet() {
         this.getAndCheck(
-                this.createList(),
-                0, // index
-                SAMPLE1 // expected
+            this.createList(),
+            0, // index
+            SAMPLE1 // expected
         );
     }
 
     @Test
     public void testGet2() {
         this.getAndCheck(
-                this.createList(),
-                1, // index
-                SAMPLE2 // expected
+            this.createList(),
+            1, // index
+            SAMPLE2 // expected
         );
     }
 
     @Test
     public void testSetFails() {
         this.setFails(
-                this.createList(),
-                0, // index
-                SAMPLE1 // expected
+            this.createList(),
+            0, // index
+            SAMPLE1 // expected
         );
     }
 
@@ -98,8 +98,8 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
         final SpreadsheetFormatterSampleList list = this.createList();
 
         this.removeIndexFails(
-                list,
-                0
+            list,
+            0
         );
     }
 
@@ -108,37 +108,37 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
         final SpreadsheetFormatterSampleList list = this.createList();
 
         this.removeFails(
-                list,
-                list.get(0)
+            list,
+            list.get(0)
         );
     }
 
     @Test
     public void testSetElementsIncludesNullFails() {
         final NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> this.createList()
-                        .setElements(
-                                Lists.of(
-                                        SAMPLE1,
-                                        SAMPLE2,
-                                        null
-                                )
-                        )
+            NullPointerException.class,
+            () -> this.createList()
+                .setElements(
+                    Lists.of(
+                        SAMPLE1,
+                        SAMPLE2,
+                        null
+                    )
+                )
         );
         this.checkEquals(
-                "includes null sample",
-                thrown.getMessage()
+            "includes null sample",
+            thrown.getMessage()
         );
     }
 
     @Override
     public SpreadsheetFormatterSampleList createList() {
         return SpreadsheetFormatterSampleList.with(
-                Lists.of(
-                        SAMPLE1,
-                        SAMPLE2
-                )
+            Lists.of(
+                SAMPLE1,
+                SAMPLE2
+            )
         );
     }
 
@@ -157,50 +157,50 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createList(),
-                "[\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"31/12/1999\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"selector\": \"time-format-pattern hh/mm\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"12/58\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "]"
+            this.createList(),
+            "[\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
+                "    \"value\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"31/12/1999\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"selector\": \"time-format-pattern hh/mm\",\n" +
+                "    \"value\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"12/58\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "]"
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "[\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"31/12/1999\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"selector\": \"time-format-pattern hh/mm\",\n" +
-                        "    \"value\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"12/58\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "]",
-                this.createList()
+            "[\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
+                "    \"value\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"31/12/1999\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"selector\": \"time-format-pattern hh/mm\",\n" +
+                "    \"value\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"12/58\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "]",
+            this.createList()
         );
     }
 
@@ -208,8 +208,8 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
     public SpreadsheetFormatterSampleList unmarshall(final JsonNode json,
                                                      final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatterSampleList.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

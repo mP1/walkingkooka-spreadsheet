@@ -39,8 +39,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberDigitsExponentOrInteg
         }
     }
 
-    @Override
-    final void sign(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
+    @Override final void sign(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
         if (this.minusSign.shouldAppendSymbol()) {
             context.appendNegativeSign();
             this.minusSign = SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED;

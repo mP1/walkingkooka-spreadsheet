@@ -36,8 +36,8 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         Objects.requireNonNull(provider, "provider");
 
         return new FilteredMappedSpreadsheetFormatterProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -45,9 +45,9 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
                                                        final SpreadsheetFormatterProvider provider) {
         this.provider = provider;
         this.mapper = FilteredProviderMapper.with(
-                infos,
-                provider.spreadsheetFormatterInfos(),
-                SpreadsheetFormatterPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetFormatterInfos(),
+            SpreadsheetFormatterPluginHelper.INSTANCE
         );
     }
 
@@ -58,8 +58,8 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.mapper.selector(selector),
-                context
+            this.mapper.selector(selector),
+            context
         );
     }
 
@@ -72,9 +72,9 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 
@@ -85,7 +85,7 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         final SpreadsheetFormatterName name = selector.name();
 
         return this.provider.spreadsheetFormatterNextToken(
-                this.mapper.selector(selector)
+            this.mapper.selector(selector)
         );
     }
 
@@ -96,14 +96,14 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatterSamples(
-                        this.mapper.name(name),
-                        context
-                ).stream()
-                .map(s -> s.setSelector(
-                                s.selector()
-                                        .setName(name)
-                        )
-                ).collect(Collectors.toList());
+                this.mapper.name(name),
+                context
+            ).stream()
+            .map(s -> s.setSelector(
+                    s.selector()
+                        .setName(name)
+                )
+            ).collect(Collectors.toList());
     }
 
     /**

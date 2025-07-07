@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation 
      */
     private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation() {
         super(
-                "validationFunctions"
+            "validationFunctions"
         );
     }
 

@@ -26,23 +26,23 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
 public final class SpreadsheetConverterGeneralMappingTest implements ClassTesting2<SpreadsheetConverterGeneralMapping<?>>,
-        ToStringTesting<SpreadsheetConverterGeneralMapping<?>>,
-        TypeNameTesting<SpreadsheetConverterGeneralMapping<?>> {
+    ToStringTesting<SpreadsheetConverterGeneralMapping<?>>,
+    TypeNameTesting<SpreadsheetConverterGeneralMapping<?>> {
 
     @Test
     public void testToString2() {
         final SpreadsheetConverterGeneralMapping<?> mapping = SpreadsheetConverterGeneralMapping.with(
-                Converters.fake().setToString("Boolean1"),
-                Converters.fake().setToString("Date2"),
-                Converters.fake().setToString("DateTime3"),
-                Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("String5"),
-                Converters.fake().setToString("Time6")
+            Converters.fake().setToString("Boolean1"),
+            Converters.fake().setToString("Date2"),
+            Converters.fake().setToString("DateTime3"),
+            Converters.fake().setToString("Number4"),
+            Converters.fake().setToString("String5"),
+            Converters.fake().setToString("Time6")
         );
 
         this.toStringAndCheck(
-                mapping,
-                "boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6"
+            mapping,
+            "boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6"
         );
     }
 

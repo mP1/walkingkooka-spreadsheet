@@ -50,8 +50,8 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
 
         final SpreadsheetColorName colorName = token.cast(ColorNameSpreadsheetFormatParserToken.class).colorName();
         this.color = metadata.nameToColor()
-                .apply(colorName)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
+            .apply(colorName)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid color name"));
     }
 
     @Override
@@ -59,8 +59,8 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
         final SpreadsheetMetadata metadata = this.context.spreadsheetMetadata();
         final int colorNumber = token.cast(ColorNumberSpreadsheetFormatParserToken.class).value();
         this.color = metadata.numberToColor()
-                .apply(colorNumber)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid color number"));
+            .apply(colorNumber)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid color number"));
     }
 
     private final SpreadsheetConverterContext context;
@@ -70,8 +70,8 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatP
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("color")
-                .value(this.color)
-                .build();
+            .label("color")
+            .value(this.color)
+            .build();
     }
 }

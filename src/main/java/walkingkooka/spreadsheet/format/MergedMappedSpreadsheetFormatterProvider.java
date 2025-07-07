@@ -37,8 +37,8 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         Objects.requireNonNull(provider, "provider");
 
         return new MergedMappedSpreadsheetFormatterProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -46,9 +46,9 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
                                                      final SpreadsheetFormatterProvider provider) {
         this.provider = provider;
         this.mapper = MergedProviderMapper.with(
-                infos,
-                provider.spreadsheetFormatterInfos(),
-                SpreadsheetFormatterPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetFormatterInfos(),
+            SpreadsheetFormatterPluginHelper.INSTANCE
         );
     }
 
@@ -59,8 +59,8 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.mapper.selector(selector),
-                context
+            this.mapper.selector(selector),
+            context
         );
     }
 
@@ -73,9 +73,9 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 
@@ -86,7 +86,7 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         final SpreadsheetFormatterName name = selector.name();
 
         return this.provider.spreadsheetFormatterNextToken(
-                this.mapper.selector(selector)
+            this.mapper.selector(selector)
         );
     }
 
@@ -97,14 +97,14 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatterSamples(
-                        this.mapper.name(name),
-                        context
-                ).stream()
-                .map(s -> s.setSelector(
-                                s.selector()
-                                        .setName(name)
-                        )
-                ).collect(Collectors.toList());
+                this.mapper.name(name),
+                context
+            ).stream()
+            .map(s -> s.setSelector(
+                    s.selector()
+                        .setName(name)
+                )
+            ).collect(Collectors.toList());
     }
 
     /**

@@ -64,9 +64,9 @@ import java.util.function.Predicate;
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
 abstract public class SpreadsheetPattern implements Value<ParserToken>,
-        HasText,
-        TreePrintable,
-        HasUrlFragment {
+    HasText,
+    TreePrintable,
+    HasUrlFragment {
 
     /**
      * The separator character between multiple patterns.
@@ -143,10 +143,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateFormatPattern dateFormatPatternLocale(final Locale locale) {
         return javaTextDateFormat(
-                DateFormat.getDateInstance(DateFormat.FULL, locale),
-                NOT_DATE,
-                NOT_TIME,
-                SpreadsheetPattern::parseDateFormatPattern
+            DateFormat.getDateInstance(DateFormat.FULL, locale),
+            NOT_DATE,
+            NOT_TIME,
+            SpreadsheetPattern::parseDateFormatPattern
         );
     }
 
@@ -155,15 +155,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateParsePattern dateParsePatternLocale(final Locale locale) {
         return javaTextDateFormat(
-                Lists.of(
-                        DateFormat.getDateInstance(DateFormat.FULL, locale),
-                        DateFormat.getDateInstance(DateFormat.LONG, locale),
-                        DateFormat.getDateInstance(DateFormat.MEDIUM, locale),
-                        DateFormat.getDateInstance(DateFormat.SHORT, locale)
-                ),
-                DATE,
-                NOT_TIME,
-                SpreadsheetPattern::parseDateParsePattern
+            Lists.of(
+                DateFormat.getDateInstance(DateFormat.FULL, locale),
+                DateFormat.getDateInstance(DateFormat.LONG, locale),
+                DateFormat.getDateInstance(DateFormat.MEDIUM, locale),
+                DateFormat.getDateInstance(DateFormat.SHORT, locale)
+            ),
+            DATE,
+            NOT_TIME,
+            SpreadsheetPattern::parseDateParsePattern
         );
     }
 
@@ -174,14 +174,14 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         checkLocale(locale);
 
         return javaTextDateFormat(
-                DateFormat.getDateTimeInstance(
-                        DateFormat.FULL,
-                        DateFormat.FULL,
-                        locale
-                ),
-                NOT_DATE,
-                NOT_TIME,
-                SpreadsheetPattern::parseDateTimeFormatPattern
+            DateFormat.getDateTimeInstance(
+                DateFormat.FULL,
+                DateFormat.FULL,
+                locale
+            ),
+            NOT_DATE,
+            NOT_TIME,
+            SpreadsheetPattern::parseDateTimeFormatPattern
         );
     }
 
@@ -193,20 +193,20 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         for (final int dateStyle : DATE_FORMAT_STYLES) {
             for (final int timeStyle : DATE_FORMAT_STYLES) {
                 patterns.add(
-                        DateFormat.getDateTimeInstance(
-                                dateStyle,
-                                timeStyle,
-                                locale
-                        )
+                    DateFormat.getDateTimeInstance(
+                        dateStyle,
+                        timeStyle,
+                        locale
+                    )
                 );
             }
         }
 
         return javaTextDateFormat(
-                patterns,
-                DATE,
-                TIME,
-                SpreadsheetPattern::parseDateTimeParsePattern
+            patterns,
+            DATE,
+            TIME,
+            SpreadsheetPattern::parseDateTimeParsePattern
         );
     }
 
@@ -218,10 +218,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         checkLocale(locale);
 
         return javaTextDateFormat(
-                DateFormat.getTimeInstance(DateFormat.FULL, locale),
-                NOT_DATE,
-                NOT_TIME,
-                SpreadsheetPattern::parseTimeFormatPattern
+            DateFormat.getTimeInstance(DateFormat.FULL, locale),
+            NOT_DATE,
+            NOT_TIME,
+            SpreadsheetPattern::parseTimeFormatPattern
         );
     }
 
@@ -232,15 +232,15 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         checkLocale(locale);
 
         return javaTextDateFormat(
-                Lists.of(
-                        DateFormat.getTimeInstance(DateFormat.FULL, locale),
-                        DateFormat.getTimeInstance(DateFormat.LONG, locale),
-                        DateFormat.getTimeInstance(DateFormat.MEDIUM, locale),
-                        DateFormat.getTimeInstance(DateFormat.SHORT, locale)
-                ),
-                NOT_DATE,
-                TIME,
-                SpreadsheetPattern::parseTimeParsePattern
+            Lists.of(
+                DateFormat.getTimeInstance(DateFormat.FULL, locale),
+                DateFormat.getTimeInstance(DateFormat.LONG, locale),
+                DateFormat.getTimeInstance(DateFormat.MEDIUM, locale),
+                DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+            ),
+            NOT_DATE,
+            TIME,
+            SpreadsheetPattern::parseTimeParsePattern
         );
     }
 
@@ -255,11 +255,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateParsePattern dateParsePattern(final SimpleDateFormat simpleDateFormat) {
         return parseDateParsePattern(
-                simpleDateFormat(
-                        simpleDateFormat,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE
-                )
+            simpleDateFormat(
+                simpleDateFormat,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE
+            )
         );
     }
 
@@ -270,11 +270,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final SimpleDateFormat simpleDateFormat) {
         return parseDateTimeParsePattern(
-                simpleDateFormat(
-                        simpleDateFormat,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE
-                )
+            simpleDateFormat(
+                simpleDateFormat,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE
+            )
         );
     }
 
@@ -285,11 +285,11 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetTimeParsePattern timeParsePattern(final SimpleDateFormat simpleDateFormat) {
         return parseTimeParsePattern(
-                simpleDateFormat(
-                        simpleDateFormat,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE
-                )
+            simpleDateFormat(
+                simpleDateFormat,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE
+            )
         );
     }
 
@@ -304,16 +304,16 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
         // include all year, seconds, ampm
         visitSimpleDateFormatPattern(
-                simpleDateFormatPattern,
-                year,
-                seconds,
-                true,
-                patterns
+            simpleDateFormatPattern,
+            year,
+            seconds,
+            true,
+            patterns
         );
 
         return String.join(
-                SEPARATOR.string(),
-                patterns
+            SEPARATOR.string(),
+            patterns
         );
     }
 
@@ -331,10 +331,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                                                                        final boolean time,
                                                                        final Function<String, P> patternParser) {
         return javaTextDateFormat(
-                Lists.of(dateFormat),
-                date,
-                time,
-                patternParser
+            Lists.of(dateFormat),
+            date,
+            time,
+            patternParser
         );
     }
 
@@ -355,80 +355,80 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
             // include all year, seconds, ampm
             visitSimpleDateFormatPattern(
-                    simpleDateFormatPattern,
-                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                    true,
-                    patterns
+                simpleDateFormatPattern,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                true,
+                patterns
             );
 
             if (date) {
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                        true,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                    true,
+                    patterns
                 );
 
 
                 if (time) {
                     visitSimpleDateFormatPattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                            false,
-                            patterns
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                        false,
+                        patterns
                     );
 
                     visitSimpleDateFormatPattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
-                            true,
-                            patterns
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_2_DIGITS,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
+                        true,
+                        patterns
                     );
                 }
 
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                        true,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                    true,
+                    patterns
                 );
 
                 if (time) {
                     visitSimpleDateFormatPattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
-                            true,
-                            patterns
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
+                        true,
+                        patterns
                     );
 
                     visitSimpleDateFormatPattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
-                            false,
-                            patterns
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
+                        false,
+                        patterns
                     );
 
                     visitSimpleDateFormatPattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                            false,
-                            patterns
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                        false,
+                        patterns
                     );
 
                     visitSimpleDateFormatPattern(
-                            simpleDateFormatPattern,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
-                            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
-                            true,
-                            patterns
+                        simpleDateFormatPattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.ALWAYS_4_DIGITS,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
+                        true,
+                        patterns
                     );
                 }
             }
@@ -437,60 +437,60 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
             // if only date, try and make a pattern without year
             if (date && !time) {
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE, // only dates, seconds and ampm shouldnt appear anyway
-                        false,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE, // only dates, seconds and ampm shouldnt appear anyway
+                    false,
+                    patterns
                 );
             }
 
             // if a parse pattern want to create simplifications like hh:mm:ss -> hh:mm
             if (time) {
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                        false,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                    false,
+                    patterns
                 );
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
-                        false,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE_WITH_MILLIS,
+                    false,
+                    patterns
                 );
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
-                        true,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
+                    true,
+                    patterns
                 );
                 visitSimpleDateFormatPattern(
-                        simpleDateFormatPattern,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
-                        false,
-                        patterns
+                    simpleDateFormatPattern,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                    SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.EXCLUDE,
+                    false,
+                    patterns
                 );
             }
         }
 
         return patternParser.apply(
-                String.join(
-                        SEPARATOR.string(),
-                        patterns
-                )
+            String.join(
+                SEPARATOR.string(),
+                patterns
+            )
         );
     }
 
     private final static int[] DATE_FORMAT_STYLES = new int[]{
-            DateFormat.FULL,
-            DateFormat.LONG,
-            DateFormat.MEDIUM,
-            DateFormat.SHORT
+        DateFormat.FULL,
+        DateFormat.LONG,
+        DateFormat.MEDIUM,
+        DateFormat.SHORT
     };
 
     /**
@@ -502,10 +502,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                                                      final boolean ampm,
                                                      final Set<String> patterns) {
         final String pattern = SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                simpleDateFormatPattern,
-                year,
-                seconds,
-                ampm
+            simpleDateFormatPattern,
+            year,
+            seconds,
+            ampm
         );
         patterns.add(pattern);
     }
@@ -524,12 +524,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         Objects.requireNonNull(decimalFormat, "decimalFormat");
 
         return parseNumberParsePattern(
-                decimalFormat.toPattern()
-                        .replace('¤', '$') // international currency symbol
-                        .replace('\u00A0', ' ') // convert NBSP to space
-                        .replace('\u2007', ' ') // convert NBSP to space
-                        .replace('\u200f', ' ') // convert NBSP to space
-                        .replace("\u200e", "") // remove Left to right mark
+            decimalFormat.toPattern()
+                .replace('¤', '$') // international currency symbol
+                .replace('\u00A0', ' ') // convert NBSP to space
+                .replace('\u2007', ' ') // convert NBSP to space
+                .replace('\u200f', ' ') // convert NBSP to space
+                .replace("\u200e", "") // remove Left to right mark
         );
     }
 
@@ -540,10 +540,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateFormatPattern parseDateFormatPattern(final String text) {
         return SpreadsheetDateFormatPattern.with(
-                parsePatternOrFail(
-                        text,
-                        DATE_FORMAT_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                DATE_FORMAT_PARSER
+            )
         );
     }
 
@@ -556,10 +556,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateParsePattern parseDateParsePattern(final String text) {
         return SpreadsheetDateParsePattern.with(
-                parsePatternOrFail(
-                        text,
-                        DATE_PARSE_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                DATE_PARSE_PARSER
+            )
         );
     }
 
@@ -572,10 +572,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateTimeFormatPattern parseDateTimeFormatPattern(final String text) {
         return SpreadsheetDateTimeFormatPattern.with(
-                parsePatternOrFail(
-                        text,
-                        DATETIME_FORMAT_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                DATETIME_FORMAT_PARSER
+            )
         );
     }
 
@@ -588,10 +588,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetDateTimeParsePattern parseDateTimeParsePattern(final String text) {
         return SpreadsheetDateTimeParsePattern.with(
-                parsePatternOrFail(
-                        text,
-                        DATETIME_PARSE_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                DATETIME_PARSE_PARSER
+            )
         );
     }
 
@@ -604,10 +604,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetNumberFormatPattern parseNumberFormatPattern(final String text) {
         return SpreadsheetNumberFormatPattern.with(
-                parsePatternOrFail(
-                        text,
-                        NUMBER_FORMAT_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                NUMBER_FORMAT_PARSER
+            )
         );
     }
 
@@ -620,10 +620,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetNumberParsePattern parseNumberParsePattern(final String text) {
         return SpreadsheetNumberParsePattern.with(
-                parsePatternOrFail(
-                        text,
-                        NUMBER_PARSE_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                NUMBER_PARSE_PARSER
+            )
         );
     }
 
@@ -636,10 +636,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetTextFormatPattern parseTextFormatPattern(final String text) {
         return SpreadsheetTextFormatPattern.with(
-                parsePatternOrFail(
-                        text,
-                        TEXT_FORMAT_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                TEXT_FORMAT_PARSER
+            )
         );
     }
 
@@ -652,10 +652,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetTimeFormatPattern parseTimeFormatPattern(final String text) {
         return SpreadsheetTimeFormatPattern.with(
-                parsePatternOrFail(
-                        text,
-                        TIME_FORMAT_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                TIME_FORMAT_PARSER
+            )
         );
     }
 
@@ -668,10 +668,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public static SpreadsheetTimeParsePattern parseTimeParsePattern(final String text) {
         return SpreadsheetTimeParsePattern.with(
-                parsePatternOrFail(
-                        text,
-                        TIME_PARSE_PARSER
-                )
+            parsePatternOrFail(
+                text,
+                TIME_PARSE_PARSER
+            )
         );
     }
 
@@ -685,10 +685,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     private static ParserToken parsePatternOrFail(final String text,
                                                   final Parser<SpreadsheetFormatParserContext> parser) {
         return parser.parseText(
-                text,
-                SpreadsheetFormatParserContexts.basic(
-                        InvalidCharacterExceptionFactory.POSITION_EXPECTED
-                )
+            text,
+            SpreadsheetFormatParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION_EXPECTED
+            )
         );
     }
 
@@ -767,7 +767,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      */
     public final SpreadsheetPatternKind patternKind() {
         return SpreadsheetPatternKind.fromTypeName(
-                "spreadsheet-" + this.printTreeTypeName()
+            "spreadsheet-" + this.printTreeTypeName()
         );
     }
 
@@ -779,7 +779,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     @Override
     public final UrlFragment urlFragment() {
         return UrlFragment.with(
-                this.value().text()
+            this.value().text()
         );
     }
 
@@ -829,8 +829,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         printer.indent();
         {
             SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor.treePrint(
-                    this.value,
-                    printer
+                this.value,
+                printer
             );
         }
 
@@ -840,10 +840,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     // SpreadsheetNumberParsePattern -> number-parse-pattern
     private String printTreeTypeName() {
         return CaseKind.CAMEL.change(
-                this.getClass()
-                        .getSimpleName()
-                        .substring("Spreadsheet".length()),
-                CaseKind.KEBAB
+            this.getClass()
+                .getSimpleName()
+                .substring("Spreadsheet".length()),
+            CaseKind.KEBAB
         );
     }
 
@@ -856,8 +856,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         this.failIfMultiplePatterns("get color name");
 
         return this.value()
-                .findFirst(COLOR_NAME_PREDICATE)
-                .map(t -> t.cast(ColorNameSpreadsheetFormatParserToken.class).colorName());
+            .findFirst(COLOR_NAME_PREDICATE)
+            .map(t -> t.cast(ColorNameSpreadsheetFormatParserToken.class).colorName());
     }
 
     private final static Predicate<ParserToken> COLOR_NAME_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName);
@@ -869,13 +869,13 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         this.failIfMultiplePatterns("get color name");
 
         return this.value()
-                .findFirst(
-                        SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorNumber)
-                ).map(t ->
-                        OptionalInt.of(
-                                t.cast(ColorNumberSpreadsheetFormatParserToken.class).value()
-                        )
-                ).orElse(OptionalInt.empty());
+            .findFirst(
+                SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorNumber)
+            ).map(t ->
+                OptionalInt.of(
+                    t.cast(ColorNumberSpreadsheetFormatParserToken.class).value()
+                )
+            ).orElse(OptionalInt.empty());
     }
 
     /**
@@ -901,7 +901,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         this.failIfMultiplePatterns("color name");
 
         return parser.apply(
-                "[" + name + "]" + this.removeColor().text()
+            "[" + name + "]" + this.removeColor().text()
         );
     }
 
@@ -920,8 +920,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         this.failIfMultiplePatterns("color number");
 
         return parser.apply(
-                "[color " + colorNumber + "]" + this.removeColor()
-                        .text()
+            "[color " + colorNumber + "]" + this.removeColor()
+                .text()
         );
     }
 
@@ -944,7 +944,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public abstract SpreadsheetPattern removeCondition();
 
     final static Predicate<ParserToken> CONDITION_PREDICATE = SpreadsheetFormatParserToken.predicate(
-            SpreadsheetFormatParserToken::isCondition
+        SpreadsheetFormatParserToken::isCondition
     );
 
     // Object...........................................................................................................
@@ -958,8 +958,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
-                this.canBeEquals(other) &&
-                        this.equals0(Cast.to(other));
+            this.canBeEquals(other) &&
+                this.equals0(Cast.to(other));
     }
 
     abstract boolean canBeEquals(final Object other);
@@ -975,7 +975,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     @Override
     public final String toString() {
         return CharSequences.quoteAndEscape(
-                this.value.text()
+            this.value.text()
         ).toString();
     }
 
@@ -989,10 +989,10 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         final Optional<?> removed = token.removeIf(predicate);
 
         return false == removed.isPresent() || token.equals(removed.get()) ?
-                (T) this :
-                factory.apply(
-                        (ParserToken) removed.get()
-                );
+            (T) this :
+            factory.apply(
+                (ParserToken) removed.get()
+            );
     }
 
     // JsonNodeContext..................................................................................................
@@ -1003,7 +1003,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetDateFormatPattern unmarshallDateFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return parseDateFormatPattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1013,7 +1013,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetDateParsePattern unmarshallDateParsePattern(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {
         return parseDateParsePattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1023,7 +1023,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetDateTimeFormatPattern unmarshallDateTimeFormatPattern(final JsonNode node,
                                                                             final JsonNodeUnmarshallContext context) {
         return parseDateTimeFormatPattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1033,7 +1033,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetDateTimeParsePattern unmarshallDateTimeParsePattern(final JsonNode node,
                                                                           final JsonNodeUnmarshallContext context) {
         return parseDateTimeParsePattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1043,7 +1043,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetNumberFormatPattern unmarshallNumberFormatPattern(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
         return parseNumberFormatPattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1053,7 +1053,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetNumberParsePattern unmarshallNumberParsePattern(final JsonNode node,
                                                                       final JsonNodeUnmarshallContext context) {
         return parseNumberParsePattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1063,7 +1063,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetTextFormatPattern unmarshallTextFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return parseTextFormatPattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1073,7 +1073,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetTimeFormatPattern unmarshallTimeFormatPattern(final JsonNode node,
                                                                     final JsonNodeUnmarshallContext context) {
         return parseTimeFormatPattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1083,7 +1083,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     static SpreadsheetTimeParsePattern unmarshallTimeParsePattern(final JsonNode node,
                                                                   final JsonNodeUnmarshallContext context) {
         return parseTimeParsePattern(
-                checkString(node)
+            checkString(node)
         );
     }
 
@@ -1095,64 +1095,64 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.value.text()
+            this.value.text()
         );
     }
 
     static {
 
         register(
-                SpreadsheetDateFormatPattern.class,
-                SpreadsheetPattern::unmarshallDateFormatPattern
+            SpreadsheetDateFormatPattern.class,
+            SpreadsheetPattern::unmarshallDateFormatPattern
         );
 
         register(
-                SpreadsheetDateParsePattern.class,
-                SpreadsheetPattern::unmarshallDateParsePattern
+            SpreadsheetDateParsePattern.class,
+            SpreadsheetPattern::unmarshallDateParsePattern
         );
 
         register(
-                SpreadsheetDateTimeFormatPattern.class,
-                SpreadsheetPattern::unmarshallDateTimeFormatPattern
+            SpreadsheetDateTimeFormatPattern.class,
+            SpreadsheetPattern::unmarshallDateTimeFormatPattern
         );
 
         register(
-                SpreadsheetDateTimeParsePattern.class,
-                SpreadsheetPattern::unmarshallDateTimeParsePattern
+            SpreadsheetDateTimeParsePattern.class,
+            SpreadsheetPattern::unmarshallDateTimeParsePattern
         );
 
         register(
-                SpreadsheetNumberFormatPattern.class,
-                SpreadsheetPattern::unmarshallNumberFormatPattern
+            SpreadsheetNumberFormatPattern.class,
+            SpreadsheetPattern::unmarshallNumberFormatPattern
         );
 
         register(
-                SpreadsheetNumberParsePattern.class,
-                SpreadsheetPattern::unmarshallNumberParsePattern
+            SpreadsheetNumberParsePattern.class,
+            SpreadsheetPattern::unmarshallNumberParsePattern
         );
 
         register(
-                SpreadsheetTextFormatPattern.class,
-                SpreadsheetPattern::unmarshallTextFormatPattern
+            SpreadsheetTextFormatPattern.class,
+            SpreadsheetPattern::unmarshallTextFormatPattern
         );
 
         register(
-                SpreadsheetTimeFormatPattern.class,
-                SpreadsheetPattern::unmarshallTimeFormatPattern
+            SpreadsheetTimeFormatPattern.class,
+            SpreadsheetPattern::unmarshallTimeFormatPattern
         );
 
         register(
-                SpreadsheetTimeParsePattern.class,
-                SpreadsheetPattern::unmarshallTimeParsePattern
+            SpreadsheetTimeParsePattern.class,
+            SpreadsheetPattern::unmarshallTimeParsePattern
         );
     }
 
     private static <P extends SpreadsheetPattern> void register(final Class<P> type,
                                                                 final BiFunction<JsonNode, JsonNodeUnmarshallContext, P> unmarshaller) {
         JsonNodeContext.register(JsonNodeContext.computeTypeName(type),
-                unmarshaller,
-                SpreadsheetPattern::marshall,
-                type);
+            unmarshaller,
+            SpreadsheetPattern::marshall,
+            type);
     }
 
     // constant here to avoid NPE during static init

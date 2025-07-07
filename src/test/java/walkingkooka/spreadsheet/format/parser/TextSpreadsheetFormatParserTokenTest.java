@@ -128,11 +128,11 @@ public final class TextSpreadsheetFormatParserTokenTest extends ParentSpreadshee
         }.accept(token);
         this.checkEquals("7137152871628428", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        text, text, text, text, text,
-                        placeholder, placeholder, placeholder, placeholder, placeholder,
-                        token, token, token),
-                visited,
-                "visited");
+                text, text, text, text, text,
+                placeholder, placeholder, placeholder, placeholder, placeholder,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     // kind............................................................................................................
@@ -152,7 +152,7 @@ public final class TextSpreadsheetFormatParserTokenTest extends ParentSpreadshee
     @Override
     List<ParserToken> tokens() {
         return Lists.of(this.text1(),
-                SpreadsheetFormatParserToken.textPlaceholder("@", "@"));
+            SpreadsheetFormatParserToken.textPlaceholder("@", "@"));
     }
 
     @Override

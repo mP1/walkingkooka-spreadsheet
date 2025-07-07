@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTimeFormatPattern,
-        TimeSpreadsheetFormatParserToken> {
+    TimeSpreadsheetFormatParserToken> {
 
     @Test
     public void testWithDateFails() {
@@ -136,11 +136,11 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     @Override
     ParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.timeFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(text),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence(text),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     // HasFormatter.....................................................................................................
@@ -148,332 +148,332 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     @Test
     public void testFormatterFormatTextLiteral() {
         this.formatAndCheck2(
-                "\"abc\"",
-                LocalTime.of(12, 58, 59),
-                "abc"
+            "\"abc\"",
+            LocalTime.of(12, 58, 59),
+            "abc"
         );
     }
 
     @Test
     public void testFormatterFormatCharacterLiteral() {
         this.formatAndCheck2(
-                ":,",
-                LocalTime.of(12, 58, 59),
-                ":,"
+            ":,",
+            LocalTime.of(12, 58, 59),
+            ":,"
         );
     }
 
     @Test
     public void testFormatterH1() {
         this.formatAndCheck2(
-                "h",
-                LocalTime.of(1, 58, 59),
-                "1"
+            "h",
+            LocalTime.of(1, 58, 59),
+            "1"
         );
     }
 
     @Test
     public void testFormatterH2() {
         this.formatAndCheck2(
-                "h",
-                LocalTime.of(12, 58, 59),
-                "12"
+            "h",
+            LocalTime.of(12, 58, 59),
+            "12"
         );
     }
 
     @Test
     public void testFormatterHh1() {
         this.formatAndCheck2(
-                "hh",
-                LocalTime.of(1, 58, 59),
-                "01"
+            "hh",
+            LocalTime.of(1, 58, 59),
+            "01"
         );
     }
 
     @Test
     public void testFormatterHh2() {
         this.formatAndCheck2(
-                "hh",
-                LocalTime.of(12, 58, 59),
-                "12"
+            "hh",
+            LocalTime.of(12, 58, 59),
+            "12"
         );
     }
 
     @Test
     public void testFormatterHhh() {
         this.formatAndCheck2(
-                "hhh",
-                LocalTime.of(12, 58, 59),
-                "12"
+            "hhh",
+            LocalTime.of(12, 58, 59),
+            "12"
         );
     }
 
     @Test
     public void testFormatterHM1() {
         this.formatAndCheck2(
-                "hm",
-                LocalTime.of(12, 1, 59),
-                "121"
+            "hm",
+            LocalTime.of(12, 1, 59),
+            "121"
         );
     }
 
     @Test
     public void testFormatterHM2() {
         this.formatAndCheck2(
-                "hm",
-                LocalTime.of(12, 58, 59),
-                "1258"
+            "hm",
+            LocalTime.of(12, 58, 59),
+            "1258"
         );
     }
 
     @Test
     public void testFormatterHMm1() {
         this.formatAndCheck2(
-                "hmm",
-                LocalTime.of(12, 1, 59),
-                "1201"
+            "hmm",
+            LocalTime.of(12, 1, 59),
+            "1201"
         );
     }
 
     @Test
     public void testFormatterHMm2() {
         this.formatAndCheck2(
-                "hmm",
-                LocalTime.of(12, 58, 59),
-                "1258"
+            "hmm",
+            LocalTime.of(12, 58, 59),
+            "1258"
         );
     }
 
     @Test
     public void testFormatterHMmm() {
         this.formatAndCheck2(
-                "hmmm",
-                LocalTime.of(12, 58, 59),
-                "1258"
+            "hmmm",
+            LocalTime.of(12, 58, 59),
+            "1258"
         );
     }
 
     @Test
     public void testFormatterHMmmap() {
         this.formatAndCheck2(
-                "hmmma/p",
-                LocalTime.of(12, 58, 59),
-                "1258q"
+            "hmmma/p",
+            LocalTime.of(12, 58, 59),
+            "1258q"
         );
     }
 
     @Test
     public void testFormatterHMmmap2() {
         this.formatAndCheck2(
-                "hmmma/p",
-                LocalTime.of(23, 58, 59),
-                "1158r"
+            "hmmma/p",
+            LocalTime.of(23, 58, 59),
+            "1158r"
         );
     }
 
     @Test
     public void testFormatterHMmmAP() {
         this.formatAndCheck2(
-                "hmmmA/P",
-                LocalTime.of(12, 58, 59),
-                "1258Q"
+            "hmmmA/P",
+            LocalTime.of(12, 58, 59),
+            "1258Q"
         );
     }
 
     @Test
     public void testFormatterHMmmaP() {
         this.formatAndCheck2(
-                "hmmma/P",
-                LocalTime.of(12, 58, 59),
-                "1258q"
+            "hmmma/P",
+            LocalTime.of(12, 58, 59),
+            "1258q"
         );
     }
 
     @Test
     public void testFormatterHMmmampm() {
         this.formatAndCheck2(
-                "hmmmam/pm",
-                LocalTime.of(12, 58, 59),
-                "1258qam"
+            "hmmmam/pm",
+            LocalTime.of(12, 58, 59),
+            "1258qam"
         );
     }
 
     @Test
     public void testFormatterHMmmampm2() {
         this.formatAndCheck2(
-                "hmmmam/pm",
-                LocalTime.of(23, 58, 59),
-                "1158rpm"
+            "hmmmam/pm",
+            LocalTime.of(23, 58, 59),
+            "1158rpm"
         );
     }
 
     @Test
     public void testFormatterS1() {
         this.formatAndCheck2(
-                "s",
-                LocalTime.of(12, 58, 1),
-                "1"
+            "s",
+            LocalTime.of(12, 58, 1),
+            "1"
         );
     }
 
     @Test
     public void testFormatterS2() {
         this.formatAndCheck2(
-                "s",
-                LocalTime.of(12, 58, 59),
-                "59"
+            "s",
+            LocalTime.of(12, 58, 59),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSs1() {
         this.formatAndCheck2(
-                "ss",
-                LocalTime.of(12, 58, 1),
-                "01"
+            "ss",
+            LocalTime.of(12, 58, 1),
+            "01"
         );
     }
 
     @Test
     public void testFormatterSs2() {
         this.formatAndCheck2(
-                "ss",
-                LocalTime.of(12, 58, 59),
-                "59"
+            "ss",
+            LocalTime.of(12, 58, 59),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSss() {
         this.formatAndCheck2(
-                "sss",
-                LocalTime.of(12, 58, 59),
-                "59"
+            "sss",
+            LocalTime.of(12, 58, 59),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSssDot() {
         this.formatAndCheck2(
-                "sss.",
-                LocalTime.of(12, 58, 59, 12345678),
-                "59"
+            "sss.",
+            LocalTime.of(12, 58, 59, 12345678),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSssDotZero() {
         this.formatAndCheck2(
-                "sss.0",
-                LocalTime.of(12, 58, 59, 123456789),
-                "59D1"
+            "sss.0",
+            LocalTime.of(12, 58, 59, 123456789),
+            "59D1"
         );
     }
 
     @Test
     public void testFormatterSssDotZeroZero() {
         this.formatAndCheck2(
-                "sss.00",
-                LocalTime.of(12, 58, 59, 123456789),
-                "59D12"
+            "sss.00",
+            LocalTime.of(12, 58, 59, 123456789),
+            "59D12"
         );
     }
 
     @Test
     public void testFormatterSssDotZeroZero2() {
         this.formatAndCheck2(
-                "sss.00",
-                LocalTime.of(12, 58, 59),
-                "59D00"
+            "sss.00",
+            LocalTime.of(12, 58, 59),
+            "59D00"
         );
     }
 
     @Test
     public void testFormatterSssDotZeroZeroZero() {
         this.formatAndCheck2(
-                "sss.000",
-                LocalTime.of(12, 58, 59, 123456789),
-                "59D123"
+            "sss.000",
+            LocalTime.of(12, 58, 59, 123456789),
+            "59D123"
         );
     }
 
     @Test
     public void testFormatterFormatHhmmssDot0000() {
         this.formatAndCheck2(
-                "hhmmss.0000",
-                LocalTime.of(12, 58, 59, 123456789),
-                "125859D1235"
+            "hhmmss.0000",
+            LocalTime.of(12, 58, 59, 123456789),
+            "125859D1235"
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorName() {
         this.formatAndCheck2(
-                "[red]hhmmss",
-                LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("125859")
-                        .setColor(
-                                Optional.of(RED)
-                        )
+            "[red]hhmmss",
+            LocalTime.of(12, 58, 59),
+            SpreadsheetText.with("125859")
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorNumber() {
         this.formatAndCheck2(
-                "[color44]hhmmss",
-                LocalTime.of(12, 58, 59),
-                SpreadsheetText.with("125859")
-                        .setColor(
-                                Optional.of(RED)
-                        )
+            "[color44]hhmmss",
+            LocalTime.of(12, 58, 59),
+            SpreadsheetText.with("125859")
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorNumberUsingArabicZeroDigit() {
         this.formatAndCheck2(
-                "[color44]hhmmss.000",
-                LocalTime.of(12, 58, 59, 123456789),
-                ARABIC_ZERO_DIGIT,
-                SpreadsheetText.with(
+            "[color44]hhmmss.000",
+            LocalTime.of(12, 58, 59, 123456789),
+            ARABIC_ZERO_DIGIT,
+            SpreadsheetText.with(
+                    arabicDigit(1) +
+                        arabicDigit(2) +
+                        arabicDigit(5) +
+                        arabicDigit(8) +
+                        arabicDigit(5) +
+                        arabicDigit(9) +
+                        'D' + // decimal separator
                         arabicDigit(1) +
-                                arabicDigit(2) +
-                                arabicDigit(5) +
-                                arabicDigit(8) +
-                                arabicDigit(5) +
-                                arabicDigit(9) +
-                                'D' + // decimal separator
-                                arabicDigit(1) +
-                                arabicDigit(2) +
-                                arabicDigit(3)
-                        )
-                        .setColor(
-                                Optional.of(RED)
-                        )
+                        arabicDigit(2) +
+                        arabicDigit(3)
+                )
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
     @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
-                "General",
-                LocalTime.of(12, 58, 59),
-                "46739"
+            "General",
+            LocalTime.of(12, 58, 59),
+            "46739"
         );
     }
 
     @Test
     public void testFormatterGeneralWithArabicZeroDigit() {
         this.formatAndCheck2(
-                "General",
-                LocalTime.of(12, 58, 59),
-                ARABIC_ZERO_DIGIT,
-                arabicDigit(4) +
-                        arabicDigit(6) +
-                        arabicDigit(7) +
-                        arabicDigit(3) +
-                        arabicDigit(9)
+            "General",
+            LocalTime.of(12, 58, 59),
+            ARABIC_ZERO_DIGIT,
+            arabicDigit(4) +
+                arabicDigit(6) +
+                arabicDigit(7) +
+                arabicDigit(3) +
+                arabicDigit(9)
         );
     }
 
@@ -485,9 +485,9 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             public boolean canConvert(final Object value,
                                       final Class<?> target) {
                 return this.converter.canConvert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
@@ -495,26 +495,26 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
-                    Lists.of(
-                            ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                    Converters.localTimeToNumber()
-                            ),
-                            Converters.localTimeToLocalDateTime()
-                    )
+                Lists.of(
+                    ExpressionNumberConverters.toNumberOrExpressionNumber(
+                        Converters.localTimeToNumber()
+                    ),
+                    Converters.localTimeToLocalDateTime()
+                )
             );
 
             @Override
             public String ampm(final int hourOfDay) {
                 return hourOfDay < 13 ?
-                        "QAM" :
-                        "RPM";
+                    "QAM" :
+                    "RPM";
             }
 
             @Override
@@ -545,24 +545,24 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public Optional<Color> colorName(final SpreadsheetColorName name) {
                 checkEquals(
-                        SpreadsheetColorName.with("red"),
-                        name,
-                        "colorName"
+                    SpreadsheetColorName.with("red"),
+                    name,
+                    "colorName"
                 );
                 return Optional.of(
-                        RED
+                    RED
                 );
             }
 
             @Override
             public Optional<Color> colorNumber(final int number) {
                 checkEquals(
-                        44,
-                        number,
-                        "colorNumber"
+                    44,
+                    number,
+                    "colorNumber"
                 );
                 return Optional.of(
-                        RED
+                    RED
                 );
             }
         };
@@ -573,9 +573,9 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createPattern(),
-                "time-format-pattern\n" +
-                        "  \"hh:mm:ss.000 A/P \\\"text-literal\\\" \\\\!\"\n"
+            this.createPattern(),
+            "time-format-pattern\n" +
+                "  \"hh:mm:ss.000 A/P \\\"text-literal\\\" \\\\!\"\n"
         );
     }
 
@@ -586,8 +586,8 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
 
         this.patternsAndCheck2(
-                pattern,
-                Lists.of(pattern)
+            pattern,
+            Lists.of(pattern)
         );
     }
 
@@ -596,8 +596,8 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss");
 
         this.patternsAndCheck(
-                pattern,
-                "[green]hh:mm:ss"
+            pattern,
+            "[green]hh:mm:ss"
         );
     }
 
@@ -608,8 +608,8 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss");
 
         this.removeColorAndCheck(
-                pattern,
-                this.createPattern("hh:mm:ss")
+            pattern,
+            this.createPattern("hh:mm:ss")
         );
     }
 
@@ -620,9 +620,9 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
 
         this.setColorNameAndCheck(
-                pattern,
-                SpreadsheetColorName.RED,
-                "[Red]hh:mm:ss"
+            pattern,
+            SpreadsheetColorName.RED,
+            "[Red]hh:mm:ss"
         );
     }
 
@@ -631,9 +631,9 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss");
 
         this.setColorNameAndCheck(
-                pattern,
-                SpreadsheetColorName.RED,
-                "[Red]hh:mm:ss"
+            pattern,
+            SpreadsheetColorName.RED,
+            "[Red]hh:mm:ss"
         );
     }
 
@@ -644,9 +644,9 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
 
         this.setColorNumberAndCheck(
-                pattern,
-                12,
-                "[color 12]hh:mm:ss"
+            pattern,
+            12,
+            "[color 12]hh:mm:ss"
         );
     }
 
@@ -655,9 +655,9 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss");
 
         this.setColorNumberAndCheck(
-                pattern,
-                12,
-                "[color 12]hh:mm:ss"
+            pattern,
+            12,
+            "[color 12]hh:mm:ss"
         );
     }
 
@@ -668,7 +668,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss");
 
         this.removeConditionAndCheck(
-                pattern
+            pattern
         );
     }
 

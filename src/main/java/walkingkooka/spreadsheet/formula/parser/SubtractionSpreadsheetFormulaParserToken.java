@@ -39,9 +39,9 @@ public final class SubtractionSpreadsheetFormulaParserToken extends ArithmeticSp
     @Override
     public SubtractionSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                SubtractionSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            SubtractionSpreadsheetFormulaParserToken::with
         );
     }
 

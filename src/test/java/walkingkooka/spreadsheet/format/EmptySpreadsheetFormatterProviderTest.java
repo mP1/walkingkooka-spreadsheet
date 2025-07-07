@@ -25,39 +25,39 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 
 public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<EmptySpreadsheetFormatterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testSpreadsheetFormatterSelectorFails() {
         this.spreadsheetFormatterFails(
-                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
-                CONTEXT
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNameFails() {
         this.spreadsheetFormatterFails(
-                SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-                Lists.empty(),
-                CONTEXT
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            Lists.empty(),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNextTokenFails() {
         this.spreadsheetFormatterNextTokenFails(
-                SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + "")
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + "")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesFails(
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
 

@@ -34,22 +34,22 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExporterCollectionTest implements SpreadsheetExporterTesting<SpreadsheetExporterCollection>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetExporterCollection>,
-        ToStringTesting<SpreadsheetExporterCollection> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetExporterCollection>,
+    ToStringTesting<SpreadsheetExporterCollection> {
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetExporterCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetExporterCollection.with(null)
         );
     }
 
     @Test
     public void testWithEmptyFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetExporterCollection.with(Lists.empty())
+            IllegalArgumentException.class,
+            () -> SpreadsheetExporterCollection.with(Lists.empty())
         );
     }
 
@@ -57,57 +57,57 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
     public void testWithOneUnwraps() {
         final SpreadsheetExporter exporter = SpreadsheetExporters.fake();
         assertSame(
-                exporter,
-                SpreadsheetExporterCollection.with(
-                        Lists.of(exporter)
-                )
+            exporter,
+            SpreadsheetExporterCollection.with(
+                Lists.of(exporter)
+            )
         );
     }
 
     private final static SpreadsheetCellRange CELL_RANGE = SpreadsheetCellRange.with(
-            SpreadsheetSelection.parseCellRange("A1:C3"),
-            Sets.empty()
+        SpreadsheetSelection.parseCellRange("A1:C3"),
+        Sets.empty()
     );
 
     private final static WebEntity WEB_ENTITY = WebEntity.empty()
-            .setContentType(
-                    Optional.of(MediaType.TEXT_PLAIN)
-            );
+        .setContentType(
+            Optional.of(MediaType.TEXT_PLAIN)
+        );
 
     @Test
     public void testExport() {
         this.exportAndCheck(
-                CELL_RANGE,
-                SpreadsheetCellValueKind.CELL,
-                WEB_ENTITY
+            CELL_RANGE,
+            SpreadsheetCellValueKind.CELL,
+            WEB_ENTITY
         );
     }
 
     @Override
     public SpreadsheetExporterCollection createSpreadsheetExporter() {
         return (SpreadsheetExporterCollection)
-                SpreadsheetExporterCollection.with(
-                        Lists.of(
-                                SpreadsheetExporters.empty(),
-                                new SpreadsheetExporter() {
-                                    @Override
-                                    public boolean canExport(final SpreadsheetCellRange cells,
-                                                             final SpreadsheetCellValueKind kind,
-                                                             final SpreadsheetExporterContext context) {
-                                        checkEquals(CELL_RANGE, cells, "cells");
-                                        return true;
-                                    }
+            SpreadsheetExporterCollection.with(
+                Lists.of(
+                    SpreadsheetExporters.empty(),
+                    new SpreadsheetExporter() {
+                        @Override
+                        public boolean canExport(final SpreadsheetCellRange cells,
+                                                 final SpreadsheetCellValueKind kind,
+                                                 final SpreadsheetExporterContext context) {
+                            checkEquals(CELL_RANGE, cells, "cells");
+                            return true;
+                        }
 
-                                    @Override
-                                    public WebEntity export(final SpreadsheetCellRange cells,
-                                                            final SpreadsheetCellValueKind kind,
-                                                            final SpreadsheetExporterContext context) {
-                                        checkEquals(CELL_RANGE, cells, "cells");
-                                        return WEB_ENTITY;
-                                    }
-                                }
-                        )
-                );
+                        @Override
+                        public WebEntity export(final SpreadsheetCellRange cells,
+                                                final SpreadsheetCellValueKind kind,
+                                                final SpreadsheetExporterContext context) {
+                            checkEquals(CELL_RANGE, cells, "cells");
+                            return WEB_ENTITY;
+                        }
+                    }
+                )
+            );
     }
 
     @Override
@@ -120,31 +120,31 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
     @Test
     public void testEqualsDifferentExporters() {
         this.checkNotEquals(
-                SpreadsheetExporterCollection.with(
-                        Lists.of(
-                                SpreadsheetExporters.fake(),
-                                SpreadsheetExporters.fake()
-                        )
-                ),
-                SpreadsheetExporterCollection.with(
-                        Lists.of(
-                                SpreadsheetExporters.fake(),
-                                SpreadsheetExporters.fake(),
-                                SpreadsheetExporters.fake()
-                        )
+            SpreadsheetExporterCollection.with(
+                Lists.of(
+                    SpreadsheetExporters.fake(),
+                    SpreadsheetExporters.fake()
                 )
+            ),
+            SpreadsheetExporterCollection.with(
+                Lists.of(
+                    SpreadsheetExporters.fake(),
+                    SpreadsheetExporters.fake(),
+                    SpreadsheetExporters.fake()
+                )
+            )
         );
     }
 
     @Override
     public SpreadsheetExporterCollection createObject() {
         return (SpreadsheetExporterCollection)
-                SpreadsheetExporterCollection.with(
-                        Lists.of(
-                                SpreadsheetExporters.empty(),
-                                SpreadsheetExporters.empty()
-                        )
-                );
+            SpreadsheetExporterCollection.with(
+                Lists.of(
+                    SpreadsheetExporters.empty(),
+                    SpreadsheetExporters.empty()
+                )
+            );
     }
 
     // toString.........................................................................................................
@@ -152,8 +152,8 @@ public final class SpreadsheetExporterCollectionTest implements SpreadsheetExpor
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createObject(),
-                "collection(EmptySpreadsheetExporter,EmptySpreadsheetExporter)"
+            this.createObject(),
+            "collection(EmptySpreadsheetExporter,EmptySpreadsheetExporter)"
         );
     }
 

@@ -29,9 +29,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, SpreadsheetName>,
-        ComparableTesting2<SpreadsheetName>,
-        JsonNodeMarshallingTesting<SpreadsheetName>,
-        ToStringTesting<SpreadsheetName> {
+    ComparableTesting2<SpreadsheetName>,
+    JsonNodeMarshallingTesting<SpreadsheetName>,
+    ToStringTesting<SpreadsheetName> {
 
     private final static String VALUE = "SpreadsheetName123";
 
@@ -48,8 +48,8 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     @Test
     public void testUrlFragment() {
         this.checkEquals(
-                UrlFragment.with(VALUE),
-                this.createObject().urlFragment()
+            UrlFragment.with(VALUE),
+            this.createObject().urlFragment()
         );
     }
 
@@ -75,7 +75,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
         final SpreadsheetName name3 = SpreadsheetName.with("C");
 
         this.compareToArraySortAndCheck(name3, name1, name2,
-                name1, name2, name3);
+            name1, name2, name3);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

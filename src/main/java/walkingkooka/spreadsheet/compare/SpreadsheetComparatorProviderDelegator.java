@@ -27,10 +27,10 @@ public interface SpreadsheetComparatorProviderDelegator extends SpreadsheetCompa
     default SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                            final ProviderContext context) {
         return this.spreadsheetComparatorProvider()
-                .spreadsheetComparator(
-                        selector,
-                        context
-                );
+            .spreadsheetComparator(
+                selector,
+                context
+            );
     }
 
     @Override
@@ -38,11 +38,11 @@ public interface SpreadsheetComparatorProviderDelegator extends SpreadsheetCompa
                                                            final List<?> values,
                                                            final ProviderContext context) {
         return this.spreadsheetComparatorProvider()
-                .spreadsheetComparator(
-                        name,
-                        values,
-                        context
-                );
+            .spreadsheetComparator(
+                name,
+                values,
+                context
+            );
     }
 
     @Override

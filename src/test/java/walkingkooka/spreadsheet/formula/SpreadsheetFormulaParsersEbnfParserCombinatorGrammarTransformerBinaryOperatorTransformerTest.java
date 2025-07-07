@@ -32,8 +32,8 @@ public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransform
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.class.getSimpleName()
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.class.getSimpleName()
         );
     }
 

@@ -42,8 +42,7 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
     /**
      * Pixel navigations do not have an opposite, a new method is available to try and sum adjacent {@link SpreadsheetViewportNavigation}.
      */
-    @Override
-    final boolean isOpposite(final SpreadsheetViewportNavigation other) {
+    @Override final boolean isOpposite(final SpreadsheetViewportNavigation other) {
         return false;
     }
 
@@ -58,14 +57,14 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
         final SpreadsheetViewportRectangle rectangle = viewport.rectangle();
         final SpreadsheetCellReference home = rectangle.home();
         final Optional<SpreadsheetCellReference> maybeMovedHome = this.updateHome(
-                home,
-                context
+            home,
+            context
         );
 
         if (maybeMovedHome.isPresent()) {
             final SpreadsheetViewportRectangle movedRectangle = rectangle.setHome(
-                    maybeMovedHome.get()
-                            .toCell()
+                maybeMovedHome.get()
+                    .toCell()
             );
 
             result = result.setRectangle(movedRectangle);
@@ -73,18 +72,18 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
             final Optional<AnchoredSpreadsheetSelection> maybeAnchoredSelection = viewport.anchoredSelection();
             if (maybeAnchoredSelection.isPresent()) {
                 result = result.setAnchoredSelection(
-                        updateViewportSelection(
-                                maybeAnchoredSelection.get(),
-                                rectangle,
-                                context
-                        )
+                    updateViewportSelection(
+                        maybeAnchoredSelection.get(),
+                        rectangle,
+                        context
+                    )
                 );
             }
 
         } else {
             // reset home
             result = result.setRectangle(
-                    rectangle.setHome(home)
+                rectangle.setHome(home)
             ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
         }
 
@@ -105,8 +104,8 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetViewportNavigationPixel &&
-                        this.equals0((SpreadsheetViewportNavigationPixel) other);
+            other instanceof SpreadsheetViewportNavigationPixel &&
+                this.equals0((SpreadsheetViewportNavigationPixel) other);
     }
 
     private boolean equals0(final SpreadsheetViewportNavigationPixel other) {

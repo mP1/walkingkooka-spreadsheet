@@ -46,8 +46,8 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
         Objects.requireNonNull(cellStore, "cellStore");
 
         return new SpreadsheetCellStoreActionSpreadsheetMetadataStore(
-                metadataStore,
-                cellStore
+            metadataStore,
+            cellStore
         );
     }
 
@@ -62,8 +62,8 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     public SpreadsheetMetadata create(final EmailAddress creator,
                                       final Optional<Locale> locale) {
         return this.metadataStore.create(
-                creator,
-                locale
+            creator,
+            locale
         );
     }
 
@@ -86,7 +86,7 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
 
             if (maybeBefore.isPresent()) {
                 final Map<SpreadsheetMetadataPropertyName<?>, Object> beforeMap = maybeBefore.get()
-                        .value();
+                    .value();
                 final Map<SpreadsheetMetadataPropertyName<?>, Object> afterMap = metadata.value();
 
                 SpreadsheetCellStoreAction action = SpreadsheetCellStoreAction.NONE;
@@ -126,11 +126,11 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
                         break;
                     case PARSE_FORMULA:
                         this.cellStore.apply(id)
-                                .clearParsedFormulaExpressions();
+                            .clearParsedFormulaExpressions();
                         break;
                     case EVALUATE_AND_FORMAT:
                         this.cellStore.apply(id)
-                                .clearFormatted();
+                            .clearFormatted();
                         break;
                 }
             }
@@ -171,8 +171,8 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     public Set<SpreadsheetId> ids(final int offset,
                                   final int count) {
         return this.metadataStore.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -180,8 +180,8 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     public List<SpreadsheetMetadata> values(final int offset,
                                             final int count) {
         return this.metadataStore.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -189,8 +189,8 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     public List<SpreadsheetMetadata> between(final SpreadsheetId from,
                                              final SpreadsheetId to) {
         return this.metadataStore.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

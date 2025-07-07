@@ -39,8 +39,8 @@ public final class NotEqualsSpreadsheetFormulaParserToken extends ConditionSprea
                                                                                                         final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightNotEquals(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -49,9 +49,9 @@ public final class NotEqualsSpreadsheetFormulaParserToken extends ConditionSprea
     @Override
     public NotEqualsSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                NotEqualsSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            NotEqualsSpreadsheetFormulaParserToken::with
         );
     }
 

@@ -72,16 +72,16 @@ public final class SecondSpreadsheetFormatParserTokenTest extends NonSymbolSprea
     @Test
     public void testKind1() {
         this.kindAndCheck(
-                "s",
-                SpreadsheetFormatParserTokenKind.SECONDS_WITHOUT_LEADING_ZERO
+            "s",
+            SpreadsheetFormatParserTokenKind.SECONDS_WITHOUT_LEADING_ZERO
         );
     }
 
     @Test
     public void testKind2() {
         this.kindAndCheck(
-                "ss",
-                SpreadsheetFormatParserTokenKind.SECONDS_WITH_LEADING_ZERO
+            "ss",
+            SpreadsheetFormatParserTokenKind.SECONDS_WITH_LEADING_ZERO
         );
     }
 

@@ -36,7 +36,7 @@ import java.util.Optional;
  * Base class for either a column or row reference {@link SpreadsheetParser}.
  */
 abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements SpreadsheetParser,
-        RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Package private ctor use singleton
@@ -64,17 +64,17 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                 cursor.next();
             }
             result = this.parseReference(
-                    cursor,
-                    absoluteOrRelative,
-                    save
+                cursor,
+                absoluteOrRelative,
+                save
             );
             if (false == result.isPresent()) {
                 if (this.isRequired()) {
-                    if(cursor.lineInfo().textOffset() != save.lineInfo().textOffset()) {
+                    if (cursor.lineInfo().textOffset() != save.lineInfo().textOffset()) {
                         final InvalidCharacterException ice = cursor.lineInfo()
-                                .invalidCharacterException()
-                                .orElse(null);
-                        if(null != ice) {
+                            .invalidCharacterException()
+                            .orElse(null);
+                        if (null != ice) {
                             throw ice;
                         }
                     }
@@ -98,10 +98,10 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
         for (; ; ) {
             if (cursor.isEmpty()) {
                 result = token(
-                        digitCounter,
-                        absoluteOrRelative,
-                        value - 1,
-                        save
+                    digitCounter,
+                    absoluteOrRelative,
+                    value - 1,
+                    save
                 );
                 break;
             }
@@ -109,10 +109,10 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
             final int digit = valueFromDigit(cursor.at());
             if (-1 == digit) {
                 result = token(
-                        digitCounter,
-                        absoluteOrRelative,
-                        value - 1,
-                        save
+                    digitCounter,
+                    absoluteOrRelative,
+                    value - 1,
+                    save
                 );
                 break;
             }
@@ -134,8 +134,8 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                                         final int value,
                                         final TextCursorSavePoint save) {
         return digitCounter > 0 ?
-                token0(absoluteOrRelative, value, save) :
-                Optional.empty();
+            token0(absoluteOrRelative, value, save) :
+            Optional.empty();
     }
 
     private Optional<ParserToken> token0(final SpreadsheetReferenceKind absoluteOrRelative,
@@ -143,16 +143,16 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                                          final TextCursorSavePoint save) {
         try {
             return Optional.of(
-                    this.token1(
-                            absoluteOrRelative,
-                            value,
-                            save.textBetween().toString()
-                    )
+                this.token1(
+                    absoluteOrRelative,
+                    value,
+                    save.textBetween().toString()
+                )
             );
         } catch (final RuntimeException cause) {
             throw new ParserException(
-                    cause.getMessage(),
-                    cause
+                cause.getMessage(),
+                cause
             );
         }
     }
@@ -183,8 +183,8 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
     @Override
     public int minCount() {
         return this.isRequired() ?
-                1 :
-                0;
+            1 :
+            0;
     }
 
     @Override

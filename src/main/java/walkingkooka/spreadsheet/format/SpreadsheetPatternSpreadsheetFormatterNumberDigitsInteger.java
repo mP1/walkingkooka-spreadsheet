@@ -57,9 +57,9 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberDigitsInteger extends Sp
 
         if (textDigitPosition >= 0) {
             this.addDigits(0 == digitSymbolPosition ? 0 : textDigitPosition,
-                    textDigitPosition,
-                    textDigits,
-                    context);
+                textDigitPosition,
+                textDigits,
+                context);
         } else {
             zero.append(numberDigitPosition, context);
         }

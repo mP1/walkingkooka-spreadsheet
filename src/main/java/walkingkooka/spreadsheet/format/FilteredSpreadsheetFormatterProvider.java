@@ -32,16 +32,16 @@ final class FilteredSpreadsheetFormatterProvider implements SpreadsheetFormatter
     static FilteredSpreadsheetFormatterProvider with(final SpreadsheetFormatterProvider provider,
                                                      final SpreadsheetFormatterInfoSet infos) {
         return new FilteredSpreadsheetFormatterProvider(
-                Objects.requireNonNull(provider, "provider"),
-                Objects.requireNonNull(infos, "infos")
+            Objects.requireNonNull(provider, "provider"),
+            Objects.requireNonNull(infos, "infos")
         );
     }
 
     private FilteredSpreadsheetFormatterProvider(final SpreadsheetFormatterProvider provider,
                                                  final SpreadsheetFormatterInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
-                infos.names(),
-                SpreadsheetFormatterPluginHelper.INSTANCE
+            infos.names(),
+            SpreadsheetFormatterPluginHelper.INSTANCE
         );
 
         this.provider = provider;
@@ -55,8 +55,8 @@ final class FilteredSpreadsheetFormatterProvider implements SpreadsheetFormatter
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.guard.selector(selector),
-                context
+            this.guard.selector(selector),
+            context
         );
     }
 
@@ -69,16 +69,16 @@ final class FilteredSpreadsheetFormatterProvider implements SpreadsheetFormatter
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatter(
-                this.guard.name(name),
-                values,
-                context
+            this.guard.name(name),
+            values,
+            context
         );
     }
 
     @Override
     public Optional<SpreadsheetFormatterSelectorToken> spreadsheetFormatterNextToken(final SpreadsheetFormatterSelector selector) {
         return this.provider.spreadsheetFormatterNextToken(
-                this.guard.selector(selector)
+            this.guard.selector(selector)
         );
     }
 
@@ -89,8 +89,8 @@ final class FilteredSpreadsheetFormatterProvider implements SpreadsheetFormatter
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatterSamples(
-                this.guard.name(name),
-                context
+            this.guard.name(name),
+            context
         );
     }
 

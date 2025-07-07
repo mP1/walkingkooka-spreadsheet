@@ -28,8 +28,8 @@ public final class DecimalSeparatorSymbolSpreadsheetFormulaParserToken extends S
     static DecimalSeparatorSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                     final String text) {
         return new DecimalSeparatorSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

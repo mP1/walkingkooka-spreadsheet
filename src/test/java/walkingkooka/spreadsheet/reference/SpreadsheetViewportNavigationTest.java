@@ -22,7 +22,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 public final class SpreadsheetViewportNavigationTest implements TreePrintableTesting,
-        ClassTesting<SpreadsheetViewportNavigation> {
+    ClassTesting<SpreadsheetViewportNavigation> {
 
     // ClassTesting.....................................................................................................
 

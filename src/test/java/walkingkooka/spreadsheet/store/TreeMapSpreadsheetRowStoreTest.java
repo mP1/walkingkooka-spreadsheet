@@ -33,31 +33,31 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         final TreeMapSpreadsheetRowStore store = this.createStore();
 
         final SpreadsheetRow row1 = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("1")
+            SpreadsheetSelection.parseRow("1")
         );
         store.save(row1);
 
         final SpreadsheetRow row2 = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("2")
+            SpreadsheetSelection.parseRow("2")
         );
         store.save(row2);
 
         final SpreadsheetRow row3 = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("3")
+            SpreadsheetSelection.parseRow("3")
         );
         store.save(row3);
 
         final SpreadsheetRow row4 = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("4")
+            SpreadsheetSelection.parseRow("4")
         );
 
         store.save(row4);
 
         this.loadRowsAndCheck(
-                store,
-                SpreadsheetSelection.parseRowRange("2:3"),
-                row2,
-                row3
+            store,
+            SpreadsheetSelection.parseRowRange("2:3"),
+            row2,
+            row3
         );
     }
 
@@ -66,24 +66,24 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
         final TreeMapSpreadsheetRowStore store = this.createStore();
 
         final SpreadsheetRow row1 = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("1")
+            SpreadsheetSelection.parseRow("1")
         );
         final SpreadsheetRow row2 = SpreadsheetRow.with(
-                SpreadsheetSelection.parseRow("2")
+            SpreadsheetSelection.parseRow("2")
         );
 
         store.saveRows(
-                Sets.of(
-                        row1,
-                        row2
-                )
+            Sets.of(
+                row1,
+                row2
+            )
         );
 
         this.loadRowsAndCheck(
-                store,
-                SpreadsheetSelection.parseRowRange("1:2"),
-                row1,
-                row2
+            store,
+            SpreadsheetSelection.parseRowRange("1:2"),
+            row1,
+            row2
         );
     }
 
@@ -93,7 +93,7 @@ final class TreeMapSpreadsheetRowStoreTest extends SpreadsheetRowStoreTestCase<T
     public void testToString() {
         final TreeMapSpreadsheetRowStore store = this.createStore();
         store.save(
-                SpreadsheetSelection.parseRow("2").row()
+            SpreadsheetSelection.parseRow("2").row()
         );
 
         this.toStringAndCheck(store, "[2]");

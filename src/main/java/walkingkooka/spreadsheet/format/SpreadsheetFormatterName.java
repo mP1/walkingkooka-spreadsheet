@@ -62,8 +62,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName AUTOMATIC = new SpreadsheetFormatterName(
-            AUTOMATIC_STRING,
-            null
+        AUTOMATIC_STRING,
+        null
     );
 
     final static String COLLECTION_STRING = "collection";
@@ -72,8 +72,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName COLLECTION = new SpreadsheetFormatterName(
-            COLLECTION_STRING,
-            null
+        COLLECTION_STRING,
+        null
     );
 
     final static String DATE_FORMAT_PATTERN_STRING = "date-format-pattern";
@@ -82,8 +82,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName DATE_FORMAT_PATTERN = new SpreadsheetFormatterName(
-            DATE_FORMAT_PATTERN_STRING,
-            SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+        DATE_FORMAT_PATTERN_STRING,
+        SpreadsheetPatternKind.DATE_FORMAT_PATTERN
     );
 
     final static String DATE_TIME_FORMAT_PATTERN_STRING = "date-time-format-pattern";
@@ -92,8 +92,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date-time {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName DATE_TIME_FORMAT_PATTERN = new SpreadsheetFormatterName(
-            DATE_TIME_FORMAT_PATTERN_STRING,
-            SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+        DATE_TIME_FORMAT_PATTERN_STRING,
+        SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
     );
 
     final static String DEFAULT_TEXT_STRING = "default-text";
@@ -102,8 +102,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName DEFAULT_TEXT = new SpreadsheetFormatterName(
-            DEFAULT_TEXT_STRING,
-            null
+        DEFAULT_TEXT_STRING,
+        null
     );
 
     final static String EXPRESSION_STRING = "expression";
@@ -112,18 +112,18 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName EXPRESSION = new SpreadsheetFormatterName(
-            EXPRESSION_STRING,
-            null
+        EXPRESSION_STRING,
+        null
     );
-    
+
     final static String GENERAL_STRING = "general";
 
     /**
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName GENERAL = new SpreadsheetFormatterName(
-            GENERAL_STRING,
-            null
+        GENERAL_STRING,
+        null
     );
 
     final static String NUMBER_FORMAT_PATTERN_STRING = "number-format-pattern";
@@ -132,8 +132,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the number {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName NUMBER_FORMAT_PATTERN = new SpreadsheetFormatterName(
-            NUMBER_FORMAT_PATTERN_STRING,
-            SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+        NUMBER_FORMAT_PATTERN_STRING,
+        SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
     );
     final static String TEXT_FORMAT_PATTERN_STRING = "text-format-pattern";
 
@@ -143,16 +143,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the date {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName SPREADSHEET_PATTERN_COLLECTION = new SpreadsheetFormatterName(
-            SPREADSHEET_PATTERN_COLLECTION_STRING,
-            null
+        SPREADSHEET_PATTERN_COLLECTION_STRING,
+        null
     );
 
     /**
      * The name of the text {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName TEXT_FORMAT_PATTERN = new SpreadsheetFormatterName(
-            TEXT_FORMAT_PATTERN_STRING,
-            SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+        TEXT_FORMAT_PATTERN_STRING,
+        SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
     );
 
     final static String TIME_FORMAT_PATTERN_STRING = "time-format-pattern";
@@ -161,8 +161,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      * The name of the time {@link SpreadsheetFormatter}
      */
     public final static SpreadsheetFormatterName TIME_FORMAT_PATTERN = new SpreadsheetFormatterName(
-            TIME_FORMAT_PATTERN_STRING,
-            SpreadsheetPatternKind.TIME_FORMAT_PATTERN
+        TIME_FORMAT_PATTERN_STRING,
+        SpreadsheetPatternKind.TIME_FORMAT_PATTERN
     );
 
     /**
@@ -209,8 +209,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             default:
                 spreadsheetFormatterName = new SpreadsheetFormatterName(
-                        name,
-                        null // other SpreadsheetFormatterNames dont have a SpreadsheetPatternKind
+                    name,
+                    null // other SpreadsheetFormatterNames dont have a SpreadsheetPatternKind
                 );
                 break;
         }
@@ -225,7 +225,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                                      final SpreadsheetPatternKind patternKind) {
         super();
         this.name = PluginName.with(name)
-                .checkLength("Formatter");
+            .checkLength("Formatter");
         this.patternKind = patternKind;
     }
 
@@ -257,8 +257,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFormatterName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormatterName other) {
@@ -283,10 +283,10 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterName.class),
-                SpreadsheetFormatterName::unmarshall,
-                SpreadsheetFormatterName::marshall,
-                SpreadsheetFormatterName.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterName.class),
+            SpreadsheetFormatterName::unmarshall,
+            SpreadsheetFormatterName::marshall,
+            SpreadsheetFormatterName.class
         );
     }
 
@@ -297,8 +297,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      */
     public SpreadsheetFormatterSelector setValueText(final String text) {
         return SpreadsheetFormatterSelector.with(
-                this,
-                text
+            this,
+            text
         );
     }
 }

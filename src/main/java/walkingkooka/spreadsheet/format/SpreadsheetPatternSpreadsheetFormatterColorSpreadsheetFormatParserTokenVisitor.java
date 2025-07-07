@@ -61,9 +61,9 @@ final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTo
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .valueSeparator(" ")
-                .value(this.source)
-                .value(this.nameOrNumber)
-                .build();
+            .valueSeparator(" ")
+            .value(this.source)
+            .value(this.nameOrNumber)
+            .build();
     }
 }

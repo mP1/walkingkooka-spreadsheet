@@ -30,16 +30,16 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidationError;
 
 public final class SpreadsheetConverterTextToValidationErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToValidationError>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertEmptyString() {
         this.convertFails(
-                SpreadsheetConverterTextToValidationError.INSTANCE,
-                "",
-                ValidationError.class,
-                this.createContext(SpreadsheetSelection.A1),
-                "Empty \"text\""
+            SpreadsheetConverterTextToValidationError.INSTANCE,
+            "",
+            ValidationError.class,
+            this.createContext(SpreadsheetSelection.A1),
+            "Empty \"text\""
         );
     }
 
@@ -47,15 +47,15 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
     public void testConvertStringWithValueMessageCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage(
-                "Message123"
+            "Message123"
         );
         final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(cell);
 
         this.convertAndCheck(
-                validationError.text(),
-                ValidationError.class,
-                this.createContext(cell),
-                validationError
+            validationError.text(),
+            ValidationError.class,
+            this.createContext(cell),
+            validationError
         );
     }
 
@@ -63,17 +63,17 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
     public void testConvertCharSequenceWithValueMessageCell() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage(
-                "Message123"
+            "Message123"
         );
         final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(cell);
 
         this.convertAndCheck(
-                new StringBuilder(
-                        validationError.text()
-                ),
-                ValidationError.class,
-                this.createContext(cell),
-                validationError
+            new StringBuilder(
+                validationError.text()
+            ),
+            ValidationError.class,
+            this.createContext(cell),
+            validationError
         );
     }
 
@@ -84,10 +84,10 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
         final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(label);
 
         this.convertAndCheck(
-                validationError.text(),
-                ValidationError.class,
-                this.createContext(label),
-                validationError
+            validationError.text(),
+            ValidationError.class,
+            this.createContext(label),
+            validationError
         );
     }
 
@@ -97,11 +97,11 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
         final String message = "Message123";
 
         this.convertAndCheck(
-                message,
-                ValidationError.class,
-                this.createContext(cell),
-                SpreadsheetError.parse(message)
-                        .toValidationError(cell)
+            message,
+            ValidationError.class,
+            this.createContext(cell),
+            SpreadsheetError.parse(message)
+                .toValidationError(cell)
         );
     }
 
@@ -122,9 +122,9 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -132,9 +132,9 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
@@ -152,8 +152,8 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterTextToValidationError.INSTANCE,
-                "String to ValidationError"
+            SpreadsheetConverterTextToValidationError.INSTANCE,
+            "String to ValidationError"
         );
     }
 

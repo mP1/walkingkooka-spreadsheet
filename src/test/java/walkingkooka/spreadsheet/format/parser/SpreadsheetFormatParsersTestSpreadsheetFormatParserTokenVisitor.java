@@ -35,7 +35,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
         final SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return visitor.children.get(0)
-                .cast(SpreadsheetFormatParserToken.class);
+            .cast(SpreadsheetFormatParserToken.class);
     }
 
     private SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor() {

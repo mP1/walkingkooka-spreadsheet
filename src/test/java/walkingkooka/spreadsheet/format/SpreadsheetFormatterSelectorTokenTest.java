@@ -30,9 +30,9 @@ public final class SpreadsheetFormatterSelectorTokenTest implements PluginSelect
                                                                            final String text,
                                                                            final List<SpreadsheetFormatterSelectorTokenAlternative> alternatives) {
         return SpreadsheetFormatterSelectorToken.with(
-                label,
-                text,
-                alternatives
+            label,
+            text,
+            alternatives
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetFormatterSelectorTokenTest implements PluginSelect
     public SpreadsheetFormatterSelectorTokenAlternative createPluginSelectorTokenAlternativesLike(final String label,
                                                                                                   final String text) {
         return SpreadsheetFormatterSelectorTokenAlternative.with(
-                label,
-                text
+            label,
+            text
         );
     }
 
@@ -49,10 +49,10 @@ public final class SpreadsheetFormatterSelectorTokenTest implements PluginSelect
     public SpreadsheetFormatterSelectorToken unmarshall(final JsonNode json,
                                                         final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenLike.unmarshall(
-                json,
-                context,
-                SpreadsheetFormatterSelectorToken::with,
-                SpreadsheetFormatterSelectorTokenAlternative.class
+            json,
+            context,
+            SpreadsheetFormatterSelectorToken::with,
+            SpreadsheetFormatterSelectorTokenAlternative.class
         );
     }
 

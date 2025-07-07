@@ -61,7 +61,7 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      * The name of the collection {@link SpreadsheetImporter}
      */
     public final static SpreadsheetImporterName COLLECTION = new SpreadsheetImporterName(
-            COLLECTION_STRING
+        COLLECTION_STRING
     );
 
     final static String EMPTY_STRING = "empty";
@@ -70,7 +70,7 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      * The name of the empty {@link SpreadsheetImporter}
      */
     public final static SpreadsheetImporterName EMPTY = new SpreadsheetImporterName(
-            EMPTY_STRING
+        EMPTY_STRING
     );
 
     final static String JSON_STRING = "json";
@@ -79,7 +79,7 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      * The name of the json {@link SpreadsheetImporter}
      */
     public final static SpreadsheetImporterName JSON = new SpreadsheetImporterName(
-            JSON_STRING
+        JSON_STRING
     );
 
     // SpreadsheetImporterName instances................................................................................
@@ -116,7 +116,7 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
     private SpreadsheetImporterName(final String name) {
         super();
         this.name = PluginName.with(name)
-                .checkLength("Importer");
+            .checkLength("Importer");
     }
 
     @Override
@@ -136,8 +136,8 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetImporterName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetImporterName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetImporterName other) {
@@ -162,10 +162,10 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetImporterName.class),
-                SpreadsheetImporterName::unmarshall,
-                SpreadsheetImporterName::marshall,
-                SpreadsheetImporterName.class
+            JsonNodeContext.computeTypeName(SpreadsheetImporterName.class),
+            SpreadsheetImporterName::unmarshall,
+            SpreadsheetImporterName::marshall,
+            SpreadsheetImporterName.class
         );
     }
 }

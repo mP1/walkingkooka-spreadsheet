@@ -37,7 +37,7 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
      * Singleton
      */
     final static SpreadsheetRowReferenceSpreadsheetParser INSTANCE = new SpreadsheetRowReferenceSpreadsheetParser(
-            true // REQUIRED
+        true // REQUIRED
     );
 
     /**
@@ -68,7 +68,7 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     }
 
     private final static Optional<ValidationValueTypeName> ROW = Optional.of(
-            SpreadsheetValueType.ROW
+        SpreadsheetValueType.ROW
     );
 
     @Override
@@ -83,8 +83,8 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
 
     private SpreadsheetRowReferenceSpreadsheetParser setRequired(final boolean required) {
         return required == this.isRequired() ?
-                this :
-                new SpreadsheetRowReferenceSpreadsheetParser(required);
+            this :
+            new SpreadsheetRowReferenceSpreadsheetParser(required);
     }
 
     @Override

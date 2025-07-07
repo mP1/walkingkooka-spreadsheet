@@ -31,16 +31,16 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
     static FilteredSpreadsheetExporterProvider with(final SpreadsheetExporterProvider provider,
                                                     final SpreadsheetExporterInfoSet infos) {
         return new FilteredSpreadsheetExporterProvider(
-                Objects.requireNonNull(provider, "provider"),
-                Objects.requireNonNull(infos, "infos")
+            Objects.requireNonNull(provider, "provider"),
+            Objects.requireNonNull(infos, "infos")
         );
     }
 
     private FilteredSpreadsheetExporterProvider(final SpreadsheetExporterProvider provider,
                                                 final SpreadsheetExporterInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
-                infos.names(),
-                SpreadsheetExporterPluginHelper.INSTANCE
+            infos.names(),
+            SpreadsheetExporterPluginHelper.INSTANCE
         );
 
         this.provider = provider;
@@ -54,8 +54,8 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetExporter(
-                this.guard.selector(selector),
-                context
+            this.guard.selector(selector),
+            context
         );
     }
 
@@ -68,9 +68,9 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetExporter(
-                this.guard.name(name),
-                values,
-                context
+            this.guard.name(name),
+            values,
+            context
         );
     }
 

@@ -56,77 +56,77 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterVerifierTest implements TreePrintableTesting,
-        ClassTesting<MissingConverterVerifier>,
-        SpreadsheetMetadataTesting {
+    ClassTesting<MissingConverterVerifier>,
+    SpreadsheetMetadataTesting {
 
     @Test
     public void testVerifyAndCheckWithNullConverterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MissingConverterVerifier.verify(
-                        null,
-                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        SpreadsheetConverterContexts.fake()
-                )
+            NullPointerException.class,
+            () -> MissingConverterVerifier.verify(
+                null,
+                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetConverterContexts.fake()
+            )
         );
     }
 
     @Test
     public void testVerifyAndCheckWithNullSpreadsheetMetadataPropertyNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MissingConverterVerifier.verify(
-                        Converters.fake(),
-                        null,
-                        SpreadsheetConverterContexts.fake()
-                )
+            NullPointerException.class,
+            () -> MissingConverterVerifier.verify(
+                Converters.fake(),
+                null,
+                SpreadsheetConverterContexts.fake()
+            )
         );
     }
 
     @Test
     public void testVerifyAndCheckWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MissingConverterVerifier.verify(
-                        Converters.fake(),
-                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        null
-                )
+            NullPointerException.class,
+            () -> MissingConverterVerifier.verify(
+                Converters.fake(),
+                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                null
+            )
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithFindConverter() {
         this.verifyAndCheck(
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER
+            SpreadsheetMetadataPropertyName.FIND_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithFormulaConverter() {
         this.verifyAndCheck(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithFormattingConverter() {
         this.verifyAndCheck(
-                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithSortConverter() {
         this.verifyAndCheck(
-                SpreadsheetMetadataPropertyName.SORT_CONVERTER
+            SpreadsheetMetadataPropertyName.SORT_CONVERTER
         );
     }
 
     @Test
     public void testVerifyAndCheckWithWithValidationConverter() {
         this.verifyAndCheck(
-                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
         );
     }
 
@@ -139,16 +139,16 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         System.out.println(propertyName + "=" + selector);
 
         this.verifyAndCheck(
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                        metadata,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER
-                ).converter(
-                        selector,
-                        PROVIDER_CONTEXT
-                ),
-                propertyName,
-                expected
+            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                metadata,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER
+            ).converter(
+                selector,
+                PROVIDER_CONTEXT
+            ),
+            propertyName,
+            expected
         );
     }
 
@@ -156,18 +156,18 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                                 final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                 final MissingConverter... expected) {
         this.verifyAndCheck(
-                converter,
-                propertyName,
-                new TestSpreadsheetConverterContext(converter),
-                Sets.of(expected)
+            converter,
+            propertyName,
+            new TestSpreadsheetConverterContext(converter),
+            Sets.of(expected)
         );
     }
 
     static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
-            DateTimeContextDelegator,
-            DecimalNumberContextDelegator,
-            JsonNodeMarshallUnmarshallContextDelegator,
-            LocaleContextDelegator {
+        DateTimeContextDelegator,
+        DecimalNumberContextDelegator,
+        JsonNodeMarshallUnmarshallContextDelegator,
+        LocaleContextDelegator {
 
         TestSpreadsheetConverterContext(final Converter<SpreadsheetConverterContext> converter) {
             this.converter = converter;
@@ -177,9 +177,9 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
             return converter.canConvert(
-                    value,
-                    type,
-                    this
+                value,
+                type,
+                this
             );
         }
 
@@ -187,9 +187,9 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         public <T> Either<T, String> convert(final Object value,
                                              final Class<T> target) {
             return converter.convert(
-                    value,
-                    target,
-                    this
+                value,
+                target,
+                this
             );
         }
 
@@ -203,7 +203,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public JsonNode marshall(final Object object) {
             return JsonNodeMarshallContexts.basic()
-                    .marshall(object);
+                .marshall(object);
         }
 
         @Override
@@ -212,9 +212,9 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         private final DateTimeContext dateTimeContext = METADATA_EN_AU.dateTimeContext(
-                SpreadsheetMetadata.NO_CELL,
-                NOW,
-                LOCALE_CONTEXT
+            SpreadsheetMetadata.NO_CELL,
+            NOW,
+            LOCALE_CONTEXT
         );
 
         @Override
@@ -228,8 +228,8 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         private final DecimalNumberContext decimalNumberContext = METADATA_EN_AU.decimalNumberContext(
-                SpreadsheetMetadata.NO_CELL,
-                LOCALE_CONTEXT
+            SpreadsheetMetadata.NO_CELL,
+            LOCALE_CONTEXT
         );
 
         @Override
@@ -238,8 +238,8 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.basic(
-                JSON_NODE_MARSHALL_CONTEXT,
-                JSON_NODE_UNMARSHALL_CONTEXT
+            JSON_NODE_MARSHALL_CONTEXT,
+            JSON_NODE_UNMARSHALL_CONTEXT
         );
 
         @Override
@@ -293,10 +293,10 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                                 final SpreadsheetConverterContext context,
                                 final MissingConverter... expected) {
         this.verifyAndCheck(
-                converter,
-                propertyName,
-                context,
-                Sets.of(expected)
+            converter,
+            propertyName,
+            context,
+            Sets.of(expected)
         );
     }
 
@@ -305,13 +305,13 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                                 final SpreadsheetConverterContext context,
                                 final Set<MissingConverter> expected) {
         this.checkEquals(
-                expected,
-                MissingConverterVerifier.verify(
-                        converter,
-                        propertyName,
-                        context
-                ),
-                () -> propertyName + "=" + converter
+            expected,
+            MissingConverterVerifier.verify(
+                converter,
+                propertyName,
+                context
+            ),
+            () -> propertyName + "=" + converter
         );
     }
 

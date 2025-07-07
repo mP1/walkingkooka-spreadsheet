@@ -49,7 +49,7 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
     @Override
     SpreadsheetViewport checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetViewport);
+            v -> v instanceof SpreadsheetViewport);
     }
 
     @Override

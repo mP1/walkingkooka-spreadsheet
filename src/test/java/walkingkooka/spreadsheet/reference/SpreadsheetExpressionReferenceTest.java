@@ -26,7 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
-        JsonNodeMarshallingTesting<SpreadsheetExpressionReference> {
+    JsonNodeMarshallingTesting<SpreadsheetExpressionReference> {
 
     // testParameterName...............................................................................................
 
@@ -35,45 +35,45 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
         final String label = "Label123";
 
         this.testParameterNameAndCheck(
-                SpreadsheetSelection.labelName(label),
-                label,
-                true
+            SpreadsheetSelection.labelName(label),
+            label,
+            true
         );
     }
 
     @Test
     public void testTestParameterNameLabelEqualDifferentCase() {
         this.testParameterNameAndCheck(
-                SpreadsheetSelection.labelName("Label123"),
-                "LABEL123",
-                true
+            SpreadsheetSelection.labelName("Label123"),
+            "LABEL123",
+            true
         );
     }
 
     @Test
     public void testTestParameterNameLabelDifferent() {
         this.testParameterNameAndCheck(
-                SpreadsheetSelection.labelName("Label123"),
-                "different",
-                false
+            SpreadsheetSelection.labelName("Label123"),
+            "different",
+            false
         );
     }
 
     @Test
     public void testTestParameterNameCell() {
         this.testParameterNameAndCheck(
-                SpreadsheetSelection.A1,
-                "different",
-                false
+            SpreadsheetSelection.A1,
+            "different",
+            false
         );
     }
 
     @Test
     public void testTestParameterNameCellRange() {
         this.testParameterNameAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                "different",
-                false
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            "different",
+            false
         );
     }
 
@@ -81,11 +81,11 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
                                            final String parameterName,
                                            final boolean expected) {
         this.checkEquals(
-                expected,
-                expressionReference.testParameterName(
-                        ExpressionFunctionParameterName.with(parameterName)
-                ),
-                () -> expressionReference + " testParameterName(" + parameterName + ")"
+            expected,
+            expressionReference.testParameterName(
+                ExpressionFunctionParameterName.with(parameterName)
+            ),
+            () -> expressionReference + " testParameterName(" + parameterName + ")"
         );
     }
 
@@ -95,7 +95,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     public void testUnmarshallWithCellReference() {
         final String reference = "A1";
         this.checkEquals(SpreadsheetSelection.parseCell(reference),
-                SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
+            SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(reference), this.unmarshallContext())
         );
     }
 
@@ -103,7 +103,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     public void testUnmarshallWithLabel() {
         final String label = "label123";
         this.checkEquals(SpreadsheetSelection.labelName(label),
-                SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())
+            SpreadsheetExpressionReference.unmarshallExpressionReference(JsonNode.string(label), this.unmarshallContext())
         );
     }
 

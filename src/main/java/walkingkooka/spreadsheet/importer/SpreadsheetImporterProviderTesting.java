@@ -34,27 +34,27 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
     @Test
     default void testSpreadsheetImporterSelectorWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporterProvider()
-                        .spreadsheetImporter(
-                                null,
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporterProvider()
+                .spreadsheetImporter(
+                    null,
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetImporterSelectorWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporterProvider()
-                        .spreadsheetImporter(
-                                SpreadsheetImporterSelector.with(
-                                        SpreadsheetImporterName.with("importer-123"),
-                                        ""
-                                ),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporterProvider()
+                .spreadsheetImporter(
+                    SpreadsheetImporterSelector.with(
+                        SpreadsheetImporterName.with("importer-123"),
+                        ""
+                    ),
+                    null
+                )
         );
     }
 
@@ -63,9 +63,9 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
     default void spreadsheetImporterFails(final String selector,
                                           final ProviderContext context) {
         this.spreadsheetImporterFails(
-                this.createSpreadsheetImporterProvider(),
-                SpreadsheetImporterSelector.parse(selector),
-                context
+            this.createSpreadsheetImporterProvider(),
+            SpreadsheetImporterSelector.parse(selector),
+            context
         );
     }
 
@@ -73,18 +73,18 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                           final String selector,
                                           final ProviderContext context) {
         this.spreadsheetImporterFails(
-                provider,
-                SpreadsheetImporterSelector.parse(selector),
-                context
+            provider,
+            SpreadsheetImporterSelector.parse(selector),
+            context
         );
     }
 
     default void spreadsheetImporterFails(final SpreadsheetImporterSelector selector,
                                           final ProviderContext context) {
         this.spreadsheetImporterFails(
-                this.createSpreadsheetImporterProvider(),
-                selector,
-                context
+            this.createSpreadsheetImporterProvider(),
+            selector,
+            context
         );
     }
 
@@ -92,11 +92,11 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                           final SpreadsheetImporterSelector selector,
                                           final ProviderContext context) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetImporter(
-                        selector,
-                        context
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetImporter(
+                selector,
+                context
+            )
         );
     }
 
@@ -104,10 +104,10 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                              final ProviderContext context,
                                              final SpreadsheetImporter expected) {
         this.spreadsheetImporterAndCheck(
-                this.createSpreadsheetImporterProvider(),
-                SpreadsheetImporterSelector.parse(selector),
-                context,
-                expected
+            this.createSpreadsheetImporterProvider(),
+            SpreadsheetImporterSelector.parse(selector),
+            context,
+            expected
         );
     }
 
@@ -116,10 +116,10 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                              final ProviderContext context,
                                              final SpreadsheetImporter expected) {
         this.spreadsheetImporterAndCheck(
-                provider,
-                SpreadsheetImporterSelector.parse(selector),
-                context,
-                expected
+            provider,
+            SpreadsheetImporterSelector.parse(selector),
+            context,
+            expected
         );
     }
 
@@ -127,10 +127,10 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                              final ProviderContext context,
                                              final SpreadsheetImporter expected) {
         this.spreadsheetImporterAndCheck(
-                this.createSpreadsheetImporterProvider(),
-                selector,
-                context,
-                expected
+            this.createSpreadsheetImporterProvider(),
+            selector,
+            context,
+            expected
         );
     }
 
@@ -139,12 +139,12 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                              final ProviderContext context,
                                              final SpreadsheetImporter expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetImporter(
-                        selector,
-                        context
-                ),
-                selector::toString
+            expected,
+            provider.spreadsheetImporter(
+                selector,
+                context
+            ),
+            selector::toString
         );
     }
 
@@ -153,39 +153,39 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
     @Test
     default void testSpreadsheetImporterNameWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporterProvider()
-                        .spreadsheetImporter(
-                                null,
-                                Lists.empty(),
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporterProvider()
+                .spreadsheetImporter(
+                    null,
+                    Lists.empty(),
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetImporterNameWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporterProvider()
-                        .spreadsheetImporter(
-                                SpreadsheetImporterName.JSON,
-                                null,
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporterProvider()
+                .spreadsheetImporter(
+                    SpreadsheetImporterName.JSON,
+                    null,
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetImporterNameWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetImporterProvider()
-                        .spreadsheetImporter(
-                                SpreadsheetImporterName.JSON,
-                                Lists.empty(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetImporterProvider()
+                .spreadsheetImporter(
+                    SpreadsheetImporterName.JSON,
+                    Lists.empty(),
+                    null
+                )
         );
     }
 
@@ -193,10 +193,10 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                           final List<?> values,
                                           final ProviderContext context) {
         this.spreadsheetImporterFails(
-                this.createSpreadsheetImporterProvider(),
-                name,
-                values,
-                context
+            this.createSpreadsheetImporterProvider(),
+            name,
+            values,
+            context
         );
     }
 
@@ -205,12 +205,12 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                           final List<?> values,
                                           final ProviderContext context) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetImporter(
-                        name,
-                        values,
-                        context
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetImporter(
+                name,
+                values,
+                context
+            )
         );
     }
 
@@ -219,11 +219,11 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                              final ProviderContext context,
                                              final SpreadsheetImporter expected) {
         this.spreadsheetImporterAndCheck(
-                this.createSpreadsheetImporterProvider(),
-                name,
-                values,
-                context,
-                expected
+            this.createSpreadsheetImporterProvider(),
+            name,
+            values,
+            context,
+            expected
         );
     }
 
@@ -233,13 +233,13 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                                              final ProviderContext context,
                                              final SpreadsheetImporter expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetImporter(
-                        name,
-                        values,
-                        context
-                ),
-                () -> name + " " + values
+            expected,
+            provider.spreadsheetImporter(
+                name,
+                values,
+                context
+            ),
+            () -> name + " " + values
         );
     }
 
@@ -247,36 +247,36 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
 
     default void spreadsheetImporterInfosAndCheck(final SpreadsheetImporterInfo... expected) {
         this.spreadsheetImporterInfosAndCheck(
-                this.createSpreadsheetImporterProvider(),
-                Sets.of(
-                        expected
-                )
+            this.createSpreadsheetImporterProvider(),
+            Sets.of(
+                expected
+            )
         );
     }
 
     default void spreadsheetImporterInfosAndCheck(final SpreadsheetImporterProvider provider,
                                                   final SpreadsheetImporterInfo... expected) {
         this.spreadsheetImporterInfosAndCheck(
-                provider,
-                Sets.of(
-                        expected
-                )
+            provider,
+            Sets.of(
+                expected
+            )
         );
     }
 
     default void spreadsheetImporterInfosAndCheck(final Set<SpreadsheetImporterInfo> expected) {
         this.spreadsheetImporterInfosAndCheck(
-                this.createSpreadsheetImporterProvider(),
-                expected
+            this.createSpreadsheetImporterProvider(),
+            expected
         );
     }
 
     default void spreadsheetImporterInfosAndCheck(final SpreadsheetImporterProvider provider,
                                                   final Set<SpreadsheetImporterInfo> expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetImporterInfos(),
-                provider::toString
+            expected,
+            provider.spreadsheetImporterInfos(),
+            provider::toString
         );
     }
 

@@ -28,18 +28,18 @@ import java.math.MathContext;
 import java.util.Locale;
 
 public final class SpreadsheetFormattersTest implements ClassTesting2<SpreadsheetFormatters>,
-        PublicStaticHelperTesting<SpreadsheetFormatters> {
+    PublicStaticHelperTesting<SpreadsheetFormatters> {
 
     // SpreadsheetPatternKind...........................................................................................
 
     @Test
     public void testSpreadsheetPatternKind() {
         this.checkNotEquals(
-                null,
-                SpreadsheetFormatters.spreadsheetPatternKind(
-                        SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
-                        Locale.forLanguageTag("En-AU")
-                )
+            null,
+            SpreadsheetFormatters.spreadsheetPatternKind(
+                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
+                Locale.forLanguageTag("En-AU")
+            )
         );
     }
 

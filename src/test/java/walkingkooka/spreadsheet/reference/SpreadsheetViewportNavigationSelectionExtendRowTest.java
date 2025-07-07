@@ -29,8 +29,8 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
     @Test
     public void testHasText() {
         this.textAndCheck(
-                SpreadsheetViewportNavigationSelectionExtendRow.with(SpreadsheetSelection.parseRow("123")),
-                "extend row 123"
+            SpreadsheetViewportNavigationSelectionExtendRow.with(SpreadsheetSelection.parseRow("123")),
+            "extend row 123"
         );
     }
 
@@ -41,10 +41,10 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                Optional.of(
-                        row.setDefaultAnchor()
-                )
+            this.createSpreadsheetViewportNavigation(row),
+            Optional.of(
+                row.setDefaultAnchor()
+            )
         );
     }
 
@@ -53,14 +53,14 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                Optional.of(
-                        SpreadsheetSelection.parseCell("B2")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        row.setDefaultAnchor()
-                )
+            this.createSpreadsheetViewportNavigation(row),
+            Optional.of(
+                SpreadsheetSelection.parseCell("B2")
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                row.setDefaultAnchor()
+            )
         );
     }
 
@@ -69,14 +69,14 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference column = SpreadsheetSelection.parseRow("3");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(column),
-                Optional.of(
-                        SpreadsheetSelection.parseColumn("B")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        column.setDefaultAnchor()
-                )
+            this.createSpreadsheetViewportNavigation(column),
+            Optional.of(
+                SpreadsheetSelection.parseColumn("B")
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                column.setDefaultAnchor()
+            )
         );
     }
 
@@ -89,13 +89,13 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                Optional.of(
-                        row.setDefaultAnchor()
-                ),
-                Optional.of(
-                        row.setDefaultAnchor()
-                )
+            this.createSpreadsheetViewportNavigation(row),
+            Optional.of(
+                row.setDefaultAnchor()
+            ),
+            Optional.of(
+                row.setDefaultAnchor()
+            )
         );
     }
 
@@ -104,30 +104,30 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("4");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                Optional.of(
-                        SpreadsheetSelection.parseRow("3")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange("3:4")
-                                .setAnchor(SpreadsheetViewportAnchor.TOP)
-                )
+            this.createSpreadsheetViewportNavigation(row),
+            Optional.of(
+                SpreadsheetSelection.parseRow("3")
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange("3:4")
+                    .setAnchor(SpreadsheetViewportAnchor.TOP)
+            )
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowAfter() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(SpreadsheetSelection.parseRow("2")),
-                Optional.of(
-                        SpreadsheetSelection.parseRow("3")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange("2:3")
-                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
-                )
+            this.createSpreadsheetViewportNavigation(SpreadsheetSelection.parseRow("2")),
+            Optional.of(
+                SpreadsheetSelection.parseRow("3")
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange("2:3")
+                    .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+            )
         );
     }
 
@@ -138,15 +138,15 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                Optional.of(
-                        row.toRowRange()
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        row.toRowRange()
-                                .setDefaultAnchor()
-                )
+            this.createSpreadsheetViewportNavigation(row),
+            Optional.of(
+                row.toRowRange()
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                row.toRowRange()
+                    .setDefaultAnchor()
+            )
         );
     }
 
@@ -155,30 +155,30 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("4");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange("3")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange("3:4")
-                                .setAnchor(SpreadsheetViewportAnchor.TOP)
-                )
+            this.createSpreadsheetViewportNavigation(row),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange("3")
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange("3:4")
+                    .setAnchor(SpreadsheetViewportAnchor.TOP)
+            )
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeAfter() {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(SpreadsheetSelection.parseRow("2")),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange("3")
-                                .setDefaultAnchor()
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange("2:3")
-                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
-                )
+            this.createSpreadsheetViewportNavigation(SpreadsheetSelection.parseRow("2")),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange("3")
+                    .setDefaultAnchor()
+            ),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange("2:3")
+                    .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+            )
         );
     }
 
@@ -187,220 +187,220 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
     @Test
     public void testUpdateRowPreviousRowRangeTopBefore() {
         this.updateRowRangeAndCheck(
-                "5",
-                "3",
-                SpreadsheetViewportAnchor.TOP,
-                "3:5",
-                SpreadsheetViewportAnchor.TOP
+            "5",
+            "3",
+            SpreadsheetViewportAnchor.TOP,
+            "3:5",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopBefore2() {
         this.updateRowRangeAndCheck(
-                "4",
-                "3:4",
-                SpreadsheetViewportAnchor.TOP,
-                "3:4",
-                SpreadsheetViewportAnchor.TOP
+            "4",
+            "3:4",
+            SpreadsheetViewportAnchor.TOP,
+            "3:4",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopBefore3() {
         this.updateRowRangeAndCheck(
-                "5",
-                "3:4",
-                SpreadsheetViewportAnchor.TOP,
-                "3:5",
-                SpreadsheetViewportAnchor.TOP
+            "5",
+            "3:4",
+            SpreadsheetViewportAnchor.TOP,
+            "3:5",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomBefore() {
         this.updateRowRangeAndCheck(
-                "5",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "4:5",
-                SpreadsheetViewportAnchor.TOP
+            "5",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "4:5",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomBefore2() {
         this.updateRowRangeAndCheck(
-                "4",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                SpreadsheetSelection.parseRow("4")
-                        .setDefaultAnchor()
+            "4",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            SpreadsheetSelection.parseRow("4")
+                .setDefaultAnchor()
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomBefore3() {
         this.updateRowRangeAndCheck(
-                "5",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "4:5",
-                SpreadsheetViewportAnchor.TOP
+            "5",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "4:5",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTop() {
         this.updateRowRangeAndCheck(
-                "3",
-                "3:4",
-                SpreadsheetViewportAnchor.TOP,
-                SpreadsheetSelection.parseRow("3")
-                        .setDefaultAnchor()
+            "3",
+            "3:4",
+            SpreadsheetViewportAnchor.TOP,
+            SpreadsheetSelection.parseRow("3")
+                .setDefaultAnchor()
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottom() {
         this.updateRowRangeAndCheck(
-                "3",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM
+            "3",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopInside2() {
         this.updateRowRangeAndCheck(
-                "4",
-                "3:4",
-                SpreadsheetViewportAnchor.TOP,
-                "3:4",
-                SpreadsheetViewportAnchor.TOP
+            "4",
+            "3:4",
+            SpreadsheetViewportAnchor.TOP,
+            "3:4",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomInside2() {
         this.updateRowRangeAndCheck(
-                "4",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                SpreadsheetSelection.parseRow("4")
-                        .setDefaultAnchor()
+            "4",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            SpreadsheetSelection.parseRow("4")
+                .setDefaultAnchor()
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopInside3() {
         this.updateRowRangeAndCheck(
-                "4",
-                "3:5",
-                SpreadsheetViewportAnchor.TOP,
-                "3:4",
-                SpreadsheetViewportAnchor.TOP
+            "4",
+            "3:5",
+            SpreadsheetViewportAnchor.TOP,
+            "3:4",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomInside3() {
         this.updateRowRangeAndCheck(
-                "4",
-                "3:5",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "4:5",
-                SpreadsheetViewportAnchor.BOTTOM
+            "4",
+            "3:5",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "4:5",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopInside4() {
         this.updateRowRangeAndCheck(
-                "5",
-                "3:6",
-                SpreadsheetViewportAnchor.TOP,
-                "3:5",
-                SpreadsheetViewportAnchor.TOP
+            "5",
+            "3:6",
+            SpreadsheetViewportAnchor.TOP,
+            "3:5",
+            SpreadsheetViewportAnchor.TOP
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomInside4() {
         this.updateRowRangeAndCheck(
-                "5",
-                "3:6",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "5:6",
-                SpreadsheetViewportAnchor.BOTTOM
+            "5",
+            "3:6",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "5:6",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopAfter() {
         this.updateRowRangeAndCheck(
-                "2",
-                "3",
-                SpreadsheetViewportAnchor.TOP,
-                "2:3",
-                SpreadsheetViewportAnchor.BOTTOM
+            "2",
+            "3",
+            SpreadsheetViewportAnchor.TOP,
+            "2:3",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopAfter2() {
         this.updateRowRangeAndCheck(
-                "3",
-                "3:4",
-                SpreadsheetViewportAnchor.TOP,
-                SpreadsheetSelection.parseRow("3")
-                        .setDefaultAnchor()
+            "3",
+            "3:4",
+            SpreadsheetViewportAnchor.TOP,
+            SpreadsheetSelection.parseRow("3")
+                .setDefaultAnchor()
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeTopAfter3() {
         this.updateRowRangeAndCheck(
-                "2",
-                "3:4",
-                SpreadsheetViewportAnchor.TOP,
-                "2:3",
-                SpreadsheetViewportAnchor.BOTTOM
+            "2",
+            "3:4",
+            SpreadsheetViewportAnchor.TOP,
+            "2:3",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomAfter() {
         this.updateRowRangeAndCheck(
-                "2",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "2:4",
-                SpreadsheetViewportAnchor.BOTTOM
+            "2",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "2:4",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomAfter2() {
         this.updateRowRangeAndCheck(
-                "3",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM
+            "3",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
     @Test
     public void testUpdateRowPreviousRowRangeBottomAfter3() {
         this.updateRowRangeAndCheck(
-                "2",
-                "3:4",
-                SpreadsheetViewportAnchor.BOTTOM,
-                "2:4",
-                SpreadsheetViewportAnchor.BOTTOM
+            "2",
+            "3:4",
+            SpreadsheetViewportAnchor.BOTTOM,
+            "2:4",
+            SpreadsheetViewportAnchor.BOTTOM
         );
     }
 
@@ -410,11 +410,11 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                                         final String expectedRowRange,
                                         final SpreadsheetViewportAnchor expectedAnchor) {
         this.updateRowRangeAndCheck(
-                row,
-                rowRange,
-                rowRangeAnchor,
-                SpreadsheetSelection.parseRowRange(expectedRowRange)
-                        .setAnchor(expectedAnchor)
+            row,
+            rowRange,
+            rowRangeAnchor,
+            SpreadsheetSelection.parseRowRange(expectedRowRange)
+                .setAnchor(expectedAnchor)
         );
     }
 
@@ -423,14 +423,14 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
                                         final SpreadsheetViewportAnchor rowRangeAnchor,
                                         final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(
-                        SpreadsheetSelection.parseRow(row)
-                ),
-                Optional.of(
-                        SpreadsheetSelection.parseRowRange(rowRange)
-                                .setAnchor(rowRangeAnchor)
-                ),
-                Optional.of(expected)
+            this.createSpreadsheetViewportNavigation(
+                SpreadsheetSelection.parseRow(row)
+            ),
+            Optional.of(
+                SpreadsheetSelection.parseRowRange(rowRange)
+                    .setAnchor(rowRangeAnchor)
+            ),
+            Optional.of(expected)
         );
     }
 
@@ -439,11 +439,11 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell.toRow()),
-                viewportRectangle(HOME)
-                        .viewport(),
-                viewportRectangle(cell.setColumn(HOME.column()))
-                        .viewport()
+            this.createSpreadsheetViewportNavigation(cell.toRow()),
+            viewportRectangle(HOME)
+                .viewport(),
+            viewportRectangle(cell.setColumn(HOME.column()))
+                .viewport()
         );
     }
 

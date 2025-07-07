@@ -36,7 +36,7 @@ final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader imple
      */
     static SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader with(final SpreadsheetStoreRepository repository) {
         return new SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader(
-                Objects.requireNonNull(repository, "repository")
+            Objects.requireNonNull(repository, "repository")
         );
     }
 
@@ -51,7 +51,7 @@ final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader imple
         Objects.requireNonNull(context, "context");
 
         return this.repository.cells()
-                .load(cell);
+            .load(cell);
     }
 
     @Override
@@ -61,7 +61,7 @@ final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader imple
         Objects.requireNonNull(context, "context");
 
         return this.repository.cells()
-                .loadCellRange(range);
+            .loadCellRange(range);
     }
 
     @Override
@@ -69,7 +69,7 @@ final class SpreadsheetStoreRepositorySpreadsheetExpressionReferenceLoader imple
         Objects.requireNonNull(labelName, "labelName");
 
         return this.repository.labels()
-                .load(labelName);
+            .load(labelName);
     }
 
     @Override

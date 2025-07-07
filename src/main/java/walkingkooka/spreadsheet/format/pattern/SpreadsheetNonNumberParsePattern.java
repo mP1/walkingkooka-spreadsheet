@@ -44,11 +44,10 @@ abstract class SpreadsheetNonNumberParsePattern extends SpreadsheetParsePattern 
     /**
      * Creates a {@link Parsers#alternatives(List)} that tries each of the individual patterns until success.
      */
-    @Override
-    final SpreadsheetParser createParser() {
+    @Override final SpreadsheetParser createParser() {
         return SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor.toParser(
-                this.value(),
-                this.valueType()
+            this.value(),
+            this.valueType()
         );
     }
 

@@ -28,60 +28,60 @@ public final class SpreadsheetConverterNullToNumberTest extends SpreadsheetConve
     @Test
     public void testConvertNullToNumber() {
         this.convertAndCheck(
-                null,
-                Number.class,
-                MISSING
+            null,
+            Number.class,
+            MISSING
         );
     }
 
     @Test
     public void testConvertNullToExpressionNumber() {
         this.convertAndCheck(
-                null,
-                ExpressionNumber.class,
-                MISSING
+            null,
+            ExpressionNumber.class,
+            MISSING
         );
     }
 
     @Test
     public void testConvertNullToExpressionNumberBigDecimal() {
         this.convertAndCheck(
-                null,
-                (Class<ExpressionNumber>)ExpressionNumberKind.BIG_DECIMAL.numberType(),
-                MISSING
+            null,
+            (Class<ExpressionNumber>) ExpressionNumberKind.BIG_DECIMAL.numberType(),
+            MISSING
         );
     }
 
     @Test
     public void testConvertNullToExpressionNumberDouble() {
         this.convertAndCheck(
-                null,
-                (Class<ExpressionNumber>)ExpressionNumberKind.DOUBLE.numberType(),
-                MISSING
+            null,
+            (Class<ExpressionNumber>) ExpressionNumberKind.DOUBLE.numberType(),
+            MISSING
         );
     }
 
     @Test
     public void testConvertNumberToNumber() {
         this.convertFails(
-                123,
-                Number.class
+            123,
+            Number.class
         );
     }
 
     @Test
     public void testConvertExpressionNumberBigDecimalToExpressionNumber() {
         this.convertFails(
-                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                ExpressionNumber.class
+            ExpressionNumberKind.BIG_DECIMAL.zero(),
+            ExpressionNumber.class
         );
     }
 
     @Test
     public void testConvertExpressionNumberDoubleToExpressionNumber() {
         this.convertFails(
-                ExpressionNumberKind.DOUBLE.zero(),
-                ExpressionNumber.class
+            ExpressionNumberKind.DOUBLE.zero(),
+            ExpressionNumber.class
         );
     }
 
@@ -105,8 +105,8 @@ public final class SpreadsheetConverterNullToNumberTest extends SpreadsheetConve
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterNullToNumber.INSTANCE,
-                "null to Number"
+            SpreadsheetConverterNullToNumber.INSTANCE,
+            "null to Number"
         );
     }
 

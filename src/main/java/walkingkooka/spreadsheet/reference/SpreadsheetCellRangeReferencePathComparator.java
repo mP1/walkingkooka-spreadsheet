@@ -28,10 +28,10 @@ final class SpreadsheetCellRangeReferencePathComparator implements Comparator<Sp
                                                             final int reverseY,
                                                             final String toString) {
         return new SpreadsheetCellRangeReferencePathComparator(
-                xFirst,
-                reverseX,
-                reverseY,
-                toString
+            xFirst,
+            reverseX,
+            reverseY,
+            toString
         );
     }
 
@@ -52,25 +52,25 @@ final class SpreadsheetCellRangeReferencePathComparator implements Comparator<Sp
 
         if (this.xFirst) {
             result = left.column()
-                    .compareTo(
-                            right.column()
-                    ) * this.reverseX;
+                .compareTo(
+                    right.column()
+                ) * this.reverseX;
             if (Comparators.EQUAL == result) {
                 result = left.row()
-                        .compareTo(
-                                right.row()
-                        ) * this.reverseY;
+                    .compareTo(
+                        right.row()
+                    ) * this.reverseY;
             }
         } else {
             result = left.row()
-                    .compareTo(
-                            right.row()
-                    ) * this.reverseY;
+                .compareTo(
+                    right.row()
+                ) * this.reverseY;
             if (Comparators.EQUAL == result) {
                 result = left.column()
-                        .compareTo(
-                                right.column()
-                        ) * this.reverseX;
+                    .compareTo(
+                        right.column()
+                    ) * this.reverseX;
             }
         }
 

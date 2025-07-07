@@ -33,7 +33,7 @@ public final class NumberSpreadsheetFormatParserToken extends ParentSpreadsheetF
      */
     static NumberSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new NumberSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmpty(text));
+            checkTextNotEmpty(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class NumberSpreadsheetFormatParserToken extends ParentSpreadsheetF
     @Override
     public NumberSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                NumberSpreadsheetFormatParserToken::with
+            this,
+            children,
+            NumberSpreadsheetFormatParserToken::with
         );
     }
 

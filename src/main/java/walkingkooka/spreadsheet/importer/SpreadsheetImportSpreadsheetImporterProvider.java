@@ -41,8 +41,8 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -55,9 +55,9 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
         Objects.requireNonNull(context, "context");
 
         return this.spreadsheetImporter0(
-                name,
-                Lists.immutable(values),
-                context
+            name,
+            Lists.immutable(values),
+            context
         );
     }
 
@@ -71,9 +71,9 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
         switch (name.value()) {
             case SpreadsheetImporterName.COLLECTION_STRING:
                 importer = SpreadsheetImporters.collection(
-                        values.stream()
-                                .map(e -> (SpreadsheetImporter) e)
-                                .collect(Collectors.toList())
+                    values.stream()
+                        .map(e -> (SpreadsheetImporter) e)
+                        .collect(Collectors.toList())
                 );
                 break;
             case SpreadsheetImporterName.EMPTY_STRING:
@@ -103,17 +103,17 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
     }
 
     private final static SpreadsheetImporterInfoSet INFOS = SpreadsheetImporterInfoSet.with(
-            Sets.of(
-                    spreadsheetImporterInfo(SpreadsheetImporterName.COLLECTION),
-                    spreadsheetImporterInfo(SpreadsheetImporterName.EMPTY),
-                    spreadsheetImporterInfo(SpreadsheetImporterName.JSON)
-            )
+        Sets.of(
+            spreadsheetImporterInfo(SpreadsheetImporterName.COLLECTION),
+            spreadsheetImporterInfo(SpreadsheetImporterName.EMPTY),
+            spreadsheetImporterInfo(SpreadsheetImporterName.JSON)
+        )
     );
 
     private static SpreadsheetImporterInfo spreadsheetImporterInfo(final SpreadsheetImporterName name) {
         return SpreadsheetImporterInfo.with(
-                SpreadsheetImporterProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
-                name
+            SpreadsheetImporterProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
+            name
         );
     }
 

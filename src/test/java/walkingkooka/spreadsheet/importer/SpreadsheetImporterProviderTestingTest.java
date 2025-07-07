@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.Objects;
 
 public final class SpreadsheetImporterProviderTestingTest implements SpreadsheetImporterProviderTesting<SpreadsheetImporterProviderTestingTest.TestSpreadsheetImporterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "text-format-pattern @@";
 
     private final static SpreadsheetImporter IMPORTER = SpreadsheetImporters.fake();
 
     private final static SpreadsheetImporterInfo INFO = SpreadsheetImporterInfo.with(
-            Url.parseAbsolute("https://example.com/123"),
-            SpreadsheetImporterName.with("importer-123")
+        Url.parseAbsolute("https://example.com/123"),
+        SpreadsheetImporterName.with("importer-123")
     );
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -45,27 +45,27 @@ public final class SpreadsheetImporterProviderTestingTest implements Spreadsheet
     @Test
     public void testSpreadsheetImporterSelectorAndCheck() {
         this.spreadsheetImporterAndCheck(
-                SELECTOR,
-                CONTEXT,
-                IMPORTER
+            SELECTOR,
+            CONTEXT,
+            IMPORTER
         );
     }
 
     @Test
     public void testSpreadsheetImporterNameAndCheck() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(SELECTOR).name(),
-                Lists.empty(),
-                CONTEXT,
-                IMPORTER
+            SpreadsheetImporterSelector.parse(SELECTOR).name(),
+            Lists.empty(),
+            CONTEXT,
+            IMPORTER
         );
     }
 
     @Test
     public void testSpreadsheetImporterInfosAndCheck() {
         this.spreadsheetImporterInfosAndCheck(
-                new TestSpreadsheetImporterProvider(),
-                INFO
+            new TestSpreadsheetImporterProvider(),
+            INFO
         );
     }
 

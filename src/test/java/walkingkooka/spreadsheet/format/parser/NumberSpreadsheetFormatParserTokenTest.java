@@ -102,11 +102,11 @@ public final class NumberSpreadsheetFormatParserTokenTest extends ParentSpreadsh
         }.accept(token);
         this.checkEquals("7137152871628428", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        text, text, text, text, text,
-                        digit, digit, digit, digit, digit,
-                        token, token, token),
-                visited,
-                "visited");
+                text, text, text, text, text,
+                digit, digit, digit, digit, digit,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     // kind............................................................................................................

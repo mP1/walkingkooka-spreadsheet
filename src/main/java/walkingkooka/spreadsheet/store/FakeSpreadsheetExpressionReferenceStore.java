@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 public class FakeSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference>
-        extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferenceStore<T>, Fake {
+    extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferenceStore<T>, Fake {
 
     @Override
     public void saveCells(final T reference,

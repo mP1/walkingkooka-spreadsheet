@@ -41,8 +41,8 @@ public final class DateTimeSpreadsheetFormulaParserToken extends ValueSpreadshee
      */
     public LocalDateTime toLocalDateTime(final DateTimeContext context) {
         return TemporalSpreadsheetFormulaParserTokenVisitor.acceptSpreadsheetParentParserToken(
-                this,
-                context.defaultYear()
+            this,
+            context.defaultYear()
         ).toLocalDateTime(context);
     }
 
@@ -51,9 +51,9 @@ public final class DateTimeSpreadsheetFormulaParserToken extends ValueSpreadshee
     @Override
     public DateTimeSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                DateTimeSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            DateTimeSpreadsheetFormulaParserToken::with
         );
     }
 

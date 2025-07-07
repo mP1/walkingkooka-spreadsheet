@@ -32,20 +32,20 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerCondit
     static ConditionSpreadsheetFormatParserToken condition(final List<ParserToken> value,
                                                            final String text) {
         final SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor(
-                value,
-                text
+            value,
+            text
         );
         ConditionSpreadsheetFormatParserToken condition = null;
 
-        for(final ParserToken token : value) {
+        for (final ParserToken token : value) {
             visitor.accept(token);
             condition = visitor.condition;
-            if(null != condition) {
+            if (null != condition) {
                 break;
             }
         }
 
-        if(null == condition) {
+        if (null == condition) {
             throw new IllegalStateException("Missing condition");
         }
         return condition;
@@ -171,8 +171,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerCondit
 
     private void setCondition(final BiFunction<List<ParserToken>, String, ConditionSpreadsheetFormatParserToken> condition) {
         this.condition = condition.apply(
-                this.value,
-                this.text
+            this.value,
+            this.text
         );
     }
 

@@ -83,7 +83,7 @@ public final class WhitespaceSpreadsheetFormatParserTokenTest extends SymbolSpre
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.TEXT_LITERAL
+            SpreadsheetFormatParserTokenKind.TEXT_LITERAL
         );
     }
 

@@ -40,7 +40,7 @@ public final class TimeSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
      */
     public LocalTime toLocalTime() {
         return TemporalSpreadsheetFormulaParserTokenVisitor.acceptSpreadsheetParentParserToken(this, Integer.MAX_VALUE)
-                .toLocalTime();
+            .toLocalTime();
     }
 
     // children.........................................................................................................
@@ -48,9 +48,9 @@ public final class TimeSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
     @Override
     public TimeSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                TimeSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            TimeSpreadsheetFormulaParserToken::with
         );
     }
 

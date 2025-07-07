@@ -57,7 +57,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext
-        implements SpreadsheetExpressionEvaluationContext {
+    implements SpreadsheetExpressionEvaluationContext {
 
     public FakeSpreadsheetExpressionEvaluationContext() {
         super();

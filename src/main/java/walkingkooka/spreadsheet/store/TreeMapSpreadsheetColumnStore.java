@@ -89,8 +89,8 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     public Set<SpreadsheetColumnReference> ids(final int offset,
                                                final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -98,8 +98,8 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     public List<SpreadsheetColumn> values(final int offset,
                                           final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -107,8 +107,8 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     public List<SpreadsheetColumn> between(final SpreadsheetColumnReference from,
                                            final SpreadsheetColumnReference to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

@@ -29,10 +29,10 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
 
     static <T> SpreadsheetComparator<T> with(final SpreadsheetComparator<T> comparator) {
         return comparator instanceof ReverseSpreadsheetComparator ?
-                ((ReverseSpreadsheetComparator<T>) comparator).comparator :
-                new ReverseSpreadsheetComparator<>(
-                        Objects.requireNonNull(comparator, "compare")
-                );
+            ((ReverseSpreadsheetComparator<T>) comparator).comparator :
+            new ReverseSpreadsheetComparator<>(
+                Objects.requireNonNull(comparator, "compare")
+            );
     }
 
     private ReverseSpreadsheetComparator(final SpreadsheetComparator<T> comparator) {
@@ -48,18 +48,18 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
     public int compare(final T left,
                        final T right) {
         return -
-                Comparators.normalize(
-                        this.comparator.compare(
-                                left,
-                                right
-                        )
-                );
+            Comparators.normalize(
+                this.comparator.compare(
+                    left,
+                    right
+                )
+            );
     }
 
     @Override
     public SpreadsheetComparatorDirection direction() {
         return this.comparator.direction()
-                .flip();
+            .flip();
     }
 
     @Override
@@ -79,7 +79,7 @@ final class ReverseSpreadsheetComparator<T> implements SpreadsheetComparator<T> 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ReverseSpreadsheetComparator && this.equals0(Cast.to(other));
+            other instanceof ReverseSpreadsheetComparator && this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final ReverseSpreadsheetComparator<?> other) {

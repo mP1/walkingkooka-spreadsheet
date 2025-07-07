@@ -36,8 +36,8 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
     private final static SpreadsheetParser PARSER = SpreadsheetParsers.fake();
 
     private final static SpreadsheetParserInfo INFO = SpreadsheetParserInfo.with(
-            Url.parseAbsolute("https://example.com/123"),
-            SpreadsheetParserName.DATE_PARSER_PATTERN
+        Url.parseAbsolute("https://example.com/123"),
+        SpreadsheetParserName.DATE_PARSER_PATTERN
     );
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
@@ -45,9 +45,9 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
     @Test
     public void testSpreadsheetParserSelectorAndCheck() {
         this.spreadsheetParserAndCheck(
-                SELECTOR,
-                PROVIDER_CONTEXT,
-                PARSER
+            SELECTOR,
+            PROVIDER_CONTEXT,
+            PARSER
         );
     }
 
@@ -56,18 +56,18 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
         final SpreadsheetParserSelector selector = SpreadsheetParserSelector.parse(SELECTOR);
 
         this.spreadsheetParserAndCheck(
-                selector.name(),
-                Lists.of(selector.text()),
-                PROVIDER_CONTEXT,
-                PARSER
+            selector.name(),
+            Lists.of(selector.text()),
+            PROVIDER_CONTEXT,
+            PARSER
         );
     }
 
     @Test
     public void testSpreadsheetParserInfosAndCheck() {
         this.spreadsheetParserInfosAndCheck(
-                new TestSpreadsheetParserProvider(),
-                INFO
+            new TestSpreadsheetParserProvider(),
+            INFO
         );
     }
 

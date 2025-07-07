@@ -59,10 +59,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                     final SpreadsheetViewportWindows window,
                                     final SpreadsheetEngineContext context) {
         return new BasicSpreadsheetEnginePrepareResponse(
-                engine,
-                changes,
-                window,
-                context
+            engine,
+            changes,
+            window,
+            context
         ).go();
     }
 
@@ -114,74 +114,74 @@ final class BasicSpreadsheetEnginePrepareResponse {
         SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
         if (this.shouldSaveUpdateColumns) {
             delta = delta.setColumns(
-                    extractSavedOrUpdated(
-                            this.columns,
-                            SpreadsheetColumn.REFERENCE_COMPARATOR
-                    )
+                extractSavedOrUpdated(
+                    this.columns,
+                    SpreadsheetColumn.REFERENCE_COMPARATOR
+                )
             );
         }
         if (this.shouldSaveUpdateRows) {
             delta = delta.setRows(
-                    extractSavedOrUpdated(
-                            this.rows,
-                            SpreadsheetRow.REFERENCE_COMPARATOR
-                    )
+                extractSavedOrUpdated(
+                    this.rows,
+                    SpreadsheetRow.REFERENCE_COMPARATOR
+                )
             );
         }
 
         if (this.shouldSaveUpdateCells) {
             delta = delta.setCells(
-                    extractSavedOrUpdated(
-                            this.cells,
-                            SpreadsheetCell.REFERENCE_COMPARATOR
-                    )
+                extractSavedOrUpdated(
+                    this.cells,
+                    SpreadsheetCell.REFERENCE_COMPARATOR
+                )
             );
         }
 
         if (this.shouldSaveUpdateLabels) {
             delta = delta.setLabels(
-                    extractSavedOrUpdated(
-                            this.labels,
-                            null // Comparator
-                    )
+                extractSavedOrUpdated(
+                    this.labels,
+                    null // Comparator
+                )
             );
         }
 
         final Set<SpreadsheetDeltaProperties> properties = this.deltaProperties;
-        if(properties.contains(SpreadsheetDeltaProperties.REFERENCES)) {
+        if (properties.contains(SpreadsheetDeltaProperties.REFERENCES)) {
             delta = delta.setReferences(
-                    this.extractExternalReferences()
+                this.extractExternalReferences()
             );
         }
 
         if (this.shouldDeleteCells) {
             delta = delta.setDeletedCells(
-                    extractDeleted(this.cells)
+                extractDeleted(this.cells)
             );
         }
         if (this.shouldDeleteColumns) {
             delta = delta.setDeletedColumns(
-                    extractDeleted(this.columns)
+                extractDeleted(this.columns)
             );
         }
         if (this.shouldDeleteRows) {
             delta = delta.setDeletedRows(
-                    extractDeleted(this.rows)
+                extractDeleted(this.rows)
             );
         }
         if (this.shouldDeleteLabels) {
             delta = delta.setDeletedLabels(
-                    extractDeleted(this.labels)
+                extractDeleted(this.labels)
             );
         }
         if (properties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
             delta = delta.setColumnWidths(
-                    this.columnsWidths()
+                this.columnsWidths()
             );
         }
         if (properties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
             delta = delta.setRowHeights(
-                    this.rowHeights()
+                this.rowHeights()
             );
         }
 
@@ -191,16 +191,16 @@ final class BasicSpreadsheetEnginePrepareResponse {
         if (hasColumnCount || hasRowCount) {
             if (hasColumnCount) {
                 delta = delta.setColumnCount(
-                        OptionalInt.of(
-                                this.engine.columnCount(this.context)
-                        )
+                    OptionalInt.of(
+                        this.engine.columnCount(this.context)
+                    )
                 );
             }
             if (hasRowCount) {
                 delta = delta.setRowCount(
-                        OptionalInt.of(
-                                this.engine.rowCount(this.context)
-                        )
+                    OptionalInt.of(
+                        this.engine.rowCount(this.context)
+                    )
                 );
             }
         }
@@ -215,22 +215,22 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn> referenceAndColumn : this.changes.columns.values()) {
                 final SpreadsheetColumnReference column = referenceAndColumn.reference;
 
-                final BasicSpreadsheetEngineChangesCacheStatusColumn status = (BasicSpreadsheetEngineChangesCacheStatusColumn)referenceAndColumn.status();
+                final BasicSpreadsheetEngineChangesCacheStatusColumn status = (BasicSpreadsheetEngineChangesCacheStatusColumn) referenceAndColumn.status();
 
-                switch(status) {
+                switch (status) {
                     case SAVED:
                         if (this.shouldSaveUpdateColumns) {
                             columns.put(
-                                    column,
-                                    referenceAndColumn.value()
+                                column,
+                                referenceAndColumn.value()
                             );
                         }
                         break;
                     case DELETED:
                         if (this.shouldDeleteColumns) {
                             columns.put(
-                                    column,
-                                    null
+                                column,
+                                null
                             );
                         }
                         break;
@@ -250,22 +250,22 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow> referenceAndRow : this.changes.rows.values()) {
                 final SpreadsheetRowReference row = referenceAndRow.reference;
 
-                final BasicSpreadsheetEngineChangesCacheStatusRow status = (BasicSpreadsheetEngineChangesCacheStatusRow)referenceAndRow.status();
+                final BasicSpreadsheetEngineChangesCacheStatusRow status = (BasicSpreadsheetEngineChangesCacheStatusRow) referenceAndRow.status();
 
-                switch(status) {
+                switch (status) {
                     case SAVED:
                         if (this.shouldSaveUpdateRows) {
                             rows.put(
-                                    row,
-                                    referenceAndRow.value()
+                                row,
+                                referenceAndRow.value()
                             );
                         }
                         break;
                     case DELETED:
                         if (this.shouldDeleteRows) {
                             rows.put(
-                                    row,
-                                    null
+                                row,
+                                null
                             );
                         }
                         break;
@@ -283,15 +283,15 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> nameAndMapping : this.changes.labels.values()) {
                 final SpreadsheetLabelName labelName = nameAndMapping.reference;
 
-                final BasicSpreadsheetEngineChangesCacheStatusLabel status = (BasicSpreadsheetEngineChangesCacheStatusLabel)nameAndMapping.status();
+                final BasicSpreadsheetEngineChangesCacheStatusLabel status = (BasicSpreadsheetEngineChangesCacheStatusLabel) nameAndMapping.status();
                 switch (status) {
                     case LOADED_REFERENCES_REFRESHED:
                     case SAVED_REFERENCES_REFRESHED:
                         final SpreadsheetLabelMapping labelMapping = nameAndMapping.value();
                         if (this.shouldSaveUpdateLabels) {
                             this.labels.put(
-                                    labelName,
-                                    labelMapping
+                                labelName,
+                                labelMapping
                             );
                         }
                         this.addLabelMappingCells(labelMapping);
@@ -299,8 +299,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     case DELETED_REFERENCES_REFRESHED:
                         if (this.shouldDeleteLabels) {
                             this.labels.put(
-                                    labelName,
-                                    null
+                                labelName,
+                                null
                             );
                         }
                         break;
@@ -326,27 +326,27 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                     // include all columns and rows within the window.
                     cellRange.cellStream()
-                            .forEach(c -> {
-                                        if (cells.add(c)) {
-                                            addColumn(
-                                                    c.column()
-                                            );
-                                            addRow(
-                                                    c.row()
-                                            );
-                                        }
-                                    }
-                            );
+                        .forEach(c -> {
+                                if (cells.add(c)) {
+                                    addColumn(
+                                        c.column()
+                                    );
+                                    addRow(
+                                        c.row()
+                                    );
+                                }
+                            }
+                        );
 
                     if (this.shouldSaveUpdateLabels) {
                         for (final SpreadsheetLabelMapping labelMapping : this.labelStore.findLabelsWithReference(
-                                cellRange,
-                                0,
-                                BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
+                            cellRange,
+                            0,
+                            BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
                         )) {
                             this.labels.put(
-                                    labelMapping.label(),
-                                    labelMapping
+                                labelMapping.label(),
+                                labelMapping
                             );
                         }
                     }
@@ -363,15 +363,15 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : this.changes.cells.values()) {
                 final SpreadsheetCellReference cell = referenceAndCell.reference;
 
-                final BasicSpreadsheetEngineChangesCacheStatusCell status = (BasicSpreadsheetEngineChangesCacheStatusCell)referenceAndCell.status();
+                final BasicSpreadsheetEngineChangesCacheStatusCell status = (BasicSpreadsheetEngineChangesCacheStatusCell) referenceAndCell.status();
                 switch (status) {
                     case LOADED_REFERENCES_REFRESHED:
                     case SAVED_REFERENCES_REFRESHED:
                     case REFERENCE_SAVED_REFERENCES_REFRESHED:
                         if (this.shouldSaveUpdateCells) {
                             this.cells.put(
-                                    cell,
-                                    referenceAndCell.value()
+                                cell,
+                                referenceAndCell.value()
                             );
                         }
 
@@ -380,8 +380,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     case DELETED_REFERENCES_REFRESHED:
                         if (this.shouldDeleteCells) {
                             this.cells.put(
-                                    cell,
-                                    null
+                                cell,
+                                null
                             );
                         }
                         break;
@@ -393,10 +393,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 }
 
                 this.addColumn(
-                        cell.column()
+                    cell.column()
                 );
                 this.addRow(
-                        cell.row()
+                    cell.row()
                 );
             }
 
@@ -418,15 +418,15 @@ final class BasicSpreadsheetEnginePrepareResponse {
     private void addCell(final SpreadsheetCellReference cell) {
         if (this.window.test(cell)) {
             if (this.add(
-                    cell,
-                    this.cells,
-                    this.cellStore
+                cell,
+                this.cells,
+                this.cellStore
             )) {
                 this.addColumn(
-                        cell.column()
+                    cell.column()
                 );
                 this.addRow(
-                        cell.row()
+                    cell.row()
                 );
             }
         }
@@ -435,9 +435,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
     private void addColumn(final SpreadsheetColumnReference column) {
         if (this.shouldSaveUpdateColumns) {
             this.add(
-                    column,
-                    this.columns,
-                    this.columnStore
+                column,
+                this.columns,
+                this.columnStore
             );
         }
     }
@@ -450,8 +450,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
             if (false == columnsWidths.containsKey(column)) {
                 final double width = this.engine.columnWidth(
-                        column,
-                        this.context
+                    column,
+                    this.context
                 );
                 if (width > 0) {
                     columnsWidths.put(column, width);
@@ -467,16 +467,16 @@ final class BasicSpreadsheetEnginePrepareResponse {
     private void addLabelMappings(final SpreadsheetCellReference cell) {
         if (this.shouldSaveUpdateLabels) {
             for (final SpreadsheetLabelMapping labelMapping : this.labelStore.findLabelsWithReference(
-                    cell,
-                    0,
-                    BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
+                cell,
+                0,
+                BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
             )) {
 
                 final SpreadsheetLabelName labelName = labelMapping.label();
                 if (false == this.labels.containsKey(labelName)) {
                     this.labels.put(
-                            labelName,
-                            labelMapping
+                        labelName,
+                        labelMapping
                     );
 
                     this.addLabelMappingCells(labelMapping);
@@ -492,9 +492,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 reference = labelMapping.reference();
                 if (reference.isLabelName()) {
                     reference = this.labelStore.load(
-                                    reference.toLabelName()
-                            ).map(SpreadsheetLabelMapping::reference)
-                            .orElse(null);
+                            reference.toLabelName()
+                        ).map(SpreadsheetLabelMapping::reference)
+                        .orElse(null);
                 }
             } while (null != reference && reference.isLabelName());
 
@@ -503,11 +503,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 this.addCell(cell);
 
                 final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.changes.cells.get(cell);
-                if(null != cache) {
+                if (null != cache) {
                     addReferences(
-                            cell,
-                            Sets.of(labelMapping.label()),
-                            this.references
+                        cell,
+                        Sets.of(labelMapping.label()),
+                        this.references
                     );
                 }
             }
@@ -517,9 +517,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
     private void addRow(final SpreadsheetRowReference row) {
         if (this.shouldSaveUpdateRows) {
             this.add(
-                    row,
-                    this.rows,
-                    this.rowStore
+                row,
+                this.rows,
+                this.rowStore
             );
         }
     }
@@ -529,11 +529,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
         for (final SpreadsheetCellReference cell : this.cells.keySet()) {
             final SpreadsheetRowReference row = cell.row()
-                    .toRelative();
+                .toRelative();
             if (false == rowsHeights.containsKey(row)) {
                 final double height = this.engine.rowHeight(
-                        row,
-                        this.context
+                    row,
+                    this.context
                 );
                 if (height > 0) {
                     rowsHeights.put(row, height);
@@ -550,11 +550,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
         if (false == referenceToHas.containsKey(reference)) {
             final H columnOrRow = store.load(reference)
-                    .orElse(null);
+                .orElse(null);
             if (null != columnOrRow) {
                 referenceToHas.put(
-                        reference,
-                        columnOrRow
+                    reference,
+                    columnOrRow
                 );
 
                 added = true;
@@ -583,7 +583,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         for (final Map.Entry<T, ?> referenceToColumnOrRow : referenceToEntities.entrySet()) {
             if (null == referenceToColumnOrRow.getValue()) {
                 deleted.add(
-                        referenceToColumnOrRow.getKey()
+                    referenceToColumnOrRow.getKey()
                 );
             }
         }
@@ -605,7 +605,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         final SpreadsheetViewportWindows window = this.window;
 
         for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache : this.changes.cells.values()) {
-            if(cache.status().isReference()) {
+            if (cache.status().isReference()) {
                 continue;
             }
 
@@ -614,33 +614,33 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                 final Set<SpreadsheetExpressionReference> references = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
                 references.addAll(
-                        cellReferencesStore.findCellsWithReference(
-                                cell,
-                                0, // offset
-                                BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count
-                        )
+                    cellReferencesStore.findCellsWithReference(
+                        cell,
+                        0, // offset
+                        BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count
+                    )
                 );
 
                 references.addAll(
-                        cellRangesStore.findValuesWithCell(cell)
+                    cellRangesStore.findValuesWithCell(cell)
                 );
 
                 references.addAll(
-                        labelStore.findLabelsWithReference(
-                                cell,
-                                0, // offset
-                                BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count
+                    labelStore.findLabelsWithReference(
+                            cell,
+                            0, // offset
+                            BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count
                         ).stream()
-                                .map(SpreadsheetLabelMapping::label)
-                                .collect(Collectors.toList())
+                        .map(SpreadsheetLabelMapping::label)
+                        .collect(Collectors.toList())
                 );
 
                 if (false == references.isEmpty()) {
-                        addReferences(
-                                cell,
-                                references,
-                                all
-                        );
+                    addReferences(
+                        cell,
+                        references,
+                        all
+                    );
                 }
             }
         }
@@ -652,11 +652,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                       final Set<SpreadsheetExpressionReference> references,
                                       final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all) {
         Set<SpreadsheetExpressionReference> old = all.get(cell);
-        if(null == old) {
+        if (null == old) {
             old = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
             all.put(
-                    cell,
-                    old
+                cell,
+                old
             );
         }
         old.addAll(references);

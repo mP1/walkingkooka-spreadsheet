@@ -50,39 +50,39 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
 
     SpreadsheetViewportAnchor setLeft() {
         return this.replace(
-                RIGHT,
-                LEFT
+            RIGHT,
+            LEFT
         );
     }
 
     SpreadsheetViewportAnchor setTop() {
         return this.replace(
-                BOTTOM,
-                TOP
+            BOTTOM,
+            TOP
         );
     }
 
     SpreadsheetViewportAnchor setRight() {
         return this.replace(
-                LEFT,
-                RIGHT
+            LEFT,
+            RIGHT
         );
     }
 
     SpreadsheetViewportAnchor setBottom() {
         return this.replace(
-                TOP,
-                BOTTOM
+            TOP,
+            BOTTOM
         );
     }
 
     private SpreadsheetViewportAnchor replace(final SpreadsheetViewportAnchor find,
                                               final SpreadsheetViewportAnchor replace) {
         return valueOf(
-                this.name()
-                        .replace(
-                                find.name(), replace.name()
-                        )
+            this.name()
+                .replace(
+                    find.name(), replace.name()
+                )
         );
     }
 
@@ -136,14 +136,14 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         }
 
         return this == NONE ?
-                selection :
-                selection.isCellRange() ?
-                        this.cell(selection.toCellRange()) :
-                        selection.isColumnRange() ?
-                                this.column(selection.toColumnRange()) :
-                                selection.isRowRange() ?
-                                        this.row(selection.toRowRange()) :
-                                        this.selectionFail(selection);
+            selection :
+            selection.isCellRange() ?
+                this.cell(selection.toCellRange()) :
+                selection.isColumnRange() ?
+                    this.column(selection.toColumnRange()) :
+                    selection.isRowRange() ?
+                        this.row(selection.toRowRange()) :
+                        this.selectionFail(selection);
     }
 
     private SpreadsheetSelection selectionFail(final SpreadsheetSelection selection) {
@@ -167,8 +167,8 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         this.failIfNone();
 
         return this.isLeft() ?
-                range.begin() :
-                range.end();
+            range.begin() :
+            range.end();
     }
 
     /**
@@ -178,8 +178,8 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
         this.failIfNone();
 
         return this.isTop() ?
-                range.begin() :
-                range.end();
+            range.begin() :
+            range.end();
     }
 
     private boolean isLeft() {
@@ -207,10 +207,10 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     @Override
     public UrlFragment urlFragment() {
         return UrlFragment.with(
-                CaseKind.SNAKE.change(
-                        this.name(),
-                        CaseKind.KEBAB
-                )
+            CaseKind.SNAKE.change(
+                this.name(),
+                CaseKind.KEBAB
+            )
         );
     }
 

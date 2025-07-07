@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static SpreadsheetId ID = SpreadsheetId.with(0x1234);
     private final static SpreadsheetStoreRepository REPOSITORY = new FakeSpreadsheetStoreRepository() {
@@ -60,76 +60,76 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     };
 
     private final static SpreadsheetMetadata METADATA = METADATA_EN_AU.set(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID
     );
 
     @Test
     public void testWithNullIdFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        null,
-                        REPOSITORY,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                null,
+                REPOSITORY,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullRepositoryFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        ID,
-                        null,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                ID,
+                null,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetParserProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        ID,
-                        REPOSITORY,
-                        null,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                ID,
+                REPOSITORY,
+                null,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullLocaleContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        ID,
-                        REPOSITORY,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        null,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                ID,
+                REPOSITORY,
+                SPREADSHEET_PARSER_PROVIDER,
+                null,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullProviderContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        ID,
-                        REPOSITORY,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                ID,
+                REPOSITORY,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                null
+            )
         );
     }
 
@@ -140,10 +140,10 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         assertNotSame(repository.repository.cells(), repository.cells(), "cells");
 
         cellStore.save(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4+5+6")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=4+5+6")
+                )
         );
     }
 
@@ -155,12 +155,12 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         assertSame(cellStore, repository.cells());
 
         repository.metadatas()
-                .save(
-                        METADATA.set(
-                                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                                SpreadsheetName.with("different")
-                        )
-                );
+            .save(
+                METADATA.set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                    SpreadsheetName.with("different")
+                )
+            );
 
         assertNotSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been recreated because of metadata save");
         assertSame(repository.cells(), repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
@@ -174,7 +174,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         assertSame(cellStore, repository.cells());
 
         repository.metadatas()
-                .save(METADATA.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999)));
+            .save(METADATA.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999)));
 
         assertSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
     }
@@ -184,13 +184,13 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         final SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository repository = this.createStoreRepository();
 
         repository.metadatas()
-                .save(METADATA);
+            .save(METADATA);
 
         final SpreadsheetCellStore cellStore = repository.cells();
 
         // addSaveWatcher not fired if same metadata saved twice in a row
         repository.metadatas()
-                .save(METADATA.set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Different")));
+            .save(METADATA.set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Different")));
 
         assertNotSame(cellStore, repository.cells(), "SpreadsheetCellStore should have been recreated because of metadata save");
         assertSame(repository.cells(), repository.cells(), "SpreadsheetCellStore should have been cached, and not recreated");
@@ -201,40 +201,40 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         final SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository repository = this.createStoreRepository();
 
         repository.metadatas()
-                .save(METADATA);
+            .save(METADATA);
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("1.5")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("1.5")
+            );
 
         repository.cells().save(cell);
 
         repository.metadatas()
-                .save(
-                        METADATA.set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator('*'))
-                );
+            .save(
+                METADATA.set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator('*'))
+            );
 
         final SpreadsheetCell reloaded = repository.cells().loadOrFail(cell.reference());
         this.checkEquals(
-                "1*5",
-                reloaded.formula()
-                        .text()
+            "1*5",
+            reloaded.formula()
+                .text()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        ID,
-                        REPOSITORY,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                ),
-                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + LOCALE_CONTEXT + " " + PROVIDER_CONTEXT
+            SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
+                ID,
+                REPOSITORY,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            ),
+            ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + LOCALE_CONTEXT + " " + PROVIDER_CONTEXT
         );
     }
 
@@ -244,32 +244,32 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
         metadatas.save(METADATA);
 
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                ID,
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.treeMap(),
-                        SpreadsheetGroupStores.treeMap(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        metadatas,
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.tree(STORAGE_STORE_CONTEXT),
-                        SpreadsheetUserStores.treeMap()
-                ),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            ID,
+            SpreadsheetStoreRepositories.basic(
+                SpreadsheetCellStores.treeMap(),
+                SpreadsheetCellReferencesStores.treeMap(),
+                SpreadsheetColumnStores.treeMap(),
+                SpreadsheetFormStores.treeMap(),
+                SpreadsheetGroupStores.treeMap(),
+                SpreadsheetLabelStores.treeMap(),
+                SpreadsheetLabelReferencesStores.treeMap(),
+                metadatas,
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetRowStores.treeMap(),
+                StorageStores.tree(STORAGE_STORE_CONTEXT),
+                SpreadsheetUserStores.treeMap()
+            ),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
     }
 
     private static SpreadsheetMetadataStore createTreeMap() {
         return SpreadsheetMetadataStores.treeMap(
-                SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
-                LocalDateTime::now
+            SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
+            LocalDateTime::now
         );
     }
 

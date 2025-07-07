@@ -47,8 +47,8 @@ final class SpreadsheetConverterUnformattedNumber implements TryingShortCircuiti
                                    final Class<?> type,
                                    final SpreadsheetConverterContext context) {
         return SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor.convertToString(
-                value,
-                context
+            value,
+            context
         );
     }
 

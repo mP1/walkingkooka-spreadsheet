@@ -46,8 +46,8 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     @Override
     SpreadsheetColumnRangeReference checkValueNonNull(final Object value) {
         final SpreadsheetColumnRangeReference range = this.checkValueType(
-                value,
-                v -> v instanceof SpreadsheetColumnRangeReference
+            value,
+            v -> v instanceof SpreadsheetColumnRangeReference
         );
         if (range.begin().value() != 0) {
             throw new SpreadsheetMetadataPropertyValueException("Column range must begin at 'A'", this, range);

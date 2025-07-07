@@ -72,7 +72,7 @@ public final class StarSpreadsheetFormatParserTokenTest extends NonSymbolSpreads
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.STAR
+            SpreadsheetFormatParserTokenKind.STAR
         );
     }
 

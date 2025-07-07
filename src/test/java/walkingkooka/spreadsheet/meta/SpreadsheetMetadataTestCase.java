@@ -70,15 +70,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements CanBeEmptyTesting,
-        ClassTesting2<SpreadsheetMetadata>,
-        ConverterTesting,
-        HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
-        JsonNodeMarshallingTesting<SpreadsheetMetadata>,
-        HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
-        ThrowableTesting,
-        ToStringTesting<SpreadsheetMetadata>,
-        TreePrintableTesting,
-        EnvironmentContextTesting {
+    ClassTesting2<SpreadsheetMetadata>,
+    ConverterTesting,
+    HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
+    JsonNodeMarshallingTesting<SpreadsheetMetadata>,
+    HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
+    ThrowableTesting,
+    ToStringTesting<SpreadsheetMetadata>,
+    TreePrintableTesting,
+    EnvironmentContextTesting {
 
     private final static Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
         throw new UnsupportedOperationException();
@@ -94,7 +94,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
-            Locale.forLanguageTag("EN-AU")
+        Locale.forLanguageTag("EN-AU")
     );
 
     final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
@@ -110,8 +110,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata metadata = this.createObject();
 
         this.isEmptyAndCheck(
-                metadata,
-                metadata.value().isEmpty()
+            metadata,
+            metadata.value().isEmpty()
         );
     }
 
@@ -120,17 +120,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testGetNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .get(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .get(null)
         );
     }
 
     @Test
     public final void testGetUnknown() {
         this.getAndCheck(
-                this.createObject(),
-                SpreadsheetMetadataPropertyName.ROUNDING_MODE
+            this.createObject(),
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE
         );
     }
 
@@ -142,28 +142,28 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
         final SpreadsheetMetadataPropertyName<Integer> unknown = SpreadsheetMetadataPropertyName.PRECISION;
         this.getAndCheck(
-                metadata,
-                unknown
+            metadata,
+            unknown
         );
 
         this.getAndCheck(
-                metadata.setDefaults(
-                        SpreadsheetMetadata.EMPTY.set(
-                                unknown,
-                                value
-                        )
-                ),
-                unknown,
-                value
+            metadata.setDefaults(
+                SpreadsheetMetadata.EMPTY.set(
+                    unknown,
+                    value
+                )
+            ),
+            unknown,
+            value
         );
     }
 
     final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
                                 final SpreadsheetMetadataPropertyName<TT> propertyName) {
         this.getAndCheck(
-                metadata,
-                propertyName,
-                Optional.empty()
+            metadata,
+            propertyName,
+            Optional.empty()
         );
     }
 
@@ -171,9 +171,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 final SpreadsheetMetadataPropertyName<TT> propertyName,
                                 final TT value) {
         this.getAndCheck(
-                metadata,
-                propertyName,
-                Optional.of(value)
+            metadata,
+            propertyName,
+            Optional.of(value)
         );
     }
 
@@ -181,9 +181,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                 final SpreadsheetMetadataPropertyName<TT> propertyName,
                                 final Optional<TT> value) {
         this.checkEquals(
-                value,
-                metadata.get(propertyName),
-                () -> metadata + " get " + propertyName
+            value,
+            metadata.get(propertyName),
+            () -> metadata + " get " + propertyName
         );
     }
 
@@ -194,24 +194,24 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadataPropertyName<DecimalNumberSymbols> propertyName = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS;
 
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(
-                SpreadsheetMetadataPropertyValueException.class,
-                () -> this.createObject()
-                        .getOrFail(propertyName)
+            SpreadsheetMetadataPropertyValueException.class,
+            () -> this.createObject()
+                .getOrFail(propertyName)
         );
 
         this.checkMessage(
-                thrown,
-                "Metadata " + propertyName.value() + "=null, Missing"
+            thrown,
+            "Metadata " + propertyName.value() + "=null, Missing"
         );
         this.checkEquals(
-                propertyName,
-                thrown.name(),
-                "property name"
+            propertyName,
+            thrown.name(),
+            "property name"
         );
         this.checkEquals(
-                null,
-                thrown.value(),
-                "property value"
+            null,
+            thrown.value(),
+            "property value"
         );
     }
 
@@ -220,9 +220,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testGetIgnoringDefaultsNullPropertyNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .getIgnoringDefaults(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .getIgnoringDefaults(null)
         );
     }
 
@@ -234,16 +234,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final Locale value = Locale.ENGLISH;
 
         final SpreadsheetMetadata metadata = this.createObject()
-                .setDefaults(
-                        SpreadsheetMetadata.EMPTY.set(
-                                propertyName,
-                                value
-                        )
-                );
+            .setDefaults(
+                SpreadsheetMetadata.EMPTY.set(
+                    propertyName,
+                    value
+                )
+            );
         this.getAndCheck(
-                metadata,
-                propertyName,
-                value
+            metadata,
+            propertyName,
+            value
         );
     }
 
@@ -252,8 +252,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testEffectiveStyleNotNull() {
         this.checkNotEquals(
-                this.createObject().effectiveStyle(),
-                null
+            this.createObject().effectiveStyle(),
+            null
         );
     }
 
@@ -262,15 +262,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final TextStyle effectiveStyle = metadata.effectiveStyle();
 
         this.checkEquals(
-                expected,
-                effectiveStyle,
-                () -> "effectiveStyle of " + metadata
+            expected,
+            effectiveStyle,
+            () -> "effectiveStyle of " + metadata
         );
 
         assertSame(
-                effectiveStyle,
-                metadata.effectiveStyle(),
-                () -> "effectiveStyle not cached of " + metadata
+            effectiveStyle,
+            metadata.effectiveStyle(),
+            () -> "effectiveStyle not cached of " + metadata
         );
     }
 
@@ -279,35 +279,35 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testSetNullPropertyNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .set(null, "value")
+            NullPointerException.class,
+            () -> this.createObject()
+                .set(null, "value")
         );
     }
 
     @Test
     public final void testSetNullPropertyValueFails() {
         assertThrows(
-                SpreadsheetMetadataPropertyValueException.class,
-                () -> this.createObject()
-                        .set(
-                                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                                null
-                        )
+            SpreadsheetMetadataPropertyValueException.class,
+            () -> this.createObject()
+                .set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    null
+                )
         );
     }
 
     @Test
     public final void testSetInvalidPropertyValueFails() {
         assertThrows(
-                SpreadsheetMetadataPropertyValueException.class, () -> {
-                    final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
-                    this.createObject()
-                            .set(
-                                    propertyName,
-                                    Cast.to("invalid-expected-EmailAddress")
-                            );
-                });
+            SpreadsheetMetadataPropertyValueException.class, () -> {
+                final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+                this.createObject()
+                    .set(
+                        propertyName,
+                        Cast.to("invalid-expected-EmailAddress")
+                    );
+            });
     }
 
     final <TT> SpreadsheetMetadata setAndCheck(final SpreadsheetMetadata metadata,
@@ -316,9 +316,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                                final String expected) {
         final SpreadsheetMetadata set = metadata.set(propertyName, value);
         this.checkEquals(
-                expected,
-                set.toString(),
-                () -> "set " + propertyName + " = " + CharSequences.quoteIfChars(value) + "\n" + metadata
+            expected,
+            set.toString(),
+            () -> "set " + propertyName + " = " + CharSequences.quoteIfChars(value) + "\n" + metadata
         );
         return set;
     }
@@ -334,8 +334,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testRemoveUnknown() {
         final SpreadsheetMetadata metadata = this.createObject();
         assertSame(
-                metadata,
-                metadata.remove(SpreadsheetMetadataPropertyName.ROUNDING_MODE)
+            metadata,
+            metadata.remove(SpreadsheetMetadataPropertyName.ROUNDING_MODE)
         );
     }
 
@@ -344,8 +344,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                              final SpreadsheetMetadata expected) {
         final SpreadsheetMetadata removed = metadata.remove(propertyName);
         this.checkEquals(expected,
-                removed,
-                () -> metadata + " remove " + propertyName);
+            removed,
+            () -> metadata + " remove " + propertyName);
         return removed;
     }
 
@@ -354,18 +354,18 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testGetEffectiveStylePropertyNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .getEffectiveStyleProperty(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .getEffectiveStyleProperty(null)
         );
     }
 
     @Test
     public final void testGetEffectiveStylePropertyAbsent() {
         this.getEffectiveStylePropertyAndCheck(
-                this.createObject(),
-                TextStylePropertyName.WORD_WRAP,
-                null
+            this.createObject(),
+            TextStylePropertyName.WORD_WRAP,
+            null
         );
     }
 
@@ -375,14 +375,14 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final WordWrap wordWrap = WordWrap.BREAK_WORD;
 
         this.getEffectiveStylePropertyAndCheck(this.createObject()
-                        .setDefaults(
-                                SpreadsheetMetadata.EMPTY.set(
-                                        SpreadsheetMetadataPropertyName.STYLE,
-                                        TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
-                                )
-                        ),
-                textStylePropertyName,
-                wordWrap
+                .setDefaults(
+                    SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                    )
+                ),
+            textStylePropertyName,
+            wordWrap
         );
     }
 
@@ -390,9 +390,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                                       final TextStylePropertyName<TT> property,
                                                       final TT expected) {
         this.checkEquals(
-                Optional.ofNullable(expected),
-                metadata.getEffectiveStyleProperty(property),
-                () -> metadata + " getEffectiveStyleProperty " + property
+            Optional.ofNullable(expected),
+            metadata.getEffectiveStyleProperty(property),
+            () -> metadata + " getEffectiveStyleProperty " + property
         );
     }
 
@@ -401,17 +401,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testGetEffectiveStylePropertyOrFailNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .getEffectiveStylePropertyOrFail(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .getEffectiveStylePropertyOrFail(null)
         );
     }
 
     @Test
     public final void testGetEffectiveStyleOrFailAbsent() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createObject().getEffectiveStylePropertyOrFail(TextStylePropertyName.WORD_WRAP)
+            IllegalArgumentException.class,
+            () -> this.createObject().getEffectiveStylePropertyOrFail(TextStylePropertyName.WORD_WRAP)
         );
     }
 
@@ -421,15 +421,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final WordWrap wordWrap = WordWrap.BREAK_WORD;
 
         this.getEffectiveStylePropertyOrFailAndCheck(
-                this.createObject()
-                        .setDefaults(
-                                SpreadsheetMetadata.EMPTY.set(
-                                        SpreadsheetMetadataPropertyName.STYLE,
-                                        TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
-                                )
-                        ),
-                textStylePropertyName,
-                wordWrap
+            this.createObject()
+                .setDefaults(
+                    SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        TextStyle.EMPTY.set(textStylePropertyName, wordWrap)
+                    )
+                ),
+            textStylePropertyName,
+            wordWrap
         );
     }
 
@@ -437,9 +437,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                                             final TextStylePropertyName<TT> property,
                                                             final TT expected) {
         this.checkEquals(
-                expected,
-                metadata.getEffectiveStylePropertyOrFail(property),
-                () -> metadata + " getEffectiveStyleOrFailProperty " + property
+            expected,
+            metadata.getEffectiveStylePropertyOrFail(property),
+            () -> metadata + " getEffectiveStyleOrFailProperty " + property
         );
     }
 
@@ -455,9 +455,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                    final Color color) {
         final Function<SpreadsheetColorName, Optional<Color>> nameToColor = metadata.nameToColor();
         this.checkEquals(
-                Optional.ofNullable(color),
-                nameToColor.apply(name),
-                () -> name + " to color " + metadata
+            Optional.ofNullable(color),
+            nameToColor.apply(name),
+            () -> name + " to color " + metadata
         );
     }
 
@@ -473,9 +473,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                      final Color color) {
         final Function<Integer, Optional<Color>> numberToColor = metadata.numberToColor();
         this.checkEquals(
-                Optional.ofNullable(color),
-                numberToColor.apply(number),
-                () -> number + " to color " + metadata
+            Optional.ofNullable(color),
+            numberToColor.apply(number),
+            () -> number + " to color " + metadata
         );
     }
 
@@ -484,9 +484,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testNumberToColorName() {
         this.numberToColorNameAndCheck(
-                this.createObject(),
-                99,
-                null
+            this.createObject(),
+            99,
+            null
         );
     }
 
@@ -495,9 +495,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                                          final SpreadsheetColorName colorName) {
         final Function<Integer, Optional<SpreadsheetColorName>> numberToColorName = metadata.numberToColorName();
         this.checkEquals(
-                Optional.ofNullable(colorName),
-                numberToColorName.apply(number),
-                () -> number + " to color " + metadata
+            Optional.ofNullable(colorName),
+            numberToColorName.apply(number),
+            () -> number + " to color " + metadata
         );
     }
 
@@ -506,9 +506,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public void testEnvironmentContextWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .environmentContext(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .environmentContext(null)
         );
     }
 
@@ -517,39 +517,39 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testExpressionConverterWithNullConverterSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .converter(
-                                null,
-                                ConverterProviders.fake(),
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    null,
+                    ConverterProviders.fake(),
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testFindConverterWithNullConverterProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                                null,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                    null,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testFindConverterWithNullProviderContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                                ConverterProviders.fake(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                    ConverterProviders.fake(),
+                    null
+                )
         );
     }
 
@@ -557,43 +557,43 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testFindConverterRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                                ConverterProviders.fake(),
-                                PROVIDER_CONTEXT
-                        )
+            IllegalStateException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                    ConverterProviders.fake(),
+                    PROVIDER_CONTEXT
+                )
         );
         checkMessage(
-                thrown,
-                "Metadata missing: findConverter"
+            thrown,
+            "Metadata missing: findConverter"
         );
     }
 
     @Test
     public final void testFormulaConverterWithNullConverterProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                null,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                    null,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testFormulaConverterWithNullProviderContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                ConverterProviders.fake(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                    ConverterProviders.fake(),
+                    null
+                )
         );
     }
 
@@ -601,17 +601,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testFormulaConverterRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject()
-                        .converter(
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                ConverterProviders.fake(),
-                                PROVIDER_CONTEXT
-                        )
+            IllegalStateException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                    ConverterProviders.fake(),
+                    PROVIDER_CONTEXT
+                )
         );
         checkMessage(
-                thrown,
-                "Metadata missing: formulaConverter"
+            thrown,
+            "Metadata missing: formulaConverter"
         );
     }
 
@@ -620,56 +620,56 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testDateTimeContextWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .dateTimeContext(
-                                null,
-                                LocalDateTime::now,
-                                LOCALE_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .dateTimeContext(
+                    null,
+                    LocalDateTime::now,
+                    LOCALE_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testDateTimeContextWithNullNowFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .dateTimeContext(
-                                SpreadsheetMetadata.NO_CELL,
-                                null,
-                                LOCALE_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .dateTimeContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    null,
+                    LOCALE_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testDateTimeContextWithNullLocaleContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .dateTimeContext(
-                                SpreadsheetMetadata.NO_CELL,
-                                LocalDateTime::now,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .dateTimeContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    LocalDateTime::now,
+                    null
+                )
         );
     }
 
     @Test
     public final void testDateTimeContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject()
-                        .dateTimeContext(
-                                SpreadsheetMetadata.NO_CELL,
-                                LocalDateTime::now,
-                                LOCALE_CONTEXT
-                        )
+            IllegalStateException.class,
+            () -> this.createObject()
+                .dateTimeContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    LocalDateTime::now,
+                    LOCALE_CONTEXT
+                )
         );
         checkMessage(
-                thrown,
-                "Metadata missing: defaultYear, locale, twoDigitYear"
+            thrown,
+            "Metadata missing: defaultYear, locale, twoDigitYear"
         );
     }
 
@@ -678,40 +678,40 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testDecimalNumberContextWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .decimalNumberContext(
-                                null,
-                                LOCALE_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .decimalNumberContext(
+                    null,
+                    LOCALE_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testDecimalNumberContextWithNullLocaleContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .decimalNumberContext(
-                                SpreadsheetMetadata.NO_CELL,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .decimalNumberContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    null
+                )
         );
     }
 
     @Test
     public final void testDecimalNumberContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject()
-                        .decimalNumberContext(
-                                SpreadsheetMetadata.NO_CELL,
-                                LOCALE_CONTEXT
-                        )
+            IllegalStateException.class,
+            () -> this.createObject()
+                .decimalNumberContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    LOCALE_CONTEXT
+                )
         );
         checkMessage(
-                thrown,
-                "Metadata missing: locale, precision, roundingMode"
+            thrown,
+            "Metadata missing: locale, precision, roundingMode"
         );
     }
 
@@ -720,16 +720,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testHasFormatterRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject()
-                        .spreadsheetFormatter(
-                                SpreadsheetFormatterProviders.fake(),
-                                PROVIDER_CONTEXT
-                        )
+            IllegalStateException.class,
+            () -> this.createObject()
+                .spreadsheetFormatter(
+                    SpreadsheetFormatterProviders.fake(),
+                    PROVIDER_CONTEXT
+                )
         );
         checkMessage(
-                thrown,
-                "Metadata missing: dateFormatter, dateTimeFormatter, numberFormatter, textFormatter, timeFormatter"
+            thrown,
+            "Metadata missing: dateFormatter, dateTimeFormatter, numberFormatter, textFormatter, timeFormatter"
         );
     }
 
@@ -738,12 +738,12 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testHasMathContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> this.createObject().mathContext()
+            IllegalStateException.class,
+            () -> this.createObject().mathContext()
         );
         checkMessage(
-                thrown,
-                "Metadata missing: precision, roundingMode");
+            thrown,
+            "Metadata missing: precision, roundingMode");
     }
 
     // spreadsheetValidatorContext......................................................................................
@@ -751,119 +751,119 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testSpreadsheetValidatorContextWithCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                null,
-                                VALIDATOR_SELECTOR_TO_VALIDATOR,
-                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                                LABEL_NAME_RESOLVER,
-                                CONVERTER_PROVIDER,
-                                LOCALE_CONTEXT,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    null,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    LABEL_NAME_RESOLVER,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testSpreadsheetValidatorContextWithValidatorSelectorToValidatorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                null,
-                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                                LABEL_NAME_RESOLVER,
-                                CONVERTER_PROVIDER,
-                                LOCALE_CONTEXT,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    null,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    LABEL_NAME_RESOLVER,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testSpreadsheetValidatorContextWithSpreadsheetCellReferenceToSpreadsheetExpressionEvaluationContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                VALIDATOR_SELECTOR_TO_VALIDATOR,
-                                null,
-                                LABEL_NAME_RESOLVER,
-                                CONVERTER_PROVIDER,
-                                LOCALE_CONTEXT,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    null,
+                    LABEL_NAME_RESOLVER,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testSpreadsheetValidatorContextWithLabelNameResolverFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                VALIDATOR_SELECTOR_TO_VALIDATOR,
-                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                                null,
-                                CONVERTER_PROVIDER,
-                                LOCALE_CONTEXT,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    null,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testSpreadsheetValidatorContextWithConverterProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                VALIDATOR_SELECTOR_TO_VALIDATOR,
-                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                                LABEL_NAME_RESOLVER,
-                                null,
-                                LOCALE_CONTEXT,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    LABEL_NAME_RESOLVER,
+                    null,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testSpreadsheetValidatorContextWithLocaleContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                VALIDATOR_SELECTOR_TO_VALIDATOR,
-                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                                LABEL_NAME_RESOLVER,
-                                CONVERTER_PROVIDER,
-                                null,
-                                PROVIDER_CONTEXT
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    LABEL_NAME_RESOLVER,
+                    CONVERTER_PROVIDER,
+                    null,
+                    PROVIDER_CONTEXT
+                )
         );
     }
 
     @Test
     public final void testSpreadsheetValidatorContextWithProviderContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .spreadsheetValidatorContext(
-                                SpreadsheetSelection.A1,
-                                VALIDATOR_SELECTOR_TO_VALIDATOR,
-                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                                LABEL_NAME_RESOLVER,
-                                CONVERTER_PROVIDER,
-                                LOCALE_CONTEXT,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    LABEL_NAME_RESOLVER,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    null
+                )
         );
     }
 
@@ -873,8 +873,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testDefaultsNotNull() {
         final SpreadsheetMetadata metadata = this.createObject();
         this.checkNotEquals(
-                null,
-                metadata.defaults()
+            null,
+            metadata.defaults()
         );
     }
 
@@ -882,8 +882,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testSetDefaultsNullFails() {
         final SpreadsheetMetadata metadata = this.createObject();
         assertThrows(
-                NullPointerException.class,
-                () -> metadata.setDefaults(null)
+            NullPointerException.class,
+            () -> metadata.setDefaults(null)
         );
     }
 
@@ -891,8 +891,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testSetDefaultsSame() {
         final SpreadsheetMetadata metadata = this.createObject();
         assertSame(
-                metadata,
-                metadata.setDefaults(metadata.defaults())
+            metadata,
+            metadata.setDefaults(metadata.defaults())
         );
     }
 
@@ -900,8 +900,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testSetDefaultsEmpty() {
         final SpreadsheetMetadata metadata = this.createObject();
         assertSame(
-                metadata,
-                metadata.setDefaults(SpreadsheetMetadata.EMPTY)
+            metadata,
+            metadata.setDefaults(SpreadsheetMetadata.EMPTY)
         );
     }
 
@@ -909,7 +909,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testSetDefaultsNotEmpty() {
         final SpreadsheetMetadata metadata = this.createObject();
         final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+            .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty);
         assertNotSame(metadata, withDefaults);
@@ -919,21 +919,21 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testSetDefaultsIncludesAuditFails() {
         this.setDefaultsWithInvalidFails(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                    EmailAddress.parse("creator@example.com"),
-                        LocalDateTime.MIN,
-                        EmailAddress.parse("modified@example.com"),
-                        LocalDateTime.MAX
-                )
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                EmailAddress.parse("creator@example.com"),
+                LocalDateTime.MIN,
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.MAX
+            )
         );
     }
 
     @Test
     public final void testSetDefaultsIncludesSpreadsheetIdFails() {
         this.setDefaultsWithInvalidFails(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SpreadsheetId.with(123)
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SpreadsheetId.with(123)
         );
     }
 
@@ -943,14 +943,14 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(property, value);
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> metadata.setDefaults(defaults)
+            IllegalArgumentException.class,
+            () -> metadata.setDefaults(defaults)
         );
         this.checkEquals(
-                "Defaults includes invalid default values: " +
-                        property,
-                thrown.getMessage(),
-                () -> "defaults with " + defaults
+            "Defaults includes invalid default values: " +
+                property,
+            thrown.getMessage(),
+            () -> "defaults with " + defaults
         );
     }
 
@@ -961,9 +961,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         } else {
             assertSame(defaults, metadata.defaults, "defaults");
             this.checkEquals(
-                    false,
-                    metadata.defaults.isEmpty(),
-                    () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults
+                false,
+                metadata.defaults.isEmpty(),
+                () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults
             );
         }
     }
@@ -974,7 +974,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testRoundtripWithDefaults() {
         final SpreadsheetMetadata metadata = this.createObject();
         final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+            .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmptyDefaults);
 
         this.marshallRoundTripTwiceAndCheck(withDefaults);
@@ -996,19 +996,19 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testMissingRequiredPropertiesReadOnly() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createObject()
-                        .missingRequiredProperties()
-                        .add(SpreadsheetMetadataPropertyName.VIEWPORT)
+            UnsupportedOperationException.class,
+            () -> this.createObject()
+                .missingRequiredProperties()
+                .add(SpreadsheetMetadataPropertyName.VIEWPORT)
         );
     }
 
     final void missingRequiredPropertiesAndCheck(final SpreadsheetMetadata metadata,
                                                  final SpreadsheetMetadataPropertyName<?>... missing) {
         this.checkEquals(
-                Sets.of(missing),
-                metadata.missingRequiredProperties(),
-                () -> "" + metadata
+            Sets.of(missing),
+            metadata.missingRequiredProperties(),
+            () -> "" + metadata
         );
     }
 

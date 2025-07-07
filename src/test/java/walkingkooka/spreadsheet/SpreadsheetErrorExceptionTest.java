@@ -30,8 +30,8 @@ public final class SpreadsheetErrorExceptionTest implements ClassTesting<Spreads
     @Test
     public void testNewNullSpreadsheetErrorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> new SpreadsheetErrorException(null)
+            NullPointerException.class,
+            () -> new SpreadsheetErrorException(null)
         );
     }
 
@@ -39,9 +39,9 @@ public final class SpreadsheetErrorExceptionTest implements ClassTesting<Spreads
     public void testNew() {
         final SpreadsheetErrorException exception = new SpreadsheetErrorException(ERROR);
         this.checkEquals(
-                ERROR,
-                exception.spreadsheetError(),
-                "spreadsheetError"
+            ERROR,
+            exception.spreadsheetError(),
+            "spreadsheetError"
         );
     }
 

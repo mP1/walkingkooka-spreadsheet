@@ -39,8 +39,8 @@ public final class LessThanEqualsSpreadsheetFormulaParserToken extends Condition
                                                                                                              final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightLessThanEquals(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -49,9 +49,9 @@ public final class LessThanEqualsSpreadsheetFormulaParserToken extends Condition
     @Override
     public LessThanEqualsSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                LessThanEqualsSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            LessThanEqualsSpreadsheetFormulaParserToken::with
         );
     }
 

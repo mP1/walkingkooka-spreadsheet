@@ -36,9 +36,9 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetFormulaParserTokenTestCase<T extends SpreadsheetFormulaParserToken> implements ClassTesting2<T>,
-        IsMethodTesting<T>,
-        JsonNodeMarshallingTesting<T>,
-        ParserTokenTesting<T> {
+    IsMethodTesting<T>,
+    JsonNodeMarshallingTesting<T>,
+    ParserTokenTesting<T> {
 
     final static int DEFAULT_YEAR = 1900;
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -68,12 +68,12 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
     @Test
     @Override
     public final void testPublicStaticFactoryMethod() {
-        if(false == (this instanceof BooleanSpreadsheetFormulaParserTokenTest)) {
+        if (false == (this instanceof BooleanSpreadsheetFormulaParserTokenTest)) {
             PublicStaticFactoryTesting.checkFactoryMethods(
-                    SpreadsheetFormulaParserToken.class,
-                    "",
-                    SpreadsheetFormulaParserToken.class.getSimpleName(),
-                    this.type()
+                SpreadsheetFormulaParserToken.class,
+                "",
+                SpreadsheetFormulaParserToken.class.getSimpleName(),
+                this.type()
             );
         }
     }
@@ -83,14 +83,14 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
         final Class<?> type = this.type();
 
         final Optional<Method> possibleMethod = Arrays.stream(PARENT.getDeclaredMethods())
-                .filter(MethodAttributes.STATIC::is)
-                .filter(m -> m.getReturnType() == type)
-                .filter(m -> JavaVisibility.PUBLIC == JavaVisibility.of(m))
-                .findFirst();
+            .filter(MethodAttributes.STATIC::is)
+            .filter(m -> m.getReturnType() == type)
+            .filter(m -> JavaVisibility.PUBLIC == JavaVisibility.of(m))
+            .findFirst();
         this.checkNotEquals(
-                Optional.empty(),
-                possibleMethod,
-                () -> "Unable to find a static public method that returns " + type.getName()
+            Optional.empty(),
+            possibleMethod,
+            () -> "Unable to find a static public method that returns " + type.getName()
         );
 
         // eg: SecondSpreadsheetFormatParserToken
@@ -98,22 +98,22 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
         final String name = method.getName();
 
         String expected = type == EqualsSpreadsheetFormulaParserToken.class ?
-                "equalsSpreadsheetFormulaParserToken" :
-                type == BooleanSpreadsheetFormulaParserToken.class ?
-                        "booleanValue" :
-        CharSequences.subSequence(
-                type.getSimpleName(),
-                0,
-                -SpreadsheetFormulaParserToken.class.getSimpleName().length()
-        ).toString();
+            "equalsSpreadsheetFormulaParserToken" :
+            type == BooleanSpreadsheetFormulaParserToken.class ?
+                "booleanValue" :
+                CharSequences.subSequence(
+                    type.getSimpleName(),
+                    0,
+                    -SpreadsheetFormulaParserToken.class.getSimpleName().length()
+                ).toString();
         expected = Character.toLowerCase(
-                expected.charAt(0)
+            expected.charAt(0)
         ) + expected.substring(1);
 
         this.checkEquals(
-                expected,
-                name,
-                () -> "Token public static factory method name incorrect: " + method.toGenericString()
+            expected,
+            name,
+            () -> "Token public static factory method name incorrect: " + method.toGenericString()
         );
     }
 
@@ -122,14 +122,14 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
         final Class<?> type = this.type();
 
         final Optional<Method> possibleMethod = Arrays.stream(PARENT.getDeclaredMethods())
-                .filter(MethodAttributes.STATIC::is)
-                .filter(m -> m.getReturnType() == type)
-                .filter(m -> JavaVisibility.PACKAGE_PRIVATE == JavaVisibility.of(m))
-                .findFirst();
+            .filter(MethodAttributes.STATIC::is)
+            .filter(m -> m.getReturnType() == type)
+            .filter(m -> JavaVisibility.PACKAGE_PRIVATE == JavaVisibility.of(m))
+            .findFirst();
         this.checkNotEquals(
-                Optional.empty(),
-                possibleMethod,
-                () -> "Unable to find a static package private method that returns " + type.getName()
+            Optional.empty(),
+            possibleMethod,
+            () -> "Unable to find a static package private method that returns " + type.getName()
         );
 
         // eg: SecondSpreadsheetFormatParserToken -> unmarshallSecond
@@ -137,17 +137,17 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
         final String name = method.getName();
 
         final String expected = "unmarshall" +
-                CharSequences.subSequence(
-                        type.getSimpleName(),
-                        0,
-                        -SpreadsheetFormulaParserToken.class.getSimpleName()
-                                .length()
-                );
+            CharSequences.subSequence(
+                type.getSimpleName(),
+                0,
+                -SpreadsheetFormulaParserToken.class.getSimpleName()
+                    .length()
+            );
 
         this.checkEquals(
-                expected,
-                name,
-                () -> "Token package private unmarshall method name incorrect: " + method.toGenericString()
+            expected,
+            name,
+            () -> "Token package private unmarshall method name incorrect: " + method.toGenericString()
         );
     }
 
@@ -170,17 +170,17 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
 
     final void toExpressionAndCheck(final Expression expected) {
         this.toExpressionAndCheck(
-                this.createToken(),
-                expected
+            this.createToken(),
+            expected
         );
     }
 
     final void toExpressionAndCheck(final T token,
                                     final Expression expected) {
         this.toExpressionAndCheck(
-                token,
-                EXPRESSION_EVALUATION_CONTEXT,
-                expected
+            token,
+            EXPRESSION_EVALUATION_CONTEXT,
+            expected
         );
     }
 
@@ -201,24 +201,24 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return (m) -> m.equals("isLeaf") ||
-                m.equals("isNoise") ||
-                m.equals("isParent") ||
-                m.equals("isSymbol") ||
-                m.equals("isEmpty") ||
-                m.equals("isNotEmpty") ||
-                m.equals("isArithmetic") ||
-                m.equals("isCondition") ||
-                m.equals("isConditionRight") ||
-                m.equals("isFunction") ||
-                m.equals("isValue");
+            m.equals("isNoise") ||
+            m.equals("isParent") ||
+            m.equals("isSymbol") ||
+            m.equals("isEmpty") ||
+            m.equals("isNotEmpty") ||
+            m.equals("isArithmetic") ||
+            m.equals("isCondition") ||
+            m.equals("isConditionRight") ||
+            m.equals("isFunction") ||
+            m.equals("isValue");
     }
 
     @Override
     public final String toIsMethodName(final String typeName) {
         return this.toIsMethodNameWithPrefixSuffix(
-                typeName,
-                "",  // drop-prefix
-                SpreadsheetFormulaParserToken.class.getSimpleName() // drop-suffix
+            typeName,
+            "",  // drop-prefix
+            SpreadsheetFormulaParserToken.class.getSimpleName() // drop-suffix
         );
     }
 

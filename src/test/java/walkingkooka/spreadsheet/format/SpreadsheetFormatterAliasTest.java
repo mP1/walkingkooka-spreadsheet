@@ -32,11 +32,11 @@ public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesti
     private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("Hello");
 
     private final static Optional<SpreadsheetFormatterSelector> SELECTOR = Optional.of(
-            SpreadsheetFormatterSelector.parse("formatter123")
+        SpreadsheetFormatterSelector.parse("formatter123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-            Url.parseAbsolute("https://example.com/formatter123")
+        Url.parseAbsolute("https://example.com/formatter123")
     );
 
     // with.............................................................................................................
@@ -44,36 +44,36 @@ public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesti
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatterAlias.with(
-                        null,
-                        SELECTOR,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormatterAlias.with(
+                null,
+                SELECTOR,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatterAlias.with(
-                        NAME,
-                        null,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormatterAlias.with(
+                NAME,
+                null,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatterAlias.with(
-                        NAME,
-                        SELECTOR,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormatterAlias.with(
+                NAME,
+                SELECTOR,
+                null
+            )
         );
     }
 
@@ -82,9 +82,9 @@ public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesti
     @Override
     public SpreadsheetFormatterAlias createComparable() {
         return SpreadsheetFormatterAlias.with(
-                NAME,
-                SELECTOR,
-                URL
+            NAME,
+            SELECTOR,
+            URL
         );
     }
 
@@ -93,16 +93,16 @@ public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesti
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "alias1 name1 https://example.com",
-                SpreadsheetFormatterAlias.with(
-                        SpreadsheetFormatterName.with("alias1"),
-                        Optional.of(
-                                SpreadsheetFormatterSelector.parse("name1")
-                        ),
-                        Optional.of(
-                                Url.parseAbsolute("https://example.com")
-                        )
+            "alias1 name1 https://example.com",
+            SpreadsheetFormatterAlias.with(
+                SpreadsheetFormatterName.with("alias1"),
+                Optional.of(
+                    SpreadsheetFormatterSelector.parse("name1")
+                ),
+                Optional.of(
+                    Url.parseAbsolute("https://example.com")
                 )
+            )
         );
     }
 

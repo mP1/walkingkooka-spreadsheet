@@ -35,49 +35,49 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting2<SpreadsheetMetadataEnvironmentContext>,
-        ToStringTesting<SpreadsheetMetadataEnvironmentContext> {
+    ToStringTesting<SpreadsheetMetadataEnvironmentContext> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58
+        1999,
+        12,
+        31,
+        12,
+        58
     );
 
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
     private final static EnvironmentContext CONTEXT = EnvironmentContexts.empty(
-            () -> NOW,
-            Optional.of(USER)
+        () -> NOW,
+        Optional.of(USER)
     );
 
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataEnvironmentContext.with(
-                        null,
-                        CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataEnvironmentContext.with(
+                null,
+                CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullEnvironmentContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataEnvironmentContext.with(
-                        SpreadsheetMetadata.EMPTY,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetMetadataEnvironmentContext.with(
+                SpreadsheetMetadata.EMPTY,
+                null
+            )
         );
     }
 
     @Test
     public void testEnvironmentValueWithPrefixButUnknown() {
         this.environmentValueAndCheck(
-                EnvironmentValueName.with("missing")
+            EnvironmentValueName.with("missing")
         );
     }
 
@@ -86,45 +86,45 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
         final SpreadsheetMetadataPropertyName<Integer> property = SpreadsheetMetadataPropertyName.PRECISION;
 
         this.environmentValueAndCheck(
-                EnvironmentValueName.with(
-                        property.value()
-                ),
-                SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(property)
+            EnvironmentValueName.with(
+                property.value()
+            ),
+            SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(property)
         );
     }
 
     @Test
     public void testEnvironmentValueNames() {
         this.environmentValueNamesAndCheck(
-                SpreadsheetMetadata.EMPTY
+            SpreadsheetMetadata.EMPTY
+                .set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    SpreadsheetId.with(1)
+                ).set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                    SpreadsheetName.with("Hello-spreadsheet-123")
+                ).set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    Locale.forLanguageTag("EN-AU")
+                ).setDefaults(
+                    SpreadsheetMetadata.EMPTY
                         .set(
-                                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                                SpreadsheetId.with(1)
+                            SpreadsheetMetadataPropertyName.LOCALE,
+                            Locale.forLanguageTag("EN-AU")
                         ).set(
-                                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                                SpreadsheetName.with("Hello-spreadsheet-123")
-                        ).set(
-                                SpreadsheetMetadataPropertyName.LOCALE,
-                                Locale.forLanguageTag("EN-AU")
-                        ).setDefaults(
-                                SpreadsheetMetadata.EMPTY
-                                        .set(
-                                                SpreadsheetMetadataPropertyName.LOCALE,
-                                                Locale.forLanguageTag("EN-AU")
-                                        ).set(
-                                                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
-                                                RoundingMode.FLOOR
-                                        )
-                        ).environmentContext(
-                                EnvironmentContexts.empty(
-                                        LocalDateTime::now,
-                                        EnvironmentContext.ANONYMOUS
-                                )
-                        ),
-                EnvironmentValueName.with("spreadsheetId"),
-                EnvironmentValueName.with("spreadsheetName"),
-                EnvironmentValueName.with("locale"),
-                EnvironmentValueName.with("roundingMode")
+                            SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                            RoundingMode.FLOOR
+                        )
+                ).environmentContext(
+                    EnvironmentContexts.empty(
+                        LocalDateTime::now,
+                        EnvironmentContext.ANONYMOUS
+                    )
+                ),
+            EnvironmentValueName.with("spreadsheetId"),
+            EnvironmentValueName.with("spreadsheetName"),
+            EnvironmentValueName.with("locale"),
+            EnvironmentValueName.with("roundingMode")
         );
     }
 
@@ -136,16 +136,16 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     @Test
     public void testNow() {
         this.checkEquals(
-                this.createContext().now(),
-                NOW
+            this.createContext().now(),
+            NOW
         );
     }
 
     @Override
     public SpreadsheetMetadataEnvironmentContext createContext() {
         return SpreadsheetMetadataEnvironmentContext.with(
-                SpreadsheetMetadataTesting.METADATA_EN_AU,
-                CONTEXT
+            SpreadsheetMetadataTesting.METADATA_EN_AU,
+            CONTEXT
         );
     }
 
@@ -154,8 +154,8 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createContext(),
-                SpreadsheetMetadataTesting.METADATA_EN_AU.toString()
+            this.createContext(),
+            SpreadsheetMetadataTesting.METADATA_EN_AU.toString()
         );
     }
 

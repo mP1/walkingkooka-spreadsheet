@@ -36,8 +36,8 @@ public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends Ille
     @Test
     public final void testSetMessageWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createThrowable(null)
+            NullPointerException.class,
+            () -> this.createThrowable(null)
         );
     }
 
@@ -45,8 +45,8 @@ public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends Ille
     public final void testSetMessageSame() {
         final T thrown = this.createThrowable(MESSAGE);
         assertSame(
-                thrown,
-                thrown.setMessage(MESSAGE)
+            thrown,
+            thrown.setMessage(MESSAGE)
         );
     }
 
@@ -57,13 +57,13 @@ public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends Ille
         final String differentMessage = "Different " + MESSAGE;
         final IllegalColumnOrRowArgumentException different = thrown.setMessage(differentMessage);
         assertNotSame(
-                thrown,
-                different
+            thrown,
+            different
         );
 
         this.checkEquals(
-                differentMessage,
-                different.getMessage()
+            differentMessage,
+            different.getMessage()
         );
     }
 

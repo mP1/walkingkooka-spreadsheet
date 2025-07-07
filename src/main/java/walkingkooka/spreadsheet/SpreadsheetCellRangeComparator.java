@@ -37,8 +37,8 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
     static SpreadsheetCellRangeComparator with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators,
                                                final SpreadsheetComparatorContext context) {
         return new SpreadsheetCellRangeComparator(
-                SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
-                Objects.requireNonNull(context, "context")
+            SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
+            Objects.requireNonNull(context, "context")
         );
     }
 
@@ -71,9 +71,9 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
                 break;
             }
             result = comparator.compare(
-                    left.get(i),
-                    right.get(i),
-                    context
+                left.get(i),
+                right.get(i),
+                context
             );
             if (Comparators.EQUAL != result) {
                 break;
@@ -94,8 +94,8 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .value(this.comparators)
-                .value(this.context)
-                .build();
+            .value(this.comparators)
+            .value(this.context)
+            .build();
     }
 }

@@ -47,85 +47,85 @@ public enum SpreadsheetFormatParserTokenKind {
     // COLOR............................................................................................................
 
     COLOR_NAME(
-            SpreadsheetFormatParserTokenKind::isColor,
-            SpreadsheetColorName.DEFAULTS.stream()
-                    .map(n -> "[" + n.value() + "]")
-                    .toArray(String[]::new)
+        SpreadsheetFormatParserTokenKind::isColor,
+        SpreadsheetColorName.DEFAULTS.stream()
+            .map(n -> "[" + n.value() + "]")
+            .toArray(String[]::new)
     ),
 
     COLOR_NUMBER(
-            SpreadsheetFormatParserTokenKind::isColor,
-            IntStream.range(
-                            SpreadsheetColors.MIN,
-                            SpreadsheetColors.MAX + 1
-                    ).mapToObj(n -> "[Color " + n + "]")
-                    .toArray(String[]::new)
+        SpreadsheetFormatParserTokenKind::isColor,
+        IntStream.range(
+                SpreadsheetColors.MIN,
+                SpreadsheetColors.MAX + 1
+            ).mapToObj(n -> "[Color " + n + "]")
+            .toArray(String[]::new)
     ),
 
     // CONDITIONAL......................................................................................................
 
     CONDITION(
-            Predicates.never()
+        Predicates.never()
     ),
 
     // DATE.............................................................................................................
 
     // @see DaySpreadsheetFormatParserToken for 'D' count'
     DAY_WITH_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isDay,
-            "dd"
+        SpreadsheetFormatParserTokenKind::isDay,
+        "dd"
     ),
 
     DAY_WITHOUT_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isDay,
-            "d"
+        SpreadsheetFormatParserTokenKind::isDay,
+        "d"
     ),
 
     DAY_NAME_ABBREVIATION(
-            SpreadsheetFormatParserTokenKind::isDay,
-            "ddd"
+        SpreadsheetFormatParserTokenKind::isDay,
+        "ddd"
     ),
 
     DAY_NAME_FULL(
-            SpreadsheetFormatParserTokenKind::isDay,
-            "dddd"
+        SpreadsheetFormatParserTokenKind::isDay,
+        "dddd"
     ),
 
     // MonthSpreadsheetFormatParserToken for 'M' count
     MONTH_WITH_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isMonth,
-            "mm"
+        SpreadsheetFormatParserTokenKind::isMonth,
+        "mm"
     ),
 
     MONTH_WITHOUT_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isMonth,
-            "m"
+        SpreadsheetFormatParserTokenKind::isMonth,
+        "m"
     ),
 
     MONTH_NAME_ABBREVIATION(
-            SpreadsheetFormatParserTokenKind::isMonth,
-            "mmm"
+        SpreadsheetFormatParserTokenKind::isMonth,
+        "mmm"
     ),
 
     MONTH_NAME_FULL(
-            SpreadsheetFormatParserTokenKind::isMonth,
-            "mmmm"
+        SpreadsheetFormatParserTokenKind::isMonth,
+        "mmmm"
     ),
 
     MONTH_NAME_INITIAL(
-            SpreadsheetFormatParserTokenKind::isMonth,
-            "mmmmm"
+        SpreadsheetFormatParserTokenKind::isMonth,
+        "mmmmm"
     ),
 
     // @see YearSpreadsheetFormatParserToken for 'Y' count
     YEAR_TWO_DIGIT(
-            SpreadsheetFormatParserTokenKind::isYear,
-            "yy"
+        SpreadsheetFormatParserTokenKind::isYear,
+        "yy"
     ),
 
     YEAR_FULL(
-            SpreadsheetFormatParserTokenKind::isYear,
-            "yyyy"
+        SpreadsheetFormatParserTokenKind::isYear,
+        "yyyy"
     ),
 
     // GENERAL...........................................................................................................
@@ -137,15 +137,15 @@ public enum SpreadsheetFormatParserTokenKind {
     CURRENCY_SYMBOL("$"),
 
     DIGIT(
-            "#"
+        "#"
     ),
 
     DIGIT_SPACE(
-            "?"
+        "?"
     ),
 
     DIGIT_ZERO(
-            "0"
+        "0"
     ),
 
     GROUP_SEPARATOR(","),
@@ -161,12 +161,12 @@ public enum SpreadsheetFormatParserTokenKind {
     // TEXT............................................................................................................
 
     TEXT_PLACEHOLDER(
-            "@"
+        "@"
     ),
 
     TEXT_LITERAL(
-            Predicates.never(),
-            "\"Text\""
+        Predicates.never(),
+        "\"Text\""
     ),
 
     STAR("* "),
@@ -176,53 +176,53 @@ public enum SpreadsheetFormatParserTokenKind {
     // TIME............................................................................................................
 
     HOUR_WITH_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isHour,
-            "hh"
+        SpreadsheetFormatParserTokenKind::isHour,
+        "hh"
     ),
 
     HOUR_WITHOUT_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isHour,
-            "h"
+        SpreadsheetFormatParserTokenKind::isHour,
+        "h"
     ),
 
     MINUTES_WITH_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isMinutes,
-            "mm"
+        SpreadsheetFormatParserTokenKind::isMinutes,
+        "mm"
     ),
 
     MINUTES_WITHOUT_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isMinutes,
-            "m"
+        SpreadsheetFormatParserTokenKind::isMinutes,
+        "m"
     ),
 
     SECONDS_WITH_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isSecond,
-            "ss"
+        SpreadsheetFormatParserTokenKind::isSecond,
+        "ss"
     ),
 
     SECONDS_WITHOUT_LEADING_ZERO(
-            SpreadsheetFormatParserTokenKind::isSecond,
-            "s"
+        SpreadsheetFormatParserTokenKind::isSecond,
+        "s"
     ),
 
     AMPM_FULL_LOWER(
-            SpreadsheetFormatParserTokenKind::isAmpm,
-            "am/pm"
+        SpreadsheetFormatParserTokenKind::isAmpm,
+        "am/pm"
     ),
 
     AMPM_FULL_UPPER(
-            SpreadsheetFormatParserTokenKind::isAmpm,
-            "AM/PM"
+        SpreadsheetFormatParserTokenKind::isAmpm,
+        "AM/PM"
     ),
 
     AMPM_INITIAL_LOWER(
-            SpreadsheetFormatParserTokenKind::isAmpm,
-            "a/p"
+        SpreadsheetFormatParserTokenKind::isAmpm,
+        "a/p"
     ),
 
     AMPM_INITIAL_UPPER(
-            SpreadsheetFormatParserTokenKind::isAmpm,
-            "A/P"
+        SpreadsheetFormatParserTokenKind::isAmpm,
+        "A/P"
     ),
 
     // MISC.............................................................................................................
@@ -231,17 +231,17 @@ public enum SpreadsheetFormatParserTokenKind {
 
     SpreadsheetFormatParserTokenKind(final String pattern) {
         this(
-                null,
-                pattern
+            null,
+            pattern
         );
     }
 
     SpreadsheetFormatParserTokenKind(final Predicate<SpreadsheetFormatParserTokenKind> duplicate,
                                      final String... patterns) {
         this.duplicate =
-                null != duplicate ?
-                        duplicate :
-                        (other) -> this == other;
+            null != duplicate ?
+                duplicate :
+                (other) -> this == other;
         this.patterns = Sets.of(patterns);
     }
 
@@ -261,14 +261,14 @@ public enum SpreadsheetFormatParserTokenKind {
     public Set<String> alternatives() {
         if (null == this.alternatives) {
             this.alternatives = Sets.readOnly(
-                    Arrays.stream(values())
-                            .filter(this.duplicate)
-                            .flatMap(k -> k.patterns.stream())
-                            .collect(
-                                    Collectors.toCollection(
-                                            this.isColor() ? Sets::ordered : SortedSets::tree
-                                    )
-                            )
+                Arrays.stream(values())
+                    .filter(this.duplicate)
+                    .flatMap(k -> k.patterns.stream())
+                    .collect(
+                        Collectors.toCollection(
+                            this.isColor() ? Sets::ordered : SortedSets::tree
+                        )
+                    )
             );
         }
 
@@ -320,16 +320,16 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isDate() {
         return this == DAY_WITH_LEADING_ZERO ||
-                this == DAY_WITHOUT_LEADING_ZERO ||
-                this == DAY_NAME_ABBREVIATION ||
-                this == DAY_NAME_FULL ||
-                this == MONTH_WITH_LEADING_ZERO ||
-                this == MONTH_WITHOUT_LEADING_ZERO ||
-                this == MONTH_NAME_ABBREVIATION ||
-                this == MONTH_NAME_FULL ||
-                this == MONTH_NAME_INITIAL ||
-                this == YEAR_TWO_DIGIT ||
-                this == YEAR_FULL;
+            this == DAY_WITHOUT_LEADING_ZERO ||
+            this == DAY_NAME_ABBREVIATION ||
+            this == DAY_NAME_FULL ||
+            this == MONTH_WITH_LEADING_ZERO ||
+            this == MONTH_WITHOUT_LEADING_ZERO ||
+            this == MONTH_NAME_ABBREVIATION ||
+            this == MONTH_NAME_FULL ||
+            this == MONTH_NAME_INITIAL ||
+            this == YEAR_TWO_DIGIT ||
+            this == YEAR_FULL;
     }
 
     /**
@@ -337,7 +337,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isDateFormat() {
         return this.isDate() ||
-                this.isFormatExtra();
+            this.isFormatExtra();
     }
 
     /**
@@ -345,7 +345,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isDateParse() {
         return this.isDate() ||
-                this.isParseExtra();
+            this.isParseExtra();
     }
 
     /**
@@ -353,7 +353,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isDateTime() {
         return this.isDate() ||
-                this.isTime();
+            this.isTime();
     }
 
     /**
@@ -361,7 +361,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isDateTimeFormat() {
         return this.isDateTime() ||
-                this.isFormatExtra();
+            this.isFormatExtra();
     }
 
     /**
@@ -369,7 +369,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isDateTimeParse() {
         return this.isDateTime() ||
-                this.isParseExtra();
+            this.isParseExtra();
     }
 
     /**
@@ -426,14 +426,14 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isNumber() {
         return this == DIGIT ||
-                this == DIGIT_SPACE ||
-                this == DIGIT_ZERO ||
-                this == CURRENCY_SYMBOL ||
-                this == DECIMAL_PLACE ||
-                this == EXPONENT ||
-                this == FRACTION ||
-                this == GROUP_SEPARATOR ||
-                this == PERCENT;
+            this == DIGIT_SPACE ||
+            this == DIGIT_ZERO ||
+            this == CURRENCY_SYMBOL ||
+            this == DECIMAL_PLACE ||
+            this == EXPONENT ||
+            this == FRACTION ||
+            this == GROUP_SEPARATOR ||
+            this == PERCENT;
     }
 
 
@@ -442,7 +442,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isNumberFormat() {
         return this.isNumber() ||
-                this.isFormatExtra();
+            this.isFormatExtra();
     }
 
     /**
@@ -450,7 +450,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isNumberParse() {
         return this.isNumber() ||
-                this.isParseExtra();
+            this.isParseExtra();
     }
 
     /**
@@ -472,9 +472,9 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isText() {
         return this == TEXT_LITERAL ||
-                this == TEXT_PLACEHOLDER ||
-                this == STAR ||
-                this == UNDERSCORE;
+            this == TEXT_PLACEHOLDER ||
+            this == STAR ||
+            this == UNDERSCORE;
     }
 
     /**
@@ -493,17 +493,17 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isTime() {
         return this == HOUR_WITH_LEADING_ZERO ||
-                this == HOUR_WITHOUT_LEADING_ZERO ||
-                this == MINUTES_WITH_LEADING_ZERO ||
-                this == MINUTES_WITHOUT_LEADING_ZERO ||
-                this == SECONDS_WITH_LEADING_ZERO ||
-                this == SECONDS_WITHOUT_LEADING_ZERO ||
-                this == AMPM_FULL_LOWER ||
-                this == AMPM_FULL_UPPER ||
-                this == AMPM_INITIAL_LOWER ||
-                this == AMPM_INITIAL_UPPER ||
-                this == DECIMAL_PLACE ||
-                this == DIGIT_ZERO;
+            this == HOUR_WITHOUT_LEADING_ZERO ||
+            this == MINUTES_WITH_LEADING_ZERO ||
+            this == MINUTES_WITHOUT_LEADING_ZERO ||
+            this == SECONDS_WITH_LEADING_ZERO ||
+            this == SECONDS_WITHOUT_LEADING_ZERO ||
+            this == AMPM_FULL_LOWER ||
+            this == AMPM_FULL_UPPER ||
+            this == AMPM_INITIAL_LOWER ||
+            this == AMPM_INITIAL_UPPER ||
+            this == DECIMAL_PLACE ||
+            this == DIGIT_ZERO;
     }
 
     /**
@@ -511,7 +511,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isTimeFormat() {
         return this.isTime() ||
-                this.isFormatExtra();
+            this.isFormatExtra();
     }
 
     /**
@@ -519,7 +519,7 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isTimeParse() {
         return this.isTime() ||
-                this.isParseExtra();
+            this.isParseExtra();
     }
 
     /**
@@ -532,17 +532,17 @@ public enum SpreadsheetFormatParserTokenKind {
 
     private boolean isFormatExtra() {
         return this.isColor() ||
-                this.isCondition() ||
-                this.isGeneral() ||
-                this == SEPARATOR ||
-                this.isTextLiteral();
+            this.isCondition() ||
+            this.isGeneral() ||
+            this == SEPARATOR ||
+            this.isTextLiteral();
     }
 
 
     private boolean isParseExtra() {
         return this.isGeneral() ||
-                this == SEPARATOR ||
-                this.isTextLiteral();
+            this == SEPARATOR ||
+            this.isTextLiteral();
     }
 
     /**
@@ -550,10 +550,10 @@ public enum SpreadsheetFormatParserTokenKind {
      */
     public boolean isNextTokenIgnored() {
         return this.isColor() ||
-                this.isCondition() ||
-                this.isGeneral() ||
-                this.isTextLiteral() ||
-                this == SEPARATOR;
+            this.isCondition() ||
+            this.isGeneral() ||
+            this.isTextLiteral() ||
+            this == SEPARATOR;
     }
 
     /**
@@ -576,11 +576,11 @@ public enum SpreadsheetFormatParserTokenKind {
     }
 
     private final String labelText = CharSequences.capitalize(
-                    CaseKind.SNAKE.change(
-                            this.name(),
-                            CaseKind.NORMAL)
-            ).toString()
-            .replace("Ampm", "AMPM");
+            CaseKind.SNAKE.change(
+                this.name(),
+                CaseKind.NORMAL)
+        ).toString()
+        .replace("Ampm", "AMPM");
 
     /**
      * Returns all possible patterns. Most enum values will only have one while others such as the colours will

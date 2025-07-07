@@ -25,8 +25,8 @@ public final class SpreadsheetMetadataPropertyNameBooleanFindHighlightingTest ex
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance(),
-                "findHighlighting"
+            SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance(),
+            "findHighlighting"
         );
     }
 

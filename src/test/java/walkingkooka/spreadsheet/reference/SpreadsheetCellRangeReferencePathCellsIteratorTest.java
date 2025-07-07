@@ -24,8 +24,8 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements IteratorTesting,
-        ClassTesting<SpreadsheetCellRangeReferencePathCellsIterator>,
-        ToStringTesting<SpreadsheetCellRangeReferencePathCellsIterator> {
+    ClassTesting<SpreadsheetCellRangeReferencePathCellsIterator>,
+    ToStringTesting<SpreadsheetCellRangeReferencePathCellsIterator> {
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
@@ -48,80 +48,80 @@ public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements
     @Test
     public void testLRTD() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                A1,
-                B1,
-                C1,
-                A2,
-                B2,
-                C2,
-                A3,
-                B3,
-                C3
+            SpreadsheetCellRangeReferencePath.LRTD,
+            A1,
+            B1,
+            C1,
+            A2,
+            B2,
+            C2,
+            A3,
+            B3,
+            C3
         );
     }
 
     @Test
     public void testRLTD() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                C1,
-                B1,
-                A1,
-                C2,
-                B2,
-                A2,
-                C3,
-                B3,
-                A3
+            SpreadsheetCellRangeReferencePath.RLTD,
+            C1,
+            B1,
+            A1,
+            C2,
+            B2,
+            A2,
+            C3,
+            B3,
+            A3
         );
     }
 
     @Test
     public void testLRBU() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                A3,
-                B3,
-                C3,
-                A2,
-                B2,
-                C2,
-                A1,
-                B1,
-                C1
+            SpreadsheetCellRangeReferencePath.LRBU,
+            A3,
+            B3,
+            C3,
+            A2,
+            B2,
+            C2,
+            A1,
+            B1,
+            C1
         );
     }
 
     @Test
     public void testRLBU() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                C3,
-                B3,
-                A3,
-                C2,
-                B2,
-                A2,
-                C1,
-                B1,
-                A1
+            SpreadsheetCellRangeReferencePath.RLBU,
+            C3,
+            B3,
+            A3,
+            C2,
+            B2,
+            A2,
+            C1,
+            B1,
+            A1
         );
     }
 
     @Test
     public void testTDLR() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                A1,
-                A2,
-                A3,
-                B1,
-                B2,
-                B3,
-                C1,
-                C2,
-                C3
+            SpreadsheetCellRangeReferencePath.TDLR,
+            A1,
+            A2,
+            A3,
+            B1,
+            B2,
+            B3,
+            C1,
+            C2,
+            C3
         );
     }
 
@@ -135,16 +135,16 @@ public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements
     @Test
     public void testTDRL() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                C1,
-                C2,
-                C3,
-                B1,
-                B2,
-                B3,
-                A1,
-                A2,
-                A3
+            SpreadsheetCellRangeReferencePath.TDRL,
+            C1,
+            C2,
+            C3,
+            B1,
+            B2,
+            B3,
+            A1,
+            A2,
+            A3
         );
     }
 
@@ -158,16 +158,16 @@ public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements
     @Test
     public void testBULR() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.BULR,
-                A3,
-                A2,
-                A1,
-                B3,
-                B2,
-                B1,
-                C3,
-                C2,
-                C1
+            SpreadsheetCellRangeReferencePath.BULR,
+            A3,
+            A2,
+            A1,
+            B3,
+            B2,
+            B1,
+            C3,
+            C2,
+            C1
         );
     }
 
@@ -181,27 +181,27 @@ public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements
     @Test
     public void testBURL() {
         this.iterateAndCheck2(
-                SpreadsheetCellRangeReferencePath.BURL,
-                C3,
-                C2,
-                C1,
-                B3,
-                B2,
-                B1,
-                A3,
-                A2,
-                A1
+            SpreadsheetCellRangeReferencePath.BURL,
+            C3,
+            C2,
+            C1,
+            B3,
+            B2,
+            B1,
+            A3,
+            A2,
+            A1
         );
     }
 
     private void iterateAndCheck2(final SpreadsheetCellRangeReferencePath path,
                                   final SpreadsheetCellReference... expected) {
         this.iterateAndCheck(
-                SpreadsheetCellRangeReferencePathCellsIterator.with(
-                        SpreadsheetSelection.parseCellRange("A1:C3"),
-                        path
-                ),
-                expected
+            SpreadsheetCellRangeReferencePathCellsIterator.with(
+                SpreadsheetSelection.parseCellRange("A1:C3"),
+                path
+            ),
+            expected
         );
     }
 
@@ -213,8 +213,8 @@ public final class SpreadsheetCellRangeReferencePathCellsIteratorTest implements
         final SpreadsheetCellRangeReferencePath path = SpreadsheetCellRangeReferencePath.BULR;
 
         this.toStringAndCheck(
-                SpreadsheetCellRangeReferencePathCellsIterator.with(cells, path),
-                cells + " " + path
+            SpreadsheetCellRangeReferencePathCellsIterator.with(cells, path),
+            cells + " " + path
         );
     }
 

@@ -44,11 +44,11 @@ enum SpreadsheetNumberParsePatternMode {
 
         private void checkCompatible0(final List<SpreadsheetNumberParsePatternComponent> patterns) {
             patterns.stream()
-                    .filter(SpreadsheetNumberParsePatternComponent::isNotExpressionCompatible)
-                    .findFirst()
-                    .ifPresent(p -> {
-                        throw new IllegalStateException("Invalid component " + p + " within " + patterns.stream().map(Objects::toString).collect(Collectors.joining()));
-                    });
+                .filter(SpreadsheetNumberParsePatternComponent::isNotExpressionCompatible)
+                .findFirst()
+                .ifPresent(p -> {
+                    throw new IllegalStateException("Invalid component " + p + " within " + patterns.stream().map(Objects::toString).collect(Collectors.joining()));
+                });
         }
     },
 

@@ -36,11 +36,11 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
                                               final SpreadsheetFormatter text,
                                               final SpreadsheetFormatter time) {
         return new AutomaticSpreadsheetFormatter(
-                Objects.requireNonNull(date, "date"),
-                Objects.requireNonNull(dateTime, "dateTime"),
-                Objects.requireNonNull(number, "number"),
-                Objects.requireNonNull(text, "text"),
-                Objects.requireNonNull(time, "time")
+            Objects.requireNonNull(date, "date"),
+            Objects.requireNonNull(dateTime, "dateTime"),
+            Objects.requireNonNull(number, "number"),
+            Objects.requireNonNull(text, "text"),
+            Objects.requireNonNull(time, "time")
         );
     }
 
@@ -60,19 +60,19 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
         final SpreadsheetFormatter formatter = SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor.select(
-                this,
-                value.orElse(null)
+            this,
+            value.orElse(null)
         );
         // if the formatter didnt work format with text
         return or(
-                formatter.format(
-                        value,
-                        context
-                ),
-                () -> this.text.format(
-                        value,
-                        context
-                )
+            formatter.format(
+                value,
+                context
+            ),
+            () -> this.text.format(
+                value,
+                context
+            )
         );
     }
 
@@ -80,8 +80,8 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     private Optional<TextNode> or(final Optional<TextNode> value,
                                   final Supplier<Optional<TextNode>> or) {
         return value.isPresent() ?
-                value :
-                or.get();
+            value :
+            or.get();
     }
 
     final SpreadsheetFormatter date;
@@ -102,27 +102,27 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.date,
-                this.dateTime,
-                this.number,
-                this.text,
-                this.time
+            this.date,
+            this.dateTime,
+            this.number,
+            this.text,
+            this.time
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof AutomaticSpreadsheetFormatter &&
-                        this.equals0(Cast.to(other));
+            other instanceof AutomaticSpreadsheetFormatter &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final AutomaticSpreadsheetFormatter other) {
         return this.date.equals(other.date) &&
-                this.dateTime.equals(other.dateTime) &&
-                this.number.equals(other.number) &&
-                this.text.equals(other.text) &&
-                this.time.equals(other.time);
+            this.dateTime.equals(other.dateTime) &&
+            this.number.equals(other.number) &&
+            this.text.equals(other.text) &&
+            this.time.equals(other.time);
     }
 
     @Override

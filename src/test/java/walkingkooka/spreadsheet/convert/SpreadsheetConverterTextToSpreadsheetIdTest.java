@@ -30,8 +30,8 @@ public final class SpreadsheetConverterTextToSpreadsheetIdTest extends Spreadshe
         final SpreadsheetId id = SpreadsheetId.parse("123");
 
         this.convertAndCheck(
-                id.toString(),
-                id
+            id.toString(),
+            id
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetConverterTextToSpreadsheetIdTest extends Spreadshe
         final SpreadsheetId id = SpreadsheetId.parse("123");
 
         this.convertAndCheck(
-                new StringBuilder(id.toString()),
-                id
+            new StringBuilder(id.toString()),
+            id
         );
     }
 
@@ -57,9 +57,9 @@ public final class SpreadsheetConverterTextToSpreadsheetIdTest extends Spreadshe
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -67,9 +67,9 @@ public final class SpreadsheetConverterTextToSpreadsheetIdTest extends Spreadshe
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

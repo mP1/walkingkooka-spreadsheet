@@ -30,28 +30,28 @@ public final class SpreadsheetConverterSpreadsheetErrorThrowingTest extends Spre
     @Test
     public void testConvertNonErrorFails() {
         this.convertFails(
-                15,
-                String.class
+            15,
+            String.class
         );
     }
 
     @Test
     public void testConvertErrorToThrows() {
         assertThrows(
-                SpreadsheetErrorException.class,
-                () -> SpreadsheetConverterSpreadsheetErrorThrowing.INSTANCE.convert(
-                        SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
-                        ExpressionNumber.class,
-                        this.createContext()
-                )
+            SpreadsheetErrorException.class,
+            () -> SpreadsheetConverterSpreadsheetErrorThrowing.INSTANCE.convert(
+                SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
+                ExpressionNumber.class,
+                this.createContext()
+            )
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterSpreadsheetErrorThrowing.INSTANCE,
-                "throws SpreadsheetError"
+            SpreadsheetConverterSpreadsheetErrorThrowing.INSTANCE,
+            "throws SpreadsheetError"
         );
     }
 

@@ -50,9 +50,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                        final SpreadsheetParserProvider spreadsheetParserProvider) {
         return new SpreadsheetConvertersConverterProvider(
-                Objects.requireNonNull(metadata, "metadata"),
-                Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
-                Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider")
+            Objects.requireNonNull(metadata, "metadata"),
+            Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
+            Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider")
         );
     }
 
@@ -71,8 +71,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         Objects.requireNonNull(selector, "selector");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -96,9 +96,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 break;
             case COLLECTION_STRING:
                 converter = Converters.collection(
-                        values.stream()
-                                .map(c -> (Converter<C>) c)
-                                .collect(Collectors.toList())
+                    values.stream()
+                        .map(c -> (Converter<C>) c)
+                        .collect(Collectors.toList())
                 );
                 break;
             case ERROR_THROWING_STRING:
@@ -115,7 +115,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 parameterCountCheck(copy, 1);
 
                 converter = SpreadsheetConverters.formatPatternToString(
-                        copy.get(0).toString()
+                    copy.get(0).toString()
                 );
                 break;
             case GENERAL_STRING:
@@ -314,9 +314,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         final SpreadsheetMetadata metadata = this.metadata;
 
         return metadata.generalConverter(
-                this.spreadsheetFormatterProvider,
-                this.spreadsheetParserProvider,
-                context
+            this.spreadsheetFormatterProvider,
+            this.spreadsheetParserProvider,
+            context
         );
     }
 
@@ -508,50 +508,50 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     // @see SpreadsheetConverters constants
     final static ConverterInfoSet INFOS = ConverterInfoSet.with(
-            Sets.of(
-                    converterInfo(BASIC_SPREADSHEET_CONVERTER),
-                    converterInfo(COLLECTION),
-                    converterInfo(ERROR_THROWING),
-                    converterInfo(ERROR_TO_NUMBER),
-                    converterInfo(FORMAT_PATTERN_TO_STRING),
-                    converterInfo(GENERAL),
-                    converterInfo(HAS_TEXT_STYLE_TO_STYLE),
-                    converterInfo(JSON_TO),
-                    converterInfo(NULL_TO_NUMBER),
-                    converterInfo(NUMBER_TO_NUMBER),
-                    converterInfo(SPREADSHEET_CELL_TO),
-                    converterInfo(SELECTION_TO_SELECTION),
-                    converterInfo(SELECTION_TO_TEXT),
-                    converterInfo(SIMPLE),
-                    converterInfo(TEXT_TO_COLOR),
-                    converterInfo(TEXT_TO_ERROR),
-                    converterInfo(TEXT_TO_EXPRESSION),
-                    converterInfo(TEXT_TO_FORM_NAME),
-                    converterInfo(TEXT_TO_JSON),
-                    converterInfo(TEXT_TO_LOCALE),
-                    converterInfo(TEXT_TO_SELECTION),
-                    converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
-                    converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
-                    converterInfo(TEXT_TO_SPREADSHEET_ID),
-                    converterInfo(TEXT_TO_SPREADSHEET_METADATA),
-                    converterInfo(TEXT_TO_SPREADSHEET_METADATA_COLOR),
-                    converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
-                    converterInfo(TEXT_TO_SPREADSHEET_NAME),
-                    converterInfo(TEXT_TO_SPREADSHEET_TEXT),
-                    converterInfo(TEXT_TO_TEMPLATE_VALUE_NAME),
-                    converterInfo(TEXT_TO_TEXT),
-                    converterInfo(TEXT_TO_TEXT_NODE),
-                    converterInfo(TEXT_TO_TEXT_STYLE),
-                    converterInfo(TEXT_TO_TEXT_STYLE_PROPERTY_NAME),
-                    converterInfo(TEXT_TO_URL),
-                    converterInfo(TEXT_TO_VALIDATION_ERROR),
-                    converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
-                    converterInfo(TEXT_TO_VALUE_TYPE),
-                    converterInfo(TO_JSON),
-                    converterInfo(TO_TEXT_NODE),
-                    converterInfo(URL_TO_HYPERLINK),
-                    converterInfo(URL_TO_IMAGE)
-            )
+        Sets.of(
+            converterInfo(BASIC_SPREADSHEET_CONVERTER),
+            converterInfo(COLLECTION),
+            converterInfo(ERROR_THROWING),
+            converterInfo(ERROR_TO_NUMBER),
+            converterInfo(FORMAT_PATTERN_TO_STRING),
+            converterInfo(GENERAL),
+            converterInfo(HAS_TEXT_STYLE_TO_STYLE),
+            converterInfo(JSON_TO),
+            converterInfo(NULL_TO_NUMBER),
+            converterInfo(NUMBER_TO_NUMBER),
+            converterInfo(SPREADSHEET_CELL_TO),
+            converterInfo(SELECTION_TO_SELECTION),
+            converterInfo(SELECTION_TO_TEXT),
+            converterInfo(SIMPLE),
+            converterInfo(TEXT_TO_COLOR),
+            converterInfo(TEXT_TO_ERROR),
+            converterInfo(TEXT_TO_EXPRESSION),
+            converterInfo(TEXT_TO_FORM_NAME),
+            converterInfo(TEXT_TO_JSON),
+            converterInfo(TEXT_TO_LOCALE),
+            converterInfo(TEXT_TO_SELECTION),
+            converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
+            converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
+            converterInfo(TEXT_TO_SPREADSHEET_ID),
+            converterInfo(TEXT_TO_SPREADSHEET_METADATA),
+            converterInfo(TEXT_TO_SPREADSHEET_METADATA_COLOR),
+            converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
+            converterInfo(TEXT_TO_SPREADSHEET_NAME),
+            converterInfo(TEXT_TO_SPREADSHEET_TEXT),
+            converterInfo(TEXT_TO_TEMPLATE_VALUE_NAME),
+            converterInfo(TEXT_TO_TEXT),
+            converterInfo(TEXT_TO_TEXT_NODE),
+            converterInfo(TEXT_TO_TEXT_STYLE),
+            converterInfo(TEXT_TO_TEXT_STYLE_PROPERTY_NAME),
+            converterInfo(TEXT_TO_URL),
+            converterInfo(TEXT_TO_VALIDATION_ERROR),
+            converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
+            converterInfo(TEXT_TO_VALUE_TYPE),
+            converterInfo(TO_JSON),
+            converterInfo(TO_TEXT_NODE),
+            converterInfo(URL_TO_HYPERLINK),
+            converterInfo(URL_TO_IMAGE)
+        )
     );
 
     /**
@@ -559,12 +559,12 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
      */
     private static ConverterInfo converterInfo(final ConverterName name) {
         return ConverterInfo.with(
-                SpreadsheetConvertersConverterProviders.BASE_URL.appendPath(
-                        UrlPath.parse(
-                                name.value()
-                        )
-                ),
-                name
+            SpreadsheetConvertersConverterProviders.BASE_URL.appendPath(
+                UrlPath.parse(
+                    name.value()
+                )
+            ),
+            name
         );
     }
 

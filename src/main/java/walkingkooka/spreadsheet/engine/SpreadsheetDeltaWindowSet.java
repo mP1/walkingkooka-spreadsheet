@@ -33,18 +33,18 @@ import java.util.TreeSet;
  * It also includes logic to verify that the window ranges do not overlap.
  */
 final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeReference>
-        implements ImmutableSetDefaults<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
+    implements ImmutableSetDefaults<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
 
     @SuppressWarnings("lgtm[java/abstract-to-concrete-cast]")
     static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRangeReference> window) {
         return window instanceof SpreadsheetDeltaWindowSet ?
-                (SpreadsheetDeltaWindowSet) window :
-                new SpreadsheetDeltaWindowSet(
-                        Objects.requireNonNull(window, "window")
-                                .toArray(
-                                        new SpreadsheetCellRangeReference[window.size()]
-                                ) // TODO Array.clone.
-                );
+            (SpreadsheetDeltaWindowSet) window :
+            new SpreadsheetDeltaWindowSet(
+                Objects.requireNonNull(window, "window")
+                    .toArray(
+                        new SpreadsheetCellRangeReference[window.size()]
+                    ) // TODO Array.clone.
+            );
     }
 
     private SpreadsheetDeltaWindowSet(final SpreadsheetCellRangeReference[] ranges) {
@@ -84,7 +84,7 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
 
     private static void failIfOverlaps(final SpreadsheetCellRangeReference left,
                                        final SpreadsheetCellRangeReference right) {
-        if(null == left || null == right) {
+        if (null == left || null == right) {
             throw new NullPointerException("Window includes null cell-range");
         }
         if (left.testCellRange(right)) {
@@ -120,14 +120,14 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
     public SpreadsheetDeltaWindowSet setElements(final Set<SpreadsheetCellRangeReference> elements) {
         final SpreadsheetDeltaWindowSet copy = with(elements);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     @Override
     public Set<SpreadsheetCellRangeReference> toSet() {
         return new TreeSet<>(
-                Arrays.asList(this.ranges)
+            Arrays.asList(this.ranges)
         );
     }
 }

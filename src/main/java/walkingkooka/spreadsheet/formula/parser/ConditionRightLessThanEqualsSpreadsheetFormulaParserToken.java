@@ -30,8 +30,8 @@ public final class ConditionRightLessThanEqualsSpreadsheetFormulaParserToken ext
     static ConditionRightLessThanEqualsSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                                           final String text) {
         return new ConditionRightLessThanEqualsSpreadsheetFormulaParserToken(
-                Lists.immutable(value),
-                checkText(text)
+            Lists.immutable(value),
+            checkText(text)
         );
     }
 
@@ -43,8 +43,8 @@ public final class ConditionRightLessThanEqualsSpreadsheetFormulaParserToken ext
     LessThanEqualsSpreadsheetFormulaParserToken setConditionLeft0(final List<ParserToken> tokens,
                                                                   final String text) {
         return lessThanEquals(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -53,9 +53,9 @@ public final class ConditionRightLessThanEqualsSpreadsheetFormulaParserToken ext
     @Override
     public ConditionRightLessThanEqualsSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ConditionRightLessThanEqualsSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            ConditionRightLessThanEqualsSpreadsheetFormulaParserToken::with
         );
     }
 

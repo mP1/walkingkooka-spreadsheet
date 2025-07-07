@@ -31,18 +31,18 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
     @Test
     default void testReplaceReferencesWithNullMapperFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createReplaceReference()
-                        .replaceReferences(null)
+            NullPointerException.class,
+            () -> this.createReplaceReference()
+                .replaceReferences(null)
         );
     }
 
     default <T extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final T can,
                                                                                final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         assertSame(
-                can,
-                can.replaceReferences(mapper),
-                can::toString
+            can,
+            can.replaceReferences(mapper),
+            can::toString
         );
     }
 
@@ -50,9 +50,9 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
                                                                                final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
                                                                                final T expected) {
         this.checkEquals(
-                expected,
-                can.replaceReferences(mapper),
-                can::toString
+            expected,
+            can.replaceReferences(mapper),
+            can::toString
         );
     }
 

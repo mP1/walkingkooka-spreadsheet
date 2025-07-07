@@ -24,7 +24,7 @@ import walkingkooka.visit.VisitorTesting;
  * A mixin interface with tests and helpers to assist in testing a {@link SpreadsheetSelectionVisitor}
  */
 public interface SpreadsheetSelectionVisitorTesting<V extends SpreadsheetSelectionVisitor> extends VisitorTesting<V, SpreadsheetSelection>,
-        TreePrintableTesting {
+    TreePrintableTesting {
 
     @Override
     default String typeNameSuffix() {

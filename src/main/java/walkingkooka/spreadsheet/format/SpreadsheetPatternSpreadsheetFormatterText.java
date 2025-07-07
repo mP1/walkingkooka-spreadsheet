@@ -56,19 +56,19 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
         final Object valueOrNull = value.orElse(null);
 
         return Optional.ofNullable(
-                context.canConvert(
+            context.canConvert(
+                valueOrNull,
+                String.class
+            ) ?
+                SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.format(
+                    this.token,
+                    context.convertOrFail(
                         valueOrNull,
                         String.class
-                ) ?
-                        SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.format(
-                                this.token,
-                                context.convertOrFail(
-                                        valueOrNull,
-                                        String.class
-                                ),
-                                context
-                        ) :
-                        null
+                    ),
+                    context
+                ) :
+                null
         );
     }
 
@@ -89,7 +89,7 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterText && this.equals0((SpreadsheetPatternSpreadsheetFormatterText) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterText && this.equals0((SpreadsheetPatternSpreadsheetFormatterText) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterText other) {

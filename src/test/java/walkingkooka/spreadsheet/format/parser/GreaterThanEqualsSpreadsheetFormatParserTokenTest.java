@@ -97,11 +97,11 @@ public final class GreaterThanEqualsSpreadsheetFormatParserTokenTest extends Con
         }.accept(token);
         this.checkEquals("7137162871528428", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        symbol, symbol, symbol, symbol, symbol,
-                        right, right, right, right, right,
-                        token, token, token),
-                visited,
-                "visited");
+                symbol, symbol, symbol, symbol, symbol,
+                right, right, right, right, right,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     @Override

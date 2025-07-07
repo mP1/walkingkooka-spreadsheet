@@ -55,7 +55,7 @@ import java.util.Objects;
  * </pre>
  */
 public final class SpreadsheetFormatterSampleList extends AbstractList<SpreadsheetFormatterSample>
-        implements ImmutableListDefaults<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample> {
+    implements ImmutableListDefaults<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample> {
 
     public final static SpreadsheetFormatterSampleList EMPTY = new SpreadsheetFormatterSampleList(Lists.empty());
 
@@ -70,7 +70,7 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
             final List<SpreadsheetFormatterSample> copy = Lists.array();
             for (final SpreadsheetFormatterSample sample : samples) {
                 copy.add(
-                        Objects.requireNonNull(sample, "includes null sample")
+                    Objects.requireNonNull(sample, "includes null sample")
                 );
             }
 
@@ -112,8 +112,8 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     public SpreadsheetFormatterSampleList setElements(final List<SpreadsheetFormatterSample> samples) {
         final SpreadsheetFormatterSampleList copy = with(samples);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     // json.............................................................................................................
@@ -121,12 +121,12 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     static SpreadsheetFormatterSampleList unmarshall(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
         return with(
-                Cast.to(
-                        context.unmarshallList(
-                                node,
-                                SpreadsheetFormatterSample.class
-                        )
+            Cast.to(
+                context.unmarshallList(
+                    node,
+                    SpreadsheetFormatterSample.class
                 )
+            )
         );
     }
 
@@ -136,16 +136,16 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
 
     static {
         SpreadsheetFormatterSample.with(
-                "Label", // label
-                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
-                TextNode.text("")
+            "Label", // label
+            SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
+            TextNode.text("")
         );
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSampleList.class),
-                SpreadsheetFormatterSampleList::unmarshall,
-                SpreadsheetFormatterSampleList::marshall,
-                SpreadsheetFormatterSampleList.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterSampleList.class),
+            SpreadsheetFormatterSampleList::unmarshall,
+            SpreadsheetFormatterSampleList::marshall,
+            SpreadsheetFormatterSampleList.class
         );
     }
 }

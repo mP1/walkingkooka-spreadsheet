@@ -48,14 +48,14 @@ final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor extends
     static Object convertToString(final Object value,
                                   final ExpressionNumberConverterContext context) {
         return null == value ?
-                null :
-                convertToString0(value, context);
+            null :
+            convertToString0(value, context);
     }
 
     private static Object convertToString0(final Object value,
                                            final ExpressionNumberConverterContext context) {
         final SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor visitor = new SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor(
-                context
+            context
         );
         visitor.accept(value);
 
@@ -129,10 +129,10 @@ final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor extends
 
     private void convert(final Object value) {
         this.accept(
-                this.context.convert(
-                        value,
-                        String.class
-                ).leftValue()
+            this.context.convert(
+                value,
+                String.class
+            ).leftValue()
         );
     }
 

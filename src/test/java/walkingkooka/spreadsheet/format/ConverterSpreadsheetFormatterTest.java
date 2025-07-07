@@ -30,16 +30,16 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
     @Test
     public void testFormatNullValue() {
         this.formatAndCheck(
-                Optional.empty(),
-                Optional.empty()
+            Optional.empty(),
+            Optional.empty()
         );
     }
 
     @Test
     public void testFormatConvertedValue() {
         this.formatAndCheck(
-                LocalDate.of(1999, 12, 31),
-                "1999-12-31"
+            LocalDate.of(1999, 12, 31),
+            "1999-12-31"
         );
     }
 
@@ -51,9 +51,9 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
     @Override
     public ConverterSpreadsheetFormatter createFormatter() {
         return ConverterSpreadsheetFormatter.with(
-                Converters.localDateToString(
-                        c -> DateTimeFormatter.ISO_DATE
-                )
+            Converters.localDateToString(
+                c -> DateTimeFormatter.ISO_DATE
+            )
         );
     }
 

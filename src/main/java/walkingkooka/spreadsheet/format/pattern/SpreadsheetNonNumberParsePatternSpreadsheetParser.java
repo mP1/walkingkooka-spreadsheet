@@ -39,9 +39,9 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
                                                                   final ParserToken token,
                                                                   final Optional<ValidationValueTypeName> valueType) {
         return new SpreadsheetNonNumberParsePatternSpreadsheetParser(
-                parser,
-                token,
-                valueType
+            parser,
+            token,
+            valueType
         );
     }
 
@@ -57,8 +57,8 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     public Optional<ParserToken> parse(final TextCursor cursor,
                                        final SpreadsheetParserContext context) {
         return this.parser.parse(
-                cursor,
-                context
+            cursor,
+            context
         );
     }
 
@@ -95,21 +95,21 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.parser,
-                this.token
+            this.parser,
+            this.token
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetNonNumberParsePatternSpreadsheetParser &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetNonNumberParsePatternSpreadsheetParser &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetNonNumberParsePatternSpreadsheetParser other) {
         return this.parser.equals(other.parser) &&
-                this.token.equals(other.token);
+            this.token.equals(other.token);
     }
 
     @Override

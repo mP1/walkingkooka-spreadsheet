@@ -42,42 +42,42 @@ public final class SpreadsheetConverterSpreadsheetErrorToNumberTest extends Spre
     @Test
     public void testConvertErrorToExpressionNumber() {
         this.convertFails(
-                SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
-                ExpressionNumber.class
+            SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
+            ExpressionNumber.class
         );
     }
 
     @Test
     public void testConvertErrorErrorToString() {
         this.convertFails(
-                SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
-                String.class
+            SpreadsheetErrorKind.ERROR.setMessage("Message will be ignored"),
+            String.class
         );
     }
 
     @Test
     public void testConvertNameLabelToExpressionNumber() {
         this.convertFails(
-                SpreadsheetSelection.labelName("Label123"),
-                ExpressionNumber.class
+            SpreadsheetSelection.labelName("Label123"),
+            ExpressionNumber.class
         );
     }
 
     @Test
     public void testConvertErrorNotFoundToBigDecimal() {
         this.convertAndCheck(
-                SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1),
-                BigDecimal.class,
-                BigDecimal.ZERO
+            SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1),
+            BigDecimal.class,
+            BigDecimal.ZERO
         );
     }
 
     @Test
     public void testConvertErrorNotFoundToExpressionNumber() {
         this.convertAndCheck(
-                SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1),
-                ExpressionNumber.class,
-                EXPRESSION_NUMBER_KIND.zero()
+            SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1),
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
@@ -86,8 +86,8 @@ public final class SpreadsheetConverterSpreadsheetErrorToNumberTest extends Spre
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.DIV0;
 
         this.convertFails(
-                kind.setMessage("Message will be ignored2"),
-                String.class
+            kind.setMessage("Message will be ignored2"),
+            String.class
         );
     }
 
@@ -96,17 +96,17 @@ public final class SpreadsheetConverterSpreadsheetErrorToNumberTest extends Spre
         final SpreadsheetErrorKind kind = SpreadsheetErrorKind.NULL;
 
         this.convertAndCheck(
-                kind.setMessage("Message will be ignored !!!"),
-                ExpressionNumber.class,
-                EXPRESSION_NUMBER_KIND.zero()
+            kind.setMessage("Message will be ignored !!!"),
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertErrorNullToStringFails() {
         this.convertFails(
-                SpreadsheetErrorKind.NULL.setMessageAndValue("Message will be ignored !!!", null),
-                String.class
+            SpreadsheetErrorKind.NULL.setMessageAndValue("Message will be ignored !!!", null),
+            String.class
         );
     }
 
@@ -132,8 +132,8 @@ public final class SpreadsheetConverterSpreadsheetErrorToNumberTest extends Spre
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterSpreadsheetErrorToNumber.INSTANCE,
-                "SpreadsheetError to Number"
+            SpreadsheetConverterSpreadsheetErrorToNumber.INSTANCE,
+            "SpreadsheetError to Number"
         );
     }
 

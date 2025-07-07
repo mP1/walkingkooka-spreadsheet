@@ -45,8 +45,8 @@ final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserT
         final ExpressionNumberKind kind = context.expressionNumberKind();
         final ExpressionNumber number = kind.parse(visitor.number.toString());
         return visitor.percentage ?
-                number.divide(kind.create(100), context) :
-                number;
+            number.divide(kind.create(100), context) :
+            number;
     }
 
     // @VisibleForTesting
@@ -97,6 +97,6 @@ final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserT
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .build();
+            .build();
     }
 }

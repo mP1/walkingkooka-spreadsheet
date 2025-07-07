@@ -65,22 +65,22 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final OptionalInt columnCount,
                                                        final OptionalInt rowCount) {
         return new SpreadsheetDeltaNonWindowed(
-                viewport,
-                cells,
-                columns,
-                forms,
-                labels,
-                rows,
-                references,
-                deletedCells,
-                deletedColumns,
-                deletedRows,
-                deletedLabels,
-                matchedCells,
-                columnWidths,
-                rowHeights,
-                columnCount,
-                rowCount
+            viewport,
+            cells,
+            columns,
+            forms,
+            labels,
+            rows,
+            references,
+            deletedCells,
+            deletedColumns,
+            deletedRows,
+            deletedLabels,
+            matchedCells,
+            columnWidths,
+            rowHeights,
+            columnCount,
+            rowCount
         );
     }
 
@@ -101,44 +101,44 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final OptionalInt columnCount,
                                         final OptionalInt rowCount) {
         super(
-                viewport,
-                cells,
-                columns,
-                forms,
-                labels,
-                rows,
-                references,
-                deletedCells,
-                deletedColumns,
-                deletedRows,
-                deletedLabels,
-                matchedCells,
-                columnWidths,
-                rowHeights,
-                columnCount,
-                rowCount
+            viewport,
+            cells,
+            columns,
+            forms,
+            labels,
+            rows,
+            references,
+            deletedCells,
+            deletedColumns,
+            deletedRows,
+            deletedLabels,
+            matchedCells,
+            columnWidths,
+            rowHeights,
+            columnCount,
+            rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceViewport(final Optional<SpreadsheetViewport> viewport) {
         return new SpreadsheetDeltaNonWindowed(
-                viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
@@ -146,340 +146,340 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells) {
         // cells have already been filtered by window
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                filterCellsByWindow(
-                        this.cells,
-                        columns,
-                        null, // cells have already been filtered by hidden rows so SKIP
-                        NO_WINDOW
-                ),
+            this.viewport,
+            filterCellsByWindow(
+                this.cells,
                 columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+                null, // cells have already been filtered by hidden rows so SKIP
+                NO_WINDOW
+            ),
+            columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetExpressionReference>> forms) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                filterCellsByWindow(
-                        this.cells,
-                        null, // cells have already been filtered by hidden columns so SKIP
-                        rows,
-                        NO_WINDOW
-                ),
-                this.columns,
-                this.forms,
-                this.labels,
+            this.viewport,
+            filterCellsByWindow(
+                this.cells,
+                null, // cells have already been filtered by hidden columns so SKIP
                 rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+                NO_WINDOW
+            ),
+            this.columns,
+            this.forms,
+            this.labels,
+            rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceReferences(final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceDeletedCells(final SpreadsheetCellReferenceSet deletedCells) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceDeletedColumns(final SpreadsheetColumnReferenceSet deletedColumns) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceDeletedRows(final SpreadsheetRowReferenceSet deletedRows) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceDeletedLabels(final SpreadsheetLabelNameSet deletedLabels) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceMatchedCells(final SpreadsheetCellReferenceSet matchedCells) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                rowHeights,
-                this.columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            rowHeights,
+            this.columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceColumnCount(final OptionalInt columnCount) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                columnCount,
-                this.rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            columnCount,
+            this.rowCount
         );
     }
 
     @Override
     SpreadsheetDelta replaceRowCount(final OptionalInt rowCount) {
         return new SpreadsheetDeltaNonWindowed(
-                this.viewport,
-                this.cells,
-                this.columns,
-                this.forms,
-                this.labels,
-                this.rows,
-                this.references,
-                this.deletedCells,
-                this.deletedColumns,
-                this.deletedRows,
-                this.deletedLabels,
-                this.matchedCells,
-                this.columnWidths,
-                this.rowHeights,
-                this.columnCount,
-                rowCount
+            this.viewport,
+            this.cells,
+            this.columns,
+            this.forms,
+            this.labels,
+            this.rows,
+            this.references,
+            this.deletedCells,
+            this.deletedColumns,
+            this.deletedRows,
+            this.deletedLabels,
+            this.matchedCells,
+            this.columnWidths,
+            this.rowHeights,
+            this.columnCount,
+            rowCount
         );
     }
 

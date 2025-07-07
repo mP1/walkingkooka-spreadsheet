@@ -36,7 +36,7 @@ import java.util.function.Predicate;
  * The name of a group.
  */
 final public class GroupName implements Name,
-        Comparable<GroupName> {
+    Comparable<GroupName> {
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
@@ -102,10 +102,10 @@ final public class GroupName implements Name,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(GroupName.class),
-                GroupName::unmarshall,
-                GroupName::marshall,
-                GroupName.class
+            JsonNodeContext.computeTypeName(GroupName.class),
+            GroupName::unmarshall,
+            GroupName::marshall,
+            GroupName.class
         );
     }
 
@@ -118,8 +118,8 @@ final public class GroupName implements Name,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof GroupName &&
-                        this.equals0(Cast.to(other));
+            other instanceof GroupName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final GroupName other) {

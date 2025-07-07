@@ -69,19 +69,19 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
-                .flatMap(f -> optionalStream(
-                                f.format(
-                                        value,
-                                        context
-                                )
-                        )
-                ).findFirst();
+            .flatMap(f -> optionalStream(
+                    f.format(
+                        value,
+                        context
+                    )
+                )
+            ).findFirst();
     }
 
     // TODO Missing GWT JRE Optional#stream
     private Stream<TextNode> optionalStream(final Optional<TextNode> optional) {
         return optional.map(Stream::of)
-                .orElse(Stream.of());
+            .orElse(Stream.of());
     }
 
     final List<SpreadsheetFormatter> formatters;
@@ -103,8 +103,8 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterCollection &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFormatterCollection &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormatterCollection other) {
@@ -114,8 +114,8 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     @Override
     public String toString() {
         return SpreadsheetPattern.SEPARATOR.toSeparatedString(
-                this.formatters,
-                SpreadsheetFormatter::toString
+            this.formatters,
+            SpreadsheetFormatter::toString
         );
     }
 }

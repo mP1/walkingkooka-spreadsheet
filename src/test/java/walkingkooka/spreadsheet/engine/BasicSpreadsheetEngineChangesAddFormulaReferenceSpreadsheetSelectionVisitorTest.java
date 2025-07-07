@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
 public final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor>
-        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor> {
+    implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("A99");
 

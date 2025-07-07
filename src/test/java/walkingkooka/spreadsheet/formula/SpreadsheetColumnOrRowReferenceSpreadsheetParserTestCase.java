@@ -39,27 +39,27 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
     @Test
     public final void testMinCount() {
         this.minCountAndCheck(
-                1
+            1
         );
     }
 
     @Test
     public final void testMaxCount() {
         this.maxCountAndCheck(
-                1
+            1
         );
     }
 
     @Override
     public final SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.POSITION,
-                this.dateTimeContext(),
-                ExpressionNumberContexts.basic(
-                        EXPRESSION_NUMBER_KIND,
-                        this.decimalNumberContext()
-                ),
-                VALUE_SEPARATOR
+            InvalidCharacterExceptionFactory.POSITION,
+            this.dateTimeContext(),
+            ExpressionNumberContexts.basic(
+                EXPRESSION_NUMBER_KIND,
+                this.decimalNumberContext()
+            ),
+            VALUE_SEPARATOR
         );
     }
 
@@ -68,7 +68,7 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
     @Test
     public final void testTokens() {
         this.tokensAndCheck(
-                this.createContext()
+            this.createContext()
         );
     }
 

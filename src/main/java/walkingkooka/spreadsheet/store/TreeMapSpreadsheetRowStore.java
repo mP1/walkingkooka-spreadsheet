@@ -89,8 +89,8 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     public Set<SpreadsheetRowReference> ids(final int offset,
                                             final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -98,8 +98,8 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     public List<SpreadsheetRow> values(final int offset,
                                        final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -107,8 +107,8 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     public List<SpreadsheetRow> between(final SpreadsheetRowReference from,
                                         final SpreadsheetRowReference to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

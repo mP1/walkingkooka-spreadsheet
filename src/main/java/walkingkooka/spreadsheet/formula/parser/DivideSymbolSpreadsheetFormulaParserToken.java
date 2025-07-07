@@ -28,8 +28,8 @@ public final class DivideSymbolSpreadsheetFormulaParserToken extends SymbolSprea
     static DivideSymbolSpreadsheetFormulaParserToken with(final String value,
                                                           final String text) {
         return new DivideSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

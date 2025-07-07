@@ -45,8 +45,8 @@ abstract class SpreadsheetPatternSpreadsheetFormatterFractionDigits implements U
     SpreadsheetPatternSpreadsheetFormatterFractionDigits(final String text) {
         super();
         this.text = "0".equals(text) ?
-                "" :
-                text;
+            "" :
+            text;
     }
 
     /**
@@ -64,9 +64,9 @@ abstract class SpreadsheetPatternSpreadsheetFormatterFractionDigits implements U
 
         if (textDigitPosition >= 0) {
             this.addDigits(0 == digitSymbolPosition ? 0 : textDigitPosition,
-                    textDigitPosition,
-                    textDigits,
-                    context);
+                textDigitPosition,
+                textDigits,
+                context);
         } else {
             zero.append(numberDigitPosition, context);
         }

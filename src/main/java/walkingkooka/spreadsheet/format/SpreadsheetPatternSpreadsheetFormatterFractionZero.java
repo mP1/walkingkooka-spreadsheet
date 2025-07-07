@@ -57,7 +57,7 @@ enum SpreadsheetPatternSpreadsheetFormatterFractionZero {
         @Override
         void append(final int textDigitPosition, final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
             context.appendDigit(
-                    context.zeroDigit()
+                context.zeroDigit()
             );
         }
 

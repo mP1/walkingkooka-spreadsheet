@@ -51,8 +51,8 @@ public interface SpreadsheetEngine {
     static void checkOffsetAndCount(final int offset,
                                     final int count) {
         Store.checkOffsetAndCount(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -167,6 +167,7 @@ public interface SpreadsheetEngine {
                                            final int count,
                                            final Set<SpreadsheetDeltaProperties> properties,
                                            final SpreadsheetEngineContext context);
+
     /**
      * Sorts the selection of cells using the provided {@link walkingkooka.spreadsheet.compare.SpreadsheetComparator comparators}.
      */
@@ -270,6 +271,7 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
                                 final SpreadsheetExpressionReference selection,
                                 final SpreadsheetEngineContext context);
+
     /**
      * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not
      * have affected and updated cells.
@@ -295,6 +297,7 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta loadLabels(final int offset,
                                 final int count,
                                 final SpreadsheetEngineContext context);
+
     /**
      * Finds all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
      */

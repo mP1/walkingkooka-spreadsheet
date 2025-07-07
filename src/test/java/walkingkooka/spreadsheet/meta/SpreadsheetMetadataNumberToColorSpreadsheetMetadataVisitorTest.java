@@ -26,7 +26,7 @@ import walkingkooka.reflect.JavaVisibility;
 import java.time.LocalDateTime;
 
 public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor>
-        implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor> {
+    implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor> {
 
     @Override
     public void testAllConstructorsVisibility() {
@@ -41,16 +41,16 @@ public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTes
         final SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor();
 
         visitor.accept(
-                SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                                AuditInfo.with(
-                                        EmailAddress.parse("creator@example.com"),
-                                        LocalDateTime.MIN,
-                                        EmailAddress.parse("modified@example.com"),
-                                        LocalDateTime.MAX
-                                )
-                        ).set(SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233))
-                        .set(SpreadsheetMetadataPropertyName.numberedColor(13), Color.fromRgb(0xffeedd))
+            SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AuditInfo.with(
+                        EmailAddress.parse("creator@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("modified@example.com"),
+                        LocalDateTime.MAX
+                    )
+                ).set(SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233))
+                .set(SpreadsheetMetadataPropertyName.numberedColor(13), Color.fromRgb(0xffeedd))
         );
         this.toStringAndCheck(visitor, "{12=#112233, 13=#ffeedd}");
     }

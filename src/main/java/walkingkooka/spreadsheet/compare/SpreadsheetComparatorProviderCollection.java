@@ -32,38 +32,38 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
 
     static SpreadsheetComparatorProviderCollection with(final Set<SpreadsheetComparatorProvider> providers) {
         return new SpreadsheetComparatorProviderCollection(
-                Objects.requireNonNull(providers, "providers")
+            Objects.requireNonNull(providers, "providers")
         );
     }
 
     private SpreadsheetComparatorProviderCollection(final Set<SpreadsheetComparatorProvider> providers) {
         this.providers = ProviderCollection.with(
-                new ProviderCollectionProviderGetter<SpreadsheetComparatorProvider, SpreadsheetComparatorName, SpreadsheetComparatorSelector, SpreadsheetComparator<?>>() {
-                    @Override
-                    public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
-                                                        final SpreadsheetComparatorName name,
-                                                        final List<?> values,
-                                                        final ProviderContext context) {
-                        return provider.spreadsheetComparator(
-                                name,
-                                values,
-                                context
-                        );
-                    }
+            new ProviderCollectionProviderGetter<SpreadsheetComparatorProvider, SpreadsheetComparatorName, SpreadsheetComparatorSelector, SpreadsheetComparator<?>>() {
+                @Override
+                public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
+                                                    final SpreadsheetComparatorName name,
+                                                    final List<?> values,
+                                                    final ProviderContext context) {
+                    return provider.spreadsheetComparator(
+                        name,
+                        values,
+                        context
+                    );
+                }
 
-                    @Override
-                    public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
-                                                        final SpreadsheetComparatorSelector selector,
-                                                        final ProviderContext context) {
-                        return provider.spreadsheetComparator(
-                                selector,
-                                context
-                        );
-                    }
-                },
-                SpreadsheetComparatorProvider::spreadsheetComparatorInfos,
-                SpreadsheetComparator.class.getSimpleName(),
-                providers
+                @Override
+                public SpreadsheetComparator<?> get(final SpreadsheetComparatorProvider provider,
+                                                    final SpreadsheetComparatorSelector selector,
+                                                    final ProviderContext context) {
+                    return provider.spreadsheetComparator(
+                        selector,
+                        context
+                    );
+                }
+            },
+            SpreadsheetComparatorProvider::spreadsheetComparatorInfos,
+            SpreadsheetComparator.class.getSimpleName(),
+            providers
         );
     }
 
@@ -71,8 +71,8 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                           final ProviderContext context) {
         return this.providers.get(
-                selector,
-                context
+            selector,
+            context
         );
     }
 
@@ -81,16 +81,16 @@ final class SpreadsheetComparatorProviderCollection implements SpreadsheetCompar
                                                           final List<?> values,
                                                           final ProviderContext context) {
         return this.providers.get(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
         return SpreadsheetComparatorInfoSet.with(
-                this.providers.infos()
+            this.providers.infos()
         );
     }
 

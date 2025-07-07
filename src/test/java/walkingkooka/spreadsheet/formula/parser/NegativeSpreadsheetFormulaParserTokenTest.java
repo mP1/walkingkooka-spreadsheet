@@ -35,16 +35,16 @@ public final class NegativeSpreadsheetFormulaParserTokenTest extends ParentSprea
     @Test
     public void testWithMissingNonNoisyTokenFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createToken("", this.whitespace())
+            IllegalArgumentException.class,
+            () -> this.createToken("", this.whitespace())
         );
     }
 
     @Test
     public void testWithMissingNonNoisyTokenFails2() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createToken("", this.whitespace(), this.whitespace())
+            IllegalArgumentException.class,
+            () -> this.createToken("", this.whitespace(), this.whitespace())
         );
     }
 
@@ -121,19 +121,19 @@ public final class NegativeSpreadsheetFormulaParserTokenTest extends ParentSprea
         }.accept(negative);
         this.checkEquals("81381728815628428", b.toString());
         this.checkEquals(Lists.of(negative, negative, negative,
-                        symbol, symbol, symbol, symbol, symbol,
-                        parameter, parameter, parameter, parameter, parameter, parameter,
-                        negative, negative, negative),
-                visited,
-                "visited");
+                symbol, symbol, symbol, symbol, symbol,
+                parameter, parameter, parameter, parameter, parameter, parameter,
+                negative, negative, negative),
+            visited,
+            "visited");
     }
 
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
-                Expression.negative(
-                        expression1()
-                )
+            Expression.negative(
+                expression1()
+            )
         );
     }
 

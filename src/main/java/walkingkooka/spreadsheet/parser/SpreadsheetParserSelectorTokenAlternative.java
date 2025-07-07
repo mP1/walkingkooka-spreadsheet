@@ -32,10 +32,10 @@ public final class SpreadsheetParserSelectorTokenAlternative implements PluginSe
     public static SpreadsheetParserSelectorTokenAlternative with(final String label,
                                                                  final String text) {
         return new SpreadsheetParserSelectorTokenAlternative(
-                PluginSelectorTokenAlternative.with(
-                        label,
-                        text
-                )
+            PluginSelectorTokenAlternative.with(
+                label,
+                text
+            )
         );
     }
 
@@ -65,8 +65,8 @@ public final class SpreadsheetParserSelectorTokenAlternative implements PluginSe
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetParserSelectorTokenAlternative &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetParserSelectorTokenAlternative &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetParserSelectorTokenAlternative other) {
@@ -83,18 +83,18 @@ public final class SpreadsheetParserSelectorTokenAlternative implements PluginSe
     static SpreadsheetParserSelectorTokenAlternative unmarshall(final JsonNode node,
                                                                 final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenAlternativeLike.unmarshall(
-                node,
-                context,
-                SpreadsheetParserSelectorTokenAlternative::with
+            node,
+            context,
+            SpreadsheetParserSelectorTokenAlternative::with
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenAlternative.class),
-                SpreadsheetParserSelectorTokenAlternative::unmarshall,
-                SpreadsheetParserSelectorTokenAlternative::marshall,
-                SpreadsheetParserSelectorTokenAlternative.class
+            JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenAlternative.class),
+            SpreadsheetParserSelectorTokenAlternative::unmarshall,
+            SpreadsheetParserSelectorTokenAlternative::marshall,
+            SpreadsheetParserSelectorTokenAlternative.class
         );
     }
 }

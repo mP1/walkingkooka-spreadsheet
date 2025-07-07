@@ -44,11 +44,11 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
                                                                                   final LocaleContext localeContext,
                                                                                   final ProviderContext providerContext) {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                metadata,
-                spreadsheetParserProvider,
-                localeContext,
-                providerContext
+            store,
+            metadata,
+            spreadsheetParserProvider,
+            localeContext,
+            providerContext
         );
     }
 

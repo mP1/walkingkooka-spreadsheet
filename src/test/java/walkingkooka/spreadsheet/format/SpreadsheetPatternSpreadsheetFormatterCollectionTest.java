@@ -42,16 +42,16 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetPatternSpreadsheetFormatterCollection.with(null)
         );
     }
 
     @Test
     public void testWithEmptyFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterCollection.with(Lists.empty())
+            IllegalArgumentException.class,
+            () -> SpreadsheetPatternSpreadsheetFormatterCollection.with(Lists.empty())
         );
     }
 
@@ -59,10 +59,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
     public void testWithOneUnwraps() {
         final SpreadsheetPatternSpreadsheetFormatter formatter = SpreadsheetFormatters.fakeSpreadsheetPattern();
         assertSame(
-                formatter,
-                SpreadsheetPatternSpreadsheetFormatterCollection.with(
-                        Lists.of(formatter)
-                )
+            formatter,
+            SpreadsheetPatternSpreadsheetFormatterCollection.with(
+                Lists.of(formatter)
+            )
         );
     }
 
@@ -81,8 +81,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                Optional.empty(),
-                Optional.empty()
+            Optional.empty(),
+            Optional.empty()
         );
     }
 
@@ -101,12 +101,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         Objects.requireNonNull(token, "token"); // token is ignored by SpreadsheetPatternSpreadsheetFormatterCollection
 
         return Cast.to(
-                SpreadsheetPatternSpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                FORMATTER1,
-                                FORMATTER2
-                        )
+            SpreadsheetPatternSpreadsheetFormatterCollection.with(
+                Lists.of(
+                    FORMATTER1,
+                    FORMATTER2
                 )
+            )
         );
     }
 
@@ -125,9 +125,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
                 Objects.requireNonNull(context, "context");
 
                 return Optional.ofNullable(
-                        value.equals(v.orElse(null)) ?
-                                spreadsheetText(text) :
-                                null
+                    value.equals(v.orElse(null)) ?
+                        spreadsheetText(text) :
+                        null
                 );
             }
 
@@ -164,20 +164,20 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
     @Test
     public void testEqualsDifferentFormatters() {
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                SpreadsheetPattern.parseTextFormatPattern("@")
-                                        .formatter(),
-                                SpreadsheetPattern.parseTextFormatPattern("@@")
-                                        .formatter()
-                        )
-                ),
-                SpreadsheetPatternSpreadsheetFormatterCollection.with(
-                        Lists.of(
-                                SpreadsheetPattern.parseTextFormatPattern("@@@")
-                                        .formatter()
-                        )
+            SpreadsheetPatternSpreadsheetFormatterCollection.with(
+                Lists.of(
+                    SpreadsheetPattern.parseTextFormatPattern("@")
+                        .formatter(),
+                    SpreadsheetPattern.parseTextFormatPattern("@@")
+                        .formatter()
                 )
+            ),
+            SpreadsheetPatternSpreadsheetFormatterCollection.with(
+                Lists.of(
+                    SpreadsheetPattern.parseTextFormatPattern("@@@")
+                        .formatter()
+                )
+            )
         );
     }
 
@@ -186,8 +186,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createFormatter(),
-                VALUE1 + ";" + VALUE2
+            this.createFormatter(),
+            VALUE1 + ";" + VALUE2
         );
     }
 

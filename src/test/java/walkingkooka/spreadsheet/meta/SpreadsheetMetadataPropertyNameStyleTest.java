@@ -44,10 +44,10 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
     @Override
     TextStyle propertyValue() {
         return TextStyle.EMPTY
-                .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("Times"))
-                .set(TextStylePropertyName.FONT_SIZE, FontSize.with(10))
-                .set(TextStylePropertyName.HEIGHT, Length.pixel(12.0))
-                .set(TextStylePropertyName.WIDTH, Length.pixel(100.0));
+            .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("Times"))
+            .set(TextStylePropertyName.FONT_SIZE, FontSize.with(10))
+            .set(TextStylePropertyName.HEIGHT, Length.pixel(12.0))
+            .set(TextStylePropertyName.WIDTH, Length.pixel(100.0));
     }
 
     @Override

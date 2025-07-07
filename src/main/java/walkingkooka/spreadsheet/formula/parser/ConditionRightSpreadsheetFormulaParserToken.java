@@ -38,7 +38,7 @@ public abstract class ConditionRightSpreadsheetFormulaParserToken extends Parent
             throw new IllegalArgumentException("Expected 1 tokens but got " + count + "=" + without);
         }
         this.right = without.get(0)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
     }
 
     /**
@@ -58,11 +58,11 @@ public abstract class ConditionRightSpreadsheetFormulaParserToken extends Parent
         Objects.requireNonNull(left, "left");
 
         return this.setConditionLeft0(
-                Lists.of(
-                        left,
-                        this
-                ),
-                left.text() + this.text()
+            Lists.of(
+                left,
+                this
+            ),
+            left.text() + this.text()
         );
     }
 

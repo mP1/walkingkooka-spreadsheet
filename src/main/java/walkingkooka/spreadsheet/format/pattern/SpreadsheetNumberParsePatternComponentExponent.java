@@ -47,12 +47,12 @@ final class SpreadsheetNumberParsePatternComponentExponent extends SpreadsheetNu
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         return this.parseToken(
-                cursor,
-                request.context.exponentSymbol(),
-                SpreadsheetStrings.CASE_SENSITIVITY,
-                SpreadsheetFormulaParserToken::exponentSymbol,
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
-                request
+            cursor,
+            request.context.exponentSymbol(),
+            SpreadsheetStrings.CASE_SENSITIVITY,
+            SpreadsheetFormulaParserToken::exponentSymbol,
+            SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
+            request
         );
     }
 

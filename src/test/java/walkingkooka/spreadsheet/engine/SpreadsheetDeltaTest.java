@@ -74,8 +74,8 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
-        PatchableTesting<SpreadsheetDelta>,
-        TreePrintableTesting {
+    PatchableTesting<SpreadsheetDelta>,
+    TreePrintableTesting {
 
     @Test
     public void testEmpty() {
@@ -91,8 +91,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testNoWindowConstant() {
         this.checkEquals(
-                SpreadsheetViewportWindows.EMPTY,
-                SpreadsheetDelta.NO_WINDOW
+            SpreadsheetViewportWindows.EMPTY,
+            SpreadsheetDelta.NO_WINDOW
         );
     }
 
@@ -103,13 +103,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setWindow(SpreadsheetViewportWindows.parse("B2:F6"))
-                .setLabels(mappings);
+            .setWindow(SpreadsheetViewportWindows.parse("B2:F6"))
+            .setLabels(mappings);
 
         this.checkEquals(
-                mappings,
-                delta.labels(),
-                "labels"
+            mappings,
+            delta.labels(),
+            "labels"
         );
     }
 
@@ -118,13 +118,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setWindow(SpreadsheetViewportWindows.parse("B2:D4"))
-                .setLabels(mappings);
+            .setWindow(SpreadsheetViewportWindows.parse("B2:D4"))
+            .setLabels(mappings);
 
         this.checkEquals(
-                mappings,
-                delta.labels(),
-                "labels"
+            mappings,
+            delta.labels(),
+            "labels"
         );
     }
 
@@ -133,22 +133,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Set<SpreadsheetLabelMapping> mappings = this.labelMappingsLabel123ToC3E5();
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setWindow(SpreadsheetViewportWindows.parse("A1:B2"))
-                .setLabels(mappings);
+            .setWindow(SpreadsheetViewportWindows.parse("A1:B2"))
+            .setLabels(mappings);
 
         this.checkEquals(
-                SpreadsheetDelta.NO_LABELS,
-                delta.labels(),
-                "labels"
+            SpreadsheetDelta.NO_LABELS,
+            delta.labels(),
+            "labels"
         );
     }
 
     private Set<SpreadsheetLabelMapping> labelMappingsLabel123ToC3E5() {
         return Sets.of(
-                SpreadsheetSelection.labelName("Label123")
-                        .setLabelMappingReference(
-                                SpreadsheetSelection.parseCellRange("C3:E5")
-                        )
+            SpreadsheetSelection.labelName("Label123")
+                .setLabelMappingReference(
+                    SpreadsheetSelection.parseCellRange("C3:E5")
+                )
         );
     }
 
@@ -157,22 +157,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellWhenEmpty() {
         this.cellAndCheck(
-                SpreadsheetDelta.EMPTY,
-                SpreadsheetSelection.A1,
-                Optional.empty()
+            SpreadsheetDelta.EMPTY,
+            SpreadsheetSelection.A1,
+            Optional.empty()
         );
     }
 
     @Test
     public void testCellNotFound() {
         this.cellAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                this.cell()
-                        )
-                ),
-                SpreadsheetSelection.parseCell("B2"),
-                Optional.empty()
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    this.cell()
+                )
+            ),
+            SpreadsheetSelection.parseCell("B2"),
+            Optional.empty()
         );
     }
 
@@ -180,11 +180,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testCellFound() {
         final SpreadsheetCell cell = this.cell();
         this.cellAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(cell)
-                ),
-                cell.reference(),
-                Optional.of(cell)
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(cell)
+            ),
+            cell.reference(),
+            Optional.of(cell)
         );
     }
 
@@ -195,29 +195,29 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.checkEquals(reference.toRelative(), reference, "reference should be relative");
 
         this.cellAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(cell)
-                ),
-                reference.toAbsolute(),
-                Optional.of(cell)
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(cell)
+            ),
+            reference.toAbsolute(),
+            Optional.of(cell)
         );
     }
 
     private SpreadsheetCell cell() {
         return SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=1+2")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=1+2")
+            );
     }
 
     private void cellAndCheck(final SpreadsheetDelta delta,
                               final SpreadsheetCellReference reference,
                               final Optional<SpreadsheetCell> cell) {
         this.checkEquals(
-                cell,
-                delta.cell(reference),
-                () -> delta + " cell " + reference
+            cell,
+            delta.cell(reference),
+            () -> delta + " cell " + reference
         );
     }
 
@@ -226,22 +226,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testColumnWhenEmpty() {
         this.columnAndCheck(
-                SpreadsheetDelta.EMPTY,
-                SpreadsheetSelection.parseColumn("A"),
-                Optional.empty()
+            SpreadsheetDelta.EMPTY,
+            SpreadsheetSelection.parseColumn("A"),
+            Optional.empty()
         );
     }
 
     @Test
     public void testColumnNotFound() {
         this.columnAndCheck(
-                SpreadsheetDelta.EMPTY.setColumns(
-                        Sets.of(
-                                this.column()
-                        )
-                ),
-                SpreadsheetSelection.parseColumn("B"),
-                Optional.empty()
+            SpreadsheetDelta.EMPTY.setColumns(
+                Sets.of(
+                    this.column()
+                )
+            ),
+            SpreadsheetSelection.parseColumn("B"),
+            Optional.empty()
         );
     }
 
@@ -249,11 +249,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testColumnFound() {
         final SpreadsheetColumn column = this.column();
         this.columnAndCheck(
-                SpreadsheetDelta.EMPTY.setColumns(
-                        Sets.of(column)
-                ),
-                column.reference(),
-                Optional.of(column)
+            SpreadsheetDelta.EMPTY.setColumns(
+                Sets.of(column)
+            ),
+            column.reference(),
+            Optional.of(column)
         );
     }
 
@@ -264,27 +264,27 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.checkEquals(reference.toRelative(), reference, "reference should be relative");
 
         this.columnAndCheck(
-                SpreadsheetDelta.EMPTY.setColumns(
-                        Sets.of(column)
-                ),
-                reference.toRelative(),
-                Optional.of(column)
+            SpreadsheetDelta.EMPTY.setColumns(
+                Sets.of(column)
+            ),
+            reference.toRelative(),
+            Optional.of(column)
         );
     }
 
     private SpreadsheetColumn column() {
         return SpreadsheetSelection.parseColumn("A")
-                .column()
-                .setHidden(true);
+            .column()
+            .setHidden(true);
     }
 
     private void columnAndCheck(final SpreadsheetDelta delta,
                                 final SpreadsheetColumnReference reference,
                                 final Optional<SpreadsheetColumn> column) {
         this.checkEquals(
-                column,
-                delta.column(reference),
-                () -> delta + " column " + reference
+            column,
+            delta.column(reference),
+            () -> delta + " column " + reference
         );
     }
 
@@ -293,9 +293,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testRowWhenEmpty() {
         this.rowAndCheck(
-                SpreadsheetDelta.EMPTY,
-                SpreadsheetSelection.parseRow("1"),
-                Optional.empty()
+            SpreadsheetDelta.EMPTY,
+            SpreadsheetSelection.parseRow("1"),
+            Optional.empty()
         );
     }
 
@@ -304,11 +304,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetRow row = this.row();
 
         this.rowAndCheck(
-                SpreadsheetDelta.EMPTY.setRows(
-                        Sets.of(row)
-                ),
-                row.reference().add(1),
-                Optional.empty()
+            SpreadsheetDelta.EMPTY.setRows(
+                Sets.of(row)
+            ),
+            row.reference().add(1),
+            Optional.empty()
         );
     }
 
@@ -317,11 +317,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetRow row = this.row();
 
         this.rowAndCheck(
-                SpreadsheetDelta.EMPTY.setRows(
-                        Sets.of(row)
-                ),
-                row.reference(),
-                Optional.of(row)
+            SpreadsheetDelta.EMPTY.setRows(
+                Sets.of(row)
+            ),
+            row.reference(),
+            Optional.of(row)
         );
     }
 
@@ -332,27 +332,27 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         this.checkEquals(reference.toRelative(), reference, "reference should be relative");
 
         this.rowAndCheck(
-                SpreadsheetDelta.EMPTY.setRows(
-                        Sets.of(row)
-                ),
-                reference.toRelative(),
-                Optional.of(row)
+            SpreadsheetDelta.EMPTY.setRows(
+                Sets.of(row)
+            ),
+            reference.toRelative(),
+            Optional.of(row)
         );
     }
 
     private SpreadsheetRow row() {
         return SpreadsheetSelection.parseRow("1")
-                .row()
-                .setHidden(true);
+            .row()
+            .setHidden(true);
     }
 
     private void rowAndCheck(final SpreadsheetDelta delta,
                              final SpreadsheetRowReference reference,
                              final Optional<SpreadsheetRow> row) {
         this.checkEquals(
-                row,
-                delta.row(reference),
-                () -> delta + " row " + reference
+            row,
+            delta.row(reference),
+            () -> delta + " row " + reference
         );
     }
 
@@ -363,22 +363,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsPatchWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsPatch(
-                        Sets.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsPatch(
+                Sets.empty(),
+                null
+            )
         );
     }
 
@@ -387,32 +387,32 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
         this.cellsPatchAndCheck(
-                Sets.of(SpreadsheetSelection.A1.setFormula(formula)),
-                JsonNode.object()
+            Sets.of(SpreadsheetSelection.A1.setFormula(formula)),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("formula"),
-                                                                marshall(formula)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("formula"),
+                                    marshall(formula)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsPatchEmptyCells() {
         this.cellsPatchAndCheck(
-                Sets.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Sets.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
@@ -422,52 +422,52 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetFormula formula2 = SpreadsheetFormula.EMPTY.setText("=22");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                SpreadsheetSelection.A1.setFormula(formula1),
-                SpreadsheetSelection.parseCell("A2")
-                        .setFormula(formula2)
+            SpreadsheetSelection.A1.setFormula(formula1),
+            SpreadsheetSelection.parseCell("A2")
+                .setFormula(formula2)
         );
 
         this.cellsPatchAndCheck(
-                cells,
-                JsonNode.object()
+            cells,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("formula"),
-                                                                marshall(formula1)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("formula"),
-                                                                marshall(formula2)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("formula"),
+                                    marshall(formula1)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("formula"),
+                                    marshall(formula2)
+                                )
                         )
+                )
         );
     }
 
     private void cellsPatchAndCheck(final Set<SpreadsheetCell> cells,
                                     final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsPatch(
-                cells,
-                MARSHALL_CONTEXT
+            cells,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY,
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(cells)
+            SpreadsheetDelta.EMPTY,
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(cells)
         );
     }
 
@@ -476,152 +476,152 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsDateTimeSymbolsPatchWithNullCellsToDateTimeSymbolsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsDateTimeSymbolsPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsDateTimeSymbolsPatch() {
         final DateTimeSymbols symbols = DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(Locale.FRANCE)
+            new DateFormatSymbols(Locale.FRANCE)
         );
 
         this.cellsDateTimeSymbolsPatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        Optional.of(symbols)
-                ),
-                JsonNode.object()
+            Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(symbols)
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("dateTimeSymbols"),
-                                                                marshall(symbols)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("dateTimeSymbols"),
+                                    marshall(symbols)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsDateTimeSymbolsPatchEmptyCells() {
         this.cellsDateTimeSymbolsPatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
     @Test
     public void testCellsDateTimeSymbolsPatchMultipleCells() {
         final DateTimeSymbols symbols1 = DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(Locale.FRANCE)
+            new DateFormatSymbols(Locale.FRANCE)
         );
         final DateTimeSymbols symbols2 = DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(Locale.GERMANY)
+            new DateFormatSymbols(Locale.GERMANY)
         );
         final DateTimeSymbols symbols3 = null;
 
         final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToSymbols = Maps.of(
-                SpreadsheetSelection.A1,
-                Optional.of(symbols1),
-                SpreadsheetSelection.parseCell("A2"),
-                Optional.of(symbols2),
-                SpreadsheetSelection.parseCell("A3"),
-                Optional.ofNullable(symbols3)
+            SpreadsheetSelection.A1,
+            Optional.of(symbols1),
+            SpreadsheetSelection.parseCell("A2"),
+            Optional.of(symbols2),
+            SpreadsheetSelection.parseCell("A3"),
+            Optional.ofNullable(symbols3)
         );
 
         this.cellsDateTimeSymbolsPatchAndCheck(
-                cellToSymbols,
-                JsonNode.object()
+            cellToSymbols,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("dateTimeSymbols"),
-                                                                marshall(symbols1)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("dateTimeSymbols"),
-                                                                marshall(symbols2)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A3"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("dateTimeSymbols"),
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("dateTimeSymbols"),
+                                    marshall(symbols1)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("dateTimeSymbols"),
+                                    marshall(symbols2)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A3"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("dateTimeSymbols"),
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     private void cellsDateTimeSymbolsPatchAndCheck(final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToDateTimeSymbols,
                                                    final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsDateTimeSymbolsPatch(
-                cellToDateTimeSymbols,
-                MARSHALL_CONTEXT
+            cellToDateTimeSymbols,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellAndDateTimeSymbols : cellToDateTimeSymbols.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndDateTimeSymbols.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
-                    SpreadsheetFormula.EMPTY.setText("'Patched over")
+                SpreadsheetFormula.EMPTY.setText("'Patched over")
             ).setStyle(style);
 
 
             beforePatchCells.add(cell);
             patchedCells.add(
-                    cell.setDateTimeSymbols(cellAndDateTimeSymbols.getValue())
+                cell.setDateTimeSymbols(cellAndDateTimeSymbols.getValue())
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -630,155 +630,155 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsDecimalNumberSymbolsPatchWithNullCellsToDecimalNumberSymbolsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsDecimalNumberSymbolsPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsDecimalNumberSymbolsPatch() {
         final DecimalNumberSymbols symbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
-                '+',
-                new DecimalFormatSymbols(Locale.FRANCE)
+            '+',
+            new DecimalFormatSymbols(Locale.FRANCE)
         );
 
         this.cellsDecimalNumberSymbolsPatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        Optional.of(symbols)
-                ),
-                JsonNode.object()
+            Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(symbols)
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("decimalNumberSymbols"),
-                                                                marshall(symbols)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("decimalNumberSymbols"),
+                                    marshall(symbols)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsDecimalNumberSymbolsPatchEmptyCells() {
         this.cellsDecimalNumberSymbolsPatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
     @Test
     public void testCellsDecimalNumberSymbolsPatchMultipleCells() {
         final DecimalNumberSymbols symbols1 = DecimalNumberSymbols.fromDecimalFormatSymbols(
-                '+',
-                new DecimalFormatSymbols(Locale.FRANCE)
+            '+',
+            new DecimalFormatSymbols(Locale.FRANCE)
         );
         final DecimalNumberSymbols symbols2 = DecimalNumberSymbols.fromDecimalFormatSymbols(
-                '+',
-                new DecimalFormatSymbols(Locale.GERMANY)
+            '+',
+            new DecimalFormatSymbols(Locale.GERMANY)
         );
         final DecimalNumberSymbols symbols3 = null;
 
         final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToSymbols = Maps.of(
-                SpreadsheetSelection.A1,
-                Optional.of(symbols1),
-                SpreadsheetSelection.parseCell("A2"),
-                Optional.of(symbols2),
-                SpreadsheetSelection.parseCell("A3"),
-                Optional.ofNullable(symbols3)
+            SpreadsheetSelection.A1,
+            Optional.of(symbols1),
+            SpreadsheetSelection.parseCell("A2"),
+            Optional.of(symbols2),
+            SpreadsheetSelection.parseCell("A3"),
+            Optional.ofNullable(symbols3)
         );
 
         this.cellsDecimalNumberSymbolsPatchAndCheck(
-                cellToSymbols,
-                JsonNode.object()
+            cellToSymbols,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("decimalNumberSymbols"),
-                                                                marshall(symbols1)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("decimalNumberSymbols"),
-                                                                marshall(symbols2)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A3"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("decimalNumberSymbols"),
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("decimalNumberSymbols"),
+                                    marshall(symbols1)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("decimalNumberSymbols"),
+                                    marshall(symbols2)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A3"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("decimalNumberSymbols"),
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     private void cellsDecimalNumberSymbolsPatchAndCheck(final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellToDecimalNumberSymbols,
                                                         final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
-                cellToDecimalNumberSymbols,
-                MARSHALL_CONTEXT
+            cellToDecimalNumberSymbols,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> cellAndDecimalNumberSymbols : cellToDecimalNumberSymbols.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndDecimalNumberSymbols.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
-                    SpreadsheetFormula.EMPTY.setText("'Patched over")
+                SpreadsheetFormula.EMPTY.setText("'Patched over")
             ).setStyle(style);
 
 
             beforePatchCells.add(cell);
             patchedCells.add(
-                    cell.setDecimalNumberSymbols(cellAndDecimalNumberSymbols.getValue())
+                cell.setDecimalNumberSymbols(cellAndDecimalNumberSymbols.getValue())
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -787,8 +787,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsFormulaTextPatchWithNullMapFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsFormulaTextPatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsFormulaTextPatch(null)
         );
     }
 
@@ -798,26 +798,26 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final String formulaText2 = "=22";
 
         this.cellsFormulaTextPatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        formulaText1,
-                        SpreadsheetSelection.parseCell("A2"),
-                        formulaText2
-                ),
-                "{\n" +
-                        "  \"cells\": {\n" +
-                        "    \"A1\": {\n" +
-                        "      \"formula\": {\n" +
-                        "        \"text\": \"=1\"\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    \"A2\": {\n" +
-                        "      \"formula\": {\n" +
-                        "        \"text\": \"=22\"\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            Maps.of(
+                SpreadsheetSelection.A1,
+                formulaText1,
+                SpreadsheetSelection.parseCell("A2"),
+                formulaText2
+            ),
+            "{\n" +
+                "  \"cells\": {\n" +
+                "    \"A1\": {\n" +
+                "      \"formula\": {\n" +
+                "        \"text\": \"=1\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    \"A2\": {\n" +
+                "      \"formula\": {\n" +
+                "        \"text\": \"=22\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -826,15 +826,15 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final JsonNode patch = SpreadsheetDelta.cellsFormulaTextPatch(cellToFormulaTexts);
 
         this.checkEquals(
-                JsonNode.parse(expected),
-                patch
+            JsonNode.parse(expected),
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         for (final Map.Entry<SpreadsheetCellReference, String> cellAndFormulaText : cellToFormulaTexts.entrySet()) {
@@ -843,22 +843,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("'Patched over");
 
             beforePatchCells.add(
-                    cell.setFormula(formula)
-                            .setStyle(style)
+                cell.setFormula(formula)
+                    .setStyle(style)
             );
             patchedCells.add(
-                    cell.setFormula(
-                            formula.setText(
-                                    cellAndFormulaText.getValue()
-                            )
-                    ).setStyle(style)
+                cell.setFormula(
+                    formula.setText(
+                        cellAndFormulaText.getValue()
+                    )
+                ).setStyle(style)
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -867,52 +867,52 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsFormatterPatchWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsFormatterPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsFormatterPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsFormatterPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsFormatterPatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsFormatterPatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsFormatterPatch() {
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
-                SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/ddd")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/ddd")
+                .spreadsheetFormatterSelector()
         );
 
         final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellToFormatter = Maps.of(
-                SpreadsheetSelection.A1,
-                formatter
+            SpreadsheetSelection.A1,
+            formatter
         );
 
         this.cellsFormatterPatchAndCheck(
-                cellToFormatter,
-                JsonNode.object()
+            cellToFormatter,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                SpreadsheetDelta.FORMATTER_PROPERTY,
-                                                                marshall(formatter.get())
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    SpreadsheetDelta.FORMATTER_PROPERTY,
+                                    marshall(formatter.get())
+                                )
                         )
+                )
         );
     }
 
@@ -921,93 +921,93 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.empty();
 
         final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellToFormatter = Maps.of(
-                SpreadsheetSelection.A1,
-                formatter
+            SpreadsheetSelection.A1,
+            formatter
         );
 
         this.cellsFormatterPatchAndCheck(
-                cellToFormatter,
-                JsonNode.object()
+            cellToFormatter,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                SpreadsheetDelta.FORMATTER_PROPERTY,
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    SpreadsheetDelta.FORMATTER_PROPERTY,
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsFormatterPatchEmptyCells() {
         this.cellsFormatterPatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
     @Test
     public void testCellsFormatterPatchMultipleCells() {
         final Optional<SpreadsheetFormatterSelector> formatter1 = Optional.of(
-                SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/ddd")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/ddd")
+                .spreadsheetFormatterSelector()
         );
         final Optional<SpreadsheetFormatterSelector> formatter2 = Optional.of(
-                SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
+                .spreadsheetFormatterSelector()
         );
 
         final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellToFormatter = Maps.of(
-                SpreadsheetSelection.A1,
-                formatter1,
-                SpreadsheetSelection.parseCell("A2"),
-                formatter2
+            SpreadsheetSelection.A1,
+            formatter1,
+            SpreadsheetSelection.parseCell("A2"),
+            formatter2
         );
 
         this.cellsFormatterPatchAndCheck(
-                cellToFormatter,
-                JsonNode.object()
+            cellToFormatter,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                SpreadsheetDelta.FORMATTER_PROPERTY,
-                                                                marshall(formatter1.get())
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                SpreadsheetDelta.FORMATTER_PROPERTY,
-                                                                marshall(formatter2.get())
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    SpreadsheetDelta.FORMATTER_PROPERTY,
+                                    marshall(formatter1.get())
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    SpreadsheetDelta.FORMATTER_PROPERTY,
+                                    marshall(formatter2.get())
+                                )
                         )
+                )
         );
     }
 
     private void cellsFormatterPatchAndCheck(final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellToFormatter,
                                              final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsFormatterPatch(
-                cellToFormatter,
-                MARSHALL_CONTEXT
+            cellToFormatter,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -1019,26 +1019,26 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetCellReference cell = cellAndFormatter.getKey();
 
             beforePatchCells.add(
-                    cell.setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=1")
-                    ).setFormatter(
-                            Optional.of(
-                                    SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
-                            )
+                cell.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=1")
+                ).setFormatter(
+                    Optional.of(
+                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
                     )
+                )
             );
             patchedCells.add(
-                    cell.setFormula(formula)
-                            .setFormatter(
-                                    cellAndFormatter.getValue()
-                            )
+                cell.setFormula(formula)
+                    .setFormatter(
+                        cellAndFormatter.getValue()
+                    )
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -1047,22 +1047,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsLocalePatchWithNullCellsToLocaleFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsLocalePatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsLocalePatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsLocalePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsLocalePatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsLocalePatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
@@ -1071,35 +1071,35 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Locale locale = Locale.FRANCE;
 
         this.cellsLocalePatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        Optional.of(locale)
-                ),
-                JsonNode.object()
+            Maps.of(
+                SpreadsheetSelection.A1,
+                Optional.of(locale)
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("locale"),
-                                                                marshall(locale)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("locale"),
+                                    marshall(locale)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsLocalePatchEmptyCells() {
         this.cellsLocalePatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
@@ -1110,230 +1110,230 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Locale locale3 = null;
 
         final Map<SpreadsheetCellReference, Optional<Locale>> cellToSymbols = Maps.of(
-                SpreadsheetSelection.A1,
-                Optional.of(locale1),
-                SpreadsheetSelection.parseCell("A2"),
-                Optional.of(locale2),
-                SpreadsheetSelection.parseCell("A3"),
-                Optional.ofNullable(locale3)
+            SpreadsheetSelection.A1,
+            Optional.of(locale1),
+            SpreadsheetSelection.parseCell("A2"),
+            Optional.of(locale2),
+            SpreadsheetSelection.parseCell("A3"),
+            Optional.ofNullable(locale3)
         );
 
         this.cellsLocalePatchAndCheck(
-                cellToSymbols,
-                JsonNode.object()
+            cellToSymbols,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("locale"),
-                                                                marshall(locale1)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("locale"),
-                                                                marshall(locale2)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A3"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("locale"),
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("locale"),
+                                    marshall(locale1)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("locale"),
+                                    marshall(locale2)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A3"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("locale"),
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     private void cellsLocalePatchAndCheck(final Map<SpreadsheetCellReference, Optional<Locale>> cellToLocale,
                                           final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsLocalePatch(
-                cellToLocale,
-                MARSHALL_CONTEXT
+            cellToLocale,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<Locale>> cellAndLocale : cellToLocale.entrySet()) {
             final SpreadsheetCellReference cellReference = cellAndLocale.getKey();
 
             final SpreadsheetCell cell = cellReference.setFormula(
-                    SpreadsheetFormula.EMPTY.setText("'Patched over")
+                SpreadsheetFormula.EMPTY.setText("'Patched over")
             ).setStyle(style);
 
 
             beforePatchCells.add(cell);
             patchedCells.add(
-                    cell.setLocale(cellAndLocale.getValue())
+                cell.setLocale(cellAndLocale.getValue())
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
-    
+
     // cellsParserPatch.................................................................................................
 
     @Test
     public void testCellsParserPatchWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsParserPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsParserPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsParserPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsParserPatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsParserPatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsParserPatch() {
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
-                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/ddd")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/ddd")
+                .spreadsheetParserSelector()
         );
 
         final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParsers = Maps.of(
-                SpreadsheetSelection.A1,
-                parser
+            SpreadsheetSelection.A1,
+            parser
         );
 
         this.cellsParserPatchAndCheck(
-                cellToParsers,
-                JsonNode.object()
+            cellToParsers,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("parser"),
-                                                                marshall(parser.get())
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("parser"),
+                                    marshall(parser.get())
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsParserPatchEmptyPattern() {
         final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParsers = Maps.of(
-                SpreadsheetSelection.A1,
-                SpreadsheetCell.NO_PARSER
+            SpreadsheetSelection.A1,
+            SpreadsheetCell.NO_PARSER
         );
 
         this.cellsParserPatchAndCheck(
-                cellToParsers,
-                JsonNode.object()
+            cellToParsers,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("parser"),
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("parser"),
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsParserPatchEmptyCells() {
         this.cellsParserPatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
     @Test
     public void testCellsParserPatchMultipleCells() {
         final Optional<SpreadsheetParserSelector> parserSelector1 = Optional.of(
-                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/ddd")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/ddd")
+                .spreadsheetParserSelector()
         );
         final Optional<SpreadsheetParserSelector> parserSelector2 = Optional.of(
-                SpreadsheetPattern.parseTimeParsePattern("hh:mm")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+                .spreadsheetParserSelector()
         );
 
         final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParsers = Maps.of(
-                SpreadsheetSelection.A1,
-                parserSelector1,
-                SpreadsheetSelection.parseCell("A2"),
-                parserSelector2
+            SpreadsheetSelection.A1,
+            parserSelector1,
+            SpreadsheetSelection.parseCell("A2"),
+            parserSelector2
         );
 
         this.cellsParserPatchAndCheck(
-                cellToParsers,
-                JsonNode.object()
+            cellToParsers,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("parser"),
-                                                                marshall(parserSelector1.get())
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("parser"),
-                                                                marshall(parserSelector2.get())
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("parser"),
+                                    marshall(parserSelector1.get())
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("parser"),
+                                    marshall(parserSelector2.get())
+                                )
                         )
+                )
         );
     }
 
     private void cellsParserPatchAndCheck(final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParser,
                                           final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsParserPatch(
-                cellToParser,
-                MARSHALL_CONTEXT
+            cellToParser,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -1345,27 +1345,27 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetCellReference cell = cellAndParser.getKey();
 
             beforePatchCells.add(
-                    cell.setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=1")
-                    ).setParser(
-                            Optional.of(
-                                    SpreadsheetPattern.parseNumberParsePattern("$0.00")
-                                            .spreadsheetParserSelector()
-                            )
+                cell.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=1")
+                ).setParser(
+                    Optional.of(
+                        SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                            .spreadsheetParserSelector()
                     )
+                )
             );
             patchedCells.add(
-                    cell.setFormula(formula)
-                            .setParser(
-                                    cellAndParser.getValue()
-                            )
+                cell.setFormula(formula)
+                    .setParser(
+                        cellAndParser.getValue()
+                    )
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -1374,118 +1374,118 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsStylePatchWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsStylePatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsStylePatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsStylePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsStylePatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsStylePatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsStylePatch() {
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         this.cellsStylePatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        style
-                ),
-                JsonNode.object()
+            Maps.of(
+                SpreadsheetSelection.A1,
+                style
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("style"),
-                                                                marshall(style)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("style"),
+                                    marshall(style)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsStylePatchEmptyCells() {
         this.cellsStylePatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
     @Test
     public void testCellsStylePatchMultipleCells() {
         final TextStyle style1 = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
         final TextStyle style2 = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.WHITE
+            TextStylePropertyName.COLOR,
+            Color.WHITE
         );
 
         final Map<SpreadsheetCellReference, TextStyle> cellToStyles = Maps.of(
-                SpreadsheetSelection.A1,
-                style1,
-                SpreadsheetSelection.parseCell("A2"),
-                style2
+            SpreadsheetSelection.A1,
+            style1,
+            SpreadsheetSelection.parseCell("A2"),
+            style2
         );
 
         this.cellsStylePatchAndCheck(
-                cellToStyles,
-                JsonNode.object()
+            cellToStyles,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("style"),
-                                                                marshall(style1)
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("style"),
-                                                                marshall(style2)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("style"),
+                                    marshall(style1)
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("style"),
+                                    marshall(style2)
+                                )
                         )
+                )
         );
     }
 
     private void cellsStylePatchAndCheck(final Map<SpreadsheetCellReference, TextStyle> cellToStyles,
                                          final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsStylePatch(
-                cellToStyles,
-                MARSHALL_CONTEXT
+            cellToStyles,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -1496,25 +1496,25 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetCellReference cell = cellAndStyle.getKey();
 
             beforePatchCells.add(
-                    cell.setFormula(formula)
-                            .setStyle(
-                                    TextStyle.EMPTY.set(TextStylePropertyName.COLOR, Color.parse("#123456"))
-                                            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
-                            )
+                cell.setFormula(formula)
+                    .setStyle(
+                        TextStyle.EMPTY.set(TextStylePropertyName.COLOR, Color.parse("#123456"))
+                            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
+                    )
             );
             patchedCells.add(
-                    cell.setFormula(formula)
-                            .setStyle(
-                                    cellAndStyle.getValue()
-                                            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
-                            )
+                cell.setFormula(formula)
+                    .setStyle(
+                        cellAndStyle.getValue()
+                            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.CENTER)
+                    )
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -1523,152 +1523,152 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsValidatorPatchWithNullCellsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValidatorPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsValidatorPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testCellsValidatorPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValidatorPatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsValidatorPatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsValidatorPatch() {
         final Optional<ValidatorSelector> validator = Optional.of(
-                ValidatorSelector.parse("hello")
+            ValidatorSelector.parse("hello")
         );
 
         final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
-                SpreadsheetSelection.A1,
-                validator
+            SpreadsheetSelection.A1,
+            validator
         );
 
         this.cellsValidatorPatchAndCheck(
-                cellToValidators,
-                JsonNode.object()
+            cellToValidators,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("validator"),
-                                                                marshall(validator.get())
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("validator"),
+                                    marshall(validator.get())
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsValidatorPatchEmptyPattern() {
         final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
-                SpreadsheetSelection.A1,
-                SpreadsheetCell.NO_VALIDATOR
+            SpreadsheetSelection.A1,
+            SpreadsheetCell.NO_VALIDATOR
         );
 
         this.cellsValidatorPatchAndCheck(
-                cellToValidators,
-                JsonNode.object()
+            cellToValidators,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("validator"),
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("validator"),
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     @Test
     public void testCellsValidatorPatchEmptyCells() {
         this.cellsValidatorPatchAndCheck(
-                Maps.empty(),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                        )
+            Maps.empty(),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
+                )
         );
     }
 
     @Test
     public void testCellsValidatorPatchMultipleCells() {
         final Optional<ValidatorSelector> validatorSelector1 = Optional.of(
-                ValidatorSelector.parse("hello1")
+            ValidatorSelector.parse("hello1")
         );
         final Optional<ValidatorSelector> validatorSelector2 = Optional.of(
-                ValidatorSelector.parse("hello2")
+            ValidatorSelector.parse("hello2")
         );
         final Optional<ValidatorSelector> validatorSelector3 = Optional.empty();
 
         final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidators = Maps.of(
-                SpreadsheetSelection.A1,
-                validatorSelector1,
-                SpreadsheetSelection.parseCell("A2"),
-                validatorSelector2,
-                SpreadsheetSelection.parseCell("A3"),
-                validatorSelector3
+            SpreadsheetSelection.A1,
+            validatorSelector1,
+            SpreadsheetSelection.parseCell("A2"),
+            validatorSelector2,
+            SpreadsheetSelection.parseCell("A3"),
+            validatorSelector3
         );
 
         this.cellsValidatorPatchAndCheck(
-                cellToValidators,
-                JsonNode.object()
+            cellToValidators,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.object()
                         .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.object()
-                                        .set(
-                                                JsonPropertyName.with("A1"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("validator"),
-                                                                marshall(validatorSelector1.get())
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A2"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("validator"),
-                                                                marshall(validatorSelector2.get())
-                                                        )
-                                        ).set(
-                                                JsonPropertyName.with("A3"),
-                                                JsonNode.object()
-                                                        .set(
-                                                                JsonPropertyName.with("validator"),
-                                                                marshall(null)
-                                                        )
-                                        )
+                            JsonPropertyName.with("A1"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("validator"),
+                                    marshall(validatorSelector1.get())
+                                )
+                        ).set(
+                            JsonPropertyName.with("A2"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("validator"),
+                                    marshall(validatorSelector2.get())
+                                )
+                        ).set(
+                            JsonPropertyName.with("A3"),
+                            JsonNode.object()
+                                .set(
+                                    JsonPropertyName.with("validator"),
+                                    marshall(null)
+                                )
                         )
+                )
         );
     }
 
     private void cellsValidatorPatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellToValidator,
-                                          final JsonObject expected) {
+                                             final JsonObject expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValidatorPatch(
-                cellToValidator,
-                MARSHALL_CONTEXT
+            cellToValidator,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                expected,
-                patch
+            expected,
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -1680,26 +1680,26 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetCellReference cell = cellAndValidator.getKey();
 
             beforePatchCells.add(
-                    cell.setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=1")
-                    ).setValidator(
-                            Optional.of(
-                                    ValidatorSelector.parse("before")
-                            )
+                cell.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=1")
+                ).setValidator(
+                    Optional.of(
+                        ValidatorSelector.parse("before")
                     )
+                )
             );
             patchedCells.add(
-                    cell.setFormula(formula)
-                            .setValidator(
-                                    cellAndValidator.getValue()
-                            )
+                cell.setFormula(formula)
+                    .setValidator(
+                        cellAndValidator.getValue()
+                    )
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
 
@@ -1708,77 +1708,77 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testCellsValuePatchWithNullMapFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValuePatch(
-                        null,
-                        JsonNodeMarshallContexts.fake()
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsValuePatch(
+                null,
+                JsonNodeMarshallContexts.fake()
+            )
         );
     }
 
     @Test
     public void testCellsValuePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValuePatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsValuePatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testCellsValuePatch() {
         final Optional<Object> value1 = Optional.of(
-                UNMARSHALL_CONTEXT.expressionNumberKind()
-                        .create(12.5)
+            UNMARSHALL_CONTEXT.expressionNumberKind()
+                .create(12.5)
         );
         final Optional<Object> value2 = Optional.empty();
 
         this.cellsValuePatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        value1,
-                        SpreadsheetSelection.parseCell("A2"),
-                        value2
-                ),
-                "{\n" +
-                        "  \"cells\": {\n" +
-                        "    \"A1\": {\n" +
-                        "      \"formula\": {\n" +
-                        "        \"value\": {\n" +
-                        "          \"type\": \"expression-number\",\n" +
-                        "          \"value\": \"12.5\"\n" +
-                        "        }\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    \"A2\": {\n" +
-                        "      \"formula\": {\n" +
-                        "        \"value\": null\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            Maps.of(
+                SpreadsheetSelection.A1,
+                value1,
+                SpreadsheetSelection.parseCell("A2"),
+                value2
+            ),
+            "{\n" +
+                "  \"cells\": {\n" +
+                "    \"A1\": {\n" +
+                "      \"formula\": {\n" +
+                "        \"value\": {\n" +
+                "          \"type\": \"expression-number\",\n" +
+                "          \"value\": \"12.5\"\n" +
+                "        }\n" +
+                "      }\n" +
+                "    },\n" +
+                "    \"A2\": {\n" +
+                "      \"formula\": {\n" +
+                "        \"value\": null\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     private void cellsValuePatchAndCheck(final Map<SpreadsheetCellReference, Optional<Object>> cellToValues,
                                          final String expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValuePatch(
-                cellToValues,
-                MARSHALL_CONTEXT
+            cellToValues,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                JsonNode.parse(expected),
-                patch
+            JsonNode.parse(expected),
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<Object>> cellAndValue : cellToValues.entrySet()) {
@@ -1787,46 +1787,46 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
 
             beforePatchCells.add(
-                    cell.setFormula(formula)
-                            .setStyle(style)
+                cell.setFormula(formula)
+                    .setStyle(style)
             );
             patchedCells.add(
-                    cell.setFormula(
-                            formula.setValue(
-                                    cellAndValue.getValue()
-                            )
-                    ).setStyle(style)
+                cell.setFormula(
+                    formula.setValue(
+                        cellAndValue.getValue()
+                    )
+                ).setStyle(style)
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
-    
+
     // cellsValueTypePatch..............................................................................................
 
     @Test
     public void testCellsValueTypePatchWithNullMapFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValueTypePatch(
-                        null,
-                        JsonNodeMarshallContexts.fake()
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsValueTypePatch(
+                null,
+                JsonNodeMarshallContexts.fake()
+            )
         );
     }
 
     @Test
     public void testCellsValueTypePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.cellsValueTypePatch(
-                        Maps.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.cellsValueTypePatch(
+                Maps.empty(),
+                null
+            )
         );
     }
 
@@ -1836,46 +1836,46 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Optional<ValidationValueTypeName> valueType2 = Optional.empty();
 
         this.cellsValueTypePatchAndCheck(
-                Maps.of(
-                        SpreadsheetSelection.A1,
-                        valueType1,
-                        SpreadsheetSelection.parseCell("A2"),
-                        valueType2
-                ),
-                "{\n" +
-                        "  \"cells\": {\n" +
-                        "    \"A1\": {\n" +
-                        "      \"formula\": {\n" +
-                        "        \"valueType\": \"hello-value-type\"\n" +
-                        "      }\n" +
-                        "    },\n" +
-                        "    \"A2\": {\n" +
-                        "      \"formula\": {\n" +
-                        "        \"valueType\": null\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            Maps.of(
+                SpreadsheetSelection.A1,
+                valueType1,
+                SpreadsheetSelection.parseCell("A2"),
+                valueType2
+            ),
+            "{\n" +
+                "  \"cells\": {\n" +
+                "    \"A1\": {\n" +
+                "      \"formula\": {\n" +
+                "        \"valueType\": \"hello-value-type\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    \"A2\": {\n" +
+                "      \"formula\": {\n" +
+                "        \"valueType\": null\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     private void cellsValueTypePatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes,
                                              final String expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValueTypePatch(
-                cellToValueTypes,
-                MARSHALL_CONTEXT
+            cellToValueTypes,
+            MARSHALL_CONTEXT
         );
 
         this.checkEquals(
-                JsonNode.parse(expected),
-                patch
+            JsonNode.parse(expected),
+            patch
         );
 
         final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         for (final Map.Entry<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellAndValueType : cellToValueTypes.entrySet()) {
@@ -1884,70 +1884,70 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("'Patched over");
 
             beforePatchCells.add(
-                    cell.setFormula(formula)
-                            .setStyle(style)
+                cell.setFormula(formula)
+                    .setStyle(style)
             );
             patchedCells.add(
-                    cell.setFormula(
-                            formula.setValueType(cellAndValueType.getValue())
-                    ).setStyle(style)
+                cell.setFormula(
+                    formula.setValueType(cellAndValueType.getValue())
+                ).setStyle(style)
             );
         }
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(patchedCells)
+            SpreadsheetDelta.EMPTY.setCells(beforePatchCells),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(patchedCells)
         );
     }
-    
+
     // dateTimeSymbolsPatch.............................................................................................
 
     @Test
     public void testDateTimeSymbolsPatchWithNullPatternFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.dateTimeSymbolsPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.dateTimeSymbolsPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testDateTimeSymbolsPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.dateTimeSymbolsPatch(
-                        Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.FRANCE)
-                                )
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.dateTimeSymbolsPatch(
+                Optional.of(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.FRANCE)
+                    )
+                ),
+                null
+            )
         );
     }
 
     @Test
     public void testDateTimeSymbolsPatch() {
         final Optional<DateTimeSymbols> symbols = Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.FRANCE)
-                )
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.FRANCE)
+            )
         );
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
-                                MARSHALL_CONTEXT.marshallOptional(symbols)
-                        )
-                ,
-                SpreadsheetDelta.dateTimeSymbolsPatch(
-                        symbols,
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
+                    MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
+            ,
+            SpreadsheetDelta.dateTimeSymbolsPatch(
+                symbols,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -1956,16 +1956,16 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Optional<DateTimeSymbols> symbols = Optional.empty();
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
-                                MARSHALL_CONTEXT.marshallOptional(symbols)
-                        )
-                ,
-                SpreadsheetDelta.dateTimeSymbolsPatch(
-                        symbols,
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.DATE_TIME_SYMBOLS_PROPERTY,
+                    MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
+            ,
+            SpreadsheetDelta.dateTimeSymbolsPatch(
+                symbols,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -1974,50 +1974,50 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testDecimalNumberSymbolsPatchWithNullPatternFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testDecimalNumberSymbolsPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
-                        Optional.of(
-                                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                        '+',
-                                        new DecimalFormatSymbols(Locale.FRANCE)
-                                )
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.decimalNumberSymbolsPatch(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                    )
+                ),
+                null
+            )
         );
     }
 
     @Test
     public void testDecimalNumberSymbolsPatch() {
         final Optional<DecimalNumberSymbols> symbols = Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.FRANCE)
-                )
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.FRANCE)
+            )
         );
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                                MARSHALL_CONTEXT.marshallOptional(symbols)
-                        )
-                ,
-                SpreadsheetDelta.decimalNumberSymbolsPatch(
-                        symbols,
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                    MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
+            ,
+            SpreadsheetDelta.decimalNumberSymbolsPatch(
+                symbols,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -2026,16 +2026,16 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Optional<DecimalNumberSymbols> symbols = Optional.empty();
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                                MARSHALL_CONTEXT.marshallOptional(symbols)
-                        )
-                ,
-                SpreadsheetDelta.decimalNumberSymbolsPatch(
-                        symbols,
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                    MARSHALL_CONTEXT.marshallOptional(symbols)
                 )
+            ,
+            SpreadsheetDelta.decimalNumberSymbolsPatch(
+                symbols,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -2044,8 +2044,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testFormulaPatchWithNullPatchFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.formulaPatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetDelta.formulaPatch(null)
         );
     }
 
@@ -2054,50 +2054,50 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
 
         final JsonNode patch = SpreadsheetDelta.formulaPatch(
-                MARSHALL_CONTEXT.marshall(formula)
+            MARSHALL_CONTEXT.marshall(formula)
         );
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMULA_PROPERTY,
-                                marshall(formula)
-                        )
-                ,
-                patch
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.FORMULA_PROPERTY,
+                    marshall(formula)
+                )
+            ,
+            patch
         );
 
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.CENTER
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
+            SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
         ).setStyle(style);
 
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("a2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Will be Patched over")
+            );
 
         this.patchCellsAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                a1,
-                                a2
-                        )
-                ),
-                SpreadsheetSelection.parseCellOrCellRange("a1:a3"),
-                patch,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                a1.setFormula(formula),
-                                a2.setFormula(formula),
-                                SpreadsheetSelection.parseCell("a3")
-                                        .setFormula(formula)
-                        )
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    a1,
+                    a2
                 )
+            ),
+            SpreadsheetSelection.parseCellOrCellRange("a1:a3"),
+            patch,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    a1.setFormula(formula),
+                    a2.setFormula(formula),
+                    SpreadsheetSelection.parseCell("a3")
+                        .setFormula(formula)
+                )
+            )
         );
     }
 
@@ -2106,60 +2106,60 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testFormatterPatchWithNullFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.formatterPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.formatterPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testFormatterPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.formatterPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseDateFormatPattern("ddmmyyyyy")
-                                        .spreadsheetFormatterSelector()
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.formatterPatch(
+                Optional.of(
+                    SpreadsheetPattern.parseDateFormatPattern("ddmmyyyyy")
+                        .spreadsheetFormatterSelector()
+                ),
+                null
+            )
         );
     }
 
     @Test
     public void testFormatterPatch() {
         final SpreadsheetFormatterSelector formatter = SpreadsheetPattern.parseTextFormatPattern("@@")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMATTER_PROPERTY,
-                                marshall(formatter)
-                        )
-                ,
-                SpreadsheetDelta.formatterPatch(
-                        Optional.of(formatter),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.FORMATTER_PROPERTY,
+                    marshall(formatter)
                 )
+            ,
+            SpreadsheetDelta.formatterPatch(
+                Optional.of(formatter),
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testFormatterPatchWithEmptyFormatter() {
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.FORMATTER_PROPERTY,
-                                JsonNode.nullNode()
-                        )
-                ,
-                SpreadsheetDelta.formatterPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.FORMATTER_PROPERTY,
+                    JsonNode.nullNode()
                 )
+            ,
+            SpreadsheetDelta.formatterPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -2168,24 +2168,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testLocalePatchWithNullLocaleFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.localePatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.localePatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testLocalePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.localePatch(
-                        Optional.of(
-                                Locale.ENGLISH
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.localePatch(
+                Optional.of(
+                    Locale.ENGLISH
+                ),
+                null
+            )
         );
     }
 
@@ -2194,94 +2194,94 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final Locale locale = Locale.forLanguageTag("en-AU");
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.LOCALE_PROPERTY,
-                                marshall(locale)
-                        )
-                ,
-                SpreadsheetDelta.localePatch(
-                        Optional.of(locale),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.LOCALE_PROPERTY,
+                    marshall(locale)
                 )
+            ,
+            SpreadsheetDelta.localePatch(
+                Optional.of(locale),
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testLocalePatchWithEmptyLocale() {
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.LOCALE_PROPERTY,
-                                JsonNode.nullNode()
-                        )
-                ,
-                SpreadsheetDelta.localePatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.LOCALE_PROPERTY,
+                    JsonNode.nullNode()
                 )
+            ,
+            SpreadsheetDelta.localePatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            )
         );
     }
-    
+
     // parserPatch......................................................................................................
 
     @Test
     public void testParserPatchWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.parserPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.parserPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testParserPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.parserPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseDateParsePattern("ddmmyyyyy")
-                                        .spreadsheetParserSelector()
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.parserPatch(
+                Optional.of(
+                    SpreadsheetPattern.parseDateParsePattern("ddmmyyyyy")
+                        .spreadsheetParserSelector()
+                ),
+                null
+            )
         );
     }
 
     @Test
     public void testParserPatch() {
         final SpreadsheetParserSelector parserSelector = SpreadsheetPattern.parseNumberParsePattern("0.00")
-                .spreadsheetParserSelector();
+            .spreadsheetParserSelector();
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.PARSER_PROPERTY,
-                                marshall(parserSelector)
-                        )
-                ,
-                SpreadsheetDelta.parserPatch(
-                        Optional.of(parserSelector),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.PARSER_PROPERTY,
+                    marshall(parserSelector)
                 )
+            ,
+            SpreadsheetDelta.parserPatch(
+                Optional.of(parserSelector),
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testParserPatchWithEmptySelector() {
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.PARSER_PROPERTY,
-                                JsonNode.nullNode()
-                        )
-                ,
-                SpreadsheetDelta.parserPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.PARSER_PROPERTY,
+                    JsonNode.nullNode()
                 )
+            ,
+            SpreadsheetDelta.parserPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            )
         );
     }
     // stylePatch.......................................................................................................
@@ -2289,10 +2289,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testStylePatchWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.stylePatch(
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.stylePatch(
+                null
+            )
         );
     }
 
@@ -2305,43 +2305,43 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final JsonNode deltaPatch = SpreadsheetDelta.stylePatch(stylePatch);
         this.stylePatchAndCheck(
-                deltaPatch,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.STYLE_PROPERTY,
-                                stylePatch
-                        )
+            deltaPatch,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.STYLE_PROPERTY,
+                    stylePatch
+                )
         );
 
         // cell = 1+2 with background-color=#ffffff
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.BACKGROUND_COLOR,
-                Color.parse("#ffffff")
+            TextStylePropertyName.BACKGROUND_COLOR,
+            Color.parse("#ffffff")
         );
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1+2")
+            SpreadsheetFormula.EMPTY
+                .setText("=1+2")
         );
 
         this.patchCellsAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                cell.setStyle(style)
-                        )
-                ),
-                cell.reference(),
-                deltaPatch,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                cell.setStyle(
-                                        style.set(
-                                                propertyName,
-                                                color
-                                        )
-                                )
-                        )
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    cell.setStyle(style)
                 )
+            ),
+            cell.reference(),
+            deltaPatch,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    cell.setStyle(
+                        style.set(
+                            propertyName,
+                            color
+                        )
+                    )
+                )
+            )
         );
     }
 
@@ -2354,55 +2354,55 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
         final JsonNode deltaPatch = SpreadsheetDelta.stylePatch(stylePatch);
         this.stylePatchAndCheck(
-                deltaPatch,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.STYLE_PROPERTY,
-                                stylePatch
-                        )
+            deltaPatch,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.STYLE_PROPERTY,
+                    stylePatch
+                )
         );
 
         // cell = 1+2 with background-color=#ffffff
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.BACKGROUND_COLOR,
-                Color.parse("#ffffff")
+            TextStylePropertyName.BACKGROUND_COLOR,
+            Color.parse("#ffffff")
         ).set(
-                propertyName,
-                Color.BLACK
+            propertyName,
+            Color.BLACK
         );
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1+2")
+            SpreadsheetFormula.EMPTY
+                .setText("=1+2")
         );
 
         this.patchCellsAndCheck(
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                cell.setStyle(style)
-                        )
-                ),
-                cell.reference(),
-                deltaPatch,
-                SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                cell.setStyle(
-                                        style.setOrRemove(
-                                                propertyName,
-                                                color
-                                        )
-                                )
-                        )
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    cell.setStyle(style)
                 )
+            ),
+            cell.reference(),
+            deltaPatch,
+            SpreadsheetDelta.EMPTY.setCells(
+                Sets.of(
+                    cell.setStyle(
+                        style.setOrRemove(
+                            propertyName,
+                            color
+                        )
+                    )
+                )
+            )
         );
     }
 
     private void stylePatchAndCheck(final JsonNode patch,
                                     final JsonNode expected) {
         this.checkEquals(
-                expected,
-                patch,
-                () -> "stylePatch " + patch
+            expected,
+            patch,
+            () -> "stylePatch " + patch
         );
     }
 
@@ -2411,24 +2411,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testValidatorPatchWithNullPatternFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.validatorPatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.validatorPatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testValidatorPatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.validatorPatch(
-                        Optional.of(
-                                ValidatorSelector.parse("hello")
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.validatorPatch(
+                Optional.of(
+                    ValidatorSelector.parse("hello")
+                ),
+                null
+            )
         );
     }
 
@@ -2437,32 +2437,32 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("hello");
 
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.VALIDATOR_PROPERTY,
-                                marshall(validatorSelector)
-                        )
-                ,
-                SpreadsheetDelta.validatorPatch(
-                        Optional.of(validatorSelector),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.VALIDATOR_PROPERTY,
+                    marshall(validatorSelector)
                 )
+            ,
+            SpreadsheetDelta.validatorPatch(
+                Optional.of(validatorSelector),
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testValidatorPatchWithEmptyPattern() {
         this.checkEquals(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.VALIDATOR_PROPERTY,
-                                JsonNode.nullNode()
-                        )
-                ,
-                SpreadsheetDelta.validatorPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.VALIDATOR_PROPERTY,
+                    JsonNode.nullNode()
                 )
+            ,
+            SpreadsheetDelta.validatorPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -2471,46 +2471,46 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testValuePatchWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.valuePatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.valuePatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testValuePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.valuePatch(
-                        Optional.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.valuePatch(
+                Optional.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testValuePatch() {
         final Optional<Object> value = Optional.of(
-                ExpressionNumberKind.BIG_DECIMAL.create(123)
+            ExpressionNumberKind.BIG_DECIMAL.create(123)
         );
 
         this.checkEquals(
-                JsonNode.parse(
-                        "{\n" +
-                                "  \"formula\": {\n" +
-                                "    \"value\": {\n" +
-                                "      \"type\": \"expression-number\",\n" +
-                                "      \"value\": \"123\"\n" +
-                                "    }\n" +
-                                "  }\n" +
-                                "}"
-                ),
-                SpreadsheetDelta.valuePatch(
-                        value,
-                        MARSHALL_CONTEXT
-                )
+            JsonNode.parse(
+                "{\n" +
+                    "  \"formula\": {\n" +
+                    "    \"value\": {\n" +
+                    "      \"type\": \"expression-number\",\n" +
+                    "      \"value\": \"123\"\n" +
+                    "    }\n" +
+                    "  }\n" +
+                    "}"
+            ),
+            SpreadsheetDelta.valuePatch(
+                value,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -2519,43 +2519,43 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testValueTypePatchWithNullValueTypeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.valueTypePatch(
-                        null,
-                        MARSHALL_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.valueTypePatch(
+                null,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
     @Test
     public void testValueTypePatchWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.valueTypePatch(
-                        Optional.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.valueTypePatch(
+                Optional.empty(),
+                null
+            )
         );
     }
 
     @Test
     public void testValueTypePatch() {
         final Optional<ValidationValueTypeName> valueType = Optional.of(
-                ValidationValueTypeName.with("Text123")
+            ValidationValueTypeName.with("Text123")
         );
 
         this.checkEquals(
-                JsonNode.parse(
-                        "{\n" +
-                                "  \"formula\": {\n" +
-                                "    \"valueType\": \"Text123\"\n" +
-                                "  }\n" +
-                                "}"
-                ),
-                SpreadsheetDelta.valueTypePatch(
-                        valueType,
-                        MARSHALL_CONTEXT
-                )
+            JsonNode.parse(
+                "{\n" +
+                    "  \"formula\": {\n" +
+                    "    \"valueType\": \"Text123\"\n" +
+                    "  }\n" +
+                    "}"
+            ),
+            SpreadsheetDelta.valueTypePatch(
+                valueType,
+                MARSHALL_CONTEXT
+            )
         );
     }
 
@@ -2564,16 +2564,16 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchWithEmptyObject() {
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY,
-                JsonNode.object()
+            SpreadsheetDelta.EMPTY,
+            JsonNode.object()
         );
     }
 
     @Test
     public void testPatchWithLabelsFails() {
         this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.LABELS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.LABELS_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -2581,669 +2581,669 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchWithDeletedCellsFails() {
         this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_CELLS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_CELLS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchWithDeletedColumnsFails() {
         this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchWithDeletedRowsFails() {
         this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_ROWS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_ROWS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchWithColumnWidthFails() {
         this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchWithRowHeightFails() {
         this.patchInvalidPropertyFails2(
-                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     private void patchInvalidPropertyFails2(final JsonPropertyName key,
                                             final JsonNode value) {
         this.patchInvalidPropertyFails(
-                JsonNode.object()
-                        .set(
-                                key,
-                                value
-                        ),
-                key,
-                JsonNode.nullNode()
+            JsonNode.object()
+                .set(
+                    key,
+                    value
+                ),
+            key,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchWithNoViewport() {
         this.patchViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                SpreadsheetDelta.NO_VIEWPORT
+            SpreadsheetDelta.NO_VIEWPORT,
+            SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchWithViewport() {
         this.patchViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                Optional.of(
-                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                .viewport()
-                                .setAnchoredSelection(
-                                        Optional.of(
-                                                SpreadsheetSelection.parseColumn("C")
-                                                        .setDefaultAnchor()
-                                        )
-                                )
-                )
+            SpreadsheetDelta.NO_VIEWPORT,
+            Optional.of(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                    .viewport()
+                    .setAnchoredSelection(
+                        Optional.of(
+                            SpreadsheetSelection.parseColumn("C")
+                                .setDefaultAnchor()
+                        )
+                    )
+            )
         );
     }
 
     private void patchViewportAndCheck(final Optional<SpreadsheetViewport> before,
                                        final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setViewport(after);
+            .setViewport(after);
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(before),
-                marshall(delta),
-                delta
+            SpreadsheetDelta.EMPTY
+                .setViewport(before),
+            marshall(delta),
+            delta
         );
     }
 
     @Test
     public void testPatchWithViewportCleared() {
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(
+            SpreadsheetDelta.EMPTY
+                .setViewport(
+                    Optional.of(
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                            .viewport()
+                            .setAnchoredSelection(
                                 Optional.of(
-                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                                .viewport()
-                                                .setAnchoredSelection(
-                                                        Optional.of(
-                                                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
-                                                        )
-                                                )
+                                    SpreadsheetSelection.parseCellRange("A1:B2")
+                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
-                        )
-                ,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                SpreadsheetDelta.EMPTY
+                            )
+                    )
+                )
+            ,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchWithNewCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=1")
-                );
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
+        );
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        cell
-                )
+            Sets.of(
+                cell
+            )
         );
 
         this.patchAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchWithReplacesCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=1")
-                );
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
+        );
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(cell)
-                );
+            .setCells(
+                Sets.of(cell)
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        cell.setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("=2")
-                        )
+            Sets.of(
+                cell.setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("=2")
                 )
+            )
         );
 
         this.patchAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchWithCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setViewport(
-                        Optional.of(
-                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                        .viewport()
-                                        .setAnchoredSelection(
-                                                Optional.of(
-                                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                .setAnchor(
-                                                                        SpreadsheetViewportAnchor.TOP_LEFT
-                                                                )
-                                                )
-                                        )
-                        )
-                );
-        this.patchAndCheck(
-                without.setCells(
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY
-                                                .setText("=1")
-                                )
+            .setViewport(
+                Optional.of(
+                    SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                            Optional.of(
+                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                    .setAnchor(
+                                        SpreadsheetViewportAnchor.TOP_LEFT
+                                    )
+                            )
                         )
                 )
-                ,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                without
+            );
+        this.patchAndCheck(
+            without.setCells(
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY
+                            .setText("=1")
+                    )
+                )
+            )
+            ,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            without
         );
     }
 
     @Test
     public void testPatchWithNewColumn() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
-                .column();
+            .column();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setColumns(
-                Sets.of(
-                        column
-                )
+            Sets.of(
+                column
+            )
         );
 
         this.patchAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchWithNewRow() {
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("1")
-                .row();
+            .row();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setRows(
-                Sets.of(
-                        row
-                )
+            Sets.of(
+                row
+            )
         );
 
         this.patchAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchWithWindow() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, b2)
-                );
+            .setCells(
+                Sets.of(a1, b2)
+            );
 
         final SpreadsheetViewportWindows afterWindow = SpreadsheetViewportWindows.parse("A1");
         final SpreadsheetDelta after = before.setWindow(afterWindow);
 
         this.patchAndCheck(
-                before,
-                marshall(after),
-                before.setWindow(afterWindow)
+            before,
+            marshall(after),
+            before.setWindow(afterWindow)
         );
     }
 
     @Test
     public void testPatchWithWindowReplaced() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, b2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:B2")
-                );
+            .setCells(
+                Sets.of(a1, b2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:B2")
+            );
 
         final SpreadsheetViewportWindows afterWindow = SpreadsheetViewportWindows.parse("A1");
 
         final SpreadsheetDelta after = before.setWindow(afterWindow);
 
         this.patchAndCheck(
-                before,
-                marshall(after),
-                before.setWindow(afterWindow)
+            before,
+            marshall(after),
+            before.setWindow(afterWindow)
         );
     }
 
     @Test
     public void testPatchWithWindowRemoved() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, b2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:B2")
-                );
+            .setCells(
+                Sets.of(a1, b2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:B2")
+            );
 
         this.patchAndCheck(
-                before,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.WINDOW_PROPERTY,
-                                JsonNode.string("")
-                        ),
-                before.setWindow(SpreadsheetDelta.NO_WINDOW)
+            before,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.WINDOW_PROPERTY,
+                    JsonNode.string("")
+                ),
+            before.setWindow(SpreadsheetDelta.NO_WINDOW)
         );
     }
 
     @Test
     public void testPatchWithDateTimeSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDateTimeSymbols(
-                        Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(
+                Optional.of(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDateTimeSymbols(
-                        Optional.empty()
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(
+                Optional.empty()
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final Optional<DateTimeSymbols> symbols = Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.GERMANY)
-                )
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.GERMANY)
+            )
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setDateTimeSymbols(symbols),
-                        a2.setDateTimeSymbols(symbols)
-                )
+            Sets.of(
+                a1.setDateTimeSymbols(symbols),
+                a2.setDateTimeSymbols(symbols)
+            )
         );
 
         this.patchAndCheck(
-                before,
-                SpreadsheetDelta.dateTimeSymbolsPatch(
-                        symbols,
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetDelta.dateTimeSymbolsPatch(
+                symbols,
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchWithDecimalNumberSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDecimalNumberSymbols(
-                        Optional.of(
-                                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                        '+',
-                                        new DecimalFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDecimalNumberSymbols(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDecimalNumberSymbols(
-                        Optional.empty()
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDecimalNumberSymbols(
+                Optional.empty()
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
-        final Optional<DecimalNumberSymbols> symbols =  Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.FRANCE)
-                )
+        final Optional<DecimalNumberSymbols> symbols = Optional.of(
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.FRANCE)
+            )
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setDecimalNumberSymbols(symbols),
-                        a2.setDecimalNumberSymbols(symbols)
-                )
+            Sets.of(
+                a1.setDecimalNumberSymbols(symbols),
+                a2.setDecimalNumberSymbols(symbols)
+            )
         );
 
         this.patchAndCheck(
-                before,
-                SpreadsheetDelta.decimalNumberSymbolsPatch(
-                        symbols,
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetDelta.decimalNumberSymbolsPatch(
+                symbols,
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchWithFormatter() {
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
-                SpreadsheetFormatterSelector.parse("hello-formatter")
+            SpreadsheetFormatterSelector.parse("hello-formatter")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1,
-                                        b2
-                                )
-                        ),
-                SpreadsheetDelta.formatterPatch(
-                        formatter,
-                        MARSHALL_CONTEXT
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1,
+                        b2
+                    )
                 ),
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1.setFormatter(formatter),
-                                        b2.setFormatter(formatter)
-                                )
-                        )
+            SpreadsheetDelta.formatterPatch(
+                formatter,
+                MARSHALL_CONTEXT
+            ),
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1.setFormatter(formatter),
+                        b2.setFormatter(formatter)
+                    )
+                )
         );
     }
 
     @Test
     public void testPatchWithParser() {
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
-                SpreadsheetParserSelector.parse("hello-parser")
+            SpreadsheetParserSelector.parse("hello-parser")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1,
-                                        b2
-                                )
-                        ),
-                SpreadsheetDelta.parserPatch(
-                        parser,
-                        MARSHALL_CONTEXT
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1,
+                        b2
+                    )
                 ),
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1.setParser(parser),
-                                        b2.setParser(parser)
-                                )
-                        )
+            SpreadsheetDelta.parserPatch(
+                parser,
+                MARSHALL_CONTEXT
+            ),
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1.setParser(parser),
+                        b2.setParser(parser)
+                    )
+                )
         );
     }
 
     @Test
     public void testPatchWithStyle() {
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1,
-                                        b2
-                                )
-                        ),
-                SpreadsheetDelta.stylePatch(
-                        this.marshall(style)
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1,
+                        b2
+                    )
                 ),
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1.setStyle(style),
-                                        b2.setStyle(style)
-                                )
-                        )
+            SpreadsheetDelta.stylePatch(
+                this.marshall(style)
+            ),
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1.setStyle(style),
+                        b2.setStyle(style)
+                    )
+                )
         );
     }
 
     @Test
     public void testPatchWithValidator() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(
-                        Optional.of(
-                                ValidatorSelector.parse("before-validator")
-                        )
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setValidator(
+                Optional.of(
+                    ValidatorSelector.parse("before-validator")
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(
-                        Optional.empty()
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setValidator(
+                Optional.empty()
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final Optional<ValidatorSelector> validator = Optional.of(
-                ValidatorSelector.parse("patched-validator1")
+            ValidatorSelector.parse("patched-validator1")
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setValidator(validator),
-                        a2.setValidator(validator)
-                )
+            Sets.of(
+                a1.setValidator(validator),
+                a2.setValidator(validator)
+            )
         );
 
         this.patchAndCheck(
-                before,
-                SpreadsheetDelta.validatorPatch(
-                        validator,
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetDelta.validatorPatch(
+                validator,
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchWithValue() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of(111)
-                        )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(111)
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of(222)
-                        )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(222)
+                )
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final Optional<Object> value = Optional.of(
-                "Hello"
+            "Hello"
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormula(
-                                a1.formula()
-                                        .setValue(value)
-                        ),
-                        a2.setFormula(
-                                a2.formula()
-                                        .setValue(value)
-                        )
+            Sets.of(
+                a1.setFormula(
+                    a1.formula()
+                        .setValue(value)
+                ),
+                a2.setFormula(
+                    a2.formula()
+                        .setValue(value)
                 )
+            )
         );
 
         this.patchAndCheck(
-                before,
-                SpreadsheetDelta.valuePatch(
-                        value,
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetDelta.valuePatch(
+                value,
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchWithValueType() {
         final Optional<ValidationValueTypeName> valueType = Optional.of(
-                ValidationValueTypeName.with("hello-value-type")
+            ValidationValueTypeName.with("hello-value-type")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setText("=1")
-                        .setValueType(
-                                Optional.of(
-                                        ValidationValueTypeName.with("lost-value-type")
-                                )
-                        )
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
+                .setValueType(
+                    Optional.of(
+                        ValidationValueTypeName.with("lost-value-type")
+                    )
+                )
         );
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=99")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
 
         this.patchAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1,
-                                        b2
-                                )
-                        ),
-                SpreadsheetDelta.valueTypePatch(
-                        valueType,
-                        MARSHALL_CONTEXT
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1,
+                        b2
+                    )
                 ),
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1.setFormula(
-                                                a1.formula()
-                                                        .setValueType(valueType)
-                                        ),
-                                        b2.setFormula(
-                                                b2.formula()
-                                                        .setValueType(valueType)
-                                        )
-                                )
+            SpreadsheetDelta.valueTypePatch(
+                valueType,
+                MARSHALL_CONTEXT
+            ),
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1.setFormula(
+                            a1.formula()
+                                .setValueType(valueType)
+                        ),
+                        b2.setFormula(
+                            b2.formula()
+                                .setValueType(valueType)
                         )
+                    )
+                )
         );
     }
 
@@ -3252,191 +3252,191 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsWithNullSelectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        null,
-                        JsonNode.object(),
-                        JsonNodeUnmarshallContexts.fake()
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                null,
+                JsonNode.object(),
+                JsonNodeUnmarshallContexts.fake()
+            )
         );
     }
 
     @Test
     public void testPatchCellsWithPatchCellsOutsideSelectionFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.A1,
-                        marshall(
-                                SpreadsheetDelta.EMPTY
-                                        .setCells(
-                                                Sets.of(
-                                                        SpreadsheetSelection.parseCell("A2")
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=1")
-                                                                )
-                                                )
-                                        )
-                        ),
-                        JsonNodeUnmarshallContexts.fake()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.A1,
+                marshall(
+                    SpreadsheetDelta.EMPTY
+                        .setCells(
+                            Sets.of(
+                                SpreadsheetSelection.parseCell("A2")
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                    )
+                            )
+                        )
+                ),
+                JsonNodeUnmarshallContexts.fake()
+            )
         );
         this.checkEquals(
-                "Patch includes cells A2 outside A1",
-                thrown.getMessage(),
-                "messages"
+            "Patch includes cells A2 outside A1",
+            thrown.getMessage(),
+            "messages"
         );
     }
 
     @Test
     public void testPatchCellsWithPatchCellsOutsideSelectionFails2() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.parseCell("A2"),
-                        marshall(
-                                SpreadsheetDelta.EMPTY
-                                        .setCells(
-                                                Sets.of(
-                                                        SpreadsheetSelection.A1
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=1")
-                                                                ),
-                                                        SpreadsheetSelection.parseCell("A2")
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=2")
-                                                                ),
-                                                        SpreadsheetSelection.parseCell("B1")
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=3")
-                                                                )
-                                                )
-                                        )
-                        ),
-                        JsonNodeUnmarshallContexts.fake()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.parseCell("A2"),
+                marshall(
+                    SpreadsheetDelta.EMPTY
+                        .setCells(
+                            Sets.of(
+                                SpreadsheetSelection.A1
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                    ),
+                                SpreadsheetSelection.parseCell("A2")
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=2")
+                                    ),
+                                SpreadsheetSelection.parseCell("B1")
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=3")
+                                    )
+                            )
+                        )
+                ),
+                JsonNodeUnmarshallContexts.fake()
+            )
         );
         this.checkEquals(
-                "Patch includes cells A1, B1 outside A2",
-                thrown.getMessage(),
-                "messages"
+            "Patch includes cells A1, B1 outside A2",
+            thrown.getMessage(),
+            "messages"
         );
     }
 
     @Test
     public void testPatchCellsWithPatchCellsOutsideSelectionFails3() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.A1,
-                        marshall(
-                                SpreadsheetDelta.EMPTY
-                                        .setCells(
-                                                Sets.of(
-                                                        SpreadsheetSelection.A1
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=1")
-                                                                ),
-                                                        SpreadsheetSelection.parseCell("A2")
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=2")
-                                                                ),
-                                                        SpreadsheetSelection.parseCell("B1")
-                                                                .setFormula(
-                                                                        SpreadsheetFormula.EMPTY.setText("=3")
-                                                                )
-                                                )
-                                        )
-                        ),
-                        this.createPatchContext() // required to unmarshall A1
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.A1,
+                marshall(
+                    SpreadsheetDelta.EMPTY
+                        .setCells(
+                            Sets.of(
+                                SpreadsheetSelection.A1
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=1")
+                                    ),
+                                SpreadsheetSelection.parseCell("A2")
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=2")
+                                    ),
+                                SpreadsheetSelection.parseCell("B1")
+                                    .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=3")
+                                    )
+                            )
+                        )
+                ),
+                this.createPatchContext() // required to unmarshall A1
+            )
         );
         this.checkEquals(
-                "Patch includes cells B1, A2 outside A1",
-                thrown.getMessage(),
-                "messages"
+            "Patch includes cells B1, A2 outside A1",
+            thrown.getMessage(),
+            "messages"
         );
     }
 
     @Test
     public void testPatchCellsColumnsFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.COLUMNS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.COLUMNS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsLabelsFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.LABELS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.LABELS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsRowsFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.ROWS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.ROWS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsDeletedCellsFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.DELETED_CELLS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_CELLS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsDeletedRowsFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.DELETED_ROWS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_ROWS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsColumnWidthFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsRowHeightFails() {
         this.patchCellsWithInvalidPropertyFails(
-                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchCellsFormattedValueFails() {
         this.patchCellsWithInvalidPropertyFails(
-                JsonPropertyName.with("formattedValue"),
-                JsonNode.nullNode()
+            JsonPropertyName.with("formattedValue"),
+            JsonNode.nullNode()
         );
     }
 
     private void patchCellsWithInvalidPropertyFails(final JsonPropertyName key,
                                                     final JsonNode value) {
         final JsonNode patch = JsonNode.object()
-                .set(
-                        key,
-                        value
-                );
+            .set(
+                key,
+                value
+            );
 
         final InvalidPropertyJsonNodeException thrown = assertThrows(
-                InvalidPropertyJsonNodeException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.A1,
-                        patch,
-                        this.createPatchContext()
-                )
+            InvalidPropertyJsonNodeException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.A1,
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(key, thrown.name(), "name");
         this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
@@ -3445,775 +3445,775 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsWithEmptyObject() {
         this.patchCellsAndCheck(
-                SpreadsheetDelta.EMPTY,
-                SpreadsheetSelection.parseCell("Z99"),
-                JsonNode.object(),
-                SpreadsheetDelta.EMPTY
+            SpreadsheetDelta.EMPTY,
+            SpreadsheetSelection.parseCell("Z99"),
+            JsonNode.object(),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchCellsNoSelection() {
         this.patchCellViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                SpreadsheetDelta.NO_VIEWPORT
+            SpreadsheetDelta.NO_VIEWPORT,
+            SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchCellsViewport() {
         this.patchCellViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                Optional.of(
-                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                .viewport()
-                                .setAnchoredSelection(
-                                        Optional.of(
-                                                SpreadsheetSelection.parseColumn("C")
-                                                        .setDefaultAnchor()
-                                        )
-                                )
-                )
+            SpreadsheetDelta.NO_VIEWPORT,
+            Optional.of(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                    .viewport()
+                    .setAnchoredSelection(
+                        Optional.of(
+                            SpreadsheetSelection.parseColumn("C")
+                                .setDefaultAnchor()
+                        )
+                    )
+            )
         );
     }
 
     private void patchCellViewportAndCheck(final Optional<SpreadsheetViewport> before,
                                            final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setViewport(after);
+            .setViewport(after);
 
         this.patchCellsAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(before),
-                SpreadsheetSelection.parseCell("Z99"),
-                marshall(delta),
-                delta
+            SpreadsheetDelta.EMPTY
+                .setViewport(before),
+            SpreadsheetSelection.parseCell("Z99"),
+            marshall(delta),
+            delta
         );
     }
 
     @Test
     public void testPatchCellsViewportCleared() {
         this.patchCellsAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(
+            SpreadsheetDelta.EMPTY
+                .setViewport(
+                    Optional.of(
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                            .viewport()
+                            .setAnchoredSelection(
                                 Optional.of(
-                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                                .viewport()
-                                                .setAnchoredSelection(
-                                                        Optional.of(
-                                                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
-                                                        )
-
-                                                )
+                                    SpreadsheetSelection.parseCellRange("A1:B2")
+                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
-                        )
-                ,
-                SpreadsheetSelection.A1,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                SpreadsheetDelta.EMPTY
+
+                            )
+                    )
+                )
+            ,
+            SpreadsheetSelection.A1,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchCellsNewCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        cell
-                )
+            Sets.of(
+                cell
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                cell.reference(),
-                marshall(after),
-                after
+            before,
+            cell.reference(),
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchCellsNewCell2() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        cell
-                )
+            Sets.of(
+                cell
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                cell.reference(),
-                marshall(after),
-                after
+            before,
+            cell.reference(),
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchCellsReplacesCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(cell)
-                );
+            .setCells(
+                Sets.of(cell)
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        cell.setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
-                )
+            Sets.of(
+                cell.setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                cell.reference(),
-                marshall(after),
-                after
+            before,
+            cell.reference(),
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchCellsCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setViewport(
-                        Optional.of(
-                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                        .viewport()
-                                        .setAnchoredSelection(
-                                                Optional.of(
-                                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                                                )
-                                        )
+            .setViewport(
+                Optional.of(
+                    SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                            Optional.of(
+                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                            )
                         )
-                );
+                )
+            );
         this.patchCellsAndCheck(
-                without.setCells(
-                        Sets.of(
-                                SpreadsheetSelection.parseCell("b2")
-                                        .setFormula(SpreadsheetFormula.EMPTY)
-                        )
+            without.setCells(
+                Sets.of(
+                    SpreadsheetSelection.parseCell("b2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+                )
+            ),
+            SpreadsheetSelection.parseCellOrCellRange("B2"),
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.CELLS_PROPERTY,
+                    JsonNode.nullNode()
                 ),
-                SpreadsheetSelection.parseCellOrCellRange("B2"),
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.CELLS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                without
+            without
         );
     }
 
     @Test
     public void testPatchCellsCellWithWindow() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("B2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, b2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(a1, b2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(a1)
+            Sets.of(a1)
         ).setWindow(
-                SpreadsheetViewportWindows.parse("A1:A2")
+            SpreadsheetViewportWindows.parse("A1:A2")
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellOrCellRange("A1:A2"),
-                marshall(after),
-                after
+            before,
+            SpreadsheetSelection.parseCellOrCellRange("A1:A2"),
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchCellAndFormatterFails() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
-                Sets.of(a1)
+            Sets.of(a1)
         );
         final JsonNode patch = this.marshall(delta)
-                .objectOrFail()
-                .merge(
-                        SpreadsheetDelta.formatterPatch(
-                                Optional.of(
-                                        SpreadsheetPattern.parseTextFormatPattern("@")
-                                                .spreadsheetFormatterSelector()
-                                ),
-                                MARSHALL_CONTEXT
-                        ).objectOrFail()
-                );
+            .objectOrFail()
+            .merge(
+                SpreadsheetDelta.formatterPatch(
+                    Optional.of(
+                        SpreadsheetPattern.parseTextFormatPattern("@")
+                            .spreadsheetFormatterSelector()
+                    ),
+                    MARSHALL_CONTEXT
+                ).objectOrFail()
+            );
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        a1.reference(),
-                        patch,
-                        this.createPatchContext()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                a1.reference(),
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(
-                "Patch must not contain both \"cells\" and \"formatter\"",
-                thrown.getMessage(),
-                "message"
+            "Patch must not contain both \"cells\" and \"formatter\"",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testPatchCellAndParserFails() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
-                Sets.of(a1)
+            Sets.of(a1)
         );
         final JsonNode patch = this.marshall(delta)
-                .objectOrFail()
-                .merge(
-                        SpreadsheetDelta.parserPatch(
-                                Optional.of(
-                                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                                                .spreadsheetParserSelector()
-                                ),
-                                MARSHALL_CONTEXT
-                        ).objectOrFail()
-                );
+            .objectOrFail()
+            .merge(
+                SpreadsheetDelta.parserPatch(
+                    Optional.of(
+                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                            .spreadsheetParserSelector()
+                    ),
+                    MARSHALL_CONTEXT
+                ).objectOrFail()
+            );
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        a1.reference(),
-                        patch,
-                        this.createPatchContext()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                a1.reference(),
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(
-                "Patch must not contain both \"cells\" and \"parser\"",
-                thrown.getMessage(),
-                "message"
+            "Patch must not contain both \"cells\" and \"parser\"",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testPatchCellFormatterAndParserFails() {
         final JsonNode patch = SpreadsheetDelta.formatterPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseTextFormatPattern("@")
-                                        .spreadsheetFormatterSelector()
-                        ),
-                        MARSHALL_CONTEXT
+                Optional.of(
+                    SpreadsheetPattern.parseTextFormatPattern("@")
+                        .spreadsheetFormatterSelector()
+                ),
+                MARSHALL_CONTEXT
+            ).objectOrFail()
+            .merge(
+                SpreadsheetDelta.parserPatch(
+                    Optional.of(
+                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                            .spreadsheetParserSelector()
+                    ),
+                    MARSHALL_CONTEXT
                 ).objectOrFail()
-                .merge(
-                        SpreadsheetDelta.parserPatch(
-                                Optional.of(
-                                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                                                .spreadsheetParserSelector()
-                                ),
-                                MARSHALL_CONTEXT
-                        ).objectOrFail()
-                );
+            );
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.parseCellOrCellRange("Z99"),
-                        patch,
-                        this.createPatchContext()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.parseCellOrCellRange("Z99"),
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(
-                "Patch must not contain both \"formatter\" and \"parser\"",
-                thrown.getMessage(),
-                "message"
+            "Patch must not contain both \"formatter\" and \"parser\"",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testPatchCellWithFormatterAndStyleFails() {
         final JsonNode patch = SpreadsheetDelta.formatterPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseTextFormatPattern("@")
-                                        .spreadsheetFormatterSelector()
-                        ),
-                        MARSHALL_CONTEXT
+                Optional.of(
+                    SpreadsheetPattern.parseTextFormatPattern("@")
+                        .spreadsheetFormatterSelector()
+                ),
+                MARSHALL_CONTEXT
+            ).objectOrFail()
+            .merge(
+                SpreadsheetDelta.stylePatch(
+                    JsonNode.object()
                 ).objectOrFail()
-                .merge(
-                        SpreadsheetDelta.stylePatch(
-                                JsonNode.object()
-                        ).objectOrFail()
-                );
+            );
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.parseCellOrCellRange("Z99"),
-                        patch,
-                        this.createPatchContext()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.parseCellOrCellRange("Z99"),
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(
-                "Patch must not contain both \"formatter\" and \"style\"",
-                thrown.getMessage(),
-                "message"
+            "Patch must not contain both \"formatter\" and \"style\"",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testPatchCellWithParserAndStyleFails() {
         final JsonNode patch = SpreadsheetDelta.parserPatch(
-                        Optional.of(
-                                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                                        .spreadsheetParserSelector()
-                        ),
-                        MARSHALL_CONTEXT
+                Optional.of(
+                    SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+                        .spreadsheetParserSelector()
+                ),
+                MARSHALL_CONTEXT
+            ).objectOrFail()
+            .merge(
+                SpreadsheetDelta.stylePatch(
+                    JsonNode.object()
                 ).objectOrFail()
-                .merge(
-                        SpreadsheetDelta.stylePatch(
-                                JsonNode.object()
-                        ).objectOrFail()
-                );
+            );
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        SpreadsheetSelection.parseCellOrCellRange("Z99"),
-                        patch,
-                        this.createPatchContext()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                SpreadsheetSelection.parseCellOrCellRange("Z99"),
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(
-                "Patch must not contain both \"parser\" and \"style\"",
-                thrown.getMessage(),
-                "message"
+            "Patch must not contain both \"parser\" and \"style\"",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testPatchCellsWithFormula() {
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.CENTER
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY.setText("'will be patched over"))
-                .setStyle(style);
+            .setFormula(SpreadsheetFormula.EMPTY.setText("'will be patched over"))
+            .setStyle(style);
 
         final SpreadsheetCell a3 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY.setText("'not patched"));
+            .setFormula(SpreadsheetFormula.EMPTY.setText("'not patched"));
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1,
-                                a3
-                        )
-                );
+            .setCells(
+                Sets.of(
+                    a1,
+                    a3
+                )
+            );
 
         final SpreadsheetFormula patched = SpreadsheetFormula.EMPTY.setText("'patched formula");
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormula(patched),
-                        SpreadsheetSelection.parseCell("A2")
-                                .setFormula(patched),
-                        a3
-                )
+            Sets.of(
+                a1.setFormula(patched),
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(patched),
+                a3
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formulaPatch(
-                        MARSHALL_CONTEXT.marshall(patched)
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formulaPatch(
+                MARSHALL_CONTEXT.marshall(patched)
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithFormulaValueType() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("'will be patched over")
-                                .setValueType(
-                                        Optional.of(
-                                                ValidationValueTypeName.with("LostValueType")
-                                        )
-                                )
-                ).setStyle(
-                        TextStyle.EMPTY.set(
-                                TextStylePropertyName.TEXT_ALIGN,
-                                TextAlign.CENTER
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("'will be patched over")
+                    .setValueType(
+                        Optional.of(
+                            ValidationValueTypeName.with("LostValueType")
                         )
-                );
+                    )
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            );
 
         final SpreadsheetCell a3 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("'not patched")
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("'not patched")
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1,
-                                a3
-                        )
-                );
+            .setCells(
+                Sets.of(
+                    a1,
+                    a3
+                )
+            );
 
         final Optional<ValidationValueTypeName> typeName = Optional.of(
-                ValidationValueTypeName.with("patchedValueType")
+            ValidationValueTypeName.with("patchedValueType")
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormula(
-                                a1.formula()
-                                        .setValueType(typeName)
-                        ),
-                        SpreadsheetSelection.parseCell("A2")
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setValueType(typeName)
-                                )
-                )
+            Sets.of(
+                a1.setFormula(
+                    a1.formula()
+                        .setValueType(typeName)
+                ),
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(
+                        SpreadsheetFormula.EMPTY.setValueType(typeName)
+                    )
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formulaPatch(
-                        SpreadsheetFormula.valueTypePatch(
-                                typeName,
-                                MARSHALL_CONTEXT
-                        )
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formulaPatch(
+                SpreadsheetFormula.valueTypePatch(
+                    typeName,
+                    MARSHALL_CONTEXT
+                )
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithDateTimeSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDateTimeSymbols(
-                        Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(
+                Optional.of(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDateTimeSymbols(
-                        Optional.empty()
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDateTimeSymbols(
+                Optional.empty()
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final Optional<DateTimeSymbols> symbols1 = Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.FRANCE)
-                )
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.FRANCE)
+            )
         );
         final Optional<DateTimeSymbols> symbols2 = Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.GERMANY)
-                )
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.GERMANY)
+            )
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setDateTimeSymbols(symbols1),
-                        a2.setDateTimeSymbols(symbols2)
-                )
+            Sets.of(
+                a1.setDateTimeSymbols(symbols1),
+                a2.setDateTimeSymbols(symbols2)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.cellsDateTimeSymbolsPatch(
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                symbols1,
-                                SpreadsheetSelection.parseCell("A2"),
-                                symbols2
-                        ),
-                        MARSHALL_CONTEXT
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.cellsDateTimeSymbolsPatch(
+                Maps.of(
+                    SpreadsheetSelection.A1,
+                    symbols1,
+                    SpreadsheetSelection.parseCell("A2"),
+                    symbols2
                 ),
-                after
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithDecimalNumberSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDecimalNumberSymbols(
-                        Optional.of(
-                                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                        '+',
-                                        new DecimalFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDecimalNumberSymbols(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setDecimalNumberSymbols(
-                        Optional.empty()
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setDecimalNumberSymbols(
+                Optional.empty()
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
-        final Optional<DecimalNumberSymbols> symbols1 =  Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.FRANCE)
-                )
+        final Optional<DecimalNumberSymbols> symbols1 = Optional.of(
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.FRANCE)
+            )
         );
-        final Optional<DecimalNumberSymbols> symbols2 =  Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.GERMANY)
-                )
+        final Optional<DecimalNumberSymbols> symbols2 = Optional.of(
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.GERMANY)
+            )
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setDecimalNumberSymbols(symbols1),
-                        a2.setDecimalNumberSymbols(symbols2)
-                )
+            Sets.of(
+                a1.setDecimalNumberSymbols(symbols1),
+                a2.setDecimalNumberSymbols(symbols2)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                symbols1,
-                                SpreadsheetSelection.parseCell("A2"),
-                                symbols2
-                        ),
-                        MARSHALL_CONTEXT
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.cellsDecimalNumberSymbolsPatch(
+                Maps.of(
+                    SpreadsheetSelection.A1,
+                    symbols1,
+                    SpreadsheetSelection.parseCell("A2"),
+                    symbols2
                 ),
-                after
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
-    
+
     @Test
     public void testPatchCellsWithFormatterWithMissingCells() {
         final Optional<SpreadsheetFormatterSelector> beforeFormatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
+                .spreadsheetFormatterSelector()
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(beforeFormatter);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setFormatter(beforeFormatter);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1)
-                );
+            .setCells(
+                Sets.of(a1)
+            );
 
         final SpreadsheetFormatterSelector patchFormatter = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormatter(Optional.of(patchFormatter)),
-                        SpreadsheetSelection.parseCell("A2")
-                                .setFormula(SpreadsheetFormula.EMPTY)
-                                .setFormatter(Optional.of(patchFormatter))
-                )
+            Sets.of(
+                a1.setFormatter(Optional.of(patchFormatter)),
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(SpreadsheetFormula.EMPTY)
+                    .setFormatter(Optional.of(patchFormatter))
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formatterPatch(
-                        Optional.of(patchFormatter),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formatterPatch(
+                Optional.of(patchFormatter),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithFormatter() {
         final Optional<SpreadsheetFormatterSelector> beforeFormatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
+                .spreadsheetFormatterSelector()
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(beforeFormatter);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setFormatter(beforeFormatter);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(beforeFormatter);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setFormatter(beforeFormatter);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final SpreadsheetFormatterSelector patchedFormatter = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormatter(Optional.of(patchedFormatter)),
-                        a2.setFormatter(Optional.of(patchedFormatter))
-                )
+            Sets.of(
+                a1.setFormatter(Optional.of(patchedFormatter)),
+                a2.setFormatter(Optional.of(patchedFormatter))
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formatterPatch(
-                        Optional.of(patchedFormatter),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formatterPatch(
+                Optional.of(patchedFormatter),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithFormatterEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
+                .spreadsheetFormatterSelector()
         );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1.setFormatter(formatter),
-                                a2.setFormatter(formatter)
-                        )
-                );
+            .setCells(
+                Sets.of(
+                    a1.setFormatter(formatter),
+                    a2.setFormatter(formatter)
+                )
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1, a2
-                )
+            Sets.of(
+                a1, a2
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formatterPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formatterPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithFormatterEmptyClears2() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final Optional<SpreadsheetFormatterSelector> beforeFormatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
+                .spreadsheetFormatterSelector()
         );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1.setFormatter(beforeFormatter)
-                        )
-                );
+            .setCells(
+                Sets.of(
+                    a1.setFormatter(beforeFormatter)
+                )
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1,
-                        SpreadsheetSelection.parseCell("A2")
-                                .setFormula(SpreadsheetFormula.EMPTY)
-                )
+            Sets.of(
+                a1,
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(SpreadsheetFormula.EMPTY)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formatterPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formatterPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithFormatterAndWindow() {
         final Optional<SpreadsheetFormatterSelector> beforeFormatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("@\"before\"")
+                .spreadsheetFormatterSelector()
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(beforeFormatter);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setFormatter(beforeFormatter);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(beforeFormatter);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setFormatter(beforeFormatter);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final SpreadsheetFormatterSelector patchedFormatter = SpreadsheetPattern.parseTextFormatPattern("@\"patched\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setFormatter(Optional.of(patchedFormatter)),
-                        a2.setFormatter(Optional.of(patchedFormatter))
-                )
+            Sets.of(
+                a1.setFormatter(Optional.of(patchedFormatter)),
+                a2.setFormatter(Optional.of(patchedFormatter))
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.formatterPatch(
-                        Optional.of(patchedFormatter),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.formatterPatch(
+                Optional.of(patchedFormatter),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
@@ -4221,221 +4221,221 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchCellsWithParser() {
         final Optional<SpreadsheetParserSelector> beforeParser = Optional.of(
-                SpreadsheetPattern.parseNumberParsePattern("\"before\"")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseNumberParsePattern("\"before\"")
+                .spreadsheetParserSelector()
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(beforeParser);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setParser(beforeParser);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(beforeParser);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setParser(beforeParser);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final SpreadsheetParserSelector parser = SpreadsheetPattern.parseNumberParsePattern("\"patched\"")
-                .spreadsheetParserSelector();
+            .spreadsheetParserSelector();
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setParser(Optional.of(parser)),
-                        a2.setParser(Optional.of(parser))
-                )
+            Sets.of(
+                a1.setParser(Optional.of(parser)),
+                a2.setParser(Optional.of(parser))
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.parserPatch(
-                        Optional.of(parser),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.parserPatch(
+                Optional.of(parser),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithParserEmptyClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
-                SpreadsheetPattern.parseNumberParsePattern("#\"should be cleared\"")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseNumberParsePattern("#\"should be cleared\"")
+                .spreadsheetParserSelector()
         );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1.setParser(parser),
-                                a2.setParser(parser)
-                        )
-                );
+            .setCells(
+                Sets.of(
+                    a1.setParser(parser),
+                    a2.setParser(parser)
+                )
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1, a2
-                )
+            Sets.of(
+                a1, a2
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.parserPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.parserPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithParserEmptylClearsAbsentCell() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
-                SpreadsheetPattern.parseNumberParsePattern("#\"should be cleared\"")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseNumberParsePattern("#\"should be cleared\"")
+                .spreadsheetParserSelector()
         );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1.setParser(parser)
-                        )
-                );
+            .setCells(
+                Sets.of(
+                    a1.setParser(parser)
+                )
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1,
-                        SpreadsheetSelection.parseCell("A2")
-                                .setFormula(SpreadsheetFormula.EMPTY)
-                )
+            Sets.of(
+                a1,
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(SpreadsheetFormula.EMPTY)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.parserPatch(
-                        Optional.empty(),
-                        MARSHALL_CONTEXT
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.parserPatch(
+                Optional.empty(),
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsAndStyleFails() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY.setCells(
-                Sets.of(a1)
+            Sets.of(a1)
         );
         final JsonNode patch = this.marshall(delta)
-                .objectOrFail()
-                .merge(
-                        SpreadsheetDelta.stylePatch(
-                                JsonNode.object()
-                        ).objectOrFail()
-                );
+            .objectOrFail()
+            .merge(
+                SpreadsheetDelta.stylePatch(
+                    JsonNode.object()
+                ).objectOrFail()
+            );
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDelta.EMPTY.patchCells(
-                        a1.reference(),
-                        patch,
-                        this.createPatchContext()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchCells(
+                a1.reference(),
+                patch,
+                this.createPatchContext()
+            )
         );
         this.checkEquals(
-                "Patch must not contain both \"cells\" and \"style\"",
-                thrown.getMessage(),
-                "message"
+            "Patch must not contain both \"cells\" and \"style\"",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testPatchCellsWithStyleMissing() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(a1)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.stylePatch(
-                Color.parse("#123456")
+            Color.parse("#123456")
         );
 
         final TextStyle style = TextStyle.EMPTY.patch(
-                stylePatch,
-                this.createPatchContext()
+            stylePatch,
+            this.createPatchContext()
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setStyle(style),
-                        SpreadsheetSelection.parseCell("A2")
-                                .setFormula(SpreadsheetFormula.EMPTY)
-                                .setStyle(style)
-                )
+            Sets.of(
+                a1.setStyle(style),
+                SpreadsheetSelection.parseCell("A2")
+                    .setFormula(SpreadsheetFormula.EMPTY)
+                    .setStyle(style)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(
-                        stylePatch
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.stylePatch(
+                stylePatch
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithStyle() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.stylePatch(
-                Color.parse("#123456")
+            Color.parse("#123456")
         );
         final TextStyle style = TextStyle.EMPTY
-                .patch(
-                        stylePatch,
-                        this.createPatchContext()
-                );
+            .patch(
+                stylePatch,
+                this.createPatchContext()
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setStyle(style),
-                        a2.setStyle(style)
-                )
+            Sets.of(
+                a1.setStyle(style),
+                a2.setStyle(style)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(stylePatch),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.stylePatch(stylePatch),
+            after
         );
     }
 
@@ -4444,45 +4444,45 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
         final Color propertyValue = Color.parse("#123456");
         final TextStyle style = TextStyle.EMPTY.set(
-                propertyName,
-                propertyValue
+            propertyName,
+            propertyValue
         ).set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.CENTER
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
-                .setStyle(style);
+            .setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
+            .setStyle(style);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
-                .setStyle(style);
+            .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
+            .setStyle(style);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.stylePatch(null);
         final TextStyle patchedStyle = style.patch(
-                stylePatch,
-                this.createPatchContext()
+            stylePatch,
+            this.createPatchContext()
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setStyle(patchedStyle),
-                        a2.setStyle(patchedStyle)
-                )
+            Sets.of(
+                a1.setStyle(patchedStyle),
+                a2.setStyle(patchedStyle)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(stylePatch),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.stylePatch(stylePatch),
+            after
         );
     }
 
@@ -4491,214 +4491,214 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final TextStylePropertyName<Color> propertyName = TextStylePropertyName.COLOR;
         final Color propertyValue = Color.parse("#123456");
         final TextStyle beforeStyle = TextStyle.EMPTY.set(
-                propertyName,
-                propertyValue
+            propertyName,
+            propertyValue
         ).set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.CENTER
         );
 
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
-                .setStyle(beforeStyle);
+            .setFormula(SpreadsheetFormula.EMPTY.setText("=2"))
+            .setStyle(beforeStyle);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(a2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final JsonNode stylePatch = TextStylePropertyName.COLOR.stylePatch(null);
 
         // A1 will be created with no formula and only the stylePatch
         final JsonNodeUnmarshallContext patchContext = this.createPatchContext();
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                                .setStyle(
-                                        TextStyle.EMPTY.patch(
-                                                stylePatch,
-                                                patchContext
-                                        )
-                                ),
-                        a2.setStyle(
-                                beforeStyle.patch(
-                                        stylePatch,
-                                        patchContext
-                                )
+            Sets.of(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                    .setStyle(
+                        TextStyle.EMPTY.patch(
+                            stylePatch,
+                            patchContext
                         )
+                    ),
+                a2.setStyle(
+                    beforeStyle.patch(
+                        stylePatch,
+                        patchContext
+                    )
                 )
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(stylePatch),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.stylePatch(stylePatch),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithStyleMerging() {
         final TextStyle beforeStyle1 = TextStyle.EMPTY
-                .set(
-                        TextStylePropertyName.COLOR,
-                        Color.parse("#111111")
-                );
+            .set(
+                TextStylePropertyName.COLOR,
+                Color.parse("#111111")
+            );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(beforeStyle1);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setStyle(beforeStyle1);
 
         final TextStyle beforeStyle2 = TextStyle.EMPTY
-                .set(
-                        TextStylePropertyName.COLOR,
-                        Color.parse("#222222")
-                );
+            .set(
+                TextStylePropertyName.COLOR,
+                Color.parse("#222222")
+            );
 
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setStyle(beforeStyle2);
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setStyle(beforeStyle2);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1,
-                                a2
-                        )
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(
+                    a1,
+                    a2
+                )
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final TextStyle patchStyle = TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.CENTER
         );
 
         final JsonNode stylePatch = TextStylePropertyName.TEXT_ALIGN.stylePatch(
-                TextAlign.CENTER
+            TextAlign.CENTER
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setStyle(
-                                beforeStyle1.merge(patchStyle)
-                        ),
-                        a2.setStyle(
-                                beforeStyle2.merge(patchStyle)
-                        )
+            Sets.of(
+                a1.setStyle(
+                    beforeStyle1.merge(patchStyle)
+                ),
+                a2.setStyle(
+                    beforeStyle2.merge(patchStyle)
                 )
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellOrCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(
-                        stylePatch
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellOrCellRange("A1:A2"),
+            SpreadsheetDelta.stylePatch(
+                stylePatch
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithStyleNullClears() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
+            .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1.setStyle(style),
-                                a2.setStyle(style)
-                        )
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:A2")
-                );
+            .setCells(
+                Sets.of(
+                    a1.setStyle(style),
+                    a2.setStyle(style)
+                )
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:A2")
+            );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1, a2
-                )
+            Sets.of(
+                a1, a2
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.stylePatch(
-                        JsonNode.nullNode()
-                ),
-                after
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.stylePatch(
+                JsonNode.nullNode()
+            ),
+            after
         );
     }
 
     @Test
     public void testPatchCellsWithValidator() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(
-                        Optional.of(
-                                ValidatorSelector.parse("before-validator")
-                        )
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setValidator(
+                Optional.of(
+                    ValidatorSelector.parse("before-validator")
+                )
+            );
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(
-                        Optional.empty()
-                );
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setValidator(
+                Optional.empty()
+            );
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(a1, a2)
-                );
+            .setCells(
+                Sets.of(a1, a2)
+            );
 
         final Optional<ValidatorSelector> validator1 = Optional.of(
-                ValidatorSelector.parse("patched-validator1")
+            ValidatorSelector.parse("patched-validator1")
         );
         final Optional<ValidatorSelector> validator2 = Optional.of(
-                ValidatorSelector.parse("patched-validator2")
+            ValidatorSelector.parse("patched-validator2")
         );
 
         final SpreadsheetDelta after = before.setCells(
-                Sets.of(
-                        a1.setValidator(validator1),
-                        a2.setValidator(validator2)
-                )
+            Sets.of(
+                a1.setValidator(validator1),
+                a2.setValidator(validator2)
+            )
         );
 
         this.patchCellsAndCheck(
-                before,
-                SpreadsheetSelection.parseCellRange("A1:A2"),
-                SpreadsheetDelta.cellsValidatorPatch(
-                        Maps.of(
-                                SpreadsheetSelection.A1,
-                                validator1,
-                                SpreadsheetSelection.parseCell("A2"),
-                                validator2
-                        ),
-                        MARSHALL_CONTEXT
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            SpreadsheetDelta.cellsValidatorPatch(
+                Maps.of(
+                    SpreadsheetSelection.A1,
+                    validator1,
+                    SpreadsheetSelection.parseCell("A2"),
+                    validator2
                 ),
-                after
+                MARSHALL_CONTEXT
+            ),
+            after
         );
     }
-    
+
     private void patchCellsAndCheck(final SpreadsheetDelta before,
                                     final SpreadsheetCellReferenceOrRange cellReferenceOrRange,
                                     final JsonNode patch,
                                     final SpreadsheetDelta expected) {
         this.checkEquals(
-                expected,
-                before.patchCells(
-                        cellReferenceOrRange,
-                        patch,
-                        this.createPatchContext()
-                ),
-                () -> "patch cells " + cellReferenceOrRange + "\n" + patch
+            expected,
+            before.patchCells(
+                cellReferenceOrRange,
+                patch,
+                this.createPatchContext()
+            ),
+            () -> "patch cells " + cellReferenceOrRange + "\n" + patch
         );
     }
 
@@ -4707,8 +4707,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsCellsFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.CELLS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.CELLS_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -4716,8 +4716,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsLabelsFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.LABELS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.LABELS_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -4725,8 +4725,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsRowsFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.ROWS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.ROWS_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -4734,24 +4734,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsDeletedCellsFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_CELLS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_CELLS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchColumnsDeletedRowsFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_ROWS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_ROWS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchColumnsFormatPatternFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.FORMATTER_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.FORMATTER_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -4759,8 +4759,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsParserFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.PARSER_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.PARSER_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -4768,8 +4768,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsStyleFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.STYLE_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.STYLE_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -4777,30 +4777,30 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsColumnWidthFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchColumnsRowHeightFails() {
         this.patchColumnInvalidPropertyFails2(
-                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     private void patchColumnInvalidPropertyFails2(final JsonPropertyName key,
                                                   final JsonNode value) {
         final JsonNode patch = JsonNode.object()
-                .set(
-                        key,
-                        value
-                );
+            .set(
+                key,
+                value
+            );
 
         final InvalidPropertyJsonNodeException thrown = assertThrows(
-                InvalidPropertyJsonNodeException.class,
-                () -> SpreadsheetDelta.EMPTY.patchColumns(patch, this.createPatchContext())
+            InvalidPropertyJsonNodeException.class,
+            () -> SpreadsheetDelta.EMPTY.patchColumns(patch, this.createPatchContext())
         );
         this.checkEquals(key, thrown.name(), "name");
         this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
@@ -4809,214 +4809,214 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchColumnsWithEmptyObject() {
         this.patchColumnsAndCheck(
-                SpreadsheetDelta.EMPTY,
-                JsonNode.object(),
-                SpreadsheetDelta.EMPTY
+            SpreadsheetDelta.EMPTY,
+            JsonNode.object(),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchColumnsNoSelection() {
         this.patchColumnViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                SpreadsheetDelta.NO_VIEWPORT
+            SpreadsheetDelta.NO_VIEWPORT,
+            SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchColumnsViewport() {
         this.patchColumnViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                Optional.of(
-                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                .viewport()
-                                .setAnchoredSelection(
-                                        Optional.of(
-                                                SpreadsheetSelection.parseColumn("C")
-                                                        .setDefaultAnchor()
-                                        )
-                                )
-                )
+            SpreadsheetDelta.NO_VIEWPORT,
+            Optional.of(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                    .viewport()
+                    .setAnchoredSelection(
+                        Optional.of(
+                            SpreadsheetSelection.parseColumn("C")
+                                .setDefaultAnchor()
+                        )
+                    )
+            )
         );
     }
 
     private void patchColumnViewportAndCheck(final Optional<SpreadsheetViewport> before,
                                              final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setViewport(after);
+            .setViewport(after);
 
         this.patchColumnsAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(before),
-                marshall(delta),
-                delta
+            SpreadsheetDelta.EMPTY
+                .setViewport(before),
+            marshall(delta),
+            delta
         );
     }
 
     @Test
     public void testPatchColumnsViewportCleared() {
         this.patchColumnsAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(
+            SpreadsheetDelta.EMPTY
+                .setViewport(
+                    Optional.of(
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                            .viewport()
+                            .setAnchoredSelection(
                                 Optional.of(
-                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                                .viewport()
-                                                .setAnchoredSelection(
-                                                        Optional.of(
-                                                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
-                                                        )
-                                                )
+                                    SpreadsheetSelection.parseCellRange("A1:B2")
+                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
-                        )
-                ,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                SpreadsheetDelta.EMPTY
+                            )
+                    )
+                )
+            ,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchColumnsNewColumn() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
-                .column();
+            .column();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setColumns(
-                Sets.of(
-                        column
-                )
+            Sets.of(
+                column
+            )
         );
 
         this.patchColumnsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchColumnsNewColumn2() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
-                .column();
+            .column();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setColumns(
-                Sets.of(
-                        column
-                )
+            Sets.of(
+                column
+            )
         );
 
         this.patchColumnsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchColumnsReplacesColumn() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
-                .column();
+            .column();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setColumns(
-                        Sets.of(column.setHidden(false))
-                );
+            .setColumns(
+                Sets.of(column.setHidden(false))
+            );
 
         final SpreadsheetDelta after = before.setColumns(
-                Sets.of(
-                        column.setHidden(true)
-                )
+            Sets.of(
+                column.setHidden(true)
+            )
         );
 
         this.patchColumnsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchColumnsReplacesColumn2() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("Z")
-                .column();
+            .column();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setColumns(
-                        Sets.of(column.setHidden(true))
-                );
+            .setColumns(
+                Sets.of(column.setHidden(true))
+            );
 
         final SpreadsheetDelta after = before.setColumns(
-                Sets.of(
-                        column.setHidden(false)
-                )
+            Sets.of(
+                column.setHidden(false)
+            )
         );
 
         this.patchColumnsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchColumnsCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setViewport(
-                        Optional.of(
-                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                        .viewport()
-                                        .setAnchoredSelection(
-                                                Optional.of(
-                                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                                                )
-                                        )
-                        )
-                );
-        this.patchColumnsAndCheck(
-                without.setColumns(
-                        Sets.of(
-                                SpreadsheetSelection.parseColumn("b")
-                                        .column()
+            .setViewport(
+                Optional.of(
+                    SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                            Optional.of(
+                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                            )
                         )
                 )
-                ,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.COLUMNS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                without
+            );
+        this.patchColumnsAndCheck(
+            without.setColumns(
+                Sets.of(
+                    SpreadsheetSelection.parseColumn("b")
+                        .column()
+                )
+            )
+            ,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.COLUMNS_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            without
         );
     }
 
     @Test
     public void testPatchColumnsColumnWithWindow() {
         final SpreadsheetColumn a = SpreadsheetSelection.parseColumn("a")
-                .column();
+            .column();
         final SpreadsheetColumn b = SpreadsheetSelection.parseColumn("b")
-                .column();
+            .column();
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setColumns(
-                        Sets.of(a, b)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:B2")
-                );
+            .setColumns(
+                Sets.of(a, b)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:B2")
+            );
 
         final SpreadsheetDelta after = before.setColumns(
-                Sets.of(a)
+            Sets.of(a)
         ).setWindow(
-                SpreadsheetViewportWindows.parse("A1")
+            SpreadsheetViewportWindows.parse("A1")
         );
 
         this.patchColumnsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
@@ -5024,9 +5024,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                       final JsonNode patch,
                                       final SpreadsheetDelta expected) {
         this.checkEquals(
-                expected,
-                before.patchColumns(patch, this.createPatchContext()),
-                () -> "patch columns\n" + patch
+            expected,
+            before.patchColumns(patch, this.createPatchContext()),
+            () -> "patch columns\n" + patch
         );
     }
 
@@ -5035,24 +5035,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsCellsFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.CELLS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.CELLS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchRowsColumnsFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.COLUMNS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.COLUMNS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchRowsLabelsFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.LABELS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.LABELS_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -5060,24 +5060,24 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsDeletedCellsFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_CELLS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_CELLS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchRowsDeletedColumnsFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.DELETED_COLUMNS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchRowsFormatPatternFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.FORMATTER_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.FORMATTER_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -5085,8 +5085,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsParserFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.PARSER_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.PARSER_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -5094,8 +5094,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsStyleFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.STYLE_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.STYLE_PROPERTY,
+            JsonNode.nullNode()
 
         );
     }
@@ -5103,30 +5103,30 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsColumnWidthFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.COLUMN_WIDTHS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testPatchRowsHeightFails() {
         this.patchRowInvalidPropertyFails2(
-                SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
-                JsonNode.nullNode()
+            SpreadsheetDelta.ROW_HEIGHTS_PROPERTY,
+            JsonNode.nullNode()
         );
     }
 
     private void patchRowInvalidPropertyFails2(final JsonPropertyName key,
                                                final JsonNode value) {
         final JsonNode patch = JsonNode.object()
-                .set(
-                        key,
-                        value
-                );
+            .set(
+                key,
+                value
+            );
 
         final InvalidPropertyJsonNodeException thrown = assertThrows(
-                InvalidPropertyJsonNodeException.class,
-                () -> SpreadsheetDelta.EMPTY.patchRows(patch, this.createPatchContext())
+            InvalidPropertyJsonNodeException.class,
+            () -> SpreadsheetDelta.EMPTY.patchRows(patch, this.createPatchContext())
         );
         this.checkEquals(key, thrown.name(), "name");
         this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
@@ -5135,216 +5135,216 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testPatchRowsWithEmptyObject() {
         this.patchRowsAndCheck(
-                SpreadsheetDelta.EMPTY,
-                JsonNode.object(),
-                SpreadsheetDelta.EMPTY
+            SpreadsheetDelta.EMPTY,
+            JsonNode.object(),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchRowsNoSelection() {
         this.patchRowViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                SpreadsheetDelta.NO_VIEWPORT
+            SpreadsheetDelta.NO_VIEWPORT,
+            SpreadsheetDelta.NO_VIEWPORT
         );
     }
 
     @Test
     public void testPatchRowsViewport() {
         this.patchRowViewportAndCheck(
-                SpreadsheetDelta.NO_VIEWPORT,
-                Optional.of(
-                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                .viewport()
-                                .setAnchoredSelection(
-                                        Optional.of(
-                                                SpreadsheetSelection.parseRow("3")
-                                                        .setDefaultAnchor()
-                                        )
-                                )
-                )
+            SpreadsheetDelta.NO_VIEWPORT,
+            Optional.of(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                    .viewport()
+                    .setAnchoredSelection(
+                        Optional.of(
+                            SpreadsheetSelection.parseRow("3")
+                                .setDefaultAnchor()
+                        )
+                    )
+            )
         );
     }
 
     private void patchRowViewportAndCheck(final Optional<SpreadsheetViewport> before,
                                           final Optional<SpreadsheetViewport> after) {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setViewport(after);
+            .setViewport(after);
 
         this.patchRowsAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(before),
-                marshall(delta),
-                delta
+            SpreadsheetDelta.EMPTY
+                .setViewport(before),
+            marshall(delta),
+            delta
         );
     }
 
     @Test
     public void testPatchRowsViewportCleared() {
         this.patchRowsAndCheck(
-                SpreadsheetDelta.EMPTY
-                        .setViewport(
+            SpreadsheetDelta.EMPTY
+                .setViewport(
+                    Optional.of(
+                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                            .viewport()
+                            .setAnchoredSelection(
                                 Optional.of(
-                                        SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                                .viewport()
-                                                .setAnchoredSelection(
-                                                        Optional.of(
-                                                                SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
-                                                        )
-                                                )
+                                    SpreadsheetSelection.parseCellRange("A1:B2")
+                                        .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
                                 )
-                        )
-                ,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                SpreadsheetDelta.EMPTY
+                            )
+                    )
+                )
+            ,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            SpreadsheetDelta.EMPTY
         );
     }
 
     @Test
     public void testPatchRowsNewRow() {
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("9")
-                .row();
+            .row();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setRows(
-                Sets.of(
-                        row
-                )
+            Sets.of(
+                row
+            )
         );
 
         this.patchRowsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchRowsNewRow2() {
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("9")
-                .row();
+            .row();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY;
 
         final SpreadsheetDelta after = before.setRows(
-                Sets.of(
-                        row
-                )
+            Sets.of(
+                row
+            )
         );
 
         this.patchRowsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchRowsReplacesRow() {
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("9")
-                .row();
+            .row();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setRows(
-                        Sets.of(
-                                row.setHidden(false)
-                        )
-                );
+            .setRows(
+                Sets.of(
+                    row.setHidden(false)
+                )
+            );
 
         final SpreadsheetDelta after = before.setRows(
-                Sets.of(
-                        row.setHidden(true)
-                )
+            Sets.of(
+                row.setHidden(true)
+            )
         );
 
         this.patchRowsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchRowsReplacesRow2() {
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("9")
-                .row();
+            .row();
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setRows(
-                        Sets.of(row.setHidden(true))
-                );
+            .setRows(
+                Sets.of(row.setHidden(true))
+            );
 
         final SpreadsheetDelta after = before.setRows(
-                Sets.of(
-                        row.setHidden(false)
-                )
+            Sets.of(
+                row.setHidden(false)
+            )
         );
 
         this.patchRowsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
     @Test
     public void testPatchRowsCellsRemoved() {
         final SpreadsheetDelta without = SpreadsheetDelta.EMPTY
-                .setViewport(
-                        Optional.of(
-                                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                                        .viewport()
-                                        .setAnchoredSelection(
-                                                Optional.of(
-                                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                                                )
-                                        )
-                        )
-                );
-        this.patchRowsAndCheck(
-                without.setRows(
-                        Sets.of(
-                                SpreadsheetSelection.parseRow("2")
-                                        .row()
+            .setViewport(
+                Optional.of(
+                    SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                            Optional.of(
+                                SpreadsheetSelection.parseCellRange("A1:B2")
+                                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                            )
                         )
                 )
-                ,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetDelta.ROWS_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                without
+            );
+        this.patchRowsAndCheck(
+            without.setRows(
+                Sets.of(
+                    SpreadsheetSelection.parseRow("2")
+                        .row()
+                )
+            )
+            ,
+            JsonNode.object()
+                .set(
+                    SpreadsheetDelta.ROWS_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            without
         );
     }
 
     @Test
     public void testPatchRowsRowWithWindow() {
         final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1")
-                .row();
+            .row();
         final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2")
-                .row();
+            .row();
 
         final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
-                .setRows(
-                        Sets.of(row1, row2)
-                ).setWindow(
-                        SpreadsheetViewportWindows.parse("A1:B2")
-                );
+            .setRows(
+                Sets.of(row1, row2)
+            ).setWindow(
+                SpreadsheetViewportWindows.parse("A1:B2")
+            );
 
         final SpreadsheetDelta after = before.setRows(
-                Sets.of(row1)
+            Sets.of(row1)
         ).setWindow(
-                SpreadsheetViewportWindows.parse("A1")
+            SpreadsheetViewportWindows.parse("A1")
         );
 
         this.patchRowsAndCheck(
-                before,
-                marshall(after),
-                after
+            before,
+            marshall(after),
+            after
         );
     }
 
@@ -5352,9 +5352,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                    final JsonNode patch,
                                    final SpreadsheetDelta expected) {
         this.checkEquals(
-                expected,
-                before.patchRows(patch, this.createPatchContext()),
-                () -> "patch rows\n" + patch
+            expected,
+            before.patchRows(patch, this.createPatchContext()),
+            () -> "patch rows\n" + patch
         );
     }
 
@@ -5365,8 +5365,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            MathContext.DECIMAL32
+        ExpressionNumberKind.BIG_DECIMAL,
+        MathContext.DECIMAL32
     );
 
     @Override
@@ -5382,8 +5382,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.BIG_DECIMAL,
-                MathContext.UNLIMITED
+            ExpressionNumberKind.BIG_DECIMAL,
+            MathContext.UNLIMITED
         );
     }
 
@@ -5396,53 +5396,53 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testResolveLabelsNullJsonFails() {
         Assertions.assertThrows(
-                NullPointerException.class,
-                () ->
-                        SpreadsheetDelta.resolveCellLabels(null, LABEL_TO_CELL)
+            NullPointerException.class,
+            () ->
+                SpreadsheetDelta.resolveCellLabels(null, LABEL_TO_CELL)
         );
     }
 
     @Test
     public void testResolveLabelsNullCellToLabelsFails() {
         Assertions.assertThrows(
-                NullPointerException.class,
-                () ->
-                        SpreadsheetDelta.resolveCellLabels(JsonNode.object(), null)
+            NullPointerException.class,
+            () ->
+                SpreadsheetDelta.resolveCellLabels(JsonNode.object(), null)
         );
     }
 
     @Test
     public void testResolveLabelsCellPropertyAbsent() {
         this.resolveCellLabelsAndCheck(
-                JsonNode.object(),
-                LABEL_TO_CELL
+            JsonNode.object(),
+            LABEL_TO_CELL
         );
     }
 
     @Test
     public void testResolveLabelsCellPropertyNull() {
         this.resolveCellLabelsAndCheck(
-                JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, JsonNode.nullNode()),
-                LABEL_TO_CELL
+            JsonNode.object()
+                .set(SpreadsheetDelta.CELLS_PROPERTY, JsonNode.nullNode()),
+            LABEL_TO_CELL
         );
     }
 
     @Test
     public void testResolveLabelsOnlyCells() {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                SpreadsheetSelection.A1
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                        )
+            .setCells(
+                Sets.of(
+                    SpreadsheetSelection.A1
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY
                         )
-                );
+                )
+            );
 
         this.resolveCellLabelsAndCheck(
-                marshall(delta).objectOrFail(),
-                LABEL_TO_CELL
+            marshall(delta).objectOrFail(),
+            LABEL_TO_CELL
         );
     }
 
@@ -5450,22 +5450,22 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testResolveLabelsOnlyCells2() {
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                SpreadsheetSelection.A1
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                        ),
-                                SpreadsheetSelection.parseCell("B2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                        )
+            .setCells(
+                Sets.of(
+                    SpreadsheetSelection.A1
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY
+                        ),
+                    SpreadsheetSelection.parseCell("B2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY
                         )
-                );
+                )
+            );
 
         this.resolveCellLabelsAndCheck(
-                marshall(delta).objectOrFail(),
-                LABEL_TO_CELL
+            marshall(delta).objectOrFail(),
+            LABEL_TO_CELL
         );
     }
 
@@ -5474,40 +5474,40 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         final SpreadsheetCellReference z99 = SpreadsheetSelection.parseCell("Z99");
 
         final SpreadsheetDelta delta = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                z99.setFormula(
-                                        SpreadsheetFormula.EMPTY
-                                ),
-                                SpreadsheetSelection.parseCell("B2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                        )
+            .setCells(
+                Sets.of(
+                    z99.setFormula(
+                        SpreadsheetFormula.EMPTY
+                    ),
+                    SpreadsheetSelection.parseCell("B2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY
                         )
-                );
+                )
+            );
         final JsonObject json = marshall(delta).objectOrFail();
 
         final String label = "Label123";
         final JsonObject jsonWithLabel = JsonNode.parse(
-                json.toString().replace("Z99", label)
+            json.toString().replace("Z99", label)
         ).objectOrFail();
 
         this.resolveCellLabelsAndCheck(
-                jsonWithLabel,
-                (l) -> {
-                    this.checkEquals(label, l.value(), "label");
-                    return z99;
-                },
-                json
+            jsonWithLabel,
+            (l) -> {
+                this.checkEquals(label, l.value(), "label");
+                return z99;
+            },
+            json
         );
     }
 
     private void resolveCellLabelsAndCheck(final JsonObject json,
                                            final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell) {
         this.resolveCellLabelsAndCheck(
-                json,
-                labelToCell,
-                json
+            json,
+            labelToCell,
+            json
         );
     }
 
@@ -5515,9 +5515,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                                            final Function<SpreadsheetLabelName, SpreadsheetCellReference> labelToCell,
                                            final JsonObject expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetDelta.resolveCellLabels(json, labelToCell),
-                () -> "resolveCellLabels " + json
+            expected,
+            SpreadsheetDelta.resolveCellLabels(json, labelToCell),
+            () -> "resolveCellLabels " + json
         );
     }
 

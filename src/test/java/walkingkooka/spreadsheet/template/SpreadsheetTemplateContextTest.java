@@ -54,7 +54,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTemplateContextTest implements TemplateContextTesting2<SpreadsheetTemplateContext>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private static final SpreadsheetExpressionEvaluationContext SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = SpreadsheetExpressionEvaluationContexts.fake();
 
@@ -65,7 +65,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     private final static TemplateValueName TEMPLATE_NAME_1 = TemplateValueName.with("TemplateValue111");
 
     private final static Expression TEMPLATE_VALUE_1 = Expression.value(
-            EXPRESSION_NUMBER_KIND.create(111)
+        EXPRESSION_NUMBER_KIND.create(111)
     );
 
     private final static TemplateValueName TEMPLATE_NAME_2 = TemplateValueName.with("TemplateValue222");
@@ -76,10 +76,10 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
 
     // 99 + 111
     private final static Expression TEMPLATE_VALUE_3 = Expression.add(
-            Expression.value(99),
-            Expression.reference(
-                    TEMPLATE_NAME_1
-            )
+        Expression.value(99),
+        Expression.reference(
+            TEMPLATE_NAME_1
+        )
     );
 
     // with.............................................................................................................
@@ -87,36 +87,36 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     @Test
     public void testWithNullSpreadsheetParserContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetTemplateContext.with(
-                        null,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        NAME_TO_EXPRESSION
-                )
+            NullPointerException.class,
+            () -> SpreadsheetTemplateContext.with(
+                null,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                NAME_TO_EXPRESSION
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetExpressionEvaluationContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetTemplateContext.with(
-                        SPREADSHEET_PARSER_CONTEXT,
-                        null,
-                        NAME_TO_EXPRESSION
-                )
+            NullPointerException.class,
+            () -> SpreadsheetTemplateContext.with(
+                SPREADSHEET_PARSER_CONTEXT,
+                null,
+                NAME_TO_EXPRESSION
+            )
         );
     }
 
     @Test
     public void testWithNullTemplateValueNameToExpressionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetTemplateContext.with(
-                        SPREADSHEET_PARSER_CONTEXT,
-                        SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetTemplateContext.with(
+                SPREADSHEET_PARSER_CONTEXT,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                null
+            )
         );
     }
 
@@ -125,86 +125,86 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     @Test
     public void testSpreadsheetMetadataTestingSpreadsheetFormatterContextFormatNumber() {
         this.checkEquals(
+            Optional.of(
+                TextNode.text("111.")
+            ),
+            SPREADSHEET_FORMATTER_CONTEXT.format(
                 Optional.of(
-                        TextNode.text("111.")
-                ),
-                SPREADSHEET_FORMATTER_CONTEXT.format(
-                        Optional.of(
-                                EXPRESSION_NUMBER_KIND.create(111)
-                        )
+                    EXPRESSION_NUMBER_KIND.create(111)
                 )
+            )
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithNumberParameter() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "Apple ${TemplateValue111} Banana",
-                "Apple 111. Banana"
+            "Apple ${TemplateValue111} Banana",
+            "Apple 111. Banana"
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithStringParameter() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "Apple ${TemplateValue222} Banana",
-                "Apple Hello Banana"
+            "Apple ${TemplateValue222} Banana",
+            "Apple Hello Banana"
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithStringParameterWithTrailingSpace() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "Apple ${  TemplateValue222 } Banana",
-                "Apple Hello Banana"
+            "Apple ${  TemplateValue222 } Banana",
+            "Apple Hello Banana"
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithTemplateValueReferencingAnother() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "Apple ${TemplateValue333} Carrot",
-                "Apple 210. Carrot"
+            "Apple ${TemplateValue333} Carrot",
+            "Apple 210. Carrot"
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithNumber() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "${123}",
-                "123."
+            "${123}",
+            "123."
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithNumberTrailingWhitespace() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "${123   }",
-                "123."
+            "${123   }",
+            "123."
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithMathExpression() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "${1+2}",
-                "3."
+            "${1+2}",
+            "3."
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithMathExpressionIncludesExtraWhitespace() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "${  1  +  2  }",
-                "3."
+            "${  1  +  2  }",
+            "3."
         );
     }
 
     @Test
     public void testParseTemplateAndRenderWithFunctionCall() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "${hello(\"a1\", \"b2\", \"c3\")}",
-                "a1, b2, c3"
+            "${hello(\"a1\", \"b2\", \"c3\")}",
+            "a1, b2, c3"
         );
     }
 
@@ -212,8 +212,8 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     @Test
     public void testParseTemplateAndRenderWithFunctionCall2() {
         this.parseTemplateAndRenderToStringAndCheck(
-                "${hello(\"}}\", \"b2\", \"c3\")}",
-                "}}, b2, c3"
+            "${hello(\"}}\", \"b2\", \"c3\")}",
+            "}}, b2, c3"
         );
     }
 
@@ -222,85 +222,85 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     @Override
     public SpreadsheetTemplateContext createContext() {
         return SpreadsheetTemplateContext.with(
-                SPREADSHEET_PARSER_CONTEXT,
-                SpreadsheetExpressionEvaluationContexts.basic(
-                        Optional.empty(), // no cell
-                        SpreadsheetExpressionReferenceLoaders.fake(),
-                        Url.parseAbsolute("https://example.com"), // serverUrl
-                        SpreadsheetMetadata.EMPTY,
-                        new FakeSpreadsheetStoreRepository() {
-                            @Override
-                            public StorageStore storage() {
-                                return this.storage;
+            SPREADSHEET_PARSER_CONTEXT,
+            SpreadsheetExpressionEvaluationContexts.basic(
+                Optional.empty(), // no cell
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                Url.parseAbsolute("https://example.com"), // serverUrl
+                SpreadsheetMetadata.EMPTY,
+                new FakeSpreadsheetStoreRepository() {
+                    @Override
+                    public StorageStore storage() {
+                        return this.storage;
+                    }
+
+                    private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
+                },
+                SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
+                (Optional<SpreadsheetCell> cell) -> {
+                    throw new UnsupportedOperationException();
+                },
+                FormHandlerContexts.fake(),
+                new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
+                    @Override
+                    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                            final List<?> values,
+                                                                                                            final ProviderContext context) {
+                        checkEquals(
+                            "hello",
+                            name.value(),
+                            "function name"
+                        );
+
+                        return Cast.to(
+                            new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
+                                @Override
+                                public String apply(final List<Object> values,
+                                                    final SpreadsheetExpressionEvaluationContext context) {
+                                    return values.stream()
+                                        .map(Objects::toString)
+                                        .collect(Collectors.joining(", "));
+                                }
+
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                    return Collections.nCopies(
+                                        3,
+                                        ExpressionFunctionParameter.STRING.setKinds(
+                                            Sets.of(ExpressionFunctionParameterKind.EVALUATE)
+                                        )
+                                    );
+                                }
+
+                                @Override
+                                public Class<String> returnType() {
+                                    return String.class;
+                                }
+
+                                @Override
+                                public Optional<ExpressionFunctionName> name() {
+                                    return Optional.of(name);
+                                }
                             }
-
-                            private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
-                        },
-                        SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
-                        (Optional<SpreadsheetCell> cell) -> {
-                            throw new UnsupportedOperationException();
-                        },
-                        FormHandlerContexts.fake(),
-                        new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
-                            @Override
-                            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                                    final List<?> values,
-                                                                                                                    final ProviderContext context) {
-                                checkEquals(
-                                        "hello",
-                                        name.value(),
-                                        "function name"
-                                );
-
-                                return Cast.to(
-                                        new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
-                                            @Override
-                                            public String apply(final List<Object> values,
-                                                                final SpreadsheetExpressionEvaluationContext context) {
-                                                return values.stream()
-                                                        .map(Objects::toString)
-                                                        .collect(Collectors.joining(", "));
-                                            }
-
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Collections.nCopies(
-                                                        3,
-                                                        ExpressionFunctionParameter.STRING.setKinds(
-                                                                Sets.of(ExpressionFunctionParameterKind.EVALUATE)
-                                                        )
-                                                );
-                                            }
-
-                                            @Override
-                                            public Class<String> returnType() {
-                                                return String.class;
-                                            }
-
-                                            @Override
-                                            public Optional<ExpressionFunctionName> name() {
-                                                return Optional.of(name);
-                                            }
-                                        }
-                                );
-                            }
-                        },
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                ),
-                (t) -> {
-                    if (t.equals(TEMPLATE_NAME_1)) {
-                        return TEMPLATE_VALUE_1;
+                        );
                     }
-                    if (t.equals(TEMPLATE_NAME_2)) {
-                        return TEMPLATE_VALUE_2;
-                    }
-                    if (t.equals(TEMPLATE_NAME_3)) {
-                        return TEMPLATE_VALUE_3;
-                    }
-
-                    throw new AssertionError("Unknown template value name: " + t);
+                },
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            ),
+            (t) -> {
+                if (t.equals(TEMPLATE_NAME_1)) {
+                    return TEMPLATE_VALUE_1;
                 }
+                if (t.equals(TEMPLATE_NAME_2)) {
+                    return TEMPLATE_VALUE_2;
+                }
+                if (t.equals(TEMPLATE_NAME_3)) {
+                    return TEMPLATE_VALUE_3;
+                }
+
+                throw new AssertionError("Unknown template value name: " + t);
+            }
         );
     }
 

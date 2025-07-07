@@ -33,22 +33,22 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterCollectionTest implements SpreadsheetImporterTesting<SpreadsheetImporterCollection>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetImporterCollection>,
-        ToStringTesting<SpreadsheetImporterCollection> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetImporterCollection>,
+    ToStringTesting<SpreadsheetImporterCollection> {
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetImporterCollection.with(null)
         );
     }
 
     @Test
     public void testWithEmptyFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetImporterCollection.with(Lists.empty())
+            IllegalArgumentException.class,
+            () -> SpreadsheetImporterCollection.with(Lists.empty())
         );
     }
 
@@ -56,55 +56,55 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
     public void testWithOneUnwraps() {
         final SpreadsheetImporter importer = SpreadsheetImporters.fake();
         assertSame(
-                importer,
-                SpreadsheetImporterCollection.with(
-                        Lists.of(importer)
-                )
+            importer,
+            SpreadsheetImporterCollection.with(
+                Lists.of(importer)
+            )
         );
     }
 
     private final static List<SpreadsheetImporterCellValue> IMPORTED = Lists.of(
-            SpreadsheetImporterCellValue.cell(
-                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            )
+        SpreadsheetImporterCellValue.cell(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+        )
     );
 
     private final static WebEntity WEB_ENTITY = WebEntity.empty()
-            .setContentType(
-                    Optional.of(MediaType.TEXT_PLAIN)
-            );
+        .setContentType(
+            Optional.of(MediaType.TEXT_PLAIN)
+        );
 
     @Test
     public void testDoImport() {
         this.doImportAndCheck(
-                WEB_ENTITY,
-                IMPORTED
+            WEB_ENTITY,
+            IMPORTED
         );
     }
 
     @Override
     public SpreadsheetImporterCollection createSpreadsheetImporter() {
         return (SpreadsheetImporterCollection)
-                SpreadsheetImporterCollection.with(
-                        Lists.of(
-                                SpreadsheetImporters.empty(),
-                                new SpreadsheetImporter() {
-                                    @Override
-                                    public boolean canImport(final WebEntity cells,
-                                                             final SpreadsheetImporterContext context) {
-                                        checkEquals(WEB_ENTITY, cells, "cells");
-                                        return true;
-                                    }
+            SpreadsheetImporterCollection.with(
+                Lists.of(
+                    SpreadsheetImporters.empty(),
+                    new SpreadsheetImporter() {
+                        @Override
+                        public boolean canImport(final WebEntity cells,
+                                                 final SpreadsheetImporterContext context) {
+                            checkEquals(WEB_ENTITY, cells, "cells");
+                            return true;
+                        }
 
-                                    @Override
-                                    public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
-                                                                                       final SpreadsheetImporterContext context) {
-                                        checkEquals(WEB_ENTITY, cells, "cells");
-                                        return IMPORTED;
-                                    }
-                                }
-                        )
-                );
+                        @Override
+                        public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                                           final SpreadsheetImporterContext context) {
+                            checkEquals(WEB_ENTITY, cells, "cells");
+                            return IMPORTED;
+                        }
+                    }
+                )
+            );
     }
 
     @Override
@@ -117,31 +117,31 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
     @Test
     public void testEqualsDifferentImporters() {
         this.checkNotEquals(
-                SpreadsheetImporterCollection.with(
-                        Lists.of(
-                                SpreadsheetImporters.fake(),
-                                SpreadsheetImporters.fake()
-                        )
-                ),
-                SpreadsheetImporterCollection.with(
-                        Lists.of(
-                                SpreadsheetImporters.fake(),
-                                SpreadsheetImporters.fake(),
-                                SpreadsheetImporters.fake()
-                        )
+            SpreadsheetImporterCollection.with(
+                Lists.of(
+                    SpreadsheetImporters.fake(),
+                    SpreadsheetImporters.fake()
                 )
+            ),
+            SpreadsheetImporterCollection.with(
+                Lists.of(
+                    SpreadsheetImporters.fake(),
+                    SpreadsheetImporters.fake(),
+                    SpreadsheetImporters.fake()
+                )
+            )
         );
     }
 
     @Override
     public SpreadsheetImporterCollection createObject() {
         return (SpreadsheetImporterCollection)
-                SpreadsheetImporterCollection.with(
-                        Lists.of(
-                                SpreadsheetImporters.empty(),
-                                SpreadsheetImporters.empty()
-                        )
-                );
+            SpreadsheetImporterCollection.with(
+                Lists.of(
+                    SpreadsheetImporters.empty(),
+                    SpreadsheetImporters.empty()
+                )
+            );
     }
 
     // toString.........................................................................................................
@@ -149,8 +149,8 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createObject(),
-                "collection(EmptySpreadsheetImporter,EmptySpreadsheetImporter)"
+            this.createObject(),
+            "collection(EmptySpreadsheetImporter,EmptySpreadsheetImporter)"
         );
     }
 

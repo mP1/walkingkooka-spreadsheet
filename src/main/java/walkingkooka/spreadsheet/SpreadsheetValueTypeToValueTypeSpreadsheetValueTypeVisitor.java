@@ -30,7 +30,7 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
         final SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor visitor = new SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor();
         visitor.accept(type);
         return Optional.ofNullable(
-                visitor.valueType
+            visitor.valueType
         );
     }
 

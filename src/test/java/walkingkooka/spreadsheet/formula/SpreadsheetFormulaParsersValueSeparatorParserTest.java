@@ -24,8 +24,8 @@ import walkingkooka.spreadsheet.formula.parser.ValueSeparatorSymbolSpreadsheetFo
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 
 public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetFormulaParsersValueSeparatorParser,
-        ValueSeparatorSymbolSpreadsheetFormulaParserToken>
-        implements ToStringTesting<SpreadsheetFormulaParsersValueSeparatorParser> {
+    ValueSeparatorSymbolSpreadsheetFormulaParserToken>
+    implements ToStringTesting<SpreadsheetFormulaParsersValueSeparatorParser> {
 
     @Test
     public void testIncorrectCharacterFails() {
@@ -39,9 +39,9 @@ public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends Spr
         final String text = VALUE_SEPARATOR + "";
 
         this.parseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
-                text
+            text,
+            SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
+            text
         );
     }
 
@@ -51,10 +51,10 @@ public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends Spr
         final String after = "@";
 
         this.parseAndCheck(
-                text + after,
-                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
-                text,
-                after
+            text + after,
+            SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
+            text,
+            after
         );
     }
 
@@ -64,10 +64,10 @@ public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends Spr
         final String text = VALUE_SEPARATOR + "";
 
         this.parseAndCheck(
-                text + text,
-                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
-                text,
-                text
+            text + text,
+            SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
+            text,
+            text
         );
     }
 
@@ -78,16 +78,16 @@ public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends Spr
         final String text = c + "";
 
         this.parseAndCheck(
-                SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE,
-                new FakeSpreadsheetParserContext() {
-                    @Override
-                    public char valueSeparator() {
-                        return c;
-                    }
-                },
-                text,
-                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
-                text
+            SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE,
+            new FakeSpreadsheetParserContext() {
+                @Override
+                public char valueSeparator() {
+                    return c;
+                }
+            },
+            text,
+            SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
+            text
         );
     }
 

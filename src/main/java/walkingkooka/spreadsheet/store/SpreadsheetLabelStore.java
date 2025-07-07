@@ -56,8 +56,8 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      */
     default Optional<SpreadsheetCellReferenceOrRange> resolveLabel(final SpreadsheetLabelName labelName) {
         return SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                labelName,
-                this
+            labelName,
+            this
         );
     }
 
@@ -67,6 +67,6 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      */
     default SpreadsheetCellReferenceOrRange resolveLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.resolveLabel(labelName)
-                .orElseThrow(() -> this.notFound(labelName));
+            .orElseThrow(() -> this.notFound(labelName));
     }
 }

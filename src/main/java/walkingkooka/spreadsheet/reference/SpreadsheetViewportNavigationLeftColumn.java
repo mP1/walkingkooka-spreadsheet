@@ -42,8 +42,8 @@ final class SpreadsheetViewportNavigationLeftColumn extends SpreadsheetViewportN
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.leftColumn(
-                anchor,
-                context
+            anchor,
+            context
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 }

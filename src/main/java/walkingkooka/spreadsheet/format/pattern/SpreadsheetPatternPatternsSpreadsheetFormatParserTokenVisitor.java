@@ -53,8 +53,8 @@ final class SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T exte
 
         final List<T> patterns = visitor.patterns;
         return patterns.size() == 1 && patterns.get(0).equals(parent) ?
-                Lists.of(parent) :
-                patterns;
+            Lists.of(parent) :
+            patterns;
     }
 
     // VisibilityForTesting
@@ -149,10 +149,10 @@ final class SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T exte
         final List<ParserToken> tokens = this.pattern;
         if (null != tokens && false == tokens.isEmpty()) {
             final T pattern = this.patternFactory.apply(
-                    ParserTokens.sequence(
-                            tokens,
-                            ParserToken.text(tokens)
-                    )
+                ParserTokens.sequence(
+                    tokens,
+                    ParserToken.text(tokens)
+                )
             );
             pattern.patterns = Lists.of(pattern);
             this.patterns.add(pattern);

@@ -68,8 +68,8 @@ public enum SpreadsheetReferenceKind {
     public final SpreadsheetColumnReference firstColumn() {
         if (null == this.firstColumn) {
             this.firstColumn = SpreadsheetColumnReference.with(
-                    0,
-                    this
+                0,
+                this
             );
         }
         return this.firstColumn;
@@ -80,8 +80,8 @@ public enum SpreadsheetReferenceKind {
     public final SpreadsheetColumnReference lastColumn() {
         if (null == this.lastColumn) {
             this.lastColumn = SpreadsheetColumnReference.with(
-                    SpreadsheetColumnReference.MAX_VALUE,
-                    this
+                SpreadsheetColumnReference.MAX_VALUE,
+                this
             );
         }
         return this.lastColumn;
@@ -91,8 +91,8 @@ public enum SpreadsheetReferenceKind {
 
     public final SpreadsheetColumnReference column(final int value) {
         return SpreadsheetSelection.column(
-                value,
-                this
+            value,
+            this
         );
     }
 
@@ -101,8 +101,8 @@ public enum SpreadsheetReferenceKind {
     public final SpreadsheetRowReference firstRow() {
         if (null == this.firstRow) {
             this.firstRow = SpreadsheetRowReference.with(
-                    0,
-                    this
+                0,
+                this
             );
         }
         return this.firstRow;
@@ -113,8 +113,8 @@ public enum SpreadsheetReferenceKind {
     public final SpreadsheetRowReference lastRow() {
         if (null == this.lastRow) {
             this.lastRow = SpreadsheetRowReference.with(
-                    SpreadsheetRowReference.MAX_VALUE,
-                    this
+                SpreadsheetRowReference.MAX_VALUE,
+                this
             );
         }
         return this.lastRow;
@@ -124,8 +124,8 @@ public enum SpreadsheetReferenceKind {
 
     public final SpreadsheetRowReference row(final int value) {
         return SpreadsheetSelection.row(
-                value,
-                this
+            value,
+            this
         );
     }
 

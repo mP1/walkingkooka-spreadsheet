@@ -37,7 +37,7 @@ import java.util.Objects;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetViewportRectangle implements Comparable<SpreadsheetViewportRectangle>,
-        TreePrintable {
+    TreePrintable {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -71,9 +71,9 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         }
 
         return with(
-                home,
-                parseDouble(tokens[1], "width", text),
-                parseDouble(tokens[2], "height", text)
+            home,
+            parseDouble(tokens[1], "width", text),
+            parseDouble(tokens[2], "height", text)
         );
     }
 
@@ -94,9 +94,9 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
                                                     final double width,
                                                     final double height) {
         return new SpreadsheetViewportRectangle(
-                checkHome(home),
-                checkWidth(width),
-                checkHeight(height)
+            checkHome(home),
+            checkWidth(width),
+            checkHeight(height)
         );
     }
 
@@ -139,7 +139,7 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     public boolean test(final double x,
                         final double y) {
         return x >= 0 && x <= this.width &&
-                y >= 0 && y <= this.height;
+            y >= 0 && y <= this.height;
     }
 
     // properties.......................................................................................................
@@ -152,12 +152,12 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         checkHome(home);
 
         return this.home.equals(home) ?
-                this :
-                new SpreadsheetViewportRectangle(
-                        home,
-                        this.width,
-                        this.height
-                );
+            this :
+            new SpreadsheetViewportRectangle(
+                home,
+                this.width,
+                this.height
+            );
     }
 
     private final SpreadsheetCellReference home;
@@ -174,12 +174,12 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         checkWidth(width);
 
         return this.width == width ?
-                this :
-                new SpreadsheetViewportRectangle(
-                        this.home,
-                        width,
-                        this.height
-                );
+            this :
+            new SpreadsheetViewportRectangle(
+                this.home,
+                width,
+                this.height
+            );
     }
 
     private final double width;
@@ -192,12 +192,12 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         checkHeight(height);
 
         return this.height == height ?
-                this :
-                new SpreadsheetViewportRectangle(
-                        this.home,
-                        this.width,
-                        height
-                );
+            this :
+            new SpreadsheetViewportRectangle(
+                this.home,
+                this.width,
+                height
+            );
     }
 
     private final double height;
@@ -207,30 +207,30 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.home,
-                this.width,
-                this.height
+            this.home,
+            this.width,
+            this.height
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetViewportRectangle &&
-                        this.equals0((SpreadsheetViewportRectangle) other);
+            other instanceof SpreadsheetViewportRectangle &&
+                this.equals0((SpreadsheetViewportRectangle) other);
     }
 
     private boolean equals0(final SpreadsheetViewportRectangle other) {
         return this.home.equals(other.home) &&
-                this.width == other.width &&
-                this.height == other.height;
+            this.width == other.width &&
+            this.height == other.height;
     }
 
     @Override
     public String toString() {
         return "home: " + this.home +
-                " width: " + this.width +
-                " height: " + this.height;
+            " width: " + this.width +
+            " height: " + this.height;
     }
 
     // Comparable.......................................................................................................
@@ -244,20 +244,20 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetViewportRectangle.class),
-                SpreadsheetViewportRectangle::unmarshall,
-                SpreadsheetViewportRectangle::marshall,
-                SpreadsheetViewportRectangle.class
+            JsonNodeContext.computeTypeName(SpreadsheetViewportRectangle.class),
+            SpreadsheetViewportRectangle::unmarshall,
+            SpreadsheetViewportRectangle::marshall,
+            SpreadsheetViewportRectangle.class
         );
     }
 
     public JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonObject.string(
-                this.home.toString() +
-                        SEPARATOR +
-                        this.width +
-                        SEPARATOR +
-                        this.height
+            this.home.toString() +
+                SEPARATOR +
+                this.width +
+                SEPARATOR +
+                this.height
         );
     }
 

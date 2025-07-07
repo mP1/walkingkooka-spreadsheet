@@ -47,8 +47,8 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     @Override
     SpreadsheetRowRangeReference checkValueNonNull(final Object value) {
         final SpreadsheetRowRangeReference range = this.checkValueType(
-                value,
-                v -> v instanceof SpreadsheetRowRangeReference
+            value,
+            v -> v instanceof SpreadsheetRowRangeReference
         );
         if (range.begin().value() != 0) {
             throw new SpreadsheetMetadataPropertyValueException("Row range must begin at '1'", this, range);

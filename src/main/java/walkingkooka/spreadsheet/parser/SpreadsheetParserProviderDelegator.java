@@ -29,10 +29,10 @@ public interface SpreadsheetParserProviderDelegator extends SpreadsheetParserPro
     default SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                 final ProviderContext context) {
         return this.spreadsheetParserProvider()
-                .spreadsheetParser(
-                        selector,
-                        context
-                );
+            .spreadsheetParser(
+                selector,
+                context
+            );
     }
 
     @Override
@@ -40,11 +40,11 @@ public interface SpreadsheetParserProviderDelegator extends SpreadsheetParserPro
                                                 final List<?> values,
                                                 final ProviderContext context) {
         return this.spreadsheetParserProvider()
-                .spreadsheetParser(
-                        name,
-                        values,
-                        context
-                );
+            .spreadsheetParser(
+                name,
+                values,
+                context
+            );
     }
 
     @Override

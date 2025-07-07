@@ -31,30 +31,30 @@ import java.util.Optional;
 public final class SpreadsheetImporterTestingTest implements SpreadsheetImporterTesting<SpreadsheetImporterTestingTest.TestSpreadsheetImporter> {
 
     private final static List<SpreadsheetImporterCellValue> IMPORTED = Lists.of(
-            SpreadsheetImporterCellValue.cell(
-                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-            )
+        SpreadsheetImporterCellValue.cell(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+        )
     );
 
     @Test
     public void testDoImportAndCheck() {
         final WebEntity webEntity = WebEntity.empty()
-                .setContentType(
-                        Optional.of(
-                                MediaType.TEXT_PLAIN
-                        )
-                );
+            .setContentType(
+                Optional.of(
+                    MediaType.TEXT_PLAIN
+                )
+            );
         this.doImportAndCheck(
-                new TestSpreadsheetImporter() {
-                    @Override
-                    public List<SpreadsheetImporterCellValue> doImport(final WebEntity w,
-                                                                       final SpreadsheetImporterContext context) {
-                        checkEquals(webEntity, w);
-                        return IMPORTED;
-                    }
-                },
-                webEntity,
-                IMPORTED
+            new TestSpreadsheetImporter() {
+                @Override
+                public List<SpreadsheetImporterCellValue> doImport(final WebEntity w,
+                                                                   final SpreadsheetImporterContext context) {
+                    checkEquals(webEntity, w);
+                    return IMPORTED;
+                }
+            },
+            webEntity,
+            IMPORTED
         );
     }
 
@@ -63,15 +63,15 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
         final String message = "Fail message 123";
 
         this.doImportFails(
-                new TestSpreadsheetImporter() {
-                    @Override
-                    public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
-                                                                       final SpreadsheetImporterContext context) {
-                        throw new IllegalArgumentException(message);
-                    }
-                },
-                WebEntity.empty(),
-                new IllegalArgumentException(message)
+            new TestSpreadsheetImporter() {
+                @Override
+                public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                                   final SpreadsheetImporterContext context) {
+                    throw new IllegalArgumentException(message);
+                }
+            },
+            WebEntity.empty(),
+            new IllegalArgumentException(message)
         );
     }
 

@@ -29,7 +29,7 @@ public final class SpreadsheetDescription implements Value<String> {
 
     public static SpreadsheetDescription with(final String message) {
         return new SpreadsheetDescription(
-                Whitespace.failIfNullOrEmptyOrWhitespace(message, "message")
+            Whitespace.failIfNullOrEmptyOrWhitespace(message, "message")
         );
     }
 
@@ -52,8 +52,8 @@ public final class SpreadsheetDescription implements Value<String> {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetDescription &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetDescription &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetDescription error) {

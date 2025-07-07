@@ -28,11 +28,11 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.validation.form.provider.FormHandlerProviderTesting;
 
 public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> extends ConverterProviderTesting<T>,
-        ExpressionFunctionProviderTesting<T, SpreadsheetExpressionEvaluationContext>,
-        SpreadsheetComparatorProviderTesting<T>,
-        SpreadsheetFormatterProviderTesting<T>,
-        FormHandlerProviderTesting<T>,
-        SpreadsheetParserProviderTesting<T> {
+    ExpressionFunctionProviderTesting<T, SpreadsheetExpressionEvaluationContext>,
+    SpreadsheetComparatorProviderTesting<T>,
+    SpreadsheetFormatterProviderTesting<T>,
+    FormHandlerProviderTesting<T>,
+    SpreadsheetParserProviderTesting<T> {
 
     @Override
     default T createConverterProvider() {

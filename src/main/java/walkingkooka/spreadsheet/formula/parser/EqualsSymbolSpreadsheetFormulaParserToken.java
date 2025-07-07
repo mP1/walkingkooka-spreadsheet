@@ -28,8 +28,8 @@ public final class EqualsSymbolSpreadsheetFormulaParserToken extends SymbolSprea
     static EqualsSymbolSpreadsheetFormulaParserToken with(final String value,
                                                           final String text) {
         return new EqualsSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

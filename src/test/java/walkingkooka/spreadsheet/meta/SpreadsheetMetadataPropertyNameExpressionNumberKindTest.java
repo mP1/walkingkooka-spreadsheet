@@ -29,24 +29,24 @@ public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest exten
     @Test
     public void testCheckValueWithInvalidExpressionNumberKindFails() {
         this.checkValueFails(
-                "invalid",
-                "Metadata expressionNumberKind=\"invalid\", Expected ExpressionNumberKind"
+            "invalid",
+            "Metadata expressionNumberKind=\"invalid\", Expected ExpressionNumberKind"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameExpressionNumberKind.instance(),
-                "expressionNumberKind"
+            SpreadsheetMetadataPropertyNameExpressionNumberKind.instance(),
+            "expressionNumberKind"
         );
     }
 

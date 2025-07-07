@@ -44,10 +44,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
-        ParserTesting,
-        LocaleContextTesting2<C>,
-        SpreadsheetProviderTesting<C>,
-        SpreadsheetLabelNameResolverTesting<C> {
+    ParserTesting,
+    LocaleContextTesting2<C>,
+    SpreadsheetProviderTesting<C>,
+    SpreadsheetLabelNameResolverTesting<C> {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
 
@@ -61,8 +61,8 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void serverUrlAndCheck(final C context,
                                    final AbsoluteUrl expected) {
         this.checkEquals(
-                expected,
-                context.serverUrl()
+            expected,
+            context.serverUrl()
         );
     }
 
@@ -71,33 +71,33 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testParseFormulaNullTextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .parseFormula(
-                                null,
-                                SpreadsheetEngineContext.NO_CELL
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .parseFormula(
+                    null,
+                    SpreadsheetEngineContext.NO_CELL
+                )
         );
     }
 
     @Test
     default void testParseFormulaNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .parseFormula(
-                                TextCursors.fake(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .parseFormula(
+                    TextCursors.fake(),
+                    null
+                )
         );
     }
 
     default void parseFormulaAndCheck(final String expression,
                                       final SpreadsheetFormulaParserToken expected) {
         this.parseFormulaAndCheck(
-                expression,
-                SpreadsheetEngineContext.NO_CELL,
-                expected
+            expression,
+            SpreadsheetEngineContext.NO_CELL,
+            expected
         );
     }
 
@@ -105,10 +105,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final Optional<SpreadsheetCell> cell,
                                       final SpreadsheetFormulaParserToken expected) {
         this.parseFormulaAndCheck(
-                this.createContext(),
-                expression,
-                cell,
-                expected
+            this.createContext(),
+            expression,
+            cell,
+            expected
         );
     }
 
@@ -116,10 +116,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final String formula,
                                       final SpreadsheetFormulaParserToken expected) {
         this.parseFormulaAndCheck(
-                context,
-                formula,
-                SpreadsheetEngineContext.NO_CELL,
-                expected
+            context,
+            formula,
+            SpreadsheetEngineContext.NO_CELL,
+            expected
         );
     }
 
@@ -128,12 +128,12 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final Optional<SpreadsheetCell> cell,
                                       final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
-                expected,
-                context.parseFormula(
-                        TextCursors.charSequence(formula),
-                        cell
-                ),
-                () -> "parseFormula " + formula + " with context " + context);
+            expected,
+            context.parseFormula(
+                TextCursors.charSequence(formula),
+                cell
+            ),
+            () -> "parseFormula " + formula + " with context " + context);
     }
 
     // toExpression....................................................................................................
@@ -141,18 +141,18 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testToExpressionWithNullTokenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .toExpression(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .toExpression(null)
         );
     }
 
     default void toExpressionAndCheck(final SpreadsheetEngineContext context,
                                       final SpreadsheetFormulaParserToken token) {
         this.toExpressionAndCheck(
-                context,
-                token,
-                Optional.empty()
+            context,
+            token,
+            Optional.empty()
         );
     }
 
@@ -160,9 +160,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final SpreadsheetFormulaParserToken token,
                                       final Expression expected) {
         this.toExpressionAndCheck(
-                context,
-                token,
-                Optional.of(expected)
+            context,
+            token,
+            Optional.of(expected)
         );
     }
 
@@ -170,9 +170,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final SpreadsheetFormulaParserToken token,
                                       final Optional<Expression> expected) {
         this.checkEquals(
-                expected,
-                context.toExpression(token),
-                token::toString
+            expected,
+            context.toExpression(token),
+            token::toString
         );
     }
 
@@ -181,9 +181,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testSpreadsheetEngineContextWithNullFunctionAliasesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .spreadsheetEngineContext(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .spreadsheetEngineContext(null)
         );
     }
 
@@ -191,9 +191,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                                   final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> aliases,
                                                   final SpreadsheetEngineContext expected) {
         this.checkEquals(
-                expected,
-                context.spreadsheetEngineContext(aliases),
-                () -> "expressionEvaluationContext " + aliases
+            expected,
+            context.spreadsheetEngineContext(aliases),
+            () -> "expressionEvaluationContext " + aliases
         );
     }
 
@@ -202,24 +202,24 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testSpreadsheetExpressionEvaluationContextWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .spreadsheetExpressionEvaluationContext(
-                                null,
-                                SpreadsheetExpressionReferenceLoaders.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .spreadsheetExpressionEvaluationContext(
+                    null,
+                    SpreadsheetExpressionReferenceLoaders.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetExpressionEvaluationContextWithNullSpreadsheetExpressionReferenceLoaderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .spreadsheetExpressionEvaluationContext(
-                                SpreadsheetEngineContext.NO_CELL,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .spreadsheetExpressionEvaluationContext(
+                    SpreadsheetEngineContext.NO_CELL,
+                    null
+                )
         );
     }
 
@@ -228,9 +228,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void evaluateAndCheck(final Expression expression,
                                   final Object expected) {
         this.evaluateAndCheck(
-                expression,
-                SpreadsheetExpressionReferenceLoaders.fake(),
-                expected
+            expression,
+            SpreadsheetExpressionReferenceLoaders.fake(),
+            expected
         );
     }
 
@@ -238,10 +238,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                   final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         this.evaluateAndCheck(
-                this.createContext(),
-                expression,
-                spreadsheetExpressionReferenceLoader,
-                expected
+            this.createContext(),
+            expression,
+            spreadsheetExpressionReferenceLoader,
+            expected
         );
     }
 
@@ -250,11 +250,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                   final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         this.evaluateAndCheck(
-                context,
-                expression,
-                Optional.empty(),
-                spreadsheetExpressionReferenceLoader,
-                expected
+            context,
+            expression,
+            Optional.empty(),
+            spreadsheetExpressionReferenceLoader,
+            expected
         );
     }
 
@@ -263,14 +263,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                   final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         final Expression expression = cell.formula()
-                .expression()
-                .orElse(null);
+            .expression()
+            .orElse(null);
         this.evaluateAndCheck(
-                context,
-                expression,
-                Optional.of(cell),
-                spreadsheetExpressionReferenceLoader,
-                expected
+            context,
+            expression,
+            Optional.of(cell),
+            spreadsheetExpressionReferenceLoader,
+            expected
         );
     }
 
@@ -280,14 +280,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                   final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         this.checkEquals(
-                expected,
-                expression.toValue(
-                        context.spreadsheetExpressionEvaluationContext(
-                                cell,
-                                spreadsheetExpressionReferenceLoader
-                        )
-                ),
-                () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
+            expected,
+            expression.toValue(
+                context.spreadsheetExpressionEvaluationContext(
+                    cell,
+                    spreadsheetExpressionReferenceLoader
+                )
+            ),
+            () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
         );
     }
 
@@ -296,39 +296,39 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testFormatValueNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .formatValue(
-                                null,
-                                Optional.of("1"),
-                                SpreadsheetEngineContext.NO_SPREADSHEET_FORMATTER_SELECTOR
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .formatValue(
+                    null,
+                    Optional.of("1"),
+                    SpreadsheetEngineContext.NO_SPREADSHEET_FORMATTER_SELECTOR
+                )
         );
     }
 
     @Test
     default void testFormatValueNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .formatValue(
-                                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                null,
-                                SpreadsheetEngineContext.NO_SPREADSHEET_FORMATTER_SELECTOR
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .formatValue(
+                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                    null,
+                    SpreadsheetEngineContext.NO_SPREADSHEET_FORMATTER_SELECTOR
+                )
         );
     }
 
     @Test
     default void testFormatValueNullSpreadsheetFormatterSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .formatValue(
-                                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                Optional.of("1"),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .formatValue(
+                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                    Optional.of("1"),
+                    null
+                )
         );
     }
 
@@ -337,10 +337,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
-                cell,
-                Optional.of(value),
-                formatter,
-                expected
+            cell,
+            Optional.of(value),
+            formatter,
+            expected
         );
     }
 
@@ -349,10 +349,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
-                cell,
-                value,
-                formatter,
-                expected.toTextNode()
+            cell,
+            value,
+            formatter,
+            expected.toTextNode()
         );
     }
 
@@ -361,10 +361,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
-                cell,
-                Optional.of(value),
-                formatter,
-                expected
+            cell,
+            Optional.of(value),
+            formatter,
+            expected
         );
     }
 
@@ -373,10 +373,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
-                cell,
-                value,
-                formatter,
-                Optional.of(expected)
+            cell,
+            value,
+            formatter,
+            Optional.of(expected)
         );
     }
 
@@ -385,10 +385,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
-                cell,
-                Optional.of(value),
-                formatter,
-                expected
+            cell,
+            Optional.of(value),
+            formatter,
+            expected
         );
     }
 
@@ -397,11 +397,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
-                this.createContext(),
-                cell,
-                value,
-                formatter,
-                expected
+            this.createContext(),
+            cell,
+            value,
+            formatter,
+            expected
         );
     }
 
@@ -411,11 +411,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
-                context,
-                cell,
-                Optional.of(value),
-                formatter,
-                expected
+            context,
+            cell,
+            Optional.of(value),
+            formatter,
+            expected
         );
     }
 
@@ -425,11 +425,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
-                context,
-                cell,
-                value,
-                formatter,
-                Optional.of(expected)
+            context,
+            cell,
+            value,
+            formatter,
+            Optional.of(expected)
         );
     }
 
@@ -439,11 +439,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatterSelector formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
-                context,
-                cell,
-                value,
-                Optional.of(formatter),
-                expected
+            context,
+            cell,
+            value,
+            Optional.of(formatter),
+            expected
         );
     }
 
@@ -453,13 +453,13 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final Optional<SpreadsheetFormatterSelector> formatter,
                                      final Optional<TextNode> expected) {
         this.checkEquals(
-                expected,
-                context.formatValue(
-                        cell,
-                        value,
-                        formatter
-                ),
-                () -> "formatValue " + cell + " " + CharSequences.quoteIfChars(value) + " " + formatter
+            expected,
+            context.formatValue(
+                cell,
+                value,
+                formatter
+            ),
+            () -> "formatValue " + cell + " " + CharSequences.quoteIfChars(value) + " " + formatter
         );
     }
 
@@ -468,26 +468,26 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     default void testFormatAndStyleNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .formatValueAndStyle(
-                                null,
-                                Optional.empty() // no formatter
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .formatValueAndStyle(
+                    null,
+                    Optional.empty() // no formatter
+                )
         );
     }
 
     @Test
     default void testFormatAndStyleNullFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .formatValueAndStyle(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY
-                                ),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .formatValueAndStyle(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY
+                    ),
+                    null
+                )
         );
     }
 
@@ -495,10 +495,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                         final SpreadsheetFormatterSelector formatter,
                                         final SpreadsheetCell expected) {
         this.formatAndStyleAndCheck(
-                this.createContext(),
-                cell,
-                formatter,
-                expected
+            this.createContext(),
+            cell,
+            formatter,
+            expected
         );
     }
 
@@ -507,12 +507,12 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                         final SpreadsheetFormatterSelector formatter,
                                         final SpreadsheetCell expected) {
         this.formatAndStyleAndCheck(
-                context,
-                cell,
-                Optional.of(
-                        formatter
-                ),
-                expected
+            context,
+            cell,
+            Optional.of(
+                formatter
+            ),
+            expected
         );
     }
 
@@ -521,12 +521,12 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                         final Optional<SpreadsheetFormatterSelector> formatter,
                                         final SpreadsheetCell expected) {
         this.checkEquals(
-                expected,
-                context.formatValueAndStyle(
-                        cell,
-                        formatter
-                ),
-                () -> "formatValueAndStyle " + cell + " " + formatter
+            expected,
+            context.formatValueAndStyle(
+                cell,
+                formatter
+            ),
+            () -> "formatValueAndStyle " + cell + " " + formatter
         );
     }
 

@@ -29,7 +29,7 @@ public final class GreaterThanSpreadsheetFormatParserToken extends ConditionSpre
 
     static GreaterThanSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new GreaterThanSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     private GreaterThanSpreadsheetFormatParserToken(final List<ParserToken> value, final String text) {
@@ -46,9 +46,9 @@ public final class GreaterThanSpreadsheetFormatParserToken extends ConditionSpre
     @Override
     public GreaterThanSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                GreaterThanSpreadsheetFormatParserToken::with
+            this,
+            children,
+            GreaterThanSpreadsheetFormatParserToken::with
         );
     }
 

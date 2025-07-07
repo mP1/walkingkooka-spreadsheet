@@ -21,23 +21,23 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 
 public final class BasicSpreadsheetEngineChangesCacheStatusColumnTest extends BasicSpreadsheetEngineChangesCacheStatusTestCase<BasicSpreadsheetEngineChangesCacheStatusColumn,
-        SpreadsheetColumnReference> {
+    SpreadsheetColumnReference> {
 
     // isDeleted........................................................................................................
 
     @Test
     public void testIsDeletedWithDeleted() {
         this.isDeletedAndCheck(
-                BasicSpreadsheetEngineChangesCacheStatusColumn.DELETED,
-                true
+            BasicSpreadsheetEngineChangesCacheStatusColumn.DELETED,
+            true
         );
     }
 
     @Test
     public void testIsDeletedWithSaved() {
         this.isDeletedAndCheck(
-                BasicSpreadsheetEngineChangesCacheStatusColumn.SAVED,
-                false
+            BasicSpreadsheetEngineChangesCacheStatusColumn.SAVED,
+            false
         );
     }
 

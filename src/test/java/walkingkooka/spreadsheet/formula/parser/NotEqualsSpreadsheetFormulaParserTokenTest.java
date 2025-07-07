@@ -40,21 +40,21 @@ public final class NotEqualsSpreadsheetFormulaParserTokenTest extends ConditionS
         final SpreadsheetFormulaParserToken right = this.number2();
 
         this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
-                SpreadsheetFormulaParserToken.notEquals(
-                        Lists.of(
-                                left,
-                                symbol,
-                                right
-                        ),
-                        "1<>22"
+            SpreadsheetFormulaParserToken.notEquals(
+                Lists.of(
+                    left,
+                    symbol,
+                    right
                 ),
-                SpreadsheetFormulaParserToken.conditionRightNotEquals(
-                        Lists.of(
-                                symbol,
-                                right
-                        ),
-                        "<>22"
-                )
+                "1<>22"
+            ),
+            SpreadsheetFormulaParserToken.conditionRightNotEquals(
+                Lists.of(
+                    symbol,
+                    right
+                ),
+                "<>22"
+            )
         );
     }
 
@@ -67,24 +67,24 @@ public final class NotEqualsSpreadsheetFormulaParserTokenTest extends ConditionS
         final SpreadsheetFormulaParserToken right = this.number2();
 
         this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
-                SpreadsheetFormulaParserToken.notEquals(
-                        Lists.of(
-                                left,
-                                whitespace1,
-                                symbol,
-                                whitespace2,
-                                right
-                        ),
-                        "1   <>   22"
+            SpreadsheetFormulaParserToken.notEquals(
+                Lists.of(
+                    left,
+                    whitespace1,
+                    symbol,
+                    whitespace2,
+                    right
                 ),
-                SpreadsheetFormulaParserToken.conditionRightNotEquals(
-                        Lists.of(
-                                symbol,
-                                whitespace2,
-                                right
-                        ),
-                        "<>   22"
-                )
+                "1   <>   22"
+            ),
+            SpreadsheetFormulaParserToken.conditionRightNotEquals(
+                Lists.of(
+                    symbol,
+                    whitespace2,
+                    right
+                ),
+                "<>   22"
+            )
         );
     }
 
@@ -164,12 +164,12 @@ public final class NotEqualsSpreadsheetFormulaParserTokenTest extends ConditionS
 
         this.checkEquals("81381562881728815628428", b.toString());
         this.checkEquals(Lists.of(binary, binary, binary,
-                        left, left, left, left, left, left,
-                        symbol, symbol, symbol, symbol, symbol,
-                        right, right, right, right, right, right,
-                        binary, binary, binary),
-                visited,
-                "visited");
+                left, left, left, left, left, left,
+                symbol, symbol, symbol, symbol, symbol,
+                right, right, right, right, right, right,
+                binary, binary, binary),
+            visited,
+            "visited");
     }
 
     @Override

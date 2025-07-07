@@ -32,8 +32,8 @@ public final class NamedFunctionSpreadsheetFormulaParserToken extends FunctionSp
     static NamedFunctionSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                            final String text) {
         return new NamedFunctionSpreadsheetFormulaParserToken(
-                copyAndCheckTokens(value),
-                checkText(text)
+            copyAndCheckTokens(value),
+            checkText(text)
         );
     }
 
@@ -47,19 +47,19 @@ public final class NamedFunctionSpreadsheetFormulaParserToken extends FunctionSp
             throw new IllegalArgumentException("Expected 2 tokens but got " + count + "=" + without);
         }
         final SpreadsheetFormulaParserToken name = without.get(0)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
         if (!name.isFunctionName()) {
             throw new IllegalArgumentException("Function name missing parse " + value);
         }
 
         final SpreadsheetFormulaParserToken parameters = without.get(1)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
         if (!parameters.isFunctionParameters()) {
             throw new IllegalArgumentException("Function parameters missing parse " + value);
         }
 
         this.name = name.cast(FunctionNameSpreadsheetFormulaParserToken.class)
-                .value();
+            .value();
         this.parameters = parameters.cast(FunctionParametersSpreadsheetFormulaParserToken.class);
     }
 
@@ -85,9 +85,9 @@ public final class NamedFunctionSpreadsheetFormulaParserToken extends FunctionSp
     @Override
     public NamedFunctionSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                NamedFunctionSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            NamedFunctionSpreadsheetFormulaParserToken::with
         );
     }
 

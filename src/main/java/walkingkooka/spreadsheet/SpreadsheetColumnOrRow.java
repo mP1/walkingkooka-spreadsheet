@@ -37,9 +37,9 @@ import java.util.Optional;
  * Base class for both column and row.
  */
 public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Comparable<R>> implements HasSpreadsheetReference<R>,
-        HateosResource<R>,
-        TreePrintable,
-        UsesToStringBuilder {
+    HateosResource<R>,
+    TreePrintable,
+    UsesToStringBuilder {
 
     static void checkReference(final SpreadsheetSelection reference) {
         Objects.requireNonNull(reference, "reference");
@@ -97,13 +97,13 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Co
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetColumnOrRow &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetColumnOrRow &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetColumnOrRow<?> other) {
         return this.reference.equals(other.reference()) &&
-                this.hidden == other.hidden;
+            this.hidden == other.hidden;
     }
 
     @Override
@@ -116,8 +116,8 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Co
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.reference)
-                .label("hidden")
-                .value(this.hidden());
+            .label("hidden")
+            .value(this.hidden());
     }
 
     // json.............................................................................................................
@@ -128,11 +128,11 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Co
 
     final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(
-                        JsonPropertyName.with(this.reference.toString()),
-                        JsonNode.object()
-                                .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden))
-                );
+            .set(
+                JsonPropertyName.with(this.reference.toString()),
+                JsonNode.object()
+                    .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden))
+            );
     }
 
     // TreePrintable....................................................................................................

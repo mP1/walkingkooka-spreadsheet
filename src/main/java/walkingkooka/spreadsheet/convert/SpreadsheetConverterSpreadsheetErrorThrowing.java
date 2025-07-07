@@ -52,9 +52,9 @@ final class SpreadsheetConverterSpreadsheetErrorThrowing extends SpreadsheetConv
                                                   final Class<T> type,
                                                   final SpreadsheetConverterContext context) {
         throw (
-                error.isMissingCell() ?
-                        error.setNameString() :
-                        error
+            error.isMissingCell() ?
+                error.setNameString() :
+                error
         ).exception();
     }
 

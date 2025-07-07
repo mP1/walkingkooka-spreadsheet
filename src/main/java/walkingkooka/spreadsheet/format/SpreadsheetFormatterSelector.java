@@ -42,8 +42,8 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
      * A {@link SpreadsheetFormatterSelector} that selects a {@link SpreadsheetFormatter} with a pattern that prints only the value.
      */
     public final static SpreadsheetFormatterSelector DEFAULT_TEXT_FORMAT = SpreadsheetFormatterSelector.parse(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN +
-                    " @"
+        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN +
+            " @"
     );
 
     /**
@@ -57,10 +57,10 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
      */
     public static SpreadsheetFormatterSelector parse(final String text) {
         return new SpreadsheetFormatterSelector(
-                PluginSelector.parse(
-                        text,
-                        SpreadsheetFormatterName::with
-                )
+            PluginSelector.parse(
+                text,
+                SpreadsheetFormatterName::with
+            )
         );
     }
 
@@ -70,10 +70,10 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     public static SpreadsheetFormatterSelector with(final SpreadsheetFormatterName name,
                                                     final String text) {
         return new SpreadsheetFormatterSelector(
-                PluginSelector.with(
-                        name,
-                        text
-                )
+            PluginSelector.with(
+                name,
+                text
+            )
         );
     }
 
@@ -97,13 +97,13 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetFormatterSelector(
-                        PluginSelector.with(
-                                name,
-                                this.valueText()
-                        )
-                );
+            this :
+            new SpreadsheetFormatterSelector(
+                PluginSelector.with(
+                    name,
+                    this.valueText()
+                )
+            );
     }
 
     // value............................................................................................................
@@ -121,8 +121,8 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     public SpreadsheetFormatterSelector setValueText(final String text) {
         final PluginSelector<SpreadsheetFormatterName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetFormatterSelector(different);
+            this :
+            new SpreadsheetFormatterSelector(different);
     }
 
     private final PluginSelector<SpreadsheetFormatterName> selector;
@@ -131,8 +131,8 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     public SpreadsheetFormatterSelector setValues(final List<?> values) {
         final PluginSelector<SpreadsheetFormatterName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetFormatterSelector(different);
+            this :
+            new SpreadsheetFormatterSelector(different);
     }
 
     /**
@@ -144,9 +144,9 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                SpreadsheetFormatterPluginHelper.INSTANCE::parseName,
-                provider::spreadsheetFormatter,
-                context
+            SpreadsheetFormatterPluginHelper.INSTANCE::parseName,
+            provider::spreadsheetFormatter,
+            context
         );
     }
 
@@ -159,12 +159,12 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     public Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern() {
         if (null == this.spreadsheetFormatPattern) {
             final SpreadsheetPatternKind patternKind = this.name()
-                    .patternKind;
+                .patternKind;
 
             this.spreadsheetFormatPattern = Optional.ofNullable(
-                    null == patternKind ?
-                            null :
-                            tryParse(patternKind)
+                null == patternKind ?
+                    null :
+                    tryParse(patternKind)
             );
         }
 
@@ -176,14 +176,14 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
 
         try {
             return kind.parse(text)
-                    .toFormat();
+                .toFormat();
         } catch (final InvalidCharacterException cause) {
             throw cause.setTextAndPosition(
-                    this.toString(),
-                    this.name()
-                            .value().length() +
-                            (text.isEmpty() ? 0 : 1) +
-                            cause.position()
+                this.toString(),
+                this.name()
+                    .value().length() +
+                    (text.isEmpty() ? 0 : 1) +
+                    cause.position()
             );
         }
     }
@@ -200,7 +200,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterSelector && this.equals0((SpreadsheetFormatterSelector) other);
+            other instanceof SpreadsheetFormatterSelector && this.equals0((SpreadsheetFormatterSelector) other);
     }
 
     private boolean equals0(final SpreadsheetFormatterSelector other) {
@@ -232,10 +232,10 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelector.class),
-                SpreadsheetFormatterSelector::unmarshall,
-                SpreadsheetFormatterSelector::marshall,
-                SpreadsheetFormatterSelector.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterSelector.class),
+            SpreadsheetFormatterSelector::unmarshall,
+            SpreadsheetFormatterSelector::marshall,
+            SpreadsheetFormatterSelector.class
         );
     }
 

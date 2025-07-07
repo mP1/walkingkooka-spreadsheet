@@ -40,7 +40,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     @Override
     Long checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof Long);
+            v -> v instanceof Long);
     }
 
     @Override

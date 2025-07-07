@@ -41,10 +41,10 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
 
         final TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor(store);
         visitor.accept(
-                mapping.label()
+            mapping.label()
         );
         visitor.accept(
-                mapping.reference()
+            mapping.reference()
         );
     }
 
@@ -56,7 +56,7 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
 
     private static CharSequence quote(final SpreadsheetSelection selection) {
         return CharSequences.quoteAndEscape(
-                selection.toString()
+            selection.toString()
         );
     }
 
@@ -67,14 +67,14 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
         final Set<SpreadsheetSelection> visited = this.visited;
         if (false == visited.add(label)) {
             throw new IllegalArgumentException(
-                    "Cycle detected for " + visited.stream()
-                            .map(TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor::quote)
-                            .collect(Collectors.joining(
-                                            " -> ",
-                                            "",
-                                            " -> " + quote(label)
-                                    )
-                            )
+                "Cycle detected for " + visited.stream()
+                    .map(TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor::quote)
+                    .collect(Collectors.joining(
+                            " -> ",
+                            "",
+                            " -> " + quote(label)
+                        )
+                    )
             );
         }
 

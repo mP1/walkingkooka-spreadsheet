@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
-        T extends ParentSpreadsheetFormatParserToken> extends SpreadsheetPatternTestCase<P> {
+    T extends ParentSpreadsheetFormatParserToken> extends SpreadsheetPatternTestCase<P> {
 
     final static Color RED = Color.parse("#FF0000");
 
@@ -43,40 +43,40 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     @Test
     public final void testWithNullParserTokenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> createPattern((T) null)
+            NullPointerException.class,
+            () -> createPattern((T) null)
         );
     }
 
     @Test
     public final void testWith() {
         final ParserToken token = this.parseFormatParserToken(
-                this.patternText()
+            this.patternText()
         );
 
         final P patterns = this.createPattern(token);
         this.checkEquals(
-                patterns.value(),
-                token,
-                "value"
+            patterns.value(),
+            token,
+            "value"
         );
     }
 
     @Test
     public final void testWithEscape() {
         final T tokens = this.createFormatParserToken(
-                Lists.of(
-                        SpreadsheetFormatParserToken.escape(
-                                '\t',
-                                "\\t"
-                        )
+            Lists.of(
+                SpreadsheetFormatParserToken.escape(
+                    '\t',
+                    "\\t"
                 )
+            )
         );
         final P patterns = this.createPattern(tokens);
         this.checkEquals(
-                patterns.value(),
-                tokens,
-                "value"
+            patterns.value(),
+            tokens,
+            "value"
         );
     }
 
@@ -90,18 +90,18 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         tokens.add(token);
 
         final T parent = this.createFormatParserToken(
-                tokens,
-                patternText2
+            tokens,
+            patternText2
         );
 
         final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> this.createPattern(parent)
+            InvalidCharacterException.class,
+            () -> this.createPattern(parent)
         );
         this.checkEquals(
-                patternText.length(),
-                thrown.position(),
-                () -> "position pattern=" + patternText2
+            patternText.length(),
+            thrown.position(),
+            () -> "position pattern=" + patternText2
         );
     }
 
@@ -110,9 +110,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final T token = this.createFormatParserToken(Lists.of(whitespace()));
         final P patterns = this.createPattern(token);
         this.checkEquals(
-                patterns.value(),
-                token,
-                "value"
+            patterns.value(),
+            token,
+            "value"
         );
     }
 
@@ -122,17 +122,16 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     public final void testToFormat() {
         final P pattern = this.createPattern();
         assertSame(
-                pattern,
-                pattern.toFormat()
+            pattern,
+            pattern.toFormat()
         );
     }
 
     // helpers..........................................................................................................
 
-    @Override
-    final P createPattern(final String pattern) {
+    @Override final P createPattern(final String pattern) {
         return this.createPattern(
-                this.parseFormatParserToken(pattern)
+            this.parseFormatParserToken(pattern)
         );
     }
 
@@ -142,8 +141,8 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     private T createFormatParserToken(final List<ParserToken> tokens) {
         return this.createFormatParserToken(
-                tokens,
-                ParserToken.text(tokens)
+            tokens,
+            ParserToken.text(tokens)
         );
     }
 
@@ -157,10 +156,10 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final String patternText = this.patternText();
 
         this.parseStringAndCheck(
-                patternText,
-                this.createPattern(
-                        this.parseFormatParserToken(patternText)
-                )
+            patternText,
+            this.createPattern(
+                this.parseFormatParserToken(patternText)
+            )
         );
     }
 
@@ -169,31 +168,31 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     @Test
     public final void testRemoveColorNameWithout() {
         this.removeColorAndCheck(
-                this.createPattern()
+            this.createPattern()
         );
     }
 
     @Test
     public final void testRemoveColorName() {
         this.removeColorAndCheck(
-                this.createPattern("[color 1]\"Text-literal\""),
-                this.createPattern("\"Text-literal\"")
+            this.createPattern("[color 1]\"Text-literal\""),
+            this.createPattern("\"Text-literal\"")
         );
     }
 
     @Test
     public final void testRemoveColorName2() {
         this.removeColorAndCheck(
-                this.createPattern("\"Text-literal\"[color 2]"),
-                this.createPattern("\"Text-literal\"")
+            this.createPattern("\"Text-literal\"[color 2]"),
+            this.createPattern("\"Text-literal\"")
         );
     }
 
     @Test
     public final void testRemoveColorNameWithColorName() {
         this.removeColorAndCheck(
-                this.createPattern("[Red]\"Text-literal\""),
-                this.createPattern("\"Text-literal\"")
+            this.createPattern("[Red]\"Text-literal\""),
+            this.createPattern("\"Text-literal\"")
         );
     }
 
@@ -203,9 +202,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
                                     final SpreadsheetColorName name,
                                     final String expected) {
         this.checkEquals(
-                this.createPattern(expected),
-                pattern.setColorName(name),
-                () -> pattern + " set color name " + name
+            this.createPattern(expected),
+            pattern.setColorName(name),
+            () -> pattern + " set color name " + name
         );
     }
 
@@ -213,9 +212,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
                                       final int number,
                                       final String expected) {
         this.checkEquals(
-                this.createPattern(expected),
-                pattern.setColorNumber(number),
-                () -> pattern + " set color number " + number
+            this.createPattern(expected),
+            pattern.setColorNumber(number),
+            () -> pattern + " set color number " + number
         );
     }
 
@@ -224,9 +223,9 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     @Override
     public final String toIsMethodName(final String typeName) {
         return this.toIsMethodNameWithPrefixSuffix(
-                typeName,
-                "Spreadsheet",
-                "FormatPattern"
+            typeName,
+            "Spreadsheet",
+            "FormatPattern"
         );
     }
 }

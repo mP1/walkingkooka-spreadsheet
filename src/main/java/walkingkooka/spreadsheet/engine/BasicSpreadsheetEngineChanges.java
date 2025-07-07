@@ -70,11 +70,11 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                                               final BasicSpreadsheetEngineChangesMode mode,
                                               final SpreadsheetEngineContext context) {
         return new BasicSpreadsheetEngineChanges(
-                engine,
-                evaluation,
-                deltaProperties,
-                mode,
-                context
+            engine,
+            evaluation,
+            deltaProperties,
+            mode,
+            context
         );
     }
 
@@ -100,12 +100,12 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final List<Runnable> watchers = Lists.array();
         if (deltaProperties.contains(SpreadsheetDeltaProperties.CELLS)) {
             watchers.add(
-                    cellStore.addSaveWatcher(this::onCellSaved)
+                cellStore.addSaveWatcher(this::onCellSaved)
             );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
             watchers.add(
-                    cellStore.addDeleteWatcher(this::onCellDeleted)
+                cellStore.addDeleteWatcher(this::onCellDeleted)
             );
         }
 
@@ -113,36 +113,36 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS)) {
             watchers.add(
-                    columnStore.addSaveWatcher(this::onColumnSaved)
+                columnStore.addSaveWatcher(this::onColumnSaved)
             );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
             watchers.add(
-                    columnStore.addDeleteWatcher(this::onColumnDeleted)
+                columnStore.addDeleteWatcher(this::onColumnDeleted)
             );
         }
 
         final SpreadsheetLabelStore labelStore = repository.labels();
         if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS)) {
             watchers.add(
-                    labelStore.addSaveWatcher(this::onLabelSaved)
+                labelStore.addSaveWatcher(this::onLabelSaved)
             );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS)) {
             watchers.add(
-                    labelStore.addDeleteWatcher(this::onLabelDeleted)
+                labelStore.addDeleteWatcher(this::onLabelDeleted)
             );
         }
 
         final SpreadsheetRowStore rowStore = repository.rows();
         if (deltaProperties.contains(SpreadsheetDeltaProperties.ROWS)) {
             watchers.add(
-                    rowStore.addSaveWatcher(this::onRowSaved)
+                rowStore.addSaveWatcher(this::onRowSaved)
             );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS)) {
             watchers.add(
-                    rowStore.addDeleteWatcher(this::onRowDeleted)
+                rowStore.addDeleteWatcher(this::onRowDeleted)
             );
         }
 
@@ -155,8 +155,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     void onLabelSaved(final SpreadsheetLabelMapping mapping) {
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = this.getOrCreateLabelCache(
-                mapping.label(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
+            mapping.label(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
         ).saved(mapping);
 
         if (this.isImmediate()) {
@@ -166,8 +166,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     private void onLabelDeleted(final SpreadsheetLabelName label) {
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = this.getOrCreateLabelCache(
-                label,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED
+            label,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED
         ).setStatus(BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED);
 
         if (this.isImmediate()) {
@@ -177,9 +177,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     private void refreshAllLabels() {
         final Collection<BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping>> labels = this.labels.values()
-                .stream()
-                .filter(c -> c.status().isRefreshable())
-                .collect(Collectors.toList());
+            .stream()
+            .filter(c -> c.status().isRefreshable())
+            .collect(Collectors.toList());
 
         for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache : labels) {
             this.refreshLabel(cache);
@@ -192,10 +192,10 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         // lazy load label
         if (cache.status().isUnloaded()) {
             cache.loadedOrMissing(
-                    this.context.storeRepository()
-                            .labels()
-                            .load(label)
-                            .orElse(null)
+                this.context.storeRepository()
+                    .labels()
+                    .load(label)
+                    .orElse(null)
             );
         }
 
@@ -206,9 +206,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     private void refreshAllLabelsCellReferences() {
         final Collection<BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping>> caches = this.labels.values()
-                .stream()
-                .filter(c -> c.status().isReferenceRefreshable())
-                .collect(Collectors.toList());
+            .stream()
+            .filter(c -> c.status().isReferenceRefreshable())
+            .collect(Collectors.toList());
 
         for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache : caches) {
             this.refreshLabelCellReferences(cache);
@@ -221,10 +221,10 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetEngineEvaluation backup = this.setEvaluation(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
         try {
             for (final SpreadsheetCellReference cell : this.repository.labelReferences()
-                    .load(labelCache.reference).orElse(Sets.empty())) {
+                .load(labelCache.reference).orElse(Sets.empty())) {
                 this.getOrCreateCellCache(
-                        cell,
-                        BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
+                    cell,
+                    BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
                 ).forceReferencesRefresh();
             }
         } finally {
@@ -237,9 +237,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> getOrCreateLabelCache(final SpreadsheetLabelName labelName,
                                                                                                             final BasicSpreadsheetEngineChangesCacheStatus<SpreadsheetLabelName> initialStatus) {
         return this.getOrCreate(
-                labelName,
-                this.labels,
-                initialStatus
+            labelName,
+            this.labels,
+            initialStatus
         );
     }
 
@@ -253,8 +253,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
      */
     void onCellLoading(final SpreadsheetCell cell) {
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                cell.reference(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+            cell.reference(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
         );
 
         cache.loadingOrMissing(cell);
@@ -267,8 +267,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     void onCellSaved(final SpreadsheetCell cell) {
         // A SpreadsheetCell must have been evaluated
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                cell.reference(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.SAVED
+            cell.reference(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.SAVED
         ).saved(cell);
 
         if (this.isImmediate()) {
@@ -278,8 +278,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     void onCellDeleted(final SpreadsheetCellReference cell) {
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                cell,
-                BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
+            cell,
+            BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
         ).setStatus(BasicSpreadsheetEngineChangesCacheStatusCell.DELETED);
 
         if (this.isImmediate()) {
@@ -289,10 +289,10 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     private void refreshAllCells() {
         final Collection<BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell>> cells = this.cells.values()
-                .stream()
-                .map(BasicSpreadsheetEngineChangesCache::forceReferencesRefresh)
-                .filter(c -> c.status().isRefreshable())
-                .collect(Collectors.toList());
+            .stream()
+            .map(BasicSpreadsheetEngineChangesCache::forceReferencesRefresh)
+            .filter(c -> c.status().isRefreshable())
+            .collect(Collectors.toList());
 
         for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cell : cells) {
             this.refreshCell(cell);
@@ -301,11 +301,11 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     private void refreshCell(final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache) {
         this.refreshCell(
-                cache,
-                (c) -> this.context.spreadsheetExpressionEvaluationContext(
-                        Optional.of(c),
-                        this // SpreadsheetExpressionReferenceLoader
-                )
+            cache,
+            (c) -> this.context.spreadsheetExpressionEvaluationContext(
+                Optional.of(c),
+                this // SpreadsheetExpressionReferenceLoader
+            )
         );
     }
 
@@ -318,9 +318,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         if (status.isUnloaded()) {
             spreadsheetCell = this.context.storeRepository()
-                    .cells()
-                    .load(cell)
-                    .orElse(null);
+                .cells()
+                .load(cell)
+                .orElse(null);
             cache.loadedOrMissing(spreadsheetCell);
         }
 
@@ -331,16 +331,16 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 this.pushCell(cell);
 
                 final SpreadsheetCell saved = this.engine.parseFormulaEvaluateValidateFormatStyleAndSave(
-                        spreadsheetCell,
-                        this.evaluation,
-                        this, // SpreadsheetExpressionReferenceLoader
-                        BasicSpreadsheetEngineSpreadsheetEngineContext.with(
-                                this.context, // SpreadsheetEngineContext
-                                evaluationContextFunction.apply(spreadsheetCell) // SpreadsheetExpressionEvaluationContext
-                        )
+                    spreadsheetCell,
+                    this.evaluation,
+                    this, // SpreadsheetExpressionReferenceLoader
+                    BasicSpreadsheetEngineSpreadsheetEngineContext.with(
+                        this.context, // SpreadsheetEngineContext
+                        evaluationContextFunction.apply(spreadsheetCell) // SpreadsheetExpressionEvaluationContext
+                    )
                 );
 
-                if(cache.status().isLoading()) {
+                if (cache.status().isLoading()) {
                     cache.loaded(saved);
                 }
 
@@ -356,10 +356,10 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     private void refreshAllCellExternalReferences() {
         final Collection<BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell>> cellCaches = this.cells.values()
-                .stream()
-                .map(BasicSpreadsheetEngineChangesCache::forceReferencesRefresh)
-                .filter(c -> c.status().isReferenceRefreshable())
-                .collect(Collectors.toList());
+            .stream()
+            .map(BasicSpreadsheetEngineChangesCache::forceReferencesRefresh)
+            .filter(c -> c.status().isReferenceRefreshable())
+            .collect(Collectors.toList());
 
         for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache : cellCaches) {
             final SpreadsheetCellReference cell = cache.reference;
@@ -372,8 +372,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 this.addFormulaReferences(spreadsheetCell);
             }
             this.addCellExternalReferences(
-                    cell,
-                    BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
+                cell,
+                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
             );
 
             cache.referencesRefreshed();
@@ -386,30 +386,30 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetStoreRepository repository = this.repository;
 
         repository.cellReferences()
-                .delete(cell);
+            .delete(cell);
 
         repository.labelReferences()
-                .findReferencesWithCell(
-                        cell,
-                        0, // offset
-                        BasicSpreadsheetEngine.FIND_REFERENCES_COUNT
-                ).forEach(l -> this.repository.labelReferences()
-                        .removeCell(
-                                ReferenceAndSpreadsheetCellReference.with(
-                                        l,
-                                        cell
-                                )
-                        )
-                );
+            .findReferencesWithCell(
+                cell,
+                0, // offset
+                BasicSpreadsheetEngine.FIND_REFERENCES_COUNT
+            ).forEach(l -> this.repository.labelReferences()
+                .removeCell(
+                    ReferenceAndSpreadsheetCellReference.with(
+                        l,
+                        cell
+                    )
+                )
+            );
 
         repository.rangeToCells()
-                .findCellRangesWithValue(cell)
-                .forEach(r -> this.repository.rangeToCells()
-                        .removeValue(
-                                r,
-                                cell
-                        )
-                );
+            .findCellRangesWithValue(cell)
+            .forEach(r -> this.repository.rangeToCells()
+                .removeValue(
+                    r,
+                    cell
+                )
+            );
     }
 
     private void addCellExternalReferences(final SpreadsheetCellReference cell,
@@ -417,11 +417,11 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetStoreRepository repository = this.repository;
 
         for (final SpreadsheetCellReference cellReference : repository.cellReferences()
-                .load(cell)
-                .orElse(Sets.empty())) {
+            .load(cell)
+            .orElse(Sets.empty())) {
             final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                    cellReference,
-                    initialStatus
+                cellReference,
+                initialStatus
             );
             if (this.isImmediate()) {
                 this.refreshCell(cache);
@@ -429,29 +429,29 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         }
 
         for (final SpreadsheetLabelMapping labelMapping : repository.labels()
-                .findLabelsWithReference(
-                        cell,
-                        0,
-                        BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
-                )
+            .findLabelsWithReference(
+                cell,
+                0,
+                BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
+            )
         ) {
             this.refreshLabel(
-                    this.getOrCreateLabelCache(
-                            labelMapping.label(),
-                            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
-                    )
+                this.getOrCreateLabelCache(
+                    labelMapping.label(),
+                    BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
+                )
             );
         }
 
         for (final SpreadsheetCellRangeReference cellRange : repository.rangeToCells()
-                .findCellRangesIncludingCell(cell)) {
+            .findCellRangesIncludingCell(cell)) {
             for (final SpreadsheetCellReference cellInRange : this.repository.rangeToCells()
-                    .load(cellRange)
-                    .orElse(Lists.empty())) {
+                .load(cellRange)
+                .orElse(Lists.empty())) {
 
                 final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                        cellInRange,
-                        BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
+                    cellInRange,
+                    BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
                 );
                 if (this.isImmediate()) {
                     this.refreshCell(cache);
@@ -467,17 +467,17 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
      */
     private void removeFormulaReferences(final SpreadsheetCellReference cell) {
         this.repository.cellReferences()
-                .removeReferencesWithCell(cell);
+            .removeReferencesWithCell(cell);
 
         this.repository.labelReferences()
-                .removeReferencesWithCell(cell);
+            .removeReferencesWithCell(cell);
 
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> cellRangeStore = this.repository.rangeToCells();
 
         for (final SpreadsheetCellRangeReference cellRange : cellRangeStore.findCellRangesIncludingCell(cell)) {
             cellRangeStore.removeValue(
-                    cellRange,
-                    cell
+                cellRange,
+                cell
             );
         }
     }
@@ -489,12 +489,12 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetCellReference cell = spreadsheetCell.reference();
 
         spreadsheetCell.formula()
-                .consumeSpreadsheetExpressionReferences(
-                        BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor.with(
-                                cell,
-                                this.repository
-                        )::accept
-                );
+            .consumeSpreadsheetExpressionReferences(
+                BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor.with(
+                    cell,
+                    this.repository
+                )::accept
+            );
     }
 
     /**
@@ -504,7 +504,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final Set<SpreadsheetCellReference> cells = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         cells.addAll(
-                this.cells.keySet()
+            this.cells.keySet()
         );
 
         for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache : this.labels.values()) {
@@ -512,12 +512,12 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 final SpreadsheetLabelMapping labelMapping = cache.valueOrNull();
                 if (null != labelMapping) {
                     final SpreadsheetCellReferenceOrRange cellOrRange = this.repository.labels()
-                            .resolveLabel(labelMapping.label())
-                            .orElse(null);
+                        .resolveLabel(labelMapping.label())
+                        .orElse(null);
 
                     if (null != cellOrRange) {
                         cells.add(
-                                cellOrRange.toCell()
+                            cellOrRange.toCell()
                         );
                     }
                 }
@@ -530,9 +530,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> getOrCreateCellCache(final SpreadsheetCellReference cell,
                                                                                                        final BasicSpreadsheetEngineChangesCacheStatus<SpreadsheetCellReference> initialStatus) {
         return this.getOrCreate(
-                cell,
-                this.cells,
-                initialStatus
+            cell,
+            this.cells,
+            initialStatus
         );
     }
 
@@ -543,22 +543,22 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     void onColumnSaved(final SpreadsheetColumn column) {
         this.getOrCreateColumnCache(
-                column.reference(),
-                BasicSpreadsheetEngineChangesCacheStatusColumn.SAVED
+            column.reference(),
+            BasicSpreadsheetEngineChangesCacheStatusColumn.SAVED
         ).saved(column);
     }
 
     void onColumnDeleted(final SpreadsheetColumnReference column) {
         this.getOrCreateColumnCache(column, BasicSpreadsheetEngineChangesCacheStatusColumn.DELETED)
-                .deleted();
+            .deleted();
     }
 
     private BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn> getOrCreateColumnCache(final SpreadsheetColumnReference column,
                                                                                                                      final BasicSpreadsheetEngineChangesCacheStatus<SpreadsheetColumnReference> initialStatus) {
         return this.getOrCreate(
-                column,
-                this.columns,
-                initialStatus
+            column,
+            this.columns,
+            initialStatus
         );
     }
 
@@ -569,24 +569,24 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
     void onRowSaved(final SpreadsheetRow row) {
         this.getOrCreateRowCache(
-                row.reference(),
-                BasicSpreadsheetEngineChangesCacheStatusRow.SAVED
+            row.reference(),
+            BasicSpreadsheetEngineChangesCacheStatusRow.SAVED
         ).saved(row);
     }
 
     void onRowDeleted(final SpreadsheetRowReference row) {
         this.getOrCreateRowCache(
-                row,
-                BasicSpreadsheetEngineChangesCacheStatusRow.DELETED
+            row,
+            BasicSpreadsheetEngineChangesCacheStatusRow.DELETED
         ).setStatus(BasicSpreadsheetEngineChangesCacheStatusRow.DELETED);
     }
 
     private BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow> getOrCreateRowCache(final SpreadsheetRowReference row,
                                                                                                             final BasicSpreadsheetEngineChangesCacheStatus<SpreadsheetRowReference> initialStatus) {
         return this.getOrCreate(
-                row,
-                this.rows,
-                initialStatus
+            row,
+            this.rows,
+            initialStatus
         );
     }
 
@@ -601,16 +601,16 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final int before = map.size();
 
         final BasicSpreadsheetEngineChangesCache<S, V> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                selection,
-                map,
-                initialStatus
+            selection,
+            map,
+            initialStatus
         );
 
         // increment the change counter if a new load was attempted.
         //if (cache.status() == initialStatus) {
 
         // if a new cache entry was added increment changes
-        if(map.size() > before ) {
+        if (map.size() > before) {
             this.incrementChanges();
         }
 
@@ -693,9 +693,9 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     final SpreadsheetStoreRepository repository;
 
     private void pushCell(final SpreadsheetCellReference cell) {
-        if(false == this.scopedCells.add(cell)) {
+        if (false == this.scopedCells.add(cell)) {
             throw SpreadsheetError.cycle(cell)
-                    .exception();
+                .exception();
         }
     }
 
@@ -729,15 +729,15 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetEngineEvaluation backupEvaluation = this.setEvaluation(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                cell,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
+            cell,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
         );
         try {
             this.refreshCell(
-                    cache,
-                    (c) -> context.setCell(
-                            Optional.of(c)
-                    )
+                cache,
+                (c) -> context.setCell(
+                    Optional.of(c)
+                )
             );
         } finally {
             this.setEvaluation(backupEvaluation);
@@ -745,7 +745,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         }
 
         return Optional.ofNullable(
-                cache.valueOrNull()
+            cache.valueOrNull()
         );
     }
 
@@ -762,13 +762,13 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
             for (final SpreadsheetCellReference cell : range) {
                 BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                        cell,
-                        BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
+                    cell,
+                    BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
                 );
 
                 this.refreshCell(
-                        cache,
-                        (c) -> context.setCell(Optional.of(c))
+                    cache,
+                    (c) -> context.setCell(Optional.of(c))
                 );
 
                 final SpreadsheetCell spreadsheetCell = cache.valueOrNull();
@@ -788,8 +788,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         Objects.requireNonNull(labelName, "labelName");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = this.getOrCreateLabelCache(
-                labelName,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
+            labelName,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
         );
 
         final BasicSpreadsheetEngineChangesMode backup = this.setImmediate();
@@ -798,7 +798,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
             this.refreshLabel(cache);
 
             return Optional.ofNullable(
-                    cache.valueOrNull()
+                cache.valueOrNull()
             );
 
         } finally {
@@ -811,16 +811,16 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .labelSeparator(": ")
-                .value(this.evaluation)
-                .label("scopedCells")
-                .value(this.scopedCells)
-                .label("cells")
-                .value(this.cells)
-                .label("columns")
-                .value(this.columns)
-                .label("rows")
-                .value(this.rows)
-                .build();
+            .labelSeparator(": ")
+            .value(this.evaluation)
+            .label("scopedCells")
+            .value(this.scopedCells)
+            .label("cells")
+            .value(this.cells)
+            .label("columns")
+            .value(this.columns)
+            .label("rows")
+            .value(this.rows)
+            .build();
     }
 }

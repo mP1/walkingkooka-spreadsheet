@@ -39,9 +39,9 @@ public final class ExpressionSpreadsheetFormulaParserToken extends ParentSpreads
     @Override
     public ExpressionSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ExpressionSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            ExpressionSpreadsheetFormulaParserToken::with
         );
     }
 

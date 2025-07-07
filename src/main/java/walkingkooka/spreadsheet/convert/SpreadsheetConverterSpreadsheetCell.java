@@ -53,16 +53,16 @@ final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuiting
 
     private boolean isClass(final Class<?> type) {
         return SpreadsheetCell.class == type ||
-                String.class == type || // formula.text
-                Object.class == type || // formula.value
-                DateTimeSymbols.class == type ||
-                DecimalNumberSymbols.class == type ||
-                Locale.class == type ||
-                SpreadsheetFormatterSelector.class == type || // formatter format-pattern etc.
-                SpreadsheetParserSelector.class == type || // parser parse-pattern etc
-                ValidatorSelector.class == type ||
-                TextStyle.class == type || // style
-                TextNode.class == type; // validator
+            String.class == type || // formula.text
+            Object.class == type || // formula.value
+            DateTimeSymbols.class == type ||
+            DecimalNumberSymbols.class == type ||
+            Locale.class == type ||
+            SpreadsheetFormatterSelector.class == type || // formatter format-pattern etc.
+            SpreadsheetParserSelector.class == type || // parser parse-pattern etc
+            ValidatorSelector.class == type ||
+            TextStyle.class == type || // style
+            TextNode.class == type; // validator
     }
 
     @Override
@@ -70,9 +70,9 @@ final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuiting
                                    final Class<?> type,
                                    final SpreadsheetConverterContext context) {
         return this.convertSpreadsheetCell(
-                (SpreadsheetCell) value,
-                type,
-                context
+            (SpreadsheetCell) value,
+            type,
+            context
         );
     }
 
@@ -90,39 +90,39 @@ final class SpreadsheetConverterSpreadsheetCell implements TryingShortCircuiting
             } else {
                 if (Object.class == type) {
                     value = cell.formula()
-                            .errorOrValue()
-                            .orElse(null);
+                        .errorOrValue()
+                        .orElse(null);
                 } else {
-                    if(DateTimeSymbols.class == type) {
+                    if (DateTimeSymbols.class == type) {
                         value = cell.dateTimeSymbols()
-                                .orElse(null);
+                            .orElse(null);
                     } else {
-                        if(DecimalNumberSymbols.class == type) {
+                        if (DecimalNumberSymbols.class == type) {
                             value = cell.decimalNumberSymbols()
-                                    .orElse(null);
+                                .orElse(null);
                         } else {
-                            if(Locale.class == type) {
+                            if (Locale.class == type) {
                                 value = cell.locale()
-                                        .orElse(null);
+                                    .orElse(null);
                             } else {
                                 if (SpreadsheetFormatterSelector.class == type) {
                                     value = cell.formatter()
-                                            .orElse(null);
+                                        .orElse(null);
                                 } else {
                                     if (SpreadsheetParserSelector.class == type) {
                                         value = cell.parser()
-                                                .orElse(null);
+                                            .orElse(null);
                                     } else {
                                         if (ValidatorSelector.class == type) {
                                             value = cell.validator()
-                                                    .orElse(null);
+                                                .orElse(null);
                                         } else {
                                             if (TextStyle.class == type) {
                                                 value = cell.style();
                                             } else {
                                                 if (TextNode.class == type) {
                                                     value = cell.formattedValue()
-                                                            .orElse(null);
+                                                        .orElse(null);
                                                 } else {
                                                     throw new IllegalArgumentException("Unexpected target type " + type.getName());
                                                 }

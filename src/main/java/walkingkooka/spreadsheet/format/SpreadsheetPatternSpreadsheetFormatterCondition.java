@@ -39,8 +39,8 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
         Objects.requireNonNull(formatter, "formatter");
 
         return new SpreadsheetPatternSpreadsheetFormatterCondition(
-                token,
-                formatter
+            token,
+            formatter
         );
     }
 
@@ -60,15 +60,15 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         return context.convert(
-                        value.orElse(null),
-                        BigDecimal.class
-                ).mapLeft(v -> null != v && this.predicate.test(v))
-                .orElseLeft(false) ?
-                this.formatter.formatSpreadsheetText(
-                        value,
-                        context
-                ) :
-                Optional.empty();
+                value.orElse(null),
+                BigDecimal.class
+            ).mapLeft(v -> null != v && this.predicate.test(v))
+            .orElseLeft(false) ?
+            this.formatter.formatSpreadsheetText(
+                value,
+                context
+            ) :
+            Optional.empty();
     }
 
     @Override
@@ -98,12 +98,12 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterCondition && this.equals0((SpreadsheetPatternSpreadsheetFormatterCondition) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterCondition && this.equals0((SpreadsheetPatternSpreadsheetFormatterCondition) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterCondition other) {
         return this.token.equals(other.token) &&
-                this.formatter.equals(other.formatter);
+            this.formatter.equals(other.formatter);
     }
 
     @Override

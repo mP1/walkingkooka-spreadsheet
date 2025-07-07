@@ -47,18 +47,18 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                this.createFormatter("\"Hello \"@@@"),
-                Optional.empty(),
-                SpreadsheetText.EMPTY.setText("Hello ")
+            this.createFormatter("\"Hello \"@@@"),
+            Optional.empty(),
+            SpreadsheetText.EMPTY.setText("Hello ")
         );
     }
 
     @Test
     public void testFormatPlaceholder() {
         this.parseFormatAndCheck(
-                "@",
-                TEXT,
-                TEXT
+            "@",
+            TEXT,
+            TEXT
         );
     }
 
@@ -66,80 +66,80 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     public void testFormatQuotedTextAndPlaceholder() {
         final String quoted = "Quoted456";
         this.parseFormatAndCheck(
-                "@\"" + quoted + "\"@",
-                TEXT,
-                TEXT + quoted + TEXT
+            "@\"" + quoted + "\"@",
+            TEXT,
+            TEXT + quoted + TEXT
         );
     }
 
     @Test
     public void testFormatTextAndUnderscore() {
         this.parseFormatAndCheck(
-                "@_A",
-                TEXT,
-                TEXT + "A"
+            "@_A",
+            TEXT,
+            TEXT + "A"
         );
     }
 
     @Test
     public void testFormatTextAndStar() {
         this.parseFormatAndCheck(
-                "@*A",
-                TEXT,
-                new TestSpreadsheetFormatterContext() {
+            "@*A",
+            TEXT,
+            new TestSpreadsheetFormatterContext() {
 
-                    @Override
-                    public int cellCharacterWidth() {
-                        return TEXT.length() + 3;
-                    }
-                },
-                TEXT + "AAA"
+                @Override
+                public int cellCharacterWidth() {
+                    return TEXT.length() + 3;
+                }
+            },
+            TEXT + "AAA"
         );
     }
 
     @Test
     public void testFormatTextAndLeftAndRightParens() {
         this.parseFormatAndCheck(
-                "(@)",
-                TEXT,
-                "(" + TEXT + ")"
+            "(@)",
+            TEXT,
+            "(" + TEXT + ")"
         );
     }
 
     @Test
     public void testFormatTextAndEscaped() {
         this.parseFormatAndCheck(
-                "@\\B",
-                TEXT,
-                TEXT + "B"
+            "@\\B",
+            TEXT,
+            TEXT + "B"
         );
     }
 
     @Test
     public void testFormatColorNameAndTextPlaceholder() {
         this.parseFormatAndCheck(
-                "[RED]@",
-                TEXT,
-                new TestSpreadsheetFormatterContext() {
+            "[RED]@",
+            TEXT,
+            new TestSpreadsheetFormatterContext() {
 
-                },
-                SpreadsheetText.with(TEXT)
-                        .setColor(
-                                Optional.of(RED)
-                        )
+            },
+            SpreadsheetText.with(TEXT)
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
     @Test
     public void testFormatColorNumberAndTextPlaceholder() {
         this.parseFormatAndCheck(
-                "[color44]@",
-                TEXT,
-                new TestSpreadsheetFormatterContext() {
+            "[color44]@",
+            TEXT,
+            new TestSpreadsheetFormatterContext() {
 
-                },
-                SpreadsheetText.with(TEXT)
-                        .setColor(Optional.of(RED))
+            },
+            SpreadsheetText.with(TEXT)
+                .setColor(Optional.of(RED))
         );
     }
 
@@ -154,10 +154,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
                                      final SpreadsheetFormatterContext context,
                                      final String text) {
         this.parseFormatAndCheck(
-                pattern,
-                value,
-                context,
-                SpreadsheetText.with(text)
+            pattern,
+            value,
+            context,
+            SpreadsheetText.with(text)
         );
     }
 
@@ -166,10 +166,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
                                      final SpreadsheetFormatterContext context,
                                      final SpreadsheetText text) {
         this.formatAndCheck(
-                this.createFormatter(pattern),
-                value,
-                context,
-                text
+            this.createFormatter(pattern),
+            value,
+            context,
+            text
         );
     }
 
@@ -213,37 +213,37 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         @Override
         public <T> Either<T, String> convert(final Object value, final Class<T> target) {
             return this.canConvert(value, target) ?
-                    this.successfulConversion(
-                            target.cast(value),
-                            target
-                    ) :
-                    this.failConversion(
-                            value,
-                            target
-                    );
+                this.successfulConversion(
+                    target.cast(value),
+                    target
+                ) :
+                this.failConversion(
+                    value,
+                    target
+                );
         }
 
         @Override
         public Optional<Color> colorName(final SpreadsheetColorName name) {
             checkEquals(
-                    SpreadsheetColorName.with("red"),
-                    name,
-                    "colorName"
+                SpreadsheetColorName.with("red"),
+                name,
+                "colorName"
             );
             return Optional.of(
-                    RED
+                RED
             );
         }
 
         @Override
         public Optional<Color> colorNumber(final int number) {
             checkEquals(
-                    44,
-                    number,
-                    "colorNumber"
+                44,
+                number,
+                "colorNumber"
             );
             return Optional.of(
-                    RED
+                RED
             );
         }
     }
@@ -253,58 +253,58 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     @Test
     public void testTokensTextWithPlaceholder() {
         this.tokensAndCheck(
-                this.createFormatter("@"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "@",
-                        "@",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                )
+            this.createFormatter("@"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "@",
+                "@",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            )
         );
     }
 
     @Test
     public void testTokensTextWithPlaceholderTextLiteral() {
         this.tokensAndCheck(
-                this.createFormatter("@\"Hello\""),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "@",
-                        "@",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetFormatterSelectorToken.with(
-                        "\"Hello\"",
-                        "\"Hello\"",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                )
+            this.createFormatter("@\"Hello\""),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "@",
+                "@",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetFormatterSelectorToken.with(
+                "\"Hello\"",
+                "\"Hello\"",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            )
         );
     }
 
     @Test
     public void testTokensTextWithColor() {
         this.tokensAndCheck(
-                this.createFormatter("[RED]@"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "[RED]",
-                        "[RED]",
-                        Stream.concat(
-                                SpreadsheetColorName.DEFAULTS.stream()
-                                        .map(n -> "[" + n.text() + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
-                                IntStream.rangeClosed(
-                                                SpreadsheetColors.MIN,
-                                                SpreadsheetColors.MAX
-                                        ).mapToObj(n -> "[Color " + n + "]")
-                                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
-                        ).collect(Collectors.toList())
-                ),
-                SpreadsheetFormatterSelectorToken.with(
-                        "@",
-                        "@",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                )
+            this.createFormatter("[RED]@"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "[RED]",
+                "[RED]",
+                Stream.concat(
+                    SpreadsheetColorName.DEFAULTS.stream()
+                        .map(n -> "[" + n.text() + "]")
+                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t)),
+                    IntStream.rangeClosed(
+                            SpreadsheetColors.MIN,
+                            SpreadsheetColors.MAX
+                        ).mapToObj(n -> "[Color " + n + "]")
+                        .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(t, t))
+                ).collect(Collectors.toList())
+            ),
+            SpreadsheetFormatterSelectorToken.with(
+                "@",
+                "@",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            )
         );
     }
 
@@ -313,8 +313,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     @Test
     public void testEqualsDifferentToken() {
         this.checkNotEquals(
-                this.createFormatter("@"),
-                this.createFormatter("@@")
+            this.createFormatter("@"),
+            this.createFormatter("@@")
         );
     }
 

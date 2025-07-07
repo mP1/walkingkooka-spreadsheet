@@ -32,8 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetColumn, SpreadsheetColumnReference>
-        implements HasSpreadsheetReferenceTesting,
-        PatchableTesting<SpreadsheetColumn> {
+    implements HasSpreadsheetReferenceTesting,
+    PatchableTesting<SpreadsheetColumn> {
 
     private final static int COLUMN = 20;
     private final static SpreadsheetColumnReference REFERENCE = reference(COLUMN);
@@ -102,15 +102,15 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testEqualsDifferentColumn() {
         this.checkNotEquals(
-                this.createObject(COLUMN + 999)
+            this.createObject(COLUMN + 999)
         );
     }
 
     @Test
     public void testCompareDifferentHidden() {
         this.checkNotEquals(
-                this.createObject()
-                        .setHidden(differentHidden())
+            this.createObject()
+                .setHidden(differentHidden())
         );
     }
 
@@ -119,38 +119,38 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                SpreadsheetSelection.parseColumn("ABC")
-                        .column(),
-                "{\n" +
-                        "  \"ABC\": {\n" +
-                        "    \"hidden\": false\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetSelection.parseColumn("ABC")
+                .column(),
+            "{\n" +
+                "  \"ABC\": {\n" +
+                "    \"hidden\": false\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallAbsolute() {
         this.marshallAndCheck(
-                this.createColumn(),
-                "{\n" +
-                        "  \"$U\": {\n" +
-                        "    \"hidden\": false\n" +
-                        "  }\n" +
-                        "}"
+            this.createColumn(),
+            "{\n" +
+                "  \"$U\": {\n" +
+                "    \"hidden\": false\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallAbsoluteHidden() {
         this.marshallAndCheck(
-                this.createColumn()
-                        .setHidden(true),
-                "{\n" +
-                        "  \"$U\": {\n" +
-                        "    \"hidden\": true\n" +
-                        "  }\n" +
-                        "}"
+            this.createColumn()
+                .setHidden(true),
+            "{\n" +
+                "  \"$U\": {\n" +
+                "    \"hidden\": true\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -159,28 +159,28 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testPatchHiddenTrue() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("A")
-                .column();
+            .column();
 
         this.patchAndCheck(
-                column,
-                "{\n" +
-                        "  \"hidden\": true\n" +
-                        "}",
-                column.setHidden(true)
+            column,
+            "{\n" +
+                "  \"hidden\": true\n" +
+                "}",
+            column.setHidden(true)
         );
     }
 
     @Test
     public void testPatchHiddenFalse() {
         final SpreadsheetColumn column = SpreadsheetSelection.parseColumn("B")
-                .column();
+            .column();
 
         this.patchAndCheck(
-                column.setHidden(true),
-                "{\n" +
-                        "  \"hidden\": false\n" +
-                        "}",
-                column.setHidden(false)
+            column.setHidden(true),
+            "{\n" +
+                "  \"hidden\": false\n" +
+                "}",
+            column.setHidden(false)
         );
     }
 
@@ -189,12 +189,12 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testTreePrintableHidden() {
         final SpreadsheetColumn column = this.createObject()
-                .setHidden(true);
+            .setHidden(true);
 
         this.treePrintAndCheck(
-                column,
-                "" + REFERENCE + EOL +
-                        "  hidden" + EOL
+            column,
+            "" + REFERENCE + EOL +
+                "  hidden" + EOL
         );
     }
 
@@ -203,17 +203,17 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                REFERENCE.column(),
-                "$U"
+            REFERENCE.column(),
+            "$U"
         );
     }
 
     @Test
     public void testToStringHiddenTrue() {
         this.toStringAndCheck(
-                REFERENCE.column()
-                        .setHidden(true),
-                "$U hidden=true"
+            REFERENCE.column()
+                .setHidden(true),
+            "$U hidden=true"
         );
     }
 
@@ -224,8 +224,8 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("AB");
 
         this.referenceAndCheck(
-                column.column(),
-                column
+            column.column(),
+            column
         );
     }
 
@@ -242,7 +242,7 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
 
     private SpreadsheetColumn createObject(final int column) {
         return reference(column)
-                .column();
+            .column();
     }
 
     private static SpreadsheetColumnReference differentReference() {

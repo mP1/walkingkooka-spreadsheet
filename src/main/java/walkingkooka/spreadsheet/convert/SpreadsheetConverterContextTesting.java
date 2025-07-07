@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting<C>,
-        SpreadsheetLabelNameResolverTesting<C> {
+    SpreadsheetLabelNameResolverTesting<C> {
 
     @Override
     default C createSpreadsheetLabelNameResolver() {

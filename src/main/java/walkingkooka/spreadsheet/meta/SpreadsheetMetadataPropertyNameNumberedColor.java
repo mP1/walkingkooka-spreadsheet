@@ -44,18 +44,18 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      * Cache of {@link SpreadsheetColors#MIN} to {@link SpreadsheetColors#MAX} values.
      */
     private static final SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[
-            SpreadsheetColors.MAX -
-                    SpreadsheetColors.MIN
-                    + 1
-            ];
+        SpreadsheetColors.MAX -
+            SpreadsheetColors.MIN
+            + 1
+        ];
 
     /*
      * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #SpreadsheetColors.MAX}.
      */
     static {
         IntStream.range(
-                SpreadsheetColors.MIN,
-                1 + SpreadsheetColors.MAX
+            SpreadsheetColors.MIN,
+            1 + SpreadsheetColors.MAX
         ).forEach(SpreadsheetMetadataPropertyNameNumberedColor::registerColor);
     }
 
@@ -79,8 +79,8 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     @Override
     Color checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof Color
+            value,
+            v -> v instanceof Color
         );
     }
 

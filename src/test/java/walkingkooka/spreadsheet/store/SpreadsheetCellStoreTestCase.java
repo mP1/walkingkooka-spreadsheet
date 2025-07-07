@@ -47,17 +47,17 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements SpreadsheetCellStoreTesting<S>,
-        TypeNameTesting<S>,
-        SpreadsheetMetadataTesting {
+    TypeNameTesting<S>,
+    SpreadsheetMetadataTesting {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.RELATIVE
-            .column(1)
-            .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
+        .column(1)
+        .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
 
     final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("d/m/y h:mm").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#;#.#").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector());
+        .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("d/m/y h:mm").spreadsheetParserSelector())
+        .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#;#.#").spreadsheetParserSelector())
+        .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector());
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = METADATA.expressionNumberKind();
 
@@ -147,8 +147,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(this.cell(0, 23));
 
         this.columnCountAndCheck(
-                store,
-                1
+            store,
+            1
         );
     }
 
@@ -161,8 +161,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(this.cell(98, 2));
 
         this.columnCountAndCheck(
-                store,
-                100
+            store,
+            100
         );
     }
 
@@ -171,15 +171,15 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final S store = this.createStore();
 
         store.save(
-                this.cell(0, 2)
+            this.cell(0, 2)
         );
         store.save(
-                this.cell(0, 23)
+            this.cell(0, 23)
         );
 
         this.rowCountAndCheck(
-                store,
-                24
+            store,
+            24
         );
     }
 
@@ -192,8 +192,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(this.cell(1, 5));
 
         this.rowCountAndCheck(
-                store,
-                100
+            store,
+            100
         );
     }
 
@@ -224,11 +224,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(a);
 
         checkCells(
-                "row 1",
-                store.row(a.reference()
-                        .row()
-                        .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
-                a
+            "row 1",
+            store.row(a.reference()
+                .row()
+                .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
+            a
         );
     }
 
@@ -259,11 +259,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(a);
 
         checkCells(
-                "column 1",
-                store.column(a.reference()
-                        .column()
-                        .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
-                a
+            "column 1",
+            store.column(a.reference()
+                .column()
+                .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
+            a
         );
     }
 
@@ -280,9 +280,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
 
         this.idsAndCheck(store,
-                0,
-                3,
-                a.reference(), b.reference(), c.reference());
+            0,
+            3,
+            a.reference(), b.reference(), c.reference());
     }
 
     @Test
@@ -300,9 +300,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(d);
 
         this.idsAndCheck(store,
-                1,
-                2,
-                b.reference(), c.reference());
+            1,
+            2,
+            b.reference(), c.reference());
     }
 
     @Test
@@ -318,11 +318,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
 
         this.valuesAndCheck(store,
-                0,
-                3,
-                a,
-                b,
-                c
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -341,10 +341,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(d);
 
         this.valuesAndCheck(store,
-                1,
-                2,
-                b,
-                c
+            1,
+            2,
+            b,
+            c
         );
     }
 
@@ -380,59 +380,59 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
         return cellReference.setFormula(
-                        this.formula()
-                )
-                .setStyle(this.style())
-                .setFormatter(this.formatter())
-                .setFormattedValue(this.formattedValue());
+                this.formula()
+            )
+            .setStyle(this.style())
+            .setFormatter(this.formatter())
+            .setFormattedValue(this.formattedValue());
     }
 
     final SpreadsheetCellReference cellReference(final int column, final int row) {
         return SpreadsheetSelection.cell(SpreadsheetReferenceKind.RELATIVE.column(column),
-                SpreadsheetReferenceKind.RELATIVE.row(row));
+            SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 
     private SpreadsheetFormula formula() {
         final String text = "1+2";
 
         return SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(Optional.of(
-                        SpreadsheetFormulaParserToken.addition(
-                                List.of(
-                                        SpreadsheetFormulaParserToken.number(
-                                                Lists.of(
-                                                        SpreadsheetFormulaParserToken.digits("1", "1")
-                                                ),
-                                                "1"
-                                        ),
-                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                                        SpreadsheetFormulaParserToken.number(
-                                                Lists.of(
-                                                        SpreadsheetFormulaParserToken.digits("2", "2")
-                                                ),
-                                                "2"
-                                        )
-                                ),
-                                text
+            .setText(text)
+            .setToken(Optional.of(
+                SpreadsheetFormulaParserToken.addition(
+                    List.of(
+                        SpreadsheetFormulaParserToken.number(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.digits("1", "1")
+                            ),
+                            "1"
+                        ),
+                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                        SpreadsheetFormulaParserToken.number(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.digits("2", "2")
+                            ),
+                            "2"
                         )
-                ))
-                .setExpression(Optional.of(
-                        Expression.add(
-                                Expression.value(
-                                        EXPRESSION_NUMBER_KIND.one()
-                                ),
-                                Expression.value(
-                                        EXPRESSION_NUMBER_KIND.create(2)
-                                )
-                        )
-                ));
+                    ),
+                    text
+                )
+            ))
+            .setExpression(Optional.of(
+                Expression.add(
+                    Expression.value(
+                        EXPRESSION_NUMBER_KIND.one()
+                    ),
+                    Expression.value(
+                        EXPRESSION_NUMBER_KIND.create(2)
+                    )
+                )
+            ));
     }
 
     private TextStyle style() {
         return TextStyle.EMPTY.set(
-                TextStylePropertyName.FONT_WEIGHT,
-                FontWeight.BOLD
+            TextStylePropertyName.FONT_WEIGHT,
+            FontWeight.BOLD
         );
     }
 

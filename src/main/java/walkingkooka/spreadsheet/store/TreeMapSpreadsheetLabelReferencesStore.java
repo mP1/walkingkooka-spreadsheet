@@ -53,17 +53,17 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
                                                                    final int count) {
         Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
         Store.checkOffsetAndCount(
-                offset,
-                count
+            offset,
+            count
         );
 
         return 0 == count ?
-                Sets.empty() :
-                this.findLabelsWithCellOrCellRangeNonZeroCount(
-                        cellOrCellRange,
-                        offset,
-                        count
-                );
+            Sets.empty() :
+            this.findLabelsWithCellOrCellRangeNonZeroCount(
+                cellOrCellRange,
+                offset,
+                count
+            );
     }
 
     private Set<SpreadsheetLabelName> findLabelsWithCellOrCellRangeNonZeroCount(final SpreadsheetCellReferenceOrRange cellOrCellRange,
@@ -74,21 +74,21 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
         // potentially slow for large ranges with gaps.
         for (final SpreadsheetCellReference reference : cellOrCellRange.toCellRange()) {
             labels.addAll(
-                    this.findReferencesWithCell(
-                            reference,
-                            0,
-                            Integer.MAX_VALUE
-                    )
+                this.findReferencesWithCell(
+                    reference,
+                    0,
+                    Integer.MAX_VALUE
+                )
             );
         }
 
         return Sets.readOnly(
-                labels.stream()
-                        .skip(offset)
-                        .limit(count)
-                        .collect(
-                                ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
-                        )
+            labels.stream()
+                .skip(offset)
+                .limit(count)
+                .collect(
+                    ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
+                )
         );
     }
 
@@ -108,8 +108,8 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     public void saveCells(final SpreadsheetLabelName label,
                           final Set<SpreadsheetCellReference> cells) {
         this.store.saveCells(
-                label,
-                cells
+            label,
+            cells
         );
     }
 
@@ -133,9 +133,9 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
                                                                 final int offset,
                                                                 final int count) {
         return this.store.findCellsWithReference(
-                label,
-                offset,
-                count
+            label,
+            offset,
+            count
         );
     }
 
@@ -154,9 +154,9 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
                                                             final int offset,
                                                             final int count) {
         return this.store.findReferencesWithCell(
-                cell,
-                offset,
-                count
+            cell,
+            offset,
+            count
         );
     }
 
@@ -191,8 +191,8 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     public Set<SpreadsheetLabelName> ids(final int offset,
                                          final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -205,8 +205,8 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     public List<Set<SpreadsheetCellReference>> values(final int offset,
                                                       final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -224,8 +224,8 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     public List<Set<SpreadsheetCellReference>> between(final SpreadsheetLabelName from,
                                                        final SpreadsheetLabelName to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

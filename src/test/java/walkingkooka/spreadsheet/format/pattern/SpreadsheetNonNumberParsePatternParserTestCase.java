@@ -24,10 +24,10 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 
 public abstract class SpreadsheetNonNumberParsePatternParserTestCase<P extends SpreadsheetNonNumberParsePatternParser>
-        extends SpreadsheetNonNumberParsePatternTestCase<P>
-        implements ParserTesting2<P, SpreadsheetParserContext>,
-        ToStringTesting<P>,
-        TypeNameTesting<P> {
+    extends SpreadsheetNonNumberParsePatternTestCase<P>
+    implements ParserTesting2<P, SpreadsheetParserContext>,
+    ToStringTesting<P>,
+    TypeNameTesting<P> {
 
     SpreadsheetNonNumberParsePatternParserTestCase() {
         super();
@@ -36,14 +36,14 @@ public abstract class SpreadsheetNonNumberParsePatternParserTestCase<P extends S
     @Test
     public final void testMinCount() {
         this.minCountAndCheck(
-                1
+            1
         );
     }
 
     @Test
     public final void testMaxCount() {
         this.maxCountAndCheck(
-                1
+            1
         );
     }
 

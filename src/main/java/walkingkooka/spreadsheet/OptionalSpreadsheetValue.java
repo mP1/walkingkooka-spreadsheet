@@ -39,8 +39,8 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
         Objects.requireNonNull(value, "value");
 
         return value.isPresent() ?
-                new OptionalSpreadsheetValue<>(value) :
-                Cast.to(EMPTY);
+            new OptionalSpreadsheetValue<>(value) :
+            Cast.to(EMPTY);
     }
 
     private OptionalSpreadsheetValue(final Optional<T> value) {
@@ -64,8 +64,8 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof OptionalSpreadsheetValue &&
-                        this.equals0(Cast.to(other));
+            other instanceof OptionalSpreadsheetValue &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final OptionalSpreadsheetValue<?> other) {
@@ -82,7 +82,7 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
     static OptionalSpreadsheetValue<?> unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallOptionalWithType(node)
+            context.unmarshallOptionalWithType(node)
         );
     }
 
@@ -94,10 +94,10 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
         SpreadsheetValueType.DATE_TIME.text();
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(OptionalSpreadsheetValue.class),
-                OptionalSpreadsheetValue::unmarshall,
-                OptionalSpreadsheetValue::marshall,
-                OptionalSpreadsheetValue.class
+            JsonNodeContext.computeTypeName(OptionalSpreadsheetValue.class),
+            OptionalSpreadsheetValue::unmarshall,
+            OptionalSpreadsheetValue::marshall,
+            OptionalSpreadsheetValue.class
         );
     }
 }

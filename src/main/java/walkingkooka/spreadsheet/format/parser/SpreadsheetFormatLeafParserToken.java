@@ -55,8 +55,8 @@ abstract class SpreadsheetFormatLeafParserToken<T> extends SpreadsheetFormatPars
     @Override
     public final ParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.leafSetChildren(
-                this,
-                children
+            this,
+            children
         );
     }
 }

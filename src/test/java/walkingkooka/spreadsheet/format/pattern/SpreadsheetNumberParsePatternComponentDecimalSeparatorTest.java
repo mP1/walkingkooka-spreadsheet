@@ -27,32 +27,32 @@ public final class SpreadsheetNumberParsePatternComponentDecimalSeparatorTest ex
         this.checkEquals(DECIMAL, 'd');
 
         this.parseAndCheck2(
-                DECIMAL,
-                ""
+            DECIMAL,
+            ""
         );
     }
 
     @Test
     public void testDecimalCharacter() {
         this.parseAndCheck2(
-                DECIMAL,
-                "!"
+            DECIMAL,
+            "!"
         );
     }
 
     @Test
     public void testDecimalTwice() {
         this.parseAndCheck2(
-                DECIMAL,
-                DECIMAL + ""
+            DECIMAL,
+            DECIMAL + ""
         );
     }
 
     @Test
     public void testDecimalTwiceCharacter() {
         this.parseAndCheck2(
-                DECIMAL,
-                DECIMAL + "!"
+            DECIMAL,
+            DECIMAL + "!"
         );
     }
 
@@ -60,11 +60,11 @@ public final class SpreadsheetNumberParsePatternComponentDecimalSeparatorTest ex
                         final String textAfter) {
         final String text = "" + c;
         this.parseAndCheck2(
-                text,
-                textAfter,
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(text, text));
+            text,
+            textAfter,
+            SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.decimalSeparatorSymbol(text, text));
     }
 
     @Test

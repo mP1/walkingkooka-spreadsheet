@@ -31,21 +31,21 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatterProviderTestingTest.TestSpreadsheetFormatterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "text-format-pattern @@";
 
     private final static SpreadsheetFormatter FORMATTER = SpreadsheetFormatters.fake();
 
     private final static SpreadsheetFormatterSample SAMPLE = SpreadsheetFormatterSample.with(
-            "Label1",
-            SpreadsheetFormatterSelector.parse(SELECTOR),
-            TextNode.text("Value123")
+        "Label1",
+        SpreadsheetFormatterSelector.parse(SELECTOR),
+        TextNode.text("Value123")
     );
 
     private final static SpreadsheetFormatterInfo INFO = SpreadsheetFormatterInfo.with(
-            Url.parseAbsolute("https://example.com/123"),
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
+        Url.parseAbsolute("https://example.com/123"),
+        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
     );
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -53,19 +53,19 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterSelectorAndCheck() {
         this.spreadsheetFormatterAndCheck(
-                SELECTOR,
-                CONTEXT,
-                FORMATTER
+            SELECTOR,
+            CONTEXT,
+            FORMATTER
         );
     }
 
     @Test
     public void testSpreadsheetFormatterNameAndCheck() {
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterSelector.parse(SELECTOR).name(),
-                Lists.empty(),
-                CONTEXT,
-                FORMATTER
+            SpreadsheetFormatterSelector.parse(SELECTOR).name(),
+            Lists.empty(),
+            CONTEXT,
+            FORMATTER
         );
     }
 
@@ -73,34 +73,34 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterSamplesAndCheck() {
         this.spreadsheetFormatterSamplesAndCheck(
-                SAMPLE.selector()
-                        .name(),
-                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
-                SAMPLE
+            SAMPLE.selector()
+                .name(),
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SAMPLE
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSamplesFails() {
         this.spreadsheetFormatterSamplesFails(
-                new FakeSpreadsheetFormatterProvider() {
-                    @Override
-                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
-                                                                                        final SpreadsheetFormatterProviderSamplesContext context) {
-                        throw new IllegalArgumentException("Unknown " + name);
-                    }
-                },
-                SAMPLE.selector()
-                        .name(),
-                SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
+            new FakeSpreadsheetFormatterProvider() {
+                @Override
+                public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                                                                                    final SpreadsheetFormatterProviderSamplesContext context) {
+                    throw new IllegalArgumentException("Unknown " + name);
+                }
+            },
+            SAMPLE.selector()
+                .name(),
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetFormatterInfosAndCheck() {
         this.spreadsheetFormatterInfosAndCheck(
-                new TestSpreadsheetFormatterProvider(),
-                INFO
+            new TestSpreadsheetFormatterProvider(),
+            INFO
         );
     }
 

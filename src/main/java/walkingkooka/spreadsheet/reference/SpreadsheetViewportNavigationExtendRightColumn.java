@@ -43,8 +43,8 @@ final class SpreadsheetViewportNavigationExtendRightColumn extends SpreadsheetVi
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.extendRightColumn(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 }

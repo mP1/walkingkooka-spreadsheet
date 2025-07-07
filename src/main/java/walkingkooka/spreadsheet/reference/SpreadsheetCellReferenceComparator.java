@@ -40,8 +40,8 @@ final class SpreadsheetCellReferenceComparator implements Comparator<Spreadsheet
     public int compare(final SpreadsheetCell left,
                        final SpreadsheetCell right) {
         return this.comparator.compare(
-                left.reference(),
-                right.reference()
+            left.reference(),
+            right.reference()
         );
     }
 

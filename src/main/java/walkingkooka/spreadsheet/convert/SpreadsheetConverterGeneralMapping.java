@@ -33,12 +33,12 @@ final class SpreadsheetConverterGeneralMapping<T> {
                                                           final T string,
                                                           final T time) {
         return new SpreadsheetConverterGeneralMapping<>(
-                booleanValue,
-                date,
-                dateTime,
-                number,
-                string,
-                time
+            booleanValue,
+            date,
+            dateTime,
+            number,
+            string,
+            time
         );
     }
 
@@ -76,13 +76,13 @@ final class SpreadsheetConverterGeneralMapping<T> {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .separator(", ")
-                .label("boolean").value(this.booleanValue)
-                .label("date").value(this.date)
-                .label("dateTime").value(this.dateTime)
-                .label("number").value(this.number)
-                .label("string").value(this.string)
-                .label("time").value(this.time)
-                .build();
+            .separator(", ")
+            .label("boolean").value(this.booleanValue)
+            .label("date").value(this.date)
+            .label("dateTime").value(this.dateTime)
+            .label("number").value(this.number)
+            .label("string").value(this.string)
+            .label("time").value(this.time)
+            .build();
     }
 }

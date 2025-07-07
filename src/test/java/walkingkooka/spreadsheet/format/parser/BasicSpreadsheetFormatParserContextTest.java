@@ -30,14 +30,14 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
-        SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext>,
-        DecimalNumberContextDelegator {
+    SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext>,
+    DecimalNumberContextDelegator {
 
     @Test
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatParserContext.with(null)
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatParserContext.with(null)
         );
     }
 
@@ -54,17 +54,17 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     @Test
     public void testLocale() {
         this.localeAndCheck(
-                this.createContext(),
-                this.decimalNumberContext()
-                        .locale()
+            this.createContext(),
+            this.decimalNumberContext()
+                .locale()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createContext(),
-                InvalidCharacterExceptionFactory.POSITION + " " + DecimalNumberContexts.american(MathContext.UNLIMITED).toString()
+            this.createContext(),
+            InvalidCharacterExceptionFactory.POSITION + " " + DecimalNumberContexts.american(MathContext.UNLIMITED).toString()
         );
     }
 

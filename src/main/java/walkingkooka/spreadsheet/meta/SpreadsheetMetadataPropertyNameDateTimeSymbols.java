@@ -45,8 +45,8 @@ final class SpreadsheetMetadataPropertyNameDateTimeSymbols extends SpreadsheetMe
     @Override
     DateTimeSymbols checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof DateTimeSymbols
+            value,
+            v -> v instanceof DateTimeSymbols
         );
     }
 
@@ -64,7 +64,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeSymbols extends SpreadsheetMe
     @Override
     Optional<DateTimeSymbols> extractLocaleAwareValue(final LocaleContext context) {
         return context.dateTimeSymbolsForLocale(
-                context.locale()
+            context.locale()
         );
     }
 

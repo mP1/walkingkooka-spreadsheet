@@ -32,38 +32,38 @@ final class SpreadsheetImporterProviderCollection implements SpreadsheetImporter
 
     static SpreadsheetImporterProviderCollection with(final Set<SpreadsheetImporterProvider> providers) {
         return new SpreadsheetImporterProviderCollection(
-                Objects.requireNonNull(providers, "providers")
+            Objects.requireNonNull(providers, "providers")
         );
     }
 
     private SpreadsheetImporterProviderCollection(final Set<SpreadsheetImporterProvider> providers) {
         this.providers = ProviderCollection.with(
-                new ProviderCollectionProviderGetter<>() {
-                    @Override
-                    public SpreadsheetImporter get(final SpreadsheetImporterProvider provider,
-                                                   final SpreadsheetImporterName name,
-                                                   final List<?> values,
-                                                   final ProviderContext context) {
-                        return provider.spreadsheetImporter(
-                                name,
-                                values,
-                                context
-                        );
-                    }
+            new ProviderCollectionProviderGetter<>() {
+                @Override
+                public SpreadsheetImporter get(final SpreadsheetImporterProvider provider,
+                                               final SpreadsheetImporterName name,
+                                               final List<?> values,
+                                               final ProviderContext context) {
+                    return provider.spreadsheetImporter(
+                        name,
+                        values,
+                        context
+                    );
+                }
 
-                    @Override
-                    public SpreadsheetImporter get(final SpreadsheetImporterProvider provider,
-                                                   final SpreadsheetImporterSelector selector,
-                                                   final ProviderContext context) {
-                        return provider.spreadsheetImporter(
-                                selector,
-                                context
-                        );
-                    }
-                },
-                SpreadsheetImporterProvider::spreadsheetImporterInfos,
-                SpreadsheetImporter.class.getSimpleName(),
-                providers
+                @Override
+                public SpreadsheetImporter get(final SpreadsheetImporterProvider provider,
+                                               final SpreadsheetImporterSelector selector,
+                                               final ProviderContext context) {
+                    return provider.spreadsheetImporter(
+                        selector,
+                        context
+                    );
+                }
+            },
+            SpreadsheetImporterProvider::spreadsheetImporterInfos,
+            SpreadsheetImporter.class.getSimpleName(),
+            providers
         );
     }
 
@@ -74,8 +74,8 @@ final class SpreadsheetImporterProviderCollection implements SpreadsheetImporter
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                selector,
-                context
+            selector,
+            context
         );
     }
 
@@ -88,16 +88,16 @@ final class SpreadsheetImporterProviderCollection implements SpreadsheetImporter
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
     }
 
     @Override
     public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
         return SpreadsheetImporterInfoSet.with(
-                this.providers.infos()
+            this.providers.infos()
         );
     }
 

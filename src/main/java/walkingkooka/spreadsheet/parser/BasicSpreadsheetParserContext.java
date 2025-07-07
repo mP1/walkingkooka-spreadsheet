@@ -34,8 +34,8 @@ import java.util.function.BiFunction;
  * A {@link SpreadsheetParserContext} without any functionality.
  */
 final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
-        DateTimeContextDelegator,
-        ExpressionNumberContextDelegator {
+    DateTimeContextDelegator,
+    ExpressionNumberContextDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetParserContext}.
@@ -45,10 +45,10 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
                                               final ExpressionNumberContext expressionNumberContext,
                                               final char valueSeparator) {
         return new BasicSpreadsheetParserContext(
-                Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory"),
-                Objects.requireNonNull(dateTimeContext, "dateTimeContext"),
-                Objects.requireNonNull(expressionNumberContext, "expressionNumberContext"),
-                valueSeparator
+            Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory"),
+            Objects.requireNonNull(dateTimeContext, "dateTimeContext"),
+            Objects.requireNonNull(expressionNumberContext, "expressionNumberContext"),
+            valueSeparator
         );
     }
 
@@ -77,8 +77,8 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
         return this.invalidCharacterExceptionFactory.apply(
-                parser,
-                cursor
+            parser,
+            cursor
         );
     }
 
@@ -110,11 +110,11 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     @Override
     public String toString() {
         return this.invalidCharacterExceptionFactory +
-                " " +
-                this.dateTimeContext +
-                " " +
-                this.expressionNumberContext +
-                " " +
-                CharSequences.quoteIfChars(this.valueSeparator);
+            " " +
+            this.dateTimeContext +
+            " " +
+            this.expressionNumberContext +
+            " " +
+            CharSequences.quoteIfChars(this.valueSeparator);
     }
 }

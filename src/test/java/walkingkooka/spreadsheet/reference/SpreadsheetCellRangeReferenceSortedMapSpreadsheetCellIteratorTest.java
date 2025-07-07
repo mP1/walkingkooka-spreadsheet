@@ -51,219 +51,219 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIteratorTest implements IteratorTesting,
-        ClassTesting<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> {
+    ClassTesting<SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator> {
 
     @Test
     public void testWithNullMapFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
+                SpreadsheetSelection.ALL_CELLS,
+                null
+            )
         );
     }
 
     @Test
     public void testEmptyMap() {
         this.iteratorCheck(
-                "A1:B2"
+            "A1:B2"
         );
     }
 
     @Test
     public void testCellsBeforeTopLeft() {
         this.iteratorCheck(
-                "B2:C3",
-                "A1"
+            "B2:C3",
+            "A1"
         );
     }
 
     @Test
     public void testCellsAfterBottomRight() {
         this.iteratorCheck(
-                "B2:C3",
-                "D4"
+            "B2:C3",
+            "D4"
         );
     }
 
     @Test
     public void testCellsBefore() {
         this.iteratorCheck(
-                "B2:C3",
-                "A2",
-                "A3"
+            "B2:C3",
+            "A2",
+            "A3"
         );
     }
 
     @Test
     public void testCellsAfter() {
         this.iteratorCheck(
-                "B2:C3",
-                "D2",
-                "D3"
+            "B2:C3",
+            "D2",
+            "D3"
         );
     }
 
     @Test
     public void testCellsBeforeAndAfter() {
         this.iteratorCheck(
-                "B2:C3",
-                "A1",
-                "D2",
-                "A3",
-                "D3"
+            "B2:C3",
+            "A1",
+            "D2",
+            "A3",
+            "D3"
         );
     }
 
     @Test
     public void testCellsSome() {
         this.iteratorCheck(
-                "B2:C3",
-                "A1",
-                "B1",
-                "B2",
-                "B3",
-                "B4",
-                "C1",
-                "C2",
-                "C3",
-                "C4"
+            "B2:C3",
+            "A1",
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "C1",
+            "C2",
+            "C3",
+            "C4"
         );
     }
 
     @Test
     public void testCellsSome2() {
         this.iteratorCheck(
-                "B2:C3",
-                "A1",
-                "B1",
-                "B2",
-                "B3",
-                "B4",
-                "C1",
-                "C2",
-                "C3",
-                "C4",
-                "D4"
+            "B2:C3",
+            "A1",
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "C1",
+            "C2",
+            "C3",
+            "C4",
+            "D4"
         );
     }
 
     @Test
     public void testCellsSome3() {
         this.iteratorCheck(
-                "B2:C3",
-                "A1",
-                "B1",
-                "B3",
-                "B4",
-                "C1",
-                "C2",
-                "C4",
-                "D4"
+            "B2:C3",
+            "A1",
+            "B1",
+            "B3",
+            "B4",
+            "C1",
+            "C2",
+            "C4",
+            "D4"
         );
     }
 
     @Test
     public void testCellsOnly1() {
         this.iteratorCheck(
-                "B2:C3",
-                "B2"
+            "B2:C3",
+            "B2"
         );
     }
 
     @Test
     public void testCellsOnly2() {
         this.iteratorCheck(
-                "B2:C3",
-                "C2",
-                "B3"
+            "B2:C3",
+            "C2",
+            "B3"
         );
     }
 
     @Test
     public void testCellsOnly3() {
         this.iteratorCheck(
-                "B2:C3",
-                "B2",
-                "C2",
-                "B3",
-                "C3"
+            "B2:C3",
+            "B2",
+            "C2",
+            "B3",
+            "C3"
         );
     }
 
     @Test
     public void testBigMostlyEmptyRange() {
         this.iteratorCheck(
-                "A1:Z99",
-                "A1"
+            "A1:Z99",
+            "A1"
         );
     }
 
     @Test
     public void testBigMostlyEmptyRange2() {
         this.iteratorCheck(
-                "A1:Z99",
-                "B2"
+            "A1:Z99",
+            "B2"
         );
     }
 
     @Test
     public void testBigMostlyEmptyRange3() {
         this.iteratorCheck(
-                "A1:Z99",
-                "Z99"
+            "A1:Z99",
+            "Z99"
         );
     }
 
     @Test
     public void testAll() {
         this.iteratorCheck(
-                SpreadsheetSelection.ALL_CELLS.toString(),
-                "A1"
+            SpreadsheetSelection.ALL_CELLS.toString(),
+            "A1"
         );
     }
 
     @Test
     public void testAll2() {
         this.iteratorCheck(
-                SpreadsheetSelection.ALL_CELLS.toString(),
-                "A1",
-                "B2"
+            SpreadsheetSelection.ALL_CELLS.toString(),
+            "A1",
+            "B2"
         );
     }
 
     @Test
     public void testAll3() {
         this.iteratorCheck(
-                SpreadsheetSelection.ALL_CELLS.toString(),
-                "B2"
+            SpreadsheetSelection.ALL_CELLS.toString(),
+            "B2"
         );
     }
 
     @Test
     public void testAll4() {
         this.iteratorCheck(
-                SpreadsheetSelection.ALL_CELLS.toString(),
-                SpreadsheetSelection.ALL_CELLS.end().toString()
+            SpreadsheetSelection.ALL_CELLS.toString(),
+            SpreadsheetSelection.ALL_CELLS.end().toString()
         );
     }
 
     private void iteratorCheck(final String range,
                                final String... cells) {
         this.iteratorCheck(
-                range,
-                Sets.of(cells)
+            range,
+            Sets.of(cells)
         );
     }
 
     private void iteratorCheck(final String range,
                                final Set<String> cells) {
         this.iteratorCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                cells.stream()
-                        .map(c -> SpreadsheetSelection.parseCell(c).setFormula(SpreadsheetFormula.EMPTY))
-                        .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)))
+            SpreadsheetSelection.parseCellRange(range),
+            cells.stream()
+                .map(c -> SpreadsheetSelection.parseCell(c).setFormula(SpreadsheetFormula.EMPTY))
+                .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)))
         );
     }
 
@@ -273,38 +273,38 @@ public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator
         final Set<SpreadsheetCell> iterated = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         cells.forEach(
-                (c) -> {
-                    final SpreadsheetCellReference cellReference = c.reference();
+            (c) -> {
+                final SpreadsheetCellReference cellReference = c.reference();
 
-                    cellMap.put(
-                            cellReference,
-                            c
-                    );
+                cellMap.put(
+                    cellReference,
+                    c
+                );
 
-                    if (range.testCell(cellReference)) {
-                        iterated.add(c);
-                    }
+                if (range.testCell(cellReference)) {
+                    iterated.add(c);
                 }
+            }
         );
 
         final SpreadsheetCell[] expected = iterated.toArray(
-                new SpreadsheetCell[iterated.size()]
+            new SpreadsheetCell[iterated.size()]
         );
 
         this.iterateUsingHasNextAndCheck(
-                SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
-                        range,
-                        cellMap
-                ),
-                expected
+            SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
+                range,
+                cellMap
+            ),
+            expected
         );
 
         this.iterateAndCheck(
-                SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
-                        range,
-                        cellMap
-                ),
-                expected
+            SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator.with(
+                range,
+                cellMap
+            ),
+            expected
         );
     }
 

@@ -71,12 +71,12 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
                              final SpreadsheetCellValueKind kind,
                              final SpreadsheetExporterContext context) {
         return this.exporters.stream()
-                .anyMatch(e -> e.canExport(
-                                cells,
-                                kind,
-                                context
-                        )
-                );
+            .anyMatch(e -> e.canExport(
+                    cells,
+                    kind,
+                    context
+                )
+            );
     }
 
     @Override
@@ -84,18 +84,18 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
                             final SpreadsheetCellValueKind kind,
                             final SpreadsheetExporterContext context) {
         return this.exporters.stream()
-                .filter(e -> e.canExport(
-                                cells,
-                                kind,
-                                context
-                        )
-                ).map(e -> e.export(
-                                cells,
-                                kind,
-                                context
-                        )
-                ).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No exporter found"));
+            .filter(e -> e.canExport(
+                    cells,
+                    kind,
+                    context
+                )
+            ).map(e -> e.export(
+                    cells,
+                    kind,
+                    context
+                )
+            ).findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("No exporter found"));
     }
 
     final List<SpreadsheetExporter> exporters;
@@ -110,8 +110,8 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetExporterCollection &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetExporterCollection &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetExporterCollection other) {
@@ -121,10 +121,10 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
     @Override
     public String toString() {
         return "collection(" +
-                CharacterConstant.COMMA.toSeparatedString(
-                        this.exporters,
-                        SpreadsheetExporter::toString
-                ) +
-                ")";
+            CharacterConstant.COMMA.toSeparatedString(
+                this.exporters,
+                SpreadsheetExporter::toString
+            ) +
+            ")";
     }
 }

@@ -29,23 +29,23 @@ public final class SpreadsheetMetadataPropertyNameSortComparatorsTest extends Sp
     @Test
     public void testCheckValueWithEmpty() {
         this.checkValue(
-                SpreadsheetComparatorNameList.EMPTY
+            SpreadsheetComparatorNameList.EMPTY
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSortComparators.instance(),
-                "sortComparators"
+            SpreadsheetMetadataPropertyNameSortComparators.instance(),
+            "sortComparators"
         );
     }
 

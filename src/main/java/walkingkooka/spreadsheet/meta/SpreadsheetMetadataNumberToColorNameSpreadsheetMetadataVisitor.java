@@ -44,8 +44,8 @@ final class SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor exten
     protected void visitNamedColor(final SpreadsheetColorName name,
                                    final int colorNumber) {
         this.numberToColorName.put(
-                colorNumber,
-                name
+            colorNumber,
+            name
         );
     }
 

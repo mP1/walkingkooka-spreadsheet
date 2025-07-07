@@ -31,27 +31,27 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
         final Color red = Color.parse("#123");
 
         this.checkEquals(
-                SpreadsheetText.with(
-                        text + text + text
-                ).setColor(
-                        Optional.of(red)
-                ).toTextNode(),
-                new FakeSpreadsheetFormatter() {
-                    @Override
-                    public Optional<TextNode> format(final Optional<Object> value,
-                                                     final SpreadsheetFormatterContext context) {
-                        return Optional.of(
-                                SpreadsheetText.EMPTY
-                                        .setText(text + text + text)
-                                        .setColor(
-                                                Optional.of(red)
-                                        ).toTextNode()
-                        );
-                    }
-                }.formatOrEmptyText(
-                        Optional.of(text),
-                        SpreadsheetFormatterContexts.fake()
-                )
+            SpreadsheetText.with(
+                text + text + text
+            ).setColor(
+                Optional.of(red)
+            ).toTextNode(),
+            new FakeSpreadsheetFormatter() {
+                @Override
+                public Optional<TextNode> format(final Optional<Object> value,
+                                                 final SpreadsheetFormatterContext context) {
+                    return Optional.of(
+                        SpreadsheetText.EMPTY
+                            .setText(text + text + text)
+                            .setColor(
+                                Optional.of(red)
+                            ).toTextNode()
+                    );
+                }
+            }.formatOrEmptyText(
+                Optional.of(text),
+                SpreadsheetFormatterContexts.fake()
+            )
         );
     }
 }

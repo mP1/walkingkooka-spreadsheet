@@ -28,8 +28,8 @@ public final class BooleanLiteralSpreadsheetFormulaParserToken extends NonSymbol
         Objects.requireNonNull(text, "text");
 
         return new BooleanLiteralSpreadsheetFormulaParserToken(
-                value,
-                text
+            value,
+            text
         );
     }
 

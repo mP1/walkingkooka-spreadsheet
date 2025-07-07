@@ -34,8 +34,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataMissingComponentsTest implements ClassTesting2<SpreadsheetMetadataMissingComponents>,
-        ToStringTesting<SpreadsheetMetadataMissingComponents>,
-        TypeNameTesting<SpreadsheetMetadataMissingComponents> {
+    ToStringTesting<SpreadsheetMetadataMissingComponents>,
+    TypeNameTesting<SpreadsheetMetadataMissingComponents> {
 
     // getOrNull........................................................................................................
 
@@ -52,10 +52,10 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
         final boolean value = true;
 
         final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(
-                SpreadsheetMetadata.EMPTY.set(
-                        property,
-                        value
-                )
+            SpreadsheetMetadata.EMPTY.set(
+                property,
+                value
+            )
         );
         this.checkEquals(value, components.getOrNull(property));
         this.checkMissing(components);
@@ -69,13 +69,13 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                components::reportIfMissing
+            IllegalStateException.class,
+            components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: auditInfo",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: auditInfo",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -86,13 +86,13 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
 
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                components::reportIfMissing
+            IllegalStateException.class,
+            components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: auditInfo, decimalNumberSymbols",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: auditInfo, decimalNumberSymbols",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -106,13 +106,13 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                components::reportIfMissing
+            IllegalStateException.class,
+            components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: auditInfo, decimalNumberSymbols, locale, roundingMode",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: auditInfo, decimalNumberSymbols, locale, roundingMode",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -124,13 +124,13 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
         components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                components::reportIfMissing
+            IllegalStateException.class,
+            components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: auditInfo, roundingMode",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: auditInfo, roundingMode",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -138,17 +138,17 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
     public void testReportIfMissingNone() {
         final SpreadsheetMetadataPropertyName<AuditInfo> property = SpreadsheetMetadataPropertyName.AUDIT_INFO;
         final AuditInfo value = AuditInfo.with(
-                EmailAddress.parse("created@example.com"),
-                LocalDateTime.MIN,
-                EmailAddress.parse("modified@example.com"),
-                LocalDateTime.MAX
+            EmailAddress.parse("created@example.com"),
+            LocalDateTime.MIN,
+            EmailAddress.parse("modified@example.com"),
+            LocalDateTime.MAX
         );
 
         final SpreadsheetMetadataMissingComponents components = SpreadsheetMetadataMissingComponents.with(
-                SpreadsheetMetadata.EMPTY.set(
-                        property,
-                        value
-                )
+            SpreadsheetMetadata.EMPTY.set(
+                property,
+                value
+            )
         );
         components.getOrNull(property);
         components.reportIfMissing();
@@ -170,11 +170,11 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
 
         this.toStringAndCheck(
-                components,
-                Lists.of(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
-                ).toString()
+            components,
+            Lists.of(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
+            ).toString()
         );
     }
 

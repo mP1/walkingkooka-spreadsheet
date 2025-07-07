@@ -211,8 +211,8 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
-                                         final SpreadsheetExpressionReference selection,
-                                         final SpreadsheetEngineContext context) {
+                                       final SpreadsheetExpressionReference selection,
+                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

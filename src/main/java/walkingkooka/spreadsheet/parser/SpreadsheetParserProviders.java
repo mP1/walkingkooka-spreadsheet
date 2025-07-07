@@ -35,7 +35,7 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
      * The name of each parser will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetParser.class.getSimpleName()
+        "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetParser.class.getSimpleName()
     );
 
     /**
@@ -44,8 +44,8 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     public static SpreadsheetParserProvider aliases(final SpreadsheetParserAliasSet aliases,
                                                     final SpreadsheetParserProvider provider) {
         return AliasesSpreadsheetParserProvider.with(
-                aliases,
-                provider
+            aliases,
+            provider
         );
     }
 
@@ -76,8 +76,8 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     public static SpreadsheetParserProvider filtered(final SpreadsheetParserProvider provider,
                                                      final SpreadsheetParserInfoSet infos) {
         return FilteredSpreadsheetParserProvider.with(
-                provider,
-                infos
+            provider,
+            infos
         );
     }
 
@@ -87,8 +87,8 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     public static SpreadsheetParserProvider filteredMapped(final SpreadsheetParserInfoSet infos,
                                                            final SpreadsheetParserProvider provider) {
         return FilteredMappedSpreadsheetParserProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -98,8 +98,8 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     public static SpreadsheetParserProvider mergedMapped(final SpreadsheetParserInfoSet infos,
                                                          final SpreadsheetParserProvider provider) {
         return MergedMappedSpreadsheetParserProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 

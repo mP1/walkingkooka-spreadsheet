@@ -38,15 +38,15 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviderDelegator;
 
 public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
-        ConverterProviderDelegator,
-        ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
-        SpreadsheetComparatorProviderDelegator,
-        SpreadsheetExporterProviderDelegator,
-        SpreadsheetFormatterProviderDelegator,
-        FormHandlerProviderDelegator,
-        SpreadsheetImporterProviderDelegator,
-        SpreadsheetParserProviderDelegator,
-        ValidatorProviderDelegator {
+    ConverterProviderDelegator,
+    ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
+    SpreadsheetComparatorProviderDelegator,
+    SpreadsheetExporterProviderDelegator,
+    SpreadsheetFormatterProviderDelegator,
+    FormHandlerProviderDelegator,
+    SpreadsheetImporterProviderDelegator,
+    SpreadsheetParserProviderDelegator,
+    ValidatorProviderDelegator {
 
     @Override
     default ConverterProvider converterProvider() {

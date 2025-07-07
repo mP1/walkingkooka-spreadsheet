@@ -33,7 +33,7 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
      * comparator will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetComparator.class.getSimpleName()
+        "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetComparator.class.getSimpleName()
     );
 
     /**
@@ -42,8 +42,8 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     public static SpreadsheetComparatorProvider aliases(final SpreadsheetComparatorAliasSet aliases,
                                                         final SpreadsheetComparatorProvider provider) {
         return AliasesSpreadsheetComparatorProvider.with(
-                aliases,
-                provider
+            aliases,
+            provider
         );
     }
 
@@ -74,8 +74,8 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     public static SpreadsheetComparatorProvider filtered(final SpreadsheetComparatorProvider provider,
                                                          final SpreadsheetComparatorInfoSet infos) {
         return FilteredSpreadsheetComparatorProvider.with(
-                provider,
-                infos
+            provider,
+            infos
         );
     }
 
@@ -85,8 +85,8 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     public static SpreadsheetComparatorProvider filteredMapped(final SpreadsheetComparatorInfoSet infos,
                                                                final SpreadsheetComparatorProvider provider) {
         return FilteredMappedSpreadsheetComparatorProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -96,8 +96,8 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     public static SpreadsheetComparatorProvider mergedMapped(final SpreadsheetComparatorInfoSet infos,
                                                              final SpreadsheetComparatorProvider provider) {
         return MergedMappedSpreadsheetComparatorProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 

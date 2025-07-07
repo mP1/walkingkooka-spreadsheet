@@ -45,7 +45,7 @@ import java.time.LocalTime;
 import java.util.Locale;
 
 public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext>,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
     private final static Locale LOCALE = Locale.FRANCE;
 
@@ -74,13 +74,13 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     public void testConvertDate() {
         final LocalDate date = LocalDate.of(2000, 1, 31);
         this.convertAndCheck(date,
-                LocalDateTime.class,
-                Converters.localDateToLocalDateTime()
-                        .convertOrFail(
-                                date,
-                                LocalDateTime.class,
-                                this.converterContext()
-                        )
+            LocalDateTime.class,
+            Converters.localDateToLocalDateTime()
+                .convertOrFail(
+                    date,
+                    LocalDateTime.class,
+                    this.converterContext()
+                )
         );
     }
 
@@ -88,14 +88,14 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     public void testConvertTime() {
         final LocalTime time = LocalTime.of(12, 58, 59);
         this.convertAndCheck(
-                time,
-                LocalDateTime.class,
-                Converters.localTimeToLocalDateTime()
-                        .convertOrFail(
-                                time,
-                                LocalDateTime.class,
-                                this.converterContext()
-                        )
+            time,
+            LocalDateTime.class,
+            Converters.localTimeToLocalDateTime()
+                .convertOrFail(
+                    time,
+                    LocalDateTime.class,
+                    this.converterContext()
+                )
         );
     }
 
@@ -103,8 +103,8 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     public void testToString() {
         final SpreadsheetConverterContext converterContext = this.converterContext();
         this.toStringAndCheck(
-                SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(converterContext),
-                converterContext.toString()
+            SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(converterContext),
+            converterContext.toString()
         );
     }
 
@@ -160,37 +160,37 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                SpreadsheetConverters.basic(),
-                (s) -> {
-                    throw new UnsupportedOperationException();
-                },
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        dateTimeContext(),
-                                        decimalNumberContext()
-                                ),
-                                ExpressionNumberKind.DEFAULT
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            SpreadsheetConverters.basic(),
+            (s) -> {
+                throw new UnsupportedOperationException();
+            },
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        Converters.fake(),
+                        dateTimeContext(),
+                        decimalNumberContext()
+                    ),
+                    ExpressionNumberKind.DEFAULT
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            )
         );
     }
 
     private DateTimeContext dateTimeContext() {
         return DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(LOCALE)
-                ),
-                LOCALE,
-                1900,
-                19,
-                LocalDateTime::now
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(LOCALE)
+            ),
+            LOCALE,
+            1900,
+            19,
+            LocalDateTime::now
         );
     }
 
@@ -199,12 +199,12 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        DecimalFormatSymbols.getInstance(LOCALE)
-                ),
-                LOCALE,
-                MathContext.UNLIMITED
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                DecimalFormatSymbols.getInstance(LOCALE)
+            ),
+            LOCALE,
+            MathContext.UNLIMITED
         );
     }
 

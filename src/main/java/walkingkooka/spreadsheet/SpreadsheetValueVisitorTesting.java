@@ -38,7 +38,7 @@ public interface SpreadsheetValueVisitorTesting<V extends SpreadsheetValueVisito
     @Test
     default void testAcceptWithNull() {
         this.createVisitor()
-                .accept(null);
+            .accept(null);
     }
 
     @Override

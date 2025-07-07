@@ -27,23 +27,23 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                Optional.empty(),
-                Optional.empty()
+            Optional.empty(),
+            Optional.empty()
         );
     }
 
     @Test
     public void testFormatNonNull() {
         this.formatAndCheck(
-                "Hello2"
+            "Hello2"
         );
     }
 
     @Test
     public void testToken() {
         this.tokensAndCheck(
-                this.createContext(),
-                Lists.empty()
+            this.createContext(),
+            Lists.empty()
         );
     }
 

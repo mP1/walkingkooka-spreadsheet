@@ -34,7 +34,7 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
      */
     static SpreadsheetDateFormatPattern with(final ParserToken token) {
         SpreadsheetDateFormatPatternSpreadsheetFormatParserTokenVisitor.with()
-                .startAccept(token);
+            .startAccept(token);
 
         return new SpreadsheetDateFormatPattern(token);
     }
@@ -60,8 +60,8 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
     public List<SpreadsheetDateFormatPattern> patterns() {
         if (null == this.patterns) {
             this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                    this,
-                    SpreadsheetDateFormatPattern::new
+                this,
+                SpreadsheetDateFormatPattern::new
             );
         }
         return this.patterns;
@@ -72,8 +72,8 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetDateFormatPattern removeColor() {
         return this.removeIf0(
-                COLOR_PREDICATE,
-                SpreadsheetDateFormatPattern::new
+            COLOR_PREDICATE,
+            SpreadsheetDateFormatPattern::new
         );
     }
 
@@ -82,16 +82,16 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetDateFormatPattern setColorName(final SpreadsheetColorName name) {
         return this.setColorName0(
-                name,
-                SpreadsheetPattern::parseDateFormatPattern
+            name,
+            SpreadsheetPattern::parseDateFormatPattern
         );
     }
 
     @Override
     public SpreadsheetPattern setColorNumber(final int colorNumber) {
         return this.setColorNumber0(
-                colorNumber,
-                SpreadsheetPattern::parseDateFormatPattern
+            colorNumber,
+            SpreadsheetPattern::parseDateFormatPattern
         );
     }
 
@@ -100,8 +100,8 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetDateFormatPattern removeCondition() {
         return this.removeIf0(
-                CONDITION_PREDICATE,
-                SpreadsheetDateFormatPattern::new
+            CONDITION_PREDICATE,
+            SpreadsheetDateFormatPattern::new
         );
     }
 

@@ -34,17 +34,17 @@ final class MergedMappedSpreadsheetComparatorProvider implements SpreadsheetComp
         Objects.requireNonNull(provider, "provider");
 
         return new MergedMappedSpreadsheetComparatorProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
     private MergedMappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
                                                       final SpreadsheetComparatorProvider provider) {
         this.mapper = MergedProviderMapper.with(
-                infos,
-                provider.spreadsheetComparatorInfos(),
-                SpreadsheetComparatorPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetComparatorInfos(),
+            SpreadsheetComparatorPluginHelper.INSTANCE
         );
         this.provider = provider;
     }
@@ -58,10 +58,10 @@ final class MergedMappedSpreadsheetComparatorProvider implements SpreadsheetComp
         final SpreadsheetComparatorName name = selector.name();
 
         return this.provider.spreadsheetComparator(
-                selector.setName(
-                        this.mapper.name(name)
-                ),
-                context
+            selector.setName(
+                this.mapper.name(name)
+            ),
+            context
         );
     }
 
@@ -74,9 +74,9 @@ final class MergedMappedSpreadsheetComparatorProvider implements SpreadsheetComp
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetComparator(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 

@@ -124,14 +124,14 @@ public final class ColorSpreadsheetFormatParserTokenTest extends ParentSpreadshe
 
         this.checkEquals("9139152A9162A9172A9182A42A", b.toString());
         this.checkEquals(
-                Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        name, name, name, name, name,
-                        whitespace, whitespace, whitespace, whitespace, whitespace,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visited"
+            Lists.of(token, token, token,
+                open, open, open, open, open,
+                name, name, name, name, name,
+                whitespace, whitespace, whitespace, whitespace, whitespace,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visited"
         );
     }
 
@@ -140,32 +140,32 @@ public final class ColorSpreadsheetFormatParserTokenTest extends ParentSpreadshe
     @Test
     public void testKindColorName() {
         this.kindAndCheck(
-                ColorSpreadsheetFormatParserToken.with(
-                        Lists.of(
-                                this.bracketOpen(),
-                                SpreadsheetFormatParserToken.colorName("RED", "RED"),
-                                this.whitespace(),
-                                this.bracketClose()
-                        ),
-                        "[RED]"
+            ColorSpreadsheetFormatParserToken.with(
+                Lists.of(
+                    this.bracketOpen(),
+                    SpreadsheetFormatParserToken.colorName("RED", "RED"),
+                    this.whitespace(),
+                    this.bracketClose()
                 ),
-                SpreadsheetFormatParserTokenKind.COLOR_NAME
+                "[RED]"
+            ),
+            SpreadsheetFormatParserTokenKind.COLOR_NAME
         );
     }
 
     @Test
     public void testKindColorNumber() {
         this.kindAndCheck(
-                ColorSpreadsheetFormatParserToken.with(
-                        Lists.of(
-                                this.bracketOpen(),
-                                SpreadsheetFormatParserToken.colorNumber(12, "12"),
-                                this.whitespace(),
-                                this.bracketClose()
-                        ),
-                        "[Color 12]"
+            ColorSpreadsheetFormatParserToken.with(
+                Lists.of(
+                    this.bracketOpen(),
+                    SpreadsheetFormatParserToken.colorNumber(12, "12"),
+                    this.whitespace(),
+                    this.bracketClose()
                 ),
-                SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+                "[Color 12]"
+            ),
+            SpreadsheetFormatParserTokenKind.COLOR_NUMBER
         );
     }
 
@@ -179,9 +179,9 @@ public final class ColorSpreadsheetFormatParserTokenTest extends ParentSpreadshe
     @Override
     List<ParserToken> tokens() {
         return Lists.of(this.bracketOpen(),
-                SpreadsheetFormatParserToken.colorName("RED", "RED"),
-                this.whitespace(),
-                this.bracketClose());
+            SpreadsheetFormatParserToken.colorName("RED", "RED"),
+            this.whitespace(),
+            this.bracketClose());
     }
 
     @Override
@@ -192,9 +192,9 @@ public final class ColorSpreadsheetFormatParserTokenTest extends ParentSpreadshe
     @Override
     public ColorSpreadsheetFormatParserToken createDifferentToken() {
         return ColorSpreadsheetFormatParserToken.with(Lists.of(this.bracketOpen(),
-                        SpreadsheetFormatParserToken.colorName("GREEN", "GREEN"),
-                        this.bracketClose()),
-                "[GREEN]");
+                SpreadsheetFormatParserToken.colorName("GREEN", "GREEN"),
+                this.bracketClose()),
+            "[GREEN]");
     }
 
     @Override

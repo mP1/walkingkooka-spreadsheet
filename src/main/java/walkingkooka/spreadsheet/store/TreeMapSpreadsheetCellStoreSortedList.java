@@ -42,14 +42,14 @@ final class TreeMapSpreadsheetCellStoreSortedList {
     private TreeMapSpreadsheetCellStoreSortedList(final SpreadsheetCellRangeReferencePath path) {
         super();
         this.comparator = SpreadsheetCellReference.cellComparator(
-                path.comparator()
+            path.comparator()
         );
         this.cells = Lists.array();
     }
 
     Optional<SpreadsheetCell> get(final SpreadsheetCellReference reference) {
         return this.offset(
-                this.indexOf(reference)
+            this.indexOf(reference)
         );
     }
 
@@ -81,9 +81,9 @@ final class TreeMapSpreadsheetCellStoreSortedList {
     Optional<SpreadsheetCell> offset(final int index) {
         final List<SpreadsheetCell> cells = this.cells;
         return Optional.ofNullable(
-                index < 0 || index >= cells.size() ?
-                        null :
-                        cells.get(index)
+            index < 0 || index >= cells.size() ?
+                null :
+                cells.get(index)
         );
     }
 
@@ -107,8 +107,8 @@ final class TreeMapSpreadsheetCellStoreSortedList {
                 cells.add(cell);
             } else {
                 cells.add(
-                        index,
-                        cell
+                    index,
+                    cell
                 );
             }
         }
@@ -129,9 +129,9 @@ final class TreeMapSpreadsheetCellStoreSortedList {
 
     private int indexOf(final SpreadsheetCellReference reference) {
         return Collections.binarySearch(
-                this.cells,
-                reference.setFormula(SpreadsheetFormula.EMPTY),
-                this.comparator
+            this.cells,
+            reference.setFormula(SpreadsheetFormula.EMPTY),
+            this.comparator
         );
     }
 

@@ -56,8 +56,8 @@ final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implem
         Objects.requireNonNull(cells, "cells");
 
         return new SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator(
-                range,
-                cells
+            range,
+            cells
         );
     }
 
@@ -67,26 +67,26 @@ final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implem
         this.nextRowFirstColumn = range.begin();
 
         final SpreadsheetColumnReference lastColumn = range.end()
-                .column();
+            .column();
 
         this.rowSubMap = lastColumn.isLast() ?
-                (left, right) ->
-                        left.row().isLast() ?
-                                cells.tailMap(
-                                        left // last row and last column
-                                ) :
-                                cells.subMap(
-                                        left,
-                                        left.addRow(1)
-                                                .setColumn(
-                                                        SpreadsheetReferenceKind.RELATIVE.firstColumn()
-                                                ) // to exclusive
-                                ) :
-                (left, right) ->
-                        cells.subMap(
-                                left,
-                                right.addColumn(1) // to exclusive
-                        );
+            (left, right) ->
+                left.row().isLast() ?
+                    cells.tailMap(
+                        left // last row and last column
+                    ) :
+                    cells.subMap(
+                        left,
+                        left.addRow(1)
+                            .setColumn(
+                                SpreadsheetReferenceKind.RELATIVE.firstColumn()
+                            ) // to exclusive
+                    ) :
+            (left, right) ->
+                cells.subMap(
+                    left,
+                    right.addColumn(1) // to exclusive
+                );
     }
 
     @Override
@@ -156,10 +156,10 @@ final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator implem
             final SpreadsheetCellReference lastCell = nextRowFirstColumn.setColumn(bottomRight.column());
 
             this.rowIterator = this.rowSubMap.apply(
-                            nextRowFirstColumn,
-                            lastCell
-                    ).values()
-                    .iterator();
+                    nextRowFirstColumn,
+                    lastCell
+                ).values()
+                .iterator();
 
             if (nextRowFirstColumn.row().isLast()) {
                 nextRowFirstColumn = null;

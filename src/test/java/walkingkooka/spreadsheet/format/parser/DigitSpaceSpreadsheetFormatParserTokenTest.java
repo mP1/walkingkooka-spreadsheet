@@ -72,7 +72,7 @@ public final class DigitSpaceSpreadsheetFormatParserTokenTest extends NonSymbolS
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.DIGIT_SPACE
+            SpreadsheetFormatParserTokenKind.DIGIT_SPACE
         );
     }
 

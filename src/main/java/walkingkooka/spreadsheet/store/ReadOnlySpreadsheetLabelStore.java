@@ -80,8 +80,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     public Set<SpreadsheetLabelName> ids(final int offset,
                                          final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -89,8 +89,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     public List<SpreadsheetLabelMapping> values(final int offset,
                                                 final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -98,8 +98,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     public List<SpreadsheetLabelMapping> between(final SpreadsheetLabelName from,
                                                  final SpreadsheetLabelName to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 
@@ -119,9 +119,9 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
                                                                 final int offset,
                                                                 final int count) {
         return this.store.findLabelsWithReference(
-                reference,
-                offset,
-                count
+            reference,
+            offset,
+            count
         );
     }
 

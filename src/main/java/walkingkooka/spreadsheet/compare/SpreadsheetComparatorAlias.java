@@ -30,10 +30,10 @@ public final class SpreadsheetComparatorAlias implements PluginAliasLike<Spreads
 
     public static SpreadsheetComparatorAlias parse(final String text) {
         return with(
-                PluginAlias.parse(
-                        text,
-                        SpreadsheetComparatorPluginHelper.INSTANCE
-                )
+            PluginAlias.parse(
+                text,
+                SpreadsheetComparatorPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -41,17 +41,17 @@ public final class SpreadsheetComparatorAlias implements PluginAliasLike<Spreads
                                                   final Optional<SpreadsheetComparatorSelector> selector,
                                                   final Optional<AbsoluteUrl> url) {
         return with(
-                PluginAlias.with(
-                        name,
-                        selector,
-                        url
-                )
+            PluginAlias.with(
+                name,
+                selector,
+                url
+            )
         );
     }
 
     static SpreadsheetComparatorAlias with(final PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector> pluginAlias) {
         return new SpreadsheetComparatorAlias(
-                Objects.requireNonNull(pluginAlias, "pluginAlias")
+            Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 

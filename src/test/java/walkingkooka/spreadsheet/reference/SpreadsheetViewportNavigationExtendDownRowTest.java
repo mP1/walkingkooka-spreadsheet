@@ -25,25 +25,25 @@ public final class SpreadsheetViewportNavigationExtendDownRowTest extends Spread
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetSelection.parseCellRange("C3:C4")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+            SpreadsheetSelection.parseCell("C3"),
+            SpreadsheetSelection.parseCellRange("C3:C4")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseColumn("C")
+            SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseRow("3"),
-                SpreadsheetSelection.parseRowRange("3:4")
-                        .setAnchor(SpreadsheetViewportAnchor.TOP)
+            SpreadsheetSelection.parseRow("3"),
+            SpreadsheetSelection.parseRowRange("3:4")
+                .setAnchor(SpreadsheetViewportAnchor.TOP)
         );
     }
 

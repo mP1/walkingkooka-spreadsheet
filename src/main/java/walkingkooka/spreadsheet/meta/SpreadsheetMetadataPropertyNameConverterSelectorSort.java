@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorSort extends Spreads
      */
     private SpreadsheetMetadataPropertyNameConverterSelectorSort() {
         super(
-                "sortConverter"
+            "sortConverter"
         );
     }
 

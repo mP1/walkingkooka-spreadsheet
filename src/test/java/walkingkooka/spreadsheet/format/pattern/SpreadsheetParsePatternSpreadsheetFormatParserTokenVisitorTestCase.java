@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
 public abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T>,
-        T extends SpreadsheetFormatParserToken>
-        extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
+    T extends SpreadsheetFormatParserToken>
+    extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
 
     SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitorTestCase() {
         super();

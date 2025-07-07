@@ -76,13 +76,13 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     @Test
     public void testUnmarshallWithoutId() {
         this.unmarshallAndCheck(this.jsonNodeWithoutId(),
-                Group.with(Optional.empty(), this.name()));
+            Group.with(Optional.empty(), this.name()));
     }
 
     @Test
     public void testUnmarshallWithId() {
         this.unmarshallAndCheck(this.jsonNodeWithId(),
-                Group.with(this.createId(), this.name()));
+            Group.with(this.createId(), this.name()));
     }
 
     @Test
@@ -97,7 +97,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
     private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(Group.NAME_PROPERTY, this.marshallContext().marshall(this.name()));
+            .set(Group.NAME_PROPERTY, this.marshallContext().marshall(this.name()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -105,8 +105,8 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
         final JsonNodeMarshallContext context = this.marshallContext();
 
         return JsonNode.object()
-                .set(Group.ID_PROPERTY, context.marshall(createId().get()))
-                .set(Group.NAME_PROPERTY, context.marshall(this.name()));
+            .set(Group.ID_PROPERTY, context.marshall(createId().get()))
+            .set(Group.NAME_PROPERTY, context.marshall(this.name()));
     }
 
     @Test

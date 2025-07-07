@@ -31,24 +31,24 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetParserName} for a {@link SpreadsheetParser}.
  */
 public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetParserInfo, SpreadsheetParserName>,
-        HateosResource<SpreadsheetParserName> {
+    HateosResource<SpreadsheetParserName> {
 
     public static SpreadsheetParserInfo parse(final String text) {
         return new SpreadsheetParserInfo(
-                PluginInfo.parse(
-                        text,
-                        SpreadsheetParserName::with
-                )
+            PluginInfo.parse(
+                text,
+                SpreadsheetParserName::with
+            )
         );
     }
 
     public static SpreadsheetParserInfo with(final AbsoluteUrl url,
                                              final SpreadsheetParserName name) {
         return new SpreadsheetParserInfo(
-                PluginInfo.with(
-                        url,
-                        name
-                )
+            PluginInfo.with(
+                url,
+                name
+            )
         );
     }
 
@@ -73,10 +73,10 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
     @Override
     public SpreadsheetParserInfo setName(final SpreadsheetParserName name) {
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetParserInfo(
-                        this.pluginInfo.setName(name)
-                );
+            this :
+            new SpreadsheetParserInfo(
+                this.pluginInfo.setName(name)
+            );
     }
 
     private final PluginInfo<SpreadsheetParserName> pluginInfo;
@@ -98,8 +98,8 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetParserInfo &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetParserInfo &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetParserInfo other) {
@@ -124,16 +124,16 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
     static SpreadsheetParserInfo unmarshall(final JsonNode node,
                                             final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserInfo.parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserInfo.class),
-                SpreadsheetParserInfo::unmarshall,
-                SpreadsheetParserInfo::marshall,
-                SpreadsheetParserInfo.class
+            JsonNodeContext.computeTypeName(SpreadsheetParserInfo.class),
+            SpreadsheetParserInfo::unmarshall,
+            SpreadsheetParserInfo::marshall,
+            SpreadsheetParserInfo.class
         );
         SpreadsheetParserName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }

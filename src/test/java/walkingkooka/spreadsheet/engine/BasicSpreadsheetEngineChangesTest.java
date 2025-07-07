@@ -46,7 +46,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Optional;
 
 public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChanges>
-        implements ToStringTesting<BasicSpreadsheetEngineChanges> {
+    implements ToStringTesting<BasicSpreadsheetEngineChanges> {
 
     // toString.........................................................................................................
 
@@ -55,103 +55,103 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.INSTANCE;
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChanges.with(
-                engine,
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                SpreadsheetDeltaProperties.ALL,
-                BasicSpreadsheetEngineChangesMode.IMMEDIATE, // IMMEDIATE is simpler than BATCH
-                new FakeSpreadsheetEngineContext() {
+            engine,
+            SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+            SpreadsheetDeltaProperties.ALL,
+            BasicSpreadsheetEngineChangesMode.IMMEDIATE, // IMMEDIATE is simpler than BATCH
+            new FakeSpreadsheetEngineContext() {
 
-                    @Override
-                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
-                        return new FakeSpreadsheetExpressionEvaluationContext() {
-                            @Override
-                            public String toString() {
-                                return this.getClass().getSimpleName();
-                            }
-                        };
-                    }
-
-                    @Override
-                    public SpreadsheetStoreRepository storeRepository() {
-                        return new FakeSpreadsheetStoreRepository() {
-                            @Override
-                            public SpreadsheetCellStore cells() {
-                                return SpreadsheetCellStores.treeMap();
-                            }
-
-                            @Override
-                            public SpreadsheetCellReferencesStore cellReferences() {
-                                return SpreadsheetCellReferencesStores.treeMap();
-                            }
-
-                            @Override
-                            public SpreadsheetColumnStore columns() {
-                                return SpreadsheetColumnStores.treeMap();
-                            }
-
-                            @Override
-                            public SpreadsheetLabelStore labels() {
-                                return SpreadsheetLabelStores.treeMap();
-                            }
-
-                            @Override
-                            public SpreadsheetLabelReferencesStore labelReferences() {
-                                return SpreadsheetLabelReferencesStores.treeMap();
-                            }
-
-                            @Override
-                            public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
-                                return SpreadsheetCellRangeStores.treeMap();
-                            }
-
-                            @Override
-                            public SpreadsheetRowStore rows() {
-                                return SpreadsheetRowStores.treeMap();
-                            }
-                        };
-                    }
+                @Override
+                public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                     final SpreadsheetExpressionReferenceLoader loader) {
+                    return new FakeSpreadsheetExpressionEvaluationContext() {
+                        @Override
+                        public String toString() {
+                            return this.getClass().getSimpleName();
+                        }
+                    };
                 }
+
+                @Override
+                public SpreadsheetStoreRepository storeRepository() {
+                    return new FakeSpreadsheetStoreRepository() {
+                        @Override
+                        public SpreadsheetCellStore cells() {
+                            return SpreadsheetCellStores.treeMap();
+                        }
+
+                        @Override
+                        public SpreadsheetCellReferencesStore cellReferences() {
+                            return SpreadsheetCellReferencesStores.treeMap();
+                        }
+
+                        @Override
+                        public SpreadsheetColumnStore columns() {
+                            return SpreadsheetColumnStores.treeMap();
+                        }
+
+                        @Override
+                        public SpreadsheetLabelStore labels() {
+                            return SpreadsheetLabelStores.treeMap();
+                        }
+
+                        @Override
+                        public SpreadsheetLabelReferencesStore labelReferences() {
+                            return SpreadsheetLabelReferencesStores.treeMap();
+                        }
+
+                        @Override
+                        public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
+                            return SpreadsheetCellRangeStores.treeMap();
+                        }
+
+                        @Override
+                        public SpreadsheetRowStore rows() {
+                            return SpreadsheetRowStores.treeMap();
+                        }
+                    };
+                }
+            }
         );
 
         changes.onCellSaved(
-                SpreadsheetSelection.A1
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("1+2")
-                        )
+            SpreadsheetSelection.A1
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("1+2")
+                )
         );
         changes.onCellSaved(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY
-                                        .setText("3+4")
-                        )
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY
+                        .setText("3+4")
+                )
         );
 
         changes.onColumnSaved(
-                SpreadsheetSelection.parseColumn("M")
-                        .column()
+            SpreadsheetSelection.parseColumn("M")
+                .column()
         );
         changes.onColumnSaved(
-                SpreadsheetSelection.parseColumn("N")
-                        .column()
-                        .setHidden(true)
+            SpreadsheetSelection.parseColumn("N")
+                .column()
+                .setHidden(true)
         );
 
         changes.onRowSaved(
-                SpreadsheetSelection.parseRow("6")
-                        .row()
+            SpreadsheetSelection.parseRow("6")
+                .row()
         );
         changes.onRowSaved(
-                SpreadsheetSelection.parseRow("7")
-                        .row()
-                        .setHidden(true)
+            SpreadsheetSelection.parseRow("7")
+                .row()
+                .setHidden(true)
         );
 
         this.toStringAndCheck(
-                changes,
-                "SKIP_EVALUATE cells: A1: A1 1+2 status=SAVED, B2: B2 3+4 status=SAVED columns: M: M status=SAVED, N: N hidden=true status=SAVED rows: 6: 6 status=SAVED, 7: 7 hidden=true status=SAVED"
+            changes,
+            "SKIP_EVALUATE cells: A1: A1 1+2 status=SAVED, B2: B2 3+4 status=SAVED columns: M: M status=SAVED, N: N hidden=true status=SAVED rows: 6: 6 status=SAVED, 7: 7 hidden=true status=SAVED"
         );
     }
 

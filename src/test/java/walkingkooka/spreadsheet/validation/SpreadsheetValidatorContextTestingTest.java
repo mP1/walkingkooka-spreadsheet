@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     @Override
     public TestSpreadsheetValidatorContext createContext() {
@@ -52,8 +52,8 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
     }
 
     static class TestSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
-            ConverterContextDelegator,
-            EnvironmentContextDelegator {
+        ConverterContextDelegator,
+        EnvironmentContextDelegator {
 
         TestSpreadsheetValidatorContext() {
             this(SpreadsheetSelection.A1);

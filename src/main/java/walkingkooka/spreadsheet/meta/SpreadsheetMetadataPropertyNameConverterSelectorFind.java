@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorFind extends Spreads
      */
     private SpreadsheetMetadataPropertyNameConverterSelectorFind() {
         super(
-                "findConverter"
+            "findConverter"
         );
     }
 

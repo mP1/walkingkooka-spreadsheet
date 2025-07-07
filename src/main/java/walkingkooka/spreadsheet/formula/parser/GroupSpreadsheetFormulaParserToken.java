@@ -39,9 +39,9 @@ public final class GroupSpreadsheetFormulaParserToken extends ParentSpreadsheetF
     @Override
     public GroupSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                GroupSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            GroupSpreadsheetFormulaParserToken::with
         );
     }
 

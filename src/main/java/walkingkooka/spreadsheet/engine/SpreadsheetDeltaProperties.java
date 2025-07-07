@@ -117,8 +117,8 @@ public enum SpreadsheetDeltaProperties {
 
     SpreadsheetDeltaProperties() {
         this.kebabCase = CaseKind.SNAKE.change(
-                this.name(),
-                CaseKind.KEBAB
+            this.name(),
+            CaseKind.KEBAB
         );
     }
 
@@ -140,7 +140,7 @@ public enum SpreadsheetDeltaProperties {
      * performed but the response with changes will be empty.
      */
     public final static Set<SpreadsheetDeltaProperties> NONE = Sets.readOnly(
-            EnumSet.noneOf(SpreadsheetDeltaProperties.class)
+        EnumSet.noneOf(SpreadsheetDeltaProperties.class)
     );
 
     /**
@@ -148,9 +148,9 @@ public enum SpreadsheetDeltaProperties {
      */
     static SpreadsheetDeltaProperties with(final String kebabCase) {
         return Arrays.stream(values())
-                .filter(v -> kebabCase.equals(v.kebabCase))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown property \"" + kebabCase + "\"."));
+            .filter(v -> kebabCase.equals(v.kebabCase))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Unknown property \"" + kebabCase + "\"."));
     }
 
     /**
@@ -159,19 +159,19 @@ public enum SpreadsheetDeltaProperties {
      */
     public static Set<SpreadsheetDeltaProperties> parse(final String selection) {
         return CharSequences.isNullOrEmpty(selection) || "*".equals(selection) ?
-                ALL :
-                parseCsv(selection);
+            ALL :
+            parseCsv(selection);
     }
 
     private static Set<SpreadsheetDeltaProperties> parseCsv(final String values) {
         return Sets.readOnly(
-                Arrays.stream(values.split(","))
-                        .map(SpreadsheetDeltaProperties::with)
-                        .collect(
-                                Collectors.toCollection(
-                                        () -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)
-                                )
-                        )
+            Arrays.stream(values.split(","))
+                .map(SpreadsheetDeltaProperties::with)
+                .collect(
+                    Collectors.toCollection(
+                        () -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)
+                    )
+                )
         );
     }
 
@@ -182,8 +182,8 @@ public enum SpreadsheetDeltaProperties {
         Objects.requireNonNull(parameters, "parameters");
 
         return parse(
-                PROPERTIES.firstParameterValue(parameters)
-                        .orElse(null)
+            PROPERTIES.firstParameterValue(parameters)
+                .orElse(null)
         );
     }
 

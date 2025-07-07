@@ -54,8 +54,8 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         }
 
         return new TreeMapSpreadsheetMetadataStore(
-                createTemplate,
-                Objects.requireNonNull(now, "now")
+            createTemplate,
+            Objects.requireNonNull(now, "now")
         );
     }
 
@@ -75,7 +75,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     private static SpreadsheetMetadata idSetter(final SpreadsheetId id,
                                                 final SpreadsheetMetadata spreadsheetMetadata) {
         return spreadsheetMetadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SpreadsheetId.with(null == id ? 1 : id.value() + 1));
+            SpreadsheetId.with(null == id ? 1 : id.value() + 1));
     }
 
     @Override
@@ -87,18 +87,18 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         final LocalDateTime timestamp = this.now.now();
 
         SpreadsheetMetadata unsaved = this.createTemplate.set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                        creator,
-                        timestamp,
-                        creator,
-                        timestamp
-                )
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                creator,
+                timestamp,
+                creator,
+                timestamp
+            )
         );
         if (locale.isPresent()) {
             unsaved = unsaved.set(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    locale.orElse(null)
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale.orElse(null)
             );
         }
 
@@ -120,10 +120,10 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = spreadsheetMetadata.missingRequiredProperties();
         if (false == missing.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Metadata missing required properties: " +
-                            missing.stream()
-                                    .map(SpreadsheetMetadataPropertyName::toString)
-                                    .collect(Collectors.joining(", "))
+                "Metadata missing required properties: " +
+                    missing.stream()
+                        .map(SpreadsheetMetadataPropertyName::toString)
+                        .collect(Collectors.joining(", "))
             );
         }
 
@@ -154,8 +154,8 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     public Set<SpreadsheetId> ids(final int offset,
                                   final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -163,8 +163,8 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     public List<SpreadsheetMetadata> values(final int offset,
                                             final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -172,8 +172,8 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     public List<SpreadsheetMetadata> between(final SpreadsheetId from,
                                              final SpreadsheetId to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

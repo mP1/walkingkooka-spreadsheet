@@ -23,8 +23,8 @@ public final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransforme
     @Override
     public SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor(
-                null,
-                null
+            null,
+            null
         );
     }
 

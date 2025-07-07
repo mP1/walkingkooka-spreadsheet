@@ -39,33 +39,33 @@ public final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadshe
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("DEFGHI456");
 
         final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.of(
-                label1, label1.setLabelMappingReference(a1),
-                label2, label2.setLabelMappingReference(a1)
+            label1, label1.setLabelMappingReference(a1),
+            label2, label2.setLabelMappingReference(a1)
         );
 
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
-                mappings,
-                0, // offset
-                100 // count
+            mappings,
+            0, // offset
+            100 // count
         );
 
         visitor.filter = a1;
 
         mappings.values()
-                .forEach(visitor::gatherMapping);
+            .forEach(visitor::gatherMapping);
 
         this.toStringAndCheck(
-                visitor,
-                "[ABCDEF123=A1, DEFGHI456=A1]"
+            visitor,
+            "[ABCDEF123=A1, DEFGHI456=A1]"
         );
     }
 
     @Override
     public TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor createVisitor() {
         return new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
-                null, // mappings
-                0, // offset
-                0 // count
+            null, // mappings
+            0, // offset
+            0 // count
         );
     }
 

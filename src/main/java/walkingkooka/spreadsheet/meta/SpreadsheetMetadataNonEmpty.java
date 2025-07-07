@@ -73,8 +73,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
         for (final Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value.entrySet()) {
             metadata = metadata.set(
-                    nameAndValue.getKey(),
-                    Cast.to(nameAndValue.getValue())
+                nameAndValue.getKey(),
+                Cast.to(nameAndValue.getValue())
             );
         }
 
@@ -92,11 +92,11 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         }
 
         final String invalid = this.value.keySet()
-                .stream()
-                .filter(SpreadsheetMetadataPropertyName::isNotDefaultProperty)
-                .map(Object::toString)
-                .sorted()
-                .collect(Collectors.joining(", "));
+            .stream()
+            .filter(SpreadsheetMetadataPropertyName::isNotDefaultProperty)
+            .map(Object::toString)
+            .sorted()
+            .collect(Collectors.joining(", "));
         if (false == invalid.isEmpty()) {
             throw new IllegalArgumentException("Defaults includes invalid default values: " + invalid);
         }
@@ -108,9 +108,9 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     <V> Optional<V> getIgnoringDefaults0(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return Optional.ofNullable(
-                Cast.to(
-                        this.value.get(propertyName)
-                )
+            Cast.to(
+                this.value.get(propertyName)
+            )
         );
     }
 
@@ -147,15 +147,15 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         copy.putAll(this.value());
         final Object removed = copy.remove(propertyName);
         return null == removed ?
-                this :
-                this.removeNonEmpty(copy);
+            this :
+            this.removeNonEmpty(copy);
     }
 
     private SpreadsheetMetadata removeNonEmpty(final Map<SpreadsheetMetadataPropertyName<?>, Object> copy) {
         final SpreadsheetMetadata defaults = this.defaults;
         return copy.isEmpty() && null == defaults ?
-                EMPTY :
-                new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), defaults);
+            EMPTY :
+            new SpreadsheetMetadataNonEmpty(Maps.immutable(copy), defaults);
     }
 
     // getters..........................................................................................................
@@ -230,8 +230,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     void accept(final SpreadsheetMetadataVisitor visitor) {
         this.value()
-                .entrySet()
-                .forEach(visitor::acceptPropertyAndValue);
+            .entrySet()
+            .forEach(visitor::acceptPropertyAndValue);
     }
 
     // JsonNodeContext..................................................................................................
@@ -244,8 +244,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             final Object value = propertyAndValue.getValue();
 
             children.add(
-                    context.marshall(value)
-                            .setName(propertyName.jsonPropertyName)
+                context.marshall(value)
+                    .setName(propertyName.jsonPropertyName)
             );
         }
     }

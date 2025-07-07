@@ -67,79 +67,79 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
     @Test
     public void testWithUnknownImporterName() {
         AliasesSpreadsheetImporterProvider.with(
-                SpreadsheetImporterAliasSet.parse("unknown-importer404"),
-                new FakeSpreadsheetImporterProvider() {
-                    @Override
-                    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
-                        return SpreadsheetImporterInfoSet.parse("https://example.com/importer111 importer111");
-                    }
+            SpreadsheetImporterAliasSet.parse("unknown-importer404"),
+            new FakeSpreadsheetImporterProvider() {
+                @Override
+                public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
+                    return SpreadsheetImporterInfoSet.parse("https://example.com/importer111 importer111");
                 }
+            }
         );
     }
 
     @Test
     public void testSpreadsheetImporterNameWithName() {
         this.spreadsheetImporterAndCheck(
-                NAME1,
-                Lists.empty(),
-                CONTEXT,
-                IMPORTER1
+            NAME1,
+            Lists.empty(),
+            CONTEXT,
+            IMPORTER1
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelectorWithName() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(NAME1 + ""),
-                CONTEXT,
-                IMPORTER1
+            SpreadsheetImporterSelector.parse(NAME1 + ""),
+            CONTEXT,
+            IMPORTER1
         );
     }
 
     @Test
     public void testSpreadsheetImporterNameWithAlias() {
         this.spreadsheetImporterAndCheck(
-                ALIAS2,
-                Lists.empty(),
-                CONTEXT,
-                IMPORTER2
+            ALIAS2,
+            Lists.empty(),
+            CONTEXT,
+            IMPORTER2
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelectorWithAlias() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(ALIAS2 + ""),
-                CONTEXT,
-                IMPORTER2
+            SpreadsheetImporterSelector.parse(ALIAS2 + ""),
+            CONTEXT,
+            IMPORTER2
         );
     }
 
     @Test
     public void testSpreadsheetImporterNameWithSelector() {
         this.spreadsheetImporterAndCheck(
-                NAME4,
-                Lists.empty(),
-                CONTEXT,
-                IMPORTER3
+            NAME4,
+            Lists.empty(),
+            CONTEXT,
+            IMPORTER3
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelectorWithSelector() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(NAME4 + ""),
-                CONTEXT,
-                IMPORTER3
+            SpreadsheetImporterSelector.parse(NAME4 + ""),
+            CONTEXT,
+            IMPORTER3
         );
     }
 
     @Test
     public void testInfos() {
         this.spreadsheetImporterInfosAndCheck(
-                INFO1,
-                INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from SpreadsheetImporterAliasSet
+            INFO1,
+            INFO2.setName(ALIAS2),
+            INFO4.setName(NAME4) // from SpreadsheetImporterAliasSet
         );
     }
 
@@ -148,59 +148,59 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
         final String aliases = "importer1, alias2 importer2, custom4 importer3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
-                NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
-                aliases
+            NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
+            aliases
         );
 
         return AliasesSpreadsheetImporterProvider.with(
-                SpreadsheetImporterAliasSet.parse(aliases),
-                new FakeSpreadsheetImporterProvider() {
-                    @Override
-                    public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
-                                                                   final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterName name,
-                                                                   final List<?> values,
-                                                                   final ProviderContext context) {
-                        SpreadsheetImporter importer;
-
-                        switch (name.toString()) {
-                            case NAME1_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                importer = IMPORTER1;
-                                break;
-                            case NAME2_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                importer = IMPORTER2;
-                                break;
-                            case NAME3_STRING:
-                                checkEquals(Lists.of(VALUE3), values, "values");
-                                importer = IMPORTER3;
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Unknown importer " + name);
-                        }
-
-                        return importer;
-                    }
-
-                    @Override
-                    public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
-                        return SpreadsheetImporterInfoSet.with(
-                                Sets.of(
-                                        INFO1,
-                                        INFO2,
-                                        INFO3
-                                )
-                        );
-                    }
+            SpreadsheetImporterAliasSet.parse(aliases),
+            new FakeSpreadsheetImporterProvider() {
+                @Override
+                public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
+                                                               final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterName name,
+                                                               final List<?> values,
+                                                               final ProviderContext context) {
+                    SpreadsheetImporter importer;
+
+                    switch (name.toString()) {
+                        case NAME1_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            importer = IMPORTER1;
+                            break;
+                        case NAME2_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            importer = IMPORTER2;
+                            break;
+                        case NAME3_STRING:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            importer = IMPORTER3;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unknown importer " + name);
+                    }
+
+                    return importer;
+                }
+
+                @Override
+                public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
+                    return SpreadsheetImporterInfoSet.with(
+                        Sets.of(
+                            INFO1,
+                            INFO2,
+                            INFO3
+                        )
+                    );
+                }
+            }
         );
     }
 

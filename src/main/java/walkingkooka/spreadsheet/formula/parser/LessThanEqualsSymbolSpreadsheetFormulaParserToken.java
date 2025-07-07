@@ -28,8 +28,8 @@ public final class LessThanEqualsSymbolSpreadsheetFormulaParserToken extends Sym
     static LessThanEqualsSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                   final String text) {
         return new LessThanEqualsSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

@@ -77,13 +77,13 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.loadCells(
-                        selection,
-                        evaluation,
-                        deltaProperties,
-                        context
-                ),
+            () -> this.engine.loadCells(
+                selection,
+                evaluation,
+                deltaProperties,
                 context
+            ),
+            context
         );
     }
 
@@ -93,13 +93,13 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                    final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.loadMultipleCellRanges(
-                        cellRanges,
-                        evaluation,
-                        deltaProperties,
-                        context
-                ),
+            () -> this.engine.loadMultipleCellRanges(
+                cellRanges,
+                evaluation,
+                deltaProperties,
                 context
+            ),
+            context
         );
     }
 
@@ -108,8 +108,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
                                      final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.saveCell(cell, context),
-                context
+            () -> this.engine.saveCell(cell, context),
+            context
         );
     }
 
@@ -117,8 +117,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.saveCells(cells, context),
-                context
+            () -> this.engine.saveCells(cells, context),
+            context
         );
     }
 
@@ -126,8 +126,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta deleteCells(final SpreadsheetSelection cells,
                                         final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.deleteCells(cells, context),
-                context
+            () -> this.engine.deleteCells(cells, context),
+            context
         );
     }
 
@@ -137,8 +137,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final SpreadsheetCellRangeReference to,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.fillCells(cells, from, to, context),
-                context
+            () -> this.engine.fillCells(cells, from, to, context),
+            context
         );
     }
 
@@ -148,10 +148,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         return this.engine.filterCells(
-                cells,
-                valueType,
-                expression,
-                context
+            cells,
+            valueType,
+            expression,
+            context
         );
     }
 
@@ -166,14 +166,14 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         return this.engine.findCells(
-                cellRange,
-                path,
-                offset,
-                count,
-                valueType,
-                expression,
-                deltaProperties,
-                context
+            cellRange,
+            path,
+            offset,
+            count,
+            valueType,
+            expression,
+            deltaProperties,
+            context
         );
     }
 
@@ -183,13 +183,13 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.sortCells(
-                        cellRange,
-                        comparatorNames,
-                        deltaProperties,
-                        context
-                ),
+            () -> this.engine.sortCells(
+                cellRange,
+                comparatorNames,
+                deltaProperties,
                 context
+            ),
+            context
         );
     }
 
@@ -200,11 +200,11 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                                   final Set<SpreadsheetDeltaProperties> properties,
                                                   final SpreadsheetEngineContext context) {
         return this.engine.findFormulaReferences(
-                reference,
-                offset,
-                count,
-                properties,
-                context
+            reference,
+            offset,
+            count,
+            properties,
+            context
         );
     }
 
@@ -218,8 +218,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
                                        final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.saveColumn(column, context),
-                context
+            () -> this.engine.saveColumn(column, context),
+            context
         );
     }
 
@@ -228,8 +228,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                           final int count,
                                           final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.deleteColumns(column, count, context),
-                context
+            () -> this.engine.deleteColumns(column, count, context),
+            context
         );
     }
 
@@ -243,8 +243,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta saveRow(final SpreadsheetRow row,
                                     final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.saveRow(row, context),
-                context
+            () -> this.engine.saveRow(row, context),
+            context
         );
     }
 
@@ -253,8 +253,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                        final int count,
                                        final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.deleteRows(row, count, context),
-                context
+            () -> this.engine.deleteRows(row, count, context),
+            context
         );
     }
 
@@ -263,8 +263,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                           final int count,
                                           final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.insertColumns(column, count, context),
-                context
+            () -> this.engine.insertColumns(column, count, context),
+            context
         );
     }
 
@@ -273,8 +273,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                        final int count,
                                        final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.insertRows(row, count, context),
-                context
+            () -> this.engine.insertRows(row, count, context),
+            context
         );
     }
 
@@ -282,8 +282,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta loadForm(final FormName name,
                                      final SpreadsheetEngineContext context) {
         return this.engine.loadForm(
-                name,
-                context
+            name,
+            context
         );
     }
 
@@ -291,8 +291,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
                                      final SpreadsheetEngineContext context) {
         return this.engine.saveForm(
-                form,
-                context
+            form,
+            context
         );
     }
 
@@ -300,8 +300,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta deleteForm(final FormName name,
                                        final SpreadsheetEngineContext context) {
         return this.engine.deleteForm(
-                name,
-                context
+            name,
+            context
         );
     }
 
@@ -310,9 +310,9 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final int count,
                                       final SpreadsheetEngineContext context) {
         return this.engine.loadForms(
-                offset,
-                count,
-                context
+            offset,
+            count,
+            context
         );
     }
 
@@ -321,20 +321,20 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                         final SpreadsheetExpressionReference selection,
                                         final SpreadsheetEngineContext context) {
         return this.engine.prepareForm(
-                name,
-                selection,
-                context
+            name,
+            selection,
+            context
         );
     }
 
     @Override
     public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
-                                         final SpreadsheetExpressionReference selection,
-                                         final SpreadsheetEngineContext context) {
+                                       final SpreadsheetExpressionReference selection,
+                                       final SpreadsheetEngineContext context) {
         return this.engine.submitForm(
-                form,
-                selection,
-                context
+            form,
+            selection,
+            context
         );
     }
 
@@ -349,9 +349,9 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                        final int count,
                                        final SpreadsheetEngineContext context) {
         return this.engine.loadLabels(
-                offset,
-                count,
-                context
+            offset,
+            count,
+            context
         );
     }
 
@@ -359,8 +359,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
                                       final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.saveLabel(mapping, context),
-                context
+            () -> this.engine.saveLabel(mapping, context),
+            context
         );
     }
 
@@ -368,8 +368,8 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
         return this.stamp(
-                () -> this.engine.deleteLabel(label, context),
-                context
+            () -> this.engine.deleteLabel(label, context),
+            context
         );
     }
 
@@ -379,10 +379,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                                     final int count,
                                                     final SpreadsheetEngineContext context) {
         return this.engine.findLabelsWithReference(
-                reference,
-                offset,
-                count,
-                context
+            reference,
+            offset,
+            count,
+            context
         );
     }
 
@@ -392,10 +392,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                                    final int count,
                                                    final SpreadsheetEngineContext context) {
         return this.engine.findCellsWithReference(
-                reference,
-                offset,
-                count,
-                context
+            reference,
+            offset,
+            count,
+            context
         );
     }
 
@@ -427,10 +427,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                              final Optional<SpreadsheetSelection> selection,
                                              final SpreadsheetEngineContext context) {
         return this.engine.window(
-                viewportRectangle,
-                includeFrozenColumnsRows,
-                selection,
-                context
+            viewportRectangle,
+            includeFrozenColumnsRows,
+            selection,
+            context
         );
     }
 
@@ -448,21 +448,21 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
         final SpreadsheetCellStore cellStore = repository.cells();
         final Runnable cellSaveWatcher = cellStore.addSaveWatcher(
-                Cast.to(watcher)
+            Cast.to(watcher)
         );
 
         try {
             final Runnable cellDeleteWatcher = cellStore.addDeleteWatcher(
-                    Cast.to(watcher)
+                Cast.to(watcher)
             );
             try {
                 final SpreadsheetLabelStore labelStore = repository.labels();
                 final Runnable saveWatcher2 = labelStore.addSaveWatcher(
-                        Cast.to(watcher)
+                    Cast.to(watcher)
                 );
                 try {
                     final Runnable labelDeleteWatcher = labelStore.addDeleteWatcher(
-                            Cast.to(watcher)
+                        Cast.to(watcher)
                     );
 
                     try {
@@ -471,11 +471,11 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                         labelDeleteWatcher.run();
                         if (watcher.saveOrDeletes > 0) {
                             repository.metadatas()
-                                    .save(
-                                            this.stamper.apply(
-                                                    context.spreadsheetMetadata()
-                                            )
-                                    );
+                                .save(
+                                    this.stamper.apply(
+                                        context.spreadsheetMetadata()
+                                    )
+                                );
                         }
                     }
                 } finally {

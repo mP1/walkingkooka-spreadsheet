@@ -30,10 +30,10 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetParserContext>,
-        T extends SpreadsheetFormulaParserToken>
-        implements ClassTesting2<P>,
-        ParserTesting2<P, SpreadsheetParserContext>,
-        TypeNameTesting<P> {
+    T extends SpreadsheetFormulaParserToken>
+    implements ClassTesting2<P>,
+    ParserTesting2<P, SpreadsheetParserContext>,
+    TypeNameTesting<P> {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static char VALUE_SEPARATOR = ',';
@@ -45,13 +45,13 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
     @Override
     public final SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                this.dateTimeContext(),
-                ExpressionNumberContexts.basic(
-                        EXPRESSION_NUMBER_KIND,
-                        this.decimalNumberContext()
-                ),
-                VALUE_SEPARATOR
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+            this.dateTimeContext(),
+            ExpressionNumberContexts.basic(
+                EXPRESSION_NUMBER_KIND,
+                this.decimalNumberContext()
+            ),
+            VALUE_SEPARATOR
         );
     }
 

@@ -43,9 +43,9 @@ import java.util.Optional;
  * Holds the formatted text which may include a color following the formatting of a value.
  */
 public final class SpreadsheetText implements HasText,
-        HasTextNode,
-        TreePrintable,
-        UsesToStringBuilder {
+    HasTextNode,
+    TreePrintable,
+    UsesToStringBuilder {
 
     /**
      * Constant that holds an empty color.
@@ -56,8 +56,8 @@ public final class SpreadsheetText implements HasText,
      * An empty {@link SpreadsheetText}.
      */
     public final static SpreadsheetText EMPTY = new SpreadsheetText(
-            WITHOUT_COLOR,
-            ""
+        WITHOUT_COLOR,
+        ""
     );
 
     /**
@@ -67,8 +67,8 @@ public final class SpreadsheetText implements HasText,
         checkText(text);
 
         return text.isEmpty() ?
-                EMPTY :
-                new SpreadsheetText(WITHOUT_COLOR, text);
+            EMPTY :
+            new SpreadsheetText(WITHOUT_COLOR, text);
     }
 
     private static void checkColor(final Optional<Color> color) {
@@ -95,8 +95,8 @@ public final class SpreadsheetText implements HasText,
         checkColor(color);
 
         return this.color.equals(color) ?
-                this :
-                this.replace(color, this.text);
+            this :
+            this.replace(color, this.text);
     }
 
     private final Optional<Color> color;
@@ -110,8 +110,8 @@ public final class SpreadsheetText implements HasText,
         checkText(text);
 
         return this.text.equals(text) ?
-                this :
-                this.replace(this.color, text);
+            this :
+            this.replace(this.color, text);
     }
 
     private final String text;
@@ -125,8 +125,8 @@ public final class SpreadsheetText implements HasText,
     @Override
     public TextNode toTextNode() {
         return this.color.map(c -> TextStyle.EMPTY.set(TextStylePropertyName.COLOR, c))
-                .orElse(TextStyle.EMPTY)
-                .replace(TextNode.text(this.text));
+            .orElse(TextStyle.EMPTY)
+            .replace(TextNode.text(this.text));
     }
 
     // Object ..........................................................................................................
@@ -139,13 +139,13 @@ public final class SpreadsheetText implements HasText,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetText &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetText &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetText other) {
         return this.color.equals(other.color) &&
-                this.text.equals(other.text);
+            this.text.equals(other.text);
     }
 
     @Override
@@ -194,7 +194,7 @@ public final class SpreadsheetText implements HasText,
         }
 
         return with(text)
-                .setColor(Optional.ofNullable(color));
+            .setColor(Optional.ofNullable(color));
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
@@ -203,8 +203,8 @@ public final class SpreadsheetText implements HasText,
         final Optional<Color> color = this.color;
         if (color.isPresent()) {
             object = object.set(
-                    COLOR_PROPERTY,
-                    context.marshallOptional(color)
+                COLOR_PROPERTY,
+                context.marshallOptional(color)
             );
         }
 
@@ -221,10 +221,10 @@ public final class SpreadsheetText implements HasText,
         Color.BLACK.hashCode();
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetText.class),
-                SpreadsheetText::unmarshall,
-                SpreadsheetText::marshall,
-                SpreadsheetText.class
+            JsonNodeContext.computeTypeName(SpreadsheetText.class),
+            SpreadsheetText::unmarshall,
+            SpreadsheetText::marshall,
+            SpreadsheetText.class
         );
     }
 

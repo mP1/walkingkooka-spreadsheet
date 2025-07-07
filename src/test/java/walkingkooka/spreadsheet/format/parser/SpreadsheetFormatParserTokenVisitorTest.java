@@ -34,10 +34,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final ColorSpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.color(Lists.of(
-                        open,
-                        name,
-                        close),
-                "[RED]");
+                open,
+                name,
+                close),
+            "[RED]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -77,12 +77,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("135138421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        name, name, name, name, name,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                name, name, name, name, name,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -101,11 +101,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.equalsSpreadsheetFormatParserToken(Lists.of(
-                        open,
-                        symbol,
-                        number,
-                        close),
-                "[=123]");
+                open,
+                symbol,
+                number,
+                close),
+            "[=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -151,13 +151,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        symbol, symbol, symbol, symbol, symbol,
-                        number, number, number, number, number,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                symbol, symbol, symbol, symbol, symbol,
+                number, number, number, number, number,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -174,11 +174,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.greaterThan(Lists.of(
-                        open,
-                        symbol,
-                        number,
-                        close),
-                "[>123]");
+                open,
+                symbol,
+                number,
+                close),
+            "[>123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -224,13 +224,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        symbol, symbol, symbol, symbol, symbol,
-                        number, number, number, number, number,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                symbol, symbol, symbol, symbol, symbol,
+                number, number, number, number, number,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -247,11 +247,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.greaterThanEquals(Lists.of(
-                        open,
-                        symbol,
-                        number,
-                        close),
-                "[>=123]");
+                open,
+                symbol,
+                number,
+                close),
+            "[>=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -297,13 +297,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        symbol, symbol, symbol, symbol, symbol,
-                        number, number, number, number, number,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                symbol, symbol, symbol, symbol, symbol,
+                number, number, number, number, number,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -320,11 +320,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.lessThan(Lists.of(
-                        open,
-                        symbol,
-                        number,
-                        close),
-                "[>123]");
+                open,
+                symbol,
+                number,
+                close),
+            "[>123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -370,13 +370,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        symbol, symbol, symbol, symbol, symbol,
-                        number, number, number, number, number,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                symbol, symbol, symbol, symbol, symbol,
+                number, number, number, number, number,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -393,11 +393,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.lessThanEquals(Lists.of(
-                        open,
-                        symbol,
-                        number,
-                        close),
-                "[>=123]");
+                open,
+                symbol,
+                number,
+                close),
+            "[>=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -443,13 +443,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        symbol, symbol, symbol, symbol, symbol,
-                        number, number, number, number, number,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                symbol, symbol, symbol, symbol, symbol,
+                number, number, number, number, number,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -466,11 +466,11 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.notEquals(Lists.of(
-                        open,
-                        symbol,
-                        number,
-                        close),
-                "[=123]");
+                open,
+                symbol,
+                number,
+                close),
+            "[=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -516,13 +516,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213A421394213742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        open, open, open, open, open,
-                        symbol, symbol, symbol, symbol, symbol,
-                        number, number, number, number, number,
-                        close, close, close, close, close,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                open, open, open, open, open,
+                symbol, symbol, symbol, symbol, symbol,
+                number, number, number, number, number,
+                close, close, close, close, close,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -538,10 +538,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken y = year();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.date(Lists.of(
-                        d,
-                        m,
-                        y),
-                "dmy");
+                d,
+                m,
+                y),
+            "dmy");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -581,12 +581,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("135137421384213942642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        d, d, d, d, d,
-                        m, m, m, m, m,
-                        y, y, y, y, y,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                d, d, d, d, d,
+                m, m, m, m, m,
+                y, y, y, y, y,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -605,13 +605,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken s = second();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.date(Lists.of(
-                        d,
-                        month,
-                        y,
-                        h,
-                        min,
-                        s),
-                "dmyhms");
+                d,
+                month,
+                y,
+                h,
+                min,
+                s),
+            "dmyhms");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -669,15 +669,15 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351374213A4213C42138421394213B42642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        d, d, d, d, d,
-                        month, month, month, month, month,
-                        y, y, y, y, y,
-                        h, h, h, h, h,
-                        min, min, min, min, min,
-                        s, s, s, s, s,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                d, d, d, d, d,
+                month, month, month, month, month,
+                y, y, y, y, y,
+                h, h, h, h, h,
+                min, min, min, min, min,
+                s, s, s, s, s,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -692,9 +692,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken digit = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.exponent(Lists.of(
-                        e,
-                        digit),
-                "e+#");
+                e,
+                digit),
+            "e+#");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -728,18 +728,18 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351374213842642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        e, e, e, e, e,
-                        digit, digit, digit, digit, digit,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                e, e, e, e, e,
+                digit, digit, digit, digit, digit,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
     public void testExponent2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(SpreadsheetFormatParserToken.exponent(Lists.of(exponentSymbolPlus()),
-                "e"));
+            "e"));
     }
 
     @Test
@@ -749,13 +749,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final ColorSpreadsheetFormatParserToken color = SpreadsheetFormatParserToken.color(Lists.of(
-                        open,
-                        name,
-                        close),
-                "[RED]");
+                open,
+                name,
+                close),
+            "[RED]");
 
         final ExpressionSpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.expression(Lists.of(color),
-                "[RED]");
+            "[RED]");
 
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -808,14 +808,14 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13513713A4213B4213942842642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        color, color, color,
-                        open, open, open, open, open,
-                        name, name, name, name, name,
-                        close, close, close, close, close,
-                        color, color, color,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                color, color, color,
+                open, open, open, open, open,
+                name, name, name, name, name,
+                close, close, close, close, close,
+                color, color, color,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -831,10 +831,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken bottom = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.fraction(Lists.of(
-                        top,
-                        symbol,
-                        bottom),
-                "#/#");
+                top,
+                symbol,
+                bottom),
+            "#/#");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -868,22 +868,22 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("135138421374213842642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        top, top, top, top, top,
-                        symbol, symbol, symbol, symbol, symbol,
-                        bottom, bottom, bottom, bottom, bottom,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                top, top, top, top, top,
+                symbol, symbol, symbol, symbol, symbol,
+                bottom, bottom, bottom, bottom, bottom,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
     public void testFraction2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(SpreadsheetFormatParserToken.fraction(Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit()),
-                "#/#"));
+                digit(),
+                fractionSymbol(),
+                digit()),
+            "#/#"));
     }
 
     @Test
@@ -891,8 +891,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken general = SpreadsheetFormatParserToken.generalSymbol("general", "general");
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.general(Lists.of(
-                        general),
-                "general");
+                general),
+            "general");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -920,10 +920,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13513742642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        general, general, general, general, general,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                general, general, general, general, general,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -939,10 +939,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken decimals = digitZero();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.number(Lists.of(
-                        integer,
-                        decimalPoint,
-                        decimals),
-                "#/#");
+                integer,
+                decimalPoint,
+                decimals),
+            "#/#");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -982,12 +982,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("135138421374213942642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        integer, integer, integer, integer, integer,
-                        decimalPoint, decimalPoint, decimalPoint, decimalPoint, decimalPoint,
-                        decimals, decimals, decimals, decimals, decimals,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                integer, integer, integer, integer, integer,
+                decimalPoint, decimalPoint, decimalPoint, decimalPoint, decimalPoint,
+                decimals, decimals, decimals, decimals, decimals,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1002,9 +1002,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken placeholder = textPlaceholder();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.text(Lists.of(
-                        whitespace,
-                        placeholder),
-                " @");
+                whitespace,
+                placeholder),
+            " @");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -1038,14 +1038,14 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("1351384213742642", b.toString(), "visited");
         this.checkEquals(
-                Lists.of(
-                        token, token, token,
-                        whitespace, whitespace, whitespace, whitespace, whitespace,
-                        placeholder, placeholder, placeholder, placeholder, placeholder,
-                        token, token, token
-                ),
-                visited,
-                "visitedTokens"
+            Lists.of(
+                token, token, token,
+                whitespace, whitespace, whitespace, whitespace, whitespace,
+                placeholder, placeholder, placeholder, placeholder, placeholder,
+                token, token, token
+            ),
+            visited,
+            "visitedTokens"
         );
     }
 
@@ -1062,10 +1062,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken s = second();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.time(Lists.of(
-                        h,
-                        m,
-                        s),
-                "hms");
+                h,
+                m,
+                s),
+            "hms");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -1105,12 +1105,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("135137421384213942642", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token,
-                        h, h, h, h, h,
-                        m, m, m, m, m,
-                        s, s, s, s, s,
-                        token, token, token),
-                visited,
-                "visitedTokens");
+                h, h, h, h, h,
+                m, m, m, m, m,
+                s, s, s, s, s,
+                token, token, token),
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1138,8 +1138,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1165,8 +1165,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1192,8 +1192,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1219,8 +1219,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1246,8 +1246,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1272,8 +1272,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1299,8 +1299,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1326,8 +1326,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1353,8 +1353,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1380,8 +1380,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1407,8 +1407,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1434,8 +1434,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1461,8 +1461,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1488,8 +1488,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1521,8 +1521,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1548,8 +1548,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1575,8 +1575,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1602,8 +1602,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1628,8 +1628,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1655,8 +1655,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1682,8 +1682,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1709,8 +1709,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1738,8 +1738,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1765,8 +1765,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1792,8 +1792,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1819,8 +1819,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1846,8 +1846,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1873,8 +1873,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1900,8 +1900,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1927,8 +1927,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1954,8 +1954,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -1981,8 +1981,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -2008,8 +2008,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test
@@ -2035,8 +2035,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         visitor.accept(token);
         this.checkEquals("13542", b.toString(), "visited");
         this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
+            visited,
+            "visitedTokens");
     }
 
     @Test

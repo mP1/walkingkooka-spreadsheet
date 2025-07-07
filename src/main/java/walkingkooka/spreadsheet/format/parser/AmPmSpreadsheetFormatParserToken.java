@@ -53,13 +53,13 @@ public final class AmPmSpreadsheetFormatParserToken extends NonSymbolSpreadsheet
         switch (text.length()) {
             case 3:
                 kind = lower ?
-                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER :
-                        SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER;
+                    SpreadsheetFormatParserTokenKind.AMPM_INITIAL_LOWER :
+                    SpreadsheetFormatParserTokenKind.AMPM_INITIAL_UPPER;
                 break;
             default:
                 kind = lower ?
-                        SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER :
-                        SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER;
+                    SpreadsheetFormatParserTokenKind.AMPM_FULL_LOWER :
+                    SpreadsheetFormatParserTokenKind.AMPM_FULL_UPPER;
                 break;
         }
 

@@ -37,7 +37,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitorTest
-        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor> {
+    implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor> {
 
     @Test
     public void testValuesWithCellNonNullValue() {
@@ -45,33 +45,33 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
         final String value = "B2Value";
 
         this.valuesAndCheck(
-                reference,
-                new FakeSpreadsheetExpressionReferenceLoader() {
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        checkEquals(
-                                reference,
-                                cell,
-                                "loadCell"
-                        );
+            reference,
+            new FakeSpreadsheetExpressionReferenceLoader() {
+                @Override
+                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    checkEquals(
+                        reference,
+                        cell,
+                        "loadCell"
+                    );
 
-                        return Optional.of(
-                                cell.setFormula(
-                                        SpreadsheetFormula.EMPTY
-                                                .setText("=1+2")
-                                                .setValue(
-                                                        Optional.of(
-                                                                value
-                                                        )
-                                                )
+                    return Optional.of(
+                        cell.setFormula(
+                            SpreadsheetFormula.EMPTY
+                                .setText("=1+2")
+                                .setValue(
+                                    Optional.of(
+                                        value
+                                    )
                                 )
-                        );
-                    }
-                },
-                Optional.of(
-                        Optional.of(value)
-                )
+                        )
+                    );
+                }
+            },
+            Optional.of(
+                Optional.of(value)
+            )
         );
     }
 
@@ -80,27 +80,27 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
         this.valuesAndCheck(
-                reference,
-                new FakeSpreadsheetExpressionReferenceLoader() {
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        checkEquals(
-                                reference,
-                                cell,
-                                "loadCell"
-                        );
+            reference,
+            new FakeSpreadsheetExpressionReferenceLoader() {
+                @Override
+                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    checkEquals(
+                        reference,
+                        cell,
+                        "loadCell"
+                    );
 
-                        return Optional.of(
-                                cell.setFormula(
-                                        SpreadsheetFormula.EMPTY
-                                                .setText("=1+2")
-                                                .setValue(Optional.empty())
-                                )
-                        );
-                    }
-                },
-                SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE
+                    return Optional.of(
+                        cell.setFormula(
+                            SpreadsheetFormula.EMPTY
+                                .setText("=1+2")
+                                .setValue(Optional.empty())
+                        )
+                    );
+                }
+            },
+            SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE
         );
     }
 
@@ -109,22 +109,22 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
         final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
 
         this.valuesAndCheck(
-                reference,
-                new FakeSpreadsheetExpressionReferenceLoader() {
+            reference,
+            new FakeSpreadsheetExpressionReferenceLoader() {
 
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        checkEquals(
-                                reference,
-                                cell,
-                                "loadCell"
-                        );
+                @Override
+                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    checkEquals(
+                        reference,
+                        cell,
+                        "loadCell"
+                    );
 
-                        return Optional.empty();
-                    }
-                },
-                SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE
+                    return Optional.empty();
+                }
+            },
+            SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE
         );
     }
 
@@ -135,41 +135,41 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
         final String value = "B2Value";
 
         this.valuesAndCheck(
-                label,
-                new FakeSpreadsheetExpressionReferenceLoader() {
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference c,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        checkEquals(
-                                cell,
-                                c,
-                                "loadCell"
-                        );
+            label,
+            new FakeSpreadsheetExpressionReferenceLoader() {
+                @Override
+                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference c,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    checkEquals(
+                        cell,
+                        c,
+                        "loadCell"
+                    );
 
-                        return Optional.of(
-                                cell.setFormula(
-                                        SpreadsheetFormula.EMPTY
-                                                .setText("=1+2")
-                                                .setValue(
-                                                        Optional.of(
-                                                                value
-                                                        )
-                                                )
+                    return Optional.of(
+                        cell.setFormula(
+                            SpreadsheetFormula.EMPTY
+                                .setText("=1+2")
+                                .setValue(
+                                    Optional.of(
+                                        value
+                                    )
                                 )
-                        );
-                    }
+                        )
+                    );
+                }
 
-                    @Override
-                    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName l) {
-                        checkEquals(label, l);
-                        return Optional.of(
-                                l.setLabelMappingReference(cell)
-                        );
-                    }
-                },
-                Optional.of(
-                        Optional.of(value)
-                )
+                @Override
+                public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName l) {
+                    checkEquals(label, l);
+                    return Optional.of(
+                        l.setLabelMappingReference(cell)
+                    );
+                }
+            },
+            Optional.of(
+                Optional.of(value)
+            )
         );
     }
 
@@ -180,50 +180,50 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
         final Integer b3Value = 123;
 
         this.valuesAndCheck(
-                range,
-                new FakeSpreadsheetExpressionReferenceLoader() {
+            range,
+            new FakeSpreadsheetExpressionReferenceLoader() {
 
-                    @Override
-                    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference r,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        checkEquals(
-                                r,
-                                range,
-                                "loadCells"
-                        );
+                @Override
+                public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference r,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    checkEquals(
+                        r,
+                        range,
+                        "loadCells"
+                    );
 
-                        return Sets.of(
-                                SpreadsheetSelection.parseCell("B2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                                        .setText("=1")
-                                                        .setValue(
-                                                                Optional.of(
-                                                                        b2Value
-                                                                )
-                                                        )
-                                        ),
-                                SpreadsheetSelection.parseCell("B3")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                                        .setText("=2")
-                                                        .setValue(
-                                                                Optional.of(
-                                                                        b3Value
-                                                                )
-                                                        )
+                    return Sets.of(
+                        SpreadsheetSelection.parseCell("B2")
+                            .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                    .setText("=1")
+                                    .setValue(
+                                        Optional.of(
+                                            b2Value
                                         )
-                        );
-                    }
-                },
+                                    )
+                            ),
+                        SpreadsheetSelection.parseCell("B3")
+                            .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                    .setText("=2")
+                                    .setValue(
+                                        Optional.of(
+                                            b3Value
+                                        )
+                                    )
+                            )
+                    );
+                }
+            },
+            Optional.of(
                 Optional.of(
-                        Optional.of(
-                                Lists.of(
-                                        b2Value,
-                                        b3Value
-                                )
-                        )
+                    Lists.of(
+                        b2Value,
+                        b3Value
+                    )
                 )
+            )
         );
     }
 
@@ -234,51 +234,51 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
         final Integer c3Value = 123;
 
         this.valuesAndCheck(
-                range,
-                new FakeSpreadsheetExpressionReferenceLoader() {
-                    @Override
-                    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference r,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        checkEquals(
-                                range,
-                                r,
-                                "loadCells"
-                        );
+            range,
+            new FakeSpreadsheetExpressionReferenceLoader() {
+                @Override
+                public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference r,
+                                                          final SpreadsheetExpressionEvaluationContext context) {
+                    checkEquals(
+                        range,
+                        r,
+                        "loadCells"
+                    );
 
-                        return Sets.of(
-                                SpreadsheetSelection.parseCell("B2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                                        .setText("=1")
-                                                        .setValue(
-                                                                Optional.of(
-                                                                        b2Value
-                                                                )
-                                                        )
-                                        ),
-                                SpreadsheetSelection.parseCell("C3")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY
-                                                        .setText("=2")
-                                                        .setValue(
-                                                                Optional.of(
-                                                                        c3Value
-                                                                )
-                                                        )
+                    return Sets.of(
+                        SpreadsheetSelection.parseCell("B2")
+                            .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                    .setText("=1")
+                                    .setValue(
+                                        Optional.of(
+                                            b2Value
                                         )
-                        );
-                    }
-                },
+                                    )
+                            ),
+                        SpreadsheetSelection.parseCell("C3")
+                            .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                    .setText("=2")
+                                    .setValue(
+                                        Optional.of(
+                                            c3Value
+                                        )
+                                    )
+                            )
+                    );
+                }
+            },
+            Optional.of(
                 Optional.of(
-                        Optional.of(
-                                Lists.of(
-                                        b2Value, // B2
-                                        null, // C2
-                                        null, // B3
-                                        c3Value// C3
-                                )
-                        )
+                    Lists.of(
+                        b2Value, // B2
+                        null, // C2
+                        null, // B3
+                        c3Value// C3
+                    )
                 )
+            )
         );
     }
 
@@ -286,21 +286,21 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                 final SpreadsheetExpressionReferenceLoader loader,
                                 final Optional<Optional<Object>> value) {
         this.checkEquals(
-                value,
-                BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
-                        reference,
-                        loader,
-                        SpreadsheetExpressionEvaluationContexts.fake()
-                ),
-                () -> "values " + reference
+            value,
+            BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+                reference,
+                loader,
+                SpreadsheetExpressionEvaluationContexts.fake()
+            ),
+            () -> "values " + reference
         );
     }
 
     @Override
     public BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor createVisitor() {
         return new BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor(
-                null, // loader
-                null // context
+            null, // loader
+            null // context
         );
     }
 

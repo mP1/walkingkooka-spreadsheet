@@ -24,8 +24,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentExponent
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterNumberComponentExponentSymbol.INSTANCE,
-                "E"
+            SpreadsheetPatternSpreadsheetFormatterNumberComponentExponentSymbol.INSTANCE,
+            "E"
         );
     }
 

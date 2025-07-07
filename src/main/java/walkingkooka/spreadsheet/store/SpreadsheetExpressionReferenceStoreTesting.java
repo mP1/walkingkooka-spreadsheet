@@ -35,9 +35,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("unchecked")
 public interface SpreadsheetExpressionReferenceStoreTesting<S extends SpreadsheetExpressionReferenceStore<T>,
-        T extends SpreadsheetExpressionReference & Comparable<T>>
-        extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
-        TypeNameTesting<S> {
+    T extends SpreadsheetExpressionReference & Comparable<T>>
+    extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
+    TypeNameTesting<S> {
 
     // save.............................................................................................................
 
@@ -45,13 +45,13 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Override
     default void testSaveNullFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createStore()
-                        .save(
-                                Sets.of(
-                                        SpreadsheetSelection.A1
-                                )
-                        )
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .save(
+                    Sets.of(
+                        SpreadsheetSelection.A1
+                    )
+                )
         );
     }
 
@@ -60,10 +60,11 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testAddSaveWatcherFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createStore()
-                        .addSaveWatcher((a) -> {}
-                        )
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .addSaveWatcher((a) -> {
+                    }
+                )
         );
     }
 
@@ -85,16 +86,16 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final T id = this.id();
 
         cells.forEach(
-                v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)
-                )
+            v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)
+            )
         );
 
         store.delete(id);
 
         this.checkEquals(
-                Lists.of(),
-                fired,
-                "fired values"
+            Lists.of(),
+            fired,
+            "fired values"
         );
     }
 
@@ -106,8 +107,8 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         store.saveCells(
-                reference,
-                Sets.of(cell)
+            reference,
+            Sets.of(cell)
         );
 
         final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
@@ -116,14 +117,14 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.delete(reference);
 
         this.checkEquals(
-                Lists.of(
-                        ReferenceAndSpreadsheetCellReference.with(
-                                reference,
-                                cell
-                        )
-                ),
-                fired,
-                "fired remove reference events"
+            Lists.of(
+                ReferenceAndSpreadsheetCellReference.with(
+                    reference,
+                    cell
+                )
+            ),
+            fired,
+            "fired remove reference events"
         );
     }
 
@@ -133,9 +134,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                           final TT id,
                                                                           final SpreadsheetCellReference... expected) {
         this.loadAndCheck(
-                store,
-                id,
-                Sets.of(expected)
+            store,
+            id,
+            Sets.of(expected)
         );
     }
 
@@ -151,9 +152,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         for (SpreadsheetCellReference cell : expected) {
             final Set<TT> references = store.findReferencesWithCell(
-                    cell,
-                    0,
-                    Integer.MAX_VALUE
+                cell,
+                0,
+                Integer.MAX_VALUE
             );
             if (!references.contains(id)) {
                 fail(store + " load " + cell + " didnt return id " + id + ", actual: " + references);
@@ -166,9 +167,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testAddCellNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .addCell(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .addCell(null)
         );
     }
 
@@ -183,15 +184,15 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.addAddCellWatcher(fired::add);
 
         final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
-                reference,
-                cell
+            reference,
+            cell
         );
         store.addCell(referenceAndCell);
 
         this.checkEquals(
-                Lists.of(referenceAndCell),
-                fired,
-                "fired add reference events"
+            Lists.of(referenceAndCell),
+            fired,
+            "fired add reference events"
         );
     }
 
@@ -200,9 +201,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testRemoveCellNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .removeCell(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .removeCell(null)
         );
     }
 
@@ -221,9 +222,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         cells.forEach(v -> store.removeCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
 
         this.checkEquals(
-                Lists.of(id),
-                fired,
-                "fired values"
+            Lists.of(id),
+            fired,
+            "fired values"
         );
     }
 
@@ -238,16 +239,16 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.addAddCellWatcher(fired::add);
 
         final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
-                reference,
-                cell
+            reference,
+            cell
         );
         store.addCell(referenceAndCell);
         store.removeCell(referenceAndCell);
 
         this.checkEquals(
-                Lists.of(referenceAndCell),
-                fired,
-                "fired add reference events"
+            Lists.of(referenceAndCell),
+            fired,
+            "fired add reference events"
         );
     }
 
@@ -256,24 +257,24 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testSaveCellsNullIdFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .saveCells(
-                                null,
-                                Sets.of(SpreadsheetSelection.A1)
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .saveCells(
+                    null,
+                    Sets.of(SpreadsheetSelection.A1)
+                )
         );
     }
 
     @Test
     default void testSaveCellsNullReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .saveCells(
-                                this.id(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .saveCells(
+                    this.id(),
+                    null
+                )
         );
     }
 
@@ -287,13 +288,13 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     default void testSaveCellsDoesntFireDeleteWatchers() {
         final S store = this.createStore();
         store.addDeleteWatcher(
-                (v) -> {
-            throw new UnsupportedOperationException();
-                }
-                );
+            (v) -> {
+                throw new UnsupportedOperationException();
+            }
+        );
         store.saveCells(
-                this.id(),
-                this.value()
+            this.id(),
+            this.value()
         );
     }
 
@@ -309,11 +310,11 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.saveCells(id, cells);
 
         this.checkEquals(
-                cells.stream()
-                        .map(r -> ReferenceAndSpreadsheetCellReference.with(id, r))
-                        .collect(Collectors.toList()),
-                fired,
-                "fired add reference"
+            cells.stream()
+                .map(r -> ReferenceAndSpreadsheetCellReference.with(id, r))
+                .collect(Collectors.toList()),
+            fired,
+            "fired add reference"
         );
     }
 
@@ -327,18 +328,18 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.saveCells(id, Sets.of(b2));
 
         store.addAddCellWatcher(
-                (e) -> {
-                    throw new UnsupportedOperationException();
-                }
+            (e) -> {
+                throw new UnsupportedOperationException();
+            }
         );
         store.addRemoveCellWatcher(
-                (e) -> {
-                    throw new UnsupportedOperationException();
-                }
+            (e) -> {
+                throw new UnsupportedOperationException();
+            }
         );
         store.saveCells(
-                id,
-                Sets.of(b2)
+            id,
+            Sets.of(b2)
         );
     }
 
@@ -361,16 +362,16 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.saveCells(id, Sets.of(z9));
 
         this.checkEquals(
-                Lists.of(
-                        ReferenceAndSpreadsheetCellReference.with(id, z9)
-                ),
-                addFired,
-                "fired add reference"
+            Lists.of(
+                ReferenceAndSpreadsheetCellReference.with(id, z9)
+            ),
+            addFired,
+            "fired add reference"
         );
         this.checkEquals(
-                Lists.of(ReferenceAndSpreadsheetCellReference.with(id, b2)),
-                removeFired,
-                "fired remove reference"
+            Lists.of(ReferenceAndSpreadsheetCellReference.with(id, b2)),
+            removeFired,
+            "fired remove reference"
         );
     }
 
@@ -394,18 +395,18 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.saveCells(id, Sets.of(c3, d4));
 
         this.checkEquals(
-                Lists.of(
-                        ReferenceAndSpreadsheetCellReference.with(id, d4)
-                ),
-                addFired,
-                "fired add reference"
+            Lists.of(
+                ReferenceAndSpreadsheetCellReference.with(id, d4)
+            ),
+            addFired,
+            "fired add reference"
         );
         this.checkEquals(
-                Lists.of(
-                        ReferenceAndSpreadsheetCellReference.with(id, b2)
-                ),
-                removeFired,
-                "fired remove reference"
+            Lists.of(
+                ReferenceAndSpreadsheetCellReference.with(id, b2)
+            ),
+            removeFired,
+            "fired remove reference"
         );
     }
 
@@ -414,39 +415,39 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testFindCellsWithReferenceWithNullReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findCellsWithReference(
-                                null, // reference
-                                0, // offset
-                                0 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .findCellsWithReference(
+                    null, // reference
+                    0, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindCellsWithReferenceWithNegativeOffsetFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findCellsWithReference(
-                                this.id(), // reference
-                                -1, // offset
-                                0 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findCellsWithReference(
+                    this.id(), // reference
+                    -1, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindCellsWithReferenceWithNegativeCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findCellsWithReference(
-                                this.id(), // reference
-                                0, // offset
-                                -1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findCellsWithReference(
+                    this.id(), // reference
+                    0, // offset
+                    -1 // count
+                )
         );
     }
 
@@ -456,11 +457,11 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                                             final int count,
                                                                                             final SpreadsheetCellReference... expected) {
         this.findCellsWithReferenceAndCheck(
-                store,
-                reference,
-                offset,
-                count,
-                Sets.of(expected)
+            store,
+            reference,
+            offset,
+            count,
+            Sets.of(expected)
         );
     }
 
@@ -470,13 +471,13 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                                             final int count,
                                                                                             final Set<SpreadsheetCellReference> expected) {
         this.checkEquals(
-                expected,
-                store.findCellsWithReference(
-                        reference,
-                        offset,
-                        count
-                ),
-                "findCellsWithReference " + reference + " offset=" + offset + ", count=" + count
+            expected,
+            store.findCellsWithReference(
+                reference,
+                offset,
+                count
+            ),
+            "findCellsWithReference " + reference + " offset=" + offset + ", count=" + count
         );
     }
 
@@ -485,9 +486,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testCountCellsWithReferenceWithNullReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .countCellsWithReference(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .countCellsWithReference(null)
         );
     }
 
@@ -496,53 +497,53 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                                              final TT reference,
                                                                                              final int expected) {
         this.checkEquals(
-                expected,
-                store.countCellsWithReference(reference),
-                "countCellsWithReference " + reference
+            expected,
+            store.countCellsWithReference(reference),
+            "countCellsWithReference " + reference
         );
     }
-    
+
     // findReferencesWithCell...........................................................................................
 
     @Test
     default void testFindReferencesWithCellWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findReferencesWithCell(
-                                null,
-                                0, // offset
-                                0 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .findReferencesWithCell(
+                    null,
+                    0, // offset
+                    0 // count
+                )
         );
     }
-    
+
     @Test
     default void testFindReferencesWithCellWithNegativeOffsetFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findReferencesWithCell(
-                                SpreadsheetSelection.A1,
-                                -1, // offset
-                                0 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findReferencesWithCell(
+                    SpreadsheetSelection.A1,
+                    -1, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindReferencesWithCellWithNegativeCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findReferencesWithCell(
-                                SpreadsheetSelection.A1,
-                                0, // offset
-                                -1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findReferencesWithCell(
+                    SpreadsheetSelection.A1,
+                    0, // offset
+                    -1 // count
+                )
         );
     }
-    
+
 
     @SuppressWarnings("unchecked")
     default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
@@ -551,11 +552,11 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                                             final int count,
                                                                                             final TT... expected) {
         this.findReferencesWithCellAndCheck(
-                store,
-                cell,
-                offset,
-                count,
-                Sets.of(expected)
+            store,
+            cell,
+            offset,
+            count,
+            Sets.of(expected)
         );
     }
 
@@ -565,13 +566,13 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                                             final int count,
                                                                                             final Set<TT> expected) {
         this.checkEquals(
-                expected,
-                store.findReferencesWithCell(
-                        cell,
-                        offset,
-                        count
-                ),
-                "findReferencesWithCell " + cell + " offset=" + offset + ", count=" + count
+            expected,
+            store.findReferencesWithCell(
+                cell,
+                offset,
+                count
+            ),
+            "findReferencesWithCell " + cell + " offset=" + offset + ", count=" + count
         );
     }
 
@@ -580,9 +581,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testRemoveReferencesWithCellWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .removeReferencesWithCell(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .removeReferencesWithCell(null)
         );
     }
 
@@ -592,10 +593,10 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         // just deleted references so find should not find it
         this.findReferencesWithCellAndCheck(
-                store,
-                cell,
-                0, // offset
-                1 // count
+            store,
+            cell,
+            0, // offset
+            1 // count
         );
     }
 

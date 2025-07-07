@@ -79,10 +79,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParsePattern,
-        T extends ParentSpreadsheetFormatParserToken,
-        SPT extends ParentSpreadsheetFormulaParserToken,
-        V> extends SpreadsheetPatternTestCase<P>
-        implements ConverterTesting {
+    T extends ParentSpreadsheetFormatParserToken,
+    SPT extends ParentSpreadsheetFormulaParserToken,
+    V> extends SpreadsheetPatternTestCase<P>
+    implements ConverterTesting {
 
     final static int DEFAULT_YEAR = 1900;
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -100,76 +100,76 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     SpreadsheetParsePatternTestCase() {
         super();
         this.checkEquals(
-                this.decimalNumberContext()
-                        .currencySymbol(),
-                currencyDollarSign()
-                        .text(),
-                "currencySymbol"
+            this.decimalNumberContext()
+                .currencySymbol(),
+            currencyDollarSign()
+                .text(),
+            "currencySymbol"
         );
         this.checkEquals(
-                this.decimalNumberContext()
-                        .exponentSymbol(),
-                e()
-                        .text(),
-                "exponentSymbol"
+            this.decimalNumberContext()
+                .exponentSymbol(),
+            e()
+                .text(),
+            "exponentSymbol"
         );
     }
 
     @Test
     public final void testWithNullParserTokenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> createPattern((ParserToken) null)
+            NullPointerException.class,
+            () -> createPattern((ParserToken) null)
         );
     }
 
     @Test
     public final void testWith() {
         final List<ParserToken> tokens = Lists.of(
-                this.parseFormatParserToken(this.patternText()),
-                this.parseFormatParserToken("\"text-literal-2\"")
+            this.parseFormatParserToken(this.patternText()),
+            this.parseFormatParserToken("\"text-literal-2\"")
         );
 
         final SequenceParserToken sequenceParserToken = ParserTokens.sequence(
-                tokens,
-                ParserToken.text(tokens)
+            tokens,
+            ParserToken.text(tokens)
         );
 
         final P patterns = this.createPattern(sequenceParserToken);
         this.checkEquals(
-                patterns.value(),
-                sequenceParserToken,
-                "value"
+            patterns.value(),
+            sequenceParserToken,
+            "value"
         );
     }
 
     @Test
     public final void testWithBracketOpenFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.bracketOpenSymbol(
-                        "[",
-                        "["
-                )
+            SpreadsheetFormatParserToken.bracketOpenSymbol(
+                "[",
+                "["
+            )
         );
     }
 
     @Test
     public final void testWithBracketCloseFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.bracketCloseSymbol(
-                        "]",
-                        "]"
-                )
+            SpreadsheetFormatParserToken.bracketCloseSymbol(
+                "]",
+                "]"
+            )
         );
     }
 
     @Test
     public final void testWithColorLiteralSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.colorLiteralSymbol(
-                        "#123",
-                        "#123"
-                )
+            SpreadsheetFormatParserToken.colorLiteralSymbol(
+                "#123",
+                "#123"
+            )
         );
     }
 
@@ -181,126 +181,126 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testWithColorNumberFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.colorNumber(
-                        1,
-                        "1"
-                )
+            SpreadsheetFormatParserToken.colorNumber(
+                1,
+                "1"
+            )
         );
     }
 
     @Test
     public final void testWithConditionNumberFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.conditionNumber(
-                        BigDecimal.TEN,
-                        "10"
-                )
+            SpreadsheetFormatParserToken.conditionNumber(
+                BigDecimal.TEN,
+                "10"
+            )
         );
     }
 
     @Test
     public final void testWithEqualsSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.equalsSymbol(
-                        "=",
-                        "="
-                )
+            SpreadsheetFormatParserToken.equalsSymbol(
+                "=",
+                "="
+            )
         );
     }
 
     @Test
     public final void testWithEscape() {
         final ParserToken token = this.createFormatParserToken(
-                Lists.of(
-                        SpreadsheetFormatParserToken.escape('\t', "\\t")
-                )
+            Lists.of(
+                SpreadsheetFormatParserToken.escape('\t', "\\t")
+            )
         );
         final P patterns = this.createPattern(token);
 
         this.checkEquals(
-                patterns.value(),
-                token,
-                "value"
+            patterns.value(),
+            token,
+            "value"
         );
     }
 
     @Test
     public final void testWithGeneralFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.generalSymbol(
-                        "GENERAL",
-                        "GENERAL"
-                )
+            SpreadsheetFormatParserToken.generalSymbol(
+                "GENERAL",
+                "GENERAL"
+            )
         );
     }
 
     @Test
     public final void testWithGreaterThanSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.greaterThanSymbol(
-                        ">",
-                        ">"
-                )
+            SpreadsheetFormatParserToken.greaterThanSymbol(
+                ">",
+                ">"
+            )
         );
     }
 
     @Test
     public final void testWithGreaterThanEqualsSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.greaterThanEqualsSymbol(
-                        ">=",
-                        ">="
-                )
+            SpreadsheetFormatParserToken.greaterThanEqualsSymbol(
+                ">=",
+                ">="
+            )
         );
     }
 
     @Test
     public final void testWithLessThanSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.lessThanSymbol(
-                        "<",
-                        "<"
-                )
+            SpreadsheetFormatParserToken.lessThanSymbol(
+                "<",
+                "<"
+            )
         );
     }
 
     @Test
     public final void testWithLessThanEqualsSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.lessThanEqualsSymbol(
-                        "<=",
-                        "<="
-                )
+            SpreadsheetFormatParserToken.lessThanEqualsSymbol(
+                "<=",
+                "<="
+            )
         );
     }
 
     @Test
     public final void testWithNotEqualsSymbolFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.notEqualsSymbol(
-                        "!=",
-                        "!="
-                )
+            SpreadsheetFormatParserToken.notEqualsSymbol(
+                "!=",
+                "!="
+            )
         );
     }
 
     @Test
     public final void testWithStarFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.star(
-                        '*',
-                        "*"
-                )
+            SpreadsheetFormatParserToken.star(
+                '*',
+                "*"
+            )
         );
     }
 
     @Test
     public final void testWithTextPlaceholderFails() {
         this.withInvalidCharacterFails(
-                SpreadsheetFormatParserToken.textPlaceholder(
-                        "@",
-                        "@"
-                )
+            SpreadsheetFormatParserToken.textPlaceholder(
+                "@",
+                "@"
+            )
         );
     }
 
@@ -312,21 +312,21 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testWithWhitespace() {
         final ParserToken token = this.createFormatParserToken(
-                Lists.of(
-                        whitespace()
-                )
+            Lists.of(
+                whitespace()
+            )
         );
         final SequenceParserToken sequenceParserToken = ParserTokens.sequence(
-                Lists.of(token),
-                token.text()
+            Lists.of(token),
+            token.text()
         );
 
         final P patterns = this.createPattern(sequenceParserToken);
 
         this.checkEquals(
-                patterns.value(),
-                sequenceParserToken,
-                "value"
+            patterns.value(),
+            sequenceParserToken,
+            "value"
         );
     }
 
@@ -335,7 +335,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
         final List<ParserToken> tokens = Lists.array();
         tokens.add(
-                this.parseFormatParserToken(patternText)
+            this.parseFormatParserToken(patternText)
         );
 
         final String patternText2 = patternText + token.text();
@@ -344,13 +344,13 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
         final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> this.createPattern(parent)
+            InvalidCharacterException.class,
+            () -> this.createPattern(parent)
         );
         this.checkEquals(
-                patternText.length(),
-                thrown.position(),
-                () -> "position pattern=" + patternText2
+            patternText.length(),
+            thrown.position(),
+            () -> "position pattern=" + patternText2
         );
     }
 
@@ -362,15 +362,15 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         final SpreadsheetFormatPattern formatPattern = parsePattern.toFormat();
 
         this.checkNotEquals(
-                parsePattern,
-                formatPattern,
-                () -> parsePattern + " toPattern"
+            parsePattern,
+            formatPattern,
+            () -> parsePattern + " toPattern"
         );
 
         this.checkEquals(
-                parsePattern.value(),
-                formatPattern.value(),
-                () -> parsePattern + " toPattern.value"
+            parsePattern.value(),
+            formatPattern.value(),
+            () -> parsePattern + " toPattern.value"
         );
     }
 
@@ -379,36 +379,36 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testParseNullTextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .parse(
-                                null,
-                                SpreadsheetParserContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createPattern()
+                .parse(
+                    null,
+                    SpreadsheetParserContexts.fake()
+                )
         );
     }
 
     @Test
     public final void testParseNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .parse(
-                                "1",
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createPattern()
+                .parse(
+                    "1",
+                    null
+                )
         );
     }
 
     @Test
     public final void testParseInvalidTextFails() {
         assertThrows(
-                InvalidCharacterException.class,
-                () -> this.createPattern()
-                        .parse(
-                                "!invalid",
-                                this.parserContext()
-                        )
+            InvalidCharacterException.class,
+            () -> this.createPattern()
+                .parse(
+                    "!invalid",
+                    this.parserContext()
+                )
         );
     }
 
@@ -424,17 +424,17 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testSetColorNameFails() {
         assertThrows(
-                IllegalStateException.class,
-                () -> this.createPattern().setColorName(SpreadsheetColorName.BLACK)
+            IllegalStateException.class,
+            () -> this.createPattern().setColorName(SpreadsheetColorName.BLACK)
         );
     }
 
     @Test
     public final void testSetColorNumberFails() {
         assertThrows(
-                IllegalStateException.class,
-                () -> this.createPattern()
-                        .setColorNumber(SpreadsheetColors.MIN)
+            IllegalStateException.class,
+            () -> this.createPattern()
+                .setColorNumber(SpreadsheetColors.MIN)
         );
     }
 
@@ -447,10 +447,9 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     // helpers..........................................................................................................
 
-    @Override
-    final P createPattern(final String pattern) {
+    @Override final P createPattern(final String pattern) {
         return this.createPattern(
-                this.parseFormatParserToken(pattern)
+            this.parseFormatParserToken(pattern)
         );
     }
 
@@ -458,11 +457,11 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     final ParserToken parseFormatParserToken(final String text) {
         return this.parser()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(text),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence(text),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     abstract Parser<SpreadsheetFormatParserContext> parser();
@@ -485,10 +484,10 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         final String patternText = this.patternText();
 
         this.parseStringAndCheck(
-                patternText,
-                this.createPattern(
-                        this.parseFormatParserToken(patternText)
-                )
+            patternText,
+            this.createPattern(
+                this.parseFormatParserToken(patternText)
+            )
         );
     }
 
@@ -498,19 +497,19 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         final String patternText2 = this.patternText();
 
         final List<ParserToken> tokens = Lists.of(
-                this.parseFormatParserToken(patternText),
-                separator(),
-                this.parseFormatParserToken(patternText2)
+            this.parseFormatParserToken(patternText),
+            separator(),
+            this.parseFormatParserToken(patternText2)
         );
 
         this.parseStringAndCheck(
-                patternText + this.separator().text() + patternText2,
-                this.createPattern(
-                        ParserTokens.sequence(
-                                tokens,
-                                ParserToken.text(tokens)
-                        )
+            patternText + this.separator().text() + patternText2,
+            this.createPattern(
+                ParserTokens.sequence(
+                    tokens,
+                    ParserToken.text(tokens)
                 )
+            )
         );
     }
 
@@ -563,15 +562,15 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     public final void testParserToString() {
         final P pattern = this.createPattern();
         this.toStringAndCheck(
-                pattern.parser(),
-                pattern.toString()
+            pattern.parser(),
+            pattern.toString()
         );
     }
 
     static AmPmSpreadsheetFormulaParserToken am() {
         return SpreadsheetFormulaParserToken.amPm(
-                0,
-                "AM"
+            0,
+            "AM"
         );
     }
 
@@ -585,22 +584,22 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     static CurrencySymbolSpreadsheetFormulaParserToken currencyDollarSign() {
         return SpreadsheetFormulaParserToken.currencySymbol(
-                CURRENCY,
-                CURRENCY
+            CURRENCY,
+            CURRENCY
         );
     }
 
     static DayNumberSpreadsheetFormulaParserToken day31() {
         return SpreadsheetFormulaParserToken.dayNumber(
-                31,
-                "31"
+            31,
+            "31"
         );
     }
 
     static DecimalSeparatorSymbolSpreadsheetFormulaParserToken decimalSeparator() {
         return SpreadsheetFormulaParserToken.decimalSeparatorSymbol(
-                "" + DECIMAL,
-                "" + DECIMAL
+            "" + DECIMAL,
+            "" + DECIMAL
         );
     }
 
@@ -630,128 +629,128 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private static DigitsSpreadsheetFormulaParserToken digits(final String text) {
         return SpreadsheetFormulaParserToken.digits(
-                text,
-                text
+            text,
+            text
         );
     }
 
     static ExponentSymbolSpreadsheetFormulaParserToken e() {
         return SpreadsheetFormulaParserToken.exponentSymbol(
-                "" + EXPONENT,
-                "" + EXPONENT
+            "" + EXPONENT,
+            "" + EXPONENT
         );
     }
 
     static GroupSeparatorSymbolSpreadsheetFormulaParserToken groupSymbol() {
         return SpreadsheetFormulaParserToken.groupSeparatorSymbol(
-                "" + GROUP_SEPARATOR,
-                "" + GROUP_SEPARATOR
+            "" + GROUP_SEPARATOR,
+            "" + GROUP_SEPARATOR
         );
     }
 
     static HourSpreadsheetFormulaParserToken hour9() {
         return SpreadsheetFormulaParserToken.hour(
-                9,
-                "9"
+            9,
+            "9"
         );
     }
 
     static HourSpreadsheetFormulaParserToken hour11() {
         return SpreadsheetFormulaParserToken.hour(
-                11,
-                "11"
+            11,
+            "11"
         );
     }
 
     static HourSpreadsheetFormulaParserToken hour13() {
         return SpreadsheetFormulaParserToken.hour(
-                13,
-                "13"
+            13,
+            "13"
         );
     }
 
     static MillisecondSpreadsheetFormulaParserToken milli(final int value,
                                                           final String text) {
         return SpreadsheetFormulaParserToken.millisecond(
-                value,
-                text
+            value,
+            text
         );
     }
 
     static MinusSymbolSpreadsheetFormulaParserToken minus() {
         return SpreadsheetFormulaParserToken.minusSymbol(
-                "" + MINUS,
-                "" + MINUS
+            "" + MINUS,
+            "" + MINUS
         );
     }
 
     static MinuteSpreadsheetFormulaParserToken minute58() {
         return SpreadsheetFormulaParserToken.minute(
-                58,
-                "58"
+            58,
+            "58"
         );
     }
 
     static MonthNumberSpreadsheetFormulaParserToken month12() {
         return SpreadsheetFormulaParserToken.monthNumber(
-                12,
-                "12"
+            12,
+            "12"
         );
     }
 
     static MonthNameAbbreviationSpreadsheetFormulaParserToken monthDec() {
         return SpreadsheetFormulaParserToken.monthNameAbbreviation(
-                12,
-                "Dec"
+            12,
+            "Dec"
         );
     }
 
     static PlusSymbolSpreadsheetFormulaParserToken plus() {
         return SpreadsheetFormulaParserToken.plusSymbol(
-                "" + PLUS,
-                "" + PLUS
+            "" + PLUS,
+            "" + PLUS
         );
     }
 
     static AmPmSpreadsheetFormulaParserToken pm() {
         return SpreadsheetFormulaParserToken.amPm(
-                12,
-                "PM"
+            12,
+            "PM"
         );
     }
 
     static SecondsSpreadsheetFormulaParserToken second9() {
         return SpreadsheetFormulaParserToken.seconds(
-                9,
-                "9"
+            9,
+            "9"
         );
     }
 
     static SecondsSpreadsheetFormulaParserToken second59() {
         return SpreadsheetFormulaParserToken.seconds(
-                59,
-                "59"
+            59,
+            "59"
         );
     }
 
     static TextLiteralSpreadsheetFormulaParserToken slash() {
         return SpreadsheetFormulaParserToken.textLiteral(
-                "/",
-                "/"
+            "/",
+            "/"
         );
     }
 
     static TextLiteralSpreadsheetFormulaParserToken textLiteral(final String text) {
         return SpreadsheetFormulaParserToken.textLiteral(
-                text,
-                text
+            text,
+            text
         );
     }
 
     static WhitespaceSpreadsheetFormulaParserToken whitespace1() {
         return SpreadsheetFormulaParserToken.whitespace(
-                " ",
-                " "
+            " ",
+            " "
         );
     }
 
@@ -765,10 +764,10 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                               final String text,
                               final SpreadsheetFormulaParserToken... tokens) {
         this.parseAndCheck2(
-                pattern,
-                text,
-                "",
-                tokens
+            pattern,
+            text,
+            "",
+            tokens
         );
     }
 
@@ -777,20 +776,20 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                               final String textAfter,
                               final SpreadsheetFormulaParserToken... tokens) {
         this.parseAndCheck(
-                this.parseString(pattern).parser(),
-                this.parserContext(),
-                text,
-                this.parent(tokens),
-                text,
-                textAfter
+            this.parseString(pattern).parser(),
+            this.parserContext(),
+            text,
+            this.parent(tokens),
+            text,
+            textAfter
         );
     }
 
     private SPT parent(final SpreadsheetFormulaParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
         return this.parent(
-                list,
-                ParserToken.text(list)
+            list,
+            ParserToken.text(list)
         );
     }
 
@@ -800,35 +799,35 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     final void parseFails2(final String pattern,
                            final String text) {
         this.parseFailAndCheck(this.parseString(pattern).parser(),
-                this.parserContext(),
-                text);
+            this.parserContext(),
+            text);
     }
 
     final SpreadsheetParserContext parserContext() {
         return this.parserContext(
-                this.decimalNumberContext()
+            this.decimalNumberContext()
         );
     }
 
     final SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext) {
         return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                this.dateTimeContext(),
-                ExpressionNumberContexts.basic(
-                        EXPRESSION_NUMBER_KIND,
-                        decimalNumberContext
-                ),
-                VALUE_SEPARATOR
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+            this.dateTimeContext(),
+            ExpressionNumberContexts.basic(
+                EXPRESSION_NUMBER_KIND,
+                decimalNumberContext
+            ),
+            VALUE_SEPARATOR
         );
     }
 
     final DecimalNumberContext ARABIC_DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(
-            DecimalNumberSymbols.fromDecimalFormatSymbols(
-                    '+',
-                    new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
-            ),
-            ARABIC_ZERO_DIGIT_LOCALE,
-            MathContext.DECIMAL32
+        DecimalNumberSymbols.fromDecimalFormatSymbols(
+            '+',
+            new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
+        ),
+        ARABIC_ZERO_DIGIT_LOCALE,
+        MathContext.DECIMAL32
     );
 
     // ConverterTesting.................................................................................................
@@ -837,21 +836,21 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                                 final String text,
                                 final V value) {
         this.convertAndCheck(
-                this.parseString(pattern).converter(),
-                text,
-                this.targetType(),
-                this.converterContext(),
-                value
+            this.parseString(pattern).converter(),
+            text,
+            this.targetType(),
+            this.converterContext(),
+            value
         );
     }
 
     final void convertFails2(final String pattern,
                              final String text) {
         this.convertFails(
-                this.parseString(pattern).converter(),
-                text,
-                this.targetType(),
-                this.converterContext()
+            this.parseString(pattern).converter(),
+            text,
+            this.targetType(),
+            this.converterContext()
         );
     }
 
@@ -859,23 +858,23 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                SpreadsheetLabelNameResolvers.fake(),
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        this.dateTimeContext(),
-                                        this.decimalNumberContext()
-                                ),
-                                EXPRESSION_NUMBER_KIND
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+            SpreadsheetLabelNameResolvers.fake(),
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        Converters.fake(),
+                        this.dateTimeContext(),
+                        this.decimalNumberContext()
+                    ),
+                    EXPRESSION_NUMBER_KIND
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            )
         );
     }
 
@@ -887,17 +886,17 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         final ParserToken second = this.parseFormatParserToken("\"text-literal-2\"");
 
         final List<ParserToken> tokens = Lists.of(
-                first,
-                second
+            first,
+            second
         );
 
         this.marshallRoundTripTwiceAndCheck(
-                this.createPattern(
-                        ParserTokens.sequence(
-                                tokens,
-                                ParserToken.text(tokens)
-                        )
+            this.createPattern(
+                ParserTokens.sequence(
+                    tokens,
+                    ParserToken.text(tokens)
                 )
+            )
         );
     }
 
@@ -906,9 +905,9 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Override
     public final String toIsMethodName(final String typeName) {
         return this.toIsMethodNameWithPrefixSuffix(
-                typeName,
-                "Spreadsheet",
-                "ParsePattern"
+            typeName,
+            "Spreadsheet",
+            "ParsePattern"
         );
     }
 }

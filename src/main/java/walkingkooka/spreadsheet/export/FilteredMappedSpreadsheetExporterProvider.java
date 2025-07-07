@@ -34,17 +34,17 @@ final class FilteredMappedSpreadsheetExporterProvider implements SpreadsheetExpo
         Objects.requireNonNull(provider, "provider");
 
         return new FilteredMappedSpreadsheetExporterProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
     private FilteredMappedSpreadsheetExporterProvider(final SpreadsheetExporterInfoSet infos,
                                                       final SpreadsheetExporterProvider provider) {
         this.mapper = FilteredProviderMapper.with(
-                infos,
-                provider.spreadsheetExporterInfos(),
-                SpreadsheetExporterPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetExporterInfos(),
+            SpreadsheetExporterPluginHelper.INSTANCE
         );
         this.provider = provider;
     }
@@ -56,8 +56,8 @@ final class FilteredMappedSpreadsheetExporterProvider implements SpreadsheetExpo
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetExporter(
-                this.mapper.selector(selector),
-                context
+            this.mapper.selector(selector),
+            context
         );
     }
 
@@ -70,9 +70,9 @@ final class FilteredMappedSpreadsheetExporterProvider implements SpreadsheetExpo
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetExporter(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 

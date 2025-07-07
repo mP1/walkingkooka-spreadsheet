@@ -36,28 +36,28 @@ public final class SpreadsheetConverterGeneralSpreadsheetValueTypeVisitorTest im
     @Test
     public void testToString() {
         final SpreadsheetConverterGeneralMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterGeneralMapping.with(
-                Converters.fake().setToString("Boolean1"),
-                Converters.fake().setToString("Date2"),
-                Converters.fake().setToString("DateTime3"),
-                Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("String5"),
-                Converters.fake().setToString("Time6")
+            Converters.fake().setToString("Boolean1"),
+            Converters.fake().setToString("Date2"),
+            Converters.fake().setToString("DateTime3"),
+            Converters.fake().setToString("Number4"),
+            Converters.fake().setToString("String5"),
+            Converters.fake().setToString("Time6")
         );
         this.toStringAndCheck(
-                new SpreadsheetConverterGeneralSpreadsheetValueTypeVisitor<>(mapping),
-                "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6"
+            new SpreadsheetConverterGeneralSpreadsheetValueTypeVisitor<>(mapping),
+            "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6"
         );
     }
 
     @Test
     public void testToString2() {
         final SpreadsheetConverterGeneralMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterGeneralMapping.with(
-                Converters.fake().setToString("Boolean1"),
-                Converters.fake().setToString("Date2"),
-                Converters.fake().setToString("DateTime3"),
-                Converters.fake().setToString("Number4"),
-                Converters.fake().setToString("String5"),
-                Converters.fake().setToString("Time6")
+            Converters.fake().setToString("Boolean1"),
+            Converters.fake().setToString("Date2"),
+            Converters.fake().setToString("DateTime3"),
+            Converters.fake().setToString("Number4"),
+            Converters.fake().setToString("String5"),
+            Converters.fake().setToString("Time6")
         );
         final SpreadsheetConverterGeneralSpreadsheetValueTypeVisitor<ConverterContext> visitor = new SpreadsheetConverterGeneralSpreadsheetValueTypeVisitor<>(mapping);
         visitor.accept(LocalDate.class);

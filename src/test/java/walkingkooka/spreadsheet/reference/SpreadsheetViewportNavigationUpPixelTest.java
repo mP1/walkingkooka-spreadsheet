@@ -43,79 +43,79 @@ public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetV
     @Test
     public void testUpdateHome() {
         this.updateAndCheck(
-                "E5",
-                "E3"
+            "E5",
+            "E3"
         );
     }
 
     @Test
     public void testUpdateHomeSkipsHiddenRow() {
         this.updateAndCheck(
-                "E5", // home
-                "", // hidden columns
-                "4", // hidden rows
-                "E2" // expected
+            "E5", // home
+            "", // hidden columns
+            "4", // hidden rows
+            "E2" // expected
         );
     }
 
     @Test
     public void testUpdateCell() {
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
-                SpreadsheetSelection.parseCell("E5")
-                        .setDefaultAnchor()
+            SpreadsheetSelection.parseCell("E5")
+                .setDefaultAnchor()
         );
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("E5")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(selection),
-                SpreadsheetSelection.parseCell("E3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(selection)
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(selection),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(selection)
         );
     }
 
     @Test
     public void testUpdateColumn() {
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
-                SpreadsheetSelection.parseColumn("E")
-                        .setDefaultAnchor()
+            SpreadsheetSelection.parseColumn("E")
+                .setDefaultAnchor()
         );
 
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("E5")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                selection
-                        ),
-                SpreadsheetSelection.parseCell("E3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                selection
-                        )
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    selection
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    selection
+                )
         );
     }
 
     @Test
     public void testUpdateRow() {
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
-                SpreadsheetSelection.parseRow("5")
-                        .setDefaultAnchor()
+            SpreadsheetSelection.parseRow("5")
+                .setDefaultAnchor()
         );
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("E5")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                selection
-                        ),
-                SpreadsheetSelection.parseCell("E3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(selection)
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    selection
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(selection)
         );
     }
 

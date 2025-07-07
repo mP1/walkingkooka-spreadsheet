@@ -30,10 +30,10 @@ public final class SpreadsheetExporterAlias implements PluginAliasLike<Spreadshe
 
     public static SpreadsheetExporterAlias parse(final String text) {
         return with(
-                PluginAlias.parse(
-                        text,
-                        SpreadsheetExporterPluginHelper.INSTANCE
-                )
+            PluginAlias.parse(
+                text,
+                SpreadsheetExporterPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -41,17 +41,17 @@ public final class SpreadsheetExporterAlias implements PluginAliasLike<Spreadshe
                                                 final Optional<SpreadsheetExporterSelector> selector,
                                                 final Optional<AbsoluteUrl> url) {
         return with(
-                PluginAlias.with(
-                        name,
-                        selector,
-                        url
-                )
+            PluginAlias.with(
+                name,
+                selector,
+                url
+            )
         );
     }
 
     static SpreadsheetExporterAlias with(final PluginAlias<SpreadsheetExporterName, SpreadsheetExporterSelector> pluginAlias) {
         return new SpreadsheetExporterAlias(
-                Objects.requireNonNull(pluginAlias, "pluginAlias")
+            Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 

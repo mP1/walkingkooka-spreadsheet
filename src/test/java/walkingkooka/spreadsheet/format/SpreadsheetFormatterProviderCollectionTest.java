@@ -34,8 +34,8 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormatterProviderCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetFormatterProviderCollection.with(null)
         );
     }
 
@@ -44,11 +44,11 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterFails(
-                SpreadsheetFormatterProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetFormatterSelector.parse("text-format-pattern"),
-                CONTEXT
+            SpreadsheetFormatterProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetFormatterSelector.parse("text-format-pattern"),
+            CONTEXT
         );
     }
 
@@ -57,13 +57,13 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
-                CONTEXT,
-                SpreadsheetPattern.parseTextFormatPattern("@@")
-                        .formatter()
+            SpreadsheetFormatterProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
+            CONTEXT,
+            SpreadsheetPattern.parseTextFormatPattern("@@")
+                .formatter()
         );
     }
 
@@ -72,12 +72,12 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterFails(
-                SpreadsheetFormatterProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetFormatterName.with("text-format-pattern"),
-                Lists.of(),
-                CONTEXT
+            SpreadsheetFormatterProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetFormatterName.with("text-format-pattern"),
+            Lists.of(),
+            CONTEXT
         );
     }
 
@@ -86,14 +86,14 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterAndCheck(
-                SpreadsheetFormatterProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetFormatterName.with("text-format-pattern"),
-                Lists.of("@@"),
-                CONTEXT,
-                SpreadsheetPattern.parseTextFormatPattern("@@")
-                        .formatter()
+            SpreadsheetFormatterProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetFormatterName.with("text-format-pattern"),
+            Lists.of("@@"),
+            CONTEXT,
+            SpreadsheetPattern.parseTextFormatPattern("@@")
+                .formatter()
         );
     }
 
@@ -102,18 +102,18 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterNextTokenAndCheck(
-                SpreadsheetFormatterProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetFormatterSelector.parse("text-format-pattern")
+            SpreadsheetFormatterProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetFormatterSelector.parse("text-format-pattern")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                SpreadsheetFormatterProviderSamplesContexts.fake()
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }
 
@@ -122,17 +122,17 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
         final SpreadsheetFormatterProvider provider = spreadsheetFormatPatternSpreadsheetFormatterProvider();
 
         this.spreadsheetFormatterInfosAndCheck(
-                SpreadsheetFormatterProviderCollection.with(Sets.of(provider)),
-                provider.spreadsheetFormatterInfos()
+            SpreadsheetFormatterProviderCollection.with(Sets.of(provider)),
+            provider.spreadsheetFormatterInfos()
         );
     }
 
     @Override
     public SpreadsheetFormatterProviderCollection createSpreadsheetFormatterProvider() {
         return SpreadsheetFormatterProviderCollection.with(
-                Sets.of(
-                        spreadsheetFormatPatternSpreadsheetFormatterProvider()
-                )
+            Sets.of(
+                spreadsheetFormatPatternSpreadsheetFormatterProvider()
+            )
         );
     }
 

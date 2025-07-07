@@ -28,54 +28,54 @@ public final class SpreadsheetNumberParsePatternComponentDigitSpaceTest extends 
     @Test
     public void testSpaceIntegerOrSign() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN
+            SpreadsheetNumberParsePatternComponentDigitMode.INTEGER_OR_SIGN
         );
     }
 
     @Test
     public void testSpaceInteger() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.INTEGER
+            SpreadsheetNumberParsePatternComponentDigitMode.INTEGER
         );
     }
 
     @Test
     public void testSpaceDecimalFirst() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST
+            SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST
         );
     }
 
     @Test
     public void testSpaceDecimal() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
+            SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST
         );
     }
 
     @Test
     public void testSpaceExponentOrSign() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
+            SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START
         );
     }
 
     @Test
     public void testSpaceExponent() {
         this.testSpace(
-                SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
+            SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT
         );
     }
 
     private void testSpace(final SpreadsheetNumberParsePatternComponentDigitMode mode) {
         this.parseAndCheck3(
-                1,
-                mode,
-                " ",
-                "",
-                mode,
-                NEXT_SKIPPED,
-                SpreadsheetFormulaParserToken.whitespace(" ", " ")
+            1,
+            mode,
+            " ",
+            "",
+            mode,
+            NEXT_SKIPPED,
+            SpreadsheetFormulaParserToken.whitespace(" ", " ")
         );
     }
 
@@ -87,11 +87,11 @@ public final class SpreadsheetNumberParsePatternComponentDigitSpaceTest extends 
     @Test
     public void testToString2() {
         this.toStringAndCheck(
-                SpreadsheetNumberParsePatternComponentDigitSpace.with(
-                        SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
-                        1
-                ),
-                "?");
+            SpreadsheetNumberParsePatternComponentDigitSpace.with(
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
+                1
+            ),
+            "?");
     }
 
     @Override

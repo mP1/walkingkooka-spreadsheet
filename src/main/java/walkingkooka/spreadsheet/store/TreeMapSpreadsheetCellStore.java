@@ -130,18 +130,18 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(path, "path");
         Store.checkOffsetAndCount(
-                offset,
-                count
+            offset,
+            count
         );
 
         return 0 == count || offset >= range.count() ?
-                Sets.empty() :
-                this.loadCellsNonZeroMax(
-                        range,
-                        path,
-                        offset,
-                        count
-                );
+            Sets.empty() :
+            this.loadCellsNonZeroMax(
+                range,
+                path,
+                offset,
+                count
+            );
     }
 
     private Set<SpreadsheetCell> loadCellsNonZeroMax(final SpreadsheetCellRangeReference range,
@@ -149,9 +149,9 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                                                      final int offset,
                                                      final int count) {
         final Set<SpreadsheetCell> loaded = SortedSets.tree(
-                SpreadsheetCellReference.cellComparator(
-                        path.comparator()
-                )
+            SpreadsheetCellReference.cellComparator(
+                path.comparator()
+            )
         );
 
         final TreeMapSpreadsheetCellStoreSortedList list;
@@ -183,8 +183,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 break;
             default:
                 list = NeverError.unhandledEnum(
-                        path,
-                        SpreadsheetCellRangeReferencePath.values()
+                    path,
+                    SpreadsheetCellRangeReferencePath.values()
                 );
                 break;
         }
@@ -204,8 +204,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         for (; ; ) {
             final SpreadsheetCellReference firstColumn = cellReference;
             final SpreadsheetCellReference lastColumn = path.lastColumn(
-                    firstColumn,
-                    range
+                firstColumn,
+                range
             );
 
             int index = list.indexOfOrNext(firstColumn);
@@ -237,8 +237,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
             }
 
             cellReference = path.nextRow(
-                    cellReference,
-                    range
+                cellReference,
+                range
             );
         }
 
@@ -250,11 +250,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         Objects.requireNonNull(range, "range");
 
         this.store.all()
-                .stream()
-                .filter(c -> range.testCell(c.reference()))
-                .forEach(
-                        c -> this.delete(c.reference())
-                );
+            .stream()
+            .filter(c -> range.testCell(c.reference()))
+            .forEach(
+                c -> this.delete(c.reference())
+            );
     }
 
     @Override
@@ -271,8 +271,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     public Set<SpreadsheetCellReference> ids(final int offset,
                                              final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -280,8 +280,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     public List<SpreadsheetCell> values(final int offset,
                                         final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -289,15 +289,15 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     public List<SpreadsheetCell> between(final SpreadsheetCellReference from,
                                          final SpreadsheetCellReference to) {
         final List<SpreadsheetCell> cells = this.store.between(
-                from,
-                to
+            from,
+            to
         );
 
         final SpreadsheetCellRangeReference window = from.cellRange(to);
 
         return cells.stream()
-                .filter(c -> window.test(c.reference()))
-                .collect(Collectors.toList());
+            .filter(c -> window.test(c.reference()))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -312,11 +312,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     private int max(final ToIntFunction<SpreadsheetCell> value) {
         return 1 +
-                this.all()
-                        .stream()
-                        .mapToInt(value)
-                        .max()
-                        .orElse(-1);
+            this.all()
+                .stream()
+                .mapToInt(value)
+                .max()
+                .orElse(-1);
     }
 
     @Override
@@ -335,9 +335,9 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     private Set<SpreadsheetCell> filterAndCollect(final Predicate<SpreadsheetCell> filter) {
         return this.all()
-                .stream()
-                .filter(filter)
-                .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
+            .stream()
+            .filter(filter)
+            .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
     }
 
     /**
@@ -346,8 +346,8 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public double maxColumnWidth(final SpreadsheetColumnReference column) {
         return this.maxWidthOrHeight(
-                this.column(column),
-                TextStylePropertyName.WIDTH
+            this.column(column),
+            TextStylePropertyName.WIDTH
         );
     }
 
@@ -357,20 +357,20 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public double maxRowHeight(final SpreadsheetRowReference row) {
         return this.maxWidthOrHeight(
-                this.row(row),
-                TextStylePropertyName.HEIGHT
+            this.row(row),
+            TextStylePropertyName.HEIGHT
         );
     }
 
     private double maxWidthOrHeight(final Collection<SpreadsheetCell> cells,
                                     final TextStylePropertyName<Length<?>> widthOrHeight) {
         return cells.stream()
-                .mapToDouble(c -> c.style()
-                        .get(widthOrHeight)
-                        .map(Length::pixelValue)
-                        .orElse(0.0)
-                ).max()
-                .orElse(0.0);
+            .mapToDouble(c -> c.style()
+                .get(widthOrHeight)
+                .map(Length::pixelValue)
+                .orElse(0.0)
+            ).max()
+            .orElse(0.0);
     }
 
     /**
@@ -385,24 +385,24 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         for (final SpreadsheetCell spreadsheetCell : this.store.between(
-                row.setColumn(first),
-                row.setColumn(last))) {
+            row.setColumn(first),
+            row.setColumn(last))) {
             final SpreadsheetColumnReference possible = spreadsheetCell.reference()
-                    .column();
+                .column();
             if (null == next || possible.compareTo(next) > 0) {
                 next = possible;
             }
         }
 
         return Optional.ofNullable(
-                null == next ?
-                        first :
-                        next.equalsIgnoreReferenceKind(last) ?
-                                null :
-                                next.add(1)
+            null == next ?
+                first :
+                next.equalsIgnoreReferenceKind(last) ?
+                    null :
+                    next.add(1)
         );
     }
-    
+
     /**
      * Slow but safe way to find the last row for the given column and then adds one.
      */
@@ -415,21 +415,21 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         for (final SpreadsheetCell spreadsheetCell : this.store.between(
-                column.setRow(first),
-                column.setRow(last))) {
+            column.setRow(first),
+            column.setRow(last))) {
             final SpreadsheetRowReference possible = spreadsheetCell.reference()
-                    .row();
+                .row();
             if (null == next || possible.compareTo(next) > 0) {
                 next = possible;
             }
         }
 
         return Optional.ofNullable(
-                null == next ?
-                        first :
-                        next.equalsIgnoreReferenceKind(last) ?
-                                null :
-                                next.add(1)
+            null == next ?
+                first :
+                next.equalsIgnoreReferenceKind(last) ?
+                    null :
+                    next.add(1)
         );
     }
 
@@ -438,29 +438,29 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                                                        final String valueTypeName,
                                                        final int max) {
         SpreadsheetCellStore.checkFindCellsWithValueType(
-                range,
-                valueTypeName,
-                max
+            range,
+            valueTypeName,
+            max
         );
 
         return this.valueTypeStream(
-                        range,
-                        valueTypeName
-                ).limit(max)
-                .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
+                range,
+                valueTypeName
+            ).limit(max)
+            .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
     }
 
     @Override
     public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                        final String valueTypeName) {
         SpreadsheetCellStore.checkCountCellsWithValueType(
-                range,
-                valueTypeName
+            range,
+            valueTypeName
         );
 
         return (int) valueTypeStream(
-                range,
-                valueTypeName
+            range,
+            valueTypeName
         ).count();
     }
 
@@ -470,57 +470,57 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRangeReference range,
                                                     final String valueTypeName) {
         final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueTypeName) ?
-                v -> Boolean.TRUE :
-                v -> valueTypeName.equals(
-                        SpreadsheetValueType.toValueType(v.getClass())
-                                .map(HasText::text)
-                                .orElse(null)
-                );
+            v -> Boolean.TRUE :
+            v -> valueTypeName.equals(
+                SpreadsheetValueType.toValueType(v.getClass())
+                    .map(HasText::text)
+                    .orElse(null)
+            );
 
         return this.between(
-                        range.begin(),
-                        range.end()
-                ).stream()
-                .filter(
-                        (cell) -> cell.formula()
-                                .errorOrValue()
-                                .map(filter)
-                                .orElse(false)
-                );
+                range.begin(),
+                range.end()
+            ).stream()
+            .filter(
+                (cell) -> cell.formula()
+                    .errorOrValue()
+                    .map(filter)
+                    .orElse(false)
+            );
     }
 
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 
     private final TreeMapSpreadsheetCellStoreSortedList lrtd = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.LRTD
+        SpreadsheetCellRangeReferencePath.LRTD
     );
     private final TreeMapSpreadsheetCellStoreSortedList rltd = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.RLTD
+        SpreadsheetCellRangeReferencePath.RLTD
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList lrbu = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.LRBU
+        SpreadsheetCellRangeReferencePath.LRBU
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList rlbu = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.RLBU
+        SpreadsheetCellRangeReferencePath.RLBU
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList tdlr = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.TDLR
+        SpreadsheetCellRangeReferencePath.TDLR
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList tdrl = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.TDRL
+        SpreadsheetCellRangeReferencePath.TDRL
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList bulr = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.BULR
+        SpreadsheetCellRangeReferencePath.BULR
     );
 
     private final TreeMapSpreadsheetCellStoreSortedList burl = TreeMapSpreadsheetCellStoreSortedList.with(
-            SpreadsheetCellRangeReferencePath.BURL
+        SpreadsheetCellRangeReferencePath.BURL
     );
 
     @Override

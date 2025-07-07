@@ -45,8 +45,8 @@ final class SpreadsheetViewportNavigationExtendDownRow extends SpreadsheetViewpo
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.extendDownRow(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 }

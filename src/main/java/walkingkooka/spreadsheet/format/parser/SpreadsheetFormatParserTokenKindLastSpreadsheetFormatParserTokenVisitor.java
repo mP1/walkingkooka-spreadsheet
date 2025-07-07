@@ -53,8 +53,8 @@ final class SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisi
 
         // dont want to visit children if a parent has a kind.
         return maybeKind.isPresent() ?
-                Visiting.SKIP :
-                Visiting.CONTINUE;
+            Visiting.SKIP :
+            Visiting.CONTINUE;
     }
 
     /**

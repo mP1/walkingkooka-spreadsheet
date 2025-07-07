@@ -33,7 +33,7 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
      * importer will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetImporter.class.getSimpleName()
+        "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetImporter.class.getSimpleName()
     );
 
     /**
@@ -42,8 +42,8 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     public static SpreadsheetImporterProvider aliases(final SpreadsheetImporterAliasSet aliases,
                                                       final SpreadsheetImporterProvider provider) {
         return AliasesSpreadsheetImporterProvider.with(
-                aliases,
-                provider
+            aliases,
+            provider
         );
     }
 
@@ -74,8 +74,8 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     public static SpreadsheetImporterProvider filtered(final SpreadsheetImporterProvider provider,
                                                        final SpreadsheetImporterInfoSet infos) {
         return FilteredSpreadsheetImporterProvider.with(
-                provider,
-                infos
+            provider,
+            infos
         );
     }
 
@@ -85,8 +85,8 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     public static SpreadsheetImporterProvider filteredMapped(final SpreadsheetImporterInfoSet infos,
                                                              final SpreadsheetImporterProvider provider) {
         return FilteredMappedSpreadsheetImporterProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -96,8 +96,8 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     public static SpreadsheetImporterProvider mergedMapped(final SpreadsheetImporterInfoSet infos,
                                                            final SpreadsheetImporterProvider provider) {
         return MergedMappedSpreadsheetImporterProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 

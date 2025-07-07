@@ -91,9 +91,9 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
         //noinspection OptionalGetWithoutIsPresent
         this.idsAndCheck(store,
-                0,
-                3,
-                a.id().get(), b.id().get(), c.id().get());
+            0,
+            3,
+            a.id().get(), b.id().get(), c.id().get());
     }
 
     @Test
@@ -112,9 +112,9 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
         //noinspection OptionalGetWithoutIsPresent
         this.idsAndCheck(store,
-                ID,
-                2,
-                b.id().get(), c.id().get());
+            ID,
+            2,
+            b.id().get(), c.id().get());
     }
 
     @Test
@@ -131,12 +131,12 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
         //noinspection OptionalGetWithoutIsPresent
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                a,
-                b,
-                c
+            store,
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -156,11 +156,11 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
         //noinspection OptionalGetWithoutIsPresent
         this.valuesAndCheck(
-                store,
-                1,
-                2,
-                b,
-                c
+            store,
+            1,
+            2,
+            b,
+            c
         );
     }
 
@@ -176,15 +176,15 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         final LocalDateTime modifiedDateTime = LocalDateTime.of(2000, 1, 2, 12, 58, 59);
 
         return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
-                .set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        AuditInfo.with(
-                                creatorEmail,
-                                createDateTime,
-                                modifiedEmail,
-                                modifiedDateTime
-                        )
-                ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"));
+            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
+            .set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    creatorEmail,
+                    createDateTime,
+                    modifiedEmail,
+                    modifiedDateTime
+                )
+            ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"));
     }
 }

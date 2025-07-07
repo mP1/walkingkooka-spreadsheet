@@ -25,30 +25,30 @@ import walkingkooka.net.header.MediaType;
 import java.util.Optional;
 
 public final class EmptySpreadsheetImporterTest implements SpreadsheetImporterTesting<EmptySpreadsheetImporter>,
-        ToStringTesting<EmptySpreadsheetImporter> {
+    ToStringTesting<EmptySpreadsheetImporter> {
 
     @Test
     public void testCanImportFalse() {
         this.canImportAndCheck(
-                WebEntity.empty(),
-                false
+            WebEntity.empty(),
+            false
         );
     }
 
     @Test
     public void testDoImportContentTypeMissingFails() {
         this.doImportFails(
-                WebEntity.empty(),
-                new IllegalArgumentException("Cannot import contentType missing")
+            WebEntity.empty(),
+            new IllegalArgumentException("Cannot import contentType missing")
         );
     }
 
     @Test
     public void testDoImportFails() {
         this.doImportFails(
-                WebEntity.empty()
-                        .setContentType(Optional.of(MediaType.TEXT_PLAIN)),
-                new IllegalArgumentException("Cannot import contentType text/plain")
+            WebEntity.empty()
+                .setContentType(Optional.of(MediaType.TEXT_PLAIN)),
+            new IllegalArgumentException("Cannot import contentType text/plain")
         );
     }
 
@@ -65,8 +65,8 @@ public final class EmptySpreadsheetImporterTest implements SpreadsheetImporterTe
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                EmptySpreadsheetImporter.INSTANCE,
-                "EmptySpreadsheetImporter"
+            EmptySpreadsheetImporter.INSTANCE,
+            "EmptySpreadsheetImporter"
         );
     }
 

@@ -44,12 +44,12 @@ final class SpreadsheetFormatParsersFormatColorParser implements Parser<Spreadsh
                                        final SpreadsheetFormatParserContext context) {
         final TextCursorSavePoint save = cursor.save();
         Optional<ParserToken> maybeToken = parser.parse(
-                cursor,
-                context
+            cursor,
+            context
         );
         if (maybeToken.isPresent()) {
             final List<ParserToken> tokens = maybeToken.get()
-                    .children();
+                .children();
             if (tokens.size() == 1) {
                 if (tokens.get(0) instanceof ColorSpreadsheetFormatParserToken) {
                     maybeToken = Optional.empty();

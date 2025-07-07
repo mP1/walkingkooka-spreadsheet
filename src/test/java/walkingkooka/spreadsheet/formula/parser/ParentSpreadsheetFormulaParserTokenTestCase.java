@@ -72,8 +72,7 @@ public abstract class ParentSpreadsheetFormulaParserTokenTestCase<T extends Pare
 
     abstract T createToken(final String text, final List<ParserToken> tokens);
 
-    @Override
-    final public T createToken(final String text) {
+    @Override final public T createToken(final String text) {
         return this.createToken(text, this.tokens());
     }
 
@@ -98,28 +97,28 @@ public abstract class ParentSpreadsheetFormulaParserTokenTestCase<T extends Pare
     final BooleanSpreadsheetFormulaParserToken booleanValue(final boolean value,
                                                             final String text) {
         return SpreadsheetFormulaParserToken.booleanValue(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.booleanLiteral(
-                                value,
-                                text
-                        )
-                ),
-                "" + value
+            Lists.of(
+                SpreadsheetFormulaParserToken.booleanLiteral(
+                    value,
+                    text
+                )
+            ),
+            "" + value
         );
     }
 
 
     final BooleanLiteralSpreadsheetFormulaParserToken booleanLiteralFalse() {
         return SpreadsheetFormulaParserToken.booleanLiteral(
-                false,
-                "false"
+            false,
+            "false"
         );
     }
 
     final BooleanLiteralSpreadsheetFormulaParserToken booleanLiteralTrue() {
         return SpreadsheetFormulaParserToken.booleanLiteral(
-                true,
-                "true"
+            true,
+            "true"
         );
     }
 
@@ -199,10 +198,10 @@ public abstract class ParentSpreadsheetFormulaParserTokenTestCase<T extends Pare
 
     final NumberSpreadsheetFormulaParserToken number(final String value, final String text) {
         return SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.digits(value, text)
-                ),
-                "" + value
+            Lists.of(
+                SpreadsheetFormulaParserToken.digits(value, text)
+            ),
+            "" + value
         );
     }
 
@@ -248,7 +247,7 @@ public abstract class ParentSpreadsheetFormulaParserTokenTestCase<T extends Pare
 
     final ValueExpression<ExpressionNumber> expression(final Number number) {
         return Expression.value(
-                EXPRESSION_NUMBER_KIND.create(number)
+            EXPRESSION_NUMBER_KIND.create(number)
         );
     }
 

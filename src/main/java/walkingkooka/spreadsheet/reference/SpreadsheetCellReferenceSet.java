@@ -56,8 +56,8 @@ public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<S
 
     private static SpreadsheetCellReferenceSet withCopy(final SortedSet<SpreadsheetCellReference> cells) {
         return cells.isEmpty() ?
-                EMPTY :
-                new SpreadsheetCellReferenceSet(cells);
+            EMPTY :
+            new SpreadsheetCellReferenceSet(cells);
     }
 
     /**
@@ -65,12 +65,12 @@ public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<S
      */
     public static SpreadsheetCellReferenceSet parse(final String text) {
         return withCopy(
-                SpreadsheetSelectionCsvParser.parse(
-                        text,
-                        SpreadsheetFormulaParsers.cell(),
-                        (SpreadsheetFormulaParserToken token) -> token.cast(CellSpreadsheetFormulaParserToken.class)
-                                .cell()
-                )
+            SpreadsheetSelectionCsvParser.parse(
+                text,
+                SpreadsheetFormulaParsers.cell(),
+                (SpreadsheetFormulaParserToken token) -> token.cast(CellSpreadsheetFormulaParserToken.class)
+                    .cell()
+            )
         );
     }
 
@@ -84,15 +84,15 @@ public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<S
     public SpreadsheetCellReferenceSet setElements(final SortedSet<SpreadsheetCellReference> cells) {
         final SpreadsheetCellReferenceSet spreadsheetCellReferenceSet;
 
-        if(cells instanceof SpreadsheetCellReferenceSet) {
+        if (cells instanceof SpreadsheetCellReferenceSet) {
             spreadsheetCellReferenceSet = (SpreadsheetCellReferenceSet) cells;
         } else {
             final TreeSet<SpreadsheetCellReference> copy = new TreeSet<>(
-                    Objects.requireNonNull(cells, "cells")
+                Objects.requireNonNull(cells, "cells")
             );
             spreadsheetCellReferenceSet = this.references.equals(copy) ?
-                    this :
-                    withCopy(copy);
+                this :
+                withCopy(copy);
         }
 
         return spreadsheetCellReferenceSet;
@@ -117,16 +117,16 @@ public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<S
     static SpreadsheetCellReferenceSet unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellReferenceSet.class),
-                SpreadsheetCellReferenceSet::unmarshall,
-                SpreadsheetCellReferenceSet::marshall,
-                SpreadsheetCellReferenceSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetCellReferenceSet.class),
+            SpreadsheetCellReferenceSet::unmarshall,
+            SpreadsheetCellReferenceSet::marshall,
+            SpreadsheetCellReferenceSet.class
         );
         SpreadsheetSelection.A1.isCell(); // trigger static init and json marshall/unmarshall registry
     }

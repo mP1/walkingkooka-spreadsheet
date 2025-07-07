@@ -149,15 +149,15 @@ import java.util.function.Function;
  * Cell specific data such as individual format patterns are not stored here but on the {@link walkingkooka.spreadsheet.SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
-        HasExpressionNumberKind,
-        HasLocale,
-        HasMathContext,
-        HasOptionalName<SpreadsheetName>,
-        HateosResource<SpreadsheetId>,
-        Patchable<SpreadsheetMetadata>,
-        TreePrintable,
-        Value<Map<SpreadsheetMetadataPropertyName<?>, Object>>,
-        HasMissingCellNumberValue {
+    HasExpressionNumberKind,
+    HasLocale,
+    HasMathContext,
+    HasOptionalName<SpreadsheetName>,
+    HateosResource<SpreadsheetId>,
+    Patchable<SpreadsheetMetadata>,
+    TreePrintable,
+    Value<Map<SpreadsheetMetadataPropertyName<?>, Object>>,
+    HasMissingCellNumberValue {
 
     public static final String HATEOS_RESOURCE_NAME_STRING = "spreadsheet";
 
@@ -224,8 +224,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public String hateosLinkId() {
         return this.id()
-                .orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
-                .hateosLinkId();
+            .orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
+            .hateosLinkId();
     }
 
     // get..............................................................................................................
@@ -236,7 +236,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> Optional<V> get(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.getOrGetDefaults(
-                Objects.requireNonNull(propertyName, "propertyName")
+            Objects.requireNonNull(propertyName, "propertyName")
         );
     }
 
@@ -260,7 +260,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.getIgnoringDefaults0(
-                Objects.requireNonNull(propertyName, "propertyName")
+            Objects.requireNonNull(propertyName, "propertyName")
         );
     }
 
@@ -271,7 +271,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.get(propertyName)
-                .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Missing", propertyName, null));
+            .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Missing", propertyName, null));
     }
 
     /**
@@ -292,7 +292,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 }
             }
             style = this.defaults()
-                    .get(SpreadsheetMetadataPropertyName.STYLE);
+                .get(SpreadsheetMetadataPropertyName.STYLE);
             if (style.isPresent()) {
                 value = style.get().get(property);
             }
@@ -307,7 +307,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> V getEffectiveStylePropertyOrFail(final TextStylePropertyName<V> propertyName) {
         return this.getEffectiveStyleProperty(propertyName)
-                .orElseThrow(() -> new IllegalArgumentException("Missing " + propertyName));
+            .orElseThrow(() -> new IllegalArgumentException("Missing " + propertyName));
     }
 
     /**
@@ -317,7 +317,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         if (null == this.effectiveStyle) {
             final TextStyle style = this.getStyleOrEmpty();
             final TextStyle defaultStyle = this.defaults()
-                    .getStyleOrEmpty();
+                .getStyleOrEmpty();
 
             this.effectiveStyle = defaultStyle.merge(style);
         }
@@ -329,7 +329,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     private TextStyle getStyleOrEmpty() {
         return this.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
-                .orElse(TextStyle.EMPTY);
+            .orElse(TextStyle.EMPTY);
     }
 
     // set..............................................................................................................
@@ -341,11 +341,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName,
                                              final V value) {
         return this.set0(
-                Objects.requireNonNull(
-                        propertyName,
-                        "propertyName"
-                ),
-                propertyName.checkValue(value) // necessary because absolute references values are made relative
+            Objects.requireNonNull(
+                propertyName,
+                "propertyName"
+            ),
+            propertyName.checkValue(value) // necessary because absolute references values are made relative
         );
     }
 
@@ -377,13 +377,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
         copy.putAll(this.value());
         copy.put(
-                propertyName,
-                value
+            propertyName,
+            value
         );
 
         return SpreadsheetMetadataNonEmpty.with(
-                Maps.immutable(copy),
-                this.defaults
+            Maps.immutable(copy),
+            this.defaults
         );
     }
 
@@ -394,10 +394,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetMetadata remove(final SpreadsheetMetadataPropertyName<?> propertyName) {
         return this.remove0(
-                Objects.requireNonNull(
-                        propertyName,
-                        "propertyName"
-                )
+            Objects.requireNonNull(
+                propertyName,
+                "propertyName"
+            )
         );
     }
 
@@ -411,8 +411,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final <V> SpreadsheetMetadata setOrRemove(final SpreadsheetMetadataPropertyName<V> propertyName,
                                                      final V value) {
         return null != value ?
-                this.set(propertyName, value) :
-                this.remove(propertyName);
+            this.set(propertyName, value) :
+            this.remove(propertyName);
     }
 
     // Patchable.....................................................................................................
@@ -441,19 +441,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 final Object value;
                 if (name instanceof SpreadsheetMetadataPropertyNameStyle) {
                     final TextStyle style = result.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
-                            .orElse(TextStyle.EMPTY);
+                        .orElse(TextStyle.EMPTY);
 
                     value = style.patch(
-                            nameAndValue,
-                            context
+                        nameAndValue,
+                        context
                     );
                 } else {
                     value = context.unmarshall(nameAndValue, name.type());
                 }
 
                 result = result.set(
-                        name,
-                        Cast.to(value)
+                    name,
+                    Cast.to(value)
                 );
             }
         }
@@ -474,8 +474,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(defaults, "defaults");
 
         return this.defaults().equals(defaults) ?
-                this :
-                this.replaceDefaults(defaults.checkDefault());
+            this :
+            this.replaceDefaults(defaults.checkDefault());
     }
 
     /**
@@ -496,8 +496,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetMetadata defaults() {
         final SpreadsheetMetadata defaults = this.defaults;
         return null != defaults ?
-                defaults :
-                EMPTY;
+            defaults :
+            EMPTY;
     }
 
     // @VisibleForTesting
@@ -523,8 +523,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return converter.evaluateValueText(
-                converterProvider,
-                context
+            converterProvider,
+            context
         );
     }
 
@@ -565,35 +565,35 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             final SpreadsheetCell spreadsheetCell = cell.get();
 
             dateTimeSymbols = spreadsheetCell.dateTimeSymbols()
-                    .orElse(null);
+                .orElse(null);
 
             if (null == dateTimeSymbols) {
                 final Locale spreadsheetCellLocale = spreadsheetCell.locale()
-                        .orElse(null);
+                    .orElse(null);
                 if (null != spreadsheetCellLocale) {
                     dateTimeSymbols = context.dateTimeSymbolsForLocale(spreadsheetCellLocale)
-                            .orElse(null);
+                        .orElse(null);
                 }
             }
         }
 
         if (null == dateTimeSymbols) {
             dateTimeSymbols = this.get(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS)
-                    .orElse(null);
+                .orElse(null);
         }
 
         if (null == dateTimeSymbols) {
             dateTimeSymbols = context.dateTimeSymbolsForLocale(locale)
-                    // Missing DateTimeSymbols for locale EN-AU
-                    .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
+                // Missing DateTimeSymbols for locale EN-AU
+                .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
         }
 
         return DateTimeContexts.basic(
-                dateTimeSymbols,
-                locale,
-                defaultYear,
-                twoYearDigit,
-                now
+            dateTimeSymbols,
+            locale,
+            defaultYear,
+            twoYearDigit,
+            now
         );
     }
 
@@ -631,35 +631,35 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         if (cell.isPresent()) {
             final SpreadsheetCell spreadsheetCell = cell.get();
             decimalNumberSymbols = spreadsheetCell.decimalNumberSymbols()
-                    .orElse(null);
+                .orElse(null);
 
             if (null == decimalNumberSymbols) {
                 final Locale spreadsheetCellLocale = spreadsheetCell.locale()
-                        .orElse(null);
+                    .orElse(null);
                 if (null != spreadsheetCellLocale) {
                     decimalNumberSymbols = context.decimalNumberSymbolsForLocale(spreadsheetCellLocale)
-                            .orElse(null);
+                        .orElse(null);
                 }
             }
         }
 
         if (null == decimalNumberSymbols) {
             decimalNumberSymbols = this.get(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS)
-                    .orElse(null);
+                .orElse(null);
         }
 
         if (null == decimalNumberSymbols) {
             decimalNumberSymbols = context.decimalNumberSymbolsForLocale(locale)
-                    .orElseThrow(
-                            // Missing DecimalNumberSymbols for locale EN-AU
-                            () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
-                    );
+                .orElseThrow(
+                    // Missing DecimalNumberSymbols for locale EN-AU
+                    () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
+                );
         }
 
         return DecimalNumberContexts.basic(
-                decimalNumberSymbols,
-                locale,
-                mathContext
+            decimalNumberSymbols,
+            locale,
+            mathContext
         );
     }
 
@@ -671,8 +671,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final EnvironmentContext environmentContext(final EnvironmentContext context) {
         return SpreadsheetMetadataEnvironmentContext.with(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -694,8 +694,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return ExpressionFunctionProviders.aliases(
-                functionsAliases,
-                provider
+            functionsAliases,
+            provider
         );
     }
 
@@ -721,8 +721,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         DecimalNumberContext decimalNumberContext;
         try {
             decimalNumberContext = this.decimalNumberContext(
-                    cell,
-                    context
+                cell,
+                context
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -732,8 +732,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return ExpressionNumberContexts.basic(
-                kind,
-                decimalNumberContext
+            kind,
+            decimalNumberContext
         );
     }
 
@@ -785,15 +785,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverters.general(
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(dateParser, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(numberParser, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(textFormat, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(timeParser, context)
+            spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
+            spreadsheetParserProvider.spreadsheetParser(dateParser, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context),
+            spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat, context),
+            spreadsheetParserProvider.spreadsheetParser(numberParser, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(textFormat, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context),
+            spreadsheetParserProvider.spreadsheetParser(timeParser, context)
         );
     }
 
@@ -826,8 +826,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return JsonNodeUnmarshallContexts.basic(
-                expressionNumberKind,
-                mathContext
+            expressionNumberKind,
+            mathContext
         );
     }
 
@@ -841,9 +841,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetMetadata loadFromLocale(final LocaleContext context) {
         return loadFromLocale0(
-                this.localeContext(
-                        Objects.requireNonNull(context, "context")
-                )
+            this.localeContext(
+                Objects.requireNonNull(context, "context")
+            )
         );
     }
 
@@ -854,8 +854,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             final Optional<?> localeAwareValue = propertyName.extractLocaleAwareValue(context);
             if (localeAwareValue.isPresent()) {
                 updated = updated.set(
-                        propertyName,
-                        Cast.to(localeAwareValue.get())
+                    propertyName,
+                    Cast.to(localeAwareValue.get())
                 );
             }
         }
@@ -877,8 +877,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final LocaleContext localeContext(final LocaleContext context) {
         return SpreadsheetMetadataLocaleContext.with(
-                context,
-                this.locale()
+            context,
+            this.locale()
         );
     }
 
@@ -955,7 +955,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     final Function<Integer, Optional<SpreadsheetColorName>> numberToColorName0() {
         return SpreadsheetMetadataColorFunction.with(
-                SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.numberToColorNameMap(this)
+            SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor.numberToColorNameMap(this)
         );
     }
 
@@ -969,12 +969,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                final LocaleContext localeContext,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
-                this.sortSpreadsheetConverterContext(
-                        resolveIfLabel,
-                        spreadsheetProvider, // ConverterProvider
-                        localeContext,
-                        providerContext // ProviderContext
-                )
+            this.sortSpreadsheetConverterContext(
+                resolveIfLabel,
+                spreadsheetProvider, // ConverterProvider
+                localeContext,
+                providerContext // ProviderContext
+            )
         );
     }
 
@@ -986,13 +986,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                         final LocaleContext localeContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
-                NO_CELL,
-                NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-                labelNameResolver,
-                converterProvider,
-                localeContext,
-                providerContext
+            NO_CELL,
+            NO_VALIDATION_REFERENCE,
+            SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+            labelNameResolver,
+            converterProvider,
+            localeContext,
+            providerContext
         );
     }
 
@@ -1003,7 +1003,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     private SpreadsheetComparatorContext spreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
         return SpreadsheetComparatorContexts.basic(
-                converterContext
+            converterContext
         );
     }
 
@@ -1032,9 +1032,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Converter<SpreadsheetConverterContext> converter;
         try {
             converter = this.converter(
-                    converterSelectorPropertyName,
-                    converterProvider,
-                    providerContext
+                converterSelectorPropertyName,
+                converterProvider,
+                providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1044,9 +1044,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         DateTimeContext dateTimeContext;
         try {
             dateTimeContext = this.dateTimeContext(
-                    cell,
-                    providerContext, // now
-                    localeContext
+                cell,
+                providerContext, // now
+                localeContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1056,8 +1056,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         DecimalNumberContext decimalNumberContext;
         try {
             decimalNumberContext = this.decimalNumberContext(
-                    cell,
-                    localeContext
+                cell,
+                localeContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             decimalNumberContext = null;
@@ -1086,26 +1086,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-                Optional.of(this),
-                validationReference,
-                converter,
-                labelNameResolver,
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        dateOffset,
-                                        Converters.fake(),
-                                        dateTimeContext,
-                                        decimalNumberContext
-                                ),
-                                expressionNumberKind
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.basic(
-                                jsonNodeMarshallContext,
-                                jsonNodeUnmarshallContext
-                        )
+            Optional.of(this),
+            validationReference,
+            converter,
+            labelNameResolver,
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                        dateOffset,
+                        Converters.fake(),
+                        dateTimeContext,
+                        decimalNumberContext
+                    ),
+                    expressionNumberKind
+                ),
+                JsonNodeMarshallUnmarshallContexts.basic(
+                    jsonNodeMarshallContext,
+                    jsonNodeUnmarshallContext
                 )
+            )
         );
     }
 
@@ -1132,11 +1132,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetFormatters.automatic(
-                spreadsheetFormatterProvider.spreadsheetFormatter(date, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateTime, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(number, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(text, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(time, context)
+            spreadsheetFormatterProvider.spreadsheetFormatter(date, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(dateTime, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(number, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(text, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(time, context)
         );
     }
 
@@ -1165,8 +1165,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetFormatter spreadsheetFormatter;
         try {
             spreadsheetFormatter = this.spreadsheetFormatter(
-                    spreadsheetFormatterProvider,
-                    providerContext
+                spreadsheetFormatterProvider,
+                providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1176,13 +1176,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetConverterContext formatSpreadsheetConverterContext;
         try {
             formatSpreadsheetConverterContext = this.spreadsheetConverterContext(
-                    cell,
-                    NO_VALIDATION_REFERENCE,
-                    SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                    labelNameResolver,
-                    converterProvider,
-                    localeContext,
-                    providerContext
+                cell,
+                NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+                labelNameResolver,
+                converterProvider,
+                localeContext,
+                providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1195,15 +1195,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetFormatterContexts.basic(
-                this.numberToColor(),
-                this.nameToColor(),
-                characterWidth,
-                generalNumberFormatDigitCount,
-                spreadsheetFormatter,
-                spreadsheetExpressionEvaluationContext,
-                formatSpreadsheetConverterContext,
-                spreadsheetFormatterProvider,
-                providerContext
+            this.numberToColor(),
+            this.nameToColor(),
+            characterWidth,
+            generalNumberFormatDigitCount,
+            spreadsheetFormatter,
+            spreadsheetExpressionEvaluationContext,
+            formatSpreadsheetConverterContext,
+            spreadsheetFormatterProvider,
+            providerContext
         );
     }
 
@@ -1219,15 +1219,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final LocaleContext localeContext,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
-                this.spreadsheetFormatterContext(
-                        NO_CELL,
-                        spreadsheetExpressionEvaluationContext,
-                        labelNameResolver,
-                        converterProvider,
-                        spreadsheetFormatterProvider,
-                        localeContext,
-                        providerContext
-                )
+            this.spreadsheetFormatterContext(
+                NO_CELL,
+                spreadsheetExpressionEvaluationContext,
+                labelNameResolver,
+                converterProvider,
+                spreadsheetFormatterProvider,
+                localeContext,
+                providerContext
+            )
         );
     }
 
@@ -1251,15 +1251,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetFormulaParsers.valueOrExpression(
-                Parsers.alternatives(
-                        Lists.of(
-                                provider.spreadsheetParser(date, context),
-                                provider.spreadsheetParser(dateTime, context),
-                                provider.spreadsheetParser(number, context)
-                                        .andEmptyTextCursor(),
-                                provider.spreadsheetParser(time, context)
-                        )
+            Parsers.alternatives(
+                Lists.of(
+                    provider.spreadsheetParser(date, context),
+                    provider.spreadsheetParser(dateTime, context),
+                    provider.spreadsheetParser(number, context)
+                        .andEmptyTextCursor(),
+                    provider.spreadsheetParser(time, context)
                 )
+            )
         );
     }
 
@@ -1294,8 +1294,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ExpressionNumberContext expressionNumberContext;
         try {
             expressionNumberContext = this.expressionNumberContext(
-                    cell,
-                    localeContext
+                cell,
+                localeContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1308,10 +1308,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
-                dateTimeContext,
-                expressionNumberContext,
-                valueSeparator
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+            dateTimeContext,
+            expressionNumberContext,
+            valueSeparator
         );
     }
 
@@ -1339,13 +1339,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetConverterContext spreadsheetConverterContext;
         try {
             spreadsheetConverterContext = this.spreadsheetConverterContext(
-                    NO_CELL,
-                    Optional.of(cellOrLabel), // validationReference
-                    SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                    labelNameResolver,
-                    converterProvider,
-                    localeContext,
-                    providerContext
+                NO_CELL,
+                Optional.of(cellOrLabel), // validationReference
+                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+                labelNameResolver,
+                converterProvider,
+                localeContext,
+                providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1355,13 +1355,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetValidatorContexts.basic(
-                ValidatorContexts.basic(
-                        cellOrLabel,
-                        Cast.to(validatorSelectorToValidator),
-                        Cast.to(referenceToExpressionEvaluationContext),
-                        spreadsheetConverterContext,
-                        providerContext // EnvironmentContext
-                )
+            ValidatorContexts.basic(
+                cellOrLabel,
+                Cast.to(validatorSelectorToValidator),
+                Cast.to(referenceToExpressionEvaluationContext),
+                spreadsheetConverterContext,
+                providerContext // EnvironmentContext
+            )
         );
     }
 
@@ -1388,42 +1388,42 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetProviders.basic(
-                ConverterProviders.aliases(
-                        converters,
-                        provider
-                ),
-                ExpressionFunctionProviders.aliases(
-                        functions,
-                        provider
-                ),
-                SpreadsheetComparatorProviders.aliases(
-                        comparators,
-                        provider
-                ),
-                SpreadsheetExporterProviders.aliases(
-                        exporters,
-                        provider
-                ),
-                SpreadsheetFormatterProviders.aliases(
-                        formatters,
-                        provider
-                ),
-                FormHandlerProviders.aliases(
-                        formHandlers,
-                        provider
-                ),
-                SpreadsheetImporterProviders.aliases(
-                        importers,
-                        provider
-                ),
-                SpreadsheetParserProviders.aliases(
-                        parsers,
-                        provider
-                ),
-                ValidatorProviders.aliases(
-                        validators,
-                        provider
-                )
+            ConverterProviders.aliases(
+                converters,
+                provider
+            ),
+            ExpressionFunctionProviders.aliases(
+                functions,
+                provider
+            ),
+            SpreadsheetComparatorProviders.aliases(
+                comparators,
+                provider
+            ),
+            SpreadsheetExporterProviders.aliases(
+                exporters,
+                provider
+            ),
+            SpreadsheetFormatterProviders.aliases(
+                formatters,
+                provider
+            ),
+            FormHandlerProviders.aliases(
+                formHandlers,
+                provider
+            ),
+            SpreadsheetImporterProviders.aliases(
+                importers,
+                provider
+            ),
+            SpreadsheetParserProviders.aliases(
+                parsers,
+                provider
+            ),
+            ValidatorProviders.aliases(
+                validators,
+                provider
+            )
         );
     }
 
@@ -1472,7 +1472,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final int hashCode() {
         if (0 == this.hashCode) {
             this.hashCode = this.value()
-                    .hashCode();
+                .hashCode();
         }
         return this.hashCode;
     }
@@ -1482,24 +1482,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                null != other &&
-                        this.getClass() == other.getClass() &&
-                        this.equals0((SpreadsheetMetadata) other);
+            null != other &&
+                this.getClass() == other.getClass() &&
+                this.equals0((SpreadsheetMetadata) other);
     }
 
     private boolean equals0(final SpreadsheetMetadata other) {
         return this.value()
-                .equals(other.value()) &&
-                Objects.equals(
-                        this.defaults,
-                        other.defaults
-                );
+            .equals(other.value()) &&
+            Objects.equals(
+                this.defaults,
+                other.defaults
+            );
     }
 
     @Override
     public final String toString() {
         return this.marshall(
-                JsonNodeMarshallContexts.basic()
+            JsonNodeMarshallContexts.basic()
         ).toString();
     }
 
@@ -1521,7 +1521,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         return JsonNode.object()
-                .setChildren(children);
+            .setChildren(children);
     }
 
     /**
@@ -1552,10 +1552,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
             metadata = metadata.set(
-                    name,
-                    Cast.to(
-                            context.unmarshall(child, name.type())
-                    )
+                name,
+                Cast.to(
+                    context.unmarshall(child, name.type())
+                )
             );
         }
 
@@ -1566,12 +1566,12 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetMetadataPropertyName.AUDIT_INFO.caseSensitivity();
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),
-                SpreadsheetMetadata::unmarshall,
-                SpreadsheetMetadata::marshall,
-                SpreadsheetMetadata.class,
-                SpreadsheetMetadataNonEmpty.class,
-                SpreadsheetMetadataEmpty.class
+            JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),
+            SpreadsheetMetadata::unmarshall,
+            SpreadsheetMetadata::marshall,
+            SpreadsheetMetadata.class,
+            SpreadsheetMetadataNonEmpty.class,
+            SpreadsheetMetadataEmpty.class
         );
     }
 
@@ -1589,58 +1589,58 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.DEFAULT,
-                MathContext.DECIMAL32
+            ExpressionNumberKind.DEFAULT,
+            MathContext.DECIMAL32
         ).unmarshall(
-                JsonNode.parse(
-                        new SpreadsheetMetadataDefaultTextResourceProvider()
-                                .text()
-                ),
-                SpreadsheetMetadata.class
+            JsonNode.parse(
+                new SpreadsheetMetadataDefaultTextResourceProvider()
+                    .text()
+            ),
+            SpreadsheetMetadata.class
         ).set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                SpreadsheetMetadata.EMPTY,
-                                SpreadsheetFormatterProviders.fake(),
-                                SpreadsheetParserProviders.fake()
-                        ).converterInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                    SpreadsheetMetadata.EMPTY,
+                    SpreadsheetFormatterProviders.fake(),
+                    SpreadsheetParserProviders.fake()
+                ).converterInfos()
+                .aliasSet()
         ).set(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorProviders.spreadsheetComparators()
-                        .spreadsheetComparatorInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.COMPARATORS,
+            SpreadsheetComparatorProviders.spreadsheetComparators()
+                .spreadsheetComparatorInfos()
+                .aliasSet()
         ).set(
-                SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterProviders.spreadsheetExport()
-                        .spreadsheetExporterInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.EXPORTERS,
+            SpreadsheetExporterProviders.spreadsheetExport()
+                .spreadsheetExporterInfos()
+                .aliasSet()
         ).set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
-                SpreadsheetMetadataPropertyName.FORMATTERS,
-                spreadsheetFormatterProvider.spreadsheetFormatterInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.FORMATTERS,
+            spreadsheetFormatterProvider.spreadsheetFormatterInfos()
+                .aliasSet()
         ).set(
-                SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterProviders.spreadsheetImport()
-                        .spreadsheetImporterInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.IMPORTERS,
+            SpreadsheetImporterProviders.spreadsheetImport()
+                .spreadsheetImporterInfos()
+                .aliasSet()
         ).set(
-                SpreadsheetMetadataPropertyName.PARSERS,
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                                spreadsheetFormatterProvider
-                        ).spreadsheetParserInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.PARSERS,
+            SpreadsheetParserProviders.spreadsheetParsePattern(
+                    spreadsheetFormatterProvider
+                ).spreadsheetParserInfos()
+                .aliasSet()
         ).set(
-                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+            SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
         ).set(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorProviders.validators()
-                        .validatorInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorProviders.validators()
+                .validatorInfos()
+                .aliasSet()
         );
     }
 
@@ -1653,8 +1653,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             printer.print(": ");
 
             TreePrintable.printTreeOrToString(
-                    nameAndValue.getValue(),
-                    printer
+                nameAndValue.getValue(),
+                printer
             );
 
             printer.lineStart();
@@ -1666,6 +1666,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public final ExpressionNumber missingCellNumberValue() {
         return this.expressionNumberKind()
-                .zero();
+            .zero();
     }
 }

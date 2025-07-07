@@ -36,11 +36,11 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
                                          final Optional<ValidationValueTypeName> valueType) {
         return parser instanceof SpreadsheetParser ?
-                (SpreadsheetParser) parser :
-                new ParserSpreadsheetParser(
-                        Objects.requireNonNull(parser, "parser"),
-                        Objects.requireNonNull(valueType, "valueType")
-                );
+            (SpreadsheetParser) parser :
+            new ParserSpreadsheetParser(
+                Objects.requireNonNull(parser, "parser"),
+                Objects.requireNonNull(valueType, "valueType")
+            );
     }
 
     private ParserSpreadsheetParser(final Parser<SpreadsheetParserContext> parser,
@@ -53,8 +53,8 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     public Optional<ParserToken> parse(final TextCursor text,
                                        final SpreadsheetParserContext context) {
         return this.parser.parse(
-                text,
-                context
+            text,
+            context
         );
     }
 
@@ -94,8 +94,8 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ParserSpreadsheetParser &&
-                        this.equals0(Cast.to(other));
+            other instanceof ParserSpreadsheetParser &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final ParserSpreadsheetParser other) {

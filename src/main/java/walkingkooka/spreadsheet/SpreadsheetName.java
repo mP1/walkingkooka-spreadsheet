@@ -35,20 +35,20 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * The name of a spreadsheet. Only printable characters may be used.
  */
 public final class SpreadsheetName implements Comparable<SpreadsheetName>,
-        Name,
-        HasId<String>,
-        Value<String>,
-        HasUrlFragment {
+    Name,
+    HasId<String>,
+    Value<String>,
+    HasUrlFragment {
 
     /**
      * Creates a new {@link SpreadsheetName} after vaildating only printable characters are used.
      */
     public static SpreadsheetName with(final String value) {
         CharPredicates.printable()
-                .failIfNullOrEmptyOrFalse(
-                        "name",
-                        value
-                );
+            .failIfNullOrEmptyOrFalse(
+                "name",
+                value
+            );
 
         final int length = value.length();
         if (length >= MAX_LENGTH) {
@@ -117,10 +117,10 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetName.class),
-                SpreadsheetName::unmarshall,
-                SpreadsheetName::marshall,
-                SpreadsheetName.class
+            JsonNodeContext.computeTypeName(SpreadsheetName.class),
+            SpreadsheetName::unmarshall,
+            SpreadsheetName::marshall,
+            SpreadsheetName.class
         );
     }
 
@@ -134,8 +134,8 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetName other) {

@@ -37,42 +37,42 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     @Test
     public void testAddLocalVariableWithNullReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> new FakeSpreadsheetExpressionEvaluationContext()
-                        .addLocalVariable(
-                                null,
-                                Optional.empty()
-                        )
+            NullPointerException.class,
+            () -> new FakeSpreadsheetExpressionEvaluationContext()
+                .addLocalVariable(
+                    null,
+                    Optional.empty()
+                )
         );
     }
 
     @Test
     public void testAddLocalVariableWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> new FakeSpreadsheetExpressionEvaluationContext()
-                        .addLocalVariable(
-                                SpreadsheetSelection.labelName("Hello"),
-                                null
-                        )
+            NullPointerException.class,
+            () -> new FakeSpreadsheetExpressionEvaluationContext()
+                .addLocalVariable(
+                    SpreadsheetSelection.labelName("Hello"),
+                    null
+                )
         );
     }
 
     @Test
     public void testCellOrFail() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public Optional<SpreadsheetCell> cell() {
-                        return Optional.empty();
-                    }
-                }.cellOrFail()
+            IllegalStateException.class,
+            () -> new FakeSpreadsheetExpressionEvaluationContext() {
+                @Override
+                public Optional<SpreadsheetCell> cell() {
+                    return Optional.empty();
+                }
+            }.cellOrFail()
         );
 
         this.checkEquals(
-                "Missing cell",
-                thrown.getMessage()
+            "Missing cell",
+            thrown.getMessage()
         );
     }
 
@@ -82,17 +82,17 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         final Object value = "abc123";
 
         this.referenceOrFailAndCheck(
-                new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public Optional<Optional<Object>> reference(final ExpressionReference r) {
-                        assertSame(label, r, "reference");
-                        return Optional.of(
-                                Optional.of(value)
-                        );
-                    }
-                },
-                label,
-                value
+            new FakeSpreadsheetExpressionEvaluationContext() {
+                @Override
+                public Optional<Optional<Object>> reference(final ExpressionReference r) {
+                    assertSame(label, r, "reference");
+                    return Optional.of(
+                        Optional.of(value)
+                    );
+                }
+            },
+            label,
+            value
         );
     }
 
@@ -101,17 +101,17 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.referenceOrFailAndCheck(
-                new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public Optional<Optional<Object>> reference(final ExpressionReference r) {
-                        assertSame(label, r, "reference");
-                        return Optional.of(
-                                Optional.empty()
-                        );
-                    }
-                },
-                label,
-                null
+            new FakeSpreadsheetExpressionEvaluationContext() {
+                @Override
+                public Optional<Optional<Object>> reference(final ExpressionReference r) {
+                    assertSame(label, r, "reference");
+                    return Optional.of(
+                        Optional.empty()
+                    );
+                }
+            },
+            label,
+            null
         );
     }
 
@@ -120,15 +120,15 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.referenceOrFailAndCheck(
-                new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public Optional<Optional<Object>> reference(final ExpressionReference r) {
-                        assertSame(label, r, "reference");
-                        return Optional.empty();
-                    }
-                },
-                label,
-                SpreadsheetError.selectionNotFound(label)
+            new FakeSpreadsheetExpressionEvaluationContext() {
+                @Override
+                public Optional<Optional<Object>> reference(final ExpressionReference r) {
+                    assertSame(label, r, "reference");
+                    return Optional.empty();
+                }
+            },
+            label,
+            SpreadsheetError.selectionNotFound(label)
         );
     }
 
@@ -137,15 +137,15 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         final TemplateValueName notSpreadsheetExpressionReference = TemplateValueName.with("TemplateValueName123");
 
         this.referenceOrFailAndCheck(
-                new FakeSpreadsheetExpressionEvaluationContext() {
-                    @Override
-                    public Optional<Optional<Object>> reference(final ExpressionReference r) {
-                        assertSame(notSpreadsheetExpressionReference, r, "reference");
-                        return Optional.empty();
-                    }
-                },
-                notSpreadsheetExpressionReference,
-                SpreadsheetError.referenceNotFound(notSpreadsheetExpressionReference)
+            new FakeSpreadsheetExpressionEvaluationContext() {
+                @Override
+                public Optional<Optional<Object>> reference(final ExpressionReference r) {
+                    assertSame(notSpreadsheetExpressionReference, r, "reference");
+                    return Optional.empty();
+                }
+            },
+            notSpreadsheetExpressionReference,
+            SpreadsheetError.referenceNotFound(notSpreadsheetExpressionReference)
         );
     }
 
@@ -153,9 +153,9 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                                          final ExpressionReference reference,
                                          final Object expected) {
         this.checkEquals(
-                expected,
-                context.referenceOrFail(reference),
-                () -> "referenceOrFail " + reference
+            expected,
+            context.referenceOrFail(reference),
+            () -> "referenceOrFail " + reference
         );
     }
 

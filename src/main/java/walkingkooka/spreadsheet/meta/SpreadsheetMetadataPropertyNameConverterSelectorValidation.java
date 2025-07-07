@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorValidation extends S
      */
     private SpreadsheetMetadataPropertyNameConverterSelectorValidation() {
         super(
-                "validationConverter"
+            "validationConverter"
         );
     }
 

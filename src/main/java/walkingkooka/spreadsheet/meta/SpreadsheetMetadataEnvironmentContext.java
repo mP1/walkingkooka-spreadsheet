@@ -39,8 +39,8 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
     static SpreadsheetMetadataEnvironmentContext with(final SpreadsheetMetadata metadata,
                                                       final EnvironmentContext context) {
         return new SpreadsheetMetadataEnvironmentContext(
-                Objects.requireNonNull(metadata, "metadata"),
-                Objects.requireNonNull(context, "context")
+            Objects.requireNonNull(metadata, "metadata"),
+            Objects.requireNonNull(context, "context")
         );
     }
 
@@ -66,7 +66,7 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
 
         if (null != propertyName) {
             value = Cast.to(
-                    this.metadata.get(propertyName)
+                this.metadata.get(propertyName)
             );
         }
 
@@ -79,17 +79,17 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
             final SpreadsheetMetadata metadata = this.metadata;
 
             final SortedSet<EnvironmentValueName<?>> names = metadata.value()
-                    .keySet()
-                    .stream()
-                    .map(m -> EnvironmentValueName.with(m.value()))
-                    .collect(Collectors.toCollection(SortedSets::tree));
+                .keySet()
+                .stream()
+                .map(m -> EnvironmentValueName.with(m.value()))
+                .collect(Collectors.toCollection(SortedSets::tree));
 
             metadata.defaults()
-                    .value()
-                    .keySet()
-                    .stream()
-                    .map(m -> EnvironmentValueName.with(m.value()))
-                    .forEach(names::add);
+                .value()
+                .keySet()
+                .stream()
+                .map(m -> EnvironmentValueName.with(m.value()))
+                .forEach(names::add);
 
             this.names = SortedSets.immutable(names);
         }

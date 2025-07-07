@@ -72,7 +72,7 @@ public final class FractionSymbolSpreadsheetFormatParserTokenTest extends Symbol
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.FRACTION
+            SpreadsheetFormatParserTokenKind.FRACTION
         );
     }
 

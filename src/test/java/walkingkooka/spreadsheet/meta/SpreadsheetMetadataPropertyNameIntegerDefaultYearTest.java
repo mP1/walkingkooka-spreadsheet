@@ -39,8 +39,8 @@ public final class SpreadsheetMetadataPropertyNameIntegerDefaultYearTest extends
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance(),
-                "defaultYear"
+            SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance(),
+            "defaultYear"
         );
     }
 

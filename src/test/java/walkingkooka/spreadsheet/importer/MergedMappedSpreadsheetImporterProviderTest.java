@@ -33,36 +33,36 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedSpreadsheetImporterProviderTest implements SpreadsheetImporterProviderTesting<MergedMappedSpreadsheetImporterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullInfosFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedSpreadsheetImporterProvider.with(
-                        null,
-                        SpreadsheetImporterProviders.fake()
-                )
+            NullPointerException.class,
+            () -> MergedMappedSpreadsheetImporterProvider.with(
+                null,
+                SpreadsheetImporterProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedSpreadsheetImporterProvider.with(
-                        SpreadsheetImporterInfoSet.EMPTY.concat(
-                                SpreadsheetImporterInfo.with(
-                                        SpreadsheetImporterProviders.BASE_URL.appendPath(
-                                                UrlPath.parse("test-123")
-                                        ),
-                                        SpreadsheetImporterName.with("test-123")
-                                )
+            NullPointerException.class,
+            () -> MergedMappedSpreadsheetImporterProvider.with(
+                SpreadsheetImporterInfoSet.EMPTY.concat(
+                    SpreadsheetImporterInfo.with(
+                        SpreadsheetImporterProviders.BASE_URL.appendPath(
+                            UrlPath.parse("test-123")
                         ),
-                        null
-                )
+                        SpreadsheetImporterName.with("test-123")
+                    )
+                ),
+                null
+            )
         );
     }
 
@@ -82,9 +82,9 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
     @Test
     public void testSpreadsheetImporterSelectorWithRenamed() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(RENAMED_RENAME_NAME + " (11.0)"),
-                CONTEXT,
-                RENAMED_IMPORTER
+            SpreadsheetImporterSelector.parse(RENAMED_RENAME_NAME + " (11.0)"),
+            CONTEXT,
+            RENAMED_IMPORTER
         );
     }
 
@@ -93,10 +93,10 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
     @Test
     public void testSpreadsheetImporterNameWithRenamed() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterName.with(RENAMED_RENAME_NAME),
-                VALUES,
-                CONTEXT,
-                RENAMED_IMPORTER
+            SpreadsheetImporterName.with(RENAMED_RENAME_NAME),
+            VALUES,
+            CONTEXT,
+            RENAMED_IMPORTER
         );
     }
 
@@ -114,33 +114,33 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
     @Test
     public void testSpreadsheetImporterSelectorWithProviderName() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(PROVIDER_ONLY_NAME + " (11.0)"),
-                CONTEXT,
-                PROVIDER_ONLY_IMPORTER
+            SpreadsheetImporterSelector.parse(PROVIDER_ONLY_NAME + " (11.0)"),
+            CONTEXT,
+            PROVIDER_ONLY_IMPORTER
         );
     }
 
     @Test
     public void testSpreadsheetImporterNameWithProviderName() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterName.with(PROVIDER_ONLY_NAME),
-                VALUES,
-                CONTEXT,
-                PROVIDER_ONLY_IMPORTER
+            SpreadsheetImporterName.with(PROVIDER_ONLY_NAME),
+            VALUES,
+            CONTEXT,
+            PROVIDER_ONLY_IMPORTER
         );
     }
 
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetImporterInfosAndCheck(
-                SpreadsheetImporterInfo.with(
-                        RENAMED_URL,
-                        SpreadsheetImporterName.with(RENAMED_RENAME_NAME)
-                ),
-                SpreadsheetImporterInfo.with(
-                        PROVIDER_ONLY_URL,
-                        SpreadsheetImporterName.with(PROVIDER_ONLY_NAME)
-                )
+            SpreadsheetImporterInfo.with(
+                RENAMED_URL,
+                SpreadsheetImporterName.with(RENAMED_RENAME_NAME)
+            ),
+            SpreadsheetImporterInfo.with(
+                PROVIDER_ONLY_URL,
+                SpreadsheetImporterName.with(PROVIDER_ONLY_NAME)
+            )
         );
     }
 
@@ -151,8 +151,8 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
             public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                            final ProviderContext context) {
                 return selector.evaluateValueText(
-                        this,
-                        context
+                    this,
+                    context
                 );
             }
 
@@ -173,28 +173,28 @@ public final class MergedMappedSpreadsheetImporterProviderTest implements Spread
             @Override
             public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
                 return SpreadsheetImporterInfoSet.with(
-                        Sets.of(
-                                SpreadsheetImporterInfo.with(
-                                        RENAMED_URL,
-                                        SpreadsheetImporterName.with(RENAMED_PROVIDER_NAME)
-                                ),
-                                SpreadsheetImporterInfo.with(
-                                        PROVIDER_ONLY_URL,
-                                        SpreadsheetImporterName.with(PROVIDER_ONLY_NAME)
-                                )
+                    Sets.of(
+                        SpreadsheetImporterInfo.with(
+                            RENAMED_URL,
+                            SpreadsheetImporterName.with(RENAMED_PROVIDER_NAME)
+                        ),
+                        SpreadsheetImporterInfo.with(
+                            PROVIDER_ONLY_URL,
+                            SpreadsheetImporterName.with(PROVIDER_ONLY_NAME)
                         )
+                    )
                 );
             }
         };
 
         return MergedMappedSpreadsheetImporterProvider.with(
-                SpreadsheetImporterInfoSet.EMPTY.concat(
-                        SpreadsheetImporterInfo.with(
-                                RENAMED_URL,
-                                SpreadsheetImporterName.with(RENAMED_RENAME_NAME)
-                        )
-                ),
-                provider
+            SpreadsheetImporterInfoSet.EMPTY.concat(
+                SpreadsheetImporterInfo.with(
+                    RENAMED_URL,
+                    SpreadsheetImporterName.with(RENAMED_RENAME_NAME)
+                )
+            ),
+            provider
         );
     }
 

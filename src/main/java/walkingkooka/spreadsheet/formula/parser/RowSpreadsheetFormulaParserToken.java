@@ -23,13 +23,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
  * A token that holds a row reference.
  */
 public final class RowSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetRowReference>
-        implements HasSpreadsheetReference<SpreadsheetRowReference> {
+    implements HasSpreadsheetReference<SpreadsheetRowReference> {
 
     static RowSpreadsheetFormulaParserToken with(final SpreadsheetRowReference value,
                                                  final String text) {
         return new RowSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

@@ -55,8 +55,8 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
 
     private static SpreadsheetLabelNameSet withCopy(final SortedSet<SpreadsheetLabelName> labels) {
         return labels.isEmpty() ?
-                EMPTY :
-                new SpreadsheetLabelNameSet(labels);
+            EMPTY :
+            new SpreadsheetLabelNameSet(labels);
     }
 
     /**
@@ -64,12 +64,12 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
      */
     public static SpreadsheetLabelNameSet parse(final String text) {
         return withCopy(
-                SpreadsheetSelectionCsvParser.parse(
-                        text,
-                        SpreadsheetFormulaParsers.labelName(),
-                        (SpreadsheetFormulaParserToken token) -> token.cast(LabelSpreadsheetFormulaParserToken.class)
-                                .reference()
-                )
+            SpreadsheetSelectionCsvParser.parse(
+                text,
+                SpreadsheetFormulaParsers.labelName(),
+                (SpreadsheetFormulaParserToken token) -> token.cast(LabelSpreadsheetFormulaParserToken.class)
+                    .reference()
+            )
         );
     }
 
@@ -87,11 +87,11 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
             spreadsheetLabelNameSet = (SpreadsheetLabelNameSet) labels;
         } else {
             final TreeSet<SpreadsheetLabelName> copy = new TreeSet<>(
-                    Objects.requireNonNull(labels, "labels")
+                Objects.requireNonNull(labels, "labels")
             );
             spreadsheetLabelNameSet = this.references.equals(copy) ?
-                    this :
-                    withCopy(copy);
+                this :
+                withCopy(copy);
         }
 
         return spreadsheetLabelNameSet;
@@ -116,16 +116,16 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
     static SpreadsheetLabelNameSet unmarshall(final JsonNode node,
                                               final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetLabelNameSet.class),
-                SpreadsheetLabelNameSet::unmarshall,
-                SpreadsheetLabelNameSet::marshall,
-                SpreadsheetLabelNameSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetLabelNameSet.class),
+            SpreadsheetLabelNameSet::unmarshall,
+            SpreadsheetLabelNameSet::marshall,
+            SpreadsheetLabelNameSet.class
         );
         SpreadsheetSelection.labelName("Hello"); // trigger static init and json marshall/unmarshall registry
     }

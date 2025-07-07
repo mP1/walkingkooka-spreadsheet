@@ -60,30 +60,30 @@ final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor e
             final String text = token.text();
 
             this.tokens.add(
-                    SpreadsheetParserSelectorToken.with(
-                            text, // label
-                            text, // text,
-                            this.alternatives(
-                                    kind,
-                                    text
-                            )
+                SpreadsheetParserSelectorToken.with(
+                    text, // label
+                    text, // text,
+                    this.alternatives(
+                        kind,
+                        text
                     )
+                )
             );
         }
 
         // dont want to visit children if a parent has a kind.
         return maybeKind.isPresent() ?
-                Visiting.SKIP :
-                Visiting.CONTINUE;
+            Visiting.SKIP :
+            Visiting.CONTINUE;
     }
 
     private List<SpreadsheetParserSelectorTokenAlternative> alternatives(final SpreadsheetFormatParserTokenKind kind,
                                                                          final String text) {
         return kind.alternatives()
-                .stream()
-                .filter(t -> false == t.equals(text))
-                .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
-                .collect(Collectors.toList());
+            .stream()
+            .filter(t -> false == t.equals(text))
+            .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
+            .collect(Collectors.toList());
     }
 
     private final List<SpreadsheetParserSelectorToken> tokens;

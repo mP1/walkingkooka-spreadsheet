@@ -72,8 +72,8 @@ public final class DecimalPointSpreadsheetFormatParserTokenTest extends NonSymbo
     @Test
     public void testKind() {
         this.kindAndCheck(
-                ".",
-                SpreadsheetFormatParserTokenKind.DECIMAL_PLACE
+            ".",
+            SpreadsheetFormatParserTokenKind.DECIMAL_PLACE
         );
     }
 

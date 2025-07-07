@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetNumberFormatPattern,
-        NumberSpreadsheetFormatParserToken> {
+    NumberSpreadsheetFormatParserToken> {
 
     private final static String TEXT = "Text123";
 
@@ -114,11 +114,11 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     @Override
     ParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.numberFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(text),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence(text),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     // HasFormatter.....................................................................................................
@@ -126,332 +126,332 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     @Test
     public void testFormatterFormatTextLiteral() {
         this.formatAndCheck2("\"abc\"",
-                123.5,
-                "abc");
+            123.5,
+            "abc");
     }
 
     @Test
     public void testFormatterFormatHash() {
         this.formatAndCheck2("#",
-                0.0,
-                "");
+            0.0,
+            "");
     }
 
     @Test
     public void testFormatterFormatHash2() {
         this.formatAndCheck2("#",
-                1.0,
-                "1");
+            1.0,
+            "1");
     }
 
     @Test
     public void testFormatterFormatHash3() {
         this.formatAndCheck2("#",
-                -2.0,
-                "n2");
+            -2.0,
+            "n2");
     }
 
     @Test
     public void testFormatterFormatHashHash() {
         this.formatAndCheck2("##",
-                0.0,
-                "");
+            0.0,
+            "");
     }
 
     @Test
     public void testFormatterFormatHashHash2() {
         this.formatAndCheck2("##",
-                1.0,
-                "1");
+            1.0,
+            "1");
     }
 
     @Test
     public void testFormatterFormatHashHash3() {
         this.formatAndCheck2("##",
-                -2.0,
-                "n2");
+            -2.0,
+            "n2");
     }
 
     @Test
     public void testFormatterFormatQuestion() {
         this.formatAndCheck2("?",
-                0.0,
-                " ");
+            0.0,
+            " ");
     }
 
     @Test
     public void testFormatterFormatQuestion2() {
         this.formatAndCheck2("?",
-                1.0,
-                "1");
+            1.0,
+            "1");
     }
 
     @Test
     public void testFormatterFormatQuestion3() {
         this.formatAndCheck2("?",
-                -2.0,
-                "n2");
+            -2.0,
+            "n2");
     }
 
     @Test
     public void testFormatterFormatQuestionQuestion() {
         this.formatAndCheck2("??",
-                0.0,
-                "  ");
+            0.0,
+            "  ");
     }
 
     @Test
     public void testFormatterFormatQuestionQuestion2() {
         this.formatAndCheck2("??",
-                1.0,
-                " 1");
+            1.0,
+            " 1");
     }
 
     @Test
     public void testFormatterFormatQuestionQuestion3() {
         this.formatAndCheck2("??",
-                -2.0,
-                "n 2");
+            -2.0,
+            "n 2");
     }
 
     @Test
     public void testFormatterFormatZero() {
         this.formatAndCheck2("0",
-                0.0,
-                "0");
+            0.0,
+            "0");
     }
 
     @Test
     public void testFormatterFormatZero2() {
         this.formatAndCheck2("0",
-                1.0,
-                "1");
+            1.0,
+            "1");
     }
 
     @Test
     public void testFormatterFormatZero3() {
         this.formatAndCheck2("0",
-                -2.0,
-                "n2");
+            -2.0,
+            "n2");
     }
 
     @Test
     public void testFormatterFormatZeroZero() {
         this.formatAndCheck2("00",
-                0.0,
-                "00");
+            0.0,
+            "00");
     }
 
     @Test
     public void testFormatterFormatZeroZero2() {
         this.formatAndCheck2("00",
-                1.0,
-                "01");
+            1.0,
+            "01");
     }
 
     @Test
     public void testFormatterFormatZeroZero3() {
         this.formatAndCheck2("00",
-                -2.0,
-                "n02");
+            -2.0,
+            "n02");
     }
 
     @Test
     public void testFormatterFormatDecimalHash() {
         this.formatAndCheck2("0.#",
-                0.0,
-                "0d");
+            0.0,
+            "0d");
     }
 
     @Test
     public void testFormatterFormatDecimalHash2() {
         this.formatAndCheck2("0.#",
-                1.0,
-                "1d");
+            1.0,
+            "1d");
     }
 
     @Test
     public void testFormatterFormatDecimalHash3() {
         this.formatAndCheck2("0.#",
-                -2.0,
-                "n2d");
+            -2.0,
+            "n2d");
     }
 
     @Test
     public void testFormatterFormatDecimalHashHash() {
         this.formatAndCheck2("0.##",
-                0.0,
-                "0d");
+            0.0,
+            "0d");
     }
 
     @Test
     public void testFormatterFormatDecimalHashHash2() {
         this.formatAndCheck2("0.##",
-                1.0,
-                "1d");
+            1.0,
+            "1d");
     }
 
     @Test
     public void testFormatterFormatDecimalHashHash3() {
         this.formatAndCheck2("0.##",
-                -2.0,
-                "n2d");
+            -2.0,
+            "n2d");
     }
 
     @Test
     public void testFormatterFormatDecimalQuestion() {
         this.formatAndCheck2("0.?",
-                0.0,
-                "0d ");
+            0.0,
+            "0d ");
     }
 
     @Test
     public void testFormatterFormatDecimalQuestion2() {
         this.formatAndCheck2("0.?",
-                1.0,
-                "1d ");
+            1.0,
+            "1d ");
     }
 
     @Test
     public void testFormatterFormatDecimalQuestion3() {
         this.formatAndCheck2("0.?",
-                -2.0,
-                "n2d ");
+            -2.0,
+            "n2d ");
     }
 
     @Test
     public void testFormatterFormatDecimalQuestionQuestion() {
         this.formatAndCheck2("0.??",
-                0.0,
-                "0d  ");
+            0.0,
+            "0d  ");
     }
 
     @Test
     public void testFormatterFormatDecimalQuestionQuestion2() {
         this.formatAndCheck2("0.??",
-                1.0,
-                "1d  ");
+            1.0,
+            "1d  ");
     }
 
     @Test
     public void testFormatterFormatDecimalQuestionQuestion3() {
         this.formatAndCheck2("0.??",
-                -2.0,
-                "n2d  ");
+            -2.0,
+            "n2d  ");
     }
 
     @Test
     public void testFormatterFormatDecimalZero() {
         this.formatAndCheck2("0.0",
-                0.0,
-                "0d0");
+            0.0,
+            "0d0");
     }
 
     @Test
     public void testFormatterFormatDecimalZero2() {
         this.formatAndCheck2("0.0",
-                1.0,
-                "1d0");
+            1.0,
+            "1d0");
     }
 
     @Test
     public void testFormatterFormatDecimalZero3() {
         this.formatAndCheck2("0.0",
-                -2.0,
-                "n2d0");
+            -2.0,
+            "n2d0");
     }
 
     @Test
     public void testFormatterFormatDecimalZeroZero() {
         this.formatAndCheck2("0.00",
-                0.0,
-                "0d00");
+            0.0,
+            "0d00");
     }
 
     @Test
     public void testFormatterFormatDecimalZeroZero2() {
         this.formatAndCheck2("0.00",
-                1.0,
-                "1d00");
+            1.0,
+            "1d00");
     }
 
     @Test
     public void testFormatterFormatDecimalZeroZero3() {
         this.formatAndCheck2("0.00",
-                -2.0,
-                "n2d00");
+            -2.0,
+            "n2d00");
     }
 
     @Test
     public void testFormatterFormatExponentHash() {
         this.formatAndCheck2("0E+#",
-                -123.0,
-                "n1x2");
+            -123.0,
+            "n1x2");
     }
 
     @Test
     public void testFormatterFormatExponentHash2() {
         this.formatAndCheck2("0e+#",
-                -123.0,
-                "n1x2");
+            -123.0,
+            "n1x2");
     }
 
     @Test
     public void testFormatterFormatExponentQuestion() {
         this.formatAndCheck2("0E+?",
-                -123.0,
-                "n1x2");
+            -123.0,
+            "n1x2");
     }
 
     @Test
     public void testFormatterFormatExponentQuestion2() {
         this.formatAndCheck2("0e+?",
-                -123.0,
-                "n1x2");
+            -123.0,
+            "n1x2");
     }
 
     @Test
     public void testFormatterFormatExponentZero() {
         this.formatAndCheck2("0E+0",
-                -123.0,
-                "n1x2");
+            -123.0,
+            "n1x2");
     }
 
     @Test
     public void testFormatterFormatExponentZero2() {
         this.formatAndCheck2("0e+0",
-                -123.0,
-                "n1x2");
+            -123.0,
+            "n1x2");
     }
 
     @Test
     public void testFormatterFormatMixed() {
         this.formatAndCheck2("\"before \"0E+#",
-                -123.0,
-                "before n1x2");
+            -123.0,
+            "before n1x2");
     }
 
     @Test
     public void testFormatterFormatIncludesColorName() {
         this.formatAndCheck2(
-                "[red]#",
-                -123.0,
-                SpreadsheetText.with("n123")
-                        .setColor(
-                                Optional.of(RED)
-                        )
+            "[red]#",
+            -123.0,
+            SpreadsheetText.with("n123")
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorNumber() {
         this.formatAndCheck2(
-                "[color44]#",
-                -123.0,
-                SpreadsheetText.with("n123")
-                        .setColor(
-                                Optional.of(RED)
-                        )
+            "[color44]#",
+            -123.0,
+            SpreadsheetText.with("n123")
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
@@ -460,54 +460,54 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     @Test
     public void testFormatterPatternPatternWithPositiveCurrencyNumber() {
         this.formatAndCheck2(
-                "$0.0;[color44]0.00",
-                123,
-                "c123*0"
+            "$0.0;[color44]0.00",
+            123,
+            "c123*0"
         );
     }
 
     @Test
     public void testFormatterPatternPatternWithPositiveNumber() {
         this.formatAndCheck2(
-                "0.0;[color44]0.00",
-                123,
-                "123d0"
+            "0.0;[color44]0.00",
+            123,
+            "123d0"
         );
     }
 
     @Test
     public void testFormatterPatternPatternWithNegativeCurrencyNumber() {
         this.formatAndCheck2(
-                "[color44]0.0;$0.00",
-                -123,
-                "cn123*00"
+            "[color44]0.0;$0.00",
+            -123,
+            "cn123*00"
         );
     }
 
     @Test
     public void testFormatterPatternPatternWithNegativeNumber() {
         this.formatAndCheck2(
-                "[color44]0.0;0.00",
-                -123,
-                "n123d00"
+            "[color44]0.0;0.00",
+            -123,
+            "n123d00"
         );
     }
 
     @Test
     public void testFormatterPatternPatternWithZero() {
         this.formatAndCheck2(
-                "$0.0;[color44]0.00",
-                0,
-                "c0*0"
+            "$0.0;[color44]0.00",
+            0,
+            "c0*0"
         );
     }
 
     @Test
     public void testFormatterPatternPatternWithText() {
         this.formatAndCheck2(
-                "[color44]0;[color44]0.00",
-                TEXT,
-                TEXT
+            "[color44]0;[color44]0.00",
+            TEXT,
+            TEXT
         );
     }
 
@@ -516,36 +516,36 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     @Test
     public void testFormatterPatternPatternPatternWithPositiveNumber() {
         this.formatAndCheck2(
-                "$0.0;[color44]0.00;[color44]0.000",
-                123,
-                "c123*0"
+            "$0.0;[color44]0.00;[color44]0.000",
+            123,
+            "c123*0"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternWithNegativeNumber() {
         this.formatAndCheck2(
-                "[color44]0.0;$0.00;[color44]0.000",
-                -123,
-                "cn123*00"
+            "[color44]0.0;$0.00;[color44]0.000",
+            -123,
+            "cn123*00"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternWithZero() {
         this.formatAndCheck2(
-                "[color44]0.0;[color44]0.00;$0.000",
-                0,
-                "c0*000"
+            "[color44]0.0;[color44]0.00;$0.000",
+            0,
+            "c0*000"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternWithText() {
         this.formatAndCheck2(
-                "[color44]0.0;[color44]0.00;[color44]0.000",
-                TEXT,
-                TEXT
+            "[color44]0.0;[color44]0.00;[color44]0.000",
+            TEXT,
+            TEXT
         );
     }
 
@@ -554,65 +554,65 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     @Test
     public void testFormatterPatternPatternPatternPatternWithPositiveNumber() {
         this.formatAndCheck2(
-                "$0.0;[color44]0.00;[color44]0.000;[color44]@@@@",
-                123,
-                "c123*0"
+            "$0.0;[color44]0.00;[color44]0.000;[color44]@@@@",
+            123,
+            "c123*0"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternPatternWithNegativeNumber() {
         this.formatAndCheck2(
-                "[color44]0.0;$0.00;[color44]0.000;[color44]@@@@",
-                -123,
-                "cn123*00"
+            "[color44]0.0;$0.00;[color44]0.000;[color44]@@@@",
+            -123,
+            "cn123*00"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternPatternWithZero() {
         this.formatAndCheck2(
-                "[color44]0.0;[color44]0.00;$0.000;[color44]@@@@",
-                0,
-                "c0*000"
+            "[color44]0.0;[color44]0.00;$0.000;[color44]@@@@",
+            0,
+            "c0*000"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternPatternWithText() {
         this.formatAndCheck2(
-                "[color44]0.0;[color44]0.00;[color44]0.000;@@@@",
-                TEXT,
-                TEXT + TEXT + TEXT + TEXT
+            "[color44]0.0;[color44]0.00;[color44]0.000;@@@@",
+            TEXT,
+            TEXT + TEXT + TEXT + TEXT
         );
     }
 
     @Test
     public void testFormatterPatternWithArabicZero() {
         this.formatAndCheck2(
-                "00.00;",
-                10.05,
-                ARABIC_ZERO_DIGIT,
-                arabicDigit(1) + arabicDigit(0) + "d" + arabicDigit(0) + arabicDigit(5)
+            "00.00;",
+            10.05,
+            ARABIC_ZERO_DIGIT,
+            arabicDigit(1) + arabicDigit(0) + "d" + arabicDigit(0) + arabicDigit(5)
         );
     }
 
     @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
-                "General",
-                1.5,
-                "1d5"
+            "General",
+            1.5,
+            "1d5"
         );
     }
 
     @Test
     public void testFormatterGeneralWithArabicZero() {
         this.formatAndCheck2(
-                "General",
-                10.05,
-                ARABIC_ZERO_DIGIT,
-                arabicDigit(1) + arabicDigit(0) + "d" + arabicDigit(0) + arabicDigit(5)
+            "General",
+            10.05,
+            ARABIC_ZERO_DIGIT,
+            arabicDigit(1) + arabicDigit(0) + "d" + arabicDigit(0) + arabicDigit(5)
         );
     }
 
@@ -623,8 +623,8 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public boolean canConvert(final Object value, final Class<?> target) {
                 return TEXT.equals(value) && target == String.class ||
-                        value instanceof Integer && target == BigDecimal.class ||
-                        value instanceof Number && target == ExpressionNumber.class;
+                    value instanceof Integer && target == BigDecimal.class ||
+                    value instanceof Number && target == ExpressionNumber.class;
             }
 
             @Override
@@ -632,20 +632,20 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                                                  final Class<T> target) {
                 if (TEXT.equals(value) && String.class == target) {
                     return this.successfulConversion(
-                            value,
-                            target
+                        value,
+                        target
                     );
                 }
                 if (value instanceof Integer && BigDecimal.class == target) {
                     return this.successfulConversion(
-                            BigDecimal.valueOf(Integer.class.cast(value)),
-                            target
+                        BigDecimal.valueOf(Integer.class.cast(value)),
+                        target
                     );
                 }
                 if (value instanceof Number && ExpressionNumber.class == target) {
                     return this.successfulConversion(
-                            ExpressionNumberKind.DOUBLE.create(Number.class.cast(value)),
-                            target
+                        ExpressionNumberKind.DOUBLE.create(Number.class.cast(value)),
+                        target
                     );
                 }
 
@@ -695,24 +695,24 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             @Override
             public Optional<Color> colorName(final SpreadsheetColorName name) {
                 checkEquals(
-                        SpreadsheetColorName.with("red"),
-                        name,
-                        "colorName"
+                    SpreadsheetColorName.with("red"),
+                    name,
+                    "colorName"
                 );
                 return Optional.of(
-                        RED
+                    RED
                 );
             }
 
             @Override
             public Optional<Color> colorNumber(final int number) {
                 checkEquals(
-                        44,
-                        number,
-                        "colorNumber"
+                    44,
+                    number,
+                    "colorNumber"
                 );
                 return Optional.of(
-                        RED
+                    RED
                 );
             }
         };
@@ -723,9 +723,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createPattern(),
-                "number-format-pattern\n" +
-                        "  \"$ ###,##0.00 \\\"text-literal\\\" \\\\!\"\n"
+            this.createPattern(),
+            "number-format-pattern\n" +
+                "  \"$ ###,##0.00 \\\"text-literal\\\" \\\\!\"\n"
         );
     }
 
@@ -734,9 +734,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final String pattern = "$0.00;";
 
         this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "number-format-pattern\n" +
-                        "  \"$0.00\" ;\n"
+            this.createPattern(pattern),
+            "number-format-pattern\n" +
+                "  \"$0.00\" ;\n"
         );
     }
 
@@ -745,10 +745,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final String pattern = "$0.0;$0.00";
 
         this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "number-format-pattern\n" +
-                        "  \"$0.0\" ;\n" +
-                        "  \"$0.00\"\n"
+            this.createPattern(pattern),
+            "number-format-pattern\n" +
+                "  \"$0.0\" ;\n" +
+                "  \"$0.00\"\n"
         );
     }
 
@@ -757,10 +757,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final String pattern = "$0.0;$0.00;";
 
         this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "number-format-pattern\n" +
-                        "  \"$0.0\" ;\n" +
-                        "  \"$0.00\" ;\n"
+            this.createPattern(pattern),
+            "number-format-pattern\n" +
+                "  \"$0.0\" ;\n" +
+                "  \"$0.00\" ;\n"
         );
     }
 
@@ -771,8 +771,8 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#");
 
         this.patternsAndCheck2(
-                pattern,
-                Lists.of(pattern)
+            pattern,
+            Lists.of(pattern)
         );
     }
 
@@ -781,9 +781,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#.0;$#.00");
 
         this.patternsAndCheck(
-                pattern,
-                "$#.0",
-                "$#.00"
+            pattern,
+            "$#.0",
+            "$#.00"
         );
     }
 
@@ -792,10 +792,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -804,9 +804,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$#.0;[RED]$#.00");
 
         this.patternsAndCheck(
-                pattern,
-                "$#.0",
-                "[RED]$#.00"
+            pattern,
+            "$#.0",
+            "[RED]$#.00"
         );
     }
 
@@ -815,10 +815,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[=10]$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "[=10]$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "[=10]$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -827,10 +827,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[>10]$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "[>10]$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "[>10]$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -839,10 +839,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[>=10]$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "[>=10]$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "[>=10]$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -851,10 +851,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<10]$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "[<10]$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "[<10]$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -863,10 +863,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<=10]$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "[<=10]$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "[<=10]$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -875,10 +875,10 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<>10]$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "[<>10]$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "[<>10]$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -887,9 +887,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("0.00;\"Text\"");
 
         this.patternsAndCheck(
-                pattern,
-                "0.00",
-                "\"Text\""
+            pattern,
+            "0.00",
+            "\"Text\""
         );
     }
 
@@ -898,9 +898,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("0.00;General");
 
         this.patternsAndCheck(
-                pattern,
-                "0.00",
-                "General"
+            pattern,
+            "0.00",
+            "General"
         );
     }
 
@@ -911,8 +911,8 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[green]$0.00");
 
         this.removeColorAndCheck(
-                pattern,
-                this.createPattern("$0.00")
+            pattern,
+            this.createPattern("$0.00")
         );
     }
 
@@ -923,9 +923,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$0.00");
 
         this.setColorNameAndCheck(
-                pattern,
-                SpreadsheetColorName.RED,
-                "[Red]$0.00"
+            pattern,
+            SpreadsheetColorName.RED,
+            "[Red]$0.00"
         );
     }
 
@@ -934,9 +934,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[green]$0.00");
 
         this.setColorNameAndCheck(
-                pattern,
-                SpreadsheetColorName.RED,
-                "[Red]$0.00"
+            pattern,
+            SpreadsheetColorName.RED,
+            "[Red]$0.00"
         );
     }
 
@@ -947,9 +947,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$0.00");
 
         this.setColorNumberAndCheck(
-                pattern,
-                12,
-                "[color 12]$0.00"
+            pattern,
+            12,
+            "[color 12]$0.00"
         );
     }
 
@@ -958,9 +958,9 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[green]$0.00");
 
         this.setColorNumberAndCheck(
-                pattern,
-                12,
-                "[color 12]$0.00"
+            pattern,
+            12,
+            "[color 12]$0.00"
         );
     }
 
@@ -971,8 +971,8 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<0]$0.00");
 
         this.removeConditionAndCheck(
-                pattern,
-                this.createPattern("$0.00")
+            pattern,
+            this.createPattern("$0.00")
         );
     }
 
@@ -981,8 +981,8 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<0][Blue]$0.00");
 
         this.removeConditionAndCheck(
-                pattern,
-                this.createPattern("[Blue]$0.00")
+            pattern,
+            this.createPattern("[Blue]$0.00")
         );
     }
 
@@ -991,7 +991,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("$0.00");
 
         this.removeConditionAndCheck(
-                pattern
+            pattern
         );
     }
 

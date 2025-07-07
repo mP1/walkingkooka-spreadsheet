@@ -38,7 +38,7 @@ final class SpreadsheetConverterFormatPatternToString implements TryingShortCirc
      */
     static SpreadsheetConverterFormatPatternToString with(final String pattern) {
         return new SpreadsheetConverterFormatPatternToString(
-                CharSequences.failIfNullOrEmpty(pattern, "pattern")
+            CharSequences.failIfNullOrEmpty(pattern, "pattern")
         );
     }
 
@@ -54,18 +54,18 @@ final class SpreadsheetConverterFormatPatternToString implements TryingShortCirc
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
         return FORMATTER_TYPES.stream()
-                .anyMatch(t -> context.canConvert(value, t));
+            .anyMatch(t -> context.canConvert(value, t));
     }
 
     /**
      * Values to be converted will be tested against this list assuming that a formatter is available and will format the value.
      */
     private final static List<Class<?>> FORMATTER_TYPES = Lists.of(
-            LocalDate.class,
-            LocalDateTime.class,
-            LocalTime.class,
-            Number.class,
-            String.class
+        LocalDate.class,
+        LocalDateTime.class,
+        LocalTime.class,
+        Number.class,
+        String.class
     );
 
     @Override
@@ -73,9 +73,9 @@ final class SpreadsheetConverterFormatPatternToString implements TryingShortCirc
                                    final Class<?> type,
                                    final SpreadsheetConverterContext context) {
         return SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor.format(
-                value,
-                this.pattern,
-                context
+            value,
+            this.pattern,
+            context
         );
     }
 
@@ -94,8 +94,8 @@ final class SpreadsheetConverterFormatPatternToString implements TryingShortCirc
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetConverterFormatPatternToString &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetConverterFormatPatternToString &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetConverterFormatPatternToString other) {

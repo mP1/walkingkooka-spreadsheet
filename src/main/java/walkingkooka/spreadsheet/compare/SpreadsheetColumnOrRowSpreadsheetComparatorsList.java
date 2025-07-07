@@ -31,20 +31,20 @@ import java.util.Objects;
  * column with a range sort.
  */
 final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparators>
-        implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
-        HasText {
+    implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
+    HasText {
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
 
         return columnOrRows instanceof SpreadsheetColumnOrRowSpreadsheetComparatorsList ?
-                (SpreadsheetColumnOrRowSpreadsheetComparatorsList) columnOrRows :
-                copyAndCreate(columnOrRows);
+            (SpreadsheetColumnOrRowSpreadsheetComparatorsList) columnOrRows :
+            copyAndCreate(columnOrRows);
     }
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorsList copyAndCreate(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         final SpreadsheetColumnOrRowSpreadsheetComparators[] copy = columnOrRows.toArray(
-                new SpreadsheetColumnOrRowSpreadsheetComparators[columnOrRows.size()]
+            new SpreadsheetColumnOrRowSpreadsheetComparators[columnOrRows.size()]
         );
 
         if (copy.length == 0) {
@@ -63,12 +63,12 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
             } else {
                 if (first != columnOrRow.columnOrRowReferenceKind()) {
                     throw new IllegalArgumentException(
-                            "All sorted columns/rows must be " +
-                                    first +
-                                    " but " +
-                                    i +
-                                    " is " +
-                                    first.flip()
+                        "All sorted columns/rows must be " +
+                            first +
+                            " but " +
+                            i +
+                            " is " +
+                            first.flip()
                     );
                 }
             }
@@ -106,8 +106,8 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorsList copy = with(comparators);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     // HasText..........................................................................................................
@@ -115,8 +115,8 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     @Override
     public String text() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toSeparatedString(
-                this,
-                Object::toString
+            this,
+            Object::toString
         );
     }
 }

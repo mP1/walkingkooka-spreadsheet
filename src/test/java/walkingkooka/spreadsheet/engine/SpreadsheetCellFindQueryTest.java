@@ -64,15 +64,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting,
-        CanBeEmptyTesting,
-        HasTextTesting,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCellFindQuery>,
-        ToStringTesting<SpreadsheetCellFindQuery>,
-        ParseStringTesting<SpreadsheetCellFindQuery>,
-        JsonNodeMarshallingTesting<SpreadsheetCellFindQuery> {
+    CanBeEmptyTesting,
+    HasTextTesting,
+    HashCodeEqualsDefinedTesting2<SpreadsheetCellFindQuery>,
+    ToStringTesting<SpreadsheetCellFindQuery>,
+    ParseStringTesting<SpreadsheetCellFindQuery>,
+    JsonNodeMarshallingTesting<SpreadsheetCellFindQuery> {
 
     private final static Optional<SpreadsheetCellRangeReferencePath> PATH = Optional.of(
-            SpreadsheetCellRangeReferencePath.LRTD
+        SpreadsheetCellRangeReferencePath.LRTD
     );
 
     private final static OptionalInt OFFSET = OptionalInt.of(123);
@@ -82,7 +82,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     private final static Optional<String> VALUE_TYPE = Optional.of(SpreadsheetValueType.ANY);
 
     private final static Optional<SpreadsheetCellQuery> QUERY = Optional.of(
-            SpreadsheetCellQuery.parse("789+blah()")
+        SpreadsheetCellQuery.parse("789+blah()")
     );
 
     // tests............................................................................................................
@@ -90,14 +90,14 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testEmpty() {
         this.checkEquals(
-                SpreadsheetCellFindQuery.empty(),
-                new SpreadsheetCellFindQuery(
-                        Optional.empty(),
-                        OptionalInt.empty(),
-                        OptionalInt.empty(),
-                        Optional.empty(),
-                        Optional.empty()
-                )
+            SpreadsheetCellFindQuery.empty(),
+            new SpreadsheetCellFindQuery(
+                Optional.empty(),
+                OptionalInt.empty(),
+                OptionalInt.empty(),
+                Optional.empty(),
+                Optional.empty()
+            )
         );
     }
 
@@ -106,9 +106,9 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetPathNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setPath(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setPath(null)
         );
     }
 
@@ -116,8 +116,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetPathSame() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         assertSame(
-                find,
-                find.setPath(find.path())
+            find,
+            find.setPath(find.path())
         );
     }
 
@@ -125,18 +125,18 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetPathDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         final Optional<SpreadsheetCellRangeReferencePath> path = Optional.of(
-                SpreadsheetCellRangeReferencePath.RLTD
+            SpreadsheetCellRangeReferencePath.RLTD
         );
 
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        path,
-                        OFFSET,
-                        COUNT,
-                        VALUE_TYPE,
-                        QUERY
-                ),
-                find.setPath(path)
+            new SpreadsheetCellFindQuery(
+                path,
+                OFFSET,
+                COUNT,
+                VALUE_TYPE,
+                QUERY
+            ),
+            find.setPath(path)
         );
     }
 
@@ -145,24 +145,24 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetOffsetNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setOffset(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setOffset(null)
         );
     }
 
     @Test
     public void testSetOffsetInvalidFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setOffset(
-                                OptionalInt.of(-456)
-                        )
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setOffset(
+                    OptionalInt.of(-456)
+                )
         );
         this.checkEquals(
-                "Invalid offset -456 < 0",
-                thrown.getMessage()
+            "Invalid offset -456 < 0",
+            thrown.getMessage()
         );
     }
 
@@ -170,8 +170,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetOffsetSame() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         assertSame(
-                find,
-                find.setOffset(find.count())
+            find,
+            find.setOffset(find.count())
         );
     }
 
@@ -179,18 +179,18 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetOffsetDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         final OptionalInt offset = OptionalInt.of(
-                999
+            999
         );
 
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        offset,
-                        COUNT,
-                        VALUE_TYPE,
-                        QUERY
-                ),
-                find.setOffset(offset)
+            new SpreadsheetCellFindQuery(
+                PATH,
+                offset,
+                COUNT,
+                VALUE_TYPE,
+                QUERY
+            ),
+            find.setOffset(offset)
         );
     }
 
@@ -199,24 +199,24 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetCountNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setCount(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setCount(null)
         );
     }
 
     @Test
     public void testSetCountInvalidFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setCount(
-                                OptionalInt.of(-123)
-                        )
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setCount(
+                    OptionalInt.of(-123)
+                )
         );
         this.checkEquals(
-                "Invalid count -123 < 0",
-                thrown.getMessage()
+            "Invalid count -123 < 0",
+            thrown.getMessage()
         );
     }
 
@@ -224,8 +224,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetCountSame() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         assertSame(
-                find,
-                find.setCount(find.count())
+            find,
+            find.setCount(find.count())
         );
     }
 
@@ -233,18 +233,18 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetCountDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         final OptionalInt count = OptionalInt.of(
-                999
+            999
         );
 
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OFFSET,
-                        count,
-                        VALUE_TYPE,
-                        QUERY
-                ),
-                find.setCount(count)
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OFFSET,
+                count,
+                VALUE_TYPE,
+                QUERY
+            ),
+            find.setCount(count)
         );
     }
 
@@ -253,9 +253,9 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetValueTypeNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setValueType(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setValueType(null)
         );
     }
 
@@ -263,8 +263,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetValueTypeSame() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         assertSame(
-                find,
-                find.setValueType(find.valueType())
+            find,
+            find.setValueType(find.valueType())
         );
     }
 
@@ -272,18 +272,18 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetValueTypeDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         final Optional<String> valueType = Optional.of(
-                SpreadsheetValueType.TEXT_STRING
+            SpreadsheetValueType.TEXT_STRING
         );
 
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OFFSET,
-                        COUNT,
-                        valueType,
-                        QUERY
-                ),
-                find.setValueType(valueType)
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OFFSET,
+                COUNT,
+                valueType,
+                QUERY
+            ),
+            find.setValueType(valueType)
         );
     }
 
@@ -292,9 +292,9 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetQueryNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellFindQuery.empty()
-                        .setQuery(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellFindQuery.empty()
+                .setQuery(null)
         );
     }
 
@@ -302,8 +302,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetQuerySame() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         assertSame(
-                find,
-                find.setQuery(find.query())
+            find,
+            find.setQuery(find.query())
         );
     }
 
@@ -311,18 +311,18 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testSetQueryDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         final Optional<SpreadsheetCellQuery> query = Optional.of(
-                SpreadsheetCellQuery.parse("different123()")
+            SpreadsheetCellQuery.parse("different123()")
         );
 
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OFFSET,
-                        COUNT,
-                        VALUE_TYPE,
-                        query
-                ),
-                find.setQuery(query)
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OFFSET,
+                COUNT,
+                VALUE_TYPE,
+                query
+            ),
+            find.setQuery(query)
         );
     }
 
@@ -331,13 +331,13 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetUntilEmpty() {
         assertSame(
-                SpreadsheetCellFindQuery.empty(),
-                this.createObject()
-                        .setPath(Optional.empty())
-                        .setOffset(OptionalInt.empty())
-                        .setCount(OptionalInt.empty())
-                        .setValueType(Optional.empty())
-                        .setQuery(Optional.empty())
+            SpreadsheetCellFindQuery.empty(),
+            this.createObject()
+                .setPath(Optional.empty())
+                .setOffset(OptionalInt.empty())
+                .setCount(OptionalInt.empty())
+                .setValueType(Optional.empty())
+                .setQuery(Optional.empty())
         );
     }
 
@@ -346,17 +346,17 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testIsEmptyWhenEmpty() {
         this.checkEquals(
-                true,
-                SpreadsheetCellFindQuery.empty().isEmpty()
+            true,
+            SpreadsheetCellFindQuery.empty().isEmpty()
         );
     }
 
     @Test
     public void testIsEmptyWhenNotEmpty() {
         this.checkEquals(
-                false,
-                this.createObject()
-                        .isEmpty()
+            false,
+            this.createObject()
+                .isEmpty()
         );
     }
 
@@ -365,78 +365,78 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testToUrlQueryStringPath() {
         this.toUrlQueryStringAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(PATH),
-                "cell-range-path=LRTD"
+            SpreadsheetCellFindQuery.empty()
+                .setPath(PATH),
+            "cell-range-path=LRTD"
         );
     }
 
     @Test
     public void testToUrlQueryStringOffset() {
         this.toUrlQueryStringAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setOffset(OFFSET),
-                "offset=123"
+            SpreadsheetCellFindQuery.empty()
+                .setOffset(OFFSET),
+            "offset=123"
         );
     }
 
     @Test
     public void testToUrlQueryStringCount() {
         this.toUrlQueryStringAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setCount(COUNT),
-                "count=456"
+            SpreadsheetCellFindQuery.empty()
+                .setCount(COUNT),
+            "count=456"
         );
     }
 
     @Test
     public void testToUrlQueryStringValueType() {
         this.toUrlQueryStringAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setValueType(
-                                Optional.of(
-                                        SpreadsheetValueType.NUMBER_STRING)
-                        ),
-                "value-type=number"
+            SpreadsheetCellFindQuery.empty()
+                .setValueType(
+                    Optional.of(
+                        SpreadsheetValueType.NUMBER_STRING)
+                ),
+            "value-type=number"
         );
     }
 
     @Test
     public void testToUrlQueryStringQuery() {
         this.toUrlQueryStringAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setQuery(QUERY),
-                "query=789%2Bblah%28%29"
+            SpreadsheetCellFindQuery.empty()
+                .setQuery(QUERY),
+            "query=789%2Bblah%28%29"
         );
     }
 
     @Test
     public void testToUrlQueryStringAllParameters() {
         this.toUrlQueryStringAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(PATH)
-                        .setOffset(OFFSET)
-                        .setCount(COUNT)
-                        .setValueType(VALUE_TYPE)
-                        .setQuery(QUERY),
-                "cell-range-path=LRTD&count=456&offset=123&query=789%2Bblah%28%29&value-type=*"
+            SpreadsheetCellFindQuery.empty()
+                .setPath(PATH)
+                .setOffset(OFFSET)
+                .setCount(COUNT)
+                .setValueType(VALUE_TYPE)
+                .setQuery(QUERY),
+            "cell-range-path=LRTD&count=456&offset=123&query=789%2Bblah%28%29&value-type=*"
         );
     }
 
     private void toUrlQueryStringAndCheck(final SpreadsheetCellFindQuery find,
                                           final String expected) {
         this.toUrlQueryStringAndCheck(
-                find,
-                UrlQueryString.parse(expected)
+            find,
+            UrlQueryString.parse(expected)
         );
     }
 
     private void toUrlQueryStringAndCheck(final SpreadsheetCellFindQuery find,
                                           final UrlQueryString expected) {
         this.checkEquals(
-                expected,
-                find.toUrlQueryString(),
-                find::toString
+            expected,
+            find.toUrlQueryString(),
+            find::toString
         );
     }
 
@@ -445,8 +445,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testText() {
         this.textAndCheck(
-                this.createObject(),
-                "/path/LRTD/offset/123/count/456/value-type/*/query/789+blah()"
+            this.createObject(),
+            "/path/LRTD/offset/123/count/456/value-type/*/query/789+blah()"
         );
     }
 
@@ -460,87 +460,87 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testParseInvalidCellRangePathFails() {
         this.parseStringFails(
-                "/path/XYZ",
-                new IllegalArgumentException("Got \"XYZ\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL")
+            "/path/XYZ",
+            new IllegalArgumentException("Got \"XYZ\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL")
         );
     }
 
     @Test
     public void testParseInvalidCountFails() {
         this.parseStringFails(
-                "/count/XYZ",
-                new IllegalArgumentException("Invalid count got \"XYZ\"")
+            "/count/XYZ",
+            new IllegalArgumentException("Invalid count got \"XYZ\"")
         );
     }
 
     @Test
     public void testParseInvalidCountFails2() {
         this.parseStringFails(
-                "/count/-123",
-                new IllegalArgumentException("Invalid count -123 < 0")
+            "/count/-123",
+            new IllegalArgumentException("Invalid count -123 < 0")
         );
     }
 
     @Test
     public void testParseInvalidOffsetFails() {
         this.parseStringFails(
-                "/offset/XYZ",
-                new IllegalArgumentException("Invalid offset got \"XYZ\"")
+            "/offset/XYZ",
+            new IllegalArgumentException("Invalid offset got \"XYZ\"")
         );
     }
 
     @Test
     public void testParseInvalidOffsetFails2() {
         this.parseStringFails(
-                "/offset/-456",
-                new IllegalArgumentException("Invalid offset -456 < 0")
+            "/offset/-456",
+            new IllegalArgumentException("Invalid offset -456 < 0")
         );
     }
 
     @Test
     public void testParseInvalidOffsetFails3() {
         this.parseStringFails(
-                "/offset/-00456",
-                new IllegalArgumentException("Invalid offset -456 < 0")
+            "/offset/-00456",
+            new IllegalArgumentException("Invalid offset -456 < 0")
         );
     }
 
     @Test
     public void testParseEmpty() {
         this.parseStringAndCheck(
-                "",
-                SpreadsheetCellFindQuery.empty()
+            "",
+            SpreadsheetCellFindQuery.empty()
         );
     }
 
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "/path/LRTD/offset/123/count/456/value-type/*/query/789+blah()",
-                this.createObject()
+            "/path/LRTD/offset/123/count/456/value-type/*/query/789+blah()",
+            this.createObject()
         );
     }
 
     @Test
     public void testParseCellRangePath() {
         this.parseStringAndCheck(
-                "/path/LRTD",
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(PATH)
+            "/path/LRTD",
+            SpreadsheetCellFindQuery.empty()
+                .setPath(PATH)
         );
     }
 
     @Test
     public void testParseIncludesQuery() {
         this.parseStringAndCheck(
-                "/path/LRTD/query/XYZ()",
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(PATH)
-                        .setQuery(
-                                Optional.of(
-                                        SpreadsheetCellQuery.parse("XYZ()")
-                                )
-                        )
+            "/path/LRTD/query/XYZ()",
+            SpreadsheetCellFindQuery.empty()
+                .setPath(PATH)
+                .setQuery(
+                    Optional.of(
+                        SpreadsheetCellQuery.parse("XYZ()")
+                    )
+                )
         );
     }
 
@@ -564,50 +564,50 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testExtractWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellFindQuery.extract(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellFindQuery.extract(null)
         );
     }
 
     @Test
     public void testExtractCellRangePath() {
         this.extractAndCheck(
-                "cell-range-path=LRTD",
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(PATH)
+            "cell-range-path=LRTD",
+            SpreadsheetCellFindQuery.empty()
+                .setPath(PATH)
         );
     }
 
     @Test
     public void testExtractIncludesQuery() {
         this.extractAndCheck(
-                "cell-range-path=LRTD&query=XYZ()",
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(PATH)
-                        .setQuery(
-                                Optional.of(
-                                        SpreadsheetCellQuery.parse("XYZ()")
-                                )
-                        )
+            "cell-range-path=LRTD&query=XYZ()",
+            SpreadsheetCellFindQuery.empty()
+                .setPath(PATH)
+                .setQuery(
+                    Optional.of(
+                        SpreadsheetCellQuery.parse("XYZ()")
+                    )
+                )
         );
     }
 
     @Test
     public void testExtract() {
         this.extractAndCheck(
-                "cell-range-path=LRTD&count=456&offset=123&query=789%2Bblah%28%29&value-type=*",
-                this.createObject()
+            "cell-range-path=LRTD&count=456&offset=123&query=789%2Bblah%28%29&value-type=*",
+            this.createObject()
         );
     }
 
     private void extractAndCheck(final String text,
                                  final SpreadsheetCellFindQuery expected) {
         this.extractAndCheck0(
-                Cast.to(
-                        UrlQueryString.parse(text)
-                                .parameters()
-                ),
-                expected
+            Cast.to(
+                UrlQueryString.parse(text)
+                    .parameters()
+            ),
+            expected
         );
     }
 
@@ -616,23 +616,23 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
         final String queryString = "cell-range-path=LRTD&count=456&offset=123&query=789%2Bblah%28%29&value-type=*";
 
         this.extractAndCheck0(
-                HttpRequests.get(
-                        HttpTransport.SECURED,
-                        Url.parseRelative("/path123?" + queryString),
-                        HttpProtocolVersion.VERSION_1_0,
-                        HttpEntity.EMPTY
-                ).routerParameters(),
-                this.createObject()
+            HttpRequests.get(
+                HttpTransport.SECURED,
+                Url.parseRelative("/path123?" + queryString),
+                HttpProtocolVersion.VERSION_1_0,
+                HttpEntity.EMPTY
+            ).routerParameters(),
+            this.createObject()
         );
     }
 
     private void extractAndCheck0(final Map<HttpRequestAttribute<?>, ?> parameters,
                                   final SpreadsheetCellFindQuery expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetCellFindQuery.extract(
-                        parameters
-                )
+            expected,
+            SpreadsheetCellFindQuery.extract(
+                parameters
+            )
         );
     }
 
@@ -641,69 +641,69 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testEqualsDifferentPath() {
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        Optional.of(
-                                SpreadsheetCellRangeReferencePath.BULR
-                        ),
-                        OFFSET,
-                        COUNT,
-                        VALUE_TYPE,
-                        QUERY
-                )
+            new SpreadsheetCellFindQuery(
+                Optional.of(
+                    SpreadsheetCellRangeReferencePath.BULR
+                ),
+                OFFSET,
+                COUNT,
+                VALUE_TYPE,
+                QUERY
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentOffset() {
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OptionalInt.of(999),
-                        COUNT,
-                        VALUE_TYPE,
-                        QUERY
-                )
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OptionalInt.of(999),
+                COUNT,
+                VALUE_TYPE,
+                QUERY
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentCount() {
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OFFSET,
-                        OptionalInt.of(9999),
-                        VALUE_TYPE,
-                        QUERY
-                )
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OFFSET,
+                OptionalInt.of(9999),
+                VALUE_TYPE,
+                QUERY
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentValueType() {
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OFFSET,
-                        COUNT,
-                        Optional.of(SpreadsheetValueType.DATE_STRING),
-                        QUERY
-                )
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OFFSET,
+                COUNT,
+                Optional.of(SpreadsheetValueType.DATE_STRING),
+                QUERY
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentQuery() {
         this.checkNotEquals(
-                new SpreadsheetCellFindQuery(
-                        PATH,
-                        OFFSET,
-                        COUNT,
-                        VALUE_TYPE,
-                        Optional.of(
-                                SpreadsheetCellQuery.parse("different()")
-                        )
+            new SpreadsheetCellFindQuery(
+                PATH,
+                OFFSET,
+                COUNT,
+                VALUE_TYPE,
+                Optional.of(
+                    SpreadsheetCellQuery.parse("different()")
                 )
+            )
         );
     }
 
@@ -712,73 +712,73 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testUrlFragmentWhenEmpty() {
         this.urlFragmentAndCheck(
-                SpreadsheetCellFindQuery.empty(),
-                UrlFragment.EMPTY
+            SpreadsheetCellFindQuery.empty(),
+            UrlFragment.EMPTY
         );
     }
 
     @Test
     public void testUrlFragmentPath() {
         this.urlFragmentAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setPath(
-                                Optional.of(SpreadsheetCellRangeReferencePath.BULR)
-                        ),
-                UrlFragment.parse("/path/BULR")
+            SpreadsheetCellFindQuery.empty()
+                .setPath(
+                    Optional.of(SpreadsheetCellRangeReferencePath.BULR)
+                ),
+            UrlFragment.parse("/path/BULR")
         );
     }
 
     @Test
     public void testUrlFragmentOffset() {
         this.urlFragmentAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setOffset(
-                                OptionalInt.of(123)
-                        ),
-                UrlFragment.parse("/offset/123")
+            SpreadsheetCellFindQuery.empty()
+                .setOffset(
+                    OptionalInt.of(123)
+                ),
+            UrlFragment.parse("/offset/123")
         );
     }
 
     @Test
     public void testUrlFragmentCount() {
         this.urlFragmentAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setCount(
-                                OptionalInt.of(456)
-                        ),
-                UrlFragment.parse("/count/456")
+            SpreadsheetCellFindQuery.empty()
+                .setCount(
+                    OptionalInt.of(456)
+                ),
+            UrlFragment.parse("/count/456")
         );
     }
 
     @Test
     public void testUrlFragmentValueType() {
         this.urlFragmentAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setValueType(
-                                Optional.of(SpreadsheetValueType.NUMBER_STRING)
-                        ),
-                UrlFragment.parse("/value-type/number")
+            SpreadsheetCellFindQuery.empty()
+                .setValueType(
+                    Optional.of(SpreadsheetValueType.NUMBER_STRING)
+                ),
+            UrlFragment.parse("/value-type/number")
         );
     }
 
     @Test
     public void testUrlFragmentQuery() {
         this.urlFragmentAndCheck(
-                SpreadsheetCellFindQuery.empty()
-                        .setQuery(
-                                Optional.of(
-                                        SpreadsheetCellQuery.parse("query123()")
-                                )
-                        ),
-                UrlFragment.parse("/query/query123()")
+            SpreadsheetCellFindQuery.empty()
+                .setQuery(
+                    Optional.of(
+                        SpreadsheetCellQuery.parse("query123()")
+                    )
+                ),
+            UrlFragment.parse("/query/query123()")
         );
     }
 
     @Test
     public void testUrlFragmentAll() {
         this.urlFragmentAndCheck(
-                this.createObject(),
-                UrlFragment.parse("/path/LRTD/offset/123/count/456/value-type/*/query/789%2Bblah%28%29")
+            this.createObject(),
+            UrlFragment.parse("/path/LRTD/offset/123/count/456/value-type/*/query/789%2Bblah%28%29")
         );
     }
 
@@ -787,26 +787,26 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testToStringEmpty() {
         this.toStringAndCheck(
-                SpreadsheetCellFindQuery.empty(),
-                ""
+            SpreadsheetCellFindQuery.empty(),
+            ""
         );
     }
 
     @Test
     public void testToStringNonEmpty() {
         this.toStringAndCheck(
-                new SpreadsheetCellFindQuery(
-                        Optional.of(SpreadsheetCellRangeReferencePath.BULR),
-                        OptionalInt.of(123), // offset
-                        OptionalInt.of(456), // count
-                        Optional.of(
-                                SpreadsheetValueType.NUMBER_STRING
-                        ),
-                        Optional.of(
-                                SpreadsheetCellQuery.parse("query789()")
-                        )
+            new SpreadsheetCellFindQuery(
+                Optional.of(SpreadsheetCellRangeReferencePath.BULR),
+                OptionalInt.of(123), // offset
+                OptionalInt.of(456), // count
+                Optional.of(
+                    SpreadsheetValueType.NUMBER_STRING
                 ),
-                "/path/BULR/offset/123/count/456/value-type/number/query/query789()"
+                Optional.of(
+                    SpreadsheetCellQuery.parse("query789()")
+                )
+            ),
+            "/path/BULR/offset/123/count/456/value-type/number/query/query789()"
         );
     }
 
@@ -816,8 +816,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public SpreadsheetCellFindQuery unmarshall(final JsonNode json,
                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetCellFindQuery.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
@@ -838,11 +838,11 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Override
     public SpreadsheetCellFindQuery createObject() {
         return new SpreadsheetCellFindQuery(
-                PATH,
-                OFFSET,
-                COUNT,
-                VALUE_TYPE,
-                QUERY
+            PATH,
+            OFFSET,
+            COUNT,
+            VALUE_TYPE,
+            QUERY
         );
     }
 }

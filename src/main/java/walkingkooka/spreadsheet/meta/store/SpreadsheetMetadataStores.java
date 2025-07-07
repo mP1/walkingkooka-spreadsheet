@@ -50,8 +50,8 @@ public final class SpreadsheetMetadataStores implements PublicStaticHelper {
     public static SpreadsheetMetadataStore spreadsheetCellStoreAction(final SpreadsheetMetadataStore metadataStore,
                                                                       final Function<SpreadsheetId, SpreadsheetCellStore> cellStore) {
         return SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                metadataStore,
-                cellStore
+            metadataStore,
+            cellStore
         );
     }
 
@@ -61,8 +61,8 @@ public final class SpreadsheetMetadataStores implements PublicStaticHelper {
     public static SpreadsheetMetadataStore treeMap(final SpreadsheetMetadata createTemplate,
                                                    final HasNow now) {
         return TreeMapSpreadsheetMetadataStore.with(
-                createTemplate,
-                now
+            createTemplate,
+            now
         );
     }
 

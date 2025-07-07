@@ -74,7 +74,7 @@ public final class ConditionNumberSpreadsheetFormatParserTokenTest extends NonSy
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CONDITION
+            SpreadsheetFormatParserTokenKind.CONDITION
         );
     }
 

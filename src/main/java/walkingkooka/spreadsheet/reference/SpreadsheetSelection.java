@@ -84,11 +84,11 @@ import java.util.stream.Collectors;
  * Base class for all selection types, including columns, rows, cells, labels and ranges.
  */
 public abstract class SpreadsheetSelection implements HasText,
-        HasUrlFragment,
-        HasNotFoundText,
-        Predicate<SpreadsheetSelection>,
-        TreePrintable,
-        UsesToStringBuilder {
+    HasUrlFragment,
+    HasNotFoundText,
+    Predicate<SpreadsheetSelection>,
+    TreePrintable,
+    UsesToStringBuilder {
 
     /**
      * All columns and labels are case-insensitive
@@ -99,9 +99,9 @@ public abstract class SpreadsheetSelection implements HasText,
      * A {@link SpreadsheetCellReference} with A1.
      */
     public final static SpreadsheetCellReference A1 = SpreadsheetReferenceKind.RELATIVE.firstColumn()
-            .setRow(
-                    SpreadsheetReferenceKind.RELATIVE.firstRow()
-            );
+        .setRow(
+            SpreadsheetReferenceKind.RELATIVE.firstRow()
+        );
 
     /**
      * {@see SpreadsheetCellRangeReference#ALL}
@@ -311,12 +311,12 @@ public abstract class SpreadsheetSelection implements HasText,
         }
 
         return Optional.ofNullable(
-                null != left ?
-                        left.columnRange(right)
-                                .setRowRange(
-                                        top.rowRange(bottom)
-                                ) :
-                        null
+            null != left ?
+                left.columnRange(right)
+                    .setRowRange(
+                        top.rowRange(bottom)
+                    ) :
+                null
         );
     }
 
@@ -356,10 +356,10 @@ public abstract class SpreadsheetSelection implements HasText,
                 break;
             default:
                 throw new IllegalArgumentException(
-                        "Invalid selectionType " +
-                                CharSequences.quoteAndEscape(selectionType) +
-                                " value " +
-                                CharSequences.quoteAndEscape(selection)
+                    "Invalid selectionType " +
+                        CharSequences.quoteAndEscape(selectionType) +
+                        " value " +
+                        CharSequences.quoteAndEscape(selection)
                 );
         }
 
@@ -377,10 +377,10 @@ public abstract class SpreadsheetSelection implements HasText,
         switch (text.split(SEPARATOR.string()).length) {
             case 1:
                 reference = ALL.string().equals(text) ?
-                        ALL_CELLS :
-                        isCellText(text) ?
-                                parseCell(text) :
-                                labelName(text);
+                    ALL_CELLS :
+                    isCellText(text) ?
+                        parseCell(text) :
+                        labelName(text);
                 break;
             case 2:
                 reference = parseCellRange(text);
@@ -397,16 +397,16 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetCellReference parseCell(final String text) {
         return parseTextOrFail(
-                text,
-                CELL_PARSER
+            text,
+            CELL_PARSER
         ).cast(CellSpreadsheetFormulaParserToken.class)
-                .cell();
+            .cell();
     }
 
     static final Parser<SpreadsheetParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic())
-            .setToString("CELL");
+        .orFailIfCursorNotEmpty(ParserReporters.basic())
+        .orReport(ParserReporters.basic())
+        .setToString("CELL");
 
     /**
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
@@ -416,8 +416,8 @@ public abstract class SpreadsheetSelection implements HasText,
         checkText(text);
 
         return isCellText(text) ?
-                parseCell(text) :
-                labelName(text);
+            parseCell(text) :
+            labelName(text);
     }
 
     /**
@@ -434,10 +434,10 @@ public abstract class SpreadsheetSelection implements HasText,
         checkText(text);
 
         return ALL.string().equals(text) ?
-                ALL_CELLS :
-                -1 == text.indexOf(SEPARATOR.character()) ?
-                        parseCell(text) :
-                        parseCellRange(text);
+            ALL_CELLS :
+            -1 == text.indexOf(SEPARATOR.character()) ?
+                parseCell(text) :
+                parseCellRange(text);
     }
 
     /**
@@ -450,11 +450,11 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetCellRangeReference parseCellRange(final String text) {
         return parseRange(
-                text,
-                ALL_CELLS,
-                SpreadsheetFormulaParsers.cell(),
-                (t) -> t.cast(CellSpreadsheetFormulaParserToken.class).cell(),
-                SpreadsheetCellRangeReference::with
+            text,
+            ALL_CELLS,
+            SpreadsheetFormulaParsers.cell(),
+            (t) -> t.cast(CellSpreadsheetFormulaParserToken.class).cell(),
+            SpreadsheetCellRangeReference::with
         );
     }
 
@@ -465,8 +465,8 @@ public abstract class SpreadsheetSelection implements HasText,
         checkText(text);
 
         return isLabelText(text) ?
-                labelName(text) :
-                parseCellRange(text);
+            labelName(text) :
+            parseCellRange(text);
     }
 
     /**
@@ -474,18 +474,18 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetColumnReference parseColumn(final String text) {
         return parseTextOrFail(
-                text,
-                COLUMN_PARSER
+            text,
+            COLUMN_PARSER
         ).cast(ColumnSpreadsheetFormulaParserToken.class)
-                .value();
+            .value();
     }
 
     /**
      * Leverages the {@link SpreadsheetFormulaParsers#column()} combined with an error reporter.
      */
     private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+        .orFailIfCursorNotEmpty(ParserReporters.basic())
+        .orReport(ParserReporters.basic());
 
 
     /**
@@ -493,21 +493,21 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetColumnOrRowReferenceOrRange parseColumnOrRow(final String text) {
         return Cast.to(
-                parseTextOrFail(
-                        text,
-                        COLUMN_OR_ROW_PARSER
-                ).cast(LeafSpreadsheetFormulaParserToken.class)
-                        .value()
+            parseTextOrFail(
+                text,
+                COLUMN_OR_ROW_PARSER
+            ).cast(LeafSpreadsheetFormulaParserToken.class)
+                .value()
         );
     }
 
     private static final Parser<SpreadsheetParserContext> COLUMN_OR_ROW_PARSER = SpreadsheetFormulaParsers.column()
-            .optional()
-            .or(
-                    SpreadsheetFormulaParsers.row()
-                            .optional()
-            ).orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+        .optional()
+        .or(
+            SpreadsheetFormulaParsers.row()
+                .optional()
+        ).orFailIfCursorNotEmpty(ParserReporters.basic())
+        .orReport(ParserReporters.basic());
 
 
     /**
@@ -516,8 +516,8 @@ public abstract class SpreadsheetSelection implements HasText,
     public static SpreadsheetColumnOrRowReferenceOrRange parseColumnOrColumnRange(final String text) {
         final SpreadsheetColumnRangeReference range = parseColumnRange(text);
         return range.isUnit() ?
-                range.begin() :
-                range;
+            range.begin() :
+            range;
     }
 
     /**
@@ -525,11 +525,11 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetColumnRangeReference parseColumnRange(final String text) {
         return parseRange(
-                text,
-                ALL_COLUMNS,
-                SpreadsheetFormulaParsers.column(),
-                (t) -> t.cast(ColumnSpreadsheetFormulaParserToken.class).value(),
-                SpreadsheetColumnRangeReference::with
+            text,
+            ALL_COLUMNS,
+            SpreadsheetFormulaParsers.column(),
+            (t) -> t.cast(ColumnSpreadsheetFormulaParserToken.class).value(),
+            SpreadsheetColumnRangeReference::with
         );
     }
 
@@ -538,18 +538,18 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetRowReference parseRow(final String text) {
         return parseTextOrFail(
-                text,
-                ROW_PARSER
+            text,
+            ROW_PARSER
         ).cast(RowSpreadsheetFormulaParserToken.class)
-                .value();
+            .value();
     }
 
     /**
      * Leverages the {@link SpreadsheetFormulaParsers#row()} combined with an error reporter.
      */
     private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+        .orFailIfCursorNotEmpty(ParserReporters.basic())
+        .orReport(ParserReporters.basic());
 
     /**
      * Parsers the text into a {@link ParserToken} or fails.
@@ -566,15 +566,15 @@ public abstract class SpreadsheetSelection implements HasText,
                                        final Parser<SpreadsheetParserContext> parser) {
         try {
             return parser.parse(
-                            TextCursors.maxPosition(
-                                    TextCursors.charSequence(text)
-                            ),
-                            PARSER_CONTEXT
-                    )
-                    .get();
+                    TextCursors.maxPosition(
+                        TextCursors.charSequence(text)
+                    ),
+                    PARSER_CONTEXT
+                )
+                .get();
         } catch (final ParserException cause) {
             final Throwable wrapped = cause.getCause();
-            if(wrapped instanceof RuntimeException) {
+            if (wrapped instanceof RuntimeException) {
                 throw (RuntimeException) wrapped;
             }
             throw new IllegalArgumentException(cause.getMessage(), cause);
@@ -582,10 +582,10 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION,
-            DateTimeContexts.fake(),
-            ExpressionNumberContexts.fake(),
-            ' ' // not important
+        InvalidCharacterExceptionFactory.POSITION,
+        DateTimeContexts.fake(),
+        ExpressionNumberContexts.fake(),
+        ' ' // not important
     );
 
     /**
@@ -593,11 +593,11 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetRowRangeReference parseRowRange(final String text) {
         return parseRange(
-                text,
-                ALL_ROWS,
-                SpreadsheetFormulaParsers.row(),
-                (t) -> t.cast(RowSpreadsheetFormulaParserToken.class).value(),
-                SpreadsheetRowRangeReference::with
+            text,
+            ALL_ROWS,
+            SpreadsheetFormulaParsers.row(),
+            (t) -> t.cast(RowSpreadsheetFormulaParserToken.class).value(),
+            SpreadsheetRowRangeReference::with
         );
     }
 
@@ -607,8 +607,8 @@ public abstract class SpreadsheetSelection implements HasText,
     public static SpreadsheetSelection parseRowOrRowRange(final String text) {
         final SpreadsheetRowRangeReference range = parseRowRange(text);
         return range.isUnit() ?
-                range.begin() :
-                range;
+            range.begin() :
+            range;
     }
 
     /**
@@ -626,12 +626,12 @@ public abstract class SpreadsheetSelection implements HasText,
             selection = all;
         } else {
             final MaxPositionTextCursor cursor = TextCursors.maxPosition(
-                    TextCursors.charSequence(text)
+                TextCursors.charSequence(text)
             );
             final SpreadsheetParserContext context = SpreadsheetParserContexts.fake();
 
             ParserToken lower = parser.parse(cursor, context)
-                    .orElse(null);
+                .orElse(null);
             if (null == lower) {
                 final TextCursorLineInfo lineInfo = cursor.lineInfo();
                 throw new InvalidCharacterException(text, lineInfo.column() - 1);
@@ -645,8 +645,8 @@ public abstract class SpreadsheetSelection implements HasText,
                 final char separator = cursor.at();
                 if (SEPARATOR.character() != separator) {
                     throw new InvalidCharacterException(
-                            text,
-                            cursor.max()
+                        text,
+                        cursor.max()
                     );
                 }
                 cursor.next();
@@ -656,41 +656,41 @@ public abstract class SpreadsheetSelection implements HasText,
                 }
 
                 upper = parser.parse(cursor, context)
-                        .orElse(null);
+                    .orElse(null);
                 if (null == upper) {
                     throw new InvalidCharacterException(
-                            text,
-                            cursor.max()
+                        text,
+                        cursor.max()
                     );
                 }
                 upperSelection = parserTokenToSelection.apply(upper);
 
                 if (cursor.isNotEmpty()) {
                     throw new InvalidCharacterException(
-                            text,
-                            cursor.max()
+                        text,
+                        cursor.max()
                     );
                 }
             }
 
             selection = rangeFactory.apply(
-                    null == upper ?
-                            Range.singleton(lowerSelection) :
-                            lowerSelection.compareTo(upperSelection) > 0 ?
-                                    Range.greaterThanEquals(
-                                            upperSelection
-                                    ).and(
-                                            Range.lessThanEquals(
-                                                    lowerSelection
-                                            )
-                                    ) :
-                                    Range.greaterThanEquals(
-                                            lowerSelection
-                                    ).and(
-                                            Range.lessThanEquals(
-                                                    upperSelection
-                                            )
-                                    )
+                null == upper ?
+                    Range.singleton(lowerSelection) :
+                    lowerSelection.compareTo(upperSelection) > 0 ?
+                        Range.greaterThanEquals(
+                            upperSelection
+                        ).and(
+                            Range.lessThanEquals(
+                                lowerSelection
+                            )
+                        ) :
+                        Range.greaterThanEquals(
+                            lowerSelection
+                        ).and(
+                            Range.lessThanEquals(
+                                upperSelection
+                            )
+                        )
             );
         }
 
@@ -723,11 +723,11 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     static <RR extends SpreadsheetSelection & Comparable<RR>> Range<RR> createRange(final RR left, final RR right) {
         return left.equalsIgnoreReferenceKind(right) ?
-                Range.singleton(left) :
-                left.compareTo(right) > 0 ?
-                        createRange(right, left) :
-                        Range.greaterThanEquals(left)
-                                .and(Range.lessThanEquals(right));
+            Range.singleton(left) :
+            left.compareTo(right) > 0 ?
+                createRange(right, left) :
+                Range.greaterThanEquals(left)
+                    .and(Range.lessThanEquals(right));
     }
 
     // ctor.............................................................................................................
@@ -793,7 +793,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public void comparatorNamesBoundsCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorNames) {
         this.comparatorNamesBoundsCheck0(
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparatorNames)
         );
     }
 
@@ -802,22 +802,22 @@ public abstract class SpreadsheetSelection implements HasText,
             final SpreadsheetCellRangeReference cellRange = this.toCellRange();
 
             final String outOfBounds = comparatorNames.stream()
-                    .map(SpreadsheetColumnOrRowSpreadsheetComparatorNames::columnOrRow)
-                    .filter(c -> false == cellRange.test(c))
-                    .map(Object::toString)
-                    .collect(Collectors.joining(", "));
+                .map(SpreadsheetColumnOrRowSpreadsheetComparatorNames::columnOrRow)
+                .filter(c -> false == cellRange.test(c))
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
             if (false == outOfBounds.isEmpty()) {
                 final SpreadsheetSelection first = comparatorNames.get(0).columnOrRow();
 
                 // Invalid column(s) C are not within D1:E1
                 // Invalid column(s) C, D are not within D1:E1
                 throw new IllegalArgumentException(
-                        "Invalid " +
-                                first.textLabel().toLowerCase() +
-                                "(s) " +
-                                outOfBounds +
-                                " are not within " +
-                                this
+                    "Invalid " +
+                        first.textLabel().toLowerCase() +
+                        "(s) " +
+                        outOfBounds +
+                        " are not within " +
+                        this
                 );
             }
         }
@@ -857,10 +857,10 @@ public abstract class SpreadsheetSelection implements HasText,
     @Override
     public final boolean test(final SpreadsheetSelection selection) {
         return null != selection &&
-                SpreadsheetSelectionTestSpreadsheetSelectionVisitor.test(
-                        this,
-                        selection
-                );
+            SpreadsheetSelectionTestSpreadsheetSelectionVisitor.test(
+                this,
+                selection
+            );
     }
 
     /**
@@ -868,7 +868,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testCell(final SpreadsheetCellReference cell) {
         return this.testCellNonNull(
-                Objects.requireNonNull(cell, "cell")
+            Objects.requireNonNull(cell, "cell")
         );
     }
 
@@ -879,7 +879,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testCellRange(final SpreadsheetCellRangeReference range) {
         return this.testCellRangeNonNull(
-                Objects.requireNonNull(range, "range")
+            Objects.requireNonNull(range, "range")
         );
     }
 
@@ -891,7 +891,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testColumn(final SpreadsheetColumnReference column) {
         return this.testColumnNonNull(
-                Objects.requireNonNull(column, "column")
+            Objects.requireNonNull(column, "column")
         );
     }
 
@@ -903,7 +903,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testRow(final SpreadsheetRowReference row) {
         return this.testRowNonNull(
-                Objects.requireNonNull(row, "row")
+            Objects.requireNonNull(row, "row")
         );
     }
 
@@ -924,7 +924,7 @@ public abstract class SpreadsheetSelection implements HasText,
         }
 
         return (this.isCell() || this.isCellRange()) &&
-                this.toCellRange().containsAll0(windows);
+            this.toCellRange().containsAll0(windows);
     }
     // isXXX............................................................................................................
 
@@ -1032,7 +1032,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final SpreadsheetCellRangeReference toCellRange() {
         return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
-                this
+            this
         );
     }
 
@@ -1043,7 +1043,7 @@ public abstract class SpreadsheetSelection implements HasText,
         if (false == this.isCell() && false == this.isCellRange()) {
             throw new UnsupportedOperationException(this.toString());
         }
-        return (SpreadsheetCellReferenceOrRange)this;
+        return (SpreadsheetCellReferenceOrRange) this;
     }
 
     /**
@@ -1166,21 +1166,21 @@ public abstract class SpreadsheetSelection implements HasText,
         switch (this.getClass().getSimpleName()) {
             case "SpreadsheetCellRangeReference":
                 scalar = this.isUnit() ?
-                        this.toCellRange()
-                                .begin():
-                        this;
+                    this.toCellRange()
+                        .begin() :
+                    this;
                 break;
             case "SpreadsheetColumnRangeReference":
                 scalar = this.isUnit() ?
-                        this.toColumnRange()
-                                .begin():
-                        this;
+                    this.toColumnRange()
+                        .begin() :
+                    this;
                 break;
             case "SpreadsheetRowRangeReference":
                 scalar = this.isUnit() ?
-                        this.toRowRange()
-                                .begin():
-                        this;
+                    this.toRowRange()
+                        .begin() :
+                    this;
                 break;
             default:
                 // labels are considered scalar
@@ -1210,7 +1210,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public final boolean isAll() {
         boolean all = false;
 
-        switch(this.getClass().getSimpleName()) {
+        switch (this.getClass().getSimpleName()) {
             case "SpreadsheetCellRangeReference":
                 all = SpreadsheetSelection.ALL_CELLS.equalsIgnoreReferenceKind(this);
                 break;
@@ -1252,14 +1252,14 @@ public abstract class SpreadsheetSelection implements HasText,
             final Set<SpreadsheetViewportAnchor> anyOf = this.anchors();
             if (false == anyOf.contains(anchor)) {
                 throw new IllegalArgumentException(
-                        "Invalid anchor " +
-                                anchor +
-                                " for " +
-                                this +
-                                ", valid anchors: " +
-                                anyOf.stream()
-                                        .map(Object::toString)
-                                        .collect(Collectors.joining(", "))
+                    "Invalid anchor " +
+                        anchor +
+                        " for " +
+                        this +
+                        ", valid anchors: " +
+                        anyOf.stream()
+                            .map(Object::toString)
+                            .collect(Collectors.joining(", "))
                 );
             }
         }
@@ -1280,8 +1280,8 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final AnchoredSpreadsheetSelection setAnchor(final SpreadsheetViewportAnchor anchor) {
         return AnchoredSpreadsheetSelection.with(
-                this,
-                anchor
+            this,
+            anchor
         );
     }
 
@@ -1290,15 +1290,15 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final AnchoredSpreadsheetSelection setDefaultAnchor() {
         return this.setAnchor(
-                this.defaultAnchor()
+            this.defaultAnchor()
         );
     }
 
     final AnchoredSpreadsheetSelection setAnchorOrDefault(final SpreadsheetViewportAnchor anchor) {
         return this.setAnchor(
-                this instanceof HasRange ?
-                        anchor :
-                        this.defaultAnchor()
+            this instanceof HasRange ?
+                anchor :
+                this.defaultAnchor()
         );
     }
 
@@ -1328,8 +1328,8 @@ public abstract class SpreadsheetSelection implements HasText,
 
     final boolean isHidden(final SpreadsheetViewportNavigationContext context) {
         return this.isHidden(
-                context::isColumnHidden,
-                context::isRowHidden
+            context::isColumnHidden,
+            context::isRowHidden
         );
     }
 
@@ -1343,8 +1343,8 @@ public abstract class SpreadsheetSelection implements HasText,
         final SS end = range.end();
 
         return begin.isHidden(hiddenColumnTester, hiddenRowTester) ||
-                (!begin.equalsIgnoreReferenceKind(end) &&
-                        end.isHidden(hiddenColumnTester, hiddenRowTester));
+            (!begin.equalsIgnoreReferenceKind(end) &&
+                end.isHidden(hiddenColumnTester, hiddenRowTester));
     }
 
     abstract Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
@@ -1417,15 +1417,15 @@ public abstract class SpreadsheetSelection implements HasText,
 
     final Optional<SpreadsheetSelection> emptyIfHidden(final SpreadsheetViewportNavigationContext context) {
         return this.isHidden(context) ?
-                Optional.empty() :
-                Optional.of(this);
+            Optional.empty() :
+            Optional.of(this);
     }
 
     final Optional<AnchoredSpreadsheetSelection> setAnchorEmptyIfHidden(final SpreadsheetViewportAnchor anchor,
                                                                         final SpreadsheetViewportNavigationContext context) {
         return this.isHidden(context) ?
-                Optional.empty() :
-                Optional.of(this.setAnchor(anchor));
+            Optional.empty() :
+            Optional.of(this.setAnchor(anchor));
     }
 
     // cellColumnOrRow..................................................................................................
@@ -1445,8 +1445,8 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final String cellColumnOrRowText() {
         return this.isColumn() || this.isColumnRange() ? "column" :
-                this.isRow() || this.isRowRange() ? "row" :
-                        "cell";
+            this.isRow() || this.isRowRange() ? "row" :
+                "cell";
     }
 
     // textLabel........................................................................................................
@@ -1466,11 +1466,11 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final String textLabel() {
         return this.getClass()
-                .getSimpleName()
-                .replace("Spreadsheet", "")
-                .replace("Reference", "")
-                .replace("Name", "")
-                .replace("Range", " Range");
+            .getSimpleName()
+            .replace("Spreadsheet", "")
+            .replace("Reference", "")
+            .replace("Name", "")
+            .replace("Range", " Range");
     }
 
     // notFound.........................................................................................................
@@ -1512,8 +1512,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * row 2
      * </pre>
      */
-    @Override
-    final public void printTree(final IndentingPrinter printer) {
+    @Override final public void printTree(final IndentingPrinter printer) {
         printer.println(this.treeString());
     }
 
@@ -1533,12 +1532,12 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final String selectionTypeName() {
         return CaseKind.CAMEL.change(
-                this.getClass()
-                        .getSimpleName()
-                        .substring("Spreadsheet".length())
-                        .replace("Reference", "")
-                        .replace("Name", ""),
-                CaseKind.KEBAB
+            this.getClass()
+                .getSimpleName()
+                .substring("Spreadsheet".length())
+                .replace("Reference", "")
+                .replace("Name", ""),
+            CaseKind.KEBAB
         );
     }
 
@@ -1559,8 +1558,8 @@ public abstract class SpreadsheetSelection implements HasText,
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this.equalsWithReferenceKind(
-                other,
-                true // includeKind = true
+            other,
+            true // includeKind = true
         );
     }
 
@@ -1569,20 +1568,20 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean equalsIgnoreReferenceKind(final Object other) {
         return this.equalsWithReferenceKind(
-                other,
-                false // includeKind = false
+            other,
+            false // includeKind = false
         );
     }
 
     private boolean equalsWithReferenceKind(final Object other,
                                             final boolean includeKind) {
         return this == other ||
-                null != other &&
-                        this.getClass() == other.getClass() &&
-                        this.equalsNotSameAndNotNull(
-                                other,
-                                includeKind
-                        );
+            null != other &&
+                this.getClass() == other.getClass() &&
+                this.equalsNotSameAndNotNull(
+                    other,
+                    includeKind
+                );
     }
 
     /**
@@ -1602,9 +1601,9 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final String toStringMaybeStar() {
         return false == this.isLabelName() &&
-                this.isAll() ?
-                ALL.toString() :
-                this.toString();
+            this.isAll() ?
+            ALL.toString() :
+            this.toString();
     }
 
     // HasText..........................................................................................................
@@ -1629,7 +1628,7 @@ public abstract class SpreadsheetSelection implements HasText,
     @Override
     public final UrlFragment urlFragment() {
         return UrlFragment.with(
-                this.toStringMaybeStar()
+            this.toStringMaybeStar()
         );
     }
 
@@ -1656,7 +1655,7 @@ public abstract class SpreadsheetSelection implements HasText,
     static SpreadsheetCellRangeReference unmarshallCellRange(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
         return unmarshall(
-                node, SpreadsheetExpressionReference::parseCellRange
+            node, SpreadsheetExpressionReference::parseCellRange
         );
     }
 
@@ -1666,8 +1665,8 @@ public abstract class SpreadsheetSelection implements HasText,
     static SpreadsheetCellReference unmarshallCellReference(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return unmarshall(
-                node,
-                SpreadsheetSelection::parseCell
+            node,
+            SpreadsheetSelection::parseCell
         );
     }
 
@@ -1693,8 +1692,8 @@ public abstract class SpreadsheetSelection implements HasText,
     static SpreadsheetExpressionReference unmarshallExpressionReference(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
         return unmarshall(
-                node,
-                SpreadsheetExpressionReference::parseExpressionReference
+            node,
+            SpreadsheetExpressionReference::parseExpressionReference
         );
     }
 
@@ -1704,8 +1703,8 @@ public abstract class SpreadsheetSelection implements HasText,
     static SpreadsheetLabelName unmarshallLabelName(final JsonNode node,
                                                     final JsonNodeUnmarshallContext context) {
         return unmarshall(
-                node,
-                SpreadsheetExpressionReference::labelName
+            node,
+            SpreadsheetExpressionReference::labelName
         );
     }
 
@@ -1737,47 +1736,47 @@ public abstract class SpreadsheetSelection implements HasText,
 
     static {
         register(
-                SpreadsheetSelection::unmarshallCellReference,
-                SpreadsheetCellReference.class
+            SpreadsheetSelection::unmarshallCellReference,
+            SpreadsheetCellReference.class
         );
 
         //noinspection StaticInitializerReferencesSubClass
         register(
-                SpreadsheetSelection::unmarshallCellRange,
-                SpreadsheetCellRangeReference.class
+            SpreadsheetSelection::unmarshallCellRange,
+            SpreadsheetCellRangeReference.class
         );
 
 
         register(
-                SpreadsheetSelection::unmarshallColumn,
-                SpreadsheetColumnReference.class
+            SpreadsheetSelection::unmarshallColumn,
+            SpreadsheetColumnReference.class
         );
 
         register(
-                SpreadsheetSelection::unmarshallColumnRange,
-                SpreadsheetColumnRangeReference.class
-        );
-
-        //noinspection StaticInitializerReferencesSubClass
-        register(
-                SpreadsheetSelection::unmarshallExpressionReference,
-                SpreadsheetExpressionReference.class
-        );
-
-        register(
-                SpreadsheetSelection::unmarshallLabelName,
-                SpreadsheetLabelName.class
+            SpreadsheetSelection::unmarshallColumnRange,
+            SpreadsheetColumnRangeReference.class
         );
 
         //noinspection StaticInitializerReferencesSubClass
         register(
-                SpreadsheetRowReference::unmarshallRow,
-                SpreadsheetRowReference.class
+            SpreadsheetSelection::unmarshallExpressionReference,
+            SpreadsheetExpressionReference.class
         );
 
         register(
-                SpreadsheetSelection::unmarshallRowRange,
-                SpreadsheetRowRangeReference.class
+            SpreadsheetSelection::unmarshallLabelName,
+            SpreadsheetLabelName.class
+        );
+
+        //noinspection StaticInitializerReferencesSubClass
+        register(
+            SpreadsheetRowReference::unmarshallRow,
+            SpreadsheetRowReference.class
+        );
+
+        register(
+            SpreadsheetSelection::unmarshallRowRange,
+            SpreadsheetRowRangeReference.class
         );
 
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.isPresent();
@@ -1794,10 +1793,10 @@ public abstract class SpreadsheetSelection implements HasText,
     private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
                                                                   final Class<T> type) {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(type),
-                from,
-                SpreadsheetSelection::marshall,
-                type
+            JsonNodeContext.computeTypeName(type),
+            from,
+            SpreadsheetSelection::marshall,
+            type
         );
     }
 

@@ -46,11 +46,11 @@ final class SpreadsheetErrorKindClassCastExceptionMessage {
             // 6=class
             // 7=walkingkooka.tree.expression.ExpressionNumber
             if (tokens[0].equals("class") &&
-                    tokens[2].equals("cannot") &&
-                    tokens[3].equals("be") &&
-                    tokens[4].equals("cast") &&
-                    tokens[5].equals("to") &&
-                    tokens[6].equals("class")) {
+                tokens[2].equals("cannot") &&
+                tokens[3].equals("be") &&
+                tokens[4].equals("cast") &&
+                tokens[5].equals("to") &&
+                tokens[6].equals("class")) {
                 result = classClassNameCannotBeCastToClass(tokens);
             }
         }
@@ -64,9 +64,9 @@ final class SpreadsheetErrorKindClassCastExceptionMessage {
             // 4=to
             // 5=java.base/java.lang.Void"
             if (tokens[1].equals("cannot") &&
-                    tokens[2].equals("be") &&
-                    tokens[3].equals("cast") &&
-                    tokens[4].equals("to")) {
+                tokens[2].equals("be") &&
+                tokens[3].equals("cast") &&
+                tokens[4].equals("to")) {
                 result = classCannotBeCastTo(tokens);
             }
         }
@@ -89,8 +89,8 @@ final class SpreadsheetErrorKindClassCastExceptionMessage {
     // to = 7
     private static String classClassNameCannotBeCastToClass(final String[] tokens) {
         return failedToConvert(
-                tokens[1],
-                tokens[7]
+            tokens[1],
+            tokens[7]
         );
     }
 
@@ -100,8 +100,8 @@ final class SpreadsheetErrorKindClassCastExceptionMessage {
     // to = last
     private static String classCannotBeCastTo(final String[] tokens) {
         return failedToConvert(
-                tokens[0],
-                tokens[tokens.length - 1]
+            tokens[0],
+            tokens[tokens.length - 1]
         );
     }
 

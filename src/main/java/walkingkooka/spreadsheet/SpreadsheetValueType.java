@@ -61,7 +61,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValidationValueTypeName COLUMN = ValidationValueTypeName.with(COLUMN_STRING);
 
     public static final String COLUMN_RANGE_STRING = "columnRange";
-    
+
     public static final ValidationValueTypeName COLUMN_RANGE = ValidationValueTypeName.with(COLUMN_RANGE_STRING);
 
     public static final String CONDITION_STRING = "condition";
@@ -69,23 +69,23 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValidationValueTypeName CONDITION = ValidationValueTypeName.with(CONDITION_STRING);
 
     public static final String DATE_STRING = ValidationValueTypeName.DATE_STRING;
-    
+
     public static final ValidationValueTypeName DATE = ValidationValueTypeName.DATE;
 
     public static final String DATE_TIME_STRING = ValidationValueTypeName.DATE_TIME_STRING;
-    
+
     public static final ValidationValueTypeName DATE_TIME = ValidationValueTypeName.DATE_TIME;
 
     public static final String ERROR_STRING = "error";
-    
+
     public static final ValidationValueTypeName ERROR = ValidationValueTypeName.with(ERROR_STRING);
 
     public static final String LABEL_STRING = "label";
-    
+
     public static final ValidationValueTypeName LABEL = ValidationValueTypeName.with(LABEL_STRING);
 
     public static final String NUMBER_STRING = ValidationValueTypeName.NUMBER_STRING;
-    
+
     public static final ValidationValueTypeName NUMBER = ValidationValueTypeName.NUMBER;
 
     public static final String ROW_STRING = "row";
@@ -93,11 +93,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final ValidationValueTypeName ROW = ValidationValueTypeName.with(ROW_STRING);
 
     public static final String ROW_RANGE_STRING = "rowRange";
-    
+
     public static final ValidationValueTypeName ROW_RANGE = ValidationValueTypeName.with(ROW_RANGE_STRING);
 
     public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
-    
+
     public static final ValidationValueTypeName TEMPLATE_VALUE_NAME = ValidationValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
 
     public static final String TEXT_STRING = ValidationValueTypeName.TEXT_STRING;
@@ -116,12 +116,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
      * Does not include all types, only those that typically appear in a cell
      */
     public static final Set<ValidationValueTypeName> ALL = Sets.of(
-            BOOLEAN,
-            DATE,
-            DATE_TIME,
-            NUMBER,
-            TEXT,
-            TIME
+        BOOLEAN,
+        DATE,
+        DATE_TIME,
+        NUMBER,
+        TEXT,
+        TIME
     );
 
     /**

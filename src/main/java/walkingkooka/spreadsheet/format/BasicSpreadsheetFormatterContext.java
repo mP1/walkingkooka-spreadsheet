@@ -37,7 +37,7 @@ import java.util.function.Function;
  * A {@link SpreadsheetFormatterContext} that basically delegates each of its methods to a dependency given at create time.
  */
 final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
-        SpreadsheetConverterContextDelegator {
+    SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
@@ -63,15 +63,15 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetFormatterContext(
-                numberToColor,
-                nameToColor,
-                cellCharacterWidth,
-                generalFormatNumberDigitCount,
-                formatter,
-                spreadsheetExpressionEvaluationContext,
-                spreadsheetConverterContext,
-                spreadsheetFormatterProvider,
-                providerContext
+            numberToColor,
+            nameToColor,
+            cellCharacterWidth,
+            generalFormatNumberDigitCount,
+            formatter,
+            spreadsheetExpressionEvaluationContext,
+            spreadsheetConverterContext,
+            spreadsheetFormatterProvider,
+            providerContext
         );
     }
 
@@ -136,22 +136,22 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.converter()
-                .canConvert(
-                        value,
-                        type,
-                        this
-                );
+            .canConvert(
+                value,
+                type,
+                this
+            );
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
         return this.converter()
-                .convert(
-                        value,
-                        type,
-                        this
-                );
+            .convert(
+                value,
+                type,
+                this
+            );
     }
 
     // format...........................................................................................................
@@ -159,8 +159,8 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     @Override
     public Optional<TextNode> format(final Optional<Object> value) {
         return this.formatter.format(
-                value,
-                this
+            value,
+            this
         );
     }
 
@@ -171,8 +171,8 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         Objects.requireNonNull(selector, "selector");
 
         return this.spreadsheetFormatterProvider.spreadsheetFormatter(
-                selector,
-                this.providerContext
+            selector,
+            this.providerContext
         );
     }
 
@@ -212,18 +212,18 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         final SpreadsheetConverterContext after = this.spreadsheetConverterContext.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new BasicSpreadsheetFormatterContext(
-                        this.numberToColor,
-                        this.nameToColor,
-                        this.cellCharacterWidth,
-                        this.generalFormatNumberDigitCount,
-                        this.formatter,
-                        this.spreadsheetExpressionEvaluationContext,
-                        after,
-                        this.spreadsheetFormatterProvider,
-                        this.providerContext
-                );
+            this :
+            new BasicSpreadsheetFormatterContext(
+                this.numberToColor,
+                this.nameToColor,
+                this.cellCharacterWidth,
+                this.generalFormatNumberDigitCount,
+                this.formatter,
+                this.spreadsheetExpressionEvaluationContext,
+                after,
+                this.spreadsheetFormatterProvider,
+                this.providerContext
+            );
     }
 
     // Object...........................................................................................................
@@ -231,13 +231,13 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("cellCharacterWidth").value(this.cellCharacterWidth)
-                .label("numberToColor").value(this.numberToColor)
-                .label("nameToColor").value(this.nameToColor)
-                .label("spreadsheetConverterContext").value(this.spreadsheetConverterContext)
-                .label("spreadsheetFormatterProvider").value(this.spreadsheetFormatterProvider)
-                .label("providerContext").value(this.providerContext)
+            .label("cellCharacterWidth").value(this.cellCharacterWidth)
+            .label("numberToColor").value(this.numberToColor)
+            .label("nameToColor").value(this.nameToColor)
+            .label("spreadsheetConverterContext").value(this.spreadsheetConverterContext)
+            .label("spreadsheetFormatterProvider").value(this.spreadsheetFormatterProvider)
+            .label("providerContext").value(this.providerContext)
 
-                .build();
+            .build();
     }
 }

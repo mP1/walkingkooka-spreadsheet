@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind extend
      */
     private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind() {
         super(
-                "findFunctions"
+            "findFunctions"
         );
     }
 

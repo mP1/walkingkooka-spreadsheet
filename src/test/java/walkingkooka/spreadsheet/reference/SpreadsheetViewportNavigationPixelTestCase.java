@@ -22,7 +22,7 @@ import walkingkooka.predicate.Predicates;
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends SpreadsheetViewportNavigationPixel> extends
-        SpreadsheetViewportNavigationTestCase2<T> {
+    SpreadsheetViewportNavigationTestCase2<T> {
 
     SpreadsheetViewportNavigationPixelTestCase() {
         super();
@@ -30,17 +30,17 @@ public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends Sprea
 
     final void updateAndCheck(final String home) {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell(home)
+            SpreadsheetSelection.parseCell(home)
         );
     }
 
     final void updateAndCheck(final String home,
                               final String expected) {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell(home),
-                Predicates.never(), // hidden Columns
-                Predicates.never(), // hidden rows
-                SpreadsheetSelection.parseCell(expected)
+            SpreadsheetSelection.parseCell(home),
+            Predicates.never(), // hidden Columns
+            Predicates.never(), // hidden rows
+            SpreadsheetSelection.parseCell(expected)
         );
     }
 
@@ -49,27 +49,27 @@ public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends Sprea
                               final String hiddenRows,
                               final String expected) {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell(home),
-                hiddenColumns,
-                hiddenRows,
-                SpreadsheetSelection.parseCell(expected)
+            SpreadsheetSelection.parseCell(home),
+            hiddenColumns,
+            hiddenRows,
+            SpreadsheetSelection.parseCell(expected)
         );
     }
 
     final void updateAndCheck(final SpreadsheetCellReference home) {
         this.updateAndCheck(
-                home,
-                home
+            home,
+            home
         );
     }
 
     final void updateAndCheck(final SpreadsheetCellReference home,
                               final SpreadsheetCellReference expected) {
         this.updateAndCheck(
-                home,
-                Predicates.never(), // hidden columns
-                Predicates.never(), // hidden rows
-                expected
+            home,
+            Predicates.never(), // hidden columns
+            Predicates.never(), // hidden rows
+            expected
         );
     }
 
@@ -78,10 +78,10 @@ public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends Sprea
                               final String hiddenRows,
                               final SpreadsheetCellReference expected) {
         this.updateAndCheck(
-                home,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                expected
+            home,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            expected
         );
     }
 
@@ -90,13 +90,13 @@ public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends Sprea
                               final Predicate<SpreadsheetRowReference> hiddenRows,
                               final SpreadsheetCellReference expected) {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                home.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport(),
-                hiddenColumns,
-                hiddenRows,
-                expected.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
+            this.createSpreadsheetViewportNavigation(),
+            home.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport(),
+            hiddenColumns,
+            hiddenRows,
+            expected.viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
         );
     }
 }

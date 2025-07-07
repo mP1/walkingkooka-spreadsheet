@@ -74,14 +74,14 @@ import java.util.function.Function;
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
  */
 public final class SpreadsheetCell implements CanBeEmpty,
-        CanReplaceReferences<SpreadsheetCell>,
-        HasSpreadsheetReference<SpreadsheetCellReference>,
-        HateosResource<SpreadsheetCellReference>,
-        Patchable<SpreadsheetCell>,
-        HasTextStyle,
-        HasText,
-        TreePrintable,
-        UsesToStringBuilder {
+    CanReplaceReferences<SpreadsheetCell>,
+    HasSpreadsheetReference<SpreadsheetCellReference>,
+    HateosResource<SpreadsheetCellReference>,
+    Patchable<SpreadsheetCell>,
+    HasTextStyle,
+    HasText,
+    TreePrintable,
+    UsesToStringBuilder {
 
     /**
      * A {@link Comparator} that only uses the {@link SpreadsheetCell#REFERENCE_COMPARATOR}.
@@ -134,16 +134,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
                                        final SpreadsheetFormula formula) {
         return new SpreadsheetCell(
-                checkReference(reference),
-                checkFormula(formula),
-                NO_DATETIME_SYMBOLS,
-                NO_DECIMAL_NUMBER_SYMBOLS,
-                NO_LOCALE,
-                NO_FORMATTER,
-                NO_PARSER,
-                NO_STYLE,
-                NO_FORMATTED_VALUE_CELL,
-                NO_VALIDATOR
+            checkReference(reference),
+            checkFormula(formula),
+            NO_DATETIME_SYMBOLS,
+            NO_DECIMAL_NUMBER_SYMBOLS,
+            NO_LOCALE,
+            NO_FORMATTER,
+            NO_PARSER,
+            NO_STYLE,
+            NO_FORMATTED_VALUE_CELL,
+            NO_VALIDATOR
         );
     }
 
@@ -195,23 +195,23 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     public SpreadsheetCell setReference(final SpreadsheetCellReference reference) {
         return this.reference.equals(reference) ?
-                this :
-                this.replace(
-                        checkReference(reference),
-                        this.formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        this.locale,
-                        this.formatter,
-                        this.parser,
-                        this.style,
-                        this.validator
-                );
+            this :
+            this.replace(
+                checkReference(reference),
+                this.formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
+            );
     }
 
     private static SpreadsheetCellReference checkReference(final SpreadsheetCellReference reference) {
         return Objects.requireNonNull(reference, "reference")
-                .toRelative();
+            .toRelative();
     }
 
     /**
@@ -227,24 +227,24 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     public SpreadsheetCell setFormula(final SpreadsheetFormula formula) {
         return this.setFormula0(
-                checkFormula(formula)
+            checkFormula(formula)
         );
     }
 
     private SpreadsheetCell setFormula0(final SpreadsheetFormula formula) {
         return this.formula.equals(formula) ?
-                this :
-                this.replace(
-                        this.reference,
-                        formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        this.locale,
-                        this.formatter,
-                        this.parser,
-                        this.style,
-                        this.validator
-                );
+            this :
+            this.replace(
+                this.reference,
+                formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
+            );
     }
 
     /**
@@ -261,8 +261,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         // if value is a List formula should have an ERROR of #VALUE!
         return formula.setValue(
-                formula.value()
-                        .map(v -> v instanceof Collection ? SpreadsheetErrorKind.VALUE : v)
+            formula.value()
+                .map(v -> v instanceof Collection ? SpreadsheetErrorKind.VALUE : v)
         );
         // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
     }
@@ -279,23 +279,23 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     public SpreadsheetCell setDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
         return this.dateTimeSymbols.equals(dateTimeSymbols) ?
-                this :
-                this.replaceDateTimeSymbols(
-                        Objects.requireNonNull(dateTimeSymbols, "dateTimeSymbols")
-                );
+            this :
+            this.replaceDateTimeSymbols(
+                Objects.requireNonNull(dateTimeSymbols, "dateTimeSymbols")
+            );
     }
 
     private SpreadsheetCell replaceDateTimeSymbols(final Optional<DateTimeSymbols> dateTimeSymbols) {
         return this.replace(
-                this.reference,
-                this.formula,
-                dateTimeSymbols,
-                this.decimalNumberSymbols,
-                this.locale,
-                this.formatter,
-                this.parser,
-                this.style,
-                this.validator
+            this.reference,
+            this.formula,
+            dateTimeSymbols,
+            this.decimalNumberSymbols,
+            this.locale,
+            this.formatter,
+            this.parser,
+            this.style,
+            this.validator
         );
     }
 
@@ -316,23 +316,23 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     public SpreadsheetCell setDecimalNumberSymbols(final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
         return this.decimalNumberSymbols.equals(decimalNumberSymbols) ?
-                this :
-                this.replaceDecimalNumberSymbols(
-                        Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols")
-                );
+            this :
+            this.replaceDecimalNumberSymbols(
+                Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols")
+            );
     }
 
     private SpreadsheetCell replaceDecimalNumberSymbols(final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
         return this.replace(
-                this.reference,
-                this.formula,
-                this.dateTimeSymbols,
-                decimalNumberSymbols,
-                this.locale,
-                this.formatter,
-                this.parser,
-                this.style,
-                this.validator
+            this.reference,
+            this.formula,
+            this.dateTimeSymbols,
+            decimalNumberSymbols,
+            this.locale,
+            this.formatter,
+            this.parser,
+            this.style,
+            this.validator
         );
     }
 
@@ -349,18 +349,18 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     public SpreadsheetCell setLocale(final Optional<Locale> locale) {
         return this.locale.equals(locale) ?
-                this :
-                this.replace(
-                        this.reference,
-                        this.formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        Objects.requireNonNull(locale, "locale"),
-                        this.formatter,
-                        this.parser,
-                        this.style,
-                        this.validator
-                );
+            this :
+            this.replace(
+                this.reference,
+                this.formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                Objects.requireNonNull(locale, "locale"),
+                this.formatter,
+                this.parser,
+                this.style,
+                this.validator
+            );
     }
 
     private final Optional<Locale> locale;
@@ -373,18 +373,18 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.formatter.equals(formatter) ?
-                this :
-                this.replace(
-                        this.reference,
-                        this.formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        this.locale,
-                        Objects.requireNonNull(formatter, "formatter"),
-                        this.parser,
-                        this.style,
-                        this.validator
-                );
+            this :
+            this.replace(
+                this.reference,
+                this.formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                Objects.requireNonNull(formatter, "formatter"),
+                this.parser,
+                this.style,
+                this.validator
+            );
     }
 
     /**
@@ -404,26 +404,26 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     public SpreadsheetCell setParser(final Optional<SpreadsheetParserSelector> parser) {
         return this.parser.equals(parser) ?
-                this :
-                this.replaceParser(
-                        Objects.requireNonNull(parser, "parser")
-                );
+            this :
+            this.replaceParser(
+                Objects.requireNonNull(parser, "parser")
+            );
     }
 
     private SpreadsheetCell replaceParser(final Optional<SpreadsheetParserSelector> parser) {
         final SpreadsheetFormula formula = this.formula;
 
         return this.replace(
-                this.reference,
-                formula.setToken(SpreadsheetFormula.NO_TOKEN)
-                        .setText(formula.text()),
-                this.dateTimeSymbols,
-                this.decimalNumberSymbols,
-                this.locale,
-                this.formatter,
-                parser,
-                this.style,
-                this.validator
+            this.reference,
+            formula.setToken(SpreadsheetFormula.NO_TOKEN)
+                .setText(formula.text()),
+            this.dateTimeSymbols,
+            this.decimalNumberSymbols,
+            this.locale,
+            this.formatter,
+            parser,
+            this.style,
+            this.validator
         );
     }
 
@@ -440,18 +440,18 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     public SpreadsheetCell setStyle(final TextStyle style) {
         return this.style.equals(style) ?
-                this :
-                this.replace(
-                        this.reference,
-                        this.formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        this.locale,
-                        this.formatter,
-                        this.parser,
-                        Objects.requireNonNull(style, "style"),
-                        this.validator
-                );
+            this :
+            this.replace(
+                this.reference,
+                this.formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                Objects.requireNonNull(style, "style"),
+                this.validator
+            );
     }
 
     /**
@@ -477,19 +477,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         final Optional<TextNode> formattedValueRoot = formattedValue.map(TextNode::root);
         return this.formattedValue.equals(formattedValueRoot) ?
-                this :
-                new SpreadsheetCell(
-                        this.reference,
-                        this.formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        this.locale,
-                        this.formatter,
-                        this.parser,
-                        this.style,
-                        formattedValueRoot,
-                        this.validator
-                );
+            this :
+            new SpreadsheetCell(
+                this.reference,
+                this.formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                formattedValueRoot,
+                this.validator
+            );
     }
 
     /**
@@ -505,18 +505,18 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     public SpreadsheetCell setValidator(final Optional<ValidatorSelector> validator) {
         return this.validator.equals(validator) ?
-                this :
-                this.replace(
-                        reference,
-                        this.formula,
-                        this.dateTimeSymbols,
-                        this.decimalNumberSymbols,
-                        this.locale,
-                        this.formatter,
-                        this.parser,
-                        this.style,
-                        Objects.requireNonNull(validator, "validator")
-                );
+            this :
+            this.replace(
+                reference,
+                this.formula,
+                this.dateTimeSymbols,
+                this.decimalNumberSymbols,
+                this.locale,
+                this.formatter,
+                this.parser,
+                this.style,
+                Objects.requireNonNull(validator, "validator")
+            );
     }
 
     /**
@@ -539,16 +539,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     final TextStyle style,
                                     final Optional<ValidatorSelector> validator) {
         return new SpreadsheetCell(
-                reference,
-                formula,
-                dateTimeSymbols,
-                decimalNumberSymbols,
-                locale,
-                formatter,
-                parser,
-                style,
-                NO_FORMATTED_VALUE_CELL,
-                validator
+            reference,
+            formula,
+            dateTimeSymbols,
+            decimalNumberSymbols,
+            locale,
+            formatter,
+            parser,
+            style,
+            NO_FORMATTED_VALUE_CELL,
+            validator
         );
     }
 
@@ -560,13 +560,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
-                false == this.dateTimeSymbols.isPresent() &&
-                false == this.decimalNumberSymbols.isPresent() &&
-                false == this.locale.isPresent() &&
-                false == this.formatter.isPresent() &&
-                false == this.parser.isPresent() &&
-                this.style.isEmpty() &&
-                false == this.validator.isPresent();
+            false == this.dateTimeSymbols.isPresent() &&
+            false == this.decimalNumberSymbols.isPresent() &&
+            false == this.locale.isPresent() &&
+            false == this.formatter.isPresent() &&
+            false == this.parser.isPresent() &&
+            this.style.isEmpty() &&
+            false == this.validator.isPresent();
     }
 
     // replaceReferences................................................................................................
@@ -580,13 +580,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         final SpreadsheetCellReference cell = this.reference();
         return this.setReference(
-                mapper.apply(this.reference())
-                        .orElseThrow(
-                                () -> new IllegalArgumentException("Mapper returned nothing for " + cell)
-                        )
+            mapper.apply(this.reference())
+                .orElseThrow(
+                    () -> new IllegalArgumentException("Mapper returned nothing for " + cell)
+                )
         ).setFormula(
-                this.formula()
-                        .replaceReferences(mapper)
+            this.formula()
+                .replaceReferences(mapper)
         );
     }
 
@@ -608,68 +608,68 @@ public final class SpreadsheetCell implements CanBeEmpty,
             switch (propertyName.value()) {
                 case FORMULA_PROPERTY_STRING:
                     patched = patched.setFormula(
-                            patched.formula()
-                                    .patch(
-                                            propertyAndValue,
-                                            context
-                                    )
+                        patched.formula()
+                            .patch(
+                                propertyAndValue,
+                                context
+                            )
                     );
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
                     patched = patched.setDateTimeSymbols(
-                            context.unmarshallOptional(
-                                    propertyAndValue,
-                                    DateTimeSymbols.class
-                            )
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            DateTimeSymbols.class
+                        )
                     );
                     break;
                 case DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING:
                     patched = patched.setDecimalNumberSymbols(
-                            context.unmarshallOptional(
-                                    propertyAndValue,
-                                    DecimalNumberSymbols.class
-                            )
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            DecimalNumberSymbols.class
+                        )
                     );
                     break;
                 case LOCALE_PROPERTY_STRING:
                     patched = patched.setLocale(
-                            context.unmarshallOptional(
-                                    propertyAndValue,
-                                    Locale.class
-                            )
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            Locale.class
+                        )
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
                     patched = patched.setFormatter(
-                            context.unmarshallOptional(
-                                    propertyAndValue,
-                                    SpreadsheetFormatterSelector.class
-                            )
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            SpreadsheetFormatterSelector.class
+                        )
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
                     patched = patched.setParser(
-                            context.unmarshallOptional(
-                                    propertyAndValue,
-                                    SpreadsheetParserSelector.class
-                            )
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            SpreadsheetParserSelector.class
+                        )
                     );
                     break;
                 case STYLE_PROPERTY_STRING:
                     patched = patched.setStyle(
-                            patched.style()
-                                    .patch(
-                                            propertyAndValue,
-                                            context
-                                    )
+                        patched.style()
+                            .patch(
+                                propertyAndValue,
+                                context
+                            )
                     );
                     break;
                 case VALIDATOR_PROPERTY_STRING:
                     patched = patched.setValidator(
-                            context.unmarshallOptional(
-                                    propertyAndValue,
-                                    ValidatorSelector.class
-                            )
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            ValidatorSelector.class
+                        )
                     );
                     break;
                 case REFERENCE_PROPERTY_STRING:
@@ -692,8 +692,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                FORMULA_PROPERTY,
-                context.marshall(this.formula)
+            FORMULA_PROPERTY,
+            context.marshall(this.formula)
         );
     }
 
@@ -705,8 +705,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                DATE_TIME_SYMBOLS_PROPERTY,
-                context.marshallOptional(this.dateTimeSymbols)
+            DATE_TIME_SYMBOLS_PROPERTY,
+            context.marshallOptional(this.dateTimeSymbols)
         );
     }
 
@@ -718,8 +718,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                context.marshallOptional(this.decimalNumberSymbols)
+            DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+            context.marshallOptional(this.decimalNumberSymbols)
         );
     }
 
@@ -731,8 +731,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                LOCALE_PROPERTY,
-                context.marshallOptional(this.locale)
+            LOCALE_PROPERTY,
+            context.marshallOptional(this.locale)
         );
     }
 
@@ -744,8 +744,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                FORMATTER_PROPERTY,
-                context.marshallOptional(this.formatter)
+            FORMATTER_PROPERTY,
+            context.marshallOptional(this.formatter)
         );
     }
 
@@ -757,8 +757,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                PARSER_PROPERTY,
-                context.marshallOptional(this.parser)
+            PARSER_PROPERTY,
+            context.marshallOptional(this.parser)
         );
     }
 
@@ -770,8 +770,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                STYLE_PROPERTY,
-                context.marshall(this.style)
+            STYLE_PROPERTY,
+            context.marshall(this.style)
         );
     }
 
@@ -783,23 +783,23 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return this.makePatch(
-                VALIDATOR_PROPERTY,
-                context.marshallOptional(this.validator)
+            VALIDATOR_PROPERTY,
+            context.marshallOptional(this.validator)
         );
     }
 
     private JsonNode makePatch(final JsonPropertyName propertyName,
                                final JsonNode value) {
         return JsonNode.object()
-                .set(
-                        propertyName,
-                        value
-                ).setName(
-                        JsonPropertyName.with(
-                                this.reference()
-                                        .toString()
-                        )
-                );
+            .set(
+                propertyName,
+                value
+            ).setName(
+                JsonPropertyName.with(
+                    this.reference()
+                        .toString()
+                )
+            );
     }
 
     // HasText..........................................................................................................
@@ -816,20 +816,20 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final SpreadsheetFormula formula = this.formula;
 
         return CsvStringList.EMPTY.setElements(
-                Lists.of(
-                        this.reference().text(), // cell reference
-                        formula.text(),
-                        toText(formula.valueType()),
-                        toJsonText(formula.value()),
-                        toText(this.dateTimeSymbols),
-                        toText(this.decimalNumberSymbols),
-                        toJsonText(this.locale),
-                        toText(this.formatter),
-                        toText(this.parser),
-                        this.style.text(),
-                        toJsonText(this.formattedValue),
-                        toText(this.validator)
-                )
+            Lists.of(
+                this.reference().text(), // cell reference
+                formula.text(),
+                toText(formula.valueType()),
+                toJsonText(formula.value()),
+                toText(this.dateTimeSymbols),
+                toText(this.decimalNumberSymbols),
+                toJsonText(this.locale),
+                toText(this.formatter),
+                toText(this.parser),
+                this.style.text(),
+                toJsonText(this.formattedValue),
+                toText(this.validator)
+            )
         ).text();
     }
 
@@ -841,12 +841,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
             final StringBuilder builder = new StringBuilder();
             final Printer printer = Printers.stringBuilder(
-                    builder,
-                    LineEnding.NONE
+                builder,
+                LineEnding.NONE
             );
 
             jsonNode.printJson(
-                    printer.indenting(Indentation.EMPTY)
+                printer.indenting(Indentation.EMPTY)
             );
 
             json = builder.toString();
@@ -866,7 +866,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private static String toText(final Optional<? extends HasText> hasText) {
         return hasText.map(HasText::text)
-                .orElse("");
+            .orElse("");
     }
 
     // parse............................................................................................................
@@ -885,92 +885,92 @@ public final class SpreadsheetCell implements CanBeEmpty,
         }
 
         SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell(
-                        list.get(0)
-                ),
-                SpreadsheetFormula.EMPTY.setText(
-                        list.get(1)
-                )
+            SpreadsheetSelection.parseCell(
+                list.get(0)
+            ),
+            SpreadsheetFormula.EMPTY.setText(
+                list.get(1)
+            )
         );
 
         cell = cell.setFormula(
-                cell.formula()
-                        .setValueType(
-                                parseCellComponent(
-                                        list.get(2),
-                                        ValidationValueTypeName::with
-                                )
-                        ).setValue(
-                                unmarshallCellComponentWithType(
-                                        list.get(3)
-                                )
-                        )
+            cell.formula()
+                .setValueType(
+                    parseCellComponent(
+                        list.get(2),
+                        ValidationValueTypeName::with
+                    )
+                ).setValue(
+                    unmarshallCellComponentWithType(
+                        list.get(3)
+                    )
+                )
         ).setDateTimeSymbols(
-                parseCellComponent(
-                        list.get(4),
-                        DateTimeSymbols::parse
-                )
+            parseCellComponent(
+                list.get(4),
+                DateTimeSymbols::parse
+            )
         ).setDecimalNumberSymbols(
-                parseCellComponent(
-                        list.get(5),
-                        DecimalNumberSymbols::parse
-                )
+            parseCellComponent(
+                list.get(5),
+                DecimalNumberSymbols::parse
+            )
         ).setLocale(
-                parseCellComponent(
-                        list.get(6),
-                        Locale::forLanguageTag
-                )
+            parseCellComponent(
+                list.get(6),
+                Locale::forLanguageTag
+            )
         ).setFormatter(
-                parseCellComponent(
-                        list.get(7),
-                        SpreadsheetFormatterSelector::parse
-                )
+            parseCellComponent(
+                list.get(7),
+                SpreadsheetFormatterSelector::parse
+            )
         ).setParser(
-                parseCellComponent(
-                        list.get(8),
-                        SpreadsheetParserSelector::parse
-                )
+            parseCellComponent(
+                list.get(8),
+                SpreadsheetParserSelector::parse
+            )
         ).setStyle(
-                TextStyle.parse(
-                        list.get(9)
-                )
+            TextStyle.parse(
+                list.get(9)
+            )
         );
 
         final Optional<TextNode> formattedValue = unmarshallCellComponentWithType(
-                list.get(10)
+            list.get(10)
         );
 
         // must call setFormattedValue after setValidator because later clears former
         return cell.setValidator(
-                parseCellComponent(
-                        list.get(11),
-                        ValidatorSelector::parse
-                )
+            parseCellComponent(
+                list.get(11),
+                ValidatorSelector::parse
+            )
         ).setFormattedValue(formattedValue);
     }
 
     private static <TT> Optional<TT> parseCellComponent(final String text,
                                                         final Function<String, TT> componentParser) {
         return Optional.ofNullable(
-                text.isEmpty() ?
-                        null :
-                        componentParser.apply(text)
+            text.isEmpty() ?
+                null :
+                componentParser.apply(text)
         );
     }
 
     private static <TT> Optional<TT> unmarshallCellComponentWithType(final String text) {
         return Optional.ofNullable(
-                text.isEmpty() ?
-                        null :
-                        UNMARSHALL_CONTEXT.unmarshallWithType(
-                                JsonNode.parse(text)
-                        )
+            text.isEmpty() ?
+                null :
+                UNMARSHALL_CONTEXT.unmarshallWithType(
+                    JsonNode.parse(text)
+                )
         );
     }
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            MathContext.UNLIMITED
+        ExpressionNumberKind.BIG_DECIMAL,
+        MathContext.UNLIMITED
     );
 
     // TreePrintable....................................................................................................
@@ -983,54 +983,54 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.formula.printTree(printer);
 
             this.printTreeLabel(
-                    "dateTimeSymbols",
-                    this.dateTimeSymbols,
-                    printer
+                "dateTimeSymbols",
+                this.dateTimeSymbols,
+                printer
             );
 
             this.printTreeLabel(
-                    "decimalNumberSymbols",
-                    this.decimalNumberSymbols,
-                    printer
+                "decimalNumberSymbols",
+                this.decimalNumberSymbols,
+                printer
             );
 
             this.printTreeLabel(
-                    "locale",
-                    this.locale,
-                    printer
+                "locale",
+                this.locale,
+                printer
             );
 
             this.printTreeLabel(
-                    "formatter",
-                    this.formatter,
-                    printer
+                "formatter",
+                this.formatter,
+                printer
             );
 
             this.printTreeLabel(
-                    "parser",
-                    this.parser,
-                    printer
+                "parser",
+                this.parser,
+                printer
             );
 
             final TextStyle style = this.style;
-            if(style.isNotEmpty()) {
+            if (style.isNotEmpty()) {
                 this.printTreeLabel(
-                        "style",
-                        style,
-                        printer
+                    "style",
+                    style,
+                    printer
                 );
             }
 
             this.printTreeLabel(
-                    "formattedValue",
-                    this.formattedValue,
-                    printer
+                "formattedValue",
+                this.formattedValue,
+                printer
             );
 
             this.printTreeLabel(
-                    "validator",
-                    this.validator,
-                    printer
+                "validator",
+                this.validator,
+                printer
             );
         }
         printer.outdent();
@@ -1041,9 +1041,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                 final IndentingPrinter printer) {
         if (value.isPresent()) {
             this.printTreeLabel(
-                    label,
-                    value.get(),
-                    printer
+                label,
+                value.get(),
+                printer
             );
         }
     }
@@ -1051,17 +1051,17 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private void printTreeLabel(final String label,
                                 final Object value,
                                 final IndentingPrinter printer) {
-            printer.print(label);
-            printer.println(":");
+        printer.print(label);
+        printer.println(":");
 
-            printer.indent();
-            {
-                TreePrintable.printTreeOrToString(
-                        value,
-                        printer
-                );
-            }
-            printer.outdent();
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                value,
+                printer
+            );
+        }
+        printer.outdent();
     }
 
     // JsonNodeContext...................................................................................................
@@ -1082,9 +1082,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
             }
 
             cell = unmarshallProperties(
-                    SpreadsheetSelection.parseCell(name.value()),
-                    child,
-                    context
+                SpreadsheetSelection.parseCell(name.value()),
+                child,
+                context
             );
         }
 
@@ -1116,38 +1116,38 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
                     dateTimeSymbols = context.unmarshallOptional(
-                            child,
-                            DateTimeSymbols.class
+                        child,
+                        DateTimeSymbols.class
                     );
                     break;
                 case DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING:
                     decimalNumberSymbols = context.unmarshallOptional(
-                            child,
-                            DecimalNumberSymbols.class
+                        child,
+                        DecimalNumberSymbols.class
                     );
                     break;
                 case LOCALE_PROPERTY_STRING:
                     locale = context.unmarshallOptional(
-                            child,
-                            Locale.class
+                        child,
+                        Locale.class
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
                     formatter = context.unmarshallOptional(
-                            child,
-                            SpreadsheetFormatterSelector.class
+                        child,
+                        SpreadsheetFormatterSelector.class
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
                     parser = context.unmarshallOptional(
-                            child,
-                            SpreadsheetParserSelector.class
+                        child,
+                        SpreadsheetParserSelector.class
                     );
                     break;
                 case STYLE_PROPERTY_STRING:
                     style = context.unmarshall(
-                            child,
-                            TextStyle.class
+                        child,
+                        TextStyle.class
                     );
                     break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
@@ -1155,30 +1155,30 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     break;
                 case VALIDATOR_PROPERTY_STRING:
                     validator = context.unmarshallOptional(
-                            child,
-                            ValidatorSelector.class
+                        child,
+                        ValidatorSelector.class
                     );
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(
-                            name,
-                            node
+                        name,
+                        node
                     );
                     break;
             }
         }
 
         return new SpreadsheetCell(
-                reference,
-                formula,
-                dateTimeSymbols,
-                decimalNumberSymbols,
-                locale,
-                formatter,
-                parser,
-                style,
-                formatted,
-                validator
+            reference,
+            formula,
+            dateTimeSymbols,
+            decimalNumberSymbols,
+            locale,
+            formatter,
+            parser,
+            style,
+            formatted,
+            validator
         );
     }
 
@@ -1200,55 +1200,55 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(
-                        this.referenceToJsonPropertyName(),
-                        marshallProperties(context)
-                );
+            .set(
+                this.referenceToJsonPropertyName(),
+                marshallProperties(context)
+            );
     }
 
     private JsonPropertyName referenceToJsonPropertyName() {
         return JsonPropertyName.with(
-                this.reference.toString()
+            this.reference.toString()
         );
     }
 
     private JsonNode marshallProperties(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object()
-                .set(FORMULA_PROPERTY, context.marshall(this.formula));
+            .set(FORMULA_PROPERTY, context.marshall(this.formula));
 
         if (this.dateTimeSymbols.isPresent()) {
             object = object.set(
-                    DATE_TIME_SYMBOLS_PROPERTY,
-                    context.marshallOptional(this.dateTimeSymbols)
+                DATE_TIME_SYMBOLS_PROPERTY,
+                context.marshallOptional(this.dateTimeSymbols)
             );
         }
 
         if (this.decimalNumberSymbols.isPresent()) {
             object = object.set(
-                    DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                    context.marshallOptional(this.decimalNumberSymbols)
+                DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                context.marshallOptional(this.decimalNumberSymbols)
             );
         }
 
         if (this.locale.isPresent()) {
             object = object.set(
-                    LOCALE_PROPERTY,
-                    context.marshallOptional(this.locale)
+                LOCALE_PROPERTY,
+                context.marshallOptional(this.locale)
             );
         }
 
         if (this.formatter.isPresent()) {
             object = object.set(
-                    FORMATTER_PROPERTY,
-                    context.marshallOptional(this.formatter)
+                FORMATTER_PROPERTY,
+                context.marshallOptional(this.formatter)
             );
         }
 
         final Optional<SpreadsheetParserSelector> parser = this.parser;
         if (parser.isPresent()) {
             object = object.set(
-                    PARSER_PROPERTY,
-                    context.marshallOptional(parser)
+                PARSER_PROPERTY,
+                context.marshallOptional(parser)
             );
         }
 
@@ -1258,15 +1258,15 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         if (this.formattedValue.isPresent()) {
             object = object.set(
-                    FORMATTED_VALUE_PROPERTY,
-                    context.marshallOptionalWithType(this.formattedValue)
+                FORMATTED_VALUE_PROPERTY,
+                context.marshallOptionalWithType(this.formattedValue)
             );
         }
 
         if (this.validator.isPresent()) {
             object = object.set(
-                    VALIDATOR_PROPERTY,
-                    context.marshallOptional(this.validator)
+                VALIDATOR_PROPERTY,
+                context.marshallOptional(this.validator)
             );
         }
 
@@ -1320,20 +1320,20 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final Locale locale = Locale.getDefault();
 
         DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(locale)
+            new DateFormatSymbols(locale)
         );
         DecimalNumberSymbols.fromDecimalFormatSymbols(
-                '+',
-                new DecimalFormatSymbols(locale)
+            '+',
+            new DecimalFormatSymbols(locale)
         );
         TextNode.NO_ATTRIBUTES.isEmpty();
         SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.toString();
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCell.class),
-                SpreadsheetCell::unmarshall,
-                SpreadsheetCell::marshall,
-                SpreadsheetCell.class
+            JsonNodeContext.computeTypeName(SpreadsheetCell.class),
+            SpreadsheetCell::unmarshall,
+            SpreadsheetCell::marshall,
+            SpreadsheetCell.class
         );
     }
 
@@ -1342,37 +1342,37 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.reference,
-                this.formula,
-                this.dateTimeSymbols,
-                this.decimalNumberSymbols,
-                this.locale,
-                this.style,
-                this.parser,
-                this.formatter,
-                this.formattedValue,
-                this.validator
+            this.reference,
+            this.formula,
+            this.dateTimeSymbols,
+            this.decimalNumberSymbols,
+            this.locale,
+            this.style,
+            this.parser,
+            this.formatter,
+            this.formattedValue,
+            this.validator
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCell &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetCell &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetCell other) {
         return this.reference.equals(other.reference()) &&
-                this.formula.equals(other.formula()) &&
-                this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
-                this.decimalNumberSymbols.equals(other.decimalNumberSymbols) &&
-                this.locale.equals(other.locale) &&
-                this.style.equals(other.style) &&
-                this.parser.equals(other.parser) &&
-                this.formatter.equals(other.formatter) &&
-                this.formattedValue.equals(other.formattedValue) &&
-                this.validator.equals(other.validator);
+            this.formula.equals(other.formula()) &&
+            this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
+            this.decimalNumberSymbols.equals(other.decimalNumberSymbols) &&
+            this.locale.equals(other.locale) &&
+            this.style.equals(other.style) &&
+            this.parser.equals(other.parser) &&
+            this.formatter.equals(other.formatter) &&
+            this.formattedValue.equals(other.formattedValue) &&
+            this.validator.equals(other.validator);
     }
 
     @Override
@@ -1383,16 +1383,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.reference)
-                .value(this.formula)
-                .value(this.dateTimeSymbols)
-                .value(this.decimalNumberSymbols)
-                .value(this.locale)
-                .value(this.style)
-                .enable(ToStringBuilderOption.QUOTE)
-                .value(this.parser.map(Object::toString).orElse(""))
-                .value(this.formatter.map(Object::toString).orElse(""))
-                .value(this.validator.map(Object::toString).orElse(""))
-                .disable(ToStringBuilderOption.QUOTE)
-                .value(this.formattedValue);
+            .value(this.formula)
+            .value(this.dateTimeSymbols)
+            .value(this.decimalNumberSymbols)
+            .value(this.locale)
+            .value(this.style)
+            .enable(ToStringBuilderOption.QUOTE)
+            .value(this.parser.map(Object::toString).orElse(""))
+            .value(this.formatter.map(Object::toString).orElse(""))
+            .value(this.validator.map(Object::toString).orElse(""))
+            .disable(ToStringBuilderOption.QUOTE)
+            .value(this.formattedValue);
     }
 }

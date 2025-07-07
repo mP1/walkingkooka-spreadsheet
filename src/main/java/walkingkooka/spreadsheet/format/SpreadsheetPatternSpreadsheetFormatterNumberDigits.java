@@ -40,8 +40,8 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberDigits implements Use
     static SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction(final String text,
                                                                        final char zeroDigit) {
         return SpreadsheetPatternSpreadsheetFormatterNumberDigitsFraction.with(
-                text,
-                zeroDigit
+            text,
+            zeroDigit
         );
     }
 
@@ -59,8 +59,8 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberDigits implements Use
     SpreadsheetPatternSpreadsheetFormatterNumberDigits(final String text) {
         super();
         this.text = "0".equals(text) ?
-                "" :
-                text;
+            "" :
+            text;
     }
 
     /**

@@ -44,9 +44,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellRangeReference>
-        implements ComparableTesting2<SpreadsheetCellRangeReference>,
-        CanReplaceReferencesTesting<SpreadsheetCellRangeReference>,
-        IterableTesting<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
+    implements ComparableTesting2<SpreadsheetCellRangeReference>,
+    CanReplaceReferencesTesting<SpreadsheetCellRangeReference>,
+    IterableTesting<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -76,13 +76,13 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testWithRangeLowerExclusiveFails() {
         this.withFails(Range.greaterThan(this.cellReference(1, 1))
-                .and(Range.lessThanEquals(this.cellReference(5, 5))));
+            .and(Range.lessThanEquals(this.cellReference(5, 5))));
     }
 
     @Test
     public void testWithRangeUpperExclusiveFails() {
         this.withFails(Range.greaterThanEquals(this.cellReference(1, 1))
-                .and(Range.lessThan(this.cellReference(5, 5))));
+            .and(Range.lessThan(this.cellReference(5, 5))));
     }
 
     private void withFails(final Range<SpreadsheetCellReference> range) {
@@ -143,8 +143,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testNotFound() {
         this.notFoundTextAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                "Cell Range not found: \"B2:C3\""
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            "Cell Range not found: \"B2:C3\""
         );
     }
 
@@ -184,8 +184,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testTextAll() {
         this.textAndCheck(
-                SpreadsheetSelection.ALL_CELLS,
-                "*"
+            SpreadsheetSelection.ALL_CELLS,
+            "*"
         );
     }
 
@@ -214,8 +214,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testCountAllCellsConstant() {
         this.countAndCheck(
-                SpreadsheetSelection.ALL_CELLS,
-                17179869184L
+            SpreadsheetSelection.ALL_CELLS,
+            17179869184L
         );
     }
 
@@ -229,16 +229,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testIsAll2() {
         this.isAllAndCheck(
-                "A1:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
-                true
+            "A1:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+            true
         );
     }
 
     @Test
     public void testIsAll3() {
         this.isAllAndCheck(
-                "B2:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
-                false
+            "B2:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+            false
         );
     }
 
@@ -279,16 +279,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testIsLastEndsLast() {
         this.isLastAndCheck(
-                "A1:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
-                false
+            "A1:" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+            false
         );
     }
 
     @Test
     public void testIsLast() {
         this.isLastAndCheck(
-                "" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
-                true
+            "" + SpreadsheetReferenceKind.RELATIVE.lastColumn() + SpreadsheetReferenceKind.RELATIVE.lastRow(),
+            true
         );
     }
 
@@ -363,9 +363,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     private void columnRangeAndCheck(final String cell,
                                      final String column) {
         this.checkEquals(
-                SpreadsheetSelection.parseColumnRange(column),
-                SpreadsheetSelection.parseCellRange(cell).columnRange(),
-                () -> cell + ".columnRange()"
+            SpreadsheetSelection.parseColumnRange(column),
+            SpreadsheetSelection.parseCellRange(cell).columnRange(),
+            () -> cell + ".columnRange()"
         );
     }
 
@@ -374,8 +374,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testSetColumnRangeNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().setColumnRange(null)
+            NullPointerException.class,
+            () -> this.createSelection().setColumnRange(null)
         );
     }
 
@@ -393,8 +393,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         assertNotSame(range, different);
         this.checkEquals(
-                SpreadsheetSelection.parseCellRange("F2:G4"),
-                different
+            SpreadsheetSelection.parseCellRange("F2:G4"),
+            different
         );
 
         this.checkEquals(columns, different.columnRange());
@@ -415,9 +415,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     private void rowRangeAndCheck(final String cell,
                                   final String row) {
         this.checkEquals(
-                SpreadsheetSelection.parseRowRange(row),
-                SpreadsheetSelection.parseCellRange(cell).rowRange(),
-                () -> cell + ".rowRange()"
+            SpreadsheetSelection.parseRowRange(row),
+            SpreadsheetSelection.parseCellRange(cell).rowRange(),
+            () -> cell + ".rowRange()"
         );
     }
 
@@ -426,8 +426,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testSetRowRangeNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().setRowRange(null)
+            NullPointerException.class,
+            () -> this.createSelection().setRowRange(null)
         );
     }
 
@@ -445,8 +445,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         assertNotSame(range, different);
         this.checkEquals(
-                SpreadsheetSelection.parseCellRange("B6:D7"),
-                different
+            SpreadsheetSelection.parseCellRange("B6:D7"),
+            different
         );
 
         this.checkEquals(rows, different.rowRange());
@@ -457,60 +457,60 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testAddColumnAndRow() {
         this.addColumnRowAndCheck(
-                SpreadsheetSelection.parseCellRange("A1"),
-                1,
-                1,
-                SpreadsheetSelection.parseCellRange("B2")
+            SpreadsheetSelection.parseCellRange("A1"),
+            1,
+            1,
+            SpreadsheetSelection.parseCellRange("B2")
         );
     }
 
     @Test
     public void testAddColumnAndRow2() {
         this.addColumnRowAndCheck(
-                SpreadsheetSelection.parseCellRange("B2"),
-                1,
-                0,
-                SpreadsheetSelection.parseCellRange("C2")
+            SpreadsheetSelection.parseCellRange("B2"),
+            1,
+            0,
+            SpreadsheetSelection.parseCellRange("C2")
         );
     }
 
     @Test
     public void testAddColumnAndRow3() {
         this.addColumnRowAndCheck(
-                SpreadsheetSelection.parseCellRange("C3"),
-                0,
-                3,
-                SpreadsheetSelection.parseCellRange("C6")
+            SpreadsheetSelection.parseCellRange("C3"),
+            0,
+            3,
+            SpreadsheetSelection.parseCellRange("C6")
         );
     }
 
     @Test
     public void testAddSaturatedColumnAndRow() {
         this.addSaturatedColumnRowAndCheck(
-                SpreadsheetSelection.parseCellRange("A1"),
-                1,
-                1,
-                SpreadsheetSelection.parseCellRange("B2")
+            SpreadsheetSelection.parseCellRange("A1"),
+            1,
+            1,
+            SpreadsheetSelection.parseCellRange("B2")
         );
     }
 
     @Test
     public void testAddSaturatedColumnAndRow2() {
         this.addSaturatedColumnRowAndCheck(
-                SpreadsheetSelection.parseCellRange("B2"),
-                1,
-                0,
-                SpreadsheetSelection.parseCellRange("C2")
+            SpreadsheetSelection.parseCellRange("B2"),
+            1,
+            0,
+            SpreadsheetSelection.parseCellRange("C2")
         );
     }
 
     @Test
     public void testAddSaturatedColumnAndRow3() {
         this.addSaturatedColumnRowAndCheck(
-                SpreadsheetSelection.parseCellRange("C3"),
-                0,
-                3,
-                SpreadsheetSelection.parseCellRange("C6")
+            SpreadsheetSelection.parseCellRange("C3"),
+            0,
+            3,
+            SpreadsheetSelection.parseCellRange("C6")
         );
     }
 
@@ -519,49 +519,49 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testAddIfRelativeAbsolute() {
         this.addIfRelativeAndCheck(
-                SpreadsheetSelection.parseCellRange("$A$2:$C$4"),
-                1,
-                2
+            SpreadsheetSelection.parseCellRange("$A$2:$C$4"),
+            1,
+            2
         );
     }
 
     @Test
     public void testAddIfRelativeMixed() {
         this.addIfRelativeAndCheck(
-                SpreadsheetSelection.parseCellRange("A$2:$C$4"),
-                1,
-                0,
-                SpreadsheetSelection.parseCellRange("B$2:$C$4")
+            SpreadsheetSelection.parseCellRange("A$2:$C$4"),
+            1,
+            0,
+            SpreadsheetSelection.parseCellRange("B$2:$C$4")
         );
     }
 
     @Test
     public void testAddIfRelativeMixed2() {
         this.addIfRelativeAndCheck(
-                SpreadsheetSelection.parseCellRange("A2:$C$4"),
-                1,
-                1,
-                SpreadsheetSelection.parseCellRange("B3:$C$4")
+            SpreadsheetSelection.parseCellRange("A2:$C$4"),
+            1,
+            1,
+            SpreadsheetSelection.parseCellRange("B3:$C$4")
         );
     }
 
     @Test
     public void testAddIfRelativeMixed3() {
         this.addIfRelativeAndCheck(
-                SpreadsheetSelection.parseCellRange("$A$2:C4"),
-                1,
-                2,
-                SpreadsheetSelection.parseCellRange("$A$2:D6")
+            SpreadsheetSelection.parseCellRange("$A$2:C4"),
+            1,
+            2,
+            SpreadsheetSelection.parseCellRange("$A$2:D6")
         );
     }
 
     @Test
     public void testAddIfRelativeAll() {
         this.addIfRelativeAndCheck(
-                SpreadsheetSelection.parseCellRange("A2:D5"),
-                1,
-                2,
-                SpreadsheetSelection.parseCellRange("B4:E7")
+            SpreadsheetSelection.parseCellRange("A2:D5"),
+            1,
+            2,
+            SpreadsheetSelection.parseCellRange("B4:E7")
         );
     }
 
@@ -570,60 +570,60 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testReplaceReferencesMapperCell() {
         this.replaceReferencesMapperAndCheck(
-                "A1:B2",
-                SpreadsheetSelection.parseCell("B4"),
-                1,
-                3
+            "A1:B2",
+            SpreadsheetSelection.parseCell("B4"),
+            1,
+            3
         );
     }
 
     @Test
     public void testReplaceReferencesMapperCell2() {
         this.replaceReferencesMapperAndCheck(
-                "B4:C5",
-                SpreadsheetSelection.A1,
-                -1,
-                -3
+            "B4:C5",
+            SpreadsheetSelection.A1,
+            -1,
+            -3
         );
     }
 
     @Test
     public void testReplaceReferencesMapperCell3() {
         this.replaceReferencesMapperAndCheck(
-                "A1:A1",
-                SpreadsheetSelection.A1,
-                0,
-                0
+            "A1:A1",
+            SpreadsheetSelection.A1,
+            0,
+            0
         );
     }
 
     @Test
     public void testReplaceReferencesMapperColumn() {
         this.replaceReferencesMapperAndCheck(
-                "B4:C5",
-                SpreadsheetSelection.parseColumn("E"),
-                3,
-                0
+            "B4:C5",
+            SpreadsheetSelection.parseColumn("E"),
+            3,
+            0
         );
     }
 
     @Test
     public void testReplaceReferencesMapperRow() {
         this.replaceReferencesMapperAndCheck(
-                "B4:C5",
-                SpreadsheetSelection.parseRow("8"),
-                0,
-                4
+            "B4:C5",
+            SpreadsheetSelection.parseRow("8"),
+            0,
+            4
         );
     }
 
     @Test
     public void testReplaceReferencesMapperCellRange() {
         this.replaceReferencesMapperAndCheck(
-                "A1:C4",
-                SpreadsheetSelection.parseCellRange("B4:D9"),
-                1,
-                3
+            "A1:C4",
+            SpreadsheetSelection.parseCellRange("B4:D9"),
+            1,
+            3
         );
     }
 
@@ -632,82 +632,82 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testReplaceReferenceEmptyBeginFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createReplaceReference()
-                        .replaceReferences(
-                                (r) -> Optional.empty()
-                        )
+            IllegalArgumentException.class,
+            () -> this.createReplaceReference()
+                .replaceReferences(
+                    (r) -> Optional.empty()
+                )
         );
     }
 
     @Test
     public void testReplaceReferenceEmptyEndFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createReplaceReference()
-                        .replaceReferences(
-                                (r) -> Optional.ofNullable(
-                                        r.toString().equals("B2") ?
-                                                r :
-                                                null
-                                )
-                        )
+            IllegalArgumentException.class,
+            () -> this.createReplaceReference()
+                .replaceReferences(
+                    (r) -> Optional.ofNullable(
+                        r.toString().equals("B2") ?
+                            r :
+                            null
+                    )
+                )
         );
     }
 
     @Test
     public void testReplaceReferenceSame() {
         this.replaceReferencesAndCheck(
-                this.createReplaceReference(),
-                Optional::of
+            this.createReplaceReference(),
+            Optional::of
         );
     }
 
     @Test
     public void testReplaceReferenceChange() {
         this.replaceReferencesAndCheck(
-                "B2:C3",
-                "B2",
-                "A1",
-                "C3",
-                "B2",
-                "A1:B2"
+            "B2:C3",
+            "B2",
+            "A1",
+            "C3",
+            "B2",
+            "A1:B2"
         );
     }
 
     @Test
     public void testReplaceReferenceChange2() {
         this.replaceReferencesAndCheck(
-                "B2:C3",
-                "B2",
-                "D4",
-                "C3",
-                "E5",
-                "D4:E5"
+            "B2:C3",
+            "B2",
+            "D4",
+            "C3",
+            "E5",
+            "D4:E5"
         );
     }
 
     @Test
     public void testReplaceReferenceSwap() {
         this.replaceReferencesAndCheck(
-                "B2:C3",
-                "B2",
-                "D4",
-                "C3",
-                "A1",
-                "A1:D4"
+            "B2:C3",
+            "B2",
+            "D4",
+            "C3",
+            "A1",
+            "A1:D4"
         );
     }
 
     @Test
     public void testReplaceReferenceSwap2() {
         this.replaceReferencesAndCheck(
-                "B2:C3",
-                "B2",
-                "D1",
-                "C3",
-                "A5",
-                "A1:D5"
+            "B2:C3",
+            "B2",
+            "D1",
+            "C3",
+            "A5",
+            "A1:D5"
         );
     }
 
@@ -718,12 +718,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                            final String endReplacement,
                                            final String expected) {
         this.replaceReferencesAndCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(begin),
-                SpreadsheetSelection.parseCell(beginReplacement),
-                SpreadsheetSelection.parseCell(end),
-                SpreadsheetSelection.parseCell(endReplacement),
-                SpreadsheetSelection.parseCellRange(expected)
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCell(begin),
+            SpreadsheetSelection.parseCell(beginReplacement),
+            SpreadsheetSelection.parseCell(end),
+            SpreadsheetSelection.parseCell(endReplacement),
+            SpreadsheetSelection.parseCellRange(expected)
         );
     }
 
@@ -734,21 +734,21 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                            final SpreadsheetCellReference endReplacement,
                                            final SpreadsheetCellRangeReference expected) {
         this.replaceReferencesAndCheck(
-                range,
-                (r) -> {
-                    if (r.equals(begin)) {
-                        return Optional.of(
-                                beginReplacement
-                        );
-                    }
-                    if (r.equals(end)) {
-                        return Optional.of(
-                                endReplacement
-                        );
-                    }
-                    throw new IllegalArgumentException(r.toString());
-                },
-                expected
+            range,
+            (r) -> {
+                if (r.equals(begin)) {
+                    return Optional.of(
+                        beginReplacement
+                    );
+                }
+                if (r.equals(end)) {
+                    return Optional.of(
+                        endReplacement
+                    );
+                }
+                throw new IllegalArgumentException(r.toString());
+            },
+            expected
         );
     }
 
@@ -762,34 +762,34 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
-                "A1:B2",
-                "B=TEXT;C=TEXT;ZZ=TEXT",
-                "Invalid column(s) C, ZZ are not within A1:B2"
+            "A1:B2",
+            "B=TEXT;C=TEXT;ZZ=TEXT",
+            "Invalid column(s) C, ZZ are not within A1:B2"
         );
     }
 
     @Test
     public void testComparatorNamesBoundsCheckWithRowComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
-                "A1:B2",
-                "2=TEXT;3=TEXT;99=TEXT",
-                "Invalid row(s) 3, 99 are not within A1:B2"
+            "A1:B2",
+            "2=TEXT;3=TEXT;99=TEXT",
+            "Invalid row(s) 3, 99 are not within A1:B2"
         );
     }
 
     @Test
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
-                "A1:C3",
-                "A=text UP;B=text DOWN"
+            "A1:C3",
+            "A=text UP;B=text DOWN"
         );
     }
 
     @Test
     public void testComparatorNamesBoundsCheckWithRows() {
         this.comparatorNamesBoundsCheckAndCheck(
-                "A1:C3",
-                "2=text UP;3=text DOWN"
+            "A1:C3",
+            "2=text UP;3=text DOWN"
         );
     }
 
@@ -798,24 +798,24 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToScalar() {
         this.toScalarAndCheck(
-                "A1:B2",
-                SpreadsheetSelection.A1
+            "A1:B2",
+            SpreadsheetSelection.A1
         );
     }
 
     @Test
     public void testToScalar2() {
         this.toScalarAndCheck(
-                "B2:C3",
-                SpreadsheetSelection.parseCell("B2")
+            "B2:C3",
+            SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
     public void testToScalar3() {
         this.toScalarAndCheck(
-                "$C$3:D4",
-                SpreadsheetSelection.parseCell("$C$3")
+            "$C$3:D4",
+            SpreadsheetSelection.parseCell("$C$3")
         );
     }
 
@@ -826,8 +826,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.toCellAndCheck(
-                range,
-                SpreadsheetSelection.parseCell("B2")
+            range,
+            SpreadsheetSelection.parseCell("B2")
         );
     }
 
@@ -836,16 +836,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToCellRange() {
         this.toCellRangeAndCheck(
-                "A1:B2",
-                "A1:B2"
+            "A1:B2",
+            "A1:B2"
         );
     }
 
     @Test
     public void testToCellRange2() {
         this.toCellRangeAndCheck(
-                "C3",
-                "C3"
+            "C3",
+            "C3"
         );
     }
 
@@ -854,8 +854,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToColumn() {
         this.toColumnAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseColumn("A")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseColumn("A")
         );
     }
 
@@ -864,8 +864,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToColumnRange() {
         this.toColumnRangeAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseColumnRange("A:B")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseColumnRange("A:B")
         );
     }
 
@@ -875,8 +875,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testToColumnOrColumnRange() {
         final SpreadsheetCellRangeReference selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
-                selection,
-                selection.toColumnRange()
+            selection,
+            selection.toColumnRange()
         );
     }
 
@@ -885,8 +885,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToRow() {
         this.toRowAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseRow("1")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseRow("1")
         );
     }
 
@@ -895,16 +895,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToRowRange() {
         this.toRowRangeAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseRowRange("1:2")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseRowRange("1:2")
         );
     }
 
     @Test
     public void testToRowRange2() {
         this.toRowRangeAndCheck(
-                SpreadsheetSelection.parseCellRange("C3:D4"),
-                SpreadsheetSelection.parseRowRange("3:4")
+            SpreadsheetSelection.parseCellRange("C3:D4"),
+            SpreadsheetSelection.parseRowRange("3:4")
         );
     }
 
@@ -914,8 +914,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testToRowOrRowRange() {
         final SpreadsheetCellRangeReference selection = this.createSelection();
         this.toRowOrRowRangeAndCheck(
-                selection,
-                selection.toRowRange()
+            selection,
+            selection.toRowRange()
         );
     }
 
@@ -924,32 +924,32 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testTestWithCellOutOfRange() {
         this.testFalse(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseCell("C3")
         );
     }
 
     @Test
     public void testTestWithCellInsideRange() {
         this.testTrue(
-                SpreadsheetSelection.parseCellRange("C3:D4"),
-                SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCellRange("C3:D4"),
+            SpreadsheetSelection.parseCell("C3")
         );
     }
 
     @Test
     public void testtestEqualsDifferentColumn() {
         this.testFalse(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseColumn("C")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
     public void testtestEqualsDifferentRow() {
         this.testFalse(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseRow("3")
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseRow("3")
         );
     }
 
@@ -1088,18 +1088,18 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     private void testCellAndCheckTrue(final String range,
                                       final String cell) {
         this.testCellAndCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(cell),
-                true
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCell(cell),
+            true
         );
     }
 
     private void testCellAndCheckFalse(final String range,
                                        final String cell) {
         this.testCellAndCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(cell),
-                false
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCell(cell),
+            false
         );
     }
 
@@ -1108,99 +1108,99 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testTestCellRangeLeft() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "A3:B3",
-                false
+            "C3:D4",
+            "A3:B3",
+            false
         );
     }
 
     @Test
     public void testTestCellRangeRight() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "C5:C6",
-                false
+            "C3:D4",
+            "C5:C6",
+            false
         );
     }
 
     @Test
     public void testTestCellRangeAboveLeft() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "A1:B2",
-                false
+            "C3:D4",
+            "A1:B2",
+            false
         );
     }
 
     @Test
     public void testTestCellRangePartialLeft() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "C1:C3",
-                true
+            "C3:D4",
+            "C1:C3",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialRight() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "D4:F4",
-                true
+            "C3:D4",
+            "D4:F4",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialAbove() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "C1:C3",
-                true
+            "C3:D4",
+            "C1:C3",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialBelow() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "D4:D6",
-                true
+            "C3:D4",
+            "D4:D6",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialLeftAbove() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "A1:C3",
-                true
+            "C3:D4",
+            "A1:C3",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialRightBelow() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "D4:E5",
-                true
+            "C3:D4",
+            "D4:E5",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialInside() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "C3:C3",
-                true
+            "C3:D4",
+            "C3:C3",
+            true
         );
     }
 
     @Test
     public void testTestCellRangePartialInside2() {
         this.testCellRangeAndCheck(
-                "C3:D4",
-                "C3:D4",
-                true
+            "C3:D4",
+            "C3:D4",
+            true
         );
     }
 
@@ -1209,45 +1209,45 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testTestColumnBefore() {
         this.testTestColumnAndCheck2(
-                "C3:D4",
-                "B",
-                false
+            "C3:D4",
+            "B",
+            false
         );
     }
 
     @Test
     public void testTestColumnAfter() {
         this.testTestColumnAndCheck2(
-                "C3:D4",
-                "E",
-                false
+            "C3:D4",
+            "E",
+            false
         );
     }
 
     @Test
     public void testTestColumnLeft() {
         this.testTestColumnAndCheck2(
-                "C3:D4",
-                "C",
-                true
+            "C3:D4",
+            "C",
+            true
         );
     }
 
     @Test
     public void testTestColumnRight() {
         this.testTestColumnAndCheck2(
-                "C3:D4",
-                "D",
-                true
+            "C3:D4",
+            "D",
+            true
         );
     }
 
     @Test
     public void testTestColumnWithin() {
         this.testTestColumnAndCheck2(
-                "C3:E5",
-                "D",
-                true
+            "C3:E5",
+            "D",
+            true
         );
     }
 
@@ -1255,9 +1255,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                          final String column,
                                          final boolean expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetSelection.parseCellRange(range).testColumn(SpreadsheetSelection.parseColumn(column)),
-                range + " testColumn " + column
+            expected,
+            SpreadsheetSelection.parseCellRange(range).testColumn(SpreadsheetSelection.parseColumn(column)),
+            range + " testColumn " + column
         );
     }
 
@@ -1266,45 +1266,45 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testTestRowAbove() {
         this.testRowAndCheck(
-                "C3:D4",
-                "2",
-                false
+            "C3:D4",
+            "2",
+            false
         );
     }
 
     @Test
     public void testTestRowBelow() {
         this.testRowAndCheck(
-                "C3:D4",
-                "5",
-                false
+            "C3:D4",
+            "5",
+            false
         );
     }
 
     @Test
     public void testTestRowTop() {
         this.testRowAndCheck(
-                "C3:D4",
-                "3",
-                true
+            "C3:D4",
+            "3",
+            true
         );
     }
 
     @Test
     public void testTestRowBottom() {
         this.testRowAndCheck(
-                "C3:D4",
-                "4",
-                true
+            "C3:D4",
+            "4",
+            true
         );
     }
 
     @Test
     public void testTestRowInside() {
         this.testRowAndCheck(
-                "C3:E5",
-                "4",
-                true
+            "C3:E5",
+            "4",
+            true
         );
     }
 
@@ -1313,135 +1313,135 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testContainsAllSpreadsheetViewportWindowsAllSpreadsheetViewportWindowsOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "A1:B2",
-                "C3:D4",
-                false
+            "A1:B2",
+            "C3:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsTopLeftOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:C3",
-                "A1:B2",
-                false
+            "B2:C3",
+            "A1:B2",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsBottomRightOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:C3",
-                "C3:D4",
-                false
+            "B2:C3",
+            "C3:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:C3",
-                "D4:E5,F6:G7",
-                false
+            "B2:C3",
+            "D4:E5,F6:G7",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsSame() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:C3",
-                "B2:C3",
-                true
+            "B2:C3",
+            "B2:C3",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsSameInsideAndOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "A1:C3",
-                "A1,B2:D4",
-                false
+            "A1:C3",
+            "A1,B2:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsInside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:E5",
-                "C3:D4",
-                true
+            "B2:E5",
+            "C3:D4",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsInside2() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:E5",
-                "C3",
-                true
+            "B2:E5",
+            "C3",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsStarInside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "*",
-                "C3:D4",
-                true
+            "*",
+            "C3:D4",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsEmpty() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "A1",
-                "",
-                true
+            "A1",
+            "",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsEmpty2() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "A1:B2",
-                "",
-                true
+            "A1:B2",
+            "",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsStarInside2() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "*",
-                "C3:D4,E5:F6",
-                true
+            "*",
+            "C3:D4,E5:F6",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsStarWithStar() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "*",
-                "*",
-                true
+            "*",
+            "*",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsAndSomeOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:C3",
-                "A1:D4",
-                false
+            "B2:C3",
+            "A1:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetViewportWindowsAndSomeStarOutside() {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                "B2:C3",
-                "*",
-                false
+            "B2:C3",
+            "*",
+            false
         );
     }
 
@@ -1449,9 +1449,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                                                final String windows,
                                                                final boolean expected) {
         this.containsAllSpreadsheetViewportWindowsAndCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetViewportWindows.parse(windows),
-                expected
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetViewportWindows.parse(windows),
+            expected
         );
     }
 
@@ -1459,9 +1459,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                                                final SpreadsheetViewportWindows windows,
                                                                final boolean expected) {
         this.containsAllAndCheck(
-                range,
-                windows,
-                expected
+            range,
+            windows,
+            expected
         );
     }
 
@@ -1470,81 +1470,81 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testContainsAllSpreadsheetCellRangeAllOutside() {
         this.containsAllAndCheck(
-                "A1:B2",
-                "C3:D4",
-                false
+            "A1:B2",
+            "C3:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeTopLeftOutside() {
         this.containsAllAndCheck(
-                "B2:C3",
-                "A1:B2",
-                false
+            "B2:C3",
+            "A1:B2",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeBottomRightOutside() {
         this.containsAllAndCheck(
-                "B2:C3",
-                "C3:D4",
-                false
+            "B2:C3",
+            "C3:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeSame() {
         this.containsAllAndCheck(
-                "B2:C3",
-                "B2:C3",
-                true
+            "B2:C3",
+            "B2:C3",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeInside() {
         this.containsAllAndCheck(
-                "B2:E5",
-                "C3:D4",
-                true
+            "B2:E5",
+            "C3:D4",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeInside2() {
         this.containsAllAndCheck(
-                "B2:E5",
-                "C3",
-                true
+            "B2:E5",
+            "C3",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeInside3() {
         this.containsAllAndCheck(
-                "*",
-                "C3:D4",
-                true
+            "*",
+            "C3:D4",
+            true
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeAndSomeOutside() {
         this.containsAllAndCheck(
-                "B2:C3",
-                "A1:D4",
-                false
+            "B2:C3",
+            "A1:D4",
+            false
         );
     }
 
     @Test
     public void testContainsAllSpreadsheetCellRangeAndSomeOutside2() {
         this.containsAllAndCheck(
-                "B2:C3",
-                "*",
-                false
+            "B2:C3",
+            "*",
+            false
         );
     }
 
@@ -1552,9 +1552,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                      final String test,
                                      final boolean expected) {
         this.containsAllAndCheck(
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCellRange(test),
-                expected
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCellRange(test),
+            expected
         );
     }
 
@@ -1562,9 +1562,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                      final SpreadsheetCellRangeReference test,
                                      final boolean expected) {
         this.checkEquals(
-                expected,
-                range.containsAll(test),
-                () -> range + " contains " + test
+            expected,
+            range.containsAll(test),
+            () -> range + " contains " + test
         );
     }
 
@@ -1575,18 +1575,18 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 10);
 
         this.checkStream(range,
-                range.columnStream(),
-                this.column(5), this.column(6), this.column(7));
+            range.columnStream(),
+            this.column(5), this.column(6), this.column(7));
     }
 
     @Test
     public void testColumnStreamFilterAndMapAndCollect() {
         final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 10);
         this.checkStream(range,
-                range.columnStream()
-                        .map(SpreadsheetColumnReference::value)
-                        .filter(c -> c >= 6),
-                6, 7);
+            range.columnStream()
+                .map(SpreadsheetColumnReference::value)
+                .filter(c -> c >= 6),
+            6, 7);
     }
 
     @Test
@@ -1594,18 +1594,18 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = this.range(10, 5, 10, 8);
 
         this.checkStream(range,
-                range.rowStream(),
-                this.row(5), this.row(6), this.row(7));
+            range.rowStream(),
+            this.row(5), this.row(6), this.row(7));
     }
 
     @Test
     public void testRowStreamFilterAndMapAndCollect() {
         final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 20);
         this.checkStream(range,
-                range.rowStream()
-                        .map(SpreadsheetRowReference::value)
-                        .filter(r -> r < 13),
-                10, 11, 12);
+            range.rowStream()
+                .map(SpreadsheetRowReference::value)
+                .filter(r -> r < 13),
+            10, 11, 12);
     }
 
     @Test
@@ -1613,10 +1613,10 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("A1:A2");
 
         this.checkStream(
-                range,
-                range.cellStream(),
-                SpreadsheetSelection.A1,
-                SpreadsheetSelection.parseCell("A2")
+            range,
+            range.cellStream(),
+            SpreadsheetSelection.A1,
+            SpreadsheetSelection.parseCell("A2")
         );
     }
 
@@ -1625,12 +1625,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = this.range(3, 7, 5, 10);
 
         this.checkStream(
-                range,
-                range.cellStream(),
-                this.cellReference(3, 7), this.cellReference(4, 7), this.cellReference(5, 7),
-                this.cellReference(3, 8), this.cellReference(4, 8), this.cellReference(5, 8),
-                this.cellReference(3, 9), this.cellReference(4, 9), this.cellReference(5, 9),
-                this.cellReference(3, 10), this.cellReference(4, 10), this.cellReference(5, 10));
+            range,
+            range.cellStream(),
+            this.cellReference(3, 7), this.cellReference(4, 7), this.cellReference(5, 7),
+            this.cellReference(3, 8), this.cellReference(4, 8), this.cellReference(5, 8),
+            this.cellReference(3, 9), this.cellReference(4, 9), this.cellReference(5, 9),
+            this.cellReference(3, 10), this.cellReference(4, 10), this.cellReference(5, 10));
     }
 
     @Test
@@ -1638,16 +1638,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.ALL_CELLS;
 
         final long count = range.cellStream()
-                .count();
+            .count();
         this.checkNotEquals(
-                0,
-                count
+            0,
+            count
         );
 
         this.checkEquals(
-                (long) range.width() * (long) range.height(),
-                range.cellStream()
-                        .count()
+            (long) range.width() * (long) range.height(),
+            range.cellStream()
+                .count()
         );
     }
 
@@ -1655,9 +1655,9 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testCellStreamFilterAndMapAndCollect() {
         final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 20);
         this.checkStream(range,
-                range.cellStream()
-                        .filter(cell -> cell.column().value() == 5 && cell.row().value() < 13),
-                this.cellReference(5, 10), this.cellReference(5, 11), this.cellReference(5, 12));
+            range.cellStream()
+                .filter(cell -> cell.column().value() == 5 && cell.row().value() < 13),
+            this.cellReference(5, 10), this.cellReference(5, 11), this.cellReference(5, 12));
     }
 
     private void checkStream(final SpreadsheetCellRangeReference range, final Stream<?> stream, final Object... expected) {
@@ -1670,22 +1670,22 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testCellsNullCellsFails() {
         this.cellsFails(null,
-                this::cellsPresent,
-                this::cellsAbsent);
+            this::cellsPresent,
+            this::cellsAbsent);
     }
 
     @Test
     public void testCellsNullPresentFails() {
         this.cellsFails(Lists.of((this.cell("A1", "1+2"))),
-                null,
-                this::cellsAbsent);
+            null,
+            this::cellsAbsent);
     }
 
     @Test
     public void testCellsNullAbsentFails() {
         this.cellsFails(Lists.of((this.cell("A1", "1+2"))),
-                this::cellsPresent,
-                null);
+            this::cellsPresent,
+            null);
     }
 
     private void cellsFails(final List<SpreadsheetCell> cells,
@@ -1718,8 +1718,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCell c3 = this.c3();
 
         range.cells(Lists.of(b1, b2, b3, c1, c2, c3),
-                present::add,
-                this::cellsAbsent);
+            present::add,
+            this::cellsAbsent);
 
         this.checkEquals(Lists.of(b1, c1, b2, c2, b3, c3), present, "present");
     }
@@ -1740,13 +1740,13 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         range.cells(Lists.of(b1, b2, c3), consumed::add, consumed::add);
 
         this.checkEquals(Lists.of(b1,
-                        c1,
-                        b2,
-                        c2,
-                        b3,
-                        c3),
-                consumed,
-                "consumed");
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+            consumed,
+            "consumed");
     }
 
     @Test
@@ -1765,13 +1765,13 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         range.cells(Lists.of(b3, c3), consumed::add, consumed::add);
 
         this.checkEquals(Lists.of(b1,
-                        c1,
-                        b2,
-                        c2,
-                        b3,
-                        c3),
-                consumed,
-                "consumed");
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+            consumed,
+            "consumed");
     }
 
     @Test
@@ -1790,13 +1790,13 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         range.cells(Lists.of(b1), consumed::add, consumed::add);
 
         this.checkEquals(Lists.of(b1,
-                        c1,
-                        b2,
-                        c2,
-                        b3,
-                        c3),
-                consumed,
-                "consumed");
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+            consumed,
+            "consumed");
     }
 
 
@@ -1816,13 +1816,13 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         range.cells(Lists.of(b1), consumed::add, consumed::add);
 
         this.checkEquals(Lists.of(b1,
-                        c1,
-                        b2,
-                        c2,
-                        b3,
-                        c3),
-                consumed,
-                "consumed");
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+            consumed,
+            "consumed");
     }
 
     @Test
@@ -1841,20 +1841,20 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         range.cells(Lists.of(b1), consumed::add, consumed::add);
 
         this.checkEquals(Lists.of(b1,
-                        c1,
-                        b2,
-                        c2),
-                consumed,
-                "consumed");
+                c1,
+                b2,
+                c2),
+            consumed,
+            "consumed");
     }
 
     private SpreadsheetCell cell(final String reference,
                                  final String formula) {
         return this.cellReference(reference)
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText(formula)
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText(formula)
+            );
     }
 
     private void cellsPresent(final SpreadsheetCell cell) {
@@ -1894,8 +1894,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("C3:Z99");
 
         assertSame(
-                range.toCellRange(),
-                range
+            range.toCellRange(),
+            range
         );
     }
 
@@ -1904,32 +1904,32 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testIsUnitSame() {
         this.isUnitAndCheck(
-                "A1:A1",
-                true
+            "A1:A1",
+            true
         );
     }
 
     @Test
     public void testIsUnitDifferentReferenceKind() {
         this.isUnitAndCheck(
-                "A1:$A$1",
-                true
+            "A1:$A$1",
+            true
         );
     }
 
     @Test
     public void testIsUnitDifferentReferenceKind2() {
         this.isUnitAndCheck(
-                "$A$1:A1",
-                true
+            "$A$1:A1",
+            true
         );
     }
 
     @Test
     public void testIsUnitDifferent() {
         this.isUnitAndCheck(
-                "A1:B2",
-                false
+            "A1:B2",
+            false
         );
     }
 
@@ -1938,70 +1938,70 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testIsHiddenBeginHidden() {
         this.isHiddenAndCheck(
-                "A1:B2",
-                Predicates.is(SpreadsheetSelection.parseColumn("A")),
-                Predicates.is(SpreadsheetSelection.parseRow("1")),
-                true
+            "A1:B2",
+            Predicates.is(SpreadsheetSelection.parseColumn("A")),
+            Predicates.is(SpreadsheetSelection.parseRow("1")),
+            true
         );
     }
 
     @Test
     public void testIsHiddenEndHidden() {
         this.isHiddenAndCheck(
-                "A1:B2",
-                Predicates.is(SpreadsheetSelection.parseColumn("B")),
-                Predicates.is(SpreadsheetSelection.parseRow("2")),
-                true
+            "A1:B2",
+            Predicates.is(SpreadsheetSelection.parseColumn("B")),
+            Predicates.is(SpreadsheetSelection.parseRow("2")),
+            true
         );
     }
 
     @Test
     public void testIsHiddenNotHidden() {
         this.isHiddenAndCheck(
-                "A1:B2",
-                Predicates.never(),
-                Predicates.never(),
-                false
+            "A1:B2",
+            Predicates.never(),
+            Predicates.never(),
+            false
         );
     }
 
     @Test
     public void testIsHiddenSingleColumnHidden() {
         this.isHiddenAndCheck(
-                "A1:A1",
-                Predicates.is(SpreadsheetSelection.parseColumn("A")),
-                Predicates.never(),
-                true
+            "A1:A1",
+            Predicates.is(SpreadsheetSelection.parseColumn("A")),
+            Predicates.never(),
+            true
         );
     }
 
     @Test
     public void testIsHiddenSingleRowHidden() {
         this.isHiddenAndCheck(
-                "A1:A1",
-                Predicates.never(),
-                Predicates.is(SpreadsheetSelection.parseRow("1")),
-                true
+            "A1:A1",
+            Predicates.never(),
+            Predicates.is(SpreadsheetSelection.parseRow("1")),
+            true
         );
     }
 
     @Test
     public void testIsHiddenSingleNeitherHidden() {
         this.isHiddenAndCheck(
-                "A1:A1",
-                Predicates.never(),
-                Predicates.never(),
-                false
+            "A1:A1",
+            Predicates.never(),
+            Predicates.never(),
+            false
         );
     }
 
     @Test
     public void testIsHiddenSingleNeitherHidden2() {
         this.isHiddenAndCheck(
-                "A1:$A$1",
-                Predicates.never(),
-                Predicates.never(),
-                false
+            "A1:$A$1",
+            Predicates.never(),
+            Predicates.never(),
+            false
         );
     }
 
@@ -2014,22 +2014,22 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testLeftColumnAnchorTopLeft() {
         this.leftColumnAndCheck(
-                "B2:D4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C4"
+            "B2:D4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C4"
         );
     }
 
     @Test
     public void testLeftColumnAnchorTopRight() {
         this.leftColumnAndCheck(
-                "B2:D4",
-                SpreadsheetViewportAnchor.TOP_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "A4"
+            "B2:D4",
+            SpreadsheetViewportAnchor.TOP_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "A4"
         );
     }
 
@@ -2039,72 +2039,72 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testLeftColumnAnchorBottomLeft() {
         this.leftColumnAndCheck(
-                "A1:C3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "A1"
+            "A1:C3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "A1"
         );
     }
 
     @Test
     public void testLeftPixels() {
         this.leftPixelsAndCheck(
-                "D2:E2",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                50,
-                "C",
-                Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B2"
+            "D2:E2",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            50,
+            "C",
+            Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B2"
         );
     }
 
     @Test
     public void testRightColumnAnchorTopLeft() {
         this.rightColumnAndCheck(
-                "A1:C3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "D3"
+            "A1:C3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "D3"
         );
     }
 
     @Test
     public void testRightColumnAnchorTopRight() {
         this.rightColumnAndCheck(
-                "A1:C3",
-                SpreadsheetViewportAnchor.TOP_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B3"
+            "A1:C3",
+            SpreadsheetViewportAnchor.TOP_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B3"
         );
     }
 
     @Test
     public void testRightColumnAnchorBottomRight() {
         this.rightColumnAndCheck(
-                "A1:C3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B1"
+            "A1:C3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B1"
         );
     }
 
     @Test
     public void testRightPixels() {
         this.rightPixelsAndCheck(
-                "D1:E2",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                50,
-                "F",
-                Maps.of("E", 5.0, "G", 50.0, "H", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "H2"
+            "D1:E2",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            50,
+            "F",
+            Maps.of("E", 5.0, "G", 50.0, "H", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "H2"
         );
     }
 
@@ -2115,50 +2115,50 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testUpRowAnchorBottomRight() {
         this.upRowAndCheck(
-                "B1:D3",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "D1"
+            "B1:D3",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "D1"
         );
     }
 
     @Test
     public void testUpPixels() {
         this.upPixelsAndCheck(
-                "E5:F6",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                50,
-                NO_HIDDEN_COLUMNS,
-                Maps.empty(),
-                "3",
-                Map.of("4", 50.0, "2", 50.0),
-                "E2"
+            "E5:F6",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            50,
+            NO_HIDDEN_COLUMNS,
+            Maps.empty(),
+            "3",
+            Map.of("4", 50.0, "2", 50.0),
+            "E2"
         );
     }
 
     @Test
     public void testDownRowAnchorBottomRight() {
         this.downRowAndCheck(
-                "B1:D3",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "D2"
+            "B1:D3",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "D2"
         );
     }
 
     @Test
     public void testDownPixels() {
         this.downPixelsAndCheck(
-                "B2:C3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                50,
-                NO_HIDDEN_COLUMNS,
-                Maps.empty(),
-                "4",
-                Map.of("5", 50.0, "6", 50.0),
-                "C6"
+            "B2:C3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            50,
+            NO_HIDDEN_COLUMNS,
+            Maps.empty(),
+            "4",
+            Map.of("5", 50.0, "6", 50.0),
+            "C6"
         );
     }
 
@@ -2167,20 +2167,20 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRangeTopLeft() {
         this.extendRangeAndCheck(
-                "B2:C3",
-                "C4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                "B2:C4"
+            "B2:C3",
+            "C4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            "B2:C4"
         );
     }
 
     @Test
     public void testExtendRangeTopLeft2() {
         this.extendRangeAndCheck(
-                "B2:C3",
-                "D4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                "B2:D4"
+            "B2:C3",
+            "D4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            "B2:D4"
         );
     }
 
@@ -2189,10 +2189,10 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRangeTopRight() {
         this.extendRangeAndCheck(
-                "B2:C3",
-                "A3",
-                SpreadsheetViewportAnchor.TOP_RIGHT,
-                "A2:C3"
+            "B2:C3",
+            "A3",
+            SpreadsheetViewportAnchor.TOP_RIGHT,
+            "A2:C3"
         );
     }
 
@@ -2202,10 +2202,10 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRangeBottomLeft() {
         this.extendRangeAndCheck(
-                "B2:C3",
-                "D2",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                "B2:D3"
+            "B2:C3",
+            "D2",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            "B2:D3"
         );
     }
 
@@ -2214,20 +2214,20 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRangeBottomRight() {
         this.extendRangeAndCheck(
-                "B2:C3",
-                "A2",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "A2:C3"
+            "B2:C3",
+            "A2",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "A2:C3"
         );
     }
 
     @Test
     public void testExtendRangeBottomRightSame() {
         this.extendRangeAndCheck(
-                "A1:B2",
-                "A1",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "A1:B2"
+            "A1:B2",
+            "A1",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "A1:B2"
         );
     }
 
@@ -2241,12 +2241,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendLeftColumnAnchorBottomRight() {
         this.extendLeftColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -2256,24 +2256,24 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendLeftColumnAnchorTopLeft() {
         this.extendLeftColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:C4",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "C3:D4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:C4",
+            SpreadsheetViewportAnchor.TOP_LEFT
         ); // C4
     }
 
     @Test
     public void testExtendLeftColumnAnchorTopLeft2() {
         this.extendLeftColumnAndCheck(
-                "C3:D3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3",
-                SpreadsheetViewportAnchor.NONE
+            "C3:D3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2283,12 +2283,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.TOP_RIGHT;
 
         this.extendLeftColumnAndCheck(
-                range,
-                anchor,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                range,
-                anchor
+            range,
+            anchor,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            range,
+            anchor
         );
     }
 
@@ -2298,12 +2298,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendLeftColumnSingleColumnBottomLeft() {
         this.extendLeftColumnAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "C3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -2313,48 +2313,48 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendLeftColumnSingleColumnBottomRight() {
         this.extendLeftColumnAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "C3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         ); // actual=c3:c4
     }
 
     @Test
     public void testExtendLeftColumnSkipsHidden() {
         this.extendLeftColumnAndCheck(
-                "D4:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "C",
-                NO_HIDDEN_ROWS,
-                "B4:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "D4:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "C",
+            NO_HIDDEN_ROWS,
+            "B4:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
     public void testExtendLeftColumnIgnoresHiddenRow() {
         this.extendLeftColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                "3",
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            "3",
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendLeftColumnIgnoresHiddenRow2() {
         this.extendLeftColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "",
-                "4",
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "",
+            "4",
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2363,15 +2363,15 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendLeftPixels() {
         this.extendLeftPixelsAndCheck(
-                "E5:F5",
-                SpreadsheetViewportAnchor.TOP_RIGHT,
-                50,
-                "D",
-                Maps.of("C", 50.0, "B", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B5:F5",
-                SpreadsheetViewportAnchor.TOP_RIGHT
+            "E5:F5",
+            SpreadsheetViewportAnchor.TOP_RIGHT,
+            50,
+            "D",
+            Maps.of("C", 50.0, "B", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B5:F5",
+            SpreadsheetViewportAnchor.TOP_RIGHT
         );
     }
 
@@ -2380,24 +2380,24 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRightColumnAnchorTopLeft() {
         this.extendRightColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:E4",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "C3:D4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:E4",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testExtendRightColumnAnchorBottomRight() {
         this.extendRightColumnAndCheck(
-                "C3:D3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "D3",
-                SpreadsheetViewportAnchor.NONE
+            "C3:D3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "D3",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2407,12 +2407,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRightColumnAnchorBottomRight2() {
         this.extendRightColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "D3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "D3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         ); // C4
     }
 
@@ -2423,12 +2423,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.BOTTOM_LEFT;
 
         this.extendRightColumnAndCheck(
-                cell,
-                anchor,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                cell,
-                anchor
+            cell,
+            anchor,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            cell,
+            anchor
         );
     }
 
@@ -2437,12 +2437,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.extendRightColumnAndCheck(
-                column.add(-1) + "1:" + column + "1",
-                SpreadsheetViewportAnchor.TOP_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                column + "1",
-                SpreadsheetViewportAnchor.NONE
+            column.add(-1) + "1:" + column + "1",
+            SpreadsheetViewportAnchor.TOP_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            column + "1",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2452,12 +2452,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRightColumnAnchorFlipsAnchor() {
         this.extendRightColumnAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+            "C3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2467,12 +2467,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRightColumnSingleColumnBottomLeft() {
         this.extendRightColumnAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+            "C3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2482,48 +2482,48 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRightColumnSingleColumnBottomRight() {
         this.extendRightColumnAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+            "C3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
     public void testExtendRightColumnSkipsHiddenColumn() {
         this.extendRightColumnAndCheck(
-                "B2:C3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                "D",
-                NO_HIDDEN_ROWS,
-                "B2:E3",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "B2:C3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            "D",
+            NO_HIDDEN_ROWS,
+            "B2:E3",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testExtendRightColumnIgnoresHiddenRow() {
         this.extendRightColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                "3",
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            "3",
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendRightColumnIgnoresHiddenRow2() {
         this.extendRightColumnAndCheck(
-                "C3:D4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "",
-                "4",
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "C3:D4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "",
+            "4",
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2532,15 +2532,15 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendRightPixels() {
         this.extendRightPixelsAndCheck(
-                "A2:B2",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                50,
-                "C",
-                Maps.of("D", 50.0, "E", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "A2:E2",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "A2:B2",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            50,
+            "C",
+            Maps.of("D", 50.0, "E", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "A2:E2",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2549,24 +2549,24 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendUpRowAnchorTopLeft() {
         this.extendUpRowAndCheck(
-                "C3:E5",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:E4",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "C3:E5",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:E4",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testExtendUpRowAnchorTopLeft2() {
         this.extendUpRowAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3",
-                SpreadsheetViewportAnchor.NONE
+            "C3:C4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2577,12 +2577,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendUpRowAnchorBottomRight() {
         this.extendUpRowAndCheck(
-                "C3:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C2:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "C3:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C2:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
@@ -2592,12 +2592,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendUpRowAnchorTopLeftFirstRow() {
         this.extendUpRowAndCheck(
-                "A1:B2",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "A1:B1",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "A1:B2",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "A1:B1",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2608,12 +2608,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendUpRowSingleColumnBottomLeft() {
         this.extendUpRowAndCheck(
-                "C3:D3",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C2:D3",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+            "C3:D3",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C2:D3",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2624,48 +2624,48 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendUpRowSingleColumnTopLeft() {
         this.extendUpRowAndCheck(
-                "C3:D3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C2:D3",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+            "C3:D3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C2:D3",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
     @Test
     public void testExtendUpRowSkipsHiddenRow() {
         this.extendUpRowAndCheck(
-                "D4:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                "3",
-                "D2:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "D4:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            "3",
+            "D2:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
     public void testExtendUpRowIgnoresHiddenColumn() {
         this.extendUpRowAndCheck(
-                "B3:C3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "B",
-                NO_HIDDEN_ROWS,
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "B3:C3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "B",
+            NO_HIDDEN_ROWS,
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendUpRowIgnoresHiddenColumn2() {
         this.extendUpRowAndCheck(
-                "B3:C3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "C",
-                NO_HIDDEN_ROWS,
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "B3:C3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "C",
+            NO_HIDDEN_ROWS,
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2674,15 +2674,15 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendUpPixels() {
         this.extendUpPixelsAndCheck(
-                "E6:F6",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                50,
-                NO_HIDDEN_COLUMNS,
-                Maps.empty(),
-                "5",
-                Maps.of("4", 50.0, "3", 50.0),
-                "E3:F6",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT
+            "E6:F6",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            50,
+            NO_HIDDEN_COLUMNS,
+            Maps.empty(),
+            "5",
+            Maps.of("4", 50.0, "3", 50.0),
+            "E3:F6",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT
         );
     }
 
@@ -2691,36 +2691,36 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendDownRowAnchorTopLeft() {
         this.extendDownRowAndCheck(
-                "C3:E5",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:E6",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "C3:E5",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:E6",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testExtendDownRowAnchorBottomRight() {
         this.extendDownRowAndCheck(
-                "C3:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C4:E5",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT
+            "C3:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C4:E5",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
         );
     }
 
     @Test
     public void testExtendDownRowAnchorBottomRight2() {
         this.extendDownRowAndCheck(
-                "C3:C4",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C4",
-                SpreadsheetViewportAnchor.NONE
+            "C3:C4",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C4",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2731,12 +2731,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetViewportAnchor anchor = SpreadsheetViewportAnchor.TOP_LEFT;
 
         this.extendDownRowAndCheck(
-                cell,
-                anchor,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                cell,
-                anchor
+            cell,
+            anchor,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            cell,
+            anchor
         );
     }
 
@@ -2745,12 +2745,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.extendDownRowAndCheck(
-                "A" + row.add(-1) + ":A" + row,
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "A" + row,
-                SpreadsheetViewportAnchor.NONE
+            "A" + row.add(-1) + ":A" + row,
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "A" + row,
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2761,12 +2761,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendDownRowSingleColumnBottomLeft() {
         this.extendDownRowAndCheck(
-                "C3:D3",
-                SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:D4",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "C3:D3",
+            SpreadsheetViewportAnchor.BOTTOM_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:D4",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2777,48 +2777,48 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendDownRowSingleColumnTopLeft() {
         this.extendDownRowAndCheck(
-                "C3:D3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C3:D4",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "C3:D3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C3:D4",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testExtendDownRowSkipsHiddenRow() {
         this.extendDownRowAndCheck(
-                "B2:C3",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                NO_HIDDEN_COLUMNS,
-                "4",
-                "B2:C5",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "B2:C3",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            NO_HIDDEN_COLUMNS,
+            "4",
+            "B2:C5",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
     @Test
     public void testExtendDownRowIgnoresHiddenColumn() {
         this.extendDownRowAndCheck(
-                "B3:C3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "B",
-                NO_HIDDEN_ROWS,
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "B3:C3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "B",
+            NO_HIDDEN_ROWS,
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendDownRowIgnoresHiddenColumn2() {
         this.extendDownRowAndCheck(
-                "B3:C3",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "C",
-                NO_HIDDEN_ROWS,
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "B3:C3",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "C",
+            NO_HIDDEN_ROWS,
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -2827,15 +2827,15 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testExtendDownPixels() {
         this.extendDownPixelsAndCheck(
-                "B2:C2",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                50,
-                NO_HIDDEN_COLUMNS,
-                Maps.empty(),
-                "3",
-                Maps.of("4", 50.0, "5", 50.0),
-                "B2:C5",
-                SpreadsheetViewportAnchor.TOP_LEFT
+            "B2:C2",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            50,
+            NO_HIDDEN_COLUMNS,
+            Maps.empty(),
+            "3",
+            Maps.of("4", 50.0, "5", 50.0),
+            "B2:C5",
+            SpreadsheetViewportAnchor.TOP_LEFT
         );
     }
 
@@ -2844,18 +2844,18 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testFocusedBottomRight() {
         this.focusedAndCheck(
-                "A1:B2",
-                SpreadsheetViewportAnchor.BOTTOM_RIGHT,
-                "A1"
+            "A1:B2",
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT,
+            "A1"
         );
     }
 
     @Test
     public void testFocusedTopLeft() {
         this.focusedAndCheck(
-                "C3:$D$4",
-                SpreadsheetViewportAnchor.TOP_LEFT,
-                "$D$4"
+            "C3:$D$4",
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            "$D$4"
         );
     }
 
@@ -2866,14 +2866,14 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final String text = "A1:B2";
 
         this.toParserTokenAndCheck(
-                SpreadsheetSelection.parseCellRange(text),
-                SpreadsheetFormulaParserToken.cellRange(
-                        Lists.of(
-                                SpreadsheetSelection.A1.toParserToken(),
-                                SpreadsheetSelection.parseCell("B2").toParserToken()
-                        ),
-                        text
-                )
+            SpreadsheetSelection.parseCellRange(text),
+            SpreadsheetFormulaParserToken.cellRange(
+                Lists.of(
+                    SpreadsheetSelection.A1.toParserToken(),
+                    SpreadsheetSelection.parseCell("B2").toParserToken()
+                ),
+                text
+            )
         );
     }
 
@@ -2882,50 +2882,50 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testEqualsIgnoreReferenceKindDifferentValuesFalse() {
         this.equalsIgnoreReferenceKindAndCheck("$A1",
-                "$B2",
-                false);
+            "$B2",
+            false);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindDifferentValuesFalse2() {
         this.equalsIgnoreReferenceKindAndCheck("$A1:$Z99",
-                "$B2:$Z99",
-                false);
+            "$B2:$Z99",
+            false);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues() {
         this.equalsIgnoreReferenceKindAndCheck("$C3",
-                "C3",
-                true);
+            "C3",
+            true);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues2() {
         this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
-                "C3:D4",
-                true);
+            "C3:D4",
+            true);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues3() {
         this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
-                "C$3:D$4",
-                true);
+            "C$3:D$4",
+            true);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindSameReferenceKindDifferentValues() {
         this.equalsIgnoreReferenceKindAndCheck("$C3",
-                "$C4",
-                false);
+            "$C4",
+            false);
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindSameReferenceKindDifferentValues2() {
         this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
-                "$C4:$D4",
-                false);
+            "$C4:$D4",
+            false);
     }
 
     // toRelative.......................................................................................................
@@ -2955,8 +2955,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
                                     final String expected) {
         final SpreadsheetCellRangeReference actual = SpreadsheetSelection.parseCellRange(start).toRelative();
         this.checkEquals(SpreadsheetSelection.parseCellRange(expected),
-                actual,
-                () -> start + " toRelative");
+            actual,
+            () -> start + " toRelative");
     }
 
     // SpreadsheetSelectionVisitor......................................................................................
@@ -2994,8 +2994,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                "cell-range A1:B2" + EOL
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            "cell-range A1:B2" + EOL
         );
     }
 
@@ -3016,36 +3016,36 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testEqualsIgnoreReferenceKindBeginDifferentKind() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "A1:C3",
-                "$A$1:C3",
-                true
+            "A1:C3",
+            "$A$1:C3",
+            true
         );
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindBeginDifferent() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "A1:C3",
-                "B2:C3",
-                false
+            "A1:C3",
+            "B2:C3",
+            false
         );
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindEndDifferentKind() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "A1:C3",
-                "A1:$C$3",
-                true
+            "A1:C3",
+            "A1:$C$3",
+            true
         );
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindEndDifferent() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "A1:C3",
-                "B2:C3",
-                false
+            "A1:C3",
+            "B2:C3",
+            false
         );
     }
 
@@ -3054,8 +3054,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToStringAllCells() {
         this.toStringAndCheck(
-                SpreadsheetSelection.ALL_CELLS,
-                "A1:XFD1048576"
+            SpreadsheetSelection.ALL_CELLS,
+            "A1:XFD1048576"
         );
     }
 
@@ -3074,15 +3074,15 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testToStringMaybeStar() {
         this.toStringMaybeStarAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2")
+            SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
 
     @Test
     public void testToStringMaybeStarAllColumns() {
         this.toStringMaybeStarAndCheck(
-                SpreadsheetSelection.ALL_CELLS,
-                "*"
+            SpreadsheetSelection.ALL_CELLS,
+            "*"
         );
     }
 
@@ -3098,16 +3098,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testBoundsWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRangeReference.bounds(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellRangeReference.bounds(null)
         );
     }
 
     @Test
     public void testBoundsWithEmptyListFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetCellRangeReference.bounds(Lists.empty())
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellRangeReference.bounds(Lists.empty())
         );
     }
 
@@ -3120,16 +3120,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(Lists.of(a));
         this.check(
-                range,
-                column,
-                row,
-                column,
-                row
+            range,
+            column,
+            row,
+            column,
+            row
         );
         this.checkEquals(
-                Range.singleton(a),
-                range.range(),
-                "range"
+            Range.singleton(a),
+            range.range(),
+            "range"
         );
     }
 
@@ -3142,20 +3142,20 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellReference e = this.cellReference(115, 24);
 
         final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(
-                Lists.of(
-                        a,
-                        b,
-                        c,
-                        d,
-                        e
-                )
+            Lists.of(
+                a,
+                b,
+                c,
+                d,
+                e
+            )
         );
         this.check(
-                range,
-                111,
-                11,
-                115,
-                24
+            range,
+            111,
+            11,
+            115,
+            24
         );
     }
 
@@ -3168,20 +3168,20 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellReference e = this.cellReference(115, 24);
 
         final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(
-                Lists.of(
-                        e,
-                        d,
-                        c,
-                        b,
-                        a
-                )
+            Lists.of(
+                e,
+                d,
+                c,
+                b,
+                a
+            )
         );
         this.check(
-                range,
-                111,
-                11,
-                115,
-                24
+            range,
+            111,
+            11,
+            115,
+            24
         );
     }
 
@@ -3191,11 +3191,11 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(Lists.of(a));
         this.check(
-                range,
-                111,
-                11,
-                111,
-                11
+            range,
+            111,
+            11,
+            111,
+            11
         );
     }
 
@@ -3204,133 +3204,133 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testParseMissingSeparatorSingleton() {
         this.parseStringAndCheck(
-                "A1",
-                SpreadsheetCellRangeReference.with(Range.singleton(SpreadsheetSelection.A1))
+            "A1",
+            SpreadsheetCellRangeReference.with(Range.singleton(SpreadsheetSelection.A1))
         );
     }
 
     @Test
     public void testParseMissingBeginFails() {
         this.parseStringFails(
-                ":A2",
-                new IllegalArgumentException("Invalid character ':' at 0")
+            ":A2",
+            new IllegalArgumentException("Invalid character ':' at 0")
         );
     }
 
     @Test
     public void testParseMissingEndFails() {
         this.parseStringFails(
-                "A2:",
-                new IllegalArgumentException("Empty upper range in \"A2:\"")
+            "A2:",
+            new IllegalArgumentException("Empty upper range in \"A2:\"")
         );
     }
 
     @Test
     public void testParseInvalidBeginFails() {
         this.parseStringFails(
-                "##:A2",
-                new IllegalArgumentException("Invalid character '#' at 0")
+            "##:A2",
+            new IllegalArgumentException("Invalid character '#' at 0")
         );
     }
 
     @Test
     public void testParseInvalidEndFails() {
         this.parseStringFails(
-                "A1:##",
-                new IllegalArgumentException("Invalid character '#' at 3")
+            "A1:##",
+            new IllegalArgumentException("Invalid character '#' at 3")
         );
     }
 
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "A2:C4",
-                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
-                        .range(SpreadsheetSelection.parseCell("C4")))
+            "A2:C4",
+            SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
+                .range(SpreadsheetSelection.parseCell("C4")))
         );
     }
 
     @Test
     public void testParseEquivalent() {
         this.parseStringAndCheck(
-                "A1:$A$1",
-                SpreadsheetCellRangeReference.with(
-                        Range.singleton(
-                                SpreadsheetSelection.A1
-                        )
+            "A1:$A$1",
+            SpreadsheetCellRangeReference.with(
+                Range.singleton(
+                    SpreadsheetSelection.A1
                 )
+            )
         );
     }
 
     @Test
     public void testParseEquivalent2() {
         this.parseStringAndCheck(
-                "$A$1:A1",
-                SpreadsheetCellRangeReference.with(
-                        Range.singleton(
-                                SpreadsheetSelection.parseCell("$A$1")
-                        )
+            "$A$1:A1",
+            SpreadsheetCellRangeReference.with(
+                Range.singleton(
+                    SpreadsheetSelection.parseCell("$A$1")
                 )
+            )
         );
     }
 
     @Test
     public void testParseAbsoluteBegin() {
         this.parseStringAndCheck("$A$2:C4",
-                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("$A$2")
-                        .range(SpreadsheetSelection.parseCell("C4"))));
+            SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("$A$2")
+                .range(SpreadsheetSelection.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteBegin2() {
         this.parseStringAndCheck("$A2:C4",
-                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("$A2")
-                        .range(SpreadsheetSelection.parseCell("C4"))));
+            SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("$A2")
+                .range(SpreadsheetSelection.parseCell("C4"))));
     }
 
     @Test
     public void testParseAbsoluteEnd() {
         this.parseStringAndCheck("A2:$C4",
-                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
-                        .range(SpreadsheetSelection.parseCell("$C4"))));
+            SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
+                .range(SpreadsheetSelection.parseCell("$C4"))));
     }
 
     @Test
     public void testParseAbsoluteEnd2() {
         this.parseStringAndCheck("A2:$C$4",
-                SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
-                        .range(SpreadsheetSelection.parseCell("$C$4"))));
+            SpreadsheetCellRangeReference.with(SpreadsheetSelection.parseCell("A2")
+                .range(SpreadsheetSelection.parseCell("$C$4"))));
     }
 
     @Test
     public void testParseSwap() {
         this.parseStringAndCheck(
-                "B2:A1",
-                SpreadsheetCellRangeReference.with(
-                        SpreadsheetSelection.A1
-                                .range(SpreadsheetSelection.parseCell("B2")
-                                )
-                )
+            "B2:A1",
+            SpreadsheetCellRangeReference.with(
+                SpreadsheetSelection.A1
+                    .range(SpreadsheetSelection.parseCell("B2")
+                    )
+            )
         );
     }
 
     @Test
     public void testParseSwap2() {
         this.parseStringAndCheck(
-                "B2:$A$1",
-                SpreadsheetCellRangeReference.with(
-                        SpreadsheetSelection.parseCell("$A$1")
-                                .range(SpreadsheetSelection.parseCell("B2")
-                                )
-                )
+            "B2:$A$1",
+            SpreadsheetCellRangeReference.with(
+                SpreadsheetSelection.parseCell("$A$1")
+                    .range(SpreadsheetSelection.parseCell("B2")
+                    )
+            )
         );
     }
 
     @Test
     public void testParseStar() {
         this.parseStringAndCheck(
-                "*",
-                SpreadsheetSelection.ALL_CELLS
+            "*",
+            SpreadsheetSelection.ALL_CELLS
         );
     }
 
@@ -3339,11 +3339,11 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testIterable() {
         this.iterateAndCheck(
-                this.createIterable().iterator(),
-                this.b2().reference(),
-                this.c2().reference(),
-                this.b3().reference(),
-                this.c3().reference()
+            this.createIterable().iterator(),
+            this.b2().reference(),
+            this.c2().reference(),
+            this.b3().reference(),
+            this.c3().reference()
         );
     }
 
@@ -3352,16 +3352,16 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testCompareEqualDifferentSpreadsheetReferenceKind() {
         this.compareToAndCheckEquals(
-                SpreadsheetSelection.parseCellRange("$A$1:$B$2"),
-                SpreadsheetSelection.parseCellRange("A1:B2")
+            SpreadsheetSelection.parseCellRange("$A$1:$B$2"),
+            SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
 
     @Test
     public void testCompareEqualLess() {
         this.compareToAndCheckLess(
-                SpreadsheetSelection.parseCellRange("$A$1:$B$2"),
-                SpreadsheetSelection.parseCellRange("B2:C3")
+            SpreadsheetSelection.parseCellRange("$A$1:$B$2"),
+            SpreadsheetSelection.parseCellRange("B2:C3")
         );
     }
 
@@ -3372,12 +3372,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("C3:D4");
 
         this.compareToArraySortAndCheck(
-                c3d4,
-                a1b2,
-                b2c3,
-                a1b2,
-                b2c3,
-                c3d4
+            c3d4,
+            a1b2,
+            b2c3,
+            a1b2,
+            b2c3,
+            c3d4
         );
     }
 
@@ -3388,12 +3388,12 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("B2:D4");
 
         this.compareToArraySortAndCheck(
-                b2d4,
-                a1b2,
-                b2c3,
-                a1b2,
-                b2c3,
-                b2d4
+            b2d4,
+            a1b2,
+            b2c3,
+            a1b2,
+            b2c3,
+            b2d4
         );
     }
 
@@ -3442,7 +3442,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
     private SpreadsheetCellReference cellReference(final int column, final int row) {
         return this.column(column)
-                .setRow(this.row(row));
+            .setRow(this.row(row));
     }
 
     private SpreadsheetColumnReference column(final int column) {

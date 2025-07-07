@@ -47,14 +47,14 @@ final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetCo
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
         return type == SpreadsheetCellReference.class ||
-                type == SpreadsheetCellReferenceOrRange.class ||
-                type == SpreadsheetCellRangeReference.class ||
-                type == SpreadsheetColumnReference.class ||
-                type == SpreadsheetColumnRangeReference.class ||
-                type == SpreadsheetLabelName.class ||
-                type == SpreadsheetRowReference.class ||
-                type == SpreadsheetRowRangeReference.class ||
-                type == SpreadsheetExpressionReference.class;
+            type == SpreadsheetCellReferenceOrRange.class ||
+            type == SpreadsheetCellRangeReference.class ||
+            type == SpreadsheetColumnReference.class ||
+            type == SpreadsheetColumnRangeReference.class ||
+            type == SpreadsheetLabelName.class ||
+            type == SpreadsheetRowReference.class ||
+            type == SpreadsheetRowRangeReference.class ||
+            type == SpreadsheetExpressionReference.class;
     }
 
     @Override
@@ -62,9 +62,9 @@ final class SpreadsheetConverterTextToSpreadsheetSelection extends SpreadsheetCo
                             final Class<?> type,
                             final SpreadsheetConverterContext context) {
         return SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor.parse(
-                value,
-                Cast.to(type),
-                context
+            value,
+            Cast.to(type),
+            context
         );
     }
 

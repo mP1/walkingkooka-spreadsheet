@@ -32,25 +32,25 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance()
-                .extractLocaleAwareValue(
-                        LocaleContexts.jre(locale)
-                ).get()
-                .spreadsheetFormatPattern()
-                .get();
+            .extractLocaleAwareValue(
+                LocaleContexts.jre(locale)
+            ).get()
+            .spreadsheetFormatPattern()
+            .get();
 
         final LocalDate date = LocalDate.of(1999, 12, 31);
         final String formatted = pattern.formatter()
-                .format(
-                        Optional.of(date),
-                        SPREADSHEET_FORMATTER_CONTEXT
-                ).get()
-                .text();
+            .format(
+                Optional.of(date),
+                SPREADSHEET_FORMATTER_CONTEXT
+            ).get()
+            .text();
 
         final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.FULL, locale);
         final String expected = simpleDateFormat.format(Date.from(date.atStartOfDay().toInstant(ZoneOffset.UTC)));
@@ -61,8 +61,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance(),
-                "dateFormatter"
+            SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance(),
+            "dateFormatter"
         );
     }
 
@@ -74,7 +74,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
     @Override
     SpreadsheetFormatterSelector propertyValue() {
         return SpreadsheetDateFormatPattern.parseDateFormatPattern("dd mm yyyy \"custom\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................

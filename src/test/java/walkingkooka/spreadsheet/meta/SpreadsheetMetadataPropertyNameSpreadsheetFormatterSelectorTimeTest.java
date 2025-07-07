@@ -29,14 +29,14 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
-                        .spreadsheetFormatterSelector()
+            LocaleContexts.jre(Locale.ENGLISH),
+            SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
+                .spreadsheetFormatterSelector()
         );
     }
 
@@ -44,32 +44,32 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
     public void testExtractLocaleAwareValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance()
-                .extractLocaleAwareValue(
-                        LocaleContexts.jre(locale)
-                ).get()
-                .spreadsheetFormatPattern()
-                .get();
+            .extractLocaleAwareValue(
+                LocaleContexts.jre(locale)
+            ).get()
+            .spreadsheetFormatPattern()
+            .get();
 
         final LocalTime time = LocalTime.of(12, 58, 59);
         final String formatted = pattern.formatter()
-                .format(
-                        Optional.of(time),
-                        SPREADSHEET_FORMATTER_CONTEXT
-                ).get()
-                .text();
+            .format(
+                Optional.of(time),
+                SPREADSHEET_FORMATTER_CONTEXT
+            ).get()
+            .text();
 
         this.checkEquals(
-                "12:58:59 PM",
-                formatted,
-                pattern::toString
+            "12:58:59 PM",
+            formatted,
+            pattern::toString
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance(),
-                "timeFormatter"
+            SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance(),
+            "timeFormatter"
         );
     }
 
@@ -81,7 +81,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
     @Override
     SpreadsheetFormatterSelector propertyValue() {
         return SpreadsheetTimeFormatPattern.parseTimeFormatPattern("hh mm ss\"custom\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................

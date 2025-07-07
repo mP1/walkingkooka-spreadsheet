@@ -29,8 +29,8 @@ import walkingkooka.text.cursor.parser.ParserTokens;
 import java.util.function.Predicate;
 
 public final class SpreadsheetFormatParserTokenPredicateTest implements PredicateTesting2<SpreadsheetFormatParserTokenPredicate, ParserToken>,
-        ClassTesting<SpreadsheetFormatParserTokenPredicate>,
-        ToStringTesting<SpreadsheetFormatParserTokenPredicate> {
+    ClassTesting<SpreadsheetFormatParserTokenPredicate>,
+    ToStringTesting<SpreadsheetFormatParserTokenPredicate> {
 
     @Test
     public void testTestNullFalse() {
@@ -40,28 +40,28 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
     @Test
     public void testNotSpreadsheetFormatParserToken() {
         this.testFalse(
-                SpreadsheetFormatParserTokenPredicate.with(Predicates.fake()),
-                ParserTokens.fake()
+            SpreadsheetFormatParserTokenPredicate.with(Predicates.fake()),
+            ParserTokens.fake()
         );
     }
 
     @Test
     public void testSpreadsheetFormatParserTokenFalse() {
         this.testFalse(
-                SpreadsheetFormatParserTokenPredicate.with(
-                        SpreadsheetFormatParserToken::isHour
-                ),
-                SpreadsheetFormatParserToken.amPm("ampm", "ampm")
+            SpreadsheetFormatParserTokenPredicate.with(
+                SpreadsheetFormatParserToken::isHour
+            ),
+            SpreadsheetFormatParserToken.amPm("ampm", "ampm")
         );
     }
 
     @Test
     public void testSpreadsheetFormatParserTokenTrue() {
         this.testTrue(
-                SpreadsheetFormatParserTokenPredicate.with(
-                        SpreadsheetFormatParserToken::isHour
-                ),
-                SpreadsheetFormatParserToken.hour("h", "h")
+            SpreadsheetFormatParserTokenPredicate.with(
+                SpreadsheetFormatParserToken::isHour
+            ),
+            SpreadsheetFormatParserToken.hour("h", "h")
         );
     }
 
@@ -70,15 +70,15 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
         final Predicate<SpreadsheetFormatParserToken> predicate = Predicates.fake();
 
         this.toStringAndCheck(
-                SpreadsheetFormatParserTokenPredicate.with(predicate),
-                predicate.toString()
+            SpreadsheetFormatParserTokenPredicate.with(predicate),
+            predicate.toString()
         );
     }
 
     @Override
     public SpreadsheetFormatParserTokenPredicate createPredicate() {
         return SpreadsheetFormatParserTokenPredicate.with(
-                SpreadsheetFormatParserToken::isHour
+            SpreadsheetFormatParserToken::isHour
         );
     }
 

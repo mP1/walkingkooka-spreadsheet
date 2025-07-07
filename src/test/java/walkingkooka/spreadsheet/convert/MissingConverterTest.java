@@ -37,60 +37,60 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterTest implements ClassTesting2<MissingConverter>,
-        HashCodeEqualsDefinedTesting2<MissingConverter>,
-        ComparableTesting2<MissingConverter>,
-        IteratorTesting,
-        ToStringTesting<MissingConverter>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<MissingConverter> {
+    HashCodeEqualsDefinedTesting2<MissingConverter>,
+    ComparableTesting2<MissingConverter>,
+    IteratorTesting,
+    ToStringTesting<MissingConverter>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<MissingConverter> {
 
     private final static ConverterName NAME = ConverterName.BOOLEAN_TO_NUMBER;
 
     private final static Set<MissingConverterValue> VALUES = Sets.of(
-            MissingConverterValue.with(
-                    "Hello",
-                    String.class.getName()
-            )
+        MissingConverterValue.with(
+            "Hello",
+            String.class.getName()
+        )
     );
 
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MissingConverter.with(
-                        null,
-                        VALUES
-                )
+            NullPointerException.class,
+            () -> MissingConverter.with(
+                null,
+                VALUES
+            )
         );
     }
 
     @Test
     public void testWithNullValuesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MissingConverter.with(
-                        NAME,
-                        null
-                )
+            NullPointerException.class,
+            () -> MissingConverter.with(
+                NAME,
+                null
+            )
         );
     }
 
     @Test
     public void testWith() {
         final MissingConverter missing = MissingConverter.with(
-                NAME,
-                VALUES
+            NAME,
+            VALUES
         );
 
         this.checkEquals(
-                NAME,
-                missing.name(),
-                "name"
+            NAME,
+            missing.name(),
+            "name"
         );
         this.checkEquals(
-                VALUES,
-                missing.values(),
-                "values"
+            VALUES,
+            missing.values(),
+            "values"
         );
     }
 
@@ -99,33 +99,33 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Test
     public void testEqualsDifferentName() {
         this.checkNotEquals(
-                MissingConverter.with(
-                        ConverterName.with("different"),
-                        VALUES
-                )
+            MissingConverter.with(
+                ConverterName.with("different"),
+                VALUES
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentValues() {
         this.checkNotEquals(
-                MissingConverter.with(
-                        NAME,
-                        Sets.of(
-                                MissingConverterValue.with(
-                                        "Different",
-                                        String.class.getName()
-                                )
-                        )
+            MissingConverter.with(
+                NAME,
+                Sets.of(
+                    MissingConverterValue.with(
+                        "Different",
+                        String.class.getName()
+                    )
                 )
+            )
         );
     }
 
     @Override
     public MissingConverter createObject() {
         return MissingConverter.with(
-                NAME,
-                VALUES
+            NAME,
+            VALUES
         );
     }
 
@@ -134,8 +134,8 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createObject(),
-                "boolean-to-number \"Hello\" java.lang.String"
+            this.createObject(),
+            "boolean-to-number \"Hello\" java.lang.String"
         );
     }
 
@@ -144,18 +144,18 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Test
     public void testComparableSort() {
         final MissingConverter apple = MissingConverter.with(
-                ConverterName.with("apple"),
-                VALUES
+            ConverterName.with("apple"),
+            VALUES
         );
 
         final MissingConverter banana = MissingConverter.with(
-                ConverterName.with("banana"),
-                VALUES
+            ConverterName.with("banana"),
+            VALUES
         );
 
         final MissingConverter carrot = MissingConverter.with(
-                ConverterName.with("carrot"),
-                VALUES
+            ConverterName.with("carrot"),
+            VALUES
         );
 
         final Set<MissingConverter> treeSet = SortedSets.tree();
@@ -164,10 +164,10 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
         treeSet.add(banana);
 
         this.iterateAndCheck(
-                treeSet.iterator(),
-                apple,
-                banana,
-                carrot
+            treeSet.iterator(),
+            apple,
+            banana,
+            carrot
         );
     }
 
@@ -181,10 +181,10 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Test
     public void testTreePrintable() {
         this.treePrintAndCheck(
-                this.createComparable(),
-                "boolean-to-number\n" +
-                        "  \"Hello\"\n" +
-                        "    java.lang.String\n"
+            this.createComparable(),
+            "boolean-to-number\n" +
+                "  \"Hello\"\n" +
+                "    java.lang.String\n"
         );
     }
 
@@ -193,16 +193,16 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "{\n" +
-                        "  \"name\": \"boolean-to-number\",\n" +
-                        "  \"values\": [\n" +
-                        "    {\n" +
-                        "      \"value\": \"Hello\",\n" +
-                        "      \"type\": \"java.lang.String\"\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}"
+            this.createJsonNodeMarshallingValue(),
+            "{\n" +
+                "  \"name\": \"boolean-to-number\",\n" +
+                "  \"values\": [\n" +
+                "    {\n" +
+                "      \"value\": \"Hello\",\n" +
+                "      \"type\": \"java.lang.String\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}"
         );
     }
 
@@ -210,8 +210,8 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     public MissingConverter unmarshall(final JsonNode json,
                                        final JsonNodeUnmarshallContext context) {
         return MissingConverter.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

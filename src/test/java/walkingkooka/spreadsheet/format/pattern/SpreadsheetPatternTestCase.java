@@ -48,16 +48,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
-        implements ClassTesting2<P>,
-        SpreadsheetPatternSpreadsheetFormatterTesting,
-        HashCodeEqualsDefinedTesting2<P>,
-        JsonNodeMarshallingTesting<P>,
-        IsMethodTesting<P>,
-        MathTesting,
-        ParserTesting,
-        ParseStringTesting<P>,
-        TreePrintableTesting,
-        ToStringTesting<P> {
+    implements ClassTesting2<P>,
+    SpreadsheetPatternSpreadsheetFormatterTesting,
+    HashCodeEqualsDefinedTesting2<P>,
+    JsonNodeMarshallingTesting<P>,
+    IsMethodTesting<P>,
+    MathTesting,
+    ParserTesting,
+    ParseStringTesting<P>,
+    TreePrintableTesting,
+    ToStringTesting<P> {
 
     SpreadsheetPatternTestCase() {
         super();
@@ -71,36 +71,36 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         final List<?> patterns = pattern.patterns();
 
         assertSame(
-                patterns,
-                pattern.patterns(),
-                "patterns not cached"
+            patterns,
+            pattern.patterns(),
+            "patterns not cached"
         );
     }
 
     final void patternsAndCheck(final P pattern,
                                 final String... patterns) {
         this.patternsAndCheck2(
-                pattern,
-                Arrays.stream(patterns)
-                        .map(this::createPattern)
-                        .collect(Collectors.toList())
+            pattern,
+            Arrays.stream(patterns)
+                .map(this::createPattern)
+                .collect(Collectors.toList())
         );
     }
 
     final void patternsAndCheck2(final P pattern,
                                  final P... patterns) {
         this.patternsAndCheck2(
-                pattern,
-                Lists.of(patterns)
+            pattern,
+            Lists.of(patterns)
         );
     }
 
     final void patternsAndCheck2(final P pattern,
                                  final List<P> patterns) {
         this.checkEquals(
-                patterns,
-                pattern.patterns(),
-                () -> pattern + " patterns"
+            patterns,
+            pattern.patterns(),
+            () -> pattern + " patterns"
         );
     }
 
@@ -108,17 +108,17 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
 
     final void removeColorAndCheck(final P pattern) {
         this.removeColorAndCheck(
-                pattern,
-                pattern
+            pattern,
+            pattern
         );
     }
 
     final void removeColorAndCheck(final P pattern,
                                    final P expected) {
         this.checkEquals(
-                expected,
-                pattern.removeColor(),
-                () -> pattern + " removeColor"
+            expected,
+            pattern.removeColor(),
+            () -> pattern + " removeColor"
         );
     }
 
@@ -127,27 +127,27 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     @Test
     public final void testSetColorNameWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .setColorName(null)
+            NullPointerException.class,
+            () -> this.createPattern()
+                .setColorName(null)
         );
     }
 
     @Test
     public final void testSetColorNumberWithLessThanMinFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createPattern()
-                        .setColorNumber(SpreadsheetColors.MIN - 1)
+            IllegalArgumentException.class,
+            () -> this.createPattern()
+                .setColorNumber(SpreadsheetColors.MIN - 1)
         );
     }
 
     @Test
     public final void testSetColorNumberWithGreaterThanMaxFails2() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createPattern()
-                        .setColorNumber(SpreadsheetColors.MAX + 1)
+            IllegalArgumentException.class,
+            () -> this.createPattern()
+                .setColorNumber(SpreadsheetColors.MAX + 1)
         );
     }
 
@@ -155,17 +155,17 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
 
     final void removeConditionAndCheck(final P pattern) {
         this.removeConditionAndCheck(
-                pattern,
-                pattern
+            pattern,
+            pattern
         );
     }
 
     final void removeConditionAndCheck(final P pattern,
                                        final P expected) {
         this.checkEquals(
-                expected,
-                pattern.removeCondition(),
-                () -> pattern + " removeCondition"
+            expected,
+            pattern.removeCondition(),
+            () -> pattern + " removeCondition"
         );
     }
 
@@ -173,249 +173,249 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
 
     final SpreadsheetFormatParserToken ampm() {
         return SpreadsheetFormatParserToken.amPm(
-                "A/P",
-                "A/P"
+            "A/P",
+            "A/P"
         );
     }
 
     final SpreadsheetFormatParserToken bracketClose() {
         return SpreadsheetFormatParserToken.bracketCloseSymbol(
-                "]",
-                "]"
+            "]",
+            "]"
         );
     }
 
     final SpreadsheetFormatParserToken bracketOpen() {
         return SpreadsheetFormatParserToken.bracketOpenSymbol(
-                "[",
-                "["
+            "[",
+            "["
         );
     }
 
     final SpreadsheetFormatParserToken color() {
         return SpreadsheetFormatParserToken.color(
-                Lists.of(
-                        colorName()
-                ),
-                "[RED]"
+            Lists.of(
+                colorName()
+            ),
+            "[RED]"
         );
     }
 
     final SpreadsheetFormatParserToken colorName() {
         return SpreadsheetFormatParserToken.colorName(
-                "RED",
-                "RED"
+            "RED",
+            "RED"
         );
     }
 
     final SpreadsheetFormatParserToken currency() {
         return SpreadsheetFormatParserToken.currency(
-                "%",
-                "%"
+            "%",
+            "%"
         );
     }
 
     final SpreadsheetFormatParserToken date() {
         return SpreadsheetFormatParserToken.date(
-                Lists.of(
-                        color()
-                ),
-                "[RED]"
+            Lists.of(
+                color()
+            ),
+            "[RED]"
         );
     }
 
     final SpreadsheetFormatParserToken dateTime() {
         return SpreadsheetFormatParserToken.dateTime(
-                Lists.of(
-                        color()
-                ),
-                "[RED]"
+            Lists.of(
+                color()
+            ),
+            "[RED]"
         );
     }
 
     final SpreadsheetFormatParserToken day() {
         return SpreadsheetFormatParserToken.day(
-                "d",
-                "d"
+            "d",
+            "d"
         );
     }
 
     final SpreadsheetFormatParserToken decimalPoint() {
         return SpreadsheetFormatParserToken.decimalPoint(
-                ".",
-                "."
+            ".",
+            "."
         );
     }
 
     final SpreadsheetFormatParserToken digit() {
         return SpreadsheetFormatParserToken.digit(
-                "#",
-                "#"
+            "#",
+            "#"
         );
     }
 
     final SpreadsheetFormatParserToken digitSpace() {
         return SpreadsheetFormatParserToken.digitSpace(
-                "?",
-                "?"
+            "?",
+            "?"
         );
     }
 
     final SpreadsheetFormatParserToken digitZero() {
         return SpreadsheetFormatParserToken.digitZero(
-                "0",
-                "0"
+            "0",
+            "0"
         );
     }
 
     final SpreadsheetFormatParserToken equalsSymbol() {
         return SpreadsheetFormatParserToken.equalsSymbol(
-                "=",
-                "="
+            "=",
+            "="
         );
     }
 
     final SpreadsheetFormatParserToken exponentSymbol() {
         return SpreadsheetFormatParserToken.exponentSymbol(
-                "^",
-                "^"
+            "^",
+            "^"
         );
     }
 
     final SpreadsheetFormatParserToken fractionSymbol() {
         return SpreadsheetFormatParserToken.fractionSymbol(
-                "/",
-                "/"
+            "/",
+            "/"
         );
     }
 
     final SpreadsheetFormatParserToken greaterThanSymbol() {
         return SpreadsheetFormatParserToken.greaterThanSymbol(
-                "<",
-                "<"
+            "<",
+            "<"
         );
     }
 
     final SpreadsheetFormatParserToken greaterThanEqualsSymbol() {
         return SpreadsheetFormatParserToken.greaterThanEqualsSymbol(
-                "<=",
-                "<="
+            "<=",
+            "<="
         );
     }
 
     final SpreadsheetFormatParserToken hour() {
         return SpreadsheetFormatParserToken.hour(
-                "h",
-                "h"
+            "h",
+            "h"
         );
     }
 
     final SpreadsheetFormatParserToken lessThanSymbol() {
         return SpreadsheetFormatParserToken.lessThanSymbol(
-                "<",
-                "<"
+            "<",
+            "<"
         );
     }
 
     final SpreadsheetFormatParserToken lessThanEqualsSymbol() {
         return SpreadsheetFormatParserToken.lessThanEqualsSymbol(
-                "<=",
-                "<="
+            "<=",
+            "<="
         );
     }
 
     final SpreadsheetFormatParserToken minute() {
         return SpreadsheetFormatParserToken.minute(
-                "m",
-                "m"
+            "m",
+            "m"
         );
     }
 
     final SpreadsheetFormatParserToken month() {
         return SpreadsheetFormatParserToken.month(
-                "m",
-                "m"
+            "m",
+            "m"
         );
     }
 
     final SpreadsheetFormatParserToken notEqualsSymbol() {
         return SpreadsheetFormatParserToken.notEqualsSymbol(
-                "<=",
-                "<="
+            "<=",
+            "<="
         );
     }
 
     final SpreadsheetFormatParserToken number() {
         return SpreadsheetFormatParserToken.number(
-                Lists.of(
-                        color()
-                ),
-                "[RED]"
+            Lists.of(
+                color()
+            ),
+            "[RED]"
         );
     }
 
     final SpreadsheetFormatParserToken percentSymbol() {
         return SpreadsheetFormatParserToken.percent(
-                "%",
-                "%"
+            "%",
+            "%"
         );
     }
 
     final SpreadsheetFormatParserToken second() {
         return SpreadsheetFormatParserToken.second(
-                "s",
-                "s"
+            "s",
+            "s"
         );
     }
 
     final SpreadsheetFormatParserToken separator() {
         return SpreadsheetFormatParserToken.separatorSymbol(
-                SpreadsheetPattern.SEPARATOR.string(),
-                SpreadsheetPattern.SEPARATOR.string()
+            SpreadsheetPattern.SEPARATOR.string(),
+            SpreadsheetPattern.SEPARATOR.string()
         );
     }
 
     final SpreadsheetFormatParserToken textLiteral() {
         return SpreadsheetFormatParserToken.textLiteral(
-                "@",
-                "@"
+            "@",
+            "@"
         );
     }
 
     final SpreadsheetFormatParserToken groupSeparator() {
         return SpreadsheetFormatParserToken.groupSeparator(
-                ",",
-                ","
+            ",",
+            ","
         );
     }
 
     final SpreadsheetFormatParserToken time() {
         return SpreadsheetFormatParserToken.time(
-                Lists.of(
-                        color()
-                ),
-                "[RED]"
+            Lists.of(
+                color()
+            ),
+            "[RED]"
         );
     }
 
     final SpreadsheetFormatParserToken underscore() {
         return SpreadsheetFormatParserToken.underscore(
-                '_',
-                "_"
+            '_',
+            "_"
         );
     }
 
     final SpreadsheetFormatParserToken whitespace() {
         return SpreadsheetFormatParserToken.whitespace(
-                " ",
-                " "
+            " ",
+            " "
         );
     }
 
     final SpreadsheetFormatParserToken year() {
         return SpreadsheetFormatParserToken.year(
-                "y",
-                "y"
+            "y",
+            "y"
         );
     }
 
@@ -423,7 +423,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
 
     final P createPattern() {
         return this.createPattern(
-                this.patternText()
+            this.patternText()
         );
     }
 
@@ -437,9 +437,9 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
                                final Object value,
                                final String expected) {
         this.formatAndCheck2(
-                pattern,
-                value,
-                SpreadsheetText.with(expected)
+            pattern,
+            value,
+            SpreadsheetText.with(expected)
         );
     }
 
@@ -447,11 +447,11 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
                                final Object value,
                                final SpreadsheetText expected) {
         this.formatAndCheck(
-                this.createPattern(pattern)
-                        .formatter(),
-                value,
-                this.createContext(),
-                expected
+            this.createPattern(pattern)
+                .formatter(),
+            value,
+            this.createContext(),
+            expected
         );
     }
 
@@ -460,10 +460,10 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
                                final char zeroDigit,
                                final String expected) {
         this.formatAndCheck2(
-                pattern,
-                value,
-                zeroDigit,
-                SpreadsheetText.EMPTY.setText(expected)
+            pattern,
+            value,
+            zeroDigit,
+            SpreadsheetText.EMPTY.setText(expected)
         );
     }
 
@@ -472,37 +472,37 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
                                final char zeroDigit,
                                final SpreadsheetText expected) {
         this.formatAndCheck(
-                this.createPattern(pattern)
-                        .formatter(),
-                value,
-                this.createContext(zeroDigit),
-                expected
+            this.createPattern(pattern)
+                .formatter(),
+            value,
+            this.createContext(zeroDigit),
+            expected
         );
     }
 
     @Test
     public final void testFormatSpreadsheetTextWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .createFormatter()
-                        .formatSpreadsheetText(
-                                null,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createPattern()
+                .createFormatter()
+                .formatSpreadsheetText(
+                    null,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     public final void testFormatSpreadsheetTextWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createPattern()
-                        .createFormatter()
-                        .formatSpreadsheetText(
-                                Optional.of("Value"),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createPattern()
+                .createFormatter()
+                .formatSpreadsheetText(
+                    Optional.of("Value"),
+                    null
+                )
         );
     }
 
@@ -517,7 +517,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     @Test
     public final void testEqualsDifferentPattern() {
         this.checkNotEquals(
-                this.createPattern("\"different-text-literal\"")
+            this.createPattern("\"different-text-literal\"")
         );
     }
 
@@ -567,8 +567,8 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     @Test
     public final void testToString() {
         this.toStringAndCheck(
-                this.createPattern(),
-                CharSequences.quoteIfChars(this.patternText()).toString()
+            this.createPattern(),
+            CharSequences.quoteIfChars(this.patternText()).toString()
         );
     }
 

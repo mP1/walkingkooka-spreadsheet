@@ -31,12 +31,12 @@ public final class SpreadsheetConverterGeneralSpreadsheetValueVisitorTest implem
     @Test
     public void testConverterUnknownValue() {
         this.checkEquals(
-                null,
-                SpreadsheetConverterGeneralSpreadsheetValueVisitor.converter(
-                        this,
-                        Void.class,
-                        null
-                )
+            null,
+            SpreadsheetConverterGeneralSpreadsheetValueVisitor.converter(
+                this,
+                Void.class,
+                null
+            )
         );
     }
 

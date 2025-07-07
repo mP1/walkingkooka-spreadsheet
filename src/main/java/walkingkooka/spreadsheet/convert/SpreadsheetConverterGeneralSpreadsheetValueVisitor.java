@@ -43,8 +43,8 @@ final class SpreadsheetConverterGeneralSpreadsheetValueVisitor extends Spreadshe
                                                             final SpreadsheetConverterGeneralMapping<SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>>> mapping) {
 
         final SpreadsheetConverterGeneralSpreadsheetValueVisitor visitor = new SpreadsheetConverterGeneralSpreadsheetValueVisitor(
-                targetType,
-                mapping
+            targetType,
+            mapping
         );
         visitor.accept(value);
         return visitor.converter;
@@ -198,9 +198,9 @@ final class SpreadsheetConverterGeneralSpreadsheetValueVisitor extends Spreadshe
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .separator(", ")
-                .value(this.targetType.getSimpleName())
-                .value(this.mapping)
-                .build();
+            .separator(", ")
+            .value(this.targetType.getSimpleName())
+            .value(this.mapping)
+            .build();
     }
 }

@@ -25,10 +25,10 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting extends Spreadshe
                                                final Optional<Object> value,
                                                final SpreadsheetFormatterContext context) {
         this.formatSpreadsheetTextAndCheck(
-                formatter,
-                value,
-                context,
-                Optional.empty()
+            formatter,
+            value,
+            context,
+            Optional.empty()
         );
     }
 
@@ -37,10 +37,10 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting extends Spreadshe
                                                final SpreadsheetFormatterContext context,
                                                final SpreadsheetText expected) {
         this.formatSpreadsheetTextAndCheck(
-                formatter,
-                value,
-                context,
-                Optional.of(expected)
+            formatter,
+            value,
+            context,
+            Optional.of(expected)
         );
     }
 
@@ -49,11 +49,11 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting extends Spreadshe
                                                final SpreadsheetFormatterContext context,
                                                final Optional<SpreadsheetText> expected) {
         this.checkEquals(
-                expected,
-                formatter.formatSpreadsheetText(
-                        value,
-                        context
-                )
+            expected,
+            formatter.formatSpreadsheetText(
+                value,
+                context
+            )
         );
     }
 }

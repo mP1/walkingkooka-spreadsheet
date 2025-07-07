@@ -24,8 +24,8 @@ public final class SpreadsheetMetadataPropertyNameIntegerPrecisionTest extends S
     @Test
     public void testCheckValueWithNegativeValueFails() {
         this.checkValueFails(
-                -1,
-                "Metadata precision=-1, < 0"
+            -1,
+            "Metadata precision=-1, < 0"
         );
     }
 

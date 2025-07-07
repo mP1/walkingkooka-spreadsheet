@@ -25,8 +25,7 @@ public abstract class SpreadsheetMetadataPropertyNameConverterAliasSetTestCase<N
         super();
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return ConverterAliasSet.class.getSimpleName();
     }
 }

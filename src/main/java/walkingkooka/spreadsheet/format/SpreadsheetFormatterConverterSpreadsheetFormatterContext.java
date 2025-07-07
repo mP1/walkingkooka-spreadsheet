@@ -43,10 +43,10 @@ import java.util.Locale;
 import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
-        DateTimeContextDelegator,
-        DecimalNumberContextDelegator,
-        JsonNodeMarshallContextDelegator,
-        JsonNodeUnmarshallContextDelegator {
+    DateTimeContextDelegator,
+    DecimalNumberContextDelegator,
+    JsonNodeMarshallContextDelegator,
+    JsonNodeUnmarshallContextDelegator {
 
     static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
@@ -62,8 +62,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.context.canConvert(
-                value,
-                type
+            value,
+            type
         );
     }
 
@@ -86,8 +86,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
         return this.context.convert(
-                value,
-                type
+            value,
+            type
         );
     }
 
@@ -180,8 +180,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         final SpreadsheetConverterContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
+            this :
+            new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
     }
 
     // HasSpreadsheetMetadata............................................................................................

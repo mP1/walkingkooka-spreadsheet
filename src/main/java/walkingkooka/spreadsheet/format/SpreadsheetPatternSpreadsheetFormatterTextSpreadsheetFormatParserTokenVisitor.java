@@ -48,7 +48,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
         final SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(value, context);
         visitor.accept(token);
         return SpreadsheetText.with(
-                visitor.text.toString()
+            visitor.text.toString()
         ).setColor(visitor.color);
     }
 
@@ -65,14 +65,14 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = this.context.colorName(
-                token.colorName()
+            token.colorName()
         );
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.color = this.context.colorNumber(
-                token.value()
+            token.value()
         );
     }
 
@@ -104,7 +104,7 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     @Override
     protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
         final String value = this.value;
-        if(null != value) {
+        if (null != value) {
             this.append(value);
         }
     }
@@ -119,10 +119,10 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     @Override
     protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.append(
-                CharSequences.repeating(
-                        ' ',
-                        token.value().length()
-                )
+            CharSequences.repeating(
+                ' ',
+                token.value().length()
+            )
         );
     }
 

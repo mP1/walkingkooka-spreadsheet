@@ -53,7 +53,7 @@ final class SpreadsheetSelectionReplaceReferencesMapperFunction implements Funct
                         mapped = null;
                     } else {
                         mapped = mapped.setColumn(
-                                column.setValue(value)
+                            column.setValue(value)
                         );
                     }
                 }
@@ -71,7 +71,7 @@ final class SpreadsheetSelectionReplaceReferencesMapperFunction implements Funct
                             mapped = null;
                         } else {
                             mapped = mapped.setRow(
-                                    row.setValue(value)
+                                row.setValue(value)
                             );
                         }
                     }

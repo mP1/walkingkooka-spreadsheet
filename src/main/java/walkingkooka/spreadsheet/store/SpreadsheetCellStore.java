@@ -43,10 +43,10 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      */
     default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         return this.loadCellRange(
-                range,
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                Integer.MAX_VALUE // max
+            range,
+            SpreadsheetCellRangeReferencePath.LRTD,
+            0, // offset
+            Integer.MAX_VALUE // max
         );
     }
 
@@ -72,7 +72,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
             final SpreadsheetFormula formulaAfter = formulaBefore.setExpression(SpreadsheetFormula.NO_EXPRESSION);
             if (false == formulaBefore.equals(formulaAfter)) {
                 this.save(
-                        cell.setFormula(formulaAfter)
+                    cell.setFormula(formulaAfter)
                 );
             }
         }

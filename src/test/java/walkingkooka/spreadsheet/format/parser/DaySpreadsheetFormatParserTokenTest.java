@@ -72,48 +72,48 @@ public final class DaySpreadsheetFormatParserTokenTest extends NonSymbolSpreadsh
     @Test
     public void testKind1() {
         this.kindAndCheck(
-                "d",
-                SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO
+            "d",
+            SpreadsheetFormatParserTokenKind.DAY_WITHOUT_LEADING_ZERO
         );
     }
 
     @Test
     public void testKind2() {
         this.kindAndCheck(
-                "dd",
-                SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO
+            "dd",
+            SpreadsheetFormatParserTokenKind.DAY_WITH_LEADING_ZERO
         );
     }
 
     @Test
     public void testKind3() {
         this.kindAndCheck(
-                "ddd",
-                SpreadsheetFormatParserTokenKind.DAY_NAME_ABBREVIATION
+            "ddd",
+            SpreadsheetFormatParserTokenKind.DAY_NAME_ABBREVIATION
         );
     }
 
     @Test
     public void testKind4() {
         this.kindAndCheck(
-                "dddd",
-                SpreadsheetFormatParserTokenKind.DAY_NAME_FULL
+            "dddd",
+            SpreadsheetFormatParserTokenKind.DAY_NAME_FULL
         );
     }
 
     @Test
     public void testKind5() {
         this.kindAndCheck(
-                "ddddd",
-                SpreadsheetFormatParserTokenKind.DAY_NAME_FULL
+            "ddddd",
+            SpreadsheetFormatParserTokenKind.DAY_NAME_FULL
         );
     }
 
     @Test
     public void testKind6() {
         this.kindAndCheck(
-                "dddddd",
-                SpreadsheetFormatParserTokenKind.DAY_NAME_FULL
+            "dddddd",
+            SpreadsheetFormatParserTokenKind.DAY_NAME_FULL
         );
     }
 

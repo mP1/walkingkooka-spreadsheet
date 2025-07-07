@@ -39,8 +39,8 @@ public final class GreaterThanSpreadsheetFormulaParserToken extends ConditionSpr
                                                                                                           final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightGreaterThan(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -49,9 +49,9 @@ public final class GreaterThanSpreadsheetFormulaParserToken extends ConditionSpr
     @Override
     public GreaterThanSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                GreaterThanSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            GreaterThanSpreadsheetFormulaParserToken::with
         );
     }
 

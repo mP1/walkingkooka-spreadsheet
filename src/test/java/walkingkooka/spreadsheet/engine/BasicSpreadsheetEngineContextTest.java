@@ -108,7 +108,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
 
@@ -143,8 +143,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             Objects.requireNonNull(context, "context");
 
             return selector.evaluateValueText(
-                    this,
-                    context
+                this,
+                context
             );
         }
 
@@ -164,16 +164,16 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         public Object apply(final List<Object> parameters,
                                             final SpreadsheetExpressionEvaluationContext context) {
                             return parameters.stream()
-                                    .mapToLong(p -> context.convertOrFail(p, Long.class))
-                                    .sum();
+                                .mapToLong(p -> context.convertOrFail(p, Long.class))
+                                .sum();
                         }
 
                         @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                             return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                            .variable(Object.class)
-                                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                                ExpressionFunctionParameterName.with("parameters")
+                                    .variable(Object.class)
+                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
                             );
                         }
 
@@ -188,21 +188,21 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         public Object apply(final List<Object> parameters,
                                             final SpreadsheetExpressionEvaluationContext context) {
                             return context.loadCell(
-                                            (SpreadsheetCellReference) parameters.get(0)
-                                    ).get()
-                                    .formula()
-                                    .errorOrValue()
-                                    .get();
+                                    (SpreadsheetCellReference) parameters.get(0)
+                                ).get()
+                                .formula()
+                                .errorOrValue()
+                                .get();
                         }
 
                         @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                             return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                            .variable(Object.class)
-                                            .setKinds(
-                                                    Sets.of(ExpressionFunctionParameterKind.EVALUATE)
-                                            )
+                                ExpressionFunctionParameterName.with("parameters")
+                                    .variable(Object.class)
+                                    .setKinds(
+                                        Sets.of(ExpressionFunctionParameterKind.EVALUATE)
+                                    )
                             );
                         }
 
@@ -222,8 +222,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                             return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                            .variable(Object.class)
+                                ExpressionFunctionParameterName.with("parameters")
+                                    .variable(Object.class)
                             );
                         }
 
@@ -243,8 +243,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                             return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                            .variable(Object.class)
+                                ExpressionFunctionParameterName.with("parameters")
+                                    .variable(Object.class)
                             );
                         }
 
@@ -261,24 +261,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         @Override
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
             return SpreadsheetExpressionFunctions.infoSet(
-                    Sets.of(
-                            SpreadsheetExpressionFunctions.info(
-                                    Url.parseAbsolute("https://example.com/test/xyz"),
-                                    SpreadsheetExpressionFunctions.name("xyz")
-                            ),
-                            SpreadsheetExpressionFunctions.info(
-                                    Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
-                                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
-                            ),
-                            SpreadsheetExpressionFunctions.info(
-                                    Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
-                                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
-                            ),
-                            SpreadsheetExpressionFunctions.info(
-                                    Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
-                                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
-                            )
+                Sets.of(
+                    SpreadsheetExpressionFunctions.info(
+                        Url.parseAbsolute("https://example.com/test/xyz"),
+                        SpreadsheetExpressionFunctions.name("xyz")
+                    ),
+                    SpreadsheetExpressionFunctions.info(
+                        Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
+                        SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
+                    ),
+                    SpreadsheetExpressionFunctions.info(
+                        Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
+                        SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
+                    ),
+                    SpreadsheetExpressionFunctions.info(
+                        Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
+                        SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
                     )
+                )
             );
         }
 
@@ -289,31 +289,31 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     };
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-            .loadFromLocale(
-                    LocaleContexts.jre(LOCALE)
-            ).set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-            .set(
-                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                    DecimalNumberSymbols.with(
-                            MINUS,
-                            PLUS,
-                            ZERO_DIGIT,
-                            CURRENCY,
-                            DECIMAL,
-                            EXPONENT,
-                            GROUP_SEPARATOR,
-                            INFINITY,
-                            MONETARY_DECIMAL_SEPARATOR,
-                            NAN,
-                            PERCENT,
-                            PERMILL_SYMBOL
-                    )
-            ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-            .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
-            .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, SpreadsheetExpressionFunctions.parseAliasSet("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
+        .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+        .loadFromLocale(
+            LocaleContexts.jre(LOCALE)
+        ).set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
+        .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+        .set(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+            DecimalNumberSymbols.with(
+                MINUS,
+                PLUS,
+                ZERO_DIGIT,
+                CURRENCY,
+                DECIMAL,
+                EXPONENT,
+                GROUP_SEPARATOR,
+                INFINITY,
+                MONETARY_DECIMAL_SEPARATOR,
+                NAN,
+                PERCENT,
+                PERMILL_SYMBOL
+            )
+        ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
+        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+        .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
+        .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, SpreadsheetExpressionFunctions.parseAliasSet("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
 
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
@@ -325,11 +325,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                   final SpreadsheetExpressionEvaluationContext context) {
             if (cell.equalsIgnoreReferenceKind(LOAD_CELL_REFERENCE)) {
                 return Optional.of(
-                        LOAD_CELL_REFERENCE.setFormula(
-                                SpreadsheetFormula.EMPTY.setValue(
-                                        Optional.of(LOAD_CELL_VALUE)
-                                )
+                    LOAD_CELL_REFERENCE.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                            Optional.of(LOAD_CELL_VALUE)
                         )
+                    )
                 );
             }
             return Optional.empty();
@@ -355,112 +355,112 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullServerUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        null,
-                        METADATA,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        LOCALE_CONTEXT,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                null,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        null,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        LOCALE_CONTEXT,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                null,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullStoreRepositoryFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        METADATA,
-                        null,
-                        FUNCTION_ALIASES,
-                        LOCALE_CONTEXT,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                null,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullFunctionAliasesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        METADATA,
-                        STORE_REPOSITORY,
-                        null,
-                        LOCALE_CONTEXT,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                null,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullLocaleContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        METADATA,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        null,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                null,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        METADATA,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        LOCALE_CONTEXT,
-                        null,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullProviderContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        METADATA,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        LOCALE_CONTEXT,
-                        SPREADSHEET_PROVIDER,
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                null
+            )
         );
     }
 
@@ -469,8 +469,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testServerUrl() {
         this.serverUrlAndCheck(
-                this.createContext(),
-                SERVER_URL
+            this.createContext(),
+            SERVER_URL
         );
     }
 
@@ -485,9 +485,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         store.save(label.setLabelMappingReference(cell));
 
         this.resolveLabelAndCheck(
-                this.createContext(store),
-                label,
-                cell
+            this.createContext(store),
+            label,
+            cell
         );
     }
 
@@ -502,9 +502,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         store.save(label2.setLabelMappingReference(cell));
 
         this.resolveLabelAndCheck(
-                this.createContext(store),
-                label1,
-                cell
+            this.createContext(store),
+            label1,
+            cell
         );
     }
 
@@ -515,11 +515,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final SpreadsheetComparator<?> comparator = SpreadsheetComparators.text();
 
         this.spreadsheetComparatorAndCheck(
-                this.createContext(),
-                comparator.name(),
-                Lists.empty(),
-                PROVIDER_CONTEXT,
-                comparator
+            this.createContext(),
+            comparator.name(),
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            comparator
         );
     }
 
@@ -530,14 +530,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "abc123";
         final String formula = "'" + text;
         this.parseFormulaAndCheck(
-                formula,
-                SpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
-                                SpreadsheetFormulaParserToken.textLiteral(text, text)
-                        ),
-                        formula
-                )
+            formula,
+            SpreadsheetFormulaParserToken.text(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                    SpreadsheetFormulaParserToken.textLiteral(text, text)
+                ),
+                formula
+            )
         );
     }
 
@@ -545,17 +545,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testParseFormulaDate() {
         final String text = "31/12/2000";
         this.parseFormulaAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.date(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.dayNumber(31, "31"),
-                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
-                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                SpreadsheetFormulaParserToken.year(2000, "2000")
-                        ),
-                        text
-                )
+            text,
+            SpreadsheetFormulaParserToken.date(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.year(2000, "2000")
+                ),
+                text
+            )
         );
     }
 
@@ -563,21 +563,21 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testParseFormulaDateTime() {
         final String text = "31/12/2000 12:58";
         this.parseFormulaAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.dateTime(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.dayNumber(31, "31"),
-                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
-                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                SpreadsheetFormulaParserToken.year(2000, "2000"),
-                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
-                                SpreadsheetFormulaParserToken.hour(12, "12"),
-                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                                SpreadsheetFormulaParserToken.minute(58, "58")
-                        ),
-                        text
-                )
+            text,
+            SpreadsheetFormulaParserToken.dateTime(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.year(2000, "2000"),
+                    SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58")
+                ),
+                text
+            )
         );
     }
 
@@ -585,13 +585,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testParseFormulaNumber() {
         final String text = "123";
         this.parseFormulaAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.number(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.digits(text, text)
-                        ),
-                        text
-                )
+            text,
+            SpreadsheetFormulaParserToken.number(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.digits(text, text)
+                ),
+                text
+            )
         );
     }
 
@@ -599,15 +599,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testParseFormulaNumber2() {
         final String text = "1" + DECIMAL + "5";
         this.parseFormulaAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.number(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.digits("1", "1"),
-                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
-                                SpreadsheetFormulaParserToken.digits("5", "5")
-                        ),
-                        text
-                )
+            text,
+            SpreadsheetFormulaParserToken.number(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.digits("1", "1"),
+                    SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
+                    SpreadsheetFormulaParserToken.digits("5", "5")
+                ),
+                text
+            )
         );
     }
 
@@ -615,15 +615,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testParseFormulaTime() {
         final String text = "12:58";
         this.parseFormulaAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.time(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.hour(12, "12"),
-                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                                SpreadsheetFormulaParserToken.minute(58, "58")
-                        ),
-                        text
-                )
+            text,
+            SpreadsheetFormulaParserToken.time(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58")
+                ),
+                text
+            )
         );
     }
 
@@ -631,31 +631,31 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testParseFormulaExpression() {
         final String text = "=1+2";
         this.parseFormulaAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.expression(
+            text,
+            SpreadsheetFormulaParserToken.expression(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                    SpreadsheetFormulaParserToken.addition(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                                SpreadsheetFormulaParserToken.addition(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.number(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.digits("1", "1")
-                                                        ),
-                                                        "1"
-                                                ),
-                                                SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetFormulaParserToken.number(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.digits("2", "2")
-                                                        ),
-                                                        "2"
-                                                )
-                                        ),
-                                        "1+2"
-                                )
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits("1", "1")
+                                ),
+                                "1"
+                            ),
+                            SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits("2", "2")
+                                ),
+                                "2"
+                            )
                         ),
-                        text
-                )
+                        "1+2"
+                    )
+                ),
+                text
+            )
         );
     }
 
@@ -666,19 +666,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final BasicSpreadsheetEngineContext context = this.createContext();
 
         this.toExpressionAndCheck(
-                context,
-                context.parseFormula(
-                        TextCursors.charSequence("=1+2"),
-                        SpreadsheetEngineContext.NO_CELL
+            context,
+            context.parseFormula(
+                TextCursors.charSequence("=1+2"),
+                SpreadsheetEngineContext.NO_CELL
+            ),
+            Expression.add(
+                Expression.value(
+                    EXPRESSION_NUMBER_KIND.one()
                 ),
-                Expression.add(
-                        Expression.value(
-                                EXPRESSION_NUMBER_KIND.one()
-                        ),
-                        Expression.value(
-                                EXPRESSION_NUMBER_KIND.create(2)
-                        )
+                Expression.value(
+                    EXPRESSION_NUMBER_KIND.create(2)
                 )
+            )
         );
     }
 
@@ -687,28 +687,28 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluate() {
         this.evaluateAndCheck(
-                Expression.add(
-                        this.expression(1),
-                        this.expression(2)
-                ),
-                this.number(1 + 2)
+            Expression.add(
+                this.expression(1),
+                this.expression(2)
+            ),
+            this.number(1 + 2)
         );
     }
 
     @Test
     public void testEvaluateWithFunction() {
         this.evaluateAndCheck(
-                Expression.call(
-                        Expression.namedFunction(
-                                SpreadsheetExpressionFunctions.name("xyz")
-                        ),
-                        Lists.of(
-                                this.expression(1),
-                                this.expression(2),
-                                this.expression(3)
-                        )
+            Expression.call(
+                Expression.namedFunction(
+                    SpreadsheetExpressionFunctions.name("xyz")
                 ),
-                1L + 2 + 3
+                Lists.of(
+                    this.expression(1),
+                    this.expression(2),
+                    this.expression(3)
+                )
+            ),
+            1L + 2 + 3
         );
     }
 
@@ -718,44 +718,44 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEvaluateWithFunctionContextLoadCell() {
         this.evaluateAndCheck(
-                Expression.call(
-                        Expression.namedFunction(
-                                SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
-                        ),
-                        Lists.of(
-                                Expression.reference(
-                                        LOAD_CELL_REFERENCE
-                                )
-                        )
+            Expression.call(
+                Expression.namedFunction(
+                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
                 ),
-                LOADER,
-                LOAD_CELL_VALUE
+                Lists.of(
+                    Expression.reference(
+                        LOAD_CELL_REFERENCE
+                    )
+                )
+            ),
+            LOADER,
+            LOAD_CELL_VALUE
         );
     }
 
     @Test
     public void testEvaluateWithFunctionContextServerUrl() {
         this.evaluateAndCheck(
-                Expression.call(
-                        Expression.namedFunction(
-                                SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
-                        ),
-                        Lists.empty()
+            Expression.call(
+                Expression.namedFunction(
+                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
                 ),
-                SERVER_URL
+                Lists.empty()
+            ),
+            SERVER_URL
         );
     }
 
     @Test
     public void testEvaluateWithFunctionContextSpreadsheetMetadata() {
         this.evaluateAndCheck(
-                Expression.call(
-                        Expression.namedFunction(
-                                SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
-                        ),
-                        Lists.empty()
+            Expression.call(
+                Expression.namedFunction(
+                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
                 ),
-                METADATA
+                Lists.empty()
+            ),
+            METADATA
         );
     }
 
@@ -764,13 +764,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testFormatValue() {
         this.formatValueAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                BigDecimal.valueOf(-125.25),
-                SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"")
-                        .spreadsheetFormatterSelector(),
-                SpreadsheetText.with(
-                        MINUS + "125" + DECIMAL + "3Abc123"
-                )
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+            BigDecimal.valueOf(-125.25),
+            SpreadsheetPattern.parseNumberFormatPattern("#.#\"Abc123\"")
+                .spreadsheetFormatterSelector(),
+            SpreadsheetText.with(
+                MINUS + "125" + DECIMAL + "3Abc123"
+            )
         );
     }
 
@@ -779,102 +779,102 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testFormatValueAndStyle() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("1")
-                        .setValue(
-                                Optional.of(1)
-                        )
+            SpreadsheetFormula.EMPTY.setText("1")
+                .setValue(
+                    Optional.of(1)
+                )
         );
 
         this.formatAndStyleAndCheck(
-                this.createContext(
-                        METADATA,
-                        SpreadsheetLabelStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap()
-                ),
-                cell,
-                SpreadsheetPattern.parseNumberFormatPattern("#.00")
-                        .spreadsheetFormatterSelector(),
-                cell.setFormattedValue(
-                        Optional.of(
-                                TextNode.text("1.00")
-                        )
+            this.createContext(
+                METADATA,
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetCellRangeStores.treeMap()
+            ),
+            cell,
+            SpreadsheetPattern.parseNumberFormatPattern("#.00")
+                .spreadsheetFormatterSelector(),
+            cell.setFormattedValue(
+                Optional.of(
+                    TextNode.text("1.00")
                 )
+            )
         );
     }
 
     @Test
     public void testFormatValueAndStylePatternsIncludesCurrencySymbol() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("1")
-                        .setValue(
-                                Optional.of(1)
-                        )
+            SpreadsheetFormula.EMPTY.setText("1")
+                .setValue(
+                    Optional.of(1)
+                )
         );
 
         this.formatAndStyleAndCheck(
-                this.createContext(
-                        METADATA,
-                        SpreadsheetLabelStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap()
-                ),
-                cell,
-                SpreadsheetPattern.parseNumberFormatPattern("$#.00")
-                        .spreadsheetFormatterSelector(),
-                cell.setFormattedValue(
-                        Optional.of(
-                                TextNode.text("CURR1:00")
-                        )
+            this.createContext(
+                METADATA,
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetCellRangeStores.treeMap()
+            ),
+            cell,
+            SpreadsheetPattern.parseNumberFormatPattern("$#.00")
+                .spreadsheetFormatterSelector(),
+            cell.setFormattedValue(
+                Optional.of(
+                    TextNode.text("CURR1:00")
                 )
+            )
         );
     }
 
     @Test
     public void testFormatValueAndStyleWithConditionalFormattingRule() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("1")
-                        .setValue(
-                                Optional.of(1)
-                        )
+            SpreadsheetFormula.EMPTY.setText("1")
+                .setValue(
+                    Optional.of(1)
+                )
         );
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.BACKGROUND_COLOR,
-                Color.parse("#123456")
+            TextStylePropertyName.BACKGROUND_COLOR,
+            Color.parse("#123456")
         );
 
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
 
         rangeToConditionalFormattingRules.addValue(
-                SpreadsheetSelection.A1.toCellRange(),
-                SpreadsheetConditionalFormattingRule.with(
-                        SpreadsheetDescription.with("Test Description"),
-                        1,
-                        SpreadsheetFormula.EMPTY.setText("=true()")
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.value(true)
-                                        )
-                                ),
-                        (c) -> style
-                )
+            SpreadsheetSelection.A1.toCellRange(),
+            SpreadsheetConditionalFormattingRule.with(
+                SpreadsheetDescription.with("Test Description"),
+                1,
+                SpreadsheetFormula.EMPTY.setText("=true()")
+                    .setExpression(
+                        Optional.of(
+                            Expression.value(true)
+                        )
+                    ),
+                (c) -> style
+            )
         );
 
         this.formatAndStyleAndCheck(
-                this.createContext(
-                        METADATA,
-                        SpreadsheetLabelStores.fake(),
-                        rangeToConditionalFormattingRules
-                ),
-                cell,
-                SpreadsheetPattern.parseNumberFormatPattern("$#.00")
-                        .spreadsheetFormatterSelector(),
-                cell.setFormattedValue(
-                        Optional.of(
-                                TextNode.text("CURR1:00")
-                                        .setAttributes(
-                                                style.value()
-                                        )
+            this.createContext(
+                METADATA,
+                SpreadsheetLabelStores.fake(),
+                rangeToConditionalFormattingRules
+            ),
+            cell,
+            SpreadsheetPattern.parseNumberFormatPattern("$#.00")
+                .spreadsheetFormatterSelector(),
+            cell.setFormattedValue(
+                Optional.of(
+                    TextNode.text("CURR1:00")
+                        .setAttributes(
+                            style.value()
                         )
                 )
+            )
         );
     }
 
@@ -887,13 +887,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                SpreadsheetFormatterProviderSamplesContexts.fake(),
-                SpreadsheetFormatterSample.with(
-                        "Default",
-                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
-                        TextNode.text("Hello 123")
-                )
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterProviderSamplesContexts.fake(),
+            SpreadsheetFormatterSample.with(
+                "Default",
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                TextNode.text("Hello 123")
+            )
         );
     }
 
@@ -904,9 +904,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final SpreadsheetParsePattern pattern = SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy");
 
         this.spreadsheetFormatterSelectorAndCheck(
-                pattern.spreadsheetParserSelector(),
-                pattern.toFormat()
-                        .spreadsheetFormatterSelector()
+            pattern.spreadsheetParserSelector(),
+            pattern.toFormat()
+                .spreadsheetFormatterSelector()
         );
     }
 
@@ -917,9 +917,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final Locale locale = Locale.FRANCE;
 
         this.checkEquals(
-                locale,
-                this.createContext(locale)
-                        .locale()
+            locale,
+            this.createContext(locale)
+                .locale()
         );
     }
 
@@ -928,54 +928,54 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final Locale locale = Locale.GERMANY;
 
         this.checkEquals(
-                locale,
-                this.createContext(locale)
-                        .localeContext()
-                        .locale()
+            locale,
+            this.createContext(locale)
+                .localeContext()
+                .locale()
         );
     }
 
     private BasicSpreadsheetEngineContext createContext(final Locale locale) {
         return BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        locale
-                ),
-                SpreadsheetStoreRepositories.basic(
-                        SpreadsheetCellStores.treeMap(),
-                        SpreadsheetCellReferencesStores.treeMap(),
-                        SpreadsheetColumnStores.treeMap(),
-                        SpreadsheetFormStores.fake(),
-                        SpreadsheetGroupStores.fake(),
-                        SpreadsheetLabelStores.treeMap(),
-                        SpreadsheetLabelReferencesStores.treeMap(),
-                        SpreadsheetMetadataStores.fake(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetCellRangeStores.treeMap(),
-                        SpreadsheetRowStores.treeMap(),
-                        StorageStores.fake(),
-                        SpreadsheetUserStores.fake()
-                ),
-                FUNCTION_ALIASES,
-                new FakeLocaleContext() {
-                    @Override
-                    public Locale locale() {
-                        return locale;
-                    }
-                },
-                SpreadsheetProviders.basic(
-                        CONVERTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_EXPORTER_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
-                        SPREADSHEET_IMPORTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        VALIDATOR_PROVIDER
-                ),
-                PROVIDER_CONTEXT
+            SERVER_URL,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale
+            ),
+            SpreadsheetStoreRepositories.basic(
+                SpreadsheetCellStores.treeMap(),
+                SpreadsheetCellReferencesStores.treeMap(),
+                SpreadsheetColumnStores.treeMap(),
+                SpreadsheetFormStores.fake(),
+                SpreadsheetGroupStores.fake(),
+                SpreadsheetLabelStores.treeMap(),
+                SpreadsheetLabelReferencesStores.treeMap(),
+                SpreadsheetMetadataStores.fake(),
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetRowStores.treeMap(),
+                StorageStores.fake(),
+                SpreadsheetUserStores.fake()
+            ),
+            FUNCTION_ALIASES,
+            new FakeLocaleContext() {
+                @Override
+                public Locale locale() {
+                    return locale;
+                }
+            },
+            SpreadsheetProviders.basic(
+                CONVERTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_COMPARATOR_PROVIDER,
+                SPREADSHEET_EXPORTER_PROVIDER,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                FORM_HANDLER_PROVIDER,
+                SPREADSHEET_IMPORTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                VALIDATOR_PROVIDER
+            ),
+            PROVIDER_CONTEXT
         );
     }
 
@@ -984,223 +984,223 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createContext(),
-                "serverUrl=https://example.com/path123 \"\n" +
-                        "\" metadata={\n" +
-                        "  \"cellCharacterWidth\": 1,\n" +
-                        "  \"clipboardExporter\": \"json\",\n" +
-                        "  \"clipboardImporter\": \"json\",\n" +
-                        "  \"color1\": \"#000000\",\n" +
-                        "  \"color2\": \"#ffffff\",\n" +
-                        "  \"color3\": \"#ff0000\",\n" +
-                        "  \"color4\": \"#00ff00\",\n" +
-                        "  \"color5\": \"#0000ff\",\n" +
-                        "  \"color6\": \"#ffff00\",\n" +
-                        "  \"color7\": \"#ff00ff\",\n" +
-                        "  \"color8\": \"#00ffff\",\n" +
-                        "  \"color9\": \"#800000\",\n" +
-                        "  \"color10\": \"#008000\",\n" +
-                        "  \"color11\": \"#000080\",\n" +
-                        "  \"color12\": \"#808000\",\n" +
-                        "  \"color13\": \"#800080\",\n" +
-                        "  \"color14\": \"#008080\",\n" +
-                        "  \"color15\": \"#c0c0c0\",\n" +
-                        "  \"color16\": \"#808080\",\n" +
-                        "  \"color17\": \"#9999ff\",\n" +
-                        "  \"color18\": \"#993366\",\n" +
-                        "  \"color19\": \"#ffffcc\",\n" +
-                        "  \"color20\": \"#ccffff\",\n" +
-                        "  \"color21\": \"#660066\",\n" +
-                        "  \"color22\": \"#ff8080\",\n" +
-                        "  \"color23\": \"#0066cc\",\n" +
-                        "  \"color24\": \"#ccccff\",\n" +
-                        "  \"color25\": \"#000080\",\n" +
-                        "  \"color26\": \"#ff00ff\",\n" +
-                        "  \"color27\": \"#ffff00\",\n" +
-                        "  \"color28\": \"#00ffff\",\n" +
-                        "  \"color29\": \"#800080\",\n" +
-                        "  \"color30\": \"#800000\",\n" +
-                        "  \"color31\": \"#008080\",\n" +
-                        "  \"color32\": \"#0000ff\",\n" +
-                        "  \"color33\": \"#00ccff\",\n" +
-                        "  \"color34\": \"#ccffff\",\n" +
-                        "  \"color35\": \"#ccffcc\",\n" +
-                        "  \"color36\": \"#ffff99\",\n" +
-                        "  \"color37\": \"#99ccff\",\n" +
-                        "  \"color38\": \"#ff99cc\",\n" +
-                        "  \"color39\": \"#cc99ff\",\n" +
-                        "  \"color40\": \"#ffcc99\",\n" +
-                        "  \"color41\": \"#3366ff\",\n" +
-                        "  \"color42\": \"#33cccc\",\n" +
-                        "  \"color43\": \"#99cc00\",\n" +
-                        "  \"color44\": \"#ffcc00\",\n" +
-                        "  \"color45\": \"#ff9900\",\n" +
-                        "  \"color46\": \"#ff6600\",\n" +
-                        "  \"color47\": \"#666699\",\n" +
-                        "  \"color48\": \"#969696\",\n" +
-                        "  \"color49\": \"#003366\",\n" +
-                        "  \"color50\": \"#339966\",\n" +
-                        "  \"color51\": \"#003300\",\n" +
-                        "  \"color52\": \"#333300\",\n" +
-                        "  \"color53\": \"#993300\",\n" +
-                        "  \"color54\": \"#993366\",\n" +
-                        "  \"color55\": \"#333399\",\n" +
-                        "  \"color56\": \"#333333\",\n" +
-                        "  \"colorBlack\": 1,\n" +
-                        "  \"colorBlue\": 5,\n" +
-                        "  \"colorCyan\": 8,\n" +
-                        "  \"colorGreen\": 4,\n" +
-                        "  \"colorMagenta\": 7,\n" +
-                        "  \"colorRed\": 3,\n" +
-                        "  \"colorWhite\": 2,\n" +
-                        "  \"colorYellow\": 6,\n" +
-                        "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, format-pattern-to-string, general, has-style-to-style, jsonTo, null-to-number, number-to-number, selection-to-selection, selection-to-text, simple, spreadsheet-cell-to, text-to-color, text-to-error, text-to-expression, text-to-form-name, text-to-json, text-to-locale, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-text, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-url, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-json, to-text-node, url-to-hyperlink, url-to-image\",\n" +
-                        "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                        "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                        "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
-                        "  \"dateTimeOffset\": \"-25569\",\n" +
-                        "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                        "  \"dateTimeSymbols\": {\n" +
-                        "    \"ampms\": [\n" +
-                        "      \"am\",\n" +
-                        "      \"pm\"\n" +
-                        "    ],\n" +
-                        "    \"monthNames\": [\n" +
-                        "      \"January\",\n" +
-                        "      \"February\",\n" +
-                        "      \"March\",\n" +
-                        "      \"April\",\n" +
-                        "      \"May\",\n" +
-                        "      \"June\",\n" +
-                        "      \"July\",\n" +
-                        "      \"August\",\n" +
-                        "      \"September\",\n" +
-                        "      \"October\",\n" +
-                        "      \"November\",\n" +
-                        "      \"December\"\n" +
-                        "    ],\n" +
-                        "    \"monthNameAbbreviations\": [\n" +
-                        "      \"Jan.\",\n" +
-                        "      \"Feb.\",\n" +
-                        "      \"Mar.\",\n" +
-                        "      \"Apr.\",\n" +
-                        "      \"May\",\n" +
-                        "      \"Jun.\",\n" +
-                        "      \"Jul.\",\n" +
-                        "      \"Aug.\",\n" +
-                        "      \"Sep.\",\n" +
-                        "      \"Oct.\",\n" +
-                        "      \"Nov.\",\n" +
-                        "      \"Dec.\"\n" +
-                        "    ],\n" +
-                        "    \"weekDayNames\": [\n" +
-                        "      \"Sunday\",\n" +
-                        "      \"Monday\",\n" +
-                        "      \"Tuesday\",\n" +
-                        "      \"Wednesday\",\n" +
-                        "      \"Thursday\",\n" +
-                        "      \"Friday\",\n" +
-                        "      \"Saturday\"\n" +
-                        "    ],\n" +
-                        "    \"weekDayNameAbbreviations\": [\n" +
-                        "      \"Sun.\",\n" +
-                        "      \"Mon.\",\n" +
-                        "      \"Tue.\",\n" +
-                        "      \"Wed.\",\n" +
-                        "      \"Thu.\",\n" +
-                        "      \"Fri.\",\n" +
-                        "      \"Sat.\"\n" +
-                        "    ]\n" +
-                        "  },\n" +
-                        "  \"decimalNumberSymbols\": {\n" +
-                        "    \"negativeSign\": \"!\",\n" +
-                        "    \"positiveSign\": \"@\",\n" +
-                        "    \"zeroDigit\": \"0\",\n" +
-                        "    \"currencySymbol\": \"CURR\",\n" +
-                        "    \"decimalSeparator\": \".\",\n" +
-                        "    \"exponentSymbol\": \"e\",\n" +
-                        "    \"groupSeparator\": \",\",\n" +
-                        "    \"infinitySymbol\": \"Infinity!\",\n" +
-                        "    \"monetaryDecimalSeparator\": \":\",\n" +
-                        "    \"nanSymbol\": \"Nan!\",\n" +
-                        "    \"percentSymbol\": \"#\",\n" +
-                        "    \"permillSymbol\": \"^\"\n" +
-                        "  },\n" +
-                        "  \"defaultFormHandler\": \"non-null\",\n" +
-                        "  \"defaultYear\": 1900,\n" +
-                        "  \"exporters\": \"collection, empty, json\",\n" +
-                        "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                        "  \"findConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"findFunctions\": \"@\",\n" +
-                        "  \"findHighlighting\": false,\n" +
-                        "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, general)\",\n" +
-                        "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, general)\",\n" +
-                        "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"functions\": \"@\",\n" +
-                        "  \"generalNumberFormatDigitCount\": 9,\n" +
-                        "  \"hideZeroValues\": false,\n" +
-                        "  \"importers\": \"collection, empty, json\",\n" +
-                        "  \"locale\": \"en-AU\",\n" +
-                        "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
-                        "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                        "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                        "  \"plugins\": \"\",\n" +
-                        "  \"precision\": 10,\n" +
-                        "  \"roundingMode\": \"HALF_UP\",\n" +
-                        "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"style\": {\n" +
-                        "    \"backgroundColor\": \"white\",\n" +
-                        "    \"borderBottomColor\": \"black\",\n" +
-                        "    \"borderBottomStyle\": \"SOLID\",\n" +
-                        "    \"borderBottomWidth\": \"1px\",\n" +
-                        "    \"borderLeftColor\": \"black\",\n" +
-                        "    \"borderLeftStyle\": \"SOLID\",\n" +
-                        "    \"borderLeftWidth\": \"1px\",\n" +
-                        "    \"borderRightColor\": \"black\",\n" +
-                        "    \"borderRightStyle\": \"SOLID\",\n" +
-                        "    \"borderRightWidth\": \"1px\",\n" +
-                        "    \"borderTopColor\": \"black\",\n" +
-                        "    \"borderTopStyle\": \"SOLID\",\n" +
-                        "    \"borderTopWidth\": \"1px\",\n" +
-                        "    \"color\": \"black\",\n" +
-                        "    \"fontFamily\": \"MS Sans Serif\",\n" +
-                        "    \"fontSize\": 11,\n" +
-                        "    \"fontStyle\": \"NORMAL\",\n" +
-                        "    \"fontVariant\": \"NORMAL\",\n" +
-                        "    \"height\": \"30px\",\n" +
-                        "    \"hyphens\": \"NONE\",\n" +
-                        "    \"marginBottom\": \"none\",\n" +
-                        "    \"marginLeft\": \"none\",\n" +
-                        "    \"marginRight\": \"none\",\n" +
-                        "    \"marginTop\": \"none\",\n" +
-                        "    \"paddingBottom\": \"none\",\n" +
-                        "    \"paddingLeft\": \"none\",\n" +
-                        "    \"paddingRight\": \"none\",\n" +
-                        "    \"paddingTop\": \"none\",\n" +
-                        "    \"textAlign\": \"LEFT\",\n" +
-                        "    \"textJustify\": \"NONE\",\n" +
-                        "    \"verticalAlign\": \"TOP\",\n" +
-                        "    \"width\": \"100px\",\n" +
-                        "    \"wordBreak\": \"NORMAL\",\n" +
-                        "    \"wordWrap\": \"NORMAL\"\n" +
-                        "  },\n" +
-                        "  \"textFormatter\": \"text-format-pattern @\",\n" +
-                        "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                        "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
-                        "  \"twoDigitYear\": 20,\n" +
-                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)\",\n" +
-                        "  \"validationFunctions\": \"@\",\n" +
-                        "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
-                        "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
-                        "  \"valueSeparator\": \",\",\n" +
-                        "  \"viewport\": {\n" +
-                        "    \"rectangle\": \"A1:100.0:100.0\"\n" +
-                        "  }\n" +
-                        "}"
+            this.createContext(),
+            "serverUrl=https://example.com/path123 \"\n" +
+                "\" metadata={\n" +
+                "  \"cellCharacterWidth\": 1,\n" +
+                "  \"clipboardExporter\": \"json\",\n" +
+                "  \"clipboardImporter\": \"json\",\n" +
+                "  \"color1\": \"#000000\",\n" +
+                "  \"color2\": \"#ffffff\",\n" +
+                "  \"color3\": \"#ff0000\",\n" +
+                "  \"color4\": \"#00ff00\",\n" +
+                "  \"color5\": \"#0000ff\",\n" +
+                "  \"color6\": \"#ffff00\",\n" +
+                "  \"color7\": \"#ff00ff\",\n" +
+                "  \"color8\": \"#00ffff\",\n" +
+                "  \"color9\": \"#800000\",\n" +
+                "  \"color10\": \"#008000\",\n" +
+                "  \"color11\": \"#000080\",\n" +
+                "  \"color12\": \"#808000\",\n" +
+                "  \"color13\": \"#800080\",\n" +
+                "  \"color14\": \"#008080\",\n" +
+                "  \"color15\": \"#c0c0c0\",\n" +
+                "  \"color16\": \"#808080\",\n" +
+                "  \"color17\": \"#9999ff\",\n" +
+                "  \"color18\": \"#993366\",\n" +
+                "  \"color19\": \"#ffffcc\",\n" +
+                "  \"color20\": \"#ccffff\",\n" +
+                "  \"color21\": \"#660066\",\n" +
+                "  \"color22\": \"#ff8080\",\n" +
+                "  \"color23\": \"#0066cc\",\n" +
+                "  \"color24\": \"#ccccff\",\n" +
+                "  \"color25\": \"#000080\",\n" +
+                "  \"color26\": \"#ff00ff\",\n" +
+                "  \"color27\": \"#ffff00\",\n" +
+                "  \"color28\": \"#00ffff\",\n" +
+                "  \"color29\": \"#800080\",\n" +
+                "  \"color30\": \"#800000\",\n" +
+                "  \"color31\": \"#008080\",\n" +
+                "  \"color32\": \"#0000ff\",\n" +
+                "  \"color33\": \"#00ccff\",\n" +
+                "  \"color34\": \"#ccffff\",\n" +
+                "  \"color35\": \"#ccffcc\",\n" +
+                "  \"color36\": \"#ffff99\",\n" +
+                "  \"color37\": \"#99ccff\",\n" +
+                "  \"color38\": \"#ff99cc\",\n" +
+                "  \"color39\": \"#cc99ff\",\n" +
+                "  \"color40\": \"#ffcc99\",\n" +
+                "  \"color41\": \"#3366ff\",\n" +
+                "  \"color42\": \"#33cccc\",\n" +
+                "  \"color43\": \"#99cc00\",\n" +
+                "  \"color44\": \"#ffcc00\",\n" +
+                "  \"color45\": \"#ff9900\",\n" +
+                "  \"color46\": \"#ff6600\",\n" +
+                "  \"color47\": \"#666699\",\n" +
+                "  \"color48\": \"#969696\",\n" +
+                "  \"color49\": \"#003366\",\n" +
+                "  \"color50\": \"#339966\",\n" +
+                "  \"color51\": \"#003300\",\n" +
+                "  \"color52\": \"#333300\",\n" +
+                "  \"color53\": \"#993300\",\n" +
+                "  \"color54\": \"#993366\",\n" +
+                "  \"color55\": \"#333399\",\n" +
+                "  \"color56\": \"#333333\",\n" +
+                "  \"colorBlack\": 1,\n" +
+                "  \"colorBlue\": 5,\n" +
+                "  \"colorCyan\": 8,\n" +
+                "  \"colorGreen\": 4,\n" +
+                "  \"colorMagenta\": 7,\n" +
+                "  \"colorRed\": 3,\n" +
+                "  \"colorWhite\": 2,\n" +
+                "  \"colorYellow\": 6,\n" +
+                "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
+                "  \"converters\": \"basic, collection, error-throwing, error-to-number, format-pattern-to-string, general, has-style-to-style, jsonTo, null-to-number, number-to-number, selection-to-selection, selection-to-text, simple, spreadsheet-cell-to, text-to-color, text-to-error, text-to-expression, text-to-form-name, text-to-json, text-to-locale, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-text, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-url, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-json, to-text-node, url-to-hyperlink, url-to-image\",\n" +
+                "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
+                "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                "  \"dateTimeOffset\": \"-25569\",\n" +
+                "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                "  \"dateTimeSymbols\": {\n" +
+                "    \"ampms\": [\n" +
+                "      \"am\",\n" +
+                "      \"pm\"\n" +
+                "    ],\n" +
+                "    \"monthNames\": [\n" +
+                "      \"January\",\n" +
+                "      \"February\",\n" +
+                "      \"March\",\n" +
+                "      \"April\",\n" +
+                "      \"May\",\n" +
+                "      \"June\",\n" +
+                "      \"July\",\n" +
+                "      \"August\",\n" +
+                "      \"September\",\n" +
+                "      \"October\",\n" +
+                "      \"November\",\n" +
+                "      \"December\"\n" +
+                "    ],\n" +
+                "    \"monthNameAbbreviations\": [\n" +
+                "      \"Jan.\",\n" +
+                "      \"Feb.\",\n" +
+                "      \"Mar.\",\n" +
+                "      \"Apr.\",\n" +
+                "      \"May\",\n" +
+                "      \"Jun.\",\n" +
+                "      \"Jul.\",\n" +
+                "      \"Aug.\",\n" +
+                "      \"Sep.\",\n" +
+                "      \"Oct.\",\n" +
+                "      \"Nov.\",\n" +
+                "      \"Dec.\"\n" +
+                "    ],\n" +
+                "    \"weekDayNames\": [\n" +
+                "      \"Sunday\",\n" +
+                "      \"Monday\",\n" +
+                "      \"Tuesday\",\n" +
+                "      \"Wednesday\",\n" +
+                "      \"Thursday\",\n" +
+                "      \"Friday\",\n" +
+                "      \"Saturday\"\n" +
+                "    ],\n" +
+                "    \"weekDayNameAbbreviations\": [\n" +
+                "      \"Sun.\",\n" +
+                "      \"Mon.\",\n" +
+                "      \"Tue.\",\n" +
+                "      \"Wed.\",\n" +
+                "      \"Thu.\",\n" +
+                "      \"Fri.\",\n" +
+                "      \"Sat.\"\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  \"decimalNumberSymbols\": {\n" +
+                "    \"negativeSign\": \"!\",\n" +
+                "    \"positiveSign\": \"@\",\n" +
+                "    \"zeroDigit\": \"0\",\n" +
+                "    \"currencySymbol\": \"CURR\",\n" +
+                "    \"decimalSeparator\": \".\",\n" +
+                "    \"exponentSymbol\": \"e\",\n" +
+                "    \"groupSeparator\": \",\",\n" +
+                "    \"infinitySymbol\": \"Infinity!\",\n" +
+                "    \"monetaryDecimalSeparator\": \":\",\n" +
+                "    \"nanSymbol\": \"Nan!\",\n" +
+                "    \"percentSymbol\": \"#\",\n" +
+                "    \"permillSymbol\": \"^\"\n" +
+                "  },\n" +
+                "  \"defaultFormHandler\": \"non-null\",\n" +
+                "  \"defaultYear\": 1900,\n" +
+                "  \"exporters\": \"collection, empty, json\",\n" +
+                "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
+                "  \"findConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                "  \"findFunctions\": \"@\",\n" +
+                "  \"findHighlighting\": false,\n" +
+                "  \"formHandlers\": \"basic\",\n" +
+                "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, general)\",\n" +
+                "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, general)\",\n" +
+                "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                "  \"functions\": \"@\",\n" +
+                "  \"generalNumberFormatDigitCount\": 9,\n" +
+                "  \"hideZeroValues\": false,\n" +
+                "  \"importers\": \"collection, empty, json\",\n" +
+                "  \"locale\": \"en-AU\",\n" +
+                "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
+                "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
+                "  \"plugins\": \"\",\n" +
+                "  \"precision\": 10,\n" +
+                "  \"roundingMode\": \"HALF_UP\",\n" +
+                "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
+                "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                "  \"style\": {\n" +
+                "    \"backgroundColor\": \"white\",\n" +
+                "    \"borderBottomColor\": \"black\",\n" +
+                "    \"borderBottomStyle\": \"SOLID\",\n" +
+                "    \"borderBottomWidth\": \"1px\",\n" +
+                "    \"borderLeftColor\": \"black\",\n" +
+                "    \"borderLeftStyle\": \"SOLID\",\n" +
+                "    \"borderLeftWidth\": \"1px\",\n" +
+                "    \"borderRightColor\": \"black\",\n" +
+                "    \"borderRightStyle\": \"SOLID\",\n" +
+                "    \"borderRightWidth\": \"1px\",\n" +
+                "    \"borderTopColor\": \"black\",\n" +
+                "    \"borderTopStyle\": \"SOLID\",\n" +
+                "    \"borderTopWidth\": \"1px\",\n" +
+                "    \"color\": \"black\",\n" +
+                "    \"fontFamily\": \"MS Sans Serif\",\n" +
+                "    \"fontSize\": 11,\n" +
+                "    \"fontStyle\": \"NORMAL\",\n" +
+                "    \"fontVariant\": \"NORMAL\",\n" +
+                "    \"height\": \"30px\",\n" +
+                "    \"hyphens\": \"NONE\",\n" +
+                "    \"marginBottom\": \"none\",\n" +
+                "    \"marginLeft\": \"none\",\n" +
+                "    \"marginRight\": \"none\",\n" +
+                "    \"marginTop\": \"none\",\n" +
+                "    \"paddingBottom\": \"none\",\n" +
+                "    \"paddingLeft\": \"none\",\n" +
+                "    \"paddingRight\": \"none\",\n" +
+                "    \"paddingTop\": \"none\",\n" +
+                "    \"textAlign\": \"LEFT\",\n" +
+                "    \"textJustify\": \"NONE\",\n" +
+                "    \"verticalAlign\": \"TOP\",\n" +
+                "    \"width\": \"100px\",\n" +
+                "    \"wordBreak\": \"NORMAL\",\n" +
+                "    \"wordWrap\": \"NORMAL\"\n" +
+                "  },\n" +
+                "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
+                "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                "  \"twoDigitYear\": 20,\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)\",\n" +
+                "  \"validationFunctions\": \"@\",\n" +
+                "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
+                "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
+                "  \"valueSeparator\": \",\",\n" +
+                "  \"viewport\": {\n" +
+                "    \"rectangle\": \"A1:100.0:100.0\"\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -1213,226 +1213,226 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         this.toStringAndCheck(
-                this.createContext(
-                        metadata,
-                        SpreadsheetLabelStores.treeMap()
-                ),
-                "serverUrl=https://example.com/path123 \"\n" +
-                        "\" metadata={\n" +
-                        "  \"cellCharacterWidth\": 1,\n" +
-                        "  \"clipboardExporter\": \"json\",\n" +
-                        "  \"clipboardImporter\": \"json\",\n" +
-                        "  \"color1\": \"#000001\",\n" +
-                        "  \"color2\": \"#000002\",\n" +
-                        "  \"color3\": \"#000003\",\n" +
-                        "  \"color4\": \"#000004\",\n" +
-                        "  \"color5\": \"#000005\",\n" +
-                        "  \"color6\": \"#000006\",\n" +
-                        "  \"color7\": \"#000007\",\n" +
-                        "  \"color8\": \"#000008\",\n" +
-                        "  \"color9\": \"#000009\",\n" +
-                        "  \"color10\": \"#00000a\",\n" +
-                        "  \"color11\": \"#00000b\",\n" +
-                        "  \"color12\": \"#00000c\",\n" +
-                        "  \"color13\": \"#00000d\",\n" +
-                        "  \"color14\": \"#00000e\",\n" +
-                        "  \"color15\": \"#00000f\",\n" +
-                        "  \"color16\": \"#000010\",\n" +
-                        "  \"color17\": \"#000011\",\n" +
-                        "  \"color18\": \"#000012\",\n" +
-                        "  \"color19\": \"#000013\",\n" +
-                        "  \"color20\": \"#000014\",\n" +
-                        "  \"color21\": \"#000015\",\n" +
-                        "  \"color22\": \"#000016\",\n" +
-                        "  \"color23\": \"#000017\",\n" +
-                        "  \"color24\": \"#000018\",\n" +
-                        "  \"color25\": \"#000019\",\n" +
-                        "  \"color26\": \"#00001a\",\n" +
-                        "  \"color27\": \"#00001b\",\n" +
-                        "  \"color28\": \"#00001c\",\n" +
-                        "  \"color29\": \"#00001d\",\n" +
-                        "  \"color30\": \"#00001e\",\n" +
-                        "  \"color31\": \"#00001f\",\n" +
-                        "  \"color32\": \"#000020\",\n" +
-                        "  \"color33\": \"#000021\",\n" +
-                        "  \"color34\": \"#000022\",\n" +
-                        "  \"color35\": \"#000023\",\n" +
-                        "  \"color36\": \"#000024\",\n" +
-                        "  \"color37\": \"#000025\",\n" +
-                        "  \"color38\": \"#000026\",\n" +
-                        "  \"color39\": \"#000027\",\n" +
-                        "  \"color40\": \"#000028\",\n" +
-                        "  \"color41\": \"#000029\",\n" +
-                        "  \"color42\": \"#00002a\",\n" +
-                        "  \"color43\": \"#00002b\",\n" +
-                        "  \"color44\": \"#00002c\",\n" +
-                        "  \"color45\": \"#00002d\",\n" +
-                        "  \"color46\": \"#00002e\",\n" +
-                        "  \"color47\": \"#00002f\",\n" +
-                        "  \"color48\": \"#000030\",\n" +
-                        "  \"color49\": \"#000031\",\n" +
-                        "  \"color50\": \"#000032\",\n" +
-                        "  \"color51\": \"#000033\",\n" +
-                        "  \"color52\": \"#000034\",\n" +
-                        "  \"color53\": \"#000035\",\n" +
-                        "  \"color54\": \"#000036\",\n" +
-                        "  \"color55\": \"#000037\",\n" +
-                        "  \"color56\": \"#000038\",\n" +
-                        "  \"colorBlack\": 1,\n" +
-                        "  \"colorBlue\": 5,\n" +
-                        "  \"colorCyan\": 8,\n" +
-                        "  \"colorGreen\": 4,\n" +
-                        "  \"colorMagenta\": 7,\n" +
-                        "  \"colorRed\": 3,\n" +
-                        "  \"colorWhite\": 2,\n" +
-                        "  \"colorYellow\": 6,\n" +
-                        "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, format-pattern-to-string, general, has-style-to-style, jsonTo, null-to-number, number-to-number, selection-to-selection, selection-to-text, simple, spreadsheet-cell-to, text-to-color, text-to-error, text-to-expression, text-to-form-name, text-to-json, text-to-locale, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-text, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-url, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-json, to-text-node, url-to-hyperlink, url-to-image\",\n" +
-                        "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                        "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                        "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
-                        "  \"dateTimeOffset\": \"-25569\",\n" +
-                        "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                        "  \"dateTimeSymbols\": {\n" +
-                        "    \"ampms\": [\n" +
-                        "      \"am\",\n" +
-                        "      \"pm\"\n" +
-                        "    ],\n" +
-                        "    \"monthNames\": [\n" +
-                        "      \"January\",\n" +
-                        "      \"February\",\n" +
-                        "      \"March\",\n" +
-                        "      \"April\",\n" +
-                        "      \"May\",\n" +
-                        "      \"June\",\n" +
-                        "      \"July\",\n" +
-                        "      \"August\",\n" +
-                        "      \"September\",\n" +
-                        "      \"October\",\n" +
-                        "      \"November\",\n" +
-                        "      \"December\"\n" +
-                        "    ],\n" +
-                        "    \"monthNameAbbreviations\": [\n" +
-                        "      \"Jan.\",\n" +
-                        "      \"Feb.\",\n" +
-                        "      \"Mar.\",\n" +
-                        "      \"Apr.\",\n" +
-                        "      \"May\",\n" +
-                        "      \"Jun.\",\n" +
-                        "      \"Jul.\",\n" +
-                        "      \"Aug.\",\n" +
-                        "      \"Sep.\",\n" +
-                        "      \"Oct.\",\n" +
-                        "      \"Nov.\",\n" +
-                        "      \"Dec.\"\n" +
-                        "    ],\n" +
-                        "    \"weekDayNames\": [\n" +
-                        "      \"Sunday\",\n" +
-                        "      \"Monday\",\n" +
-                        "      \"Tuesday\",\n" +
-                        "      \"Wednesday\",\n" +
-                        "      \"Thursday\",\n" +
-                        "      \"Friday\",\n" +
-                        "      \"Saturday\"\n" +
-                        "    ],\n" +
-                        "    \"weekDayNameAbbreviations\": [\n" +
-                        "      \"Sun.\",\n" +
-                        "      \"Mon.\",\n" +
-                        "      \"Tue.\",\n" +
-                        "      \"Wed.\",\n" +
-                        "      \"Thu.\",\n" +
-                        "      \"Fri.\",\n" +
-                        "      \"Sat.\"\n" +
-                        "    ]\n" +
-                        "  },\n" +
-                        "  \"decimalNumberSymbols\": {\n" +
-                        "    \"negativeSign\": \"!\",\n" +
-                        "    \"positiveSign\": \"@\",\n" +
-                        "    \"zeroDigit\": \"0\",\n" +
-                        "    \"currencySymbol\": \"CURR\",\n" +
-                        "    \"decimalSeparator\": \".\",\n" +
-                        "    \"exponentSymbol\": \"e\",\n" +
-                        "    \"groupSeparator\": \",\",\n" +
-                        "    \"infinitySymbol\": \"Infinity!\",\n" +
-                        "    \"monetaryDecimalSeparator\": \":\",\n" +
-                        "    \"nanSymbol\": \"Nan!\",\n" +
-                        "    \"percentSymbol\": \"#\",\n" +
-                        "    \"permillSymbol\": \"^\"\n" +
-                        "  },\n" +
-                        "  \"defaultFormHandler\": \"non-null\",\n" +
-                        "  \"defaultYear\": 1900,\n" +
-                        "  \"exporters\": \"collection, empty, json\",\n" +
-                        "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                        "  \"findConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"findFunctions\": \"@\",\n" +
-                        "  \"findHighlighting\": false,\n" +
-                        "  \"formHandlers\": \"basic\",\n" +
-                        "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, general)\",\n" +
-                        "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, general)\",\n" +
-                        "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"functions\": \"@\",\n" +
-                        "  \"generalNumberFormatDigitCount\": 9,\n" +
-                        "  \"hideZeroValues\": false,\n" +
-                        "  \"importers\": \"collection, empty, json\",\n" +
-                        "  \"locale\": \"en-AU\",\n" +
-                        "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
-                        "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                        "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                        "  \"plugins\": \"\",\n" +
-                        "  \"precision\": 10,\n" +
-                        "  \"roundingMode\": \"HALF_UP\",\n" +
-                        "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
-                        "  \"style\": {\n" +
-                        "    \"backgroundColor\": \"white\",\n" +
-                        "    \"borderBottomColor\": \"black\",\n" +
-                        "    \"borderBottomStyle\": \"SOLID\",\n" +
-                        "    \"borderBottomWidth\": \"1px\",\n" +
-                        "    \"borderLeftColor\": \"black\",\n" +
-                        "    \"borderLeftStyle\": \"SOLID\",\n" +
-                        "    \"borderLeftWidth\": \"1px\",\n" +
-                        "    \"borderRightColor\": \"black\",\n" +
-                        "    \"borderRightStyle\": \"SOLID\",\n" +
-                        "    \"borderRightWidth\": \"1px\",\n" +
-                        "    \"borderTopColor\": \"black\",\n" +
-                        "    \"borderTopStyle\": \"SOLID\",\n" +
-                        "    \"borderTopWidth\": \"1px\",\n" +
-                        "    \"color\": \"black\",\n" +
-                        "    \"fontFamily\": \"MS Sans Serif\",\n" +
-                        "    \"fontSize\": 11,\n" +
-                        "    \"fontStyle\": \"NORMAL\",\n" +
-                        "    \"fontVariant\": \"NORMAL\",\n" +
-                        "    \"height\": \"30px\",\n" +
-                        "    \"hyphens\": \"NONE\",\n" +
-                        "    \"marginBottom\": \"none\",\n" +
-                        "    \"marginLeft\": \"none\",\n" +
-                        "    \"marginRight\": \"none\",\n" +
-                        "    \"marginTop\": \"none\",\n" +
-                        "    \"paddingBottom\": \"none\",\n" +
-                        "    \"paddingLeft\": \"none\",\n" +
-                        "    \"paddingRight\": \"none\",\n" +
-                        "    \"paddingTop\": \"none\",\n" +
-                        "    \"textAlign\": \"LEFT\",\n" +
-                        "    \"textJustify\": \"NONE\",\n" +
-                        "    \"verticalAlign\": \"TOP\",\n" +
-                        "    \"width\": \"100px\",\n" +
-                        "    \"wordBreak\": \"NORMAL\",\n" +
-                        "    \"wordWrap\": \"NORMAL\"\n" +
-                        "  },\n" +
-                        "  \"textFormatter\": \"text-format-pattern @\",\n" +
-                        "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                        "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
-                        "  \"twoDigitYear\": 20,\n" +
-                        "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)\",\n" +
-                        "  \"validationFunctions\": \"@\",\n" +
-                        "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
-                        "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
-                        "  \"valueSeparator\": \",\",\n" +
-                        "  \"viewport\": {\n" +
-                        "    \"rectangle\": \"A1:100.0:100.0\"\n" +
-                        "  }\n" +
-                        "}"
+            this.createContext(
+                metadata,
+                SpreadsheetLabelStores.treeMap()
+            ),
+            "serverUrl=https://example.com/path123 \"\n" +
+                "\" metadata={\n" +
+                "  \"cellCharacterWidth\": 1,\n" +
+                "  \"clipboardExporter\": \"json\",\n" +
+                "  \"clipboardImporter\": \"json\",\n" +
+                "  \"color1\": \"#000001\",\n" +
+                "  \"color2\": \"#000002\",\n" +
+                "  \"color3\": \"#000003\",\n" +
+                "  \"color4\": \"#000004\",\n" +
+                "  \"color5\": \"#000005\",\n" +
+                "  \"color6\": \"#000006\",\n" +
+                "  \"color7\": \"#000007\",\n" +
+                "  \"color8\": \"#000008\",\n" +
+                "  \"color9\": \"#000009\",\n" +
+                "  \"color10\": \"#00000a\",\n" +
+                "  \"color11\": \"#00000b\",\n" +
+                "  \"color12\": \"#00000c\",\n" +
+                "  \"color13\": \"#00000d\",\n" +
+                "  \"color14\": \"#00000e\",\n" +
+                "  \"color15\": \"#00000f\",\n" +
+                "  \"color16\": \"#000010\",\n" +
+                "  \"color17\": \"#000011\",\n" +
+                "  \"color18\": \"#000012\",\n" +
+                "  \"color19\": \"#000013\",\n" +
+                "  \"color20\": \"#000014\",\n" +
+                "  \"color21\": \"#000015\",\n" +
+                "  \"color22\": \"#000016\",\n" +
+                "  \"color23\": \"#000017\",\n" +
+                "  \"color24\": \"#000018\",\n" +
+                "  \"color25\": \"#000019\",\n" +
+                "  \"color26\": \"#00001a\",\n" +
+                "  \"color27\": \"#00001b\",\n" +
+                "  \"color28\": \"#00001c\",\n" +
+                "  \"color29\": \"#00001d\",\n" +
+                "  \"color30\": \"#00001e\",\n" +
+                "  \"color31\": \"#00001f\",\n" +
+                "  \"color32\": \"#000020\",\n" +
+                "  \"color33\": \"#000021\",\n" +
+                "  \"color34\": \"#000022\",\n" +
+                "  \"color35\": \"#000023\",\n" +
+                "  \"color36\": \"#000024\",\n" +
+                "  \"color37\": \"#000025\",\n" +
+                "  \"color38\": \"#000026\",\n" +
+                "  \"color39\": \"#000027\",\n" +
+                "  \"color40\": \"#000028\",\n" +
+                "  \"color41\": \"#000029\",\n" +
+                "  \"color42\": \"#00002a\",\n" +
+                "  \"color43\": \"#00002b\",\n" +
+                "  \"color44\": \"#00002c\",\n" +
+                "  \"color45\": \"#00002d\",\n" +
+                "  \"color46\": \"#00002e\",\n" +
+                "  \"color47\": \"#00002f\",\n" +
+                "  \"color48\": \"#000030\",\n" +
+                "  \"color49\": \"#000031\",\n" +
+                "  \"color50\": \"#000032\",\n" +
+                "  \"color51\": \"#000033\",\n" +
+                "  \"color52\": \"#000034\",\n" +
+                "  \"color53\": \"#000035\",\n" +
+                "  \"color54\": \"#000036\",\n" +
+                "  \"color55\": \"#000037\",\n" +
+                "  \"color56\": \"#000038\",\n" +
+                "  \"colorBlack\": 1,\n" +
+                "  \"colorBlue\": 5,\n" +
+                "  \"colorCyan\": 8,\n" +
+                "  \"colorGreen\": 4,\n" +
+                "  \"colorMagenta\": 7,\n" +
+                "  \"colorRed\": 3,\n" +
+                "  \"colorWhite\": 2,\n" +
+                "  \"colorYellow\": 6,\n" +
+                "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
+                "  \"converters\": \"basic, collection, error-throwing, error-to-number, format-pattern-to-string, general, has-style-to-style, jsonTo, null-to-number, number-to-number, selection-to-selection, selection-to-text, simple, spreadsheet-cell-to, text-to-color, text-to-error, text-to-expression, text-to-form-name, text-to-json, text-to-locale, text-to-selection, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-text, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-url, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-json, to-text-node, url-to-hyperlink, url-to-image\",\n" +
+                "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
+                "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                "  \"dateTimeOffset\": \"-25569\",\n" +
+                "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                "  \"dateTimeSymbols\": {\n" +
+                "    \"ampms\": [\n" +
+                "      \"am\",\n" +
+                "      \"pm\"\n" +
+                "    ],\n" +
+                "    \"monthNames\": [\n" +
+                "      \"January\",\n" +
+                "      \"February\",\n" +
+                "      \"March\",\n" +
+                "      \"April\",\n" +
+                "      \"May\",\n" +
+                "      \"June\",\n" +
+                "      \"July\",\n" +
+                "      \"August\",\n" +
+                "      \"September\",\n" +
+                "      \"October\",\n" +
+                "      \"November\",\n" +
+                "      \"December\"\n" +
+                "    ],\n" +
+                "    \"monthNameAbbreviations\": [\n" +
+                "      \"Jan.\",\n" +
+                "      \"Feb.\",\n" +
+                "      \"Mar.\",\n" +
+                "      \"Apr.\",\n" +
+                "      \"May\",\n" +
+                "      \"Jun.\",\n" +
+                "      \"Jul.\",\n" +
+                "      \"Aug.\",\n" +
+                "      \"Sep.\",\n" +
+                "      \"Oct.\",\n" +
+                "      \"Nov.\",\n" +
+                "      \"Dec.\"\n" +
+                "    ],\n" +
+                "    \"weekDayNames\": [\n" +
+                "      \"Sunday\",\n" +
+                "      \"Monday\",\n" +
+                "      \"Tuesday\",\n" +
+                "      \"Wednesday\",\n" +
+                "      \"Thursday\",\n" +
+                "      \"Friday\",\n" +
+                "      \"Saturday\"\n" +
+                "    ],\n" +
+                "    \"weekDayNameAbbreviations\": [\n" +
+                "      \"Sun.\",\n" +
+                "      \"Mon.\",\n" +
+                "      \"Tue.\",\n" +
+                "      \"Wed.\",\n" +
+                "      \"Thu.\",\n" +
+                "      \"Fri.\",\n" +
+                "      \"Sat.\"\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  \"decimalNumberSymbols\": {\n" +
+                "    \"negativeSign\": \"!\",\n" +
+                "    \"positiveSign\": \"@\",\n" +
+                "    \"zeroDigit\": \"0\",\n" +
+                "    \"currencySymbol\": \"CURR\",\n" +
+                "    \"decimalSeparator\": \".\",\n" +
+                "    \"exponentSymbol\": \"e\",\n" +
+                "    \"groupSeparator\": \",\",\n" +
+                "    \"infinitySymbol\": \"Infinity!\",\n" +
+                "    \"monetaryDecimalSeparator\": \":\",\n" +
+                "    \"nanSymbol\": \"Nan!\",\n" +
+                "    \"percentSymbol\": \"#\",\n" +
+                "    \"permillSymbol\": \"^\"\n" +
+                "  },\n" +
+                "  \"defaultFormHandler\": \"non-null\",\n" +
+                "  \"defaultYear\": 1900,\n" +
+                "  \"exporters\": \"collection, empty, json\",\n" +
+                "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
+                "  \"findConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                "  \"findFunctions\": \"@\",\n" +
+                "  \"findHighlighting\": false,\n" +
+                "  \"formHandlers\": \"basic\",\n" +
+                "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                "  \"formattingConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, general)\",\n" +
+                "  \"formulaConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, general)\",\n" +
+                "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                "  \"functions\": \"@\",\n" +
+                "  \"generalNumberFormatDigitCount\": 9,\n" +
+                "  \"hideZeroValues\": false,\n" +
+                "  \"importers\": \"collection, empty, json\",\n" +
+                "  \"locale\": \"en-AU\",\n" +
+                "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
+                "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
+                "  \"plugins\": \"\",\n" +
+                "  \"precision\": 10,\n" +
+                "  \"roundingMode\": \"HALF_UP\",\n" +
+                "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
+                "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
+                "  \"style\": {\n" +
+                "    \"backgroundColor\": \"white\",\n" +
+                "    \"borderBottomColor\": \"black\",\n" +
+                "    \"borderBottomStyle\": \"SOLID\",\n" +
+                "    \"borderBottomWidth\": \"1px\",\n" +
+                "    \"borderLeftColor\": \"black\",\n" +
+                "    \"borderLeftStyle\": \"SOLID\",\n" +
+                "    \"borderLeftWidth\": \"1px\",\n" +
+                "    \"borderRightColor\": \"black\",\n" +
+                "    \"borderRightStyle\": \"SOLID\",\n" +
+                "    \"borderRightWidth\": \"1px\",\n" +
+                "    \"borderTopColor\": \"black\",\n" +
+                "    \"borderTopStyle\": \"SOLID\",\n" +
+                "    \"borderTopWidth\": \"1px\",\n" +
+                "    \"color\": \"black\",\n" +
+                "    \"fontFamily\": \"MS Sans Serif\",\n" +
+                "    \"fontSize\": 11,\n" +
+                "    \"fontStyle\": \"NORMAL\",\n" +
+                "    \"fontVariant\": \"NORMAL\",\n" +
+                "    \"height\": \"30px\",\n" +
+                "    \"hyphens\": \"NONE\",\n" +
+                "    \"marginBottom\": \"none\",\n" +
+                "    \"marginLeft\": \"none\",\n" +
+                "    \"marginRight\": \"none\",\n" +
+                "    \"marginTop\": \"none\",\n" +
+                "    \"paddingBottom\": \"none\",\n" +
+                "    \"paddingLeft\": \"none\",\n" +
+                "    \"paddingRight\": \"none\",\n" +
+                "    \"paddingTop\": \"none\",\n" +
+                "    \"textAlign\": \"LEFT\",\n" +
+                "    \"textJustify\": \"NONE\",\n" +
+                "    \"verticalAlign\": \"TOP\",\n" +
+                "    \"width\": \"100px\",\n" +
+                "    \"wordBreak\": \"NORMAL\",\n" +
+                "    \"wordWrap\": \"NORMAL\"\n" +
+                "  },\n" +
+                "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
+                "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                "  \"twoDigitYear\": 20,\n" +
+                "  \"validationConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, text-to-error, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, general)\",\n" +
+                "  \"validationFunctions\": \"@\",\n" +
+                "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
+                "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
+                "  \"valueSeparator\": \",\",\n" +
+                "  \"viewport\": {\n" +
+                "    \"rectangle\": \"A1:100.0:100.0\"\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -1443,17 +1443,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
         return this.createContext(
-                METADATA,
-                labelStore
+            METADATA,
+            labelStore
         );
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final SpreadsheetLabelStore labelStore) {
         return this.createContext(
-                metadata,
-                labelStore,
-                SpreadsheetCellRangeStores.fake()
+            metadata,
+            labelStore,
+            SpreadsheetCellRangeStores.fake()
         );
     }
 
@@ -1462,20 +1462,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
         final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
         cells.save(
-                LOAD_CELL_REFERENCE.setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("'" + LOAD_CELL_VALUE)
-                                .setValue(
-                                        Optional.of(LOAD_CELL_VALUE)
-                                )
-                )
+            LOAD_CELL_REFERENCE.setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("'" + LOAD_CELL_VALUE)
+                    .setValue(
+                        Optional.of(LOAD_CELL_VALUE)
+                    )
+            )
         );
 
         return this.createContext(
-                metadata,
-                cells,
-                labelStore,
-                rangeToConditionalFormattingRules
+            metadata,
+            cells,
+            labelStore,
+            rangeToConditionalFormattingRules
         );
     }
 
@@ -1485,52 +1485,52 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetLabelStore labelStore,
                                                         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
         return this.createContext(
-                metadata,
-                new FakeSpreadsheetStoreRepository() {
+            metadata,
+            new FakeSpreadsheetStoreRepository() {
 
-                    @Override
-                    public SpreadsheetCellStore cells() {
-                        return cellStore;
-                    }
-
-                    @Override
-                    public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
-                        return rangeToConditionalFormattingRules;
-                    }
-
-                    @Override
-                    public SpreadsheetLabelStore labels() {
-                        return labelStore;
-                    }
-
-                    @Override
-                    public StorageStore storage() {
-                        return StorageStores.fake();
-                    }
+                @Override
+                public SpreadsheetCellStore cells() {
+                    return cellStore;
                 }
+
+                @Override
+                public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
+                    return rangeToConditionalFormattingRules;
+                }
+
+                @Override
+                public SpreadsheetLabelStore labels() {
+                    return labelStore;
+                }
+
+                @Override
+                public StorageStore storage() {
+                    return StorageStores.fake();
+                }
+            }
         );
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final SpreadsheetStoreRepository repository) {
         return BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
-                metadata,
-                repository,
-                FUNCTION_ALIASES,
-                LOCALE_CONTEXT,
-                SpreadsheetProviders.basic(
-                        CONVERTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_EXPORTER_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        FORM_HANDLER_PROVIDER,
-                        SPREADSHEET_IMPORTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        VALIDATOR_PROVIDER
-                ),
-                PROVIDER_CONTEXT
+            SERVER_URL,
+            metadata,
+            repository,
+            FUNCTION_ALIASES,
+            LOCALE_CONTEXT,
+            SpreadsheetProviders.basic(
+                CONVERTER_PROVIDER,
+                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_COMPARATOR_PROVIDER,
+                SPREADSHEET_EXPORTER_PROVIDER,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                FORM_HANDLER_PROVIDER,
+                SPREADSHEET_IMPORTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                VALIDATOR_PROVIDER
+            ),
+            PROVIDER_CONTEXT
         );
     }
 
@@ -1540,7 +1540,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private ValueExpression<?> expression(final Number value) {
         return Expression.value(
-                this.number(value)
+            this.number(value)
         );
     }
 
@@ -1558,25 +1558,25 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
-                DecimalNumberSymbols.with(
-                        MINUS,
-                        PLUS,
-                        ZERO_DIGIT,
-                        CURRENCY,
-                        DECIMAL,
-                        EXPONENT,
-                        GROUP_SEPARATOR,
-                        INFINITY,
-                        MONETARY_DECIMAL_SEPARATOR,
-                        NAN,
-                        PERCENT,
-                        PERMILL_SYMBOL
-                ),
-                LOCALE,
-                new MathContext(
-                        MathContext.DECIMAL32.getPrecision(),
-                        RoundingMode.HALF_UP
-                )
+            DecimalNumberSymbols.with(
+                MINUS,
+                PLUS,
+                ZERO_DIGIT,
+                CURRENCY,
+                DECIMAL,
+                EXPONENT,
+                GROUP_SEPARATOR,
+                INFINITY,
+                MONETARY_DECIMAL_SEPARATOR,
+                NAN,
+                PERCENT,
+                PERMILL_SYMBOL
+            ),
+            LOCALE,
+            new MathContext(
+                MathContext.DECIMAL32.getPrecision(),
+                RoundingMode.HALF_UP
+            )
         );
     }
 

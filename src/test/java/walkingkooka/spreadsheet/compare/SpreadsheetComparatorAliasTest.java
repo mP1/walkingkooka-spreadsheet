@@ -32,11 +32,11 @@ public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTest
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("Hello");
 
     private final static Optional<SpreadsheetComparatorSelector> SELECTOR = Optional.of(
-            SpreadsheetComparatorSelector.parse("comparator123")
+        SpreadsheetComparatorSelector.parse("comparator123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-            Url.parseAbsolute("https://example.com/comparator123")
+        Url.parseAbsolute("https://example.com/comparator123")
     );
 
     // with.............................................................................................................
@@ -44,36 +44,36 @@ public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTest
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorAlias.with(
-                        null,
-                        SELECTOR,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparatorAlias.with(
+                null,
+                SELECTOR,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorAlias.with(
-                        NAME,
-                        null,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparatorAlias.with(
+                NAME,
+                null,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorAlias.with(
-                        NAME,
-                        SELECTOR,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparatorAlias.with(
+                NAME,
+                SELECTOR,
+                null
+            )
         );
     }
 
@@ -82,9 +82,9 @@ public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTest
     @Override
     public SpreadsheetComparatorAlias createComparable() {
         return SpreadsheetComparatorAlias.with(
-                NAME,
-                SELECTOR,
-                URL
+            NAME,
+            SELECTOR,
+            URL
         );
     }
 
@@ -93,16 +93,16 @@ public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTest
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "alias1 name1 https://example.com",
-                SpreadsheetComparatorAlias.with(
-                        SpreadsheetComparatorName.with("alias1"),
-                        Optional.of(
-                                SpreadsheetComparatorSelector.parse("name1")
-                        ),
-                        Optional.of(
-                                Url.parseAbsolute("https://example.com")
-                        )
+            "alias1 name1 https://example.com",
+            SpreadsheetComparatorAlias.with(
+                SpreadsheetComparatorName.with("alias1"),
+                Optional.of(
+                    SpreadsheetComparatorSelector.parse("name1")
+                ),
+                Optional.of(
+                    Url.parseAbsolute("https://example.com")
                 )
+            )
         );
     }
 

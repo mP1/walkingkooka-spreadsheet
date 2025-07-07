@@ -41,18 +41,18 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
      * A parser that returns a {@link SpreadsheetImporterName}.
      */
     private final static Parser<ParserContext> NAME_PARSER = Parsers.initialAndPartCharPredicateString(
-            (c) -> SpreadsheetImporterName.isChar(0, c),
-            (c) -> SpreadsheetImporterName.isChar(1, c),
-            1,
-            SpreadsheetImporterName.MAX_LENGTH
+        (c) -> SpreadsheetImporterName.isChar(0, c),
+        (c) -> SpreadsheetImporterName.isChar(1, c),
+        1,
+        SpreadsheetImporterName.MAX_LENGTH
     );
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetImporterSelector.class),
-                SpreadsheetImporterSelector::unmarshall,
-                SpreadsheetImporterSelector::marshall,
-                SpreadsheetImporterSelector.class
+            JsonNodeContext.computeTypeName(SpreadsheetImporterSelector.class),
+            SpreadsheetImporterSelector::unmarshall,
+            SpreadsheetImporterSelector::marshall,
+            SpreadsheetImporterSelector.class
         );
     }
 
@@ -69,10 +69,10 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
      */
     public static SpreadsheetImporterSelector parse(final String text) {
         return new SpreadsheetImporterSelector(
-                PluginSelector.parse(
-                        text,
-                        SpreadsheetImporterName::with
-                )
+            PluginSelector.parse(
+                text,
+                SpreadsheetImporterName::with
+            )
         );
     }
 
@@ -84,10 +84,10 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
     public static SpreadsheetImporterSelector with(final SpreadsheetImporterName name,
                                                    final String text) {
         return new SpreadsheetImporterSelector(
-                PluginSelector.with(
-                        name,
-                        text
-                )
+            PluginSelector.with(
+                name,
+                text
+            )
         );
     }
 
@@ -115,13 +115,13 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetImporterSelector(
-                        PluginSelector.with(
-                                name,
-                                this.valueText()
-                        )
-                );
+            this :
+            new SpreadsheetImporterSelector(
+                PluginSelector.with(
+                    name,
+                    this.valueText()
+                )
+            );
     }
 
     // value............................................................................................................
@@ -138,16 +138,16 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
     public SpreadsheetImporterSelector setValueText(final String text) {
         final PluginSelector<SpreadsheetImporterName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetImporterSelector(different);
+            this :
+            new SpreadsheetImporterSelector(different);
     }
 
     @Override
     public SpreadsheetImporterSelector setValues(final List<?> values) {
         final PluginSelector<SpreadsheetImporterName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetImporterSelector(different);
+            this :
+            new SpreadsheetImporterSelector(different);
     }
 
     /**
@@ -159,9 +159,9 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                SpreadsheetImporterPluginHelper.INSTANCE::parseName,
-                provider::spreadsheetImporter,
-                context
+            SpreadsheetImporterPluginHelper.INSTANCE::parseName,
+            provider::spreadsheetImporter,
+            context
         );
     }
 
@@ -173,7 +173,7 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetImporterSelector && this.equals0((SpreadsheetImporterSelector) other);
+            other instanceof SpreadsheetImporterSelector && this.equals0((SpreadsheetImporterSelector) other);
     }
 
     // JsonNodeContext..................................................................................................

@@ -42,8 +42,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserTime extends Spreads
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParserTime() {
         super(
-                "timeParser",
-                SpreadsheetPatternKind.TIME_PARSE_PATTERN
+            "timeParser",
+            SpreadsheetPatternKind.TIME_PARSE_PATTERN
         );
     }
 
@@ -56,7 +56,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserTime extends Spreads
     @Override
     Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale) {
         return Optional.of(
-                SpreadsheetPattern.timeParsePatternLocale(locale)
+            SpreadsheetPattern.timeParsePatternLocale(locale)
         );
     }
 }

@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
  * Base class for all {@link SpreadsheetFormatParserTokenVisitor} in this package.
  */
 public abstract class SpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<V> {
+    implements SpreadsheetFormatParserTokenVisitorTesting<V> {
 
     SpreadsheetFormatParserTokenVisitorTestCase() {
         super();

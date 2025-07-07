@@ -30,8 +30,8 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
     @Test
     public void testInsufficientSpaceFails() {
         this.parseFails(
-                SpreadsheetNumberParsePatternComponentWhitespace.with(3),
-                " a"
+            SpreadsheetNumberParsePatternComponentWhitespace.with(3),
+            " a"
         );
     }
 
@@ -39,13 +39,13 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
     public void testSpace() {
         final String text = " ";
         this.parseAndCheck2(
+            text,
+            "A",
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.whitespace(
                 text,
-                "A",
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.whitespace(
-                        text,
-                        text
-                )
+                text
+            )
         );
     }
 
@@ -54,15 +54,15 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
         final String text = "  ";
 
         this.parseAndCheck2(
-                SpreadsheetNumberParsePatternComponentWhitespace.with(2),
-                text, // text
-                "A", // textAfter
-                this.createRequest(true),
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.whitespace(
-                        text,
-                        text
-                )
+            SpreadsheetNumberParsePatternComponentWhitespace.with(2),
+            text, // text
+            "A", // textAfter
+            this.createRequest(true),
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.whitespace(
+                text,
+                text
+            )
         );
     }
 
@@ -71,29 +71,29 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
         final String text = "\t";
 
         this.parseAndCheck2(
+            text,
+            "A",
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.whitespace(
                 text,
-                "A",
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.whitespace(
-                        text,
-                        text
-                )
+                text
+            )
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createComponent(),
-                " "
+            this.createComponent(),
+            " "
         );
     }
 
     @Test
     public void testToString3() {
         this.toStringAndCheck(
-                SpreadsheetNumberParsePatternComponentWhitespace.with(3),
-                "   "
+            SpreadsheetNumberParsePatternComponentWhitespace.with(3),
+            "   "
         );
     }
 

@@ -30,16 +30,16 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
     @Test
     public void testCheckValueWithInvalidSpreadsheetColumnRangeReferenceFails() {
         this.checkValueFails(
-                SpreadsheetSelection.parseColumnRange("C:D"),
-                "Metadata frozenColumns=C:D, Column range must begin at 'A'"
+            SpreadsheetSelection.parseColumnRange("C:D"),
+            "Metadata frozenColumns=C:D, Column range must begin at 'A'"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
@@ -48,17 +48,17 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
     @Test
     public void testParseUrlFragmentSaveValueQuery() {
         this.checkEquals(
-                SpreadsheetSelection.parseColumnRange("A:B"),
-                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS
-                        .parseUrlFragmentSaveValue("A:B")
+            SpreadsheetSelection.parseColumnRange("A:B"),
+            SpreadsheetMetadataPropertyName.FROZEN_COLUMNS
+                .parseUrlFragmentSaveValue("A:B")
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFrozenColumns.instance(),
-                "frozenColumns"
+            SpreadsheetMetadataPropertyNameFrozenColumns.instance(),
+            "frozenColumns"
         );
     }
 

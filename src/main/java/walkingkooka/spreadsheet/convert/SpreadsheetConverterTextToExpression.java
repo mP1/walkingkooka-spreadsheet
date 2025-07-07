@@ -52,23 +52,23 @@ final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTex
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
         return SpreadsheetFormulaParsers.expression()
-                .parseText(
-                        value,
-                        SpreadsheetParserContexts.basic(
-                                InvalidCharacterExceptionFactory.POSITION,
-                                context,
-                                context,
-                                ';' // valueSeparator
-                        )
-                ).cast(SpreadsheetFormulaParserToken.class)
-                .toExpression(
-                        new FakeSpreadsheetExpressionEvaluationContext() {
-                            @Override
-                            public ExpressionNumberKind expressionNumberKind() {
-                                return context.expressionNumberKind();
-                            }
-                        }
-                ).get();
+            .parseText(
+                value,
+                SpreadsheetParserContexts.basic(
+                    InvalidCharacterExceptionFactory.POSITION,
+                    context,
+                    context,
+                    ';' // valueSeparator
+                )
+            ).cast(SpreadsheetFormulaParserToken.class)
+            .toExpression(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+                    @Override
+                    public ExpressionNumberKind expressionNumberKind() {
+                        return context.expressionNumberKind();
+                    }
+                }
+            ).get();
     }
 
     @Override

@@ -36,8 +36,8 @@ public interface SpreadsheetLabelNameResolver {
         Objects.requireNonNull(reference, "reference");
 
         return reference instanceof SpreadsheetExpressionReference ?
-                this.resolveIfLabel((SpreadsheetSelection) reference) :
-                Optional.empty();
+            this.resolveIfLabel((SpreadsheetSelection) reference) :
+            Optional.empty();
     }
 
     /**
@@ -49,8 +49,8 @@ public interface SpreadsheetLabelNameResolver {
         Objects.requireNonNull(selection, "selection");
 
         return selection.isLabelName() ?
-                this.resolveLabel(selection.toLabelName()) :
-                Optional.of(selection);
+            this.resolveLabel(selection.toLabelName()) :
+            Optional.of(selection);
     }
 
     /**
@@ -58,9 +58,9 @@ public interface SpreadsheetLabelNameResolver {
      */
     default SpreadsheetSelection resolveIfLabelOrFail(final SpreadsheetSelection selection) {
         return this.resolveIfLabel(selection)
-                .orElseThrow(
-                        () -> this.labelNotFound(selection.toLabelName())
-                );
+            .orElseThrow(
+                () -> this.labelNotFound(selection.toLabelName())
+            );
     }
 
     /**
@@ -74,9 +74,9 @@ public interface SpreadsheetLabelNameResolver {
      */
     default SpreadsheetSelection resolveLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.resolveLabel(labelName)
-                .orElseThrow(
-                        () -> this.labelNotFound(labelName)
-                );
+            .orElseThrow(
+                () -> this.labelNotFound(labelName)
+            );
     }
 
     /**

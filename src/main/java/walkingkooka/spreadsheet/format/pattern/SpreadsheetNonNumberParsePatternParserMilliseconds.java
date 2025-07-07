@@ -57,8 +57,8 @@ final class SpreadsheetNonNumberParsePatternParserMilliseconds extends Spreadshe
             final int digit = context.digit(c);
             if (-1 == digit) {
                 token = digitValue != FIRST_DIGIT ?
-                        token(value, start) :
-                        null;
+                    token(value, start) :
+                    null;
                 break;
             }
             value += digit * digitValue;
@@ -80,8 +80,8 @@ final class SpreadsheetNonNumberParsePatternParserMilliseconds extends Spreadshe
     private static MillisecondSpreadsheetFormulaParserToken token(final double value,
                                                                   final TextCursorSavePoint start) {
         return SpreadsheetFormulaParserToken.millisecond(
-                (int) Math.round(value), // shouldnt overload
-                start.textBetween().toString()
+            (int) Math.round(value), // shouldnt overload
+            start.textBetween().toString()
         );
     }
 

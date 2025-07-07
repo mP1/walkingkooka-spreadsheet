@@ -48,39 +48,39 @@ public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCell
     @Test
     default void testFindCellsWithCellOrCellRangeWithNullCellOrCellRangesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findCellsWithCellOrCellRange(
-                                null, // reference
-                                0, // offset
-                                0 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .findCellsWithCellOrCellRange(
+                    null, // reference
+                    0, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindCellsWithCellOrCellRangeWithNegativeOffsetFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findCellsWithCellOrCellRange(
-                                this.id(), // reference
-                                -1, // offset
-                                0 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findCellsWithCellOrCellRange(
+                    this.id(), // reference
+                    -1, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindCellsWithCellOrCellRangeWithNegativeCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findCellsWithCellOrCellRange(
-                                this.id(), // reference
-                                0, // offset
-                                -1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findCellsWithCellOrCellRange(
+                    this.id(), // reference
+                    0, // offset
+                    -1 // count
+                )
         );
     }
 
@@ -90,11 +90,11 @@ public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCell
                                                       final int count,
                                                       final SpreadsheetCellReference... expected) {
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                cellOrCellRange,
-                offset,
-                count,
-                Sets.of(expected)
+            store,
+            cellOrCellRange,
+            offset,
+            count,
+            Sets.of(expected)
         );
     }
 
@@ -104,13 +104,13 @@ public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCell
                                                       final int count,
                                                       final Set<SpreadsheetCellReference> expected) {
         this.checkEquals(
-                expected,
-                store.findCellsWithCellOrCellRange(
-                        cellOrCellRange,
-                        offset,
-                        count
-                ),
-                "findCellsWithCellOrCellRange " + cellOrCellRange + " offset=" + offset + ", count=" + count
+            expected,
+            store.findCellsWithCellOrCellRange(
+                cellOrCellRange,
+                offset,
+                count
+            ),
+            "findCellsWithCellOrCellRange " + cellOrCellRange + " offset=" + offset + ", count=" + count
         );
     }
 

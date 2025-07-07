@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
 import java.math.MathContext;
 
 public final class SpreadsheetEnginesTest implements ClassTesting2<SpreadsheetEngines>,
-        PublicStaticHelperTesting<SpreadsheetEngines> {
+    PublicStaticHelperTesting<SpreadsheetEngines> {
 
     @Test
     public void testPublicStaticMethodsWithoutMathContextParameter() {

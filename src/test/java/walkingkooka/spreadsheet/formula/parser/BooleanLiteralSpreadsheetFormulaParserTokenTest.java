@@ -92,7 +92,7 @@ public final class BooleanLiteralSpreadsheetFormulaParserTokenTest extends NonSy
     @Override
     Boolean value() {
         return Boolean.valueOf(
-                this.text()
+            this.text()
         );
     }
 
@@ -100,16 +100,16 @@ public final class BooleanLiteralSpreadsheetFormulaParserTokenTest extends NonSy
     BooleanLiteralSpreadsheetFormulaParserToken createToken(final Boolean value,
                                                             final String text) {
         return BooleanLiteralSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
     @Override
     public BooleanLiteralSpreadsheetFormulaParserToken createDifferentToken() {
         return BooleanLiteralSpreadsheetFormulaParserToken.with(
-                false,
-                "false"
+            false,
+            "false"
         );
     }
 
@@ -119,8 +119,8 @@ public final class BooleanLiteralSpreadsheetFormulaParserTokenTest extends NonSy
     public BooleanLiteralSpreadsheetFormulaParserToken unmarshall(final JsonNode json,
                                                                   final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormulaParserToken.unmarshallBooleanLiteral(
-                json,
-                context
+            json,
+            context
         );
     }
 

@@ -26,7 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
-        JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation> {
+    JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation> {
 
     // JsonNodeMarshallingTesting.......................................................................................
 
@@ -65,8 +65,8 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     private void toLinkRelationAndCheck(final SpreadsheetEngineEvaluation evaluation,
                                         final String linkRelation) {
         this.checkEquals(LinkRelation.with(linkRelation),
-                evaluation.toLinkRelation(),
-                () -> evaluation + ".toLinkRelation");
+            evaluation.toLinkRelation(),
+            () -> evaluation + ".toLinkRelation");
     }
 
     // ClassTesting.....................................................................................................

@@ -46,22 +46,22 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
     public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
         final Either<String, String> converted = this.converter.convert(
-                value.orElse(null),
-                String.class,
-                context
+            value.orElse(null),
+            String.class,
+            context
         );
         return Optional.ofNullable(
-                converted.isLeft() ?
-                        toTextNode(converted.leftValue()) :
-                       null
+            converted.isLeft() ?
+                toTextNode(converted.leftValue()) :
+                null
         );
     }
 
     private TextNode toTextNode(final String value) {
         return CharSequences.isNullOrEmpty(value) ?
-                null :
-                SpreadsheetText.with(value)
-                        .toTextNode();
+            null :
+            SpreadsheetText.with(value)
+                .toTextNode();
     }
 
     @Override

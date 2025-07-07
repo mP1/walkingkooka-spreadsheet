@@ -117,7 +117,7 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     private static SpreadsheetComparatorName registerConstant(final String name) {
         return new SpreadsheetComparatorName(
-                PluginName.with(name)
+            PluginName.with(name)
         );
     }
 
@@ -177,8 +177,8 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
                 break;
             default:
                 spreadsheetComparatorName = new SpreadsheetComparatorName(
-                        PluginName.with(name)
-                                .checkLength("Comparator")
+                    PluginName.with(name)
+                        .checkLength("Comparator")
                 );
                 break;
         }
@@ -206,8 +206,8 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
      */
     public SpreadsheetComparatorNameAndDirection setDirection(final SpreadsheetComparatorDirection direction) {
         return SpreadsheetComparatorNameAndDirection.with(
-                this,
-                direction
+            this,
+            direction
         );
     }
 
@@ -221,8 +221,8 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetComparatorName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetComparatorName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetComparatorName other) {
@@ -247,10 +247,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorName.class),
-                SpreadsheetComparatorName::unmarshall,
-                SpreadsheetComparatorName::marshall,
-                SpreadsheetComparatorName.class
+            JsonNodeContext.computeTypeName(SpreadsheetComparatorName.class),
+            SpreadsheetComparatorName::unmarshall,
+            SpreadsheetComparatorName::marshall,
+            SpreadsheetComparatorName.class
         );
     }
 }

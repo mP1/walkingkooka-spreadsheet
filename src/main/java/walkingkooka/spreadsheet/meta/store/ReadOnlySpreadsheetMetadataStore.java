@@ -91,8 +91,8 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
     public Set<SpreadsheetId> ids(final int offset,
                                   final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -100,8 +100,8 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
     public List<SpreadsheetMetadata> values(final int offset,
                                             final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -109,8 +109,8 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
     public List<SpreadsheetMetadata> between(final SpreadsheetId from,
                                              final SpreadsheetId to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

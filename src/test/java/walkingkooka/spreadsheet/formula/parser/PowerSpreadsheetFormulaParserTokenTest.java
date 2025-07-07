@@ -105,12 +105,12 @@ public final class PowerSpreadsheetFormulaParserTokenTest extends ArithmeticSpre
 
         this.checkEquals("81381562881728815628428", b.toString());
         this.checkEquals(Lists.of(binary, binary, binary,
-                        left, left, left, left, left, left,
-                        symbol, symbol, symbol, symbol, symbol,
-                        right, right, right, right, right, right,
-                        binary, binary, binary),
-                visited,
-                "visited");
+                left, left, left, left, left, left,
+                symbol, symbol, symbol, symbol, symbol,
+                right, right, right, right, right, right,
+                binary, binary, binary),
+            visited,
+            "visited");
     }
 
     @Override

@@ -25,7 +25,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * The primary key for a {@link Group}.
  */
 public final class GroupId extends IdentityId
-        implements Comparable<GroupId> {
+    implements Comparable<GroupId> {
 
     public static GroupId with(final long value) {
         return new GroupId(value);
@@ -49,10 +49,10 @@ public final class GroupId extends IdentityId
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(GroupId.class),
-                GroupId::unmarshall,
-                GroupId::marshall,
-                GroupId.class
+            JsonNodeContext.computeTypeName(GroupId.class),
+            GroupId::unmarshall,
+            GroupId::marshall,
+            GroupId.class
         );
     }
 

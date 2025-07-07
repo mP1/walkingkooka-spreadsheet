@@ -119,9 +119,9 @@ final class TemporalSpreadsheetFormulaParserTokenVisitor extends SpreadsheetForm
         final int year = this.year;
 
         return LocalDate.of(
-                this.twoDigitYear ? context.twoToFourDigitYear(year) : year,
-                this.month,
-                this.day
+            this.twoDigitYear ? context.twoToFourDigitYear(year) : year,
+            this.month,
+            this.day
         );
     }
 
@@ -131,10 +131,10 @@ final class TemporalSpreadsheetFormulaParserTokenVisitor extends SpreadsheetForm
      */
     LocalTime toLocalTime() {
         return LocalTime.of(
-                this.hour + this.ampm,
-                this.minute,
-                this.seconds,
-                this.millis
+            this.hour + this.ampm,
+            this.minute,
+            this.seconds,
+            this.millis
         );
     }
 
@@ -144,8 +144,8 @@ final class TemporalSpreadsheetFormulaParserTokenVisitor extends SpreadsheetForm
      */
     LocalDateTime toLocalDateTime(final DateTimeContext context) {
         return LocalDateTime.of(
-                this.toLocalDate(context),
-                this.toLocalTime()
+            this.toLocalDate(context),
+            this.toLocalTime()
         );
     }
 
@@ -163,13 +163,13 @@ final class TemporalSpreadsheetFormulaParserTokenVisitor extends SpreadsheetForm
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("day").value(this.day)
-                .label("month").value(this.month)
-                .label("year").value(this.year)
-                .label("hour").value(this.hour)
-                .label("minutes").value(this.minute)
-                .label("seconds").value(this.seconds)
-                .label("millis").value(this.millis)
-                .build();
+            .label("day").value(this.day)
+            .label("month").value(this.month)
+            .label("year").value(this.year)
+            .label("hour").value(this.hour)
+            .label("minutes").value(this.minute)
+            .label("seconds").value(this.seconds)
+            .label("millis").value(this.millis)
+            .build();
     }
 }

@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore<V>, V> extends SpreadsheetStoreTesting<S, SpreadsheetCellRangeReference, List<V>>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     /**
      * RANGE and RANGE1B share a common TOPLEFT.
@@ -62,19 +62,20 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     @Test
     default void testAddSaveWatcherFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createStore()
-                        .addSaveWatcher((a) -> {}
-                        )
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .addSaveWatcher((a) -> {
+                    }
+                )
         );
     }
 
     default void loadRangeFails(final SpreadsheetCellRangeStore<V> store,
                                 final SpreadsheetCellRangeReference range) {
         this.checkEquals(
-                Optional.empty(),
-                store.load(range),
-                () -> "load range " + range + " should have returned no values"
+            Optional.empty(),
+            store.load(range),
+            () -> "load range " + range + " should have returned no values"
         );
     }
 
@@ -85,14 +86,14 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         final Optional<List<V>> values = store.load(range);
 
         this.checkNotEquals(
-                Optional.empty(),
-                values,
-                () -> "load of " + range + " failed"
+            Optional.empty(),
+            values,
+            () -> "load of " + range + " failed"
         );
         this.checkEquals(
-                Lists.of(expected),
-                values.get(),
-                () -> "load range " + range
+            Lists.of(expected),
+            values.get(),
+            () -> "load range " + range
         );
     }
 
@@ -112,9 +113,9 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         store.delete(range);
 
         this.checkEquals(
-                Lists.of(range),
-                fired,
-                "fired values"
+            Lists.of(range),
+            fired,
+            "fired values"
         );
     }
 
@@ -123,24 +124,24 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     @Test
     default void testAddValueNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .addValue(
-                                null,
-                                this.valueValue()
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .addValue(
+                    null,
+                    this.valueValue()
+                )
         );
     }
 
     @Test
     default void testAddValueNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .addValue(
-                                RANGE,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .addValue(
+                    RANGE,
+                    null
+                )
         );
     }
 
@@ -149,63 +150,63 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     @Test
     default void testReplaceValueNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .replaceValue(
-                                null,
-                                this.valueValue(),
-                                this.valueValue()
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .replaceValue(
+                    null,
+                    this.valueValue(),
+                    this.valueValue()
+                )
         );
     }
 
     @Test
     default void testReplaceValueNullNewValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .replaceValue(
-                                RANGE,
-                                null,
-                                this.valueValue()
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .replaceValue(
+                    RANGE,
+                    null,
+                    this.valueValue()
+                )
         );
     }
 
     @Test
     default void testReplaceValueNullOldValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .replaceValue(
-                                RANGE,
-                                this.valueValue(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .replaceValue(
+                    RANGE,
+                    this.valueValue(),
+                    null
+                )
         );
     }
 
     @Test
     default void testRemoveValueNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .removeValue(
-                                null,
-                                this.valueValue()
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .removeValue(
+                    null,
+                    this.valueValue()
+                )
         );
     }
 
     @Test
     default void testRemoveValueNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .removeValue(
-                                RANGE,
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .removeValue(
+                    RANGE,
+                    null
+                )
         );
     }
 
@@ -218,16 +219,16 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     default void findCellRangesIncludingCellFails(final SpreadsheetCellRangeStore<V> store,
                                                   final SpreadsheetCellReference cell) {
         this.checkEquals(Sets.empty(),
-                this.findCellRangesIncludingCell(store, cell),
-                () -> "load cell " + cell + " should have returned no ranges");
+            this.findCellRangesIncludingCell(store, cell),
+            () -> "load cell " + cell + " should have returned no ranges");
     }
 
     default void findCellRangesIncludingCellAndCheck(final SpreadsheetCellRangeStore<V> store,
                                                      final SpreadsheetCellReference cell,
                                                      final SpreadsheetCellRangeReference... ranges) {
         this.checkEquals(Sets.of(ranges),
-                this.findCellRangesIncludingCell(store, cell),
-                () -> "load cell reference ranges for " + cell);
+            this.findCellRangesIncludingCell(store, cell),
+            () -> "load cell reference ranges for " + cell);
     }
 
     default Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellRangeStore<V> store,
@@ -242,9 +243,9 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     @Test
     default void testFindValuesWithCellWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findValuesWithCell(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .findValuesWithCell(null)
         );
     }
 
@@ -255,17 +256,17 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     default void findValuesWithCellFails(final SpreadsheetCellReference cell) {
         this.findValuesWithCellFails(
-                this.createStore(),
-                cell
+            this.createStore(),
+            cell
         );
     }
 
     default void findValuesWithCellFails(final SpreadsheetCellRangeStore<V> store,
                                          final SpreadsheetCellReference cell) {
         this.checkEquals(
-                Sets.empty(),
-                this.findValuesWithCell(store, cell),
-                () -> "load cell " + cell + " should have returned no values"
+            Sets.empty(),
+            this.findValuesWithCell(store, cell),
+            () -> "load cell " + cell + " should have returned no values"
         );
     }
 
@@ -274,9 +275,9 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
                                             final SpreadsheetCellReference cell,
                                             final V... values) {
         this.checkEquals(
-                Sets.of(values),
-                this.findValuesWithCell(store, cell),
-                () -> "load cell reference values for " + cell
+            Sets.of(values),
+            this.findValuesWithCell(store, cell),
+            () -> "load cell reference values for " + cell
         );
     }
 
@@ -284,9 +285,9 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
                                       final SpreadsheetCellReference cell) {
         final Set<V> values = store.findValuesWithCell(cell);
         this.checkNotEquals(
-                null,
-                values,
-                "values"
+            null,
+            values,
+            "values"
         );
         return values;
     }
@@ -296,9 +297,9 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     @Test
     default void testFindCellRangesWithValueWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findCellRangesWithValue(null)
+            NullPointerException.class,
+            () -> this.createStore()
+                .findCellRangesWithValue(null)
         );
     }
 
@@ -319,9 +320,9 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
                                                  final V value,
                                                  final SpreadsheetCellRangeReference... ranges) {
         this.checkEquals(
-                Sets.of(ranges),
-                store.findCellRangesWithValue(value),
-                () -> "ranges with values for " + value
+            Sets.of(ranges),
+            store.findCellRangesWithValue(value),
+            () -> "ranges with values for " + value
         );
     }
 
@@ -351,6 +352,6 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     static SpreadsheetCellReference cell(final int column,
                                          final int row) {
         return SpreadsheetReferenceKind.RELATIVE.column(column)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(row));
+            .setRow(SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 }

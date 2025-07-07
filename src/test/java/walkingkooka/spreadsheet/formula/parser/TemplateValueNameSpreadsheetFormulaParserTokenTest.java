@@ -28,13 +28,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TemplateValueNameSpreadsheetFormulaParserTokenTest extends NonSymbolSpreadsheetFormulaParserTokenTestCase<TemplateValueNameSpreadsheetFormulaParserToken, TemplateValueName>
-        implements HasSpreadsheetReferenceTesting {
+    implements HasSpreadsheetReferenceTesting {
 
     @Test
     public void testWithEmptyTextFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createToken("")
+            IllegalArgumentException.class,
+            () -> this.createToken("")
         );
     }
 
@@ -93,16 +93,16 @@ public final class TemplateValueNameSpreadsheetFormulaParserTokenTest extends No
     TemplateValueNameSpreadsheetFormulaParserToken createToken(final TemplateValueName value,
                                                                final String text) {
         return TemplateValueNameSpreadsheetFormulaParserToken.with(
-                value,
-                text
+            value,
+            text
         );
     }
 
     @Override
     public TemplateValueNameSpreadsheetFormulaParserToken createDifferentToken() {
         return TemplateValueNameSpreadsheetFormulaParserToken.with(
-                TemplateValueName.with("different"),
-                "different"
+            TemplateValueName.with("different"),
+            "different"
         );
     }
 
@@ -122,8 +122,8 @@ public final class TemplateValueNameSpreadsheetFormulaParserTokenTest extends No
     @Test
     public void testReference() {
         this.referenceAndCheck(
-                this.createToken(),
-                this.value()
+            this.createToken(),
+            this.value()
         );
     }
 }

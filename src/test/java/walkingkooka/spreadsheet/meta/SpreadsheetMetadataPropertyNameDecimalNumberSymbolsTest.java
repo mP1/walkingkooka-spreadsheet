@@ -30,24 +30,24 @@ public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest exten
     @Test
     public void testCheckValueWithInvalidDecimalNumberSymbolsFails() {
         this.checkValueFails(
-                "invalid",
-                "Metadata decimalNumberSymbols=\"invalid\", Expected DecimalNumberSymbols"
+            "invalid",
+            "Metadata decimalNumberSymbols=\"invalid\", Expected DecimalNumberSymbols"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                this.propertyValue()
+            LocaleContexts.jre(Locale.ENGLISH),
+            this.propertyValue()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameDecimalNumberSymbols.instance(),
-                "decimalNumberSymbols"
+            SpreadsheetMetadataPropertyNameDecimalNumberSymbols.instance(),
+            "decimalNumberSymbols"
         );
     }
 
@@ -59,8 +59,8 @@ public final class SpreadsheetMetadataPropertyNameDecimalNumberSymbolsTest exten
     @Override
     DecimalNumberSymbols propertyValue() {
         return DecimalNumberSymbols.fromDecimalFormatSymbols(
-                '+',
-                new DecimalFormatSymbols(Locale.ENGLISH)
+            '+',
+            new DecimalFormatSymbols(Locale.ENGLISH)
         );
     }
 

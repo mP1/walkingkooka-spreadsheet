@@ -72,7 +72,7 @@ public final class GreaterThanSymbolSpreadsheetFormatParserTokenTest extends Sym
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CONDITION
+            SpreadsheetFormatParserTokenKind.CONDITION
         );
     }
 

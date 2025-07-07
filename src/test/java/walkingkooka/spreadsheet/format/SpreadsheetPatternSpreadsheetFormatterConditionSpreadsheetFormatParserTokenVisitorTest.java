@@ -31,61 +31,61 @@ import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor>
-        implements PredicateTesting,
-        ToStringTesting<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor> {
+    implements PredicateTesting,
+    ToStringTesting<SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testEquals() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.equalsSymbol("=", "="),
-                SpreadsheetFormatParserToken::equalsSpreadsheetFormatParserToken,
-                10,
-                10,
-                11);
+            SpreadsheetFormatParserToken::equalsSpreadsheetFormatParserToken,
+            10,
+            10,
+            11);
     }
 
     @Test
     public void testGreaterThan() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.greaterThanSymbol("<", "<"),
-                SpreadsheetFormatParserToken::greaterThan,
-                11,
-                12,
-                9);
+            SpreadsheetFormatParserToken::greaterThan,
+            11,
+            12,
+            9);
     }
 
     @Test
     public void testGreaterThanEquals() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.greaterThanSymbol("<=", "<="),
-                SpreadsheetFormatParserToken::greaterThanEquals,
-                10,
-                11,
-                9);
+            SpreadsheetFormatParserToken::greaterThanEquals,
+            10,
+            11,
+            9);
     }
 
     @Test
     public void testLessThan() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.lessThanSymbol("<", "<"),
-                SpreadsheetFormatParserToken::lessThan,
-                9,
-                8,
-                10);
+            SpreadsheetFormatParserToken::lessThan,
+            9,
+            8,
+            10);
     }
 
     @Test
     public void testLessThanEquals() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.lessThanSymbol("<=", "<="),
-                SpreadsheetFormatParserToken::lessThanEquals,
-                9,
-                10,
-                11);
+            SpreadsheetFormatParserToken::lessThanEquals,
+            9,
+            10,
+            11);
     }
 
     @Test
     public void testNotEquals() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.notEqualsSymbol("!=", "!="),
-                SpreadsheetFormatParserToken::notEquals,
-                9,
-                11,
-                10);
+            SpreadsheetFormatParserToken::notEquals,
+            9,
+            11,
+            10);
     }
 
     private void predicateOrFailAndCheck(final SpreadsheetFormatParserToken symbol,
@@ -94,10 +94,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFor
                                          final Integer trueValue2,
                                          final Integer falseValue) {
         final List<ParserToken> tokens = Lists.of(
-                SpreadsheetFormatParserToken.bracketCloseSymbol("[", "["),
-                symbol,
-                SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(10), "1.5"),
-                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]"));
+            SpreadsheetFormatParserToken.bracketCloseSymbol("[", "["),
+            symbol,
+            SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(10), "1.5"),
+            SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]"));
 
         final ConditionSpreadsheetFormatParserToken token = factory.apply(tokens, ParserToken.text(tokens));
         final Predicate<BigDecimal> predicate = SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
@@ -117,10 +117,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFor
         final SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor visitor = this.createVisitor();
 
         final List<ParserToken> tokens = Lists.of(
-                SpreadsheetFormatParserToken.bracketCloseSymbol("[", "["),
-                SpreadsheetFormatParserToken.lessThanSymbol("<", "<"),
-                SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(1.5), "1.5"),
-                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+            SpreadsheetFormatParserToken.bracketCloseSymbol("[", "["),
+            SpreadsheetFormatParserToken.lessThanSymbol("<", "<"),
+            SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(1.5), "1.5"),
+            SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
         );
 
         visitor.accept(SpreadsheetFormatParserToken.lessThan(tokens, ParserToken.text(tokens)));

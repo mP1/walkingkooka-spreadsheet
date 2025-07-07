@@ -32,12 +32,12 @@ public class LabelNotFoundException extends RuntimeException implements HasSprea
 
     public LabelNotFoundException(final SpreadsheetLabelName label) {
         super(
-                "Label " +
-                        CharSequences.quoteAndEscape(
-                                Objects.requireNonNull(label, "label")
-                                        .value()
-                        ) +
-                        " not found"
+            "Label " +
+                CharSequences.quoteAndEscape(
+                    Objects.requireNonNull(label, "label")
+                        .value()
+                ) +
+                " not found"
         );
 
         this.label = label;

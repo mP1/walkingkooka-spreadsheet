@@ -98,12 +98,12 @@ public final class LessThanEqualsSpreadsheetFormatParserTokenTest extends Condit
 
         this.checkEquals("7137162871528428", b.toString());
         this.checkEquals(
-                Lists.of(token, token, token,
-                        symbol, symbol, symbol, symbol, symbol,
-                        right, right, right, right, right,
-                        token, token, token),
-                visited,
-                "visited"
+            Lists.of(token, token, token,
+                symbol, symbol, symbol, symbol, symbol,
+                right, right, right, right, right,
+                token, token, token),
+            visited,
+            "visited"
         );
     }
 

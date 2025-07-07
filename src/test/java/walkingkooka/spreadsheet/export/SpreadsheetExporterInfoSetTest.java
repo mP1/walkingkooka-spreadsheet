@@ -29,7 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias, SpreadsheetExporterAliasSet>,
-        ClassTesting<SpreadsheetExporterInfoSet> {
+    ClassTesting<SpreadsheetExporterInfoSet> {
 
     // immutable set....................................................................................................
 
@@ -38,8 +38,8 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
         final SpreadsheetExporterInfoSet set = this.createSet();
 
         assertSame(
-                set,
-                Sets.immutable(set)
+            set,
+            Sets.immutable(set)
         );
     }
 
@@ -60,17 +60,17 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
     @Override
     public SpreadsheetExporterInfoSet createSet() {
         return SpreadsheetExporterInfoSet.with(
-                Sets.of(
-                        this.info()
-                )
+            Sets.of(
+                this.info()
+            )
         );
     }
 
     @Override
     public SpreadsheetExporterInfo info() {
         return SpreadsheetExporterInfo.with(
-                Url.parseAbsolute("https://example.com/SpreadsheetCellExporter1"),
-                SpreadsheetExporterName.with("test123")
+            Url.parseAbsolute("https://example.com/SpreadsheetCellExporter1"),
+            SpreadsheetExporterName.with("test123")
         );
     }
 
@@ -79,25 +79,25 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetExporterInfoSet.EMPTY,
-                JsonNode.array()
+            SpreadsheetExporterInfoSet.EMPTY,
+            JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty2() {
         this.marshallAndCheck(
-                SpreadsheetExporterInfoSet.with(
-                        Sets.of(
-                                SpreadsheetExporterInfo.with(
-                                        Url.parseAbsolute("https://example.com/test123"),
-                                        SpreadsheetExporterName.with("test123")
-                                )
-                        )
-                ),
-                "[\n" +
-                        "  \"https://example.com/test123 test123\"\n" +
-                        "]"
+            SpreadsheetExporterInfoSet.with(
+                Sets.of(
+                    SpreadsheetExporterInfo.with(
+                        Url.parseAbsolute("https://example.com/test123"),
+                        SpreadsheetExporterName.with("test123")
+                    )
+                )
+            ),
+            "[\n" +
+                "  \"https://example.com/test123 test123\"\n" +
+                "]"
         );
     }
 
@@ -107,24 +107,24 @@ public final class SpreadsheetExporterInfoSetTest implements PluginInfoSetLikeTe
     public SpreadsheetExporterInfoSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
         return SpreadsheetExporterInfoSet.unmarshall(
-                node,
-                context
+            node,
+            context
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet createJsonNodeMarshallingValue() {
         return SpreadsheetExporterInfoSet.with(
-                Sets.of(
-                        SpreadsheetExporterInfo.with(
-                                Url.parseAbsolute("https://example.com/test111"),
-                                SpreadsheetExporterName.with("test111")
-                        ),
-                        SpreadsheetExporterInfo.with(
-                                Url.parseAbsolute("https://example.com/test222"),
-                                SpreadsheetExporterName.with("test222")
-                        )
+            Sets.of(
+                SpreadsheetExporterInfo.with(
+                    Url.parseAbsolute("https://example.com/test111"),
+                    SpreadsheetExporterName.with("test111")
+                ),
+                SpreadsheetExporterInfo.with(
+                    Url.parseAbsolute("https://example.com/test222"),
+                    SpreadsheetExporterName.with("test222")
                 )
+            )
         );
     }
 

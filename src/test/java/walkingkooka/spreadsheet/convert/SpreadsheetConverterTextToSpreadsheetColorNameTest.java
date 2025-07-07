@@ -30,8 +30,8 @@ public final class SpreadsheetConverterTextToSpreadsheetColorNameTest extends Sp
         final SpreadsheetColorName name = SpreadsheetColorName.BLACK;
 
         this.convertAndCheck(
-                name.toString(),
-                name
+            name.toString(),
+            name
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetConverterTextToSpreadsheetColorNameTest extends Sp
         final SpreadsheetColorName name = SpreadsheetColorName.with("SomeRandomColor");
 
         this.convertAndCheck(
-                name.toString(),
-                name
+            name.toString(),
+            name
         );
     }
 
@@ -50,8 +50,8 @@ public final class SpreadsheetConverterTextToSpreadsheetColorNameTest extends Sp
         final SpreadsheetColorName name = SpreadsheetColorName.BLACK;
 
         this.convertAndCheck(
-                new StringBuilder(name.toString()),
-                name
+            new StringBuilder(name.toString()),
+            name
         );
     }
 
@@ -68,9 +68,9 @@ public final class SpreadsheetConverterTextToSpreadsheetColorNameTest extends Sp
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -78,9 +78,9 @@ public final class SpreadsheetConverterTextToSpreadsheetColorNameTest extends Sp
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

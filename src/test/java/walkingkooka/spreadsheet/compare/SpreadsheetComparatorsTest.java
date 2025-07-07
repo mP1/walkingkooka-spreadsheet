@@ -36,225 +36,225 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesting<SpreadsheetComparators>,
-        ComparatorTesting {
+    ComparatorTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testDate() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.date(),
-                LocalDate.class,
-                LocalDate.of(1999, 1, 31),
-                LocalDate.of(2001, 12, 1)
+            SpreadsheetComparators.date(),
+            LocalDate.class,
+            LocalDate.of(1999, 1, 31),
+            LocalDate.of(2001, 12, 1)
         );
     }
 
     @Test
     public void testDate2() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.date(),
-                LocalDate.class,
-                LocalDate.of(1999, 1, 1),
-                LocalDate.of(2001, 2, 2)
+            SpreadsheetComparators.date(),
+            LocalDate.class,
+            LocalDate.of(1999, 1, 1),
+            LocalDate.of(2001, 2, 2)
         );
     }
 
     @Test
     public void testDateTime() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.dateTime(),
-                LocalDateTime.class,
-                LocalDateTime.of(1999, 1, 31, 12, 58, 59),
-                LocalDateTime.of(2001, 12, 1, 12, 58, 59)
+            SpreadsheetComparators.dateTime(),
+            LocalDateTime.class,
+            LocalDateTime.of(1999, 1, 31, 12, 58, 59),
+            LocalDateTime.of(2001, 12, 1, 12, 58, 59)
         );
     }
 
     @Test
     public void testDayOfMonth() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.dayOfMonth(),
-                LocalDate.class,
-                LocalDate.of(2001, 12, 1),
-                LocalDate.of(1999, 1, 31)
+            SpreadsheetComparators.dayOfMonth(),
+            LocalDate.class,
+            LocalDate.of(2001, 12, 1),
+            LocalDate.of(1999, 1, 31)
         );
     }
 
     @Test
     public void testDayOfWeek() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.dayOfWeek(),
-                LocalDate.class,
-                LocalDate.of(2024, 4, 19),
-                LocalDate.of(2024, 4, 20)
+            SpreadsheetComparators.dayOfWeek(),
+            LocalDate.class,
+            LocalDate.of(2024, 4, 19),
+            LocalDate.of(2024, 4, 20)
         );
     }
 
     @Test
     public void testHourOfAmpm() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.hourOfAmPm(),
-                LocalTime.class,
-                LocalTime.of(13, 1, 11),
-                LocalTime.of(2, 2, 22)
+            SpreadsheetComparators.hourOfAmPm(),
+            LocalTime.class,
+            LocalTime.of(13, 1, 11),
+            LocalTime.of(2, 2, 22)
         );
     }
 
     @Test
     public void testHourOfDay() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.hourOfAmPm(),
-                LocalTime.class,
-                LocalTime.of(1, 11, 11),
-                LocalTime.of(2, 2, 2)
+            SpreadsheetComparators.hourOfAmPm(),
+            LocalTime.class,
+            LocalTime.of(1, 11, 11),
+            LocalTime.of(2, 2, 2)
         );
     }
 
     @Test
     public void testMinuteOfHour() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.minuteOfHour(),
-                LocalTime.class,
-                LocalTime.of(13, 1, 11),
-                LocalTime.of(2, 2, 22)
+            SpreadsheetComparators.minuteOfHour(),
+            LocalTime.class,
+            LocalTime.of(13, 1, 11),
+            LocalTime.of(2, 2, 22)
         );
     }
 
     @Test
     public void testMonthOfYear() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.monthOfYear(),
-                LocalDate.class,
-                LocalDate.of(2001, 1, 31),
-                LocalDate.of(1999, 12, 2)
+            SpreadsheetComparators.monthOfYear(),
+            LocalDate.class,
+            LocalDate.of(2001, 1, 31),
+            LocalDate.of(1999, 12, 2)
         );
     }
 
     @Test
     public void testNanoOfSecond() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.nanoOfSecond(),
-                LocalTime.class,
-                LocalTime.of(1, 1, 11, 100),
-                LocalTime.of(2, 2, 22, 222)
+            SpreadsheetComparators.nanoOfSecond(),
+            LocalTime.class,
+            LocalTime.of(1, 1, 11, 100),
+            LocalTime.of(2, 2, 22, 222)
         );
     }
 
     @Test
     public void testNullAfter() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.nullAfter(
-                        String.class,
-                        String.CASE_INSENSITIVE_ORDER,
-                        SpreadsheetComparatorDirection.UP,
-                        SpreadsheetComparatorName.with("text-case-insensitive-null-after")
-                ),
-                "abc",
-                null
+            SpreadsheetComparators.nullAfter(
+                String.class,
+                String.CASE_INSENSITIVE_ORDER,
+                SpreadsheetComparatorDirection.UP,
+                SpreadsheetComparatorName.with("text-case-insensitive-null-after")
+            ),
+            "abc",
+            null
         );
     }
 
     @Test
     public void testNullBefore() {
         this.compareAndCheckMore(
-                SpreadsheetComparators.nullBefore(
-                        String.class,
-                        String.CASE_INSENSITIVE_ORDER,
-                        SpreadsheetComparatorDirection.UP,
-                        SpreadsheetComparatorName.with("text-case-insensitive-null-before")
-                ),
-                "abc",
-                null
+            SpreadsheetComparators.nullBefore(
+                String.class,
+                String.CASE_INSENSITIVE_ORDER,
+                SpreadsheetComparatorDirection.UP,
+                SpreadsheetComparatorName.with("text-case-insensitive-null-before")
+            ),
+            "abc",
+            null
         );
     }
 
     @Test
     public void testNumber() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.number(),
-                ExpressionNumber.class,
-                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                ExpressionNumberKind.BIG_DECIMAL.one()
+            SpreadsheetComparators.number(),
+            ExpressionNumber.class,
+            ExpressionNumberKind.BIG_DECIMAL.zero(),
+            ExpressionNumberKind.BIG_DECIMAL.one()
         );
     }
 
     @Test
     public void testNumberDifferentExpressionNumberKind() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.number(),
-                ExpressionNumber.class,
-                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                ExpressionNumberKind.DOUBLE.one()
+            SpreadsheetComparators.number(),
+            ExpressionNumber.class,
+            ExpressionNumberKind.BIG_DECIMAL.zero(),
+            ExpressionNumberKind.DOUBLE.one()
         );
     }
 
     @Test
     public void testSecondOfMinute() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.secondsOfMinute(),
-                LocalTime.class,
-                LocalTime.of(11, 11, 1, 100),
-                LocalTime.of(2, 2, 22, 222)
+            SpreadsheetComparators.secondsOfMinute(),
+            LocalTime.class,
+            LocalTime.of(11, 11, 1, 100),
+            LocalTime.of(2, 2, 22, 222)
         );
     }
 
     @Test
     public void testStringCaseInsensitive() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.textCaseInsensitive(),
-                String.class,
-                "abc",
-                "XYZ"
+            SpreadsheetComparators.textCaseInsensitive(),
+            String.class,
+            "abc",
+            "XYZ"
         );
     }
 
     @Test
     public void testText() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.text(),
-                String.class,
-                "abc",
-                "xyz"
+            SpreadsheetComparators.text(),
+            String.class,
+            "abc",
+            "xyz"
         );
     }
 
     @Test
     public void testText2() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.text(),
-                String.class,
-                "BCD",
-                "abc"
+            SpreadsheetComparators.text(),
+            String.class,
+            "BCD",
+            "abc"
         );
     }
 
     @Test
     public void testStringCaseInsensitive2() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.textCaseInsensitive(),
-                String.class,
-                "abc",
-                "BCD"
+            SpreadsheetComparators.textCaseInsensitive(),
+            String.class,
+            "abc",
+            "BCD"
         );
     }
 
     @Test
     public void testTime() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.time(),
-                LocalTime.class,
-                LocalTime.of(1, 58, 59),
-                LocalTime.of(2, 58, 59)
+            SpreadsheetComparators.time(),
+            LocalTime.class,
+            LocalTime.of(1, 58, 59),
+            LocalTime.of(2, 58, 59)
         );
     }
 
     @Test
     public void testYear() {
         this.compareAndCheckLess(
-                SpreadsheetComparators.monthOfYear(),
-                LocalDate.class,
-                LocalDate.of(1999, 1, 1),
-                LocalDate.of(2000, 12, 31)
+            SpreadsheetComparators.monthOfYear(),
+            LocalDate.class,
+            LocalDate.of(1999, 1, 1),
+            LocalDate.of(2000, 12, 31)
         );
     }
 
@@ -263,14 +263,14 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                                          final T left,
                                          final T right) {
         this.checkEquals(
-                type,
-                comparator.type(),
-                () -> comparator + " type"
+            type,
+            comparator.type(),
+            () -> comparator + " type"
         );
         this.compareAndCheckLess(
-                comparator,
-                left,
-                right
+            comparator,
+            left,
+            right
         );
     }
 
@@ -279,137 +279,137 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     @Test
     public void testParseNullComparatorsStringFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparators.parse(
-                        null,
-                        SpreadsheetComparatorProviders.fake(),
-                        CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparators.parse(
+                null,
+                SpreadsheetComparatorProviders.fake(),
+                CONTEXT
+            )
         );
     }
 
     @Test
     public void testParseEmptyComparatorsStringFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetComparators.parse(
-                        "",
-                        SpreadsheetComparatorProviders.fake(),
-                        CONTEXT
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetComparators.parse(
+                "",
+                SpreadsheetComparatorProviders.fake(),
+                CONTEXT
+            )
         );
     }
 
     @Test
     public void testParseNullFunctionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparators.parse(
-                        "hello",
-                        null,
-                        CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparators.parse(
+                "hello",
+                null,
+                CONTEXT
+            )
         );
     }
 
     @Test
     public void testParseNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparators.parse(
-                        "hello",
-                        SpreadsheetComparatorProviders.fake(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparators.parse(
+                "hello",
+                SpreadsheetComparatorProviders.fake(),
+                null
+            )
         );
     }
 
     @Test
     public void testParseInvalidUpOrDownFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetComparators.parse(
-                        "text XYZ",
-                        SpreadsheetComparatorProviders.spreadsheetComparators(),
-                        CONTEXT
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetComparators.parse(
+                "text XYZ",
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                CONTEXT
+            )
         );
         this.checkEquals(
-                "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"text XYZ\"",
-                thrown.getMessage()
+            "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"text XYZ\"",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testParseInvalidUpOrDownFails2() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetComparators.parse(
-                        "day-of-month,month-of-year XYZ,year",
-                        SpreadsheetComparatorProviders.spreadsheetComparators(),
-                        CONTEXT
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetComparators.parse(
+                "day-of-month,month-of-year XYZ,year",
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                CONTEXT
+            )
         );
         this.checkEquals(
-                "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"month-of-year XYZ\"",
-                thrown.getMessage()
+            "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"month-of-year XYZ\"",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testParseString() {
         this.parseAndCheck(
-                "text",
-                SpreadsheetComparators.text()
+            "text",
+            SpreadsheetComparators.text()
         );
     }
 
     @Test
     public void testParseStringUp() {
         this.parseAndCheck(
-                "text UP",
-                SpreadsheetComparators.text()
+            "text UP",
+            SpreadsheetComparators.text()
         );
     }
 
     @Test
     public void testParseStringDown() {
         this.parseAndCheck(
-                "text DOWN",
-                SpreadsheetComparators.reverse(
-                        SpreadsheetComparators.text()
-                )
+            "text DOWN",
+            SpreadsheetComparators.reverse(
+                SpreadsheetComparators.text()
+            )
         );
     }
 
     @Test
     public void testParseDayOfMonth_MonthOfYear_Year() {
         this.parseAndCheck(
-                "day-of-month,month-of-year,year",
-                SpreadsheetComparators.dayOfMonth(),
-                SpreadsheetComparators.monthOfYear(),
-                SpreadsheetComparators.year()
+            "day-of-month,month-of-year,year",
+            SpreadsheetComparators.dayOfMonth(),
+            SpreadsheetComparators.monthOfYear(),
+            SpreadsheetComparators.year()
         );
     }
 
     @Test
     public void testParseDayOfMonth_Up_MonthOfYear_Down_Year_Up() {
         this.parseAndCheck(
-                "day-of-month UP,month-of-year DOWN,year UP",
-                SpreadsheetComparators.dayOfMonth(),
-                SpreadsheetComparators.reverse(
-                        SpreadsheetComparators.monthOfYear()
-                ),
-                SpreadsheetComparators.year()
+            "day-of-month UP,month-of-year DOWN,year UP",
+            SpreadsheetComparators.dayOfMonth(),
+            SpreadsheetComparators.reverse(
+                SpreadsheetComparators.monthOfYear()
+            ),
+            SpreadsheetComparators.year()
         );
     }
 
     private void parseAndCheck(final String comparators,
                                final SpreadsheetComparator<?>... expected) {
         this.parseAndCheck(
-                comparators,
-                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                expected
+            comparators,
+            SpreadsheetComparatorProviders.spreadsheetComparators(),
+            expected
         );
     }
 
@@ -417,11 +417,11 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                                final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                final SpreadsheetComparator<?>... expected) {
         this.parseAndCheck(
-                comparators,
-                spreadsheetComparatorProvider,
-                Lists.of(
-                        expected
-                )
+            comparators,
+            spreadsheetComparatorProvider,
+            Lists.of(
+                expected
+            )
         );
     }
 
@@ -429,12 +429,12 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
                                final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                final List<SpreadsheetComparator<?>> expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetComparators.parse(
-                        comparators,
-                        spreadsheetComparatorProvider,
-                        CONTEXT
-                )
+            expected,
+            SpreadsheetComparators.parse(
+                comparators,
+                spreadsheetComparatorProvider,
+                CONTEXT
+            )
         );
     }
 

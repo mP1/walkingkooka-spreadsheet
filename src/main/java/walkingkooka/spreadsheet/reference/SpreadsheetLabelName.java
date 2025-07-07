@@ -44,9 +44,9 @@ import java.util.function.Predicate;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
-        implements Comparable<SpreadsheetLabelName>,
-        Name,
-        HateosResource<String> {
+    implements Comparable<SpreadsheetLabelName>,
+    Name,
+    HateosResource<String> {
     private final static CharPredicate LETTER = CharPredicates.letter();
 
     // https://contexturesblog.com/archives/2017/12/07/what-are-the-rules-for-excel-names/
@@ -56,7 +56,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // underscore (_)
     // backslash (\).
     private final static CharPredicate INITIAL = LETTER.or(
-            CharPredicates.any("\\_")
+        CharPredicates.any("\\_")
     );
 
     // Remaining characters in the name can be
@@ -69,9 +69,9 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // Names can’t look like cell addresses, such as A$35 or R2D2
     // C, c, R, r — can’t be used as names — Excel uses them as selection shortcuts
     private final static CharPredicate PART = LETTER.or(
-            CharPredicates.range('0', '9') // numbers
+        CharPredicates.range('0', '9') // numbers
     ).or(
-            CharPredicates.any("._")
+        CharPredicates.any("._")
     );
 
     /**
@@ -81,13 +81,13 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
 
     static boolean isLabelText0(final String text) {
         return CharPredicates.isInitialAndPart(
-                text,
-                INITIAL,
-                PART
+            text,
+            INITIAL,
+            PART
         ) &&
-                false == CASE_SENSITIVITY.equals("true", text) &&
-                false == CASE_SENSITIVITY.equals("false", text) &&
-                false == SpreadsheetSelection.isCellText(text);
+            false == CASE_SENSITIVITY.equals("true", text) &&
+            false == CASE_SENSITIVITY.equals("false", text) &&
+            false == SpreadsheetSelection.isCellText(text);
     }
 
     /**
@@ -95,10 +95,10 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      */
     static SpreadsheetLabelName with(final String name) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
-                name,
-                "Label",
-                INITIAL,
-                PART
+            name,
+            "Label",
+            INITIAL,
+            PART
         );
 
         if (CASE_SENSITIVITY.equals("true", name) || CASE_SENSITIVITY.equals("false", name)) {
@@ -138,8 +138,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      */
     public SpreadsheetLabelMapping setLabelMappingReference(final SpreadsheetExpressionReference reference) {
         return SpreadsheetLabelMapping.with(
-                this,
-                reference
+            this,
+            reference
         );
     }
 
@@ -153,7 +153,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     @Override
     public Optional<String> id() {
         return Optional.of(
-                this.hateosLinkId()
+            this.hateosLinkId()
         );
     }
 
@@ -414,8 +414,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     @Override
     public LabelSpreadsheetFormulaParserToken toParserToken() {
         return SpreadsheetFormulaParserToken.label(
-                this,
-                this.text()
+            this,
+            this.text()
         );
     }
 
@@ -437,7 +437,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     boolean equalsNotSameAndNotNull(final Object other,
                                     final boolean includeKind) {
         return this.equals1(
-                (SpreadsheetLabelName) other
+            (SpreadsheetLabelName) other
         );
     }
 

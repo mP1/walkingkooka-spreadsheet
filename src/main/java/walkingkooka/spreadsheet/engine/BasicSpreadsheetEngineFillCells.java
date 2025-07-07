@@ -38,13 +38,13 @@ final class BasicSpreadsheetEngineFillCells {
                         final BasicSpreadsheetEngineChanges changes,
                         final SpreadsheetEngineContext context) {
         new BasicSpreadsheetEngineFillCells(
-                engine,
-                changes,
-                context
+            engine,
+            changes,
+            context
         ).execute(
-                cells,
-                from,
-                to
+            cells,
+            from,
+            to
         );
     }
 
@@ -64,8 +64,8 @@ final class BasicSpreadsheetEngineFillCells {
             this.deleteCell(to);
         } else {
             final List<SpreadsheetCell> out = cells.stream()
-                    .filter(c -> false == from.testCell(c.reference()))
-                    .collect(Collectors.toList());
+                .filter(c -> false == from.testCell(c.reference()))
+                .collect(Collectors.toList());
             if (!out.isEmpty()) {
                 throw new IllegalArgumentException("Several cells " + out + " are outside the range " + from);
             }
@@ -83,8 +83,8 @@ final class BasicSpreadsheetEngineFillCells {
                       final SpreadsheetCellRangeReference to) {
         final List<Object> referencesAndCells = Lists.array();
         from.cells(cells,
-                referencesAndCells::add,
-                referencesAndCells::add);
+            referencesAndCells::add,
+            referencesAndCells::add);
 
         final int fromWidth = from.width();
         final int fromHeight = from.height();
@@ -93,11 +93,11 @@ final class BasicSpreadsheetEngineFillCells {
         final int toHeight = to.height();
 
         final int widthMultiple = fromWidth >= toWidth ?
-                1 :
-                toWidth / fromWidth;
+            1 :
+            toWidth / fromWidth;
         final int heightMultiple = fromHeight >= toHeight ?
-                1 :
-                toHeight / fromHeight;
+            1 :
+            toHeight / fromHeight;
 
         final SpreadsheetCellReference fromBegin = from.begin();
         final SpreadsheetCellReference toBegin = to.begin();
@@ -123,8 +123,8 @@ final class BasicSpreadsheetEngineFillCells {
 
     private void deleteCell(final SpreadsheetExpressionReference reference) {
         this.engine.deleteCells(
-                reference,
-                this.context
+            reference,
+            this.context
         );
     }
 
@@ -136,33 +136,33 @@ final class BasicSpreadsheetEngineFillCells {
                           final int xOffset,
                           final int yOffset) {
         final SpreadsheetCell updatedReference = cell.setReference(
-                cell.reference()
-                        .add(
-                                xOffset,
-                                yOffset
-                        )
+            cell.reference()
+                .add(
+                    xOffset,
+                    yOffset
+                )
         );
 
         final BasicSpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
         final SpreadsheetCell cell2 = engine.parseFormulaIfNecessary(
-                updatedReference,
-                t -> t.replaceIf(
-                        p -> p instanceof CellSpreadsheetFormulaParserToken, // predicate
-                        m -> m.cast(CellSpreadsheetFormulaParserToken.class) // mapper
-                                .cell()
-                                .addIfRelative(xOffset, yOffset)
-                                .toParserToken()
-                ).cast(SpreadsheetFormulaParserToken.class),
-                context
+            updatedReference,
+            t -> t.replaceIf(
+                p -> p instanceof CellSpreadsheetFormulaParserToken, // predicate
+                m -> m.cast(CellSpreadsheetFormulaParserToken.class) // mapper
+                    .cell()
+                    .addIfRelative(xOffset, yOffset)
+                    .toParserToken()
+            ).cast(SpreadsheetFormulaParserToken.class),
+            context
         );
 
         engine.parseFormulaEvaluateValidateFormatStyleAndSave(
-                cell2,
-                SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
-                this.changes, // SpreadsheetExpressionReferenceLoader
-                context
+            cell2,
+            SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
+            this.changes, // SpreadsheetExpressionReferenceLoader
+            context
         );
     }
 

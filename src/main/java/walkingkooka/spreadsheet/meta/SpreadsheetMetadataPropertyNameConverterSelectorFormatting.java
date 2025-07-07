@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorFormatting extends S
      */
     private SpreadsheetMetadataPropertyNameConverterSelectorFormatting() {
         super(
-                "formattingConverter"
+            "formattingConverter"
         );
     }
 

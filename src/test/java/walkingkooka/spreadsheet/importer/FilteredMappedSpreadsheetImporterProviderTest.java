@@ -31,36 +31,36 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedSpreadsheetImporterProviderTest implements SpreadsheetImporterProviderTesting<FilteredMappedSpreadsheetImporterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullInfosFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> FilteredMappedSpreadsheetImporterProvider.with(
-                        null,
-                        SpreadsheetImporterProviders.fake()
-                )
+            NullPointerException.class,
+            () -> FilteredMappedSpreadsheetImporterProvider.with(
+                null,
+                SpreadsheetImporterProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> FilteredMappedSpreadsheetImporterProvider.with(
-                        SpreadsheetImporterInfoSet.EMPTY.concat(
-                                SpreadsheetImporterInfo.with(
-                                        SpreadsheetImporterProviders.BASE_URL.appendPath(
-                                                UrlPath.parse("test-123")
-                                        ),
-                                        SpreadsheetImporterName.with("test-123")
-                                )
+            NullPointerException.class,
+            () -> FilteredMappedSpreadsheetImporterProvider.with(
+                SpreadsheetImporterInfoSet.EMPTY.concat(
+                    SpreadsheetImporterInfo.with(
+                        SpreadsheetImporterProviders.BASE_URL.appendPath(
+                            UrlPath.parse("test-123")
                         ),
-                        null
-                )
+                        SpreadsheetImporterName.with("test-123")
+                    )
+                ),
+                null
+            )
         );
     }
 
@@ -76,9 +76,9 @@ public final class FilteredMappedSpreadsheetImporterProviderTest implements Spre
     @Test
     public void testSpreadsheetImporterSelector() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterSelector.parse(NAME + " (11.0)"),
-                CONTEXT,
-                IMPORTER
+            SpreadsheetImporterSelector.parse(NAME + " (11.0)"),
+            CONTEXT,
+            IMPORTER
         );
     }
 
@@ -87,20 +87,20 @@ public final class FilteredMappedSpreadsheetImporterProviderTest implements Spre
     @Test
     public void testSpreadsheetImporterName() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterName.with(NAME),
-                VALUES,
-                CONTEXT,
-                IMPORTER
+            SpreadsheetImporterName.with(NAME),
+            VALUES,
+            CONTEXT,
+            IMPORTER
         );
     }
 
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetImporterInfosAndCheck(
-                SpreadsheetImporterInfo.with(
-                        url(NAME),
-                        SpreadsheetImporterName.with(NAME)
-                )
+            SpreadsheetImporterInfo.with(
+                url(NAME),
+                SpreadsheetImporterName.with(NAME)
+            )
         );
     }
 
@@ -111,8 +111,8 @@ public final class FilteredMappedSpreadsheetImporterProviderTest implements Spre
             public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                            final ProviderContext context) {
                 return selector.evaluateValueText(
-                        this,
-                        context
+                    this,
+                    context
                 );
             }
 
@@ -129,28 +129,28 @@ public final class FilteredMappedSpreadsheetImporterProviderTest implements Spre
             @Override
             public SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
                 return SpreadsheetImporterInfoSet.EMPTY.concat(
-                        SpreadsheetImporterInfo.with(
-                                url(NAME),
-                                SpreadsheetImporterName.with(NAME)
-                        )
+                    SpreadsheetImporterInfo.with(
+                        url(NAME),
+                        SpreadsheetImporterName.with(NAME)
+                    )
                 );
             }
         };
 
         return FilteredMappedSpreadsheetImporterProvider.with(
-                SpreadsheetImporterInfoSet.EMPTY.concat(
-                        SpreadsheetImporterInfo.with(
-                                url(NAME),
-                                SpreadsheetImporterName.with(NAME)
-                        )
-                ),
-                provider
+            SpreadsheetImporterInfoSet.EMPTY.concat(
+                SpreadsheetImporterInfo.with(
+                    url(NAME),
+                    SpreadsheetImporterName.with(NAME)
+                )
+            ),
+            provider
         );
     }
 
     private static AbsoluteUrl url(final String importerName) {
         return SpreadsheetImporterProviders.BASE_URL.appendPath(
-                UrlPath.parse(importerName)
+            UrlPath.parse(importerName)
         );
     }
 

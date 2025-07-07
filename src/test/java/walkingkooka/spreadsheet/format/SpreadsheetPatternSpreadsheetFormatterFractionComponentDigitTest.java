@@ -24,7 +24,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionComponentDigitT
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetPatternSpreadsheetFormatterFractionComponentDigit.with(1, SpreadsheetPatternSpreadsheetFormatterFractionZero.ZERO),
-                "0");
+            "0");
     }
 
     @Override

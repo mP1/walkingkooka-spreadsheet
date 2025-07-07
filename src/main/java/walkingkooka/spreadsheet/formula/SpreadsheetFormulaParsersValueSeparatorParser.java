@@ -31,7 +31,7 @@ import java.util.Optional;
  * This {@link Parser} attempts to match the {@link SpreadsheetParserContext#valueSeparator()} and then creates a {@link ValueSeparatorSymbolSpreadsheetFormulaParserToken}.
  */
 final class SpreadsheetFormulaParsersValueSeparatorParser implements Parser<SpreadsheetParserContext>,
-        RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton

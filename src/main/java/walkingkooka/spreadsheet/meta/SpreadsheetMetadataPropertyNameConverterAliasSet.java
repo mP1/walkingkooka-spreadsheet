@@ -34,21 +34,18 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
         super(name);
     }
 
-    @Override
-    final ConverterAliasSet checkValueNonNull(final Object value) {
+    @Override final ConverterAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof ConverterAliasSet
+            value,
+            v -> v instanceof ConverterAliasSet
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return ConverterAliasSet.class.getSimpleName();
     }
 
-    @Override
-    final Optional<ConverterAliasSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<ConverterAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 
@@ -59,8 +56,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final ConverterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final ConverterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return ConverterAliasSet.parse(value);
     }
 }

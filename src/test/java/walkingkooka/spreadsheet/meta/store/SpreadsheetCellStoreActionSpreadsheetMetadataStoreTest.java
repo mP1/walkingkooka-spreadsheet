@@ -40,11 +40,11 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
     @Test
     public void testSaveSameMetadataTwice() {
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = this.createStore(
-                SpreadsheetCellStores.fake() // interactions will throw UOE
+            SpreadsheetCellStores.fake() // interactions will throw UOE
         );
 
         final SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
         store.save(metadata);
     }
@@ -52,15 +52,15 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
     @Test
     public void testSaveSameMetadataTwice2() {
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = this.createStore(
-                SpreadsheetCellStores.fake() // interactions will throw UOE
+            SpreadsheetCellStores.fake() // interactions will throw UOE
         );
 
         final SpreadsheetMetadata metadata = store.save(this.metadata()
-                .set(
-                        SpreadsheetMetadataPropertyName.STYLE,
-                        TextStyle.EMPTY
-                                .set(TextStylePropertyName.COLOR, Color.BLACK)
-                )
+            .set(
+                SpreadsheetMetadataPropertyName.STYLE,
+                TextStyle.EMPTY
+                    .set(TextStylePropertyName.COLOR, Color.BLACK)
+            )
         );
         store.save(metadata);
     }
@@ -68,19 +68,19 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
     @Test
     public void testSaveOnlyTimestampsUpdated() {
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = this.createStore(
-                SpreadsheetCellStores.fake() // interactions will throw UOE
+            SpreadsheetCellStores.fake() // interactions will throw UOE
         );
 
         final SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
-                                        .setModifiedTimestamp(LocalDateTime.now())
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                    .setModifiedTimestamp(LocalDateTime.now())
+            )
         );
     }
 
@@ -91,37 +91,37 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(
-                        CREATE_TEMPLATE,
-                        LocalDateTime::now
-                ),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        cleared.incrementAndGet();
-                    }
+            SpreadsheetMetadataStores.treeMap(
+                CREATE_TEMPLATE,
+                LocalDateTime::now
+            ),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    cleared.incrementAndGet();
                 }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                cleared.get()
+            0,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00").spreadsheetParserSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00").spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                cleared.get()
+            1,
+            cleared.get()
         );
     }
 
@@ -130,48 +130,48 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        cleared.incrementAndGet();
-                    }
+            createTreeMap(),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    cleared.incrementAndGet();
                 }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                cleared.get()
+            0,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                cleared.get()
+            1,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                cleared.get()
+            1,
+            cleared.get()
         );
     }
 
@@ -180,56 +180,56 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        cleared.incrementAndGet();
-                    }
+            createTreeMap(),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    cleared.incrementAndGet();
                 }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                cleared.get()
+            0,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                ).set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        AuditInfo.with(
-                                EmailAddress.parse("different@example.com"),
-                                LocalDateTime.MIN,
-                                EmailAddress.parse("different@example.com"),
-                                LocalDateTime.MAX
-                        )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    EmailAddress.parse("different@example.com"),
+                    LocalDateTime.MIN,
+                    EmailAddress.parse("different@example.com"),
+                    LocalDateTime.MAX
                 )
+            )
         );
 
         this.checkEquals(
-                1,
-                cleared.get()
+            1,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                cleared.get()
+            1,
+            cleared.get()
         );
     }
 
@@ -238,48 +238,48 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        cleared.incrementAndGet();
-                    }
+            createTreeMap(),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    cleared.incrementAndGet();
                 }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                cleared.get()
+            0,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                cleared.get()
+            1,
+            cleared.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.000")
-                                .spreadsheetParserSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.000")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                2,
-                cleared.get()
+            2,
+            cleared.get()
         );
     }
 
@@ -289,65 +289,65 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger clearFormatted = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        clearParsed.incrementAndGet();
-                    }
-
-                    @Override
-                    public void clearFormatted() {
-                        clearFormatted.incrementAndGet();
-                    }
+            createTreeMap(),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    clearParsed.incrementAndGet();
                 }
+
+                @Override
+                public void clearFormatted() {
+                    clearFormatted.incrementAndGet();
+                }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                clearParsed.get()
+            0,
+            clearParsed.get()
         );
         this.checkEquals(
-                0,
-                clearFormatted.get()
-        );
-
-        metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
-        );
-
-        this.checkEquals(
-                1,
-                clearParsed.get()
-        );
-        this.checkEquals(
-                0,
-                clearFormatted.get()
+            0,
+            clearFormatted.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                        SpreadsheetPattern.parseTextFormatPattern("@@")
-                                .spreadsheetFormatterSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                clearParsed.get()
+            1,
+            clearParsed.get()
         );
         this.checkEquals(
-                1,
-                clearFormatted.get()
+            0,
+            clearFormatted.get()
+        );
+
+        metadata = store.save(
+            metadata.set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetPattern.parseTextFormatPattern("@@")
+                    .spreadsheetFormatterSelector()
+            )
+        );
+
+        this.checkEquals(
+            1,
+            clearParsed.get()
+        );
+        this.checkEquals(
+            1,
+            clearFormatted.get()
         );
     }
 
@@ -357,82 +357,82 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger clearFormatted = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        clearParsed.incrementAndGet();
-                    }
-
-                    @Override
-                    public void clearFormatted() {
-                        clearFormatted.incrementAndGet();
-                    }
+            createTreeMap(),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    clearParsed.incrementAndGet();
                 }
+
+                @Override
+                public void clearFormatted() {
+                    clearFormatted.incrementAndGet();
+                }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                clearParsed.get()
+            0,
+            clearParsed.get()
         );
         this.checkEquals(
-                0,
-                clearFormatted.get()
-        );
-
-        metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
-        );
-
-        this.checkEquals(
-                1,
-                clearParsed.get()
-        );
-        this.checkEquals(
-                0,
-                clearFormatted.get()
+            0,
+            clearFormatted.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                        SpreadsheetPattern.parseTextFormatPattern("@@")
-                                .spreadsheetFormatterSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                clearParsed.get()
+            1,
+            clearParsed.get()
         );
         this.checkEquals(
-                1,
-                clearFormatted.get()
+            0,
+            clearFormatted.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                        SpreadsheetPattern.parseTextFormatPattern("@@@")
-                                .spreadsheetFormatterSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetPattern.parseTextFormatPattern("@@")
+                    .spreadsheetFormatterSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                clearParsed.get()
+            1,
+            clearParsed.get()
         );
         this.checkEquals(
-                2,
-                clearFormatted.get()
+            1,
+            clearFormatted.get()
+        );
+
+        metadata = store.save(
+            metadata.set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetPattern.parseTextFormatPattern("@@@")
+                    .spreadsheetFormatterSelector()
+            )
+        );
+
+        this.checkEquals(
+            1,
+            clearParsed.get()
+        );
+        this.checkEquals(
+            2,
+            clearFormatted.get()
         );
     }
 
@@ -442,80 +442,80 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger clearFormatted = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> new FakeSpreadsheetCellStore() {
-                    @Override
-                    public void clearParsedFormulaExpressions() {
-                        clearParsed.incrementAndGet();
-                    }
-
-                    @Override
-                    public void clearFormatted() {
-                        clearFormatted.incrementAndGet();
-                    }
+            createTreeMap(),
+            (id) -> new FakeSpreadsheetCellStore() {
+                @Override
+                public void clearParsedFormulaExpressions() {
+                    clearParsed.incrementAndGet();
                 }
+
+                @Override
+                public void clearFormatted() {
+                    clearFormatted.incrementAndGet();
+                }
+            }
         );
 
         SpreadsheetMetadata metadata = store.save(
-                this.metadata()
+            this.metadata()
         );
 
         this.checkEquals(
-                0,
-                clearParsed.get()
+            0,
+            clearParsed.get()
         );
         this.checkEquals(
-                0,
-                clearFormatted.get()
-        );
-
-        metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                        SpreadsheetPattern.parseNumberParsePattern("0.00")
-                                .spreadsheetParserSelector()
-                )
-        );
-
-        this.checkEquals(
-                1,
-                clearParsed.get()
-        );
-        this.checkEquals(
-                0,
-                clearFormatted.get()
+            0,
+            clearFormatted.get()
         );
 
         metadata = store.save(
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                        SpreadsheetPattern.parseTextFormatPattern("@@")
-                                .spreadsheetFormatterSelector()
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                SpreadsheetPattern.parseNumberParsePattern("0.00")
+                    .spreadsheetParserSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                clearParsed.get()
+            1,
+            clearParsed.get()
         );
         this.checkEquals(
-                1,
-                clearFormatted.get()
+            0,
+            clearFormatted.get()
         );
 
         metadata = store.save(
-                metadata.remove(
-                        SpreadsheetMetadataPropertyName.TEXT_FORMATTER
-                )
+            metadata.set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                SpreadsheetPattern.parseTextFormatPattern("@@")
+                    .spreadsheetFormatterSelector()
+            )
         );
 
         this.checkEquals(
-                1,
-                clearParsed.get()
+            1,
+            clearParsed.get()
         );
         this.checkEquals(
-                2,
-                clearFormatted.get()
+            1,
+            clearFormatted.get()
+        );
+
+        metadata = store.save(
+            metadata.remove(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER
+            )
+        );
+
+        this.checkEquals(
+            1,
+            clearParsed.get()
+        );
+        this.checkEquals(
+            2,
+            clearFormatted.get()
         );
     }
 
@@ -523,37 +523,37 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
 
         return SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                        EmailAddress.parse("creator@example.com"),
-                        yesterday,
-                        EmailAddress.parse("creator@example.com"),
-                        yesterday
-                )
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                EmailAddress.parse("creator@example.com"),
+                yesterday,
+                EmailAddress.parse("creator@example.com"),
+                yesterday
+            )
         ).set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                Locale.ENGLISH
+            SpreadsheetMetadataPropertyName.LOCALE,
+            Locale.ENGLISH
         );
     }
 
     @Override
     public SpreadsheetCellStoreActionSpreadsheetMetadataStore createStore() {
         return this.createStore(
-                SpreadsheetCellStores.treeMap()
+            SpreadsheetCellStores.treeMap()
         );
     }
 
     private SpreadsheetCellStoreActionSpreadsheetMetadataStore createStore(final SpreadsheetCellStore cellStore) {
         return SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                createTreeMap(),
-                (id) -> cellStore
+            createTreeMap(),
+            (id) -> cellStore
         );
     }
 
     private SpreadsheetMetadataStore createTreeMap() {
         return SpreadsheetMetadataStores.treeMap(
-                CREATE_TEMPLATE,
-                LocalDateTime::now
+            CREATE_TEMPLATE,
+            LocalDateTime::now
         );
     }
 

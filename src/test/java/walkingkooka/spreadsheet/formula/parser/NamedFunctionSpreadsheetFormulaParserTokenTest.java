@@ -45,11 +45,11 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
         final String text = FUNCTION + "(" + ParentSpreadsheetFormulaParserTokenTestCase.NUMBER1 + ")";
         final FunctionNameSpreadsheetFormulaParserToken name = this.functionNameParserToken();
         final NamedFunctionSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                name,
-                this.functionParameters(
-                        this.number1()
-                )
+            text,
+            name,
+            this.functionParameters(
+                this.number1()
+            )
         );
         this.textAndCheck(token, text);
     }
@@ -60,15 +60,15 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
 
         final FunctionNameSpreadsheetFormulaParserToken name = this.functionNameParserToken();
         final FunctionParametersSpreadsheetFormulaParserToken parameters = this.functionParameters(
-                this.openParenthesisSymbol(),
-                this.number1(),
-                this.closeParenthesisSymbol()
+            this.openParenthesisSymbol(),
+            this.number1(),
+            this.closeParenthesisSymbol()
         );
 
         final NamedFunctionSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                name,
-                parameters
+            text,
+            name,
+            parameters
         );
         this.textAndCheck(token, text);
         this.checkValue(token, name, parameters);
@@ -83,11 +83,11 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
 
         final NamedFunctionSpreadsheetFormulaParserToken namedFunction = this.createToken();
         final SpreadsheetFormulaParserToken functionName = namedFunction.value()
-                .get(0)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .get(0)
+            .cast(SpreadsheetFormulaParserToken.class);
         final SpreadsheetFormulaParserToken parameters = namedFunction.value()
-                .get(1)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .get(1)
+            .cast(SpreadsheetFormulaParserToken.class);
 
         new FakeSpreadsheetFormulaParserTokenVisitor() {
             @Override
@@ -152,52 +152,52 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
         }.accept(namedFunction);
 
         this.checkEquals(
-                "81381629815729429",
-                b.toString()
+            "81381629815729429",
+            b.toString()
         );
         this.checkEquals(
-                Lists.of(
-                        namedFunction, namedFunction, namedFunction,
-                        functionName, functionName, functionName, functionName, functionName,
-                        parameters, parameters, parameters, parameters, parameters, parameters,
-                        namedFunction, namedFunction, namedFunction
-                ),
-                visited,
-                "visited"
+            Lists.of(
+                namedFunction, namedFunction, namedFunction,
+                functionName, functionName, functionName, functionName, functionName,
+                parameters, parameters, parameters, parameters, parameters, parameters,
+                namedFunction, namedFunction, namedFunction
+            ),
+            visited,
+            "visited"
         );
     }
 
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
-                Expression.call(
-                        Expression.namedFunction(
-                                SpreadsheetExpressionFunctions.name(FUNCTION)
-                        ),
-                        Lists.of(
-                                Expression.value(
-                                        this.expressionNumber(ParentSpreadsheetFormulaParserTokenTestCase.NUMBER1)
-                                )
-                        )
+            Expression.call(
+                Expression.namedFunction(
+                    SpreadsheetExpressionFunctions.name(FUNCTION)
+                ),
+                Lists.of(
+                    Expression.value(
+                        this.expressionNumber(ParentSpreadsheetFormulaParserTokenTestCase.NUMBER1)
+                    )
                 )
+            )
         );
     }
 
     private void checkFunctionName(final NamedFunctionSpreadsheetFormulaParserToken function,
                                    final SpreadsheetFunctionName name) {
         this.checkEquals(
-                name,
-                function.functionName(),
-                "functionName"
+            name,
+            function.functionName(),
+            "functionName"
         );
     }
 
     private void checkParameters(final NamedFunctionSpreadsheetFormulaParserToken function,
                                  final FunctionParametersSpreadsheetFormulaParserToken parameters) {
         this.checkEquals(
-                parameters,
-                function.parameters(),
-                "parameters"
+            parameters,
+            function.parameters(),
+            "parameters"
         );
     }
 
@@ -215,12 +215,12 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                this.functionNameParserToken(),
-                this.functionParameters(
-                        this.openParenthesisSymbol(),
-                        this.number1(),
-                        this.closeParenthesisSymbol()
-                )
+            this.functionNameParserToken(),
+            this.functionParameters(
+                this.openParenthesisSymbol(),
+                this.number1(),
+                this.closeParenthesisSymbol()
+            )
         );
     }
 
@@ -230,8 +230,8 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
 
     private FunctionNameSpreadsheetFormulaParserToken functionNameParserToken(final String name) {
         return SpreadsheetFormulaParserToken.functionName(
-                SpreadsheetFunctionName.with(name),
-                name
+            SpreadsheetFunctionName.with(name),
+            name
         );
     }
 
@@ -245,20 +245,20 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
 
     private FunctionParametersSpreadsheetFormulaParserToken functionParameters(final SpreadsheetFormulaParserToken... tokens) {
         return SpreadsheetFormulaParserToken.functionParameters(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+            Lists.of(
+                tokens
+            ),
+            ParserToken.text(
+                Lists.of(tokens)
+            )
         );
     }
 
     @Override
     public NamedFunctionSpreadsheetFormulaParserToken createDifferentToken() {
         return this.createToken(
-                "avg()",
-                this.functionNameParserToken("avg")
+            "avg()",
+            this.functionNameParserToken("avg")
         );
     }
 

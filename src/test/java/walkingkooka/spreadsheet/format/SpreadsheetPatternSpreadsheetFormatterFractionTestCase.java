@@ -22,7 +22,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterFractionTestCase<T> implements ClassTesting2<T>,
-        TypeNameTesting<T> {
+    TypeNameTesting<T> {
 
     // ClassTesting.....................................................................................................
 

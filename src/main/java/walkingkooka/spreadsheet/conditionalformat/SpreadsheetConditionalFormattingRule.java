@@ -78,8 +78,8 @@ public final class SpreadsheetConditionalFormattingRule implements UsesToStringB
         checkDescription(description);
 
         return this.description.equals(description) ?
-                this :
-                this.replace(description, this.priority, this.formula, this.style);
+            this :
+            this.replace(description, this.priority, this.formula, this.style);
     }
 
     private final SpreadsheetDescription description;
@@ -96,8 +96,8 @@ public final class SpreadsheetConditionalFormattingRule implements UsesToStringB
 
     public SpreadsheetConditionalFormattingRule setPriority(final int priority) {
         return this.priority == priority ?
-                this :
-                this.replace(this.description, priority, this.formula, this.style);
+            this :
+            this.replace(this.description, priority, this.formula, this.style);
     }
 
     private final int priority;
@@ -112,8 +112,8 @@ public final class SpreadsheetConditionalFormattingRule implements UsesToStringB
         checkFormula(formula);
 
         return this.formula.equals(formula) ?
-                this :
-                this.replace(this.description, this.priority, formula, this.style);
+            this :
+            this.replace(this.description, this.priority, formula, this.style);
     }
 
     private final SpreadsheetFormula formula;
@@ -138,8 +138,8 @@ public final class SpreadsheetConditionalFormattingRule implements UsesToStringB
         checkStyle(style);
 
         return this.style.equals(style) ?
-                this :
-                this.replace(this.description, this.priority, this.formula, style);
+            this :
+            this.replace(this.description, this.priority, this.formula, style);
     }
 
     private final Function<SpreadsheetCell, TextStyle> style;
@@ -170,15 +170,15 @@ public final class SpreadsheetConditionalFormattingRule implements UsesToStringB
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetConditionalFormattingRule &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetConditionalFormattingRule &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetConditionalFormattingRule other) {
         return this.description.equals(other.description) &&
-                this.priority == other.priority &&
-                this.formula.equals(other.formula) &&
-                this.style.equals(other.style);
+            this.priority == other.priority &&
+            this.formula.equals(other.formula) &&
+            this.style.equals(other.style);
     }
 
     @Override

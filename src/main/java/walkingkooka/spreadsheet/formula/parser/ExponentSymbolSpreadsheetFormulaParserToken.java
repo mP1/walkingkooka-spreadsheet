@@ -28,8 +28,8 @@ public final class ExponentSymbolSpreadsheetFormulaParserToken extends SymbolSpr
     static ExponentSymbolSpreadsheetFormulaParserToken with(final String value,
                                                             final String text) {
         return new ExponentSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

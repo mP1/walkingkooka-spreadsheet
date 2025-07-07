@@ -28,7 +28,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete extends BasicS
 
     static void delete(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
         new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete(columnOrRow)
-                .delete0();
+            .delete0();
     }
 
     private BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {

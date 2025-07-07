@@ -36,12 +36,12 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumber formatter,
                                                                     final SpreadsheetFormatterContext context) {
         return new SpreadsheetPatternSpreadsheetFormatterNumberContext(
-                currency,
-                integer,
-                fraction,
-                exponent,
-                formatter,
-                context
+            currency,
+            integer,
+            fraction,
+            exponent,
+            formatter,
+            context
         );
     }
 
@@ -89,8 +89,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
         final SpreadsheetFormatterContext context = this.context;
 
         this.text.append(
-                this.currency ?
-                        context.monetaryDecimalSeparator() :
+            this.currency ?
+                context.monetaryDecimalSeparator() :
                 context.decimalSeparator()
         );
         this.digits = next;
@@ -147,15 +147,15 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .disable(ToStringBuilderOption.QUOTE)
-                .separator("")
-                .labelSeparator("")
-                .value(this.currency ? "currency " : "") // https://github.com/mP1/walkingkooka/issues/2525
-                .value(this.integer)
-                .value(this.fraction)
-                .value(this.exponent)
-                .label(" ")
-                .value(this.text)
-                .build();
+            .disable(ToStringBuilderOption.QUOTE)
+            .separator("")
+            .labelSeparator("")
+            .value(this.currency ? "currency " : "") // https://github.com/mP1/walkingkooka/issues/2525
+            .value(this.integer)
+            .value(this.fraction)
+            .value(this.exponent)
+            .label(" ")
+            .value(this.text)
+            .build();
     }
 }

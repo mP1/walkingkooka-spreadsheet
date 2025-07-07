@@ -29,7 +29,7 @@ public final class EqualsSpreadsheetFormatParserToken extends ConditionSpreadshe
 
     static EqualsSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new EqualsSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     private EqualsSpreadsheetFormatParserToken(final List<ParserToken> value, final String text) {
@@ -46,9 +46,9 @@ public final class EqualsSpreadsheetFormatParserToken extends ConditionSpreadshe
     @Override
     public EqualsSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                EqualsSpreadsheetFormatParserToken::with
+            this,
+            children,
+            EqualsSpreadsheetFormatParserToken::with
         );
     }
 

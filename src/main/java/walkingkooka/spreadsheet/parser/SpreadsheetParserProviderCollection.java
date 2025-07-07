@@ -34,38 +34,38 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
 
     static SpreadsheetParserProviderCollection with(final Set<SpreadsheetParserProvider> providers) {
         return new SpreadsheetParserProviderCollection(
-                Objects.requireNonNull(providers, "providers")
+            Objects.requireNonNull(providers, "providers")
         );
     }
 
     private SpreadsheetParserProviderCollection(final Set<SpreadsheetParserProvider> providers) {
         this.providers = ProviderCollection.with(
-                new ProviderCollectionProviderGetter<>() {
-                    @Override
-                    public SpreadsheetParser get(final SpreadsheetParserProvider provider,
-                                                 final SpreadsheetParserName name,
-                                                 final List<?> values,
-                                                 final ProviderContext context) {
-                        return provider.spreadsheetParser(
-                                name,
-                                values,
-                                context
-                        );
-                    }
+            new ProviderCollectionProviderGetter<>() {
+                @Override
+                public SpreadsheetParser get(final SpreadsheetParserProvider provider,
+                                             final SpreadsheetParserName name,
+                                             final List<?> values,
+                                             final ProviderContext context) {
+                    return provider.spreadsheetParser(
+                        name,
+                        values,
+                        context
+                    );
+                }
 
-                    @Override
-                    public SpreadsheetParser get(final SpreadsheetParserProvider provider,
-                                                 final SpreadsheetParserSelector selector,
-                                                 final ProviderContext context) {
-                        return provider.spreadsheetParser(
-                                selector,
-                                context
-                        );
-                    }
-                },
-                SpreadsheetParserProvider::spreadsheetParserInfos,
-                SpreadsheetParser.class.getSimpleName(),
-                providers
+                @Override
+                public SpreadsheetParser get(final SpreadsheetParserProvider provider,
+                                             final SpreadsheetParserSelector selector,
+                                             final ProviderContext context) {
+                    return provider.spreadsheetParser(
+                        selector,
+                        context
+                    );
+                }
+            },
+            SpreadsheetParserProvider::spreadsheetParserInfos,
+            SpreadsheetParser.class.getSimpleName(),
+            providers
         );
     }
 
@@ -73,8 +73,8 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                final ProviderContext context) {
         final SpreadsheetParser parser = this.providers.get(
-                selector,
-                context
+            selector,
+            context
         );
         if (null == parser) {
             throw new IllegalArgumentException("Unknown parser " + selector.name());
@@ -87,9 +87,9 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
                                                final List<?> values,
                                                final ProviderContext context) {
         final SpreadsheetParser parser = this.providers.get(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
         if (null == parser) {
             throw new IllegalArgumentException("Unknown parser " + name);
@@ -114,7 +114,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
     @Override
     public SpreadsheetParserInfoSet spreadsheetParserInfos() {
         return SpreadsheetParserInfoSet.with(
-                this.providers.infos()
+            this.providers.infos()
         );
     }
 

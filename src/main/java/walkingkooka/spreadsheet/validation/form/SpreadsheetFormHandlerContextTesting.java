@@ -30,11 +30,11 @@ public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormH
     @Test
     default void testLoadFormFieldValueWithCellRangeFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createContext()
-                        .loadFormFieldValue(
-                                SpreadsheetSelection.A1.toCellRange()
-                        )
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .loadFormFieldValue(
+                    SpreadsheetSelection.A1.toCellRange()
+                )
         );
     }
 }

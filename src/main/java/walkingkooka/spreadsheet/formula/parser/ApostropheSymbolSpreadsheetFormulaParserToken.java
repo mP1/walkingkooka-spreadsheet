@@ -28,8 +28,8 @@ public final class ApostropheSymbolSpreadsheetFormulaParserToken extends SymbolS
     static ApostropheSymbolSpreadsheetFormulaParserToken with(final String value,
                                                               final String text) {
         return new ApostropheSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

@@ -43,8 +43,8 @@ public enum SpreadsheetEngineEvaluation {
                                                      final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return context.storeRepository()
-                    .cells()
-                    .save(cell.setFormula(cell.formula().clear()));
+                .cells()
+                .save(cell.setFormula(cell.formula().clear()));
         }
 
         @Override
@@ -89,13 +89,13 @@ public enum SpreadsheetEngineEvaluation {
                                                      final SpreadsheetEngineContext context) {
             // clear value and error to allow evaluation to continue.
             return engine.parseFormulaEvaluateValidateFormatAndStyle(
-                    cell.setFormula(
-                            cell.formula()
-                                    .clear()
-                    ),
-                    this,
-                    loader,
-                    context
+                cell.setFormula(
+                    cell.formula()
+                        .clear()
+                ),
+                this,
+                loader,
+                context
             );
         }
 
@@ -105,9 +105,9 @@ public enum SpreadsheetEngineEvaluation {
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
             return engine.evaluate(
-                    cell,
-                    loader,
-                    context
+                cell,
+                loader,
+                context
             );
         }
     },
@@ -122,10 +122,10 @@ public enum SpreadsheetEngineEvaluation {
                                                      final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return engine.parseFormulaEvaluateValidateFormatAndStyle(
-                    cell,
-                    this,
-                    loader,
-                    context
+                cell,
+                this,
+                loader,
+                context
             );
         }
 
@@ -135,16 +135,16 @@ public enum SpreadsheetEngineEvaluation {
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
             return engine.evaluateIfNecessary(
-                    cell,
-                    loader,
-                    context
+                cell,
+                loader,
+                context
             );
         }
     };
 
     SpreadsheetEngineEvaluation() {
         this.linkRelation = LinkRelation.with(
-                CaseKind.kebabEnumName(this)
+            CaseKind.kebabEnumName(this)
         );
     }
 
@@ -182,15 +182,15 @@ public enum SpreadsheetEngineEvaluation {
 
     static {
         final Class<SpreadsheetEngineEvaluation>[] types = Cast.to(Arrays.stream(values())
-                .map(SpreadsheetEngineEvaluation::getClass)
-                .toArray(Class[]::new));
+            .map(SpreadsheetEngineEvaluation::getClass)
+            .toArray(Class[]::new));
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetEngineEvaluation.class),
-                SpreadsheetEngineEvaluation::unmarshall,
-                SpreadsheetEngineEvaluation::marshall,
-                SpreadsheetEngineEvaluation.class,
-                types
+            JsonNodeContext.computeTypeName(SpreadsheetEngineEvaluation.class),
+            SpreadsheetEngineEvaluation::unmarshall,
+            SpreadsheetEngineEvaluation::marshall,
+            SpreadsheetEngineEvaluation.class,
+            types
         );
     }
 }

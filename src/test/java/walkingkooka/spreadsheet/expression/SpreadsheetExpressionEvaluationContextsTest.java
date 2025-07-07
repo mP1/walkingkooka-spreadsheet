@@ -33,7 +33,7 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetExpressionEvaluationContextsTest implements ClassTesting2<SpreadsheetExpressionEvaluationContexts>,
-        PublicStaticHelperTesting<SpreadsheetExpressionEvaluationContexts> {
+    PublicStaticHelperTesting<SpreadsheetExpressionEvaluationContexts> {
 
     @Test
     public void testPublicStaticMethodsWithoutMathContextParameter() {
@@ -53,22 +53,22 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
         };
 
         this.referenceNotFoundAndCheck(
-                reference,
-                "Unknown reference: " + reference);
+            reference,
+            "Unknown reference: " + reference);
     }
 
     @Test
     public void testReferenceNotFoundCell() {
         this.referenceNotFoundAndCheck(
-                SpreadsheetSelection.parseCell("B2"),
-                "Cell not found: \"B2\"");
+            SpreadsheetSelection.parseCell("B2"),
+            "Cell not found: \"B2\"");
     }
 
     @Test
     public void testReferenceNotFoundCellRange() {
         this.referenceNotFoundAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                "Cell Range not found: \"B2:C3\""
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            "Cell Range not found: \"B2:C3\""
         );
     }
 
@@ -76,27 +76,27 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
     @Test
     public void testReferenceNotFoundLabel() {
         this.referenceNotFoundAndCheck(
-                SpreadsheetSelection.labelName("Label123"),
-                "Label not found: \"Label123\""
+            SpreadsheetSelection.labelName("Label123"),
+            "Label not found: \"Label123\""
         );
     }
 
     private void referenceNotFoundAndCheck(final ExpressionReference reference,
                                            final String expected) {
         final SpreadsheetExpressionEvaluationReferenceException created = (SpreadsheetExpressionEvaluationReferenceException)
-                SpreadsheetExpressionEvaluationContexts.referenceNotFound()
-                        .apply(reference);
+            SpreadsheetExpressionEvaluationContexts.referenceNotFound()
+                .apply(reference);
 
         this.checkEquals(
-                expected,
-                created.getMessage(),
-                created::getMessage
+            expected,
+            created.getMessage(),
+            created::getMessage
         );
 
         assertSame(
-                SpreadsheetErrorKind.NAME,
-                created.spreadsheetErrorKind(),
-                created::getMessage
+            SpreadsheetErrorKind.NAME,
+            created.spreadsheetErrorKind(),
+            created::getMessage
         );
     }
 

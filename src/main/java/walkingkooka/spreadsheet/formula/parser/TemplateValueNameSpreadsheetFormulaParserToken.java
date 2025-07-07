@@ -23,13 +23,13 @@ import walkingkooka.template.TemplateValueName;
  * Represents a {@link TemplateValueName} within an expression.
  */
 public final class TemplateValueNameSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<TemplateValueName> implements SpreadsheetReferenceParserToken,
-        HasSpreadsheetReference<TemplateValueName> {
+    HasSpreadsheetReference<TemplateValueName> {
 
     static TemplateValueNameSpreadsheetFormulaParserToken with(final TemplateValueName value,
                                                                final String text) {
         return new TemplateValueNameSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

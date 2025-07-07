@@ -34,8 +34,8 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
         Objects.requireNonNull(provider, "provider");
 
         return new FilteredMappedSpreadsheetImporterProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -43,9 +43,9 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
                                                       final SpreadsheetImporterProvider provider) {
         this.provider = provider;
         this.mapper = FilteredProviderMapper.with(
-                infos,
-                provider.spreadsheetImporterInfos(),
-                SpreadsheetImporterPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetImporterInfos(),
+            SpreadsheetImporterPluginHelper.INSTANCE
         );
     }
 
@@ -56,8 +56,8 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetImporter(
-                this.mapper.selector(selector),
-                context
+            this.mapper.selector(selector),
+            context
         );
     }
 
@@ -70,9 +70,9 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetImporter(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 

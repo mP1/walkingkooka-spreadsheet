@@ -29,49 +29,49 @@ public final class SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTo
     @Test
     public void testLastWithDateFormatPattern() {
         this.lastAndCheck(
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy").value(),
-                SpreadsheetFormatParserTokenKind.YEAR_FULL
+            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy").value(),
+            SpreadsheetFormatParserTokenKind.YEAR_FULL
         );
     }
 
     @Test
     public void testLastWithDateTimeFormatPattern() {
         this.lastAndCheck(
-                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy").value(),
-                SpreadsheetFormatParserTokenKind.YEAR_FULL
+            SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy").value(),
+            SpreadsheetFormatParserTokenKind.YEAR_FULL
         );
     }
 
     @Test
     public void testLastWithNumberFormatPattern() {
         this.lastAndCheck(
-                SpreadsheetPattern.parseNumberFormatPattern("$0.00").value(),
-                SpreadsheetFormatParserTokenKind.DIGIT_ZERO
+            SpreadsheetPattern.parseNumberFormatPattern("$0.00").value(),
+            SpreadsheetFormatParserTokenKind.DIGIT_ZERO
         );
     }
 
     @Test
     public void testLastWithNumberParsePattern() {
         this.lastAndCheck(
-                SpreadsheetPattern.parseNumberParsePattern("$0.00;$0.00;").value(),
-                SpreadsheetFormatParserTokenKind.SEPARATOR
+            SpreadsheetPattern.parseNumberParsePattern("$0.00;$0.00;").value(),
+            SpreadsheetFormatParserTokenKind.SEPARATOR
         );
     }
 
     private void lastAndCheck(final ParserToken token,
                               final SpreadsheetFormatParserTokenKind expected) {
         this.lastAndCheck(
-                token,
-                Optional.of(expected)
+            token,
+            Optional.of(expected)
         );
     }
 
     private void lastAndCheck(final ParserToken token,
                               final Optional<SpreadsheetFormatParserTokenKind> expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor.last(token),
-                token::toString
+            expected,
+            SpreadsheetFormatParserTokenKindLastSpreadsheetFormatParserTokenVisitor.last(token),
+            token::toString
         );
     }
 

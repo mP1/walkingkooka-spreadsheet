@@ -40,9 +40,9 @@ public final class AdditionSpreadsheetFormulaParserToken extends ArithmeticSprea
     @Override
     public AdditionSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                AdditionSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            AdditionSpreadsheetFormulaParserToken::with
         );
     }
 

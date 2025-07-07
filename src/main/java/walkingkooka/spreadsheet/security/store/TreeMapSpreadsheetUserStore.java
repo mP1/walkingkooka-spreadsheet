@@ -84,8 +84,8 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     public Set<UserId> ids(final int offset,
                            final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -93,8 +93,8 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     public List<User> values(final int offset,
                              final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -102,17 +102,17 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     public List<User> between(final UserId from,
                               final UserId to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 
     @Override
     public Optional<User> loadWithEmail(final EmailAddress email) {
         return this.store.all()
-                .stream()
-                .filter(u -> email.equals(u.email()))
-                .findFirst();
+            .stream()
+            .filter(u -> email.equals(u.email()))
+            .findFirst();
     }
 
     final Store<UserId, User> store;

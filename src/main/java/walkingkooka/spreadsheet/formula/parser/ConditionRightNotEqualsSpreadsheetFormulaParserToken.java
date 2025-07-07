@@ -30,8 +30,8 @@ public final class ConditionRightNotEqualsSpreadsheetFormulaParserToken extends 
     static ConditionRightNotEqualsSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                                      final String text) {
         return new ConditionRightNotEqualsSpreadsheetFormulaParserToken(
-                Lists.immutable(value),
-                checkText(text)
+            Lists.immutable(value),
+            checkText(text)
         );
     }
 
@@ -43,8 +43,8 @@ public final class ConditionRightNotEqualsSpreadsheetFormulaParserToken extends 
     NotEqualsSpreadsheetFormulaParserToken setConditionLeft0(final List<ParserToken> tokens,
                                                              final String text) {
         return notEquals(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -53,9 +53,9 @@ public final class ConditionRightNotEqualsSpreadsheetFormulaParserToken extends 
     @Override
     public ConditionRightNotEqualsSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ConditionRightNotEqualsSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            ConditionRightNotEqualsSpreadsheetFormulaParserToken::with
         );
     }
 

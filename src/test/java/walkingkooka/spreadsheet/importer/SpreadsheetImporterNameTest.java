@@ -27,7 +27,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Set;
 
 final public class SpreadsheetImporterNameTest implements PluginNameTesting<SpreadsheetImporterName>,
-        ConstantsTesting<SpreadsheetImporterName> {
+    ConstantsTesting<SpreadsheetImporterName> {
 
     @Override
     public Set<SpreadsheetImporterName> intentionalDuplicateConstants() {

@@ -25,8 +25,7 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSe
         super();
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return SpreadsheetFormatterAliasSet.class.getSimpleName();
     }
 }

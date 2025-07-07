@@ -35,9 +35,9 @@ final class SpreadsheetViewportNavigationUpPixel extends SpreadsheetViewportNavi
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
         return home.upPixels(
-                SpreadsheetViewportAnchor.CELL,
-                this.value,
-                context
+            SpreadsheetViewportAnchor.CELL,
+            this.value,
+            context
         ).map(SpreadsheetSelection::toCell);
     }
 
@@ -46,9 +46,9 @@ final class SpreadsheetViewportNavigationUpPixel extends SpreadsheetViewportNavi
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.upPixels(
-                anchor,
-                this.value,
-                context
+            anchor,
+            this.value,
+            context
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 

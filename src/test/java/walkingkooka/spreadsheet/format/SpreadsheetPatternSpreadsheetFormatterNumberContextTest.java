@@ -26,28 +26,28 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberContextTest exten
     @Test
     public void testToStringCurrencyTrue() {
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
-                        true,
-                        SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
-                        SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
-                        SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
-                        SpreadsheetPatternSpreadsheetFormatterNumber.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
-                        SpreadsheetFormatterContexts.fake()),
-                "currency 123-456789"
+            SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
+                true,
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
+                SpreadsheetPatternSpreadsheetFormatterNumber.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
+                SpreadsheetFormatterContexts.fake()),
+            "currency 123-456789"
         );
     }
 
     @Test
     public void testToStringCurrencyFalse() {
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
+            SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
                 false,
-                        SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
-                        SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
-                        SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
-                        SpreadsheetPatternSpreadsheetFormatterNumber.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
-                        SpreadsheetFormatterContexts.fake()),
-                "123-456789"
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
+                SpreadsheetPatternSpreadsheetFormatterNumber.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
+                SpreadsheetFormatterContexts.fake()),
+            "123-456789"
         );
     }
 

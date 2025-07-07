@@ -24,11 +24,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import java.util.Objects;
 
 final class BasicSpreadsheetImporterContext implements SpreadsheetImporterContext,
-        JsonNodeUnmarshallContextDelegator {
+    JsonNodeUnmarshallContextDelegator {
 
     static BasicSpreadsheetImporterContext with(final JsonNodeUnmarshallContext context) {
         return new BasicSpreadsheetImporterContext(
-                Objects.requireNonNull(context, "context")
+            Objects.requireNonNull(context, "context")
         );
     }
 
@@ -42,8 +42,8 @@ final class BasicSpreadsheetImporterContext implements SpreadsheetImporterContex
         final JsonNodeUnmarshallContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new BasicSpreadsheetImporterContext(after);
+            this :
+            new BasicSpreadsheetImporterContext(after);
     }
 
     @Override

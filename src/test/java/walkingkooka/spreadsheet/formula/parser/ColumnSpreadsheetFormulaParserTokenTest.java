@@ -37,7 +37,7 @@ public final class ColumnSpreadsheetFormulaParserTokenTest extends NonSymbolSpre
     @Test
     public void testToStringAbsolute() {
         this.toStringAndCheck(this.createToken(SpreadsheetReferenceKind.ABSOLUTE.column(555), "$999"),
-                "$999");
+            "$999");
     }
 
     @Test

@@ -31,32 +31,32 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken>,
-        ClassTesting<SpreadsheetParserSelectorTokenList>,
-        ImmutableListTesting<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken>,
-        JsonNodeMarshallingTesting<SpreadsheetParserSelectorTokenList> {
+    ClassTesting<SpreadsheetParserSelectorTokenList>,
+    ImmutableListTesting<SpreadsheetParserSelectorTokenList, SpreadsheetParserSelectorToken>,
+    JsonNodeMarshallingTesting<SpreadsheetParserSelectorTokenList> {
 
     private final static SpreadsheetParserSelectorToken COMPONENT1 = SpreadsheetParserSelectorToken.with(
-            "label1",
-            "text1",
-            Lists.of(
-                    SpreadsheetParserSelectorTokenAlternative.with(
-                            "alternative-label-1",
-                            "alternative-text-1"
-                    )
+        "label1",
+        "text1",
+        Lists.of(
+            SpreadsheetParserSelectorTokenAlternative.with(
+                "alternative-label-1",
+                "alternative-text-1"
             )
+        )
     );
 
     private final static SpreadsheetParserSelectorToken COMPONENT2 = SpreadsheetParserSelectorToken.with(
-            "label1",
-            "text1",
-            SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+        "label1",
+        "text1",
+        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
     );
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserSelectorTokenList.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetParserSelectorTokenList.with(null)
         );
     }
 
@@ -64,35 +64,35 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     public void testDoesntDoubleWrap() {
         final SpreadsheetParserSelectorTokenList list = this.createList();
         assertSame(
-                list,
-                SpreadsheetParserSelectorTokenList.with(list)
+            list,
+            SpreadsheetParserSelectorTokenList.with(list)
         );
     }
 
     @Test
     public void testGet() {
         this.getAndCheck(
-                this.createList(),
-                0, // index
-                COMPONENT1 // expected
+            this.createList(),
+            0, // index
+            COMPONENT1 // expected
         );
     }
 
     @Test
     public void testGet2() {
         this.getAndCheck(
-                this.createList(),
-                1, // index
-                COMPONENT2 // expected
+            this.createList(),
+            1, // index
+            COMPONENT2 // expected
         );
     }
 
     @Test
     public void testSetFails() {
         this.setFails(
-                this.createList(),
-                0, // index
-                COMPONENT1 // expected
+            this.createList(),
+            0, // index
+            COMPONENT1 // expected
         );
     }
 
@@ -101,8 +101,8 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         final SpreadsheetParserSelectorTokenList list = this.createList();
 
         this.removeIndexFails(
-                list,
-                0
+            list,
+            0
         );
     }
 
@@ -111,36 +111,36 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
         final SpreadsheetParserSelectorTokenList list = this.createList();
 
         this.removeFails(
-                list,
-                list.get(0)
+            list,
+            list.get(0)
         );
     }
 
     @Test
     public void testSetElementsIncludesNullFails() {
         final NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> this.createList()
-                        .setElements(
-                                Lists.of(
-                                        COMPONENT1,
-                                        null
-                                )
-                        )
+            NullPointerException.class,
+            () -> this.createList()
+                .setElements(
+                    Lists.of(
+                        COMPONENT1,
+                        null
+                    )
+                )
         );
         this.checkEquals(
-                "Includes null token",
-                thrown.getMessage()
+            "Includes null token",
+            thrown.getMessage()
         );
     }
 
     @Override
     public SpreadsheetParserSelectorTokenList createList() {
         return SpreadsheetParserSelectorTokenList.with(
-                Lists.of(
-                        COMPONENT1,
-                        COMPONENT2
-                )
+            Lists.of(
+                COMPONENT1,
+                COMPONENT2
+            )
         );
     }
 
@@ -159,46 +159,46 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createList(),
-                "[\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"text\": \"text1\",\n" +
-                        "    \"alternatives\": [\n" +
-                        "      {\n" +
-                        "        \"label\": \"alternative-label-1\",\n" +
-                        "        \"text\": \"alternative-text-1\"\n" +
-                        "      }\n" +
-                        "    ]\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"text\": \"text1\"\n" +
-                        "  }\n" +
-                        "]"
+            this.createList(),
+            "[\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"text\": \"text1\",\n" +
+                "    \"alternatives\": [\n" +
+                "      {\n" +
+                "        \"label\": \"alternative-label-1\",\n" +
+                "        \"text\": \"alternative-text-1\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"text\": \"text1\"\n" +
+                "  }\n" +
+                "]"
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "[\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"text\": \"text1\",\n" +
-                        "    \"alternatives\": [\n" +
-                        "      {\n" +
-                        "        \"label\": \"alternative-label-1\",\n" +
-                        "        \"text\": \"alternative-text-1\"\n" +
-                        "      }\n" +
-                        "    ]\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"label\": \"label1\",\n" +
-                        "    \"text\": \"text1\"\n" +
-                        "  }\n" +
-                        "]",
-                this.createList()
+            "[\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"text\": \"text1\",\n" +
+                "    \"alternatives\": [\n" +
+                "      {\n" +
+                "        \"label\": \"alternative-label-1\",\n" +
+                "        \"text\": \"alternative-text-1\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"label\": \"label1\",\n" +
+                "    \"text\": \"text1\"\n" +
+                "  }\n" +
+                "]",
+            this.createList()
         );
     }
 
@@ -206,8 +206,8 @@ public class SpreadsheetParserSelectorTokenListTest implements ListTesting2<Spre
     public SpreadsheetParserSelectorTokenList unmarshall(final JsonNode json,
                                                          final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserSelectorTokenList.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

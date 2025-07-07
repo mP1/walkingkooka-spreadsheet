@@ -25,7 +25,7 @@ import java.util.List;
  * Base parent class for a {@link SpreadsheetFormatParserToken} that holds child tokens.
  */
 abstract public class ParentSpreadsheetFormatParserToken extends SpreadsheetFormatParserToken
-        implements Value<List<ParserToken>> {
+    implements Value<List<ParserToken>> {
 
     ParentSpreadsheetFormatParserToken(final List<ParserToken> value, final String text) {
         super(text);

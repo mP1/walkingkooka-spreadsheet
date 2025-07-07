@@ -34,13 +34,11 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
         return this.checkValueType(value, v -> v instanceof Integer);
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return "int";
     }
 
-    @Override
-    final Optional<Integer> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<Integer> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty(); // Dont think width/precison/twoYearDigit are locale aware.
     }
 
@@ -51,8 +49,7 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final Integer parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final Integer parseUrlFragmentSaveValueNonNull(final String value) {
         return Integer.parseInt(value);
     }
 }

@@ -60,17 +60,17 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
         Objects.requireNonNull(context, "context");
 
         final MediaType contentType = cells.contentType()
-                .orElse(null);
+            .orElse(null);
 
         return null != contentType &&
-                (SpreadsheetMediaTypes.JSON_CELLS.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_PARSERS.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_STYLES.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType) ||
-                        SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)
-                );
+            (SpreadsheetMediaTypes.JSON_CELLS.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_PARSERS.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_STYLES.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)
+            );
     }
 
     @Override
@@ -82,73 +82,73 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
         final Function<JsonNode, SpreadsheetImporterCellValue> value;
 
         final MediaType contentType = cells.contentType()
-                .orElseThrow(() -> new IllegalArgumentException("Missing content-type"));
+            .orElseThrow(() -> new IllegalArgumentException("Missing content-type"));
 
         if (SpreadsheetMediaTypes.JSON_CELLS.test(contentType)) {
             value = (j) -> SpreadsheetImporterCellValue.cell(
-                    context.unmarshall(
-                            JsonNode.object()
-                                    .appendChild(j),
-                            SpreadsheetCell.class
-                    )
+                context.unmarshall(
+                    JsonNode.object()
+                        .appendChild(j),
+                    SpreadsheetCell.class
+                )
             );
         } else {
             if (SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType)) {
                 value = (j) -> SpreadsheetImporterCellValue.formula(
-                        cell(j),
-                        SpreadsheetFormula.EMPTY.setText(
-                                j.stringOrFail()
-                        )
+                    cell(j),
+                    SpreadsheetFormula.EMPTY.setText(
+                        j.stringOrFail()
+                    )
                 );
             } else {
                 if (SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType)) {
                     value = (j) -> SpreadsheetImporterCellValue.formatter(
-                            cell(j),
-                            OptionalSpreadsheetFormatterSelector.with(
-                                    context.unmarshallOptional(
-                                            j,
-                                            SpreadsheetFormatterSelector.class
-                                    )
+                        cell(j),
+                        OptionalSpreadsheetFormatterSelector.with(
+                            context.unmarshallOptional(
+                                j,
+                                SpreadsheetFormatterSelector.class
                             )
+                        )
                     );
                 } else {
                     if (SpreadsheetMediaTypes.JSON_PARSERS.test(contentType)) {
                         value = (j) -> SpreadsheetImporterCellValue.parser(
-                                cell(j),
-                                OptionalSpreadsheetParserSelector.with(
-                                        context.unmarshallOptional(
-                                                j,
-                                                SpreadsheetParserSelector.class
-                                        )
+                            cell(j),
+                            OptionalSpreadsheetParserSelector.with(
+                                context.unmarshallOptional(
+                                    j,
+                                    SpreadsheetParserSelector.class
                                 )
+                            )
                         );
                     } else {
                         if (SpreadsheetMediaTypes.JSON_STYLES.test(contentType)) {
                             value = (j) -> SpreadsheetImporterCellValue.textStyle(
-                                    cell(j),
-                                    context.unmarshall(
-                                            j,
-                                            TextStyle.class
-                                    )
+                                cell(j),
+                                context.unmarshall(
+                                    j,
+                                    TextStyle.class
+                                )
                             );
                         } else {
                             if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType)) {
                                 value = (j) -> SpreadsheetImporterCellValue.formattedValue(
-                                        cell(j),
-                                        OptionalTextNode.with(
-                                                context.unmarshallOptionalWithType(j)
-                                        )
+                                    cell(j),
+                                    OptionalTextNode.with(
+                                        context.unmarshallOptionalWithType(j)
+                                    )
                                 );
                             } else {
                                 if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)) {
                                     value = (j) -> SpreadsheetImporterCellValue.valueType(
-                                            cell(j),
-                                            OptionalValidationValueTypeName.with(
-                                                    context.unmarshallOptional(
-                                                            j,
-                                                            ValidationValueTypeName.class
-                                                    )
+                                        cell(j),
+                                        OptionalValidationValueTypeName.with(
+                                            context.unmarshallOptional(
+                                                j,
+                                                ValidationValueTypeName.class
                                             )
+                                        )
                                     );
                                 } else {
                                     throw new IllegalArgumentException("Unknown contentType " + contentType);
@@ -161,17 +161,17 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
         }
 
         return JsonNode.parse(
-                        cells.text()
-                ).children()
-                .stream()
-                .map(value)
-                .collect(Collectors.toList());
+                cells.text()
+            ).children()
+            .stream()
+            .map(value)
+            .collect(Collectors.toList());
     }
 
     private static SpreadsheetCellReference cell(final JsonNode json) {
         return SpreadsheetSelection.parseCell(
-                json.name()
-                        .value()
+            json.name()
+                .value()
         );
     }
 

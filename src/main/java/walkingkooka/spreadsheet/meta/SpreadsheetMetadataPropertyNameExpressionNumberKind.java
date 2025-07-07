@@ -41,7 +41,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     @Override
     ExpressionNumberKind checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof ExpressionNumberKind);
+            v -> v instanceof ExpressionNumberKind);
     }
 
     @Override

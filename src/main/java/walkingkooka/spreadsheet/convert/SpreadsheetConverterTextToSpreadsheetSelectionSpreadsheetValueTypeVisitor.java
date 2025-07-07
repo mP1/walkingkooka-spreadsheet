@@ -32,8 +32,8 @@ final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVi
                                                     final Class<S> selectionType,
                                                     final SpreadsheetConverterContext context) {
         final SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor visitor = new SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor(
-                string,
-                context
+            string,
+            context
         );
         visitor.accept(selectionType);
         return Cast.to(visitor.selection);
@@ -49,21 +49,21 @@ final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVi
     @Override
     protected void visitCellRange() {
         this.parseLabelOr(
-                SpreadsheetSelection::parseCellRange
+            SpreadsheetSelection::parseCellRange
         );
     }
 
     @Override
     protected void visitCellReference() {
         this.parseLabelOr(
-                SpreadsheetSelection::parseCell
+            SpreadsheetSelection::parseCell
         );
     }
 
     @Override
     protected void visitCellReferenceOrRange() {
         this.parseLabelOr(
-                SpreadsheetSelection::parseCellOrCellRange
+            SpreadsheetSelection::parseCellOrCellRange
         );
     }
 
@@ -71,10 +71,10 @@ final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVi
         final String string = this.string;
 
         this.selection = SpreadsheetSelection.isLabelText(string) ?
-                this.context.resolveIfLabelOrFail(
-                        SpreadsheetSelection.labelName(string)
-                ) :
-                parse.apply(string);
+            this.context.resolveIfLabelOrFail(
+                SpreadsheetSelection.labelName(string)
+            ) :
+            parse.apply(string);
     }
 
     @Override

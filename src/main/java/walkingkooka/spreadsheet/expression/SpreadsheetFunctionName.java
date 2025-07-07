@@ -38,18 +38,18 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
      * {@link CharPredicate} that may be used to match the first valid character of a {@link SpreadsheetFunctionName}.
      */
     public final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
-            .or(
-                    CharPredicates.range('a', 'z')
-            );
+        .or(
+            CharPredicates.range('a', 'z')
+        );
 
     /**
      * {@link CharPredicate} that may be used to match the non first valid character of a {@link SpreadsheetFunctionName}.
      */
     public final static CharPredicate PART = INITIAL.or(
-            CharPredicates.range('0', '9')
-                    .or(
-                            CharPredicates.is('.')
-                    )
+        CharPredicates.range('0', '9')
+            .or(
+                CharPredicates.is('.')
+            )
     );
 
     /**
@@ -67,17 +67,17 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
      */
     public static SpreadsheetFunctionName with(final String name) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
-                name,
-                SpreadsheetFunctionName.class.getSimpleName(),
-                INITIAL,
-                PART
+            name,
+            SpreadsheetFunctionName.class.getSimpleName(),
+            INITIAL,
+            PART
         );
 
         InvalidTextLengthException.throwIfFail(
-                "function name",
-                name,
-                MIN_LENGTH,
-                MAX_LENGTH
+            "function name",
+            name,
+            MIN_LENGTH,
+            MAX_LENGTH
         );
 
         return new SpreadsheetFunctionName(name);
@@ -117,8 +117,8 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFunctionName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFunctionName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFunctionName other) {
@@ -159,10 +159,10 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFunctionName.class),
-                SpreadsheetFunctionName::unmarshall,
-                SpreadsheetFunctionName::marshall,
-                SpreadsheetFunctionName.class
+            JsonNodeContext.computeTypeName(SpreadsheetFunctionName.class),
+            SpreadsheetFunctionName::unmarshall,
+            SpreadsheetFunctionName::marshall,
+            SpreadsheetFunctionName.class
         );
     }
 }

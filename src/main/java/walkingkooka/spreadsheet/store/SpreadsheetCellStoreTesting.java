@@ -42,56 +42,56 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     @Test
     default void testLoadCellRangeNullCellRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .loadCellRange(
-                                null, // range
-                                SpreadsheetCellRangeReferencePath.LRTD,
-                                0, // offset
-                                1 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .loadCellRange(
+                    null, // range
+                    SpreadsheetCellRangeReferencePath.LRTD,
+                    0, // offset
+                    1 // count
+                )
         );
     }
 
     @Test
     default void testLoadCellRangeNullCellRangePathFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .loadCellRange(
-                                SpreadsheetSelection.ALL_CELLS, // range
-                                null, // path
-                                0, // offset
-                                1 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .loadCellRange(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    null, // path
+                    0, // offset
+                    1 // count
+                )
         );
     }
 
     @Test
     default void testLoadCellRangeNegativeOffsetFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .loadCellRange(
-                                SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangeReferencePath.LRTD,
-                                -1, // offset
-                                1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .loadCellRange(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD,
+                    -1, // offset
+                    1 // count
+                )
         );
     }
 
     @Test
     default void testLoadCellRangeNegativeCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .loadCellRange(
-                                SpreadsheetSelection.ALL_CELLS, // range
-                                SpreadsheetCellRangeReferencePath.LRTD,
-                                0, // offset
-                                -1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .loadCellRange(
+                    SpreadsheetSelection.ALL_CELLS, // range
+                    SpreadsheetCellRangeReferencePath.LRTD,
+                    0, // offset
+                    -1 // count
+                )
         );
     }
 
@@ -102,14 +102,14 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                        final int count,
                                        final SpreadsheetCell... cells) {
         this.loadCellRangeAndCheck(
-                store,
-                range,
-                path,
-                offset,
-                count,
-                Sets.of(
-                        cells
-                )
+            store,
+            range,
+            path,
+            offset,
+            count,
+            Sets.of(
+                cells
+            )
         );
     }
 
@@ -120,14 +120,14 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                        final int count,
                                        final Set<SpreadsheetCell> cells) {
         this.checkEquals(
-                cells,
-                store.loadCellRange(
-                        range,
-                        path,
-                        offset,
-                        count
-                ),
-                () -> "loadCellRange " + range + " " + path + " " + offset + " " + count
+            cells,
+            store.loadCellRange(
+                range,
+                path,
+                offset,
+                count
+            ),
+            () -> "loadCellRange " + range + " " + path + " " + offset + " " + count
         );
     }
 
@@ -136,8 +136,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     @Test
     default void testDeleteCellsNullCellRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().deleteCells(null)
+            NullPointerException.class,
+            () -> this.createStore().deleteCells(null)
         );
     }
 
@@ -147,17 +147,17 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         final S store = this.createStore();
 
         this.columnCountAndCheck(
-                store,
-                0
+            store,
+            0
         );
     }
 
     default void columnCountAndCheck(final SpreadsheetCellStore store,
                                      final int expected) {
         this.checkEquals(
-                expected,
-                store.columnCount(),
-                () -> "columnCount for store=" + store
+            expected,
+            store.columnCount(),
+            () -> "columnCount for store=" + store
         );
     }
 
@@ -166,48 +166,48 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         final S store = this.createStore();
 
         this.rowCountAndCheck(
-                store,
-                0
+            store,
+            0
         );
     }
 
     default void rowCountAndCheck(final SpreadsheetCellStore store,
                                   final int expected) {
         this.checkEquals(
-                expected,
-                store.rowCount(),
-                () -> "rowCount for store=" + store);
+            expected,
+            store.rowCount(),
+            () -> "rowCount for store=" + store);
     }
 
     @Test
     default void testColumnNullColumnFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().column(null)
+            NullPointerException.class,
+            () -> this.createStore().column(null)
         );
     }
 
     @Test
     default void testRowNullRowFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().row(null)
+            NullPointerException.class,
+            () -> this.createStore().row(null)
         );
     }
 
     @Test
     default void testMaxColumnWidthNullColumnFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().maxColumnWidth(null)
+            NullPointerException.class,
+            () -> this.createStore().maxColumnWidth(null)
         );
     }
 
     @Test
     default void testMaxRowHeightNullRowFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().maxRowHeight(null)
+            NullPointerException.class,
+            () -> this.createStore().maxRowHeight(null)
         );
     }
 
@@ -216,9 +216,9 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void nextEmptyColumnAndCheck(final SpreadsheetCellStore store,
                                          final SpreadsheetRowReference row) {
         this.nextEmptyColumnAndCheck(
-                store,
-                row,
-                Optional.empty()
+            store,
+            row,
+            Optional.empty()
         );
     }
 
@@ -226,9 +226,9 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                          final SpreadsheetRowReference row,
                                          final SpreadsheetColumnReference expected) {
         this.nextEmptyColumnAndCheck(
-                store,
-                row,
-                Optional.of(expected)
+            store,
+            row,
+            Optional.of(expected)
         );
     }
 
@@ -236,8 +236,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                          final SpreadsheetRowReference row,
                                          final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
-                expected,
-                store.nextEmptyColumn(row)
+            expected,
+            store.nextEmptyColumn(row)
         );
     }
 
@@ -246,9 +246,9 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     default void nextEmptyRowAndCheck(final SpreadsheetCellStore store,
                                       final SpreadsheetColumnReference column) {
         this.nextEmptyRowAndCheck(
-                store,
-                column,
-                Optional.empty()
+            store,
+            column,
+            Optional.empty()
         );
     }
 
@@ -256,9 +256,9 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                       final SpreadsheetColumnReference column,
                                       final SpreadsheetRowReference expected) {
         this.nextEmptyRowAndCheck(
-                store,
-                column,
-                Optional.of(expected)
+            store,
+            column,
+            Optional.of(expected)
         );
     }
 
@@ -266,8 +266,8 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                       final SpreadsheetColumnReference column,
                                       final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
-                expected,
-                store.nextEmptyRow(column)
+            expected,
+            store.nextEmptyRow(column)
         );
     }
 
@@ -276,46 +276,46 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     @Test
     default void testFindCellsWithValueTypeWithNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().findCellsWithValueType(
-                        null,
-                        SpreadsheetValueType.TEXT_STRING,
-                        1
-                )
+            NullPointerException.class,
+            () -> this.createStore().findCellsWithValueType(
+                null,
+                SpreadsheetValueType.TEXT_STRING,
+                1
+            )
         );
     }
 
     @Test
     default void testFindCellsWithValueTypeWithNullValueTypeNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().findCellsWithValueType(
-                        SpreadsheetSelection.ALL_CELLS,
-                        null,
-                        1
-                )
+            NullPointerException.class,
+            () -> this.createStore().findCellsWithValueType(
+                SpreadsheetSelection.ALL_CELLS,
+                null,
+                1
+            )
         );
     }
 
     @Test
     default void testFindCellsWithValueTypeWithNegativeMaxFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore().findCellsWithValueType(
-                        SpreadsheetSelection.ALL_CELLS,
-                        SpreadsheetValueType.TEXT_STRING,
-                        -1
-                )
+            IllegalArgumentException.class,
+            () -> this.createStore().findCellsWithValueType(
+                SpreadsheetSelection.ALL_CELLS,
+                SpreadsheetValueType.TEXT_STRING,
+                -1
+            )
         );
     }
 
     @Test
     default void testFindCellsWithValueTypeWithZero() {
         this.findCellsWithValueTypeAndCheck(
-                this.createStore(),
-                SpreadsheetSelection.ALL_CELLS,
-                SpreadsheetValueType.TEXT_STRING,
-                0
+            this.createStore(),
+            SpreadsheetSelection.ALL_CELLS,
+            SpreadsheetValueType.TEXT_STRING,
+            0
         );
     }
 
@@ -325,11 +325,11 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                                 final int max,
                                                 final SpreadsheetCell... expected) {
         this.findCellsWithValueTypeAndCheck(
-                store,
-                cellRange,
-                valueTypeName,
-                max,
-                Sets.of(expected)
+            store,
+            cellRange,
+            valueTypeName,
+            max,
+            Sets.of(expected)
         );
     }
 
@@ -339,13 +339,13 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                                 final int max,
                                                 final Set<SpreadsheetCell> expected) {
         this.checkEquals(
-                expected,
-                store.findCellsWithValueType(
-                        cellRange,
-                        valueTypeName,
-                        max
-                ),
-                () -> "findCellsWithValueType " + cellRange + " " + valueTypeName + " max=" + max
+            expected,
+            store.findCellsWithValueType(
+                cellRange,
+                valueTypeName,
+                max
+            ),
+            () -> "findCellsWithValueType " + cellRange + " " + valueTypeName + " max=" + max
         );
     }
 
@@ -354,22 +354,22 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     @Test
     default void testCountCellsWithValueTypeWithNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().countCellsWithValueType(
-                        null,
-                        SpreadsheetValueType.TEXT_STRING
-                )
+            NullPointerException.class,
+            () -> this.createStore().countCellsWithValueType(
+                null,
+                SpreadsheetValueType.TEXT_STRING
+            )
         );
     }
 
     @Test
     default void testCountCellsWithValueTypeWithNullValueTypeNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().countCellsWithValueType(
-                        SpreadsheetSelection.ALL_CELLS,
-                        null
-                )
+            NullPointerException.class,
+            () -> this.createStore().countCellsWithValueType(
+                SpreadsheetSelection.ALL_CELLS,
+                null
+            )
         );
     }
 
@@ -378,12 +378,12 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                                  final String valueTypeName,
                                                  final int expected) {
         this.checkEquals(
-                expected,
-                store.countCellsWithValueType(
-                        cellRange,
-                        valueTypeName
-                ),
-                () -> "countCellsWithValueType " + cellRange + " " + valueTypeName
+            expected,
+            store.countCellsWithValueType(
+                cellRange,
+                valueTypeName
+            ),
+            () -> "countCellsWithValueType " + cellRange + " " + valueTypeName
         );
     }
 }

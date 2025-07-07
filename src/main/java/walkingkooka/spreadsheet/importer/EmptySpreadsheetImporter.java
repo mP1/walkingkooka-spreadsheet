@@ -50,8 +50,8 @@ final class EmptySpreadsheetImporter implements SpreadsheetImporter {
         Objects.requireNonNull(context, "context");
 
         throw new IllegalArgumentException("Cannot import contentType " + cells.contentType()
-                .map(MediaType::toString)
-                .orElse("missing"));
+            .map(MediaType::toString)
+            .orElse("missing"));
     }
 
     @Override

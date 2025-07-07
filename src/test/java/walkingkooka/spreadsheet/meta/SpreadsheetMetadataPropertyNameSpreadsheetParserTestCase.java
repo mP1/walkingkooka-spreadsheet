@@ -29,14 +29,13 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetParserTestCase<N
     @Test
     public final void testPatternKindNonNull() {
         this.checkNotEquals(
-                null,
-                this.createName()
-                        .patternKind()
+            null,
+            this.createName()
+                .patternKind()
         );
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return SpreadsheetParserSelector.class.getSimpleName();
     }
 }

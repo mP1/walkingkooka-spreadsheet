@@ -25,8 +25,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetViewportNavigationSelectionTestCase<T extends SpreadsheetViewportNavigationSelection<S>, S extends SpreadsheetSelection>
-        extends SpreadsheetViewportNavigationTestCase2<T>
-        implements HashCodeEqualsDefinedTesting2<T> {
+    extends SpreadsheetViewportNavigationTestCase2<T>
+    implements HashCodeEqualsDefinedTesting2<T> {
 
     SpreadsheetViewportNavigationSelectionTestCase() {
     }
@@ -34,19 +34,19 @@ public abstract class SpreadsheetViewportNavigationSelectionTestCase<T extends S
     @Test
     public final void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetViewportNavigation(null)
+            NullPointerException.class,
+            () -> this.createSpreadsheetViewportNavigation(null)
         );
     }
 
     final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
                               final Optional<AnchoredSpreadsheetSelection> expected) {
         this.updateAndCheck(
-                navigation,
-                HOME_VIEWPORT_RECTANGLE.viewport()
-                        .setAnchoredSelection(Optional.empty()),
-                HOME_VIEWPORT_RECTANGLE.viewport()
-                        .setAnchoredSelection(expected)
+            navigation,
+            HOME_VIEWPORT_RECTANGLE.viewport()
+                .setAnchoredSelection(Optional.empty()),
+            HOME_VIEWPORT_RECTANGLE.viewport()
+                .setAnchoredSelection(expected)
         );
     }
 
@@ -55,14 +55,13 @@ public abstract class SpreadsheetViewportNavigationSelectionTestCase<T extends S
     @Test
     public void testEqualsDifferentSelection() {
         this.checkNotEquals(
-                this.createSpreadsheetViewportNavigation(
-                        this.differentSelection()
-                )
+            this.createSpreadsheetViewportNavigation(
+                this.differentSelection()
+            )
         );
     }
 
-    @Override
-    final T createSpreadsheetViewportNavigation() {
+    @Override final T createSpreadsheetViewportNavigation() {
         return this.createSpreadsheetViewportNavigation(this.selection());
     }
 

@@ -69,10 +69,10 @@ import java.util.function.Function;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
-        SpreadsheetConverterContext,
-        HasSpreadsheetMetadata,
-        FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
-        ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
+    SpreadsheetConverterContext,
+    HasSpreadsheetMetadata,
+    FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
     /**
      * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}
@@ -84,19 +84,19 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         Objects.requireNonNull(value, "value");
 
         return this.enterScope(
-                (final ExpressionReference expressionReference) -> Optional.ofNullable(
-                        expressionReference.equals(reference) ?
-                                value :
-                                null
-                )
+            (final ExpressionReference expressionReference) -> Optional.ofNullable(
+                expressionReference.equals(reference) ?
+                    value :
+                    null
+            )
         );
     }
 
     @Override
     default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         return SpreadsheetExpressionEvaluationContexts.localReferences(
-                scoped,
-                this
+            scoped,
+            this
         );
     }
 
@@ -121,11 +121,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         Object result;
         try {
             result = this.reference(reference)
-                    .orElseGet(
-                            () -> Optional.of(
-                                    SpreadsheetError.referenceNotFound(reference)
-                            )
-                    ).orElse(null);
+                .orElseGet(
+                    () -> Optional.of(
+                        SpreadsheetError.referenceNotFound(reference)
+                    )
+                ).orElse(null);
         } catch (final RuntimeException exception) {
             result = this.handleException(exception);
         }
@@ -144,10 +144,10 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      */
     default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell) {
         return this.loadCell(cell)
-                .orElseThrow(
-                        () -> SpreadsheetError.selectionNotFound(cell)
-                                .exception()
-                );
+            .orElseThrow(
+                () -> SpreadsheetError.selectionNotFound(cell)
+                    .exception()
+            );
     }
 
     /**
@@ -166,9 +166,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      */
     default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.loadLabel(labelName)
-                .orElseThrow(
-                        () -> SpreadsheetError.selectionNotFound(labelName).exception()
-                );
+            .orElseThrow(
+                () -> SpreadsheetError.selectionNotFound(labelName).exception()
+            );
     }
 
     /**
@@ -188,7 +188,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     default SpreadsheetCell cellOrFail() {
         return this.cell()
-                .orElseThrow(() -> new IllegalStateException("Missing cell"));
+            .orElseThrow(() -> new IllegalStateException("Missing cell"));
     }
 
     /**
@@ -216,7 +216,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      */
     default Optional<Object> formatValue() {
         return this.reference(FORMAT_VALUE)
-                .orElse(Optional.empty());
+            .orElse(Optional.empty());
     }
 
     /**

@@ -60,8 +60,8 @@ public final class User extends Identity<UserId> {
         checkId(id);
 
         return this.id.equals(id) ?
-                this :
-                new User(id, this.email);
+            this :
+            new User(id, this.email);
     }
 
     public EmailAddress email() {
@@ -109,7 +109,7 @@ public final class User extends Identity<UserId> {
         properties.add(context.marshall(this.email).setName(EMAIL_PROPERTY));
 
         return JsonNode.object()
-                .setChildren(properties);
+            .setChildren(properties);
     }
 
     private final static String EMAIL_PROPERTY_STRING = "email";
@@ -117,10 +117,10 @@ public final class User extends Identity<UserId> {
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(User.class),
-                User::unmarshall,
-                User::marshall,
-                User.class
+            JsonNodeContext.computeTypeName(User.class),
+            User::unmarshall,
+            User::marshall,
+            User.class
         );
     }
 
@@ -139,8 +139,8 @@ public final class User extends Identity<UserId> {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .value(this.id)
-                .value(this.email)
-                .build();
+            .value(this.id)
+            .value(this.email)
+            .build();
     }
 }

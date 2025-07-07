@@ -42,23 +42,20 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector exten
     // @see SpreadsheetMetadataPropertyName.patternKind
     final SpreadsheetPatternKind spreadsheetPatternKind;
 
-    @Override
-    final SpreadsheetFormatterSelector checkValueNonNull(final Object value) {
+    @Override final SpreadsheetFormatterSelector checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof SpreadsheetFormatterSelector
+            value,
+            v -> v instanceof SpreadsheetFormatterSelector
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return SpreadsheetFormatterSelector.class.getSimpleName();
     }
 
-    @Override
-    final Optional<SpreadsheetFormatterSelector> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<SpreadsheetFormatterSelector> extractLocaleAwareValue(final LocaleContext context) {
         return this.extractLocaleAwareValueSpreadsheetFormatPattern(context)
-                .map(SpreadsheetFormatPattern::spreadsheetFormatterSelector);
+            .map(SpreadsheetFormatPattern::spreadsheetFormatterSelector);
     }
 
     /**
@@ -74,8 +71,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector exten
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final SpreadsheetFormatterSelector parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final SpreadsheetFormatterSelector parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetFormatterSelector.parse(value);
     }
 }

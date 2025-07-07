@@ -33,7 +33,7 @@ public final class ExpressionSpreadsheetFormatParserToken extends ParentSpreadsh
      */
     static ExpressionSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new ExpressionSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmpty(text));
+            checkTextNotEmpty(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class ExpressionSpreadsheetFormatParserToken extends ParentSpreadsh
     @Override
     public ExpressionSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ExpressionSpreadsheetFormatParserToken::with
+            this,
+            children,
+            ExpressionSpreadsheetFormatParserToken::with
         );
     }
 

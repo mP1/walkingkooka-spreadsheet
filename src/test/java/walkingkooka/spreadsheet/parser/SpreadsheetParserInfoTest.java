@@ -32,15 +32,15 @@ public final class SpreadsheetParserInfoTest implements PluginInfoLikeTesting<Sp
         final SpreadsheetParserName different = SpreadsheetParserName.with("different");
 
         this.setNameAndCheck(
-                SpreadsheetParserInfo.with(
-                        url,
-                        SpreadsheetParserName.with("original-parser-name")
-                ),
-                different,
-                SpreadsheetParserInfo.with(
-                        url,
-                        different
-                )
+            SpreadsheetParserInfo.with(
+                url,
+                SpreadsheetParserName.with("original-parser-name")
+            ),
+            different,
+            SpreadsheetParserInfo.with(
+                url,
+                different
+            )
         );
     }
 
@@ -62,8 +62,8 @@ public final class SpreadsheetParserInfoTest implements PluginInfoLikeTesting<Sp
     public SpreadsheetParserInfo createPluginInfoLike(final AbsoluteUrl url,
                                                       final SpreadsheetParserName name) {
         return SpreadsheetParserInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -73,8 +73,8 @@ public final class SpreadsheetParserInfoTest implements PluginInfoLikeTesting<Sp
     public SpreadsheetParserInfo unmarshall(final JsonNode json,
                                             final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserInfo.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

@@ -48,283 +48,283 @@ public final class NumberSpreadsheetFormulaParserTokenTest extends ValueSpreadsh
     @Test
     public void testToExpressionNumber0() {
         this.toExpressionAndCheck2(
-                0.0,
-                digit("0")
+            0.0,
+            digit("0")
         );
     }
 
     @Test
     public void testToExpressionNumber01() {
         this.toExpressionAndCheck2(
-                1.0,
-                digit("01")
+            1.0,
+            digit("01")
         );
     }
 
     @Test
     public void testToExpressionNumber001() {
         this.toExpressionAndCheck2(
-                1.0,
-                digit("001")
+            1.0,
+            digit("001")
         );
     }
 
     @Test
     public void testToExpressionNumber1() {
         this.toExpressionAndCheck2(
-                1.0,
-                digit("1")
+            1.0,
+            digit("1")
         );
     }
 
     @Test
     public void testToExpressionNumber5600() {
         this.toExpressionAndCheck2(
-                5600.0,
-                digit("5600")
+            5600.0,
+            digit("5600")
         );
     }
 
     @Test
     public void testToExpressionNumber123() {
         this.toExpressionAndCheck2(
-                123.0,
-                digit("123")
+            123.0,
+            digit("123")
         );
     }
 
     @Test
     public void testToExpressionPlusNumber1() {
         this.toExpressionAndCheck2(
-                1.0,
-                plus(),
-                digit("1")
+            1.0,
+            plus(),
+            digit("1")
         );
     }
 
     @Test
     public void testToExpressionNumber0Dot0() {
         this.toExpressionAndCheck2(
-                0.0,
-                plus(),
-                digit("0"),
-                decimalSeparator(),
-                digit("0")
+            0.0,
+            plus(),
+            digit("0"),
+            decimalSeparator(),
+            digit("0")
         );
     }
 
     @Test
     public void testToExpressionPlusNumber1Dot0() {
         this.toExpressionAndCheck2(
-                1.0,
-                plus(),
-                digit("1"),
-                decimalSeparator(),
-                digit("0")
+            1.0,
+            plus(),
+            digit("1"),
+            decimalSeparator(),
+            digit("0")
         );
     }
 
     @Test
     public void testToExpressionPlusNumber1Dot23() {
         this.toExpressionAndCheck2(
-                1.23,
-                plus(),
-                digit("1"),
-                decimalSeparator(),
-                digit("23")
+            1.23,
+            plus(),
+            digit("1"),
+            decimalSeparator(),
+            digit("23")
         );
     }
 
     @Test
     public void testToExpressionMinusNumber1() {
         this.toExpressionAndCheck2(
-                -1.0,
-                minus(),
-                digit("1")
+            -1.0,
+            minus(),
+            digit("1")
         );
     }
 
     @Test
     public void testToExpressionMinusNumber1Dot0() {
         this.toExpressionAndCheck2(
-                -1.0,
-                minus(),
-                digit("1"),
-                decimalSeparator(),
-                digit("0")
+            -1.0,
+            minus(),
+            digit("1"),
+            decimalSeparator(),
+            digit("0")
         );
     }
 
     @Test
     public void testToExpressionMinusNumber1Dot23() {
         this.toExpressionAndCheck2(
-                -1.23,
-                minus(),
-                digit("1"),
-                decimalSeparator(),
-                digit("23")
+            -1.23,
+            minus(),
+            digit("1"),
+            decimalSeparator(),
+            digit("23")
         );
     }
 
     @Test
     public void testToExpressionNumber1ExponentNumber1() {
         this.toExpressionAndCheck2(
-                1E2,
-                digit("1"),
-                exponent(),
-                digit("2")
+            1E2,
+            digit("1"),
+            exponent(),
+            digit("2")
         );
     }
 
     @Test
     public void testToExpressionNumber1ExponentNumber12() {
         this.toExpressionAndCheck2(
-                1E12,
-                digit("1"),
-                exponent(),
-                digit("12")
+            1E12,
+            digit("1"),
+            exponent(),
+            digit("12")
         );
     }
 
     @Test
     public void testToExpressionNumber1DecimalNumber2ExponentPlusNumber3() {
         this.toExpressionAndCheck2(
-                1.2E+3,
-                digit("1"),
-                decimalSeparator(),
-                digit("2"),
-                exponent(),
-                plus(),
-                digit("3")
+            1.2E+3,
+            digit("1"),
+            decimalSeparator(),
+            digit("2"),
+            exponent(),
+            plus(),
+            digit("3")
         );
     }
 
     @Test
     public void testToExpressionNumber1DecimalNumber2ExponentPlusNumber34() {
         this.toExpressionAndCheck2(
-                1.2E+34,
-                digit("1"),
-                decimalSeparator(),
-                digit("2"),
-                exponent(),
-                plus(),
-                digit("34")
+            1.2E+34,
+            digit("1"),
+            decimalSeparator(),
+            digit("2"),
+            exponent(),
+            plus(),
+            digit("34")
         );
     }
 
     @Test
     public void testToExpressionNumber1DecimalNumber2ExponentMinusNumber3() {
         this.toExpressionAndCheck2(
-                1.2E-3,
-                digit("1"),
-                decimalSeparator(),
-                digit("2"),
-                exponent(),
-                minus(),
-                digit("3")
+            1.2E-3,
+            digit("1"),
+            decimalSeparator(),
+            digit("2"),
+            exponent(),
+            minus(),
+            digit("3")
         );
     }
 
     @Test
     public void testToExpressionNumber1DecimalNumber2ExponentMinusNumber34() {
         this.toExpressionAndCheck2(
-                1.2E-34,
-                digit("1"),
-                decimalSeparator(),
-                digit("2"),
-                exponent(),
-                minus(),
-                digit("34")
+            1.2E-34,
+            digit("1"),
+            decimalSeparator(),
+            digit("2"),
+            exponent(),
+            minus(),
+            digit("34")
         );
     }
 
     @Test
     public void testToExpressionNumber1ExponentPlusNumber1() {
         this.toExpressionAndCheck2(
-                1E+2,
-                digit("1"),
-                exponent(),
-                plus(),
-                digit("2")
+            1E+2,
+            digit("1"),
+            exponent(),
+            plus(),
+            digit("2")
         );
     }
 
     @Test
     public void testToExpressionNumber1ExponentPlusNumber12() {
         this.toExpressionAndCheck2(
-                1E+12,
-                digit("1"),
-                exponent(),
-                plus(),
-                digit("12")
+            1E+12,
+            digit("1"),
+            exponent(),
+            plus(),
+            digit("12")
         );
     }
 
     @Test
     public void testToExpressionNumber1ExponentMinusNumber1() {
         this.toExpressionAndCheck2(
-                1E-2,
-                digit("1"),
-                exponent(),
-                minus(),
-                digit("2")
+            1E-2,
+            digit("1"),
+            exponent(),
+            minus(),
+            digit("2")
         );
     }
 
     @Test
     public void testToExpressionNumber1ExponentMinusNumber23() {
         this.toExpressionAndCheck2(
-                1E-23,
-                digit("1"),
-                exponent(),
-                minus(),
-                digit("23")
+            1E-23,
+            digit("1"),
+            exponent(),
+            minus(),
+            digit("23")
         );
     }
 
     @Test
     public void testToExpressionNumber0Percent() {
         this.toExpressionAndCheck2(
-                0.0,
-                digit("0"),
-                percent()
+            0.0,
+            digit("0"),
+            percent()
         );
     }
 
     @Test
     public void testToExpressionNumber50Percent() {
         this.toExpressionAndCheck2(
-                0.5,
-                digit("50"),
-                percent()
+            0.5,
+            digit("50"),
+            percent()
         );
     }
 
     @Test
     public void testToExpressionNumber200Percent() {
         this.toExpressionAndCheck2(
-                2.0,
-                digit("200"),
-                percent()
+            2.0,
+            digit("200"),
+            percent()
         );
     }
 
     @Test
     public void testToExpressionNumberPercent300() {
         this.toExpressionAndCheck2(
-                3.0,
-                digit("300"),
-                percent()
+            3.0,
+            digit("300"),
+            percent()
         );
     }
 
     @Test
     public void testToExpressionNumberMinusPercent400() {
         this.toExpressionAndCheck2(
-                -4.0,
-                minus(),
-                digit("400"),
-                percent()
+            -4.0,
+            minus(),
+            digit("400"),
+            percent()
         );
     }
 
@@ -353,18 +353,18 @@ public final class NumberSpreadsheetFormulaParserTokenTest extends ValueSpreadsh
         final List<ParserToken> tokensList = Lists.of(tokens);
 
         final NumberSpreadsheetFormulaParserToken numberParserToken = NumberSpreadsheetFormulaParserToken.with(
-                tokensList,
-                ParserToken.text(tokensList)
+            tokensList,
+            ParserToken.text(tokensList)
         );
         this.toExpressionAndCheck2(
-                numberParserToken,
-                ExpressionNumberKind.BIG_DECIMAL,
-                expected
+            numberParserToken,
+            ExpressionNumberKind.BIG_DECIMAL,
+            expected
         );
         this.toExpressionAndCheck2(
-                numberParserToken,
-                ExpressionNumberKind.DOUBLE,
-                expected
+            numberParserToken,
+            ExpressionNumberKind.DOUBLE,
+            expected
         );
     }
 
@@ -376,15 +376,15 @@ public final class NumberSpreadsheetFormulaParserTokenTest extends ValueSpreadsh
         final ExpressionEvaluationContext context = this.expressionEvaluationContext(kind);
 
         this.checkEquals(
-                expressionNumber,
-                token.toNumber(context),
-                () -> "toNumber() " + token
+            expressionNumber,
+            token.toNumber(context),
+            () -> "toNumber() " + token
         );
 
         this.toExpressionAndCheck(
-                token,
-                context,
-                Expression.value(expressionNumber)
+            token,
+            context,
+            Expression.value(expressionNumber)
         );
     }
 
@@ -416,11 +416,11 @@ public final class NumberSpreadsheetFormulaParserTokenTest extends ValueSpreadsh
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                this.dayNumber(),
-                this.slashTextLiteral(),
-                this.monthNumber(),
-                this.slashTextLiteral(),
-                this.year()
+            this.dayNumber(),
+            this.slashTextLiteral(),
+            this.monthNumber(),
+            this.slashTextLiteral(),
+            this.year()
         );
     }
 
@@ -429,12 +429,12 @@ public final class NumberSpreadsheetFormulaParserTokenTest extends ValueSpreadsh
         final String different = "" + YEAR + "/" + MONTH + "/" + DAY;
 
         return this.createToken(
-                different,
-                year(),
-                slashTextLiteral(),
-                monthNumber(),
-                slashTextLiteral(),
-                dayNumber()
+            different,
+            year(),
+            slashTextLiteral(),
+            monthNumber(),
+            slashTextLiteral(),
+            dayNumber()
         );
     }
 

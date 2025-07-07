@@ -72,7 +72,7 @@ public final class EqualsSymbolSpreadsheetFormatParserTokenTest extends SymbolSp
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CONDITION
+            SpreadsheetFormatParserTokenKind.CONDITION
         );
     }
 

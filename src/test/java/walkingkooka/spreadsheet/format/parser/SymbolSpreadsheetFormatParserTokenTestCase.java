@@ -23,8 +23,7 @@ public abstract class SymbolSpreadsheetFormatParserTokenTestCase<T extends Symbo
         super();
     }
 
-    @Override
-    final String value() {
+    @Override final String value() {
         return this.text();
     }
 }

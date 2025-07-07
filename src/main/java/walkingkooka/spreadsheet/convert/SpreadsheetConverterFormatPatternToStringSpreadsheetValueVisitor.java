@@ -56,8 +56,8 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                          final String pattern,
                          final SpreadsheetConverterContext context) {
         final SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor visitor = new SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor(
-                pattern,
-                context
+            pattern,
+            context
         );
         visitor.accept(value);
         return visitor.formatted;
@@ -84,7 +84,7 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
     @Override
     protected void visit(final Boolean value) {
         this.formatExpressionNumber(
-                value ? 1 : 0
+            value ? 1 : 0
         );
     }
 
@@ -121,24 +121,24 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
     @Override
     protected void visit(final LocalDate value) {
         this.patternFormatterFormatOrEmptyText(
-                value,
-                SpreadsheetPattern.parseDateFormatPattern(this.pattern)
+            value,
+            SpreadsheetPattern.parseDateFormatPattern(this.pattern)
         );
     }
 
     @Override
     protected void visit(final LocalDateTime value) {
         this.patternFormatterFormatOrEmptyText(
-                value,
-                SpreadsheetPattern.parseDateTimeFormatPattern(this.pattern)
+            value,
+            SpreadsheetPattern.parseDateTimeFormatPattern(this.pattern)
         );
     }
 
     @Override
     protected void visit(final LocalTime value) {
         this.patternFormatterFormatOrEmptyText(
-                value,
-                SpreadsheetPattern.parseTimeFormatPattern(this.pattern)
+            value,
+            SpreadsheetPattern.parseTimeFormatPattern(this.pattern)
         );
     }
 
@@ -211,31 +211,31 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
      */
     private void formatExpressionNumber(final ExpressionNumber number) {
         this.patternFormatterFormatOrEmptyText(
-                number,
-                SpreadsheetPattern.parseNumberFormatPattern(this.pattern)
+            number,
+            SpreadsheetPattern.parseNumberFormatPattern(this.pattern)
         );
     }
 
     private void patternFormatterFormatOrEmptyText(final Object value,
                                                    final SpreadsheetPattern pattern) {
         this.formatText(
-                pattern.formatter()
-                        .formatOrEmptyText(
-                                Optional.of(value),
-                                SpreadsheetFormatterContexts.basic(
-                                        this::numberToColor,
-                                        this::nameToColor,
-                                        1,
-                                        8, // default general-format-number-digit-count
-                                        SpreadsheetFormatters.fake(), // should never be called
-                                        (final Optional<Object> v) -> {
-                                            throw new UnsupportedOperationException();
-                                        },
-                                        this.context, // SpreadsheetConverterContext
-                                        SpreadsheetFormatterProviders.empty(),
-                                        ProviderContexts.fake()
-                                )
-                        ).text()
+            pattern.formatter()
+                .formatOrEmptyText(
+                    Optional.of(value),
+                    SpreadsheetFormatterContexts.basic(
+                        this::numberToColor,
+                        this::nameToColor,
+                        1,
+                        8, // default general-format-number-digit-count
+                        SpreadsheetFormatters.fake(), // should never be called
+                        (final Optional<Object> v) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        this.context, // SpreadsheetConverterContext
+                        SpreadsheetFormatterProviders.empty(),
+                        ProviderContexts.fake()
+                    )
+                ).text()
         );
     }
 

@@ -34,7 +34,7 @@ import java.util.Objects;
  * Represents a single row within a spreadsheet.
  */
 public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowReference>
-        implements Patchable<SpreadsheetRow> {
+    implements Patchable<SpreadsheetRow> {
 
     /**
      * A {@link Comparator} that may be used to compare {@link SpreadsheetRow} within a {@link java.util.SortedSet}.
@@ -61,14 +61,14 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
         checkReference(reference);
 
         return this.reference.equals(reference) ?
-                this :
-                this.replace(reference);
+            this :
+            this.replace(reference);
     }
 
     private SpreadsheetRow replace(final SpreadsheetRowReference reference) {
         return new SpreadsheetRow(
-                reference,
-                this.hidden
+            reference,
+            this.hidden
         );
     }
 
@@ -77,14 +77,14 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
     public SpreadsheetRow setHidden(final boolean hidden) {
 
         return this.hidden == hidden ?
-                this :
-                this.replace(hidden);
+            this :
+            this.replace(hidden);
     }
 
     private SpreadsheetRow replace(final boolean hidden) {
         return new SpreadsheetRow(
-                this.reference,
-                hidden
+            this.reference,
+            hidden
         );
     }
 
@@ -103,9 +103,9 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
             }
 
             row = unmarshall0(
-                    SpreadsheetSelection.parseRow(name.value()),
-                    child,
-                    context
+                SpreadsheetSelection.parseRow(name.value()),
+                child,
+                context
             );
         }
 
@@ -142,10 +142,10 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetRow.class),
-                SpreadsheetRow::unmarshall,
-                SpreadsheetRow::marshall,
-                SpreadsheetRow.class
+            JsonNodeContext.computeTypeName(SpreadsheetRow.class),
+            SpreadsheetRow::unmarshall,
+            SpreadsheetRow::marshall,
+            SpreadsheetRow.class
         );
     }
 
@@ -167,7 +167,7 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
             switch (name.value()) {
                 case HIDDEN_PROPERTY_STRING:
                     patched = patched.setHidden(
-                            child.booleanOrFail()
+                        child.booleanOrFail()
                     );
                     break;
                 default:

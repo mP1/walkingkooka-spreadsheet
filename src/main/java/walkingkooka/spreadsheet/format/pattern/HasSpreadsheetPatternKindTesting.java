@@ -25,25 +25,25 @@ public interface HasSpreadsheetPatternKindTesting extends Testing {
 
     default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has) {
         this.hasSpreadsheetPatternKindAndCheck(
-                has,
-                Optional.empty()
+            has,
+            Optional.empty()
         );
     }
 
     default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has,
                                                    final SpreadsheetPatternKind expected) {
         this.hasSpreadsheetPatternKindAndCheck(
-                has,
-                Optional.of(expected)
+            has,
+            Optional.of(expected)
         );
     }
 
     default void hasSpreadsheetPatternKindAndCheck(final HasSpreadsheetPatternKind has,
                                                    final Optional<SpreadsheetPatternKind> expected) {
         this.checkEquals(
-                expected,
-                has.patternKind(),
-                has::toString
+            expected,
+            has.patternKind(),
+            has::toString
         );
     }
 }

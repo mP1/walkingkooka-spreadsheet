@@ -46,12 +46,12 @@ final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNum
         final char percentSymbol = request.context.percentSymbol();
 
         return this.parseToken(
-                cursor,
-                Character.toString(percentSymbol),
-                CaseSensitivity.SENSITIVE,
-                SpreadsheetFormulaParserToken::percentSymbol,
-                null, // dont update mode
-                request
+            cursor,
+            Character.toString(percentSymbol),
+            CaseSensitivity.SENSITIVE,
+            SpreadsheetFormulaParserToken::percentSymbol,
+            null, // dont update mode
+            request
         );
     }
 

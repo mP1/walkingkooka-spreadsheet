@@ -28,8 +28,8 @@ import walkingkooka.tree.expression.ExpressionNumberContextDelegator;
 import java.util.Locale;
 
 public interface SpreadsheetParserContextDelegator extends SpreadsheetParserContext,
-        DateTimeContextDelegator,
-        ExpressionNumberContextDelegator {
+    DateTimeContextDelegator,
+    ExpressionNumberContextDelegator {
 
     @Override
     default DateTimeContext dateTimeContext() {
@@ -39,7 +39,7 @@ public interface SpreadsheetParserContextDelegator extends SpreadsheetParserCont
     @Override
     default char valueSeparator() {
         return this.spreadsheetParserContext()
-                .valueSeparator();
+            .valueSeparator();
     }
 
     @Override
@@ -51,16 +51,16 @@ public interface SpreadsheetParserContextDelegator extends SpreadsheetParserCont
     default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                 final TextCursor cursor) {
         return this.spreadsheetParserContext()
-                .invalidCharacterException(
-                        parser,
-                        cursor
-                );
+            .invalidCharacterException(
+                parser,
+                cursor
+            );
     }
 
     @Override
     default Locale locale() {
         return this.spreadsheetParserContext()
-                .locale();
+            .locale();
     }
 
     SpreadsheetParserContext spreadsheetParserContext();

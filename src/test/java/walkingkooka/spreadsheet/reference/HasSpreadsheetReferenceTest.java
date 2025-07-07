@@ -35,31 +35,31 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
     @Test
     public void testComparatorSpreadsheetCell() {
         final SortedSet<SpreadsheetCell> sorted = SortedSets.tree(
-                HasSpreadsheetReference.hasSpreadsheetReferenceComparator()
+            HasSpreadsheetReference.hasSpreadsheetReferenceComparator()
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+            );
 
         final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+            );
 
         final SpreadsheetCell z99 = SpreadsheetSelection.parseCell("z99")
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+            );
 
         sorted.add(z99);
         sorted.add(a1);
         sorted.add(b2);
 
         this.checkEquals(
-                Lists.of(a1, b2, z99),
-                new ArrayList<>(sorted)
+            Lists.of(a1, b2, z99),
+            new ArrayList<>(sorted)
         );
     }
 
@@ -76,8 +76,8 @@ public final class HasSpreadsheetReferenceTest implements ClassTesting<HasSpread
         sorted.add(b);
 
         this.checkEquals(
-                Lists.of(a, b, z),
-                new ArrayList<>(sorted)
+            Lists.of(a, b, z),
+            new ArrayList<>(sorted)
         );
     }
 

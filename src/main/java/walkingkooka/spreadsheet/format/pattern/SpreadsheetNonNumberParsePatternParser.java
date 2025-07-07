@@ -34,7 +34,7 @@ import java.util.function.Function;
  * Abstract {@link Parser} that requires a {@link SpreadsheetParserContext} that provides some template methods.
  */
 abstract class SpreadsheetNonNumberParsePatternParser implements Parser<SpreadsheetParserContext>,
-        RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext> {
 
     /**
      * @see SpreadsheetNonNumberParsePatternParserDecimalSeparator
@@ -57,9 +57,9 @@ abstract class SpreadsheetNonNumberParsePatternParser implements Parser<Spreadsh
                                                                       final BiFunction<Integer, String, SpreadsheetFormulaParserToken> tokenFactory,
                                                                       final String pattern) {
         return SpreadsheetNonNumberParsePatternParserString.with(
-                values,
-                tokenFactory,
-                pattern
+            values,
+            tokenFactory,
+            pattern
         );
     }
 
@@ -71,8 +71,8 @@ abstract class SpreadsheetNonNumberParsePatternParser implements Parser<Spreadsh
     public final Optional<ParserToken> parse(final TextCursor cursor,
                                              final SpreadsheetParserContext context) {
         return cursor.isEmpty() ?
-                Optional.empty() :
-                this.parseNotEmpty(cursor, context);
+            Optional.empty() :
+            this.parseNotEmpty(cursor, context);
     }
 
     private Optional<ParserToken> parseNotEmpty(final TextCursor cursor,

@@ -24,8 +24,8 @@ public final class SpreadsheetMetadataPropertyNameIntegerCellCharacterWidthTest 
     @Test
     public void testCheckValueWithNegativeValueFails() {
         this.checkValueFails(
-                -1,
-                "Metadata cellCharacterWidth=-1, <= 0"
+            -1,
+            "Metadata cellCharacterWidth=-1, <= 0"
         );
     }
 
@@ -37,8 +37,8 @@ public final class SpreadsheetMetadataPropertyNameIntegerCellCharacterWidthTest 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance(),
-                "cellCharacterWidth"
+            SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance(),
+            "cellCharacterWidth"
         );
     }
 

@@ -22,7 +22,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterNumberTestCase<T> implements ClassTesting2<T>,
-        ToStringTesting<T> {
+    ToStringTesting<T> {
 
     SpreadsheetPatternSpreadsheetFormatterNumberTestCase() {
         super();

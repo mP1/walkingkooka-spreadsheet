@@ -38,7 +38,7 @@ public final class IllegalColumnArgumentException extends IllegalColumnOrRowArgu
         checkMessage(message);
 
         return message.equals(this.getMessage()) ?
-                this :
-                new IllegalColumnArgumentException(message, this);
+            this :
+            new IllegalColumnArgumentException(message, this);
     }
 }

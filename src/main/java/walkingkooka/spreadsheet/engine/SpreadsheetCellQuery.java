@@ -67,8 +67,8 @@ import java.util.Optional;
  * Holds a query as a {@link SpreadsheetFormulaParserToken}.
  */
 public final class SpreadsheetCellQuery implements HasUrlFragment,
-        HasText,
-        TreePrintable {
+    HasText,
+    TreePrintable {
 
     /**
      * Reads or extracts a {@link SpreadsheetCellFindQuery} from the parameters probably a {@link UrlQueryString}.
@@ -77,7 +77,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
         Objects.requireNonNull(parameters, "parameters");
 
         return QUERY.firstParameterValue(parameters)
-                .map(SpreadsheetCellQuery::parse);
+            .map(SpreadsheetCellQuery::parse);
     }
 
     public static final UrlParameterName QUERY = UrlParameterName.with("query");
@@ -89,26 +89,26 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
         Objects.requireNonNull(text, "text");
 
         return with(
-                PARSER.parseText(
-                        text,
-                        PARSER_CONTEXT
-                ).cast(SpreadsheetFormulaParserToken.class)
+            PARSER.parseText(
+                text,
+                PARSER_CONTEXT
+            ).cast(SpreadsheetFormulaParserToken.class)
         );
     }
 
     private final static Parser<SpreadsheetParserContext> PARSER = SpreadsheetFormulaParsers.expression()
-            .orFailIfCursorNotEmpty(ParserReporters.basic());
+        .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
-            DateTimeContexts.fake(),
-            ExpressionNumberContexts.basic(
-                    EXPRESSION_NUMBER_KIND,
-                    DecimalNumberContexts.american(MathContext.UNLIMITED)
-            ),
-            ','
+        InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+        DateTimeContexts.fake(),
+        ExpressionNumberContexts.basic(
+            EXPRESSION_NUMBER_KIND,
+            DecimalNumberContexts.american(MathContext.UNLIMITED)
+        ),
+        ','
     );
 
     /**
@@ -116,7 +116,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
      */
     public static SpreadsheetCellQuery with(final SpreadsheetFormulaParserToken parserToken) {
         return new SpreadsheetCellQuery(
-                Objects.requireNonNull(parserToken, "parserToken")
+            Objects.requireNonNull(parserToken, "parserToken")
         );
     }
 
@@ -131,8 +131,8 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
 
     public SpreadsheetCellQuery setParserToken(final SpreadsheetFormulaParserToken parserToken) {
         return this.parserToken.equals(parserToken) ?
-                this :
-                with(parserToken);
+            this :
+            with(parserToken);
     }
 
     private final SpreadsheetFormulaParserToken parserToken;
@@ -160,7 +160,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
 
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellQuery && this.equals0((SpreadsheetCellQuery) other);
+            other instanceof SpreadsheetCellQuery && this.equals0((SpreadsheetCellQuery) other);
     }
 
     private boolean equals0(final SpreadsheetCellQuery other) {
@@ -170,17 +170,17 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     @Override
     public String toString() {
         return this.urlFragment()
-                .toString();
+            .toString();
     }
 
     // json.............................................................................................................
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellQuery.class),
-                SpreadsheetCellQuery::unmarshall,
-                SpreadsheetCellQuery::marshall,
-                SpreadsheetCellQuery.class
+            JsonNodeContext.computeTypeName(SpreadsheetCellQuery.class),
+            SpreadsheetCellQuery::unmarshall,
+            SpreadsheetCellQuery::marshall,
+            SpreadsheetCellQuery.class
         );
     }
 

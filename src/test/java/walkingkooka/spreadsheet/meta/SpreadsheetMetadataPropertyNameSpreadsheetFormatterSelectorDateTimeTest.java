@@ -29,14 +29,14 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                SpreadsheetDateParsePattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM")
-                        .spreadsheetFormatterSelector()
+            LocaleContexts.jre(Locale.ENGLISH),
+            SpreadsheetDateParsePattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM")
+                .spreadsheetFormatterSelector()
         );
     }
 
@@ -44,32 +44,32 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
     public void testExtractLocaleAwareValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance()
-                .extractLocaleAwareValue(
-                        LocaleContexts.jre(locale)
-                ).get()
-                .spreadsheetFormatPattern()
-                .get();
+            .extractLocaleAwareValue(
+                LocaleContexts.jre(locale)
+            ).get()
+            .spreadsheetFormatPattern()
+            .get();
 
         final LocalDateTime date = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
         final String formatted = pattern.formatter()
-                .format(
-                        Optional.of(date),
-                        SPREADSHEET_FORMATTER_CONTEXT
-                )
-                .get()
-                .text();
+            .format(
+                Optional.of(date),
+                SPREADSHEET_FORMATTER_CONTEXT
+            )
+            .get()
+            .text();
         this.checkEquals(
-                "Friday, December 31, 1999 at 12:58:59 PM",
-                formatted,
-                pattern::toString
+            "Friday, December 31, 1999 at 12:58:59 PM",
+            formatted,
+            pattern::toString
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance(),
-                "dateTimeFormatter"
+            SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance(),
+            "dateTimeFormatter"
         );
     }
 
@@ -81,7 +81,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
     @Override
     SpreadsheetFormatterSelector propertyValue() {
         return SpreadsheetDateTimeFormatPattern.parseDateTimeFormatPattern("dd mm yyyy hh mm ss\"custom\"")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................

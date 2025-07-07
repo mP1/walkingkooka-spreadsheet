@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 public final class SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor> {
+    SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor> {
     @Override
     public SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor createVisitor() {
         return SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor.with();

@@ -36,44 +36,44 @@ public final class BasicSpreadsheetExpressionReferenceLoaderTest implements Spre
     @Test
     public void testLoadCell() {
         this.loadCellAndCheck(
-                BasicSpreadsheetExpressionReferenceLoader.INSTANCE,
-                CELL,
-                this.createContext(),
-                CELL.setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of(123)
-                        )
+            BasicSpreadsheetExpressionReferenceLoader.INSTANCE,
+            CELL,
+            this.createContext(),
+            CELL.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(123)
                 )
+            )
         );
     }
 
     @Test
     public void testLoadCellRange() {
         this.loadCellRangeAndCheck(
-                BasicSpreadsheetExpressionReferenceLoader.INSTANCE,
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                this.createContext(),
-                CELL.setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of(111)
-                        )
-                ),
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setValue(
-                                        Optional.of(222)
-                                )
-                        )
+            BasicSpreadsheetExpressionReferenceLoader.INSTANCE,
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            this.createContext(),
+            CELL.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(111)
+                )
+            ),
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(222)
+                    )
+                )
         );
     }
 
     @Test
     public void testLoadLabelFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> BasicSpreadsheetExpressionReferenceLoader.INSTANCE.loadLabel(
-                        SpreadsheetSelection.labelName("Label123")
-                )
+            UnsupportedOperationException.class,
+            () -> BasicSpreadsheetExpressionReferenceLoader.INSTANCE.loadLabel(
+                SpreadsheetSelection.labelName("Label123")
+            )
         );
     }
 
@@ -88,29 +88,29 @@ public final class BasicSpreadsheetExpressionReferenceLoaderTest implements Spre
             @Override
             public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
                 return Optional.of(
-                        cell.setFormula(
-                                SpreadsheetFormula.EMPTY.setValue(
-                                        Optional.of(123)
-                                )
+                    cell.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                            Optional.of(123)
                         )
+                    )
                 );
             }
 
             @Override
             public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
                 return Sets.of(
-                        range.begin()
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setValue(
-                                                Optional.of(111)
-                                        )
-                                ),
-                        range.end()
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setValue(
-                                                Optional.of(222)
-                                        )
-                                )
+                    range.begin()
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of(111)
+                            )
+                        ),
+                    range.end()
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of(222)
+                            )
+                        )
                 );
             }
         };

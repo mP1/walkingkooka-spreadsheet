@@ -53,9 +53,9 @@ import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
-        NumberSpreadsheetFormatParserToken,
-        NumberSpreadsheetFormulaParserToken,
-        ExpressionNumber> implements ConverterTesting {
+    NumberSpreadsheetFormatParserToken,
+    NumberSpreadsheetFormulaParserToken,
+    ExpressionNumber> implements ConverterTesting {
 
     @Test
     public void testWithAmpmFails() {
@@ -124,311 +124,311 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testParseFails() {
         this.parseFails2("#.00",
-                "abc123");
+            "abc123");
     }
 
     @Test
     public void testParseFails2() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + "23"
+            "$ #.00",
+            "1" + DECIMAL + "23"
         );
     }
 
     @Test
     public void testParseGroupSeparatorAfterDecimalFails() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + GROUP_SEPARATOR + "23"
+            "$ #.00",
+            "1" + DECIMAL + GROUP_SEPARATOR + "23"
         );
     }
 
     @Test
     public void testParseGroupSeparatorAfterDecimalFails2() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + "2" + GROUP_SEPARATOR + "3"
+            "$ #.00",
+            "1" + DECIMAL + "2" + GROUP_SEPARATOR + "3"
         );
     }
 
     @Test
     public void testParseGroupSeparatorWithinExponentFails() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + "23"
+            "$ #.00",
+            "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + "23"
         );
     }
 
     @Test
     public void testParseGroupSeparatorWithinExponentFails2() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + PLUS + "23"
+            "$ #.00",
+            "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + PLUS + "23"
         );
     }
 
     @Test
     public void testParseGroupSeparatorWithinExponentFails3() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + MINUS + "23"
+            "$ #.00",
+            "1" + DECIMAL + EXPONENT + GROUP_SEPARATOR + MINUS + "23"
         );
     }
 
     @Test
     public void testParseGroupSeparatorWithinExponentFails4() {
         this.parseFails2(
-                "$ #.00",
-                "1" + DECIMAL + "2" + EXPONENT + "2" + GROUP_SEPARATOR + "3"
+            "$ #.00",
+            "1" + DECIMAL + "2" + EXPONENT + "2" + GROUP_SEPARATOR + "3"
         );
     }
 
     @Test
     public void testParseNumber0() {
         this.parseAndCheck2(
-                "#",
-                "0",
-                digit0()
+            "#",
+            "0",
+            digit0()
         );
     }
 
     @Test
     public void testParseNumber1() {
         this.parseAndCheck2(
-                "#",
-                "1",
-                digit1()
+            "#",
+            "1",
+            digit1()
         );
     }
 
     @Test
     public void testParseNumber12() {
         this.parseAndCheck2(
-                "#",
-                "12",
-                digit12()
+            "#",
+            "12",
+            digit12()
         );
     }
 
     @Test
     public void testParseNumber0Decimal() {
         this.parseAndCheck2(
-                "#.",
-                "0" + DECIMAL,
-                digit0(),
-                decimalSeparator()
+            "#.",
+            "0" + DECIMAL,
+            digit0(),
+            decimalSeparator()
         );
     }
 
     @Test
     public void testParseNumber1Decimal() {
         this.parseAndCheck2(
-                "#.",
-                "1" + DECIMAL,
-                digit1(),
-                decimalSeparator()
+            "#.",
+            "1" + DECIMAL,
+            digit1(),
+            decimalSeparator()
         );
     }
 
     @Test
     public void testParseNumber0DecimalFive() {
         this.parseAndCheck2(
-                "#.#",
-                "0" + DECIMAL + "5",
-                digit0(),
-                decimalSeparator(),
-                digit5()
+            "#.#",
+            "0" + DECIMAL + "5",
+            digit0(),
+            decimalSeparator(),
+            digit5()
         );
     }
 
     @Test
     public void testParseNumber0DecimalZeroFive() {
         this.parseAndCheck2(
-                "#.##",
-                "0" + DECIMAL + "05",
-                digit0(),
-                decimalSeparator(),
-                digit05()
+            "#.##",
+            "0" + DECIMAL + "05",
+            digit0(),
+            decimalSeparator(),
+            digit05()
         );
     }
 
     @Test
     public void testParseNumber0DecimalZeroSevenFive() {
         this.parseAndCheck2(
-                "#.##",
-                "0" + DECIMAL + "075",
-                digit0(),
-                decimalSeparator(),
-                digit075()
+            "#.##",
+            "0" + DECIMAL + "075",
+            digit0(),
+            decimalSeparator(),
+            digit075()
         );
     }
 
     @Test
     public void testParsePlusNumber0() {
         this.parseAndCheck2(
-                "#",
-                PLUS + "0",
-                plus(),
-                digit0()
+            "#",
+            PLUS + "0",
+            plus(),
+            digit0()
         );
     }
 
     @Test
     public void testParsePlusNumber12() {
         this.parseAndCheck2(
-                "#",
-                PLUS + "12",
-                plus(),
-                digit12()
+            "#",
+            PLUS + "12",
+            plus(),
+            digit12()
         );
     }
 
     @Test
     public void testParseMinusNumber0() {
         this.parseAndCheck2(
-                "#",
-                MINUS + "0",
-                minus(),
-                digit0()
+            "#",
+            MINUS + "0",
+            minus(),
+            digit0()
         );
     }
 
     @Test
     public void testParseMinusNumber12() {
         this.parseAndCheck2(
-                "#",
-                MINUS + "12",
-                minus(),
-                digit12()
+            "#",
+            MINUS + "12",
+            minus(),
+            digit12()
         );
     }
 
     @Test
     public void testParseCurrencyNumber0() {
         this.parseAndCheck2(
-                "$#",
-                CURRENCY + "0",
-                currencyDollarSign(),
-                digit0()
+            "$#",
+            CURRENCY + "0",
+            currencyDollarSign(),
+            digit0()
         );
     }
 
     @Test
     public void testParseCurrencyNumber12() {
         this.parseAndCheck2(
-                "$#",
-                CURRENCY + "12",
-                currencyDollarSign(),
-                digit12()
+            "$#",
+            CURRENCY + "12",
+            currencyDollarSign(),
+            digit12()
         );
     }
 
     @Test
     public void testParseCurrencyNumber12Decimal() {
         this.parseAndCheck2(
-                "$#.",
-                CURRENCY + "12" + DECIMAL,
-                currencyDollarSign(),
-                digit12(),
-                decimalSeparator()
+            "$#.",
+            CURRENCY + "12" + DECIMAL,
+            currencyDollarSign(),
+            digit12(),
+            decimalSeparator()
         );
     }
 
     @Test
     public void testParseCurrencyNumber0Decimal075() {
         this.parseAndCheck2(
-                "$#.#",
-                CURRENCY + "0" + DECIMAL + "075",
-                currencyDollarSign(),
-                digit0(),
-                decimalSeparator(),
-                digit075()
+            "$#.#",
+            CURRENCY + "0" + DECIMAL + "075",
+            currencyDollarSign(),
+            digit0(),
+            decimalSeparator(),
+            digit075()
         );
     }
 
     @Test
     public void testParseNumberExponentNumber() {
         this.parseAndCheck2(
-                "#E+#",
-                "0" + EXPONENT + "1",
-                digit0(),
-                e(),
-                digit1()
+            "#E+#",
+            "0" + EXPONENT + "1",
+            digit0(),
+            e(),
+            digit1()
         );
     }
 
     @Test
     public void testParseNumberExponentPlusNumber() {
         this.parseAndCheck2(
-                "#E+#",
-                "0" + EXPONENT + PLUS + "1",
-                digit0(),
-                e(),
-                plus(),
-                digit1()
+            "#E+#",
+            "0" + EXPONENT + PLUS + "1",
+            digit0(),
+            e(),
+            plus(),
+            digit1()
         );
     }
 
     @Test
     public void testParseNumberExponentMinusNumber() {
         this.parseAndCheck2(
-                "#E+#",
-                "0" + EXPONENT + MINUS + "1",
-                digit0(),
-                e(),
-                minus(),
-                digit1()
+            "#E+#",
+            "0" + EXPONENT + MINUS + "1",
+            digit0(),
+            e(),
+            minus(),
+            digit1()
         );
     }
 
     @Test
     public void testParseNumberSeparator() {
         this.parseAndCheck2(
-                "#;",
-                "1",
-                digit1()
+            "#;",
+            "1",
+            digit1()
         );
     }
 
     @Test
     public void testParseSecondPatternNumberDecimalNumber() {
         this.parseAndCheck2(
-                "$#;#.#",
-                "1" + DECIMAL + "5",
-                digit1(),
-                decimalSeparator(),
-                digit5()
+            "$#;#.#",
+            "1" + DECIMAL + "5",
+            digit1(),
+            decimalSeparator(),
+            digit5()
         );
     }
 
     @Test
     public void testParseIncludesGroupSeparator() {
         this.parseAndCheck2(
-                "#",
-                "1" + GROUP_SEPARATOR + "5",
-                digit1(),
-                groupSymbol(),
-                digit5()
+            "#",
+            "1" + GROUP_SEPARATOR + "5",
+            digit1(),
+            groupSymbol(),
+            digit5()
         );
     }
 
     @Test
     public void testParseTextLiteralDigit() {
         this.parseAndCheck2(
-                "\"Number\"#",
-                "Number5",
-                SpreadsheetFormulaParserToken.textLiteral("Number", "Number"),
-                digit5()
+            "\"Number\"#",
+            "Number5",
+            SpreadsheetFormulaParserToken.textLiteral("Number", "Number"),
+            digit5()
         );
     }
 
     @Test
     public void testParseSpaceDigit() {
         this.parseAndCheck2(
-                " #",
-                " 5",
-                SpreadsheetFormulaParserToken.textLiteral(" ", " "),
-                digit5()
+            " #",
+            " 5",
+            SpreadsheetFormulaParserToken.textLiteral(" ", " "),
+            digit5()
         );
     }
 
@@ -437,12 +437,12 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testParseNumber() {
         this.checkEquals(
-                EXPRESSION_NUMBER_KIND.create(-1.25),
-                this.createPattern("#.##")
-                        .parse(
-                                MINUS + "1" + DECIMAL + "25",
-                                this.parserContext()
-                        )
+            EXPRESSION_NUMBER_KIND.create(-1.25),
+            this.createPattern("#.##")
+                .parse(
+                    MINUS + "1" + DECIMAL + "25",
+                    this.parserContext()
+                )
         );
     }
 
@@ -451,34 +451,34 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertUnparseableStringToExpressionNumberFails() {
         this.convertFails2(
-                "#.00",
-                "abc123"
+            "#.00",
+            "abc123"
         );
     }
 
     @Test
     public void testConvertUnparseableStringToExpressionNumberFails2() {
         this.convertFails2(
-                "$ #.00",
-                "1" + DECIMAL + "23"
+            "$ #.00",
+            "1" + DECIMAL + "23"
         );
     }
 
     @Test
     public void testConvertStringToNumber() {
         this.convertStringToExpressionNumberAndCheck(
-                "#.00",
-                "1" + DECIMAL + "23",
-                1.23
+            "#.00",
+            "1" + DECIMAL + "23",
+            1.23
         );
     }
 
     @Test
     public void testConvertStringWithCurrencyToNumber() {
         this.convertStringToExpressionNumberAndCheck(
-                "$#.00",
-                CURRENCY + "1" + DECIMAL + "23",
-                1.23
+            "$#.00",
+            CURRENCY + "1" + DECIMAL + "23",
+            1.23
         );
     }
 
@@ -486,9 +486,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                                          final String text,
                                                          final Number value) {
         this.convertAndCheck2(
-                pattern,
-                text,
-                EXPRESSION_NUMBER_KIND.create(value)
+            pattern,
+            text,
+            EXPRESSION_NUMBER_KIND.create(value)
         );
     }
 
@@ -498,9 +498,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetPattern.parseNumberParsePattern("#"),
-                "number-parse-pattern\n" +
-                        "  \"#\"\n"
+            SpreadsheetPattern.parseNumberParsePattern("#"),
+            "number-parse-pattern\n" +
+                "  \"#\"\n"
         );
     }
 
@@ -509,9 +509,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         final String pattern = "$0.00;";
 
         this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "number-parse-pattern\n" +
-                        "  \"$0.00\" ;\n"
+            this.createPattern(pattern),
+            "number-parse-pattern\n" +
+                "  \"$0.00\" ;\n"
         );
     }
 
@@ -520,10 +520,10 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         final String pattern = "$0.0;$0.00";
 
         this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "number-parse-pattern\n" +
-                        "  \"$0.0\" ;\n" +
-                        "  \"$0.00\"\n"
+            this.createPattern(pattern),
+            "number-parse-pattern\n" +
+                "  \"$0.0\" ;\n" +
+                "  \"$0.00\"\n"
         );
     }
 
@@ -532,10 +532,10 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         final String pattern = "$0.0;$0.00;";
 
         this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "number-parse-pattern\n" +
-                        "  \"$0.0\" ;\n" +
-                        "  \"$0.00\" ;\n"
+            this.createPattern(pattern),
+            "number-parse-pattern\n" +
+                "  \"$0.0\" ;\n" +
+                "  \"$0.00\" ;\n"
         );
     }
 
@@ -546,8 +546,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         final SpreadsheetNumberParsePattern pattern = this.createPattern("$#");
 
         this.patternsAndCheck2(
-                pattern,
-                Lists.of(pattern)
+            pattern,
+            Lists.of(pattern)
         );
     }
 
@@ -556,9 +556,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         final SpreadsheetNumberParsePattern pattern = this.createPattern("$#.0;$#.00");
 
         this.patternsAndCheck(
-                pattern,
-                "$#.0",
-                "$#.00"
+            pattern,
+            "$#.0",
+            "$#.00"
         );
     }
 
@@ -567,10 +567,10 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         final SpreadsheetNumberParsePattern pattern = this.createPattern("$#.0;$#.00;$#.000");
 
         this.patternsAndCheck(
-                pattern,
-                "$#.0",
-                "$#.00",
-                "$#.000"
+            pattern,
+            "$#.0",
+            "$#.00",
+            "$#.000"
         );
     }
 
@@ -579,18 +579,18 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testFormatterPatternPatternPatternWithNegativeCurrencyNumber() {
         this.formatAndCheck2(
-                "$0.00",
-                -123,
-                "cn123*00"
+            "$0.00",
+            -123,
+            "cn123*00"
         );
     }
 
     @Test
     public void testFormatterPatternPatternPatternWithNegativeNumber() {
         this.formatAndCheck2(
-                "0.00",
-                -123,
-                "n123d00"
+            "0.00",
+            -123,
+            "n123d00"
         );
     }
 
@@ -608,8 +608,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                                  final Class<T> target) {
                 if (value instanceof Number && ExpressionNumber.class == target) {
                     return this.successfulConversion(
-                            ExpressionNumberKind.DOUBLE.create(Number.class.cast(value)),
-                            target
+                        ExpressionNumberKind.DOUBLE.create(Number.class.cast(value)),
+                        target
                     );
                 }
 
@@ -665,147 +665,147 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternHashBigDecimalZero() {
         this.parsePatternConvertAndCheck(
-                "#",
-                "0",
-                BigDecimal.valueOf(0)
+            "#",
+            "0",
+            BigDecimal.valueOf(0)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalPlusInteger() {
         this.parsePatternConvertAndCheck(
-                "#",
-                PLUS + "1",
-                BigDecimal.ONE
+            "#",
+            PLUS + "1",
+            BigDecimal.ONE
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalPlusInteger2() {
         this.parsePatternConvertAndCheck(
-                "#",
-                PLUS + "23",
-                BigDecimal.valueOf(23)
+            "#",
+            PLUS + "23",
+            BigDecimal.valueOf(23)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalPlusInteger3() {
         this.parsePatternConvertAndCheck(
-                "#",
-                PLUS + "456",
-                BigDecimal.valueOf(456)
+            "#",
+            PLUS + "456",
+            BigDecimal.valueOf(456)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalMinusInteger() {
         this.parsePatternConvertAndCheck(
-                "#",
-                MINUS + "1",
-                BigDecimal.valueOf(-1)
+            "#",
+            MINUS + "1",
+            BigDecimal.valueOf(-1)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalMinusInteger2() {
         this.parsePatternConvertAndCheck(
-                "#",
-                MINUS + "23",
-                BigDecimal.valueOf(-23)
+            "#",
+            MINUS + "23",
+            BigDecimal.valueOf(-23)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalMinusInteger3() {
         this.parsePatternConvertAndCheck(
-                "#",
-                MINUS + "456",
-                BigDecimal.valueOf(-456)
+            "#",
+            MINUS + "456",
+            BigDecimal.valueOf(-456)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalLeadingZeroInteger() {
         this.parsePatternConvertAndCheck(
-                "#",
-                MINUS + "0789",
-                BigDecimal.valueOf(-789)
+            "#",
+            MINUS + "0789",
+            BigDecimal.valueOf(-789)
         );
     }
 
     @Test
     public void testConvertPatternHashBigDecimalLeadingZeroInteger2() {
         this.parsePatternConvertAndCheck(
-                "#",
-                MINUS + "00789",
-                BigDecimal.valueOf(-789)
+            "#",
+            MINUS + "00789",
+            BigDecimal.valueOf(-789)
         );
     }
 
     @Test
     public void testConvertPatternQuestionMarkBigDecimalLeadingZeroInteger2() {
         this.parsePatternConvertAndCheck(
-                "?",
-                MINUS + "00789",
-                BigDecimal.valueOf(-789)
+            "?",
+            MINUS + "00789",
+            BigDecimal.valueOf(-789)
         );
     }
 
     @Test
     public void testConvertPatternZeroBigDecimalLeadingZeroInteger2() {
         this.parsePatternConvertAndCheck(
-                "0",
-                MINUS + "00789",
-                BigDecimal.valueOf(-789)
+            "0",
+            MINUS + "00789",
+            BigDecimal.valueOf(-789)
         );
     }
 
     @Test
     public void testConvertPatternHashHashBigDecimal() {
         this.parsePatternConvertAndCheck("##",
-                "12",
-                BigDecimal.valueOf(12));
+            "12",
+            BigDecimal.valueOf(12));
     }
 
     @Test
     public void testConvertPatternQuestionQuestionQuestionBigDecimal() {
         this.parsePatternConvertAndCheck("???",
-                "123",
-                BigDecimal.valueOf(123));
+            "123",
+            BigDecimal.valueOf(123));
     }
 
     @Test
     public void testConvertPatternZeroZeroZeroZeroBigDecimal() {
         this.parsePatternConvertAndCheck("0000",
-                "1234",
-                BigDecimal.valueOf(1234));
+            "1234",
+            BigDecimal.valueOf(1234));
     }
 
     @Test
     public void testConvertPatternHashHashBigDecimalExtraPattern() {
         this.parsePatternConvertAndCheck(
-                "##",
-                "9",
-                BigDecimal.valueOf(9)
+            "##",
+            "9",
+            BigDecimal.valueOf(9)
         );
     }
 
     @Test
     public void testConvertPatternQuestionQuestionQuestionBigDecimalExtraPattern() {
         this.parsePatternConvertAndCheck(
-                "???",
-                "78",
-                BigDecimal.valueOf(78)
+            "???",
+            "78",
+            BigDecimal.valueOf(78)
         );
     }
 
     @Test
     public void testConvertPatternZeroZeroZeroZeroBigDecimalExtraPattern() {
         this.parsePatternConvertAndCheck(
-                "0000",
-                "6",
-                BigDecimal.valueOf(6)
+            "0000",
+            "6",
+            BigDecimal.valueOf(6)
         );
     }
 
@@ -814,71 +814,71 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternHashBigDecimalFractionFails() {
         this.parsePatternAndConvertFails(
-                "#",
-                "0.5"
+            "#",
+            "0.5"
         );
     }
 
     @Test
     public void testConvertPatternHashDecimalHashBigDecimalFraction() {
         this.parsePatternConvertAndCheck(
-                "#.#",
-                "0" + DECIMAL + "5",
-                BigDecimal.valueOf(0.5)
+            "#.#",
+            "0" + DECIMAL + "5",
+            BigDecimal.valueOf(0.5)
         );
     }
 
     @Test
     public void testConvertPatternQuestionDecimalQuestionBigDecimalFraction() {
         this.parsePatternConvertAndCheck(
-                "?.?",
-                "0" + DECIMAL + "5",
-                BigDecimal.valueOf(0.5)
+            "?.?",
+            "0" + DECIMAL + "5",
+            BigDecimal.valueOf(0.5)
         );
     }
 
     @Test
     public void testConvertPatternZeroDecimalZeroBigDecimalFraction() {
         this.parsePatternConvertAndCheck(
-                "0.0",
-                "0" + DECIMAL + "5",
-                BigDecimal.valueOf(0.5)
+            "0.0",
+            "0" + DECIMAL + "5",
+            BigDecimal.valueOf(0.5)
         );
     }
 
     @Test
     public void testConvertPatternZeroDecimalZeroBigDecimalFractionExtraPattern() {
         this.parsePatternConvertAndCheck(
-                "0.00",
-                "0" + DECIMAL + "5",
-                BigDecimal.valueOf(0.5)
+            "0.00",
+            "0" + DECIMAL + "5",
+            BigDecimal.valueOf(0.5)
         );
     }
 
     @Test
     public void testConvertPatternZeroDecimalZeroBigDecimalFractionExtraPattern2() {
         this.parsePatternConvertAndCheck(
-                "0.000",
-                "0" + DECIMAL + "5",
-                BigDecimal.valueOf(0.5)
+            "0.000",
+            "0" + DECIMAL + "5",
+            BigDecimal.valueOf(0.5)
         );
     }
 
     @Test
     public void testConvertPatternZeroDecimalZeroZeroBigDecimalFraction() {
         this.parsePatternConvertAndCheck(
-                "0.00",
-                "0" + DECIMAL + "56",
-                BigDecimal.valueOf(0.56)
+            "0.00",
+            "0" + DECIMAL + "56",
+            BigDecimal.valueOf(0.56)
         );
     }
 
     @Test
     public void testConvertPatternZeroDecimalZeroZeroZeroBigDecimalFraction() {
         this.parsePatternConvertAndCheck(
-                "0.000",
-                "0" + DECIMAL + "56",
-                BigDecimal.valueOf(0.56)
+            "0.000",
+            "0" + DECIMAL + "56",
+            BigDecimal.valueOf(0.56)
         );
     }
 
@@ -887,36 +887,36 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternHashQuestionZeroBigDecimalDigit() {
         this.parsePatternConvertAndCheck(
-                "#?0",
-                "1",
-                BigDecimal.ONE
+            "#?0",
+            "1",
+            BigDecimal.ONE
         );
     }
 
     @Test
     public void testConvertPatternHashQuestionZeroBigDecimalSpaceDigit() {
         this.parsePatternConvertAndCheck(
-                "#?0",
-                " 1",
-                BigDecimal.ONE
+            "#?0",
+            " 1",
+            BigDecimal.ONE
         );
     }
 
     @Test
     public void testConvertPatternHashQuestionZeroBigDecimalDigitSpaceDigit() {
         this.parsePatternConvertAndCheck(
-                "#?0",
-                "0 1",
-                BigDecimal.ONE
+            "#?0",
+            "0 1",
+            BigDecimal.ONE
         );
     }
 
     @Test
     public void testConvertPatternHashQuestionZeroBigDecimalDigitSpaceDigit2() {
         this.parsePatternConvertAndCheck(
-                "#?0",
-                "3 4",
-                BigDecimal.valueOf(34)
+            "#?0",
+            "3 4",
+            BigDecimal.valueOf(34)
         );
     }
 
@@ -925,63 +925,63 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentDigit() {
         this.parsePatternConvertAndCheck(
-                "#E+#",
-                "2" + EXPONENT + PLUS + "3",
-                BigDecimal.valueOf(2000)
+            "#E+#",
+            "2" + EXPONENT + PLUS + "3",
+            BigDecimal.valueOf(2000)
         );
     }
 
     @Test
     public void testConvertPatternHashExponentMinusHashBigDecimalDigitExponentDigit() {
         this.parsePatternConvertAndCheck(
-                "#E+#",
-                "2" + EXPONENT + PLUS + "3",
-                BigDecimal.valueOf(2000)
+            "#E+#",
+            "2" + EXPONENT + PLUS + "3",
+            BigDecimal.valueOf(2000)
         );
     }
 
     @Test
     public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentDigit2() {
         this.parsePatternConvertAndCheck(
-                "#E+#",
-                "2" + EXPONENT + PLUS + "3",
-                BigDecimal.valueOf(2000)
+            "#E+#",
+            "2" + EXPONENT + PLUS + "3",
+            BigDecimal.valueOf(2000)
         );
     }
 
     @Test
     public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentPlusDigit() {
         this.parsePatternConvertAndCheck(
-                "#E+#",
-                "4" + EXPONENT + PLUS + "5",
-                new BigDecimal("4E+5")
+            "#E+#",
+            "4" + EXPONENT + PLUS + "5",
+            new BigDecimal("4E+5")
         );
     }
 
     @Test
     public void testConvertPatternHashExponentPlusHashBigDecimalDigitExponentMinusDigit() {
         this.parsePatternConvertAndCheck(
-                "#E+#",
-                "6" + EXPONENT + MINUS + "7",
-                new BigDecimal("6E-7")
+            "#E+#",
+            "6" + EXPONENT + MINUS + "7",
+            new BigDecimal("6E-7")
         );
     }
 
     @Test
     public void testConvertPatternHashExponentPlusHashHashBigDecimalDigitExponentDigit() {
         this.parsePatternConvertAndCheck(
-                "#E+##",
-                "8" + EXPONENT + PLUS + "90",
-                new BigDecimal("8E+90")
+            "#E+##",
+            "8" + EXPONENT + PLUS + "90",
+            new BigDecimal("8E+90")
         );
     }
 
     @Test
     public void testConvertPatternHashExponentPlusQuestionBigDecimalDigitExponentSpaceDigit() {
         this.parsePatternConvertAndCheck(
-                "#E+?",
-                "1" + EXPONENT + " 2",
-                new BigDecimal("1E+2")
+            "#E+?",
+            "1" + EXPONENT + " 2",
+            new BigDecimal("1E+2")
         );
     }
 
@@ -990,16 +990,16 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternCurrencyHashBigDecimal() {
         this.parsePatternConvertAndCheck("$#",
-                CURRENCY + "1",
-                BigDecimal.ONE);
+            CURRENCY + "1",
+            BigDecimal.ONE);
     }
 
     @Test
     public void testConvertPatternHashCurrencyBigDecimal() {
         this.parsePatternConvertAndCheck(
-                "#$",
-                "1" + CURRENCY,
-                BigDecimal.ONE
+            "#$",
+            "1" + CURRENCY,
+            BigDecimal.ONE
         );
     }
 
@@ -1008,33 +1008,33 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternPercentHashBigDecimalPercentDigit() {
         this.parsePatternConvertAndCheck(
-                "%#",
-                PERCENT + "1",
-                BigDecimal.valueOf(0.01)
+            "%#",
+            PERCENT + "1",
+            BigDecimal.valueOf(0.01)
         );
     }
 
     @Test
     public void testConvertPatternHashPercentBigDecimalDigitPercent() {
         this.parsePatternConvertAndCheck(
-                "#%",
-                "12" + PERCENT,
-                BigDecimal.valueOf(0.12)
+            "#%",
+            "12" + PERCENT,
+            BigDecimal.valueOf(0.12)
         );
     }
 
     @Test
     public void testConvertPatternHashPercentBigDecimalDigitDigitDigitPercent() {
         this.parsePatternConvertAndCheck("#%",
-                "123" + PERCENT,
-                BigDecimal.valueOf(1.23));
+            "123" + PERCENT,
+            BigDecimal.valueOf(1.23));
     }
 
     @Test
     public void testConvertPatternHashDecimalPercentBigDecimalDigitDigitDigitPercent() {
         this.parsePatternConvertAndCheck("#.#%",
-                "45" + DECIMAL + "6" + PERCENT,
-                BigDecimal.valueOf(0.456));
+            "45" + DECIMAL + "6" + PERCENT,
+            BigDecimal.valueOf(0.456));
     }
 
     // several patterns.................................................................................................
@@ -1042,15 +1042,15 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternFirstPatternMatches() {
         this.parsePatternConvertAndCheck("0;\"text-literal\"",
-                "1",
-                BigDecimal.ONE);
+            "1",
+            BigDecimal.ONE);
     }
 
     @Test
     public void testConvertPatternLastPatternMatches() {
         this.parsePatternConvertAndCheck("\"text-literal\";0",
-                "2",
-                BigDecimal.valueOf(2));
+            "2",
+            BigDecimal.valueOf(2));
     }
 
     // other Number types...............................................................................................
@@ -1063,8 +1063,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternByteRangeFail() {
         this.parsePatternAndConvertFails("#",
-                String.valueOf(Short.MAX_VALUE),
-                Byte.class);
+            String.valueOf(Short.MAX_VALUE),
+            Byte.class);
     }
 
     @Test
@@ -1075,8 +1075,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternShortRangeFail() {
         this.parsePatternAndConvertFails("#",
-                String.valueOf(Integer.MAX_VALUE),
-                Short.class);
+            String.valueOf(Integer.MAX_VALUE),
+            Short.class);
     }
 
     @Test
@@ -1087,8 +1087,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testConvertPatternIntegerRangeFail() {
         this.parsePatternAndConvertFails("#",
-                String.valueOf(Long.MAX_VALUE),
-                Integer.class);
+            String.valueOf(Long.MAX_VALUE),
+            Integer.class);
     }
 
     @Test
@@ -1118,18 +1118,18 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     private void parsePatternConvertAndCheck(final Number number) {
         this.parsePatternConvertAndCheck(
-                "#.#;#",
-                number.toString().replace('.', DECIMAL).replace('+', PLUS).replace('-', MINUS).replace("E", EXPONENT),
-                number
+            "#.#;#",
+            number.toString().replace('.', DECIMAL).replace('+', PLUS).replace('-', MINUS).replace("E", EXPONENT),
+            number
         );
     }
 
     @Test
     public void testConvertPatternNumber() {
         this.convertAndCheck3(
-                "##.##",
-                "1" + DECIMAL + "25",
-                1.25
+            "##.##",
+            "1" + DECIMAL + "25",
+            1.25
         );
     }
 
@@ -1137,16 +1137,16 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                   final String text,
                                   final Number number) {
         this.convertAndCheck4(
-                pattern,
-                text,
-                ExpressionNumberKind.BIG_DECIMAL,
-                number
+            pattern,
+            text,
+            ExpressionNumberKind.BIG_DECIMAL,
+            number
         );
         this.convertAndCheck4(
-                pattern,
-                text,
-                ExpressionNumberKind.DOUBLE,
-                number
+            pattern,
+            text,
+            ExpressionNumberKind.DOUBLE,
+            number
         );
     }
 
@@ -1155,11 +1155,11 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                   final ExpressionNumberKind kind,
                                   final Number number) {
         this.convertAndCheck(
-                SpreadsheetNumberParsePattern.parseNumberParsePattern(pattern).createConverter(),
-                text,
-                ExpressionNumber.class,
-                this.createConverterContext(kind),
-                kind.create(number)
+            SpreadsheetNumberParsePattern.parseNumberParsePattern(pattern).createConverter(),
+            text,
+            ExpressionNumber.class,
+            this.createConverterContext(kind),
+            kind.create(number)
         );
     }
 
@@ -1174,10 +1174,10 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                              final String text,
                                              final Class<? extends Number> type) {
         this.convertFails(
-                this.createConverter(pattern),
-                text,
-                type,
-                this.createConverterContext(ExpressionNumberKind.DEFAULT)
+            this.createConverter(pattern),
+            text,
+            type,
+            this.createConverterContext(ExpressionNumberKind.DEFAULT)
         );
     }
 
@@ -1185,10 +1185,10 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                              final String text,
                                              final Number expected) {
         this.parsePatternConvertAndCheck(
-                pattern,
-                text,
-                Cast.to(expected.getClass()),
-                expected
+            pattern,
+            text,
+            Cast.to(expected.getClass()),
+            expected
         );
     }
 
@@ -1197,39 +1197,39 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                                                                 final Class<N> number,
                                                                 final N expected) {
         this.convertAndCheck(
-                this.createConverter(pattern),
-                text,
-                number,
-                createConverterContext(ExpressionNumberKind.DEFAULT),
-                expected
+            this.createConverter(pattern),
+            text,
+            number,
+            createConverterContext(ExpressionNumberKind.DEFAULT),
+            expected
         );
     }
 
     private Converter<SpreadsheetConverterContext> createConverter(final String pattern) {
         return Cast.to(
-                this.parseString(pattern)
-                        .createConverter()
+            this.parseString(pattern)
+                .createConverter()
         );
     }
 
     private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                SpreadsheetConverters.textToText(),
-                SpreadsheetLabelNameResolvers.fake(),
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        DateTimeContexts.fake(), // DateTimeContext unused
-                                        this.decimalNumberContext()),
-                                kind
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            SpreadsheetConverters.textToText(),
+            SpreadsheetLabelNameResolvers.fake(),
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                    ConverterContexts.basic(
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        Converters.fake(),
+                        DateTimeContexts.fake(), // DateTimeContext unused
+                        this.decimalNumberContext()),
+                    kind
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            )
         );
     }
 
@@ -1238,8 +1238,8 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     @Test
     public void testToString2() {
         this.toStringAndCheck(
-                this.createPattern("#.##"),
-                "\"#.##\""
+            this.createPattern("#.##"),
+            "\"#.##\""
         );
     }
 

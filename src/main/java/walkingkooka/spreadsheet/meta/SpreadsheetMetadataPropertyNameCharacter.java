@@ -35,8 +35,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
         super(name);
     }
 
-    @Override
-    final Character checkValueNonNull(final Object value) {
+    @Override final Character checkValueNonNull(final Object value) {
         final Character c = this.checkValueType(value, v -> v instanceof Character);
         if (c < 0x20 || Character.isWhitespace(c) || Character.isLetter(c) || Character.isDigit(c)) {
             throw this.spreadsheetMetadataPropertyValueException(value);
@@ -44,19 +43,17 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
         return c;
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return Character.class.getSimpleName() + " symbol, not control character, whitespace, letter or digit";
     }
 
-    @Override
-    final Optional<Character> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<Character> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.of(
-                this.extractLocaleValueCharacter(
-                        DecimalFormatSymbols.getInstance(
-                                context.locale()
-                        )
+            this.extractLocaleValueCharacter(
+                DecimalFormatSymbols.getInstance(
+                    context.locale()
                 )
+            )
         );
     }
 
@@ -72,8 +69,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final Character parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final Character parseUrlFragmentSaveValueNonNull(final String value) {
         if (value.length() != 1) {
             throw new IllegalArgumentException("Invalid value " + CharSequences.quoteAndEscape(value) + " expected a single character");
         }
