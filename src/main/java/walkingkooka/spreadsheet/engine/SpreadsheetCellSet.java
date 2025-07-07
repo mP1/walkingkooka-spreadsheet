@@ -242,7 +242,7 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
     public UrlFragment urlFragment() {
         return UrlFragment.with(
             this.marshall(
-                JsonNodeMarshallContexts.fake()
+                JsonNodeMarshallContexts.basic()
             ).toString()
         );
     }

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.ImmutableSortedSetTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -37,7 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<SpreadsheetCellSet, SpreadsheetCell>,
     TreePrintableTesting,
-    JsonNodeMarshallingTesting<SpreadsheetCellSet> {
+    JsonNodeMarshallingTesting<SpreadsheetCellSet>,
+    HasUrlFragmentTesting {
 
     @Test
     public void testWithNullFails() {
@@ -157,7 +159,17 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
         return this.createSet();
     }
 
-// class............................................................................................................
+    // UrlFragment......................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        this.urlFragmentAndCheck(
+            this.createSet(),
+            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=1%22%0A%20%20%20%20%7D%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=2%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellSet> type() {
