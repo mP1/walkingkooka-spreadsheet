@@ -36,6 +36,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
@@ -51,14 +52,28 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
     /**
      * Factory that creates a {@link SpreadsheetCellSet} after taking a copy.
      */
-    public static SpreadsheetCellSet with(final SortedSet<SpreadsheetCell> cells) {
-        Objects.requireNonNull(cells, "cells");
+    public static SpreadsheetCellSet with(final Set<SpreadsheetCell> cells) {
+        SpreadsheetCellSet with;
 
-        return cells instanceof SpreadsheetCellSet ?
-            (SpreadsheetCellSet) cells :
-            withCopy(
-                SortedSets.immutable(cells)
+        if (cells instanceof SpreadsheetCellSet) {
+            with = (SpreadsheetCellSet) cells;
+        } else {
+            Objects.requireNonNull(cells, "cells");
+
+            SortedSet<SpreadsheetCell> sortedSet;
+            if (cells instanceof SortedSet) {
+                sortedSet = (SortedSet<SpreadsheetCell>) cells;
+            } else {
+                sortedSet = SortedSets.tree(COMPARATOR);
+                sortedSet.addAll(cells);
+            }
+
+            with = withCopy(
+                SortedSets.immutable(sortedSet)
             );
+        }
+
+        return with;
     }
 
     private static SpreadsheetCellSet withCopy(final SortedSet<SpreadsheetCell> cells) {
