@@ -43,10 +43,10 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
 
     public static SpreadsheetCellReferenceToSpreadsheetCellMap with(final Map<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell) {
         return cellReferenceToCell instanceof SpreadsheetCellReferenceToSpreadsheetCellMap ?
-                (SpreadsheetCellReferenceToSpreadsheetCellMap) cellReferenceToCell :
-                new SpreadsheetCellReferenceToSpreadsheetCellMap(
-                        copy(cellReferenceToCell)
-                );
+            (SpreadsheetCellReferenceToSpreadsheetCellMap) cellReferenceToCell :
+            new SpreadsheetCellReferenceToSpreadsheetCellMap(
+                copy(cellReferenceToCell)
+            );
     }
 
     private static Map<SpreadsheetCellReference, SpreadsheetCell> copy(final Map<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell) {
@@ -55,11 +55,11 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
         final Map<SpreadsheetCellReference, SpreadsheetCell> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         for (final Entry<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : cellReferenceToCell.entrySet()) {
             copy.put(
-                    referenceAndCell.getKey(),
-                    Objects.requireNonNull(
-                            referenceAndCell.getValue(),
-                            "null cell included"
-                    )
+                referenceAndCell.getKey(),
+                Objects.requireNonNull(
+                    referenceAndCell.getValue(),
+                    "null cell included"
+                )
             );
         }
         return copy;
@@ -77,8 +77,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
     @Override
     public SpreadsheetCell get(final Object key) {
         return key instanceof SpreadsheetCellReference ?
-                this.cellReferenceToCell.get(key) :
-                null;
+            this.cellReferenceToCell.get(key) :
+            null;
     }
 
     @Override
@@ -92,7 +92,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
     public Set<Entry<SpreadsheetCellReference, SpreadsheetCell>> entrySet() {
         if (null == this.entries) {
             this.entries = Sets.readOnly(
-                    this.cellReferenceToCell.entrySet()
+                this.cellReferenceToCell.entrySet()
             );
         }
         return this.entries;
@@ -107,36 +107,36 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
 
         for (final SpreadsheetCell cell : this.values()) {
             final JsonObject json = context.marshall(cell)
-                    .objectOrFail();
+                .objectOrFail();
             children.add(
-                    json.children()
-                            .get(0)
+                json.children()
+                    .get(0)
             );
         }
 
         return JsonNode.object()
-                .setChildren(children);
+            .setChildren(children);
     }
 
     static SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
         final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = Maps.sorted(
-                SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
+            SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
         );
 
         for (final JsonNode cell : node.children()) {
             final SpreadsheetCell spreadsheetCell = context.unmarshall(
-                    JsonNode.object()
-                            .set(
-                                    cell.name(),
-                                    cell
-                            ),
-                    SpreadsheetCell.class
+                JsonNode.object()
+                    .set(
+                        cell.name(),
+                        cell
+                    ),
+                SpreadsheetCell.class
             );
 
             referenceToCell.put(
-                    spreadsheetCell.reference(),
-                    spreadsheetCell
+                spreadsheetCell.reference(),
+                spreadsheetCell
             );
         }
 
@@ -145,10 +145,10 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellReferenceToSpreadsheetCellMap.class),
-                SpreadsheetCellReferenceToSpreadsheetCellMap::unmarshall,
-                SpreadsheetCellReferenceToSpreadsheetCellMap::marshall,
-                SpreadsheetCellReferenceToSpreadsheetCellMap.class
+            JsonNodeContext.computeTypeName(SpreadsheetCellReferenceToSpreadsheetCellMap.class),
+            SpreadsheetCellReferenceToSpreadsheetCellMap::unmarshall,
+            SpreadsheetCellReferenceToSpreadsheetCellMap::marshall,
+            SpreadsheetCellReferenceToSpreadsheetCellMap.class
         );
     }
 }

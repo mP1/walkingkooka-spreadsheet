@@ -37,33 +37,33 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap, SpreadsheetCellReference, SpreadsheetCell>,
-        ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap>,
-        JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap> {
+    ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap> {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
     private final static SpreadsheetCell VALUE1 = KEY1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
+        SpreadsheetFormula.EMPTY.setText("=1")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
     private final static SpreadsheetCell VALUE2 = KEY2.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=2")
+        SpreadsheetFormula.EMPTY.setText("=2")
     );
 
     private final static Map<SpreadsheetCellReference, SpreadsheetCell> MAP = Maps.of(
-            KEY1,
-            VALUE1,
-            KEY2,
-            VALUE2
+        KEY1,
+        VALUE1,
+        KEY2,
+        VALUE2
     );
 
     @Test
     public void testWithNullMapFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(null)
         );
     }
 
@@ -74,8 +74,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
         map.put(KEY2, null);
 
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
+            NullPointerException.class,
+            () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
         );
     }
 
@@ -84,8 +84,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
         final SpreadsheetCellReferenceToSpreadsheetCellMap map = this.createMap();
 
         assertSame(
-                map,
-                SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
+            map,
+            SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
         );
     }
 
@@ -94,38 +94,38 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
         final SpreadsheetCellReferenceToSpreadsheetCellMap map = this.createMap();
 
         this.checkEquals(
-                MAP,
-                map
+            MAP,
+            map
         );
     }
 
     @Test
     public void testGetWithNonSpreadsheetCellReferenceFails() {
         this.getAndCheckAbsent(
-                KEY1.toString()
+            KEY1.toString()
         );
     }
 
     @Test
     public void testGetWithUnknownSpreadsheetCellReferenceFails() {
         this.getAndCheckAbsent(
-                SpreadsheetSelection.parseCell("Z99")
+            SpreadsheetSelection.parseCell("Z99")
         );
     }
 
     @Test
     public void testSize() {
         this.sizeAndCheck(
-                this.createMap(),
-                MAP.size()
+            this.createMap(),
+            MAP.size()
         );
     }
 
     @Test
     public void testGet() {
         this.getAndCheck(
-                KEY1,
-                VALUE1
+            KEY1,
+            VALUE1
         );
     }
 
@@ -133,43 +133,43 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     public void testGetDifferentSpreadsheetCellReferenceKind() {
         final SpreadsheetCellReference reference = KEY1.toAbsolute();
         this.checkNotEquals(
-                KEY1,
-                reference
+            KEY1,
+            reference
         );
 
         this.getAndCheck(
-                reference,
-                VALUE1
+            reference,
+            VALUE1
         );
     }
 
     @Test
     public void testPutFails() {
         this.putFails(
-                this.createMap(),
-                KEY1,
-                VALUE1
+            this.createMap(),
+            KEY1,
+            VALUE1
         );
     }
 
     @Test
     public void testRemoveFails() {
         this.removeFails(
-                this.createMap(),
-                KEY1
+            this.createMap(),
+            KEY1
         );
     }
 
     @Test
     public void testIteratorRemoveFails() {
         final Iterator<Map.Entry<SpreadsheetCellReference, SpreadsheetCell>> iterator = this.createMap()
-                .entrySet()
-                .iterator();
+            .entrySet()
+            .iterator();
         iterator.next();
 
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> iterator.remove()
+            UnsupportedOperationException.class,
+            () -> iterator.remove()
         );
     }
 
@@ -183,8 +183,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createMap(),
-                MAP.toString()
+            this.createMap(),
+            MAP.toString()
         );
     }
 
@@ -193,38 +193,38 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createMap(),
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  \"A2\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=2\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            this.createMap(),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"A2\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=2\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  \"A2\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=2\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}",
-                this.createMap()
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"A2\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=2\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}",
+            this.createMap()
         );
     }
 
@@ -232,8 +232,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     public SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode json,
                                                                    final JsonNodeUnmarshallContext context) {
         return SpreadsheetCellReferenceToSpreadsheetCellMap.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
