@@ -36,12 +36,23 @@ import java.util.Optional;
  */
 public final class SpreadsheetCellReferenceToValueMap extends SpreadsheetCellReferenceToMap<Optional<Object>> {
 
+    /**
+     * Empty singleton
+     */
+    public final static SpreadsheetCellReferenceToValueMap EMPTY = new SpreadsheetCellReferenceToValueMap(Maps.empty());
+
     public static SpreadsheetCellReferenceToValueMap with(final Map<SpreadsheetCellReference, Optional<Object>> cellReferenceToValue) {
         return cellReferenceToValue instanceof SpreadsheetCellReferenceToValueMap ?
             (SpreadsheetCellReferenceToValueMap) cellReferenceToValue :
-            new SpreadsheetCellReferenceToValueMap(
+            withCopy(
                 copy(cellReferenceToValue)
             );
+    }
+
+    private static SpreadsheetCellReferenceToValueMap withCopy(final Map<SpreadsheetCellReference, Optional<Object>> cellReferenceToValue) {
+        return cellReferenceToValue.isEmpty() ?
+            EMPTY :
+            new SpreadsheetCellReferenceToValueMap(cellReferenceToValue);
     }
 
     private static Map<SpreadsheetCellReference, Optional<Object>> copy(final Map<SpreadsheetCellReference, Optional<Object>> cellReferenceToValue) {
@@ -74,7 +85,7 @@ public final class SpreadsheetCellReferenceToValueMap extends SpreadsheetCellRef
 
     static SpreadsheetCellReferenceToValueMap unmarshall(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
-        return new SpreadsheetCellReferenceToValueMap(
+        return withCopy(
             unmarshallMap(
                 node,
                 (JsonNode value) -> context.unmarshallOptionalWithType(
