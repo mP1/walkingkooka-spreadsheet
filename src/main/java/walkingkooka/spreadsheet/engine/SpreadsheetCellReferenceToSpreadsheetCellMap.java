@@ -17,13 +17,20 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -92,4 +99,56 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
     }
 
     private Set<Entry<SpreadsheetCellReference, SpreadsheetCell>> entries;
+
+    // Json.............................................................................................................
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        final List<JsonNode> children = Lists.array();
+
+        for (final SpreadsheetCell cell : this.values()) {
+            final JsonObject json = context.marshall(cell)
+                    .objectOrFail();
+            children.add(
+                    json.children()
+                            .get(0)
+            );
+        }
+
+        return JsonNode.object()
+                .setChildren(children);
+    }
+
+    static SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = Maps.sorted(
+                SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
+        );
+
+        for (final JsonNode cell : node.children()) {
+            final SpreadsheetCell spreadsheetCell = context.unmarshall(
+                    JsonNode.object()
+                            .set(
+                                    cell.name(),
+                                    cell
+                            ),
+                    SpreadsheetCell.class
+            );
+
+            referenceToCell.put(
+                    spreadsheetCell.reference(),
+                    spreadsheetCell
+            );
+        }
+
+        return new SpreadsheetCellReferenceToSpreadsheetCellMap(referenceToCell);
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCellReferenceToSpreadsheetCellMap.class),
+                SpreadsheetCellReferenceToSpreadsheetCellMap::unmarshall,
+                SpreadsheetCellReferenceToSpreadsheetCellMap::marshall,
+                SpreadsheetCellReferenceToSpreadsheetCellMap.class
+        );
+    }
 }
