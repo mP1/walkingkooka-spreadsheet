@@ -47,14 +47,22 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     );
 
     public static MissingConverterSet with(final Set<MissingConverter> missing) {
-        Objects.requireNonNull(missing, "missing");
+        MissingConverterSet with;
 
-        final ImmutableSortedSet<MissingConverter> copy = SortedSets.immutable(
-            new TreeSet<>(missing)
-        );
-        return copy.isEmpty() ?
-            EMPTY :
-            new MissingConverterSet(copy);
+        if (missing instanceof MissingConverterSet) {
+            with = (MissingConverterSet) missing;
+        } else {
+            Objects.requireNonNull(missing, "missing");
+
+            final ImmutableSortedSet<MissingConverter> copy = SortedSets.immutable(
+                new TreeSet<>(missing)
+            );
+            with = copy.isEmpty() ?
+                EMPTY :
+                new MissingConverterSet(copy);
+        }
+
+        return with;
     }
 
     private MissingConverterSet(final SortedSet<MissingConverter> missings) {
