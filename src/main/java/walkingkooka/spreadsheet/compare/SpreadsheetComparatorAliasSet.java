@@ -187,12 +187,21 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
 
     @Override
     public SpreadsheetComparatorAliasSet setElements(final SortedSet<SpreadsheetComparatorAlias> aliases) {
-        final SpreadsheetComparatorAliasSet after = new SpreadsheetComparatorAliasSet(
+        final SpreadsheetComparatorAliasSet after;
+
+        if (aliases instanceof SpreadsheetComparatorAliasSet) {
+            after = (SpreadsheetComparatorAliasSet) aliases;
+        } else {
+            after = new SpreadsheetComparatorAliasSet(
                 this.pluginAliasSet.setElements(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
+            );
+            return this.pluginAliasSet.equals(aliases) ?
                 this :
                 after;
+
+        }
+
+        return after;
     }
 
     @Override

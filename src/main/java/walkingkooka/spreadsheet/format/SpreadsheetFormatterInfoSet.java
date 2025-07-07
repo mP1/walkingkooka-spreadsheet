@@ -56,12 +56,20 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     public static SpreadsheetFormatterInfoSet with(final Set<SpreadsheetFormatterInfo> infos) {
-        Objects.requireNonNull(infos, "infos");
+        SpreadsheetFormatterInfoSet with;
 
-        final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet = PluginInfoSet.with(infos);
-        return pluginInfoSet.isEmpty() ?
+        if (infos instanceof SpreadsheetFormatterInfoSet) {
+            with = (SpreadsheetFormatterInfoSet) infos;
+        } else {
+            final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet = PluginInfoSet.with(
+                Objects.requireNonNull(infos, "infos")
+            );
+            with = pluginInfoSet.isEmpty() ?
                 EMPTY :
                 new SpreadsheetFormatterInfoSet(pluginInfoSet);
+        }
+
+        return with;
     }
 
     private SpreadsheetFormatterInfoSet(final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet) {
@@ -159,13 +167,22 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     @Override
-    public SpreadsheetFormatterInfoSet setElements(final Set<SpreadsheetFormatterInfo> infos) {
-        final SpreadsheetFormatterInfoSet after = new SpreadsheetFormatterInfoSet(
-                this.pluginInfoSet.setElements(infos)
-        );
-        return this.pluginInfoSet.equals(infos) ?
+    public SpreadsheetFormatterInfoSet setElements(final Set<SpreadsheetFormatterInfo> aliases) {
+        final SpreadsheetFormatterInfoSet after;
+
+        if (aliases instanceof SpreadsheetFormatterInfoSet) {
+            after = (SpreadsheetFormatterInfoSet) aliases;
+        } else {
+            after = new SpreadsheetFormatterInfoSet(
+                this.pluginInfoSet.setElements(aliases)
+            );
+            return this.pluginInfoSet.equals(aliases) ?
                 this :
                 after;
+
+        }
+
+        return after;
     }
 
     @Override

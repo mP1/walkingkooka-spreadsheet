@@ -145,14 +145,23 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
 
     @Override
     public SpreadsheetFormatterAliasSet setElements(final SortedSet<SpreadsheetFormatterAlias> aliases) {
-        final SpreadsheetFormatterAliasSet after = new SpreadsheetFormatterAliasSet(
+        final SpreadsheetFormatterAliasSet after;
+
+        if (aliases instanceof SpreadsheetFormatterAliasSet) {
+            after = (SpreadsheetFormatterAliasSet) aliases;
+        } else {
+            after = new SpreadsheetFormatterAliasSet(
                 this.pluginAliasSet.setElements(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
+            );
+            return this.pluginAliasSet.equals(aliases) ?
                 this :
                 after;
-    }
 
+        }
+
+        return after;
+    }
+    
     @Override
     public SpreadsheetFormatterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetFormatterAlias> sortedSet) {
         return null;
