@@ -187,12 +187,21 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
 
     @Override
     public SpreadsheetParserAliasSet setElements(final SortedSet<SpreadsheetParserAlias> aliases) {
-        final SpreadsheetParserAliasSet after = new SpreadsheetParserAliasSet(
+        final SpreadsheetParserAliasSet after;
+
+        if (aliases instanceof SpreadsheetParserAliasSet) {
+            after = (SpreadsheetParserAliasSet) aliases;
+        } else {
+            after = new SpreadsheetParserAliasSet(
                 this.pluginAliasSet.setElements(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
+            );
+            return this.pluginAliasSet.equals(aliases) ?
                 this :
                 after;
+
+        }
+
+        return after;
     }
 
     @Override

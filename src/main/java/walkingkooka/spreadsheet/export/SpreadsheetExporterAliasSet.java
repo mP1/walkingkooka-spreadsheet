@@ -187,14 +187,23 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
 
     @Override
     public SpreadsheetExporterAliasSet setElements(final SortedSet<SpreadsheetExporterAlias> aliases) {
-        final SpreadsheetExporterAliasSet after = new SpreadsheetExporterAliasSet(
+        final SpreadsheetExporterAliasSet after;
+
+        if (aliases instanceof SpreadsheetExporterAliasSet) {
+            after = (SpreadsheetExporterAliasSet) aliases;
+        } else {
+            after = new SpreadsheetExporterAliasSet(
                 this.pluginAliasSet.setElements(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
+            );
+            return this.pluginAliasSet.equals(aliases) ?
                 this :
                 after;
-    }
 
+        }
+
+        return after;
+    }
+    
     @Override
     public SpreadsheetExporterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetExporterAlias> elements) {
         return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);

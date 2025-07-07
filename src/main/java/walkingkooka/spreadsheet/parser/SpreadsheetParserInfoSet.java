@@ -56,12 +56,20 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     }
 
     public static SpreadsheetParserInfoSet with(final Set<SpreadsheetParserInfo> infos) {
-        Objects.requireNonNull(infos, "infos");
+        SpreadsheetParserInfoSet with;
 
-        final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet = PluginInfoSet.with(infos);
-        return pluginInfoSet.isEmpty() ?
+        if (infos instanceof SpreadsheetParserInfoSet) {
+            with = (SpreadsheetParserInfoSet) infos;
+        } else {
+            final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet = PluginInfoSet.with(
+                Objects.requireNonNull(infos, "infos")
+            );
+            with = pluginInfoSet.isEmpty() ?
                 EMPTY :
                 new SpreadsheetParserInfoSet(pluginInfoSet);
+        }
+
+        return with;
     }
 
     private SpreadsheetParserInfoSet(final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet) {
@@ -160,12 +168,21 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
 
     @Override
     public SpreadsheetParserInfoSet setElements(final Set<SpreadsheetParserInfo> infos) {
-        final SpreadsheetParserInfoSet after = new SpreadsheetParserInfoSet(
+        final SpreadsheetParserInfoSet after;
+
+        if (infos instanceof SpreadsheetParserInfoSet) {
+            after = (SpreadsheetParserInfoSet) infos;
+        } else {
+            after = new SpreadsheetParserInfoSet(
                 this.pluginInfoSet.setElements(infos)
-        );
-        return this.pluginInfoSet.equals(infos) ?
+            );
+            return this.pluginInfoSet.equals(infos) ?
                 this :
                 after;
+
+        }
+
+        return after;
     }
 
     @Override

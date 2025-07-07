@@ -56,12 +56,20 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     public static SpreadsheetComparatorInfoSet with(final Set<SpreadsheetComparatorInfo> infos) {
-        Objects.requireNonNull(infos, "infos");
+        SpreadsheetComparatorInfoSet with;
 
-        final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet = PluginInfoSet.with(infos);
-        return pluginInfoSet.isEmpty() ?
+        if (infos instanceof SpreadsheetComparatorInfoSet) {
+            with = (SpreadsheetComparatorInfoSet) infos;
+        } else {
+            final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet = PluginInfoSet.with(
+                Objects.requireNonNull(infos, "infos")
+            );
+            with = pluginInfoSet.isEmpty() ?
                 EMPTY :
                 new SpreadsheetComparatorInfoSet(pluginInfoSet);
+        }
+
+        return with;
     }
 
     private SpreadsheetComparatorInfoSet(final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet) {
@@ -159,13 +167,22 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     @Override
-    public SpreadsheetComparatorInfoSet setElements(final Set<SpreadsheetComparatorInfo> infos) {
-        final SpreadsheetComparatorInfoSet after = new SpreadsheetComparatorInfoSet(
-                this.pluginInfoSet.setElements(infos)
-        );
-        return this.pluginInfoSet.equals(infos) ?
+    public SpreadsheetComparatorInfoSet setElements(final Set<SpreadsheetComparatorInfo> aliases) {
+        final SpreadsheetComparatorInfoSet after;
+
+        if (aliases instanceof SpreadsheetComparatorInfoSet) {
+            after = (SpreadsheetComparatorInfoSet) aliases;
+        } else {
+            after = new SpreadsheetComparatorInfoSet(
+                this.pluginInfoSet.setElements(aliases)
+            );
+            return this.pluginInfoSet.equals(aliases) ?
                 this :
                 after;
+
+        }
+
+        return after;
     }
 
     @Override

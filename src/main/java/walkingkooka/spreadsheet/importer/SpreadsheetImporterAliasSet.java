@@ -197,12 +197,21 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
 
     @Override
     public SpreadsheetImporterAliasSet setElements(final SortedSet<SpreadsheetImporterAlias> aliases) {
-        final SpreadsheetImporterAliasSet after = new SpreadsheetImporterAliasSet(
+        final SpreadsheetImporterAliasSet after;
+
+        if (aliases instanceof SpreadsheetImporterAliasSet) {
+            after = (SpreadsheetImporterAliasSet) aliases;
+        } else {
+            after = new SpreadsheetImporterAliasSet(
                 this.pluginAliasSet.setElements(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
+            );
+            return this.pluginAliasSet.equals(aliases) ?
                 this :
                 after;
+
+        }
+
+        return after;
     }
 
     @Override
