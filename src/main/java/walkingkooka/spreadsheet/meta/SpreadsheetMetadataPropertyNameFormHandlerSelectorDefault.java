@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault extends Sp
      */
     private SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault() {
         super(
-                "defaultFormHandler"
+            "defaultFormHandler"
         );
     }
 

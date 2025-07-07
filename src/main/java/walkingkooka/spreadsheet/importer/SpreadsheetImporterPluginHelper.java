@@ -36,11 +36,11 @@ import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetImporterName,
-        SpreadsheetImporterInfo,
-        SpreadsheetImporterInfoSet,
-        SpreadsheetImporterSelector,
-        SpreadsheetImporterAlias,
-        SpreadsheetImporterAliasSet> {
+    SpreadsheetImporterInfo,
+    SpreadsheetImporterInfoSet,
+    SpreadsheetImporterSelector,
+    SpreadsheetImporterAlias,
+    SpreadsheetImporterAliasSet> {
 
     final static SpreadsheetImporterPluginHelper INSTANCE = new SpreadsheetImporterPluginHelper();
 
@@ -59,24 +59,24 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
         Objects.requireNonNull(context, "context");
 
         return Parsers.initialAndPartCharPredicateString(
-                c -> SpreadsheetImporterName.isChar(0, c),
-                c -> SpreadsheetImporterName.isChar(1, c),
-                SpreadsheetImporterName.MIN_LENGTH, // minLength
-                SpreadsheetImporterName.MAX_LENGTH // maxLength
+            c -> SpreadsheetImporterName.isChar(0, c),
+            c -> SpreadsheetImporterName.isChar(1, c),
+            SpreadsheetImporterName.MIN_LENGTH, // minLength
+            SpreadsheetImporterName.MAX_LENGTH // maxLength
         ).parse(
-                cursor,
-                context
+            cursor,
+            context
         ).map(
-                (final ParserToken token) -> this.name(
-                        token.cast(StringParserToken.class).value()
-                )
+            (final ParserToken token) -> this.name(
+                token.cast(StringParserToken.class).value()
+            )
         );
     }
 
     @Override
     public Set<SpreadsheetImporterName> names(final Set<SpreadsheetImporterName> names) {
         return Sets.immutable(
-                Objects.requireNonNull(names, "names")
+            Objects.requireNonNull(names, "names")
         );
     }
 
@@ -116,9 +116,9 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
                                           final Optional<SpreadsheetImporterSelector> selector,
                                           final Optional<AbsoluteUrl> url) {
         return SpreadsheetImporterAlias.with(
-                name,
-                selector,
-                url
+            name,
+            selector,
+            url
         );
     }
 

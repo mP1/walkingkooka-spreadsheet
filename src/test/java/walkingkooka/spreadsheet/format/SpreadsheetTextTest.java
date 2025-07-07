@@ -40,11 +40,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetText>,
-        HasTextNodeTesting,
-        JsonNodeMarshallingTesting<SpreadsheetText>,
-        ToStringTesting<SpreadsheetText>,
-        TreePrintableTesting {
+    HashCodeEqualsDefinedTesting2<SpreadsheetText>,
+    HasTextNodeTesting,
+    JsonNodeMarshallingTesting<SpreadsheetText>,
+    ToStringTesting<SpreadsheetText>,
+    TreePrintableTesting {
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
     private final static String TEXT = "1/1/2000";
@@ -52,8 +52,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testWithNullTextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetText.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetText.with(null)
         );
     }
 
@@ -61,9 +61,9 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     public void testWith() {
         final SpreadsheetText formatted = this.createFormattedText();
         this.check(
-                formatted,
-                SpreadsheetText.WITHOUT_COLOR,
-                TEXT
+            formatted,
+            SpreadsheetText.WITHOUT_COLOR,
+            TEXT
         );
     }
 
@@ -71,9 +71,9 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     public void testWithEmptyText() {
         final String text = "";
         this.check(
-                SpreadsheetText.with(text),
-                SpreadsheetText.WITHOUT_COLOR,
-                text
+            SpreadsheetText.with(text),
+            SpreadsheetText.WITHOUT_COLOR,
+            text
         );
     }
 
@@ -81,8 +81,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     public void testWithEmptyTextConstant() {
         final SpreadsheetText spreadsheetText = SpreadsheetText.with("");
         assertSame(
-                spreadsheetText,
-                SpreadsheetText.with("")
+            spreadsheetText,
+            SpreadsheetText.with("")
         );
     }
 
@@ -97,10 +97,10 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testSetColorSame() {
         final SpreadsheetText formatted = this.createFormattedText()
-                .setColor(COLOR);
+            .setColor(COLOR);
         assertSame(
-                formatted,
-                formatted.setColor(COLOR)
+            formatted,
+            formatted.setColor(COLOR)
         );
     }
 
@@ -125,8 +125,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         final String text = "abc123";
 
         this.toTextNodeAndCheck(
-                SpreadsheetText.with(text),
-                TextNode.text(text));
+            SpreadsheetText.with(text),
+            TextNode.text(text));
     }
 
     @Test
@@ -135,15 +135,15 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         final Color color = Color.fromRgb(0x123456);
 
         this.toTextNodeAndCheck(
-                SpreadsheetText.with(text)
-                        .setColor(Optional.of(color)),
-                TextNode.text(text)
-                        .setAttributes(
-                                Maps.of(
-                                        TextStylePropertyName.COLOR,
-                                        color
-                                )
-                        )
+            SpreadsheetText.with(text)
+                .setColor(Optional.of(color)),
+            TextNode.text(text)
+                .setAttributes(
+                    Maps.of(
+                        TextStylePropertyName.COLOR,
+                        color
+                    )
+                )
         );
     }
 
@@ -152,23 +152,23 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testEqualsDifferentColor() {
         this.checkNotEquals(
-                SpreadsheetText.with(TEXT)
-                        .setColor(Optional.of(Color.WHITE))
+            SpreadsheetText.with(TEXT)
+                .setColor(Optional.of(Color.WHITE))
         );
     }
 
     @Test
     public void testEqualsDifferentColor2() {
         this.checkNotEquals(
-                SpreadsheetText.with(TEXT)
+            SpreadsheetText.with(TEXT)
         );
     }
 
     @Test
     public void testEqualsDifferentText() {
         this.checkNotEquals(
-                SpreadsheetText.with("different")
-                        .setColor(COLOR));
+            SpreadsheetText.with("different")
+                .setColor(COLOR));
     }
 
     // toString ........................................................................................................
@@ -176,8 +176,8 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetText.with(TEXT),
-                CharSequences.quote(TEXT).toString()
+            SpreadsheetText.with(TEXT),
+            CharSequences.quote(TEXT).toString()
         );
     }
 
@@ -185,9 +185,9 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testToStringWithColor() {
         this.toStringAndCheck(
-                SpreadsheetText.with(TEXT)
-                        .setColor(COLOR),
-                COLOR.get() + " " + CharSequences.quote(TEXT)
+            SpreadsheetText.with(TEXT)
+                .setColor(COLOR),
+            COLOR.get() + " " + CharSequences.quote(TEXT)
         );
     }
 
@@ -202,39 +202,39 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testUnmarshallTextOnly() {
         this.unmarshallAndCheck(
-                "{ \"text\":  \"1/1/2000\"}",
-                SpreadsheetText.with(TEXT));
+            "{ \"text\":  \"1/1/2000\"}",
+            SpreadsheetText.with(TEXT));
     }
 
     @Test
     public void testUnmarshallColorAndText() {
         this.unmarshallAndCheck(
-                "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}",
-                SpreadsheetText.with(TEXT).setColor(COLOR));
+            "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}",
+            SpreadsheetText.with(TEXT).setColor(COLOR));
     }
 
     @Test
     public void testMarshallTextOnly() {
         this.marshallAndCheck(
-                SpreadsheetText.with(TEXT),
-                "{ \"text\":  \"1/1/2000\"}"
+            SpreadsheetText.with(TEXT),
+            "{ \"text\":  \"1/1/2000\"}"
         );
     }
 
     @Test
     public void testMarshallColorAndText() {
         this.marshallAndCheck(
-                SpreadsheetText.with(TEXT)
-                        .setColor(COLOR),
-                "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}"
+            SpreadsheetText.with(TEXT)
+                .setColor(COLOR),
+            "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}"
         );
     }
 
     @Test
     public void testJsonRoundtrip() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetText.with("text-abc-123")
-                        .setColor(Optional.of(Color.fromRgb(0x123456)))
+            SpreadsheetText.with("text-abc-123")
+                .setColor(Optional.of(Color.fromRgb(0x123456)))
         );
     }
 
@@ -255,7 +255,7 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Override
     public SpreadsheetText createObject() {
         return SpreadsheetText.with(TEXT)
-                .setColor(COLOR);
+            .setColor(COLOR);
     }
 
     // json.............................................................................................................
@@ -276,27 +276,27 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     @Test
     public void testTreePrintEmptyText() {
         this.treePrintAndCheck(
-                SpreadsheetText.EMPTY,
-                "SpreadsheetText\n"
+            SpreadsheetText.EMPTY,
+            "SpreadsheetText\n"
         );
     }
 
     @Test
     public void testTreePrintText() {
         this.treePrintAndCheck(
-                SpreadsheetText.with("hello123"),
-                "SpreadsheetText\n" +
-                        "  hello123\n"
+            SpreadsheetText.with("hello123"),
+            "SpreadsheetText\n" +
+                "  hello123\n"
         );
     }
 
     @Test
     public void testTreePrintColorAndText() {
         this.treePrintAndCheck(
-                SpreadsheetText.with("hello123").setColor(Optional.of(Color.fromRgb(12345678))),
-                "SpreadsheetText\n" +
-                        "  #bc614e\n" +
-                        "    hello123\n"
+            SpreadsheetText.with("hello123").setColor(Optional.of(Color.fromRgb(12345678))),
+            "SpreadsheetText\n" +
+                "  #bc614e\n" +
+                "    hello123\n"
         );
     }
 }

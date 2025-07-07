@@ -31,13 +31,13 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
-        ComparableTesting2<SpreadsheetId>,
-        HasNotFoundTextTesting,
-        HasUrlFragmentTesting,
-        JsonNodeMarshallingTesting<SpreadsheetId>,
-        ParseStringTesting<SpreadsheetId>,
-        TreePrintableTesting,
-        ToStringTesting<SpreadsheetId> {
+    ComparableTesting2<SpreadsheetId>,
+    HasNotFoundTextTesting,
+    HasUrlFragmentTesting,
+    JsonNodeMarshallingTesting<SpreadsheetId>,
+    ParseStringTesting<SpreadsheetId>,
+    TreePrintableTesting,
+    ToStringTesting<SpreadsheetId> {
 
     private final static Long VALUE = 123L;
 
@@ -53,8 +53,8 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testNotFoundText() {
         this.notFoundTextAndCheck(
-                SpreadsheetId.with(0x123456),
-                "Spreadsheet \"123456\" not found"
+            SpreadsheetId.with(0x123456),
+            "Spreadsheet \"123456\" not found"
         );
     }
 
@@ -63,8 +63,8 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
-                SpreadsheetId.with(0x123456),
-                "123456"
+            SpreadsheetId.with(0x123456),
+            "123456"
         );
     }
 
@@ -99,7 +99,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         final SpreadsheetId id3 = SpreadsheetId.with(3);
 
         this.compareToArraySortAndCheck(id3, id1, id2,
-                id1, id2, id3);
+            id1, id2, id3);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -134,7 +134,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetId.with(VALUE),
-                Long.toHexString(VALUE));
+            Long.toHexString(VALUE));
     }
 
     @Override
@@ -192,8 +192,8 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createObject(),
-                "7b\n"
+            this.createObject(),
+            "7b\n"
         );
     }
 }

@@ -33,8 +33,8 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
     @Test
     default void testLoadRowsWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().loadRows(null)
+            NullPointerException.class,
+            () -> this.createStore().loadRows(null)
         );
     }
 
@@ -42,9 +42,9 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
                                   final SpreadsheetRowRangeReference range,
                                   final SpreadsheetRow... expected) {
         this.loadRowsAndCheck(
-                store,
-                range,
-                Sets.of(expected)
+            store,
+            range,
+            Sets.of(expected)
         );
     }
 
@@ -52,9 +52,9 @@ public interface SpreadsheetRowStoreTesting<S extends SpreadsheetRowStore> exten
                                   final SpreadsheetRowRangeReference range,
                                   final Set<SpreadsheetRow> expected) {
         this.checkEquals(
-                expected,
-                store.loadRows(range),
-                () -> "loadRows " + range
+            expected,
+            store.loadRows(range),
+            () -> "loadRows " + range
         );
     }
 }

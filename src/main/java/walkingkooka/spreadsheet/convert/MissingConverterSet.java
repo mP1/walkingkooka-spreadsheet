@@ -40,21 +40,21 @@ import java.util.TreeSet;
  * A read only {@link Set} of {@link MissingConverter} sorted by {@link MissingConverter}.
  */
 public final class MissingConverterSet extends AbstractSet<MissingConverter> implements ImmutableSortedSetDefaults<MissingConverterSet, MissingConverter>,
-        TreePrintable {
+    TreePrintable {
 
     public final static MissingConverterSet EMPTY = new MissingConverterSet(
-            SortedSets.empty()
+        SortedSets.empty()
     );
 
     public static MissingConverterSet with(final Set<MissingConverter> missing) {
         Objects.requireNonNull(missing, "missing");
 
         final ImmutableSortedSet<MissingConverter> copy = SortedSets.immutable(
-                new TreeSet<>(missing)
+            new TreeSet<>(missing)
         );
         return copy.isEmpty() ?
-                EMPTY :
-                new MissingConverterSet(copy);
+            EMPTY :
+            new MissingConverterSet(copy);
     }
 
     private MissingConverterSet(final SortedSet<MissingConverter> missings) {
@@ -64,7 +64,7 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     @Override
     public Iterator<MissingConverter> iterator() {
         return Iterators.readOnly(
-                this.missings.iterator()
+            this.missings.iterator()
         );
     }
 
@@ -87,24 +87,24 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     public SortedSet<MissingConverter> subSet(final MissingConverter from,
                                               final MissingConverter to) {
         return this.setElements(
-                this.missings.subSet(
-                        from,
-                        to
-                )
+            this.missings.subSet(
+                from,
+                to
+            )
         );
     }
 
     @Override
     public SortedSet<MissingConverter> headSet(final MissingConverter to) {
         return this.setElements(
-                this.missings.headSet(to)
+            this.missings.headSet(to)
         );
     }
 
     @Override
     public SortedSet<MissingConverter> tailSet(final MissingConverter from) {
         return this.setElements(
-                this.missings.tailSet(from)
+            this.missings.tailSet(from)
         );
     }
 
@@ -127,21 +127,21 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     public MissingConverterSet setElements(final SortedSet<MissingConverter> missings) {
         MissingConverterSet missingConverterSet;
         if (missings instanceof MissingConverterSet) {
-            missingConverterSet = (MissingConverterSet)missings;
+            missingConverterSet = (MissingConverterSet) missings;
         } else {
             SortedSet<MissingConverter> copy = SortedSets.tree();
 
-            for(final MissingConverter missing : missings) {
+            for (final MissingConverter missing : missings) {
                 Objects.requireNonNull(missing, "includes null MissingConverter");
                 copy.add(missing);
             }
 
             missingConverterSet = this.missings.equals(copy) ?
-                    this :
-                    (copy.isEmpty() ?
-                            EMPTY :
-                            new MissingConverterSet(copy)
-                    );
+                this :
+                (copy.isEmpty() ?
+                    EMPTY :
+                    new MissingConverterSet(copy)
+                );
         }
 
         return missingConverterSet;
@@ -173,19 +173,19 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     static MissingConverterSet unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallSet(
-                        node,
-                        MissingConverter.class
-                )
+            context.unmarshallSet(
+                node,
+                MissingConverter.class
+            )
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(MissingConverterSet.class),
-                MissingConverterSet::unmarshall,
-                MissingConverterSet::marshall,
-                MissingConverterSet.class
+            JsonNodeContext.computeTypeName(MissingConverterSet.class),
+            MissingConverterSet::unmarshall,
+            MissingConverterSet::marshall,
+            MissingConverterSet.class
         );
     }
 }

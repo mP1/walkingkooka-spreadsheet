@@ -35,11 +35,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * Identifies a single spreadsheet.
  */
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
-        HasId<Long>,
-        Value<Long>,
-        HasUrlFragment,
-        HasNotFoundText,
-        TreePrintable {
+    HasId<Long>,
+    Value<Long>,
+    HasUrlFragment,
+    HasNotFoundText,
+    TreePrintable {
 
     /**
      * Parses some text into a {@link SpreadsheetId}. This is the inverse of {@link SpreadsheetId#toString()}.
@@ -115,10 +115,10 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetId.class),
-                SpreadsheetId::unmarshall,
-                SpreadsheetId::marshall,
-                SpreadsheetId.class
+            JsonNodeContext.computeTypeName(SpreadsheetId.class),
+            SpreadsheetId::unmarshall,
+            SpreadsheetId::marshall,
+            SpreadsheetId.class
         );
     }
 
@@ -132,8 +132,8 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetId &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetId &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetId id) {

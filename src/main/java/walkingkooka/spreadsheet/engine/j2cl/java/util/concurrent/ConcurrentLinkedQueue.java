@@ -52,16 +52,16 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E> {
     public E poll() {
         final List<E> list = this.list;
         return list.isEmpty() ?
-                null :
-                list.remove(list.size() - 1);
+            null :
+            list.remove(list.size() - 1);
     }
 
     @Override
     public E peek() {
         final List<E> list = this.list;
         return list.isEmpty() ?
-                null :
-                list.get(list.size() - 1);
+            null :
+            list.get(list.size() - 1);
     }
 
     private final List<E> list = Lists.array();

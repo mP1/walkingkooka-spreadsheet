@@ -28,8 +28,8 @@ public final class CurrencySymbolSpreadsheetFormulaParserToken extends SymbolSpr
     static CurrencySymbolSpreadsheetFormulaParserToken with(final String value,
                                                             final String text) {
         return new CurrencySymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

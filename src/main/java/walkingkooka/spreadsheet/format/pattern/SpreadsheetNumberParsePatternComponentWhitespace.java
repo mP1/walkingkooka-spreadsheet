@@ -45,9 +45,9 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
         this.length = length;
 
         this.parser = Parsers.charPredicateString(
-                CharPredicates.whitespace(),
-                length,
-                length
+            CharPredicates.whitespace(),
+            length,
+            length
         );
     }
 
@@ -61,17 +61,17 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
                   final SpreadsheetNumberParsePatternRequest request) {
         boolean completed = false;
         final Optional<ParserToken> maybeWhitespace = this.parser.parse(
-                cursor,
-                PARSER_CONTEXT
+            cursor,
+            PARSER_CONTEXT
         );
         if (maybeWhitespace.isPresent()) {
             final String whitespace = maybeWhitespace.get()
-                    .text();
+                .text();
             request.add(
-                    SpreadsheetFormulaParserToken.whitespace(
-                            whitespace,
-                            whitespace
-                    )
+                SpreadsheetFormulaParserToken.whitespace(
+                    whitespace,
+                    whitespace
+                )
             );
             completed = request.nextComponent(cursor);
         }
@@ -85,8 +85,8 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
     @Override
     public String toString() {
         return CharSequences.repeating(
-                ' ',
-                this.length
+            ' ',
+            this.length
         ).toString();
     }
 

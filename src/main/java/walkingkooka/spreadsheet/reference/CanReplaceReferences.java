@@ -35,7 +35,7 @@ public interface CanReplaceReferences<T extends CanReplaceReferences<T>> {
         @Override
         public Optional<SpreadsheetCellReference> apply(final SpreadsheetCellReference cellReference) {
             return Optional.of(
-                    cellReference
+                cellReference
             );
         }
 

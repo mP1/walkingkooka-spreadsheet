@@ -59,8 +59,8 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     public List<SpreadsheetTimeFormatPattern> patterns() {
         if (null == this.patterns) {
             this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                    this,
-                    SpreadsheetTimeFormatPattern::new
+                this,
+                SpreadsheetTimeFormatPattern::new
             );
         }
 
@@ -72,8 +72,8 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetTimeFormatPattern removeColor() {
         return this.removeIf0(
-                COLOR_PREDICATE,
-                SpreadsheetTimeFormatPattern::new
+            COLOR_PREDICATE,
+            SpreadsheetTimeFormatPattern::new
         );
     }
 
@@ -82,16 +82,16 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetTimeFormatPattern setColorName(final SpreadsheetColorName name) {
         return this.setColorName0(
-                name,
-                SpreadsheetPattern::parseTimeFormatPattern
+            name,
+            SpreadsheetPattern::parseTimeFormatPattern
         );
     }
 
     @Override
     public SpreadsheetTimeFormatPattern setColorNumber(final int colorNumber) {
         return this.setColorNumber0(
-                colorNumber,
-                SpreadsheetPattern::parseTimeFormatPattern
+            colorNumber,
+            SpreadsheetPattern::parseTimeFormatPattern
         );
     }
 
@@ -100,8 +100,8 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     @Override
     public SpreadsheetTimeFormatPattern removeCondition() {
         return this.removeIf0(
-                CONDITION_PREDICATE,
-                SpreadsheetTimeFormatPattern::new
+            CONDITION_PREDICATE,
+            SpreadsheetTimeFormatPattern::new
         );
     }
 

@@ -44,25 +44,25 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetComparatorContextTesting<BasicSpreadsheetComparatorContext>,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
     @Test
     public void testWithNullConverterContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetComparatorContext.with(
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetComparatorContext.with(
+                null
+            )
         );
     }
 
     @Test
     public void testConvert() {
         this.convertAndCheck(
-                this.createContext(),
-                LocalDate.of(1999, 12, 31),
-                String.class,
-                "1999-12-31"
+            this.createContext(),
+            LocalDate.of(1999, 12, 31),
+            String.class,
+            "1999-12-31"
         );
     }
 
@@ -70,59 +70,59 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     public void testToString() {
         final SpreadsheetConverterContext SpreadsheetConverterContext = SpreadsheetConverterContexts.fake();
         this.toStringAndCheck(
-                BasicSpreadsheetComparatorContext.with(
-                        SpreadsheetConverterContext
-                ),
-                SpreadsheetConverterContext.toString()
+            BasicSpreadsheetComparatorContext.with(
+                SpreadsheetConverterContext
+            ),
+            SpreadsheetConverterContext.toString()
         );
     }
 
     @Override
     public BasicSpreadsheetComparatorContext createContext() {
         return BasicSpreadsheetComparatorContext.with(
-                CONVERTER_CONTEXT
+            CONVERTER_CONTEXT
         );
     }
 
     private final SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContexts.NO_METADATA,
-            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            Converters.objectToString(),
-            (label) -> {
-                Objects.requireNonNull(label, "label");
-                throw new UnsupportedOperationException();
-            },
-            JsonNodeConverterContexts.basic(
-                    ExpressionNumberConverterContexts.basic(
-                            Converters.fake(),
-                            ConverterContexts.basic(
-                                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                    Converters.objectToString(),
-                                    DateTimeContexts.basic(
-                                            DateTimeSymbols.fromDateFormatSymbols(
-                                                    new DateFormatSymbols(
-                                                            Locale.forLanguageTag("EN-AU")
-                                                    )
-                                            ),
-                                            Locale.forLanguageTag("EN-AU"),
-                                            1950, // default year
-                                            50, // two-digit-year
-                                            LocalDateTime::now
-                                    ),
-                                    DecimalNumberContexts.american(
-                                            MathContext.DECIMAL32
-                                    )
-                            ),
-                            ExpressionNumberKind.BIG_DECIMAL
-                    ),
-                    JsonNodeMarshallUnmarshallContexts.basic(
-                            JsonNodeMarshallContexts.basic(),
-                            JsonNodeUnmarshallContexts.basic(
-                                    ExpressionNumberKind.BIG_DECIMAL,
-                                    MathContext.DECIMAL32
+        SpreadsheetConverterContexts.NO_METADATA,
+        SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+        Converters.objectToString(),
+        (label) -> {
+            Objects.requireNonNull(label, "label");
+            throw new UnsupportedOperationException();
+        },
+        JsonNodeConverterContexts.basic(
+            ExpressionNumberConverterContexts.basic(
+                Converters.fake(),
+                ConverterContexts.basic(
+                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    Converters.objectToString(),
+                    DateTimeContexts.basic(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                            new DateFormatSymbols(
+                                Locale.forLanguageTag("EN-AU")
                             )
+                        ),
+                        Locale.forLanguageTag("EN-AU"),
+                        1950, // default year
+                        50, // two-digit-year
+                        LocalDateTime::now
+                    ),
+                    DecimalNumberContexts.american(
+                        MathContext.DECIMAL32
                     )
+                ),
+                ExpressionNumberKind.BIG_DECIMAL
+            ),
+            JsonNodeMarshallUnmarshallContexts.basic(
+                JsonNodeMarshallContexts.basic(),
+                JsonNodeUnmarshallContexts.basic(
+                    ExpressionNumberKind.BIG_DECIMAL,
+                    MathContext.DECIMAL32
+                )
             )
+        )
     );
 
     @Override

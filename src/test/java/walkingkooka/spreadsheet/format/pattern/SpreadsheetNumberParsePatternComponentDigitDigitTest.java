@@ -29,11 +29,11 @@ public final class SpreadsheetNumberParsePatternComponentDigitDigitTest extends 
     @Test
     public void testToString2() {
         this.toStringAndCheck(
-                SpreadsheetNumberParsePatternComponentDigitDigit.with(
-                        SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
-                        1
-                ),
-                "#"
+            SpreadsheetNumberParsePatternComponentDigitDigit.with(
+                SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_NOT_FIRST,
+                1
+            ),
+            "#"
         );
     }
 

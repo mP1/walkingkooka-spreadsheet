@@ -94,10 +94,10 @@ public final class ExpressionSpreadsheetFormatParserTokenTest extends DateDateTi
         }.accept(token);
         this.checkEquals("6136152A42A", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        text, text, text, text, text,
-                        token, token, token),
-                visited,
-                "visited");
+                text, text, text, text, text,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     @Override
@@ -119,7 +119,7 @@ public final class ExpressionSpreadsheetFormatParserTokenTest extends DateDateTi
     public ExpressionSpreadsheetFormatParserToken createDifferentToken() {
         final SpreadsheetFormatParserToken text = this.text2();
         return ExpressionSpreadsheetFormatParserToken.with(Lists.of(text),
-                text.text());
+            text.text());
     }
 
     @Override

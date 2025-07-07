@@ -77,24 +77,24 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements SpreadsheetEngineTesting<SpreadsheetMetadataStampingSpreadsheetEngine>,
-        ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {
+    ToStringTesting<SpreadsheetMetadataStampingSpreadsheetEngine> {
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
 
     private final static SpreadsheetMetadata BEFORE = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-            .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-            .loadFromLocale(
-                    LocaleContexts.jre(Locale.forLanguageTag("EN-AU"))
-            ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
-            .set(
-                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                    AuditInfo.with(
-                            EmailAddress.parse("creator@example.com"),
-                            LocalDateTime.of(1999, 12, 31, 12, 0),
-                            EmailAddress.parse("modified@example.com"),
-                            LocalDateTime.of(1999, 12, 31, 12, 0)
-                    )
-            ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector());
+        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+        .loadFromLocale(
+            LocaleContexts.jre(Locale.forLanguageTag("EN-AU"))
+        ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
+        .set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                EmailAddress.parse("creator@example.com"),
+                LocalDateTime.of(1999, 12, 31, 12, 0),
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.of(1999, 12, 31, 12, 0)
+            )
+        ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector());
 
     private final static LocalDateTime TIMESTAMP = LocalDateTime.now();
 
@@ -117,12 +117,12 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetEngineContext context = this.createContext();
 
         assertNotNull(
-                engine.loadCells(
-                        SpreadsheetSelection.A1,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        SpreadsheetDeltaProperties.ALL,
-                        context
-                )
+            engine.loadCells(
+                SpreadsheetSelection.A1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context
+            )
         );
 
         this.checkMetadataNotUpdated(context);
@@ -138,17 +138,17 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         context.storeRepository().cells().save(cell);
 
         final SpreadsheetDelta delta = engine.loadCells(
-                cell.reference(),
-                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                SpreadsheetDeltaProperties.ALL,
-                context
+            cell.reference(),
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context
         );
         final SpreadsheetCell loaded = delta.cells().iterator().next();
         this.checkEquals(Optional.of(TextNode.text(FORMULA_VALUE)), loaded.formattedValue(), "formattedValue");
         this.checkEquals(
-                Optional.of(FORMULA_VALUE),
-                loaded.formula()
-                        .errorOrValue()
+            Optional.of(FORMULA_VALUE),
+            loaded.formula()
+                .errorOrValue()
         );
 
         this.checkMetadataUpdated(context);
@@ -353,17 +353,17 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     private SpreadsheetCell cell() {
         return SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText(FORMULA_TEXT)
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.value(FORMULA_VALUE)
-                                        )
-                                ).setValue(
-                                        Optional.of(FORMULA_VALUE)
-                                )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA_TEXT)
+                    .setExpression(
+                        Optional.of(
+                            Expression.value(FORMULA_VALUE)
+                        )
+                    ).setValue(
+                        Optional.of(FORMULA_VALUE)
+                    )
+            );
     }
 
     private void checkMetadataUpdated(final SpreadsheetEngineContext context) {
@@ -385,16 +385,16 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetEngine engine = SpreadsheetEngines.fake();
 
         this.toStringAndCheck(
-                SpreadsheetMetadataStampingSpreadsheetEngine.with(engine, Function.identity()),
-                engine.toString()
+            SpreadsheetMetadataStampingSpreadsheetEngine.with(engine, Function.identity()),
+            engine.toString()
         );
     }
 
     @Override
     public SpreadsheetMetadataStampingSpreadsheetEngine createSpreadsheetEngine() {
         return SpreadsheetMetadataStampingSpreadsheetEngine.with(
-                SpreadsheetEngines.basic(),
-                this.stamper()
+            SpreadsheetEngines.basic(),
+            this.stamper()
         );
     }
 
@@ -403,10 +403,10 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             assertSame(BEFORE, m, "before stamp");
 
             return m.set(
-                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                    m.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
-                            .setModifiedTimestamp(TIMESTAMP)
-                    );
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                m.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                    .setModifiedTimestamp(TIMESTAMP)
+            );
         };
     }
 
@@ -418,8 +418,8 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
         final SpreadsheetLabelReferencesStore labelReferences = SpreadsheetLabelReferencesStores.treeMap();
         final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap(
-                SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
-                LocalDateTime::now
+            SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
+            LocalDateTime::now
         );
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = SpreadsheetCellRangeStores.treeMap();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
@@ -485,14 +485,14 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                     @Override
                     public String toString() {
                         return "cells: " + this.cells() +
-                                " cellReferences: " + cellReferences +
-                                " columns: " + this.columns() +
-                                " labels: " + this.labels() +
-                                " labelReferences: " + this.labelReferences() +
-                                " metadatas: " + this.metadatas() +
-                                " rangeToCells: " + this.rangeToCells() +
-                                " rangeToConditionalFormattingRules: " + this.rangeToConditionalFormattingRules() +
-                                " rows: " + this.rows();
+                            " cellReferences: " + cellReferences +
+                            " columns: " + this.columns() +
+                            " labels: " + this.labels() +
+                            " labelReferences: " + this.labelReferences() +
+                            " metadatas: " + this.metadatas() +
+                            " rangeToCells: " + this.rangeToCells() +
+                            " rangeToConditionalFormattingRules: " + this.rangeToConditionalFormattingRules() +
+                            " rows: " + this.rows();
                     }
                 };
             }
@@ -504,23 +504,23 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 formula.end();
 
                 checkEquals(
-                        FORMULA_TEXT,
-                        beginning.textBetween(),
-                        "formula text"
+                    FORMULA_TEXT,
+                    beginning.textBetween(),
+                    "formula text"
                 );
                 return SpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
-                                SpreadsheetFormulaParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
-                        ),
-                        FORMULA_TEXT
+                    Lists.of(
+                        SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                        SpreadsheetFormulaParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
+                    ),
+                    FORMULA_TEXT
                 );
             }
 
             @Override
             public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
                 return Optional.of(
-                        Expression.value("Hello")
+                    Expression.value("Hello")
                 );
             }
 
@@ -542,13 +542,13 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                                                   final Optional<Object> value,
                                                   final Optional<SpreadsheetFormatterSelector> formatter) {
                 checkEquals(
-                        FORMULA_VALUE,
-                        value.orElse(null),
-                        "formatValue"
+                    FORMULA_VALUE,
+                    value.orElse(null),
+                    "formatValue"
                 );
                 return Optional.of(
-                        SpreadsheetText.with(FORMULA_VALUE)
-                                .toTextNode()
+                    SpreadsheetText.with(FORMULA_VALUE)
+                        .toTextNode()
                 );
             }
 
@@ -556,15 +556,15 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                        final Optional<SpreadsheetFormatterSelector> formatter) {
                 return cell.setFormattedValue(
-                        this.formatValue(
-                                cell,
-                                cell.formula()
-                                        .errorOrValue(),
+                    this.formatValue(
+                        cell,
+                        cell.formula()
+                            .errorOrValue(),
 //                                formatter.orElse(
 //                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
 //                                )
-                                formatter
-                        )
+                        formatter
+                    )
                 );
             }
 
@@ -572,10 +572,10 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                        final ProviderContext context) {
                 return SpreadsheetParserProviders.spreadsheetParsePattern(this)
-                        .spreadsheetParser(
-                                selector,
-                                context
-                        );
+                    .spreadsheetParser(
+                        selector,
+                        context
+                    );
             }
         };
     }

@@ -25,9 +25,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> implements ClassTesting2<I>,
-        ComparableTesting2<I>,
-        JsonNodeMarshallingTesting<I>,
-        ToStringTesting<I> {
+    ComparableTesting2<I>,
+    JsonNodeMarshallingTesting<I>,
+    ToStringTesting<I> {
 
     IdentityIdTestCase() {
         super();
@@ -48,7 +48,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(id2, id3, id1,
-                id1, id2, id3);
+            id1, id2, id3);
     }
 
     @Test

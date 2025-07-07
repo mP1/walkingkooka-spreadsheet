@@ -72,48 +72,48 @@ public final class YearSpreadsheetFormatParserTokenTest extends NonSymbolSpreads
     @Test
     public void testKind1() {
         this.kindAndCheck(
-                "y",
-                SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT
+            "y",
+            SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT
         );
     }
 
     @Test
     public void testKind2() {
         this.kindAndCheck(
-                "yy",
-                SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT
+            "yy",
+            SpreadsheetFormatParserTokenKind.YEAR_TWO_DIGIT
         );
     }
 
     @Test
     public void testKind3() {
         this.kindAndCheck(
-                "yyy",
-                SpreadsheetFormatParserTokenKind.YEAR_FULL
+            "yyy",
+            SpreadsheetFormatParserTokenKind.YEAR_FULL
         );
     }
 
     @Test
     public void testKind4() {
         this.kindAndCheck(
-                "yyyy",
-                SpreadsheetFormatParserTokenKind.YEAR_FULL
+            "yyyy",
+            SpreadsheetFormatParserTokenKind.YEAR_FULL
         );
     }
 
     @Test
     public void testKind5() {
         this.kindAndCheck(
-                "yyyyy",
-                SpreadsheetFormatParserTokenKind.YEAR_FULL
+            "yyyyy",
+            SpreadsheetFormatParserTokenKind.YEAR_FULL
         );
     }
 
     @Test
     public void testKind6() {
         this.kindAndCheck(
-                "yyyyyy",
-                SpreadsheetFormatParserTokenKind.YEAR_FULL
+            "yyyyyy",
+            SpreadsheetFormatParserTokenKind.YEAR_FULL
         );
     }
 

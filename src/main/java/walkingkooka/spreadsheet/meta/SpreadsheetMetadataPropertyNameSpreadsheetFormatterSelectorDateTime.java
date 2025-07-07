@@ -42,8 +42,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime 
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime() {
         super(
-                "dateTimeFormatter",
-                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+            "dateTimeFormatter",
+            SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
         );
     }
 
@@ -56,9 +56,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime 
     @Override
     Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final LocaleContext context) {
         return Optional.of(
-                SpreadsheetPattern.dateTimeFormatPatternLocale(
-                        context.locale()
-                )
+            SpreadsheetPattern.dateTimeFormatPatternLocale(
+                context.locale()
+            )
         );
     }
 }

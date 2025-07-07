@@ -72,48 +72,48 @@ public final class MonthSpreadsheetFormatParserTokenTest extends NonSymbolSpread
     @Test
     public void testKindMonths1() {
         this.kindAndCheck(
-                "m",
-                SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO
+            "m",
+            SpreadsheetFormatParserTokenKind.MONTH_WITHOUT_LEADING_ZERO
         );
     }
 
     @Test
     public void testKindMonths2() {
         this.kindAndCheck(
-                "mm",
-                SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO
+            "mm",
+            SpreadsheetFormatParserTokenKind.MONTH_WITH_LEADING_ZERO
         );
     }
 
     @Test
     public void testKindMonths3() {
         this.kindAndCheck(
-                "mmm",
-                SpreadsheetFormatParserTokenKind.MONTH_NAME_ABBREVIATION
+            "mmm",
+            SpreadsheetFormatParserTokenKind.MONTH_NAME_ABBREVIATION
         );
     }
 
     @Test
     public void testKindMonths4() {
         this.kindAndCheck(
-                "mmmm",
-                SpreadsheetFormatParserTokenKind.MONTH_NAME_FULL
+            "mmmm",
+            SpreadsheetFormatParserTokenKind.MONTH_NAME_FULL
         );
     }
 
     @Test
     public void testKindMonths5() {
         this.kindAndCheck(
-                "mmmmm",
-                SpreadsheetFormatParserTokenKind.MONTH_NAME_INITIAL
+            "mmmmm",
+            SpreadsheetFormatParserTokenKind.MONTH_NAME_INITIAL
         );
     }
 
     @Test
     public void testKindMonths6() {
         this.kindAndCheck(
-                "mmmmmm",
-                SpreadsheetFormatParserTokenKind.MONTH_NAME_INITIAL
+            "mmmmmm",
+            SpreadsheetFormatParserTokenKind.MONTH_NAME_INITIAL
         );
     }
 

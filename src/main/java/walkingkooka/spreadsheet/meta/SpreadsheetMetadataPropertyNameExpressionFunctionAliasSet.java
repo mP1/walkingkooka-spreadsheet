@@ -35,21 +35,18 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
         super(name);
     }
 
-    @Override
-    final ExpressionFunctionAliasSet checkValueNonNull(final Object value) {
+    @Override final ExpressionFunctionAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof ExpressionFunctionAliasSet
+            value,
+            v -> v instanceof ExpressionFunctionAliasSet
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return ExpressionFunctionAliasSet.class.getSimpleName();
     }
 
-    @Override
-    final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 
@@ -60,8 +57,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetExpressionFunctions.parseAliasSet(value);
     }
 }

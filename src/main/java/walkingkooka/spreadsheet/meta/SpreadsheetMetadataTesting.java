@@ -110,8 +110,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
      */
     static SpreadsheetMetadataStore spreadsheetMetadataStore() {
         return SpreadsheetMetadataStores.treeMap(
-                SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
-                SpreadsheetMetadataTesting.NOW
+            SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
+            SpreadsheetMetadataTesting.NOW
         );
     }
 
@@ -123,17 +123,17 @@ public interface SpreadsheetMetadataTesting extends Testing {
     EmailAddress USER = EmailAddress.parse("user@example.com");
 
     HasNow NOW = () -> LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58
+        1999,
+        12,
+        31,
+        12,
+        58
     );
 
     Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = ExpressionFunctionProviders.empty(
-            SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
+        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
     );
 
     SpreadsheetComparatorProvider SPREADSHEET_COMPARATOR_PROVIDER = SpreadsheetComparatorProviders.spreadsheetComparators();
@@ -147,31 +147,31 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetImporterProvider SPREADSHEET_IMPORTER_PROVIDER = SpreadsheetImporterProviders.spreadsheetImport();
 
     SpreadsheetParserProvider SPREADSHEET_PARSER_PROVIDER = SpreadsheetParserProviders.spreadsheetParsePattern(
-            SPREADSHEET_FORMATTER_PROVIDER
+        SPREADSHEET_FORMATTER_PROVIDER
     );
 
     ConverterProvider CONVERTER_PROVIDER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-            SpreadsheetMetadata.EMPTY
-                    .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()),
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER
+        SpreadsheetMetadata.EMPTY
+            .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()),
+        SPREADSHEET_FORMATTER_PROVIDER,
+        SPREADSHEET_PARSER_PROVIDER
     );
 
     DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(LOCALE)
+        new DateFormatSymbols(LOCALE)
     );
 
     DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(LOCALE)
+        '+',
+        new DecimalFormatSymbols(LOCALE)
     );
 
     StorageStoreContext STORAGE_STORE_CONTEXT = new FakeStorageStoreContext() {
@@ -194,259 +194,259 @@ public interface SpreadsheetMetadataTesting extends Testing {
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
     SpreadsheetMetadata METADATA_EN_AU = SpreadsheetMetadata.EMPTY
-            .set(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    LOCALE
-            ).loadFromLocale(LOCALE_CONTEXT)
-            .set(
-                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                    AuditInfo.with(
-                            USER,
-                            NOW.now(),
-                            USER,
-                            NOW.now()
-                    )
-            ).set(
-                    SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH,
-                    1
-            ).set(
-                    SpreadsheetMetadataPropertyName.COMPARATORS,
-                    SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
-                            .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.CONVERTERS,
-                    CONVERTER_PROVIDER.converterInfos()
-                            .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                    SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.DATE_PARSER,
-                    SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                    SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
-                    Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
-            ).set(
-                    SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-                    SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
-                    DATE_TIME_SYMBOLS
-            ).set(
-                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                    DECIMAL_NUMBER_SYMBOLS
-            ).set(
-                    SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                    FormHandlerSelector.parse("basic")
-            ).set(
-                    SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
-                    2000
-            ).set(
-                    SpreadsheetMetadataPropertyName.EXPORTERS,
-                    SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
-                            .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
-                    EXPRESSION_NUMBER_KIND
-            ).set(
-                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                    ConverterSelector.parse("collection(" +
-                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, " +
-                            "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
-                            "general)"
-                    )
-            ).set(
-                    SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                    SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                    ConverterSelector.parse("collection(" +
-                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, " +
-                            "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
-                            "text-to-selection, selection-to-selection, selection-to-text, " +
-                            "spreadsheet-cell-to, " +
-                            "has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, " +
-                            "general)"
-                    )
-            ).set(
-                    SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                    SpreadsheetMetadataPropertyName.FORMATTERS,
-                    SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
-                            .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                    FormHandlerAliasSet.EMPTY
-            ).set(
-                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse(
-                            "collection(" +
-                                    "null-to-number, simple, number-to-number, text-to-text, " +
-                                    "error-to-number, error-throwing, text-to-error, " +
-                                    "text-to-selection, selection-to-selection, selection-to-text, " +
-                                    "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
-                                    "general)"
-                    )
-            ).set(
-                    SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                    SpreadsheetMetadataPropertyName.FUNCTIONS,
-                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                    SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                    8
-            ).set(
-                    SpreadsheetMetadataPropertyName.IMPORTERS,
-                    SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
-                            .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-                    SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                    SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.PARSERS,
-                    SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
-                            .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.PLUGINS,
-                    PluginNameSet.EMPTY
-            ).set(
-                    SpreadsheetMetadataPropertyName.PRECISION,
-                    7
-            ).set(
-                    SpreadsheetMetadataPropertyName.ROUNDING_MODE,
-                    RoundingMode.HALF_UP
-            ).set(
-                    SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
-                    SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
-            ).set(
-                    SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-                    ConverterSelector.parse("collection(" +
-                            "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, " +
-                            "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
-                            "general)"
-                    )
-            ).set(
-                    SpreadsheetMetadataPropertyName.STYLE,
-                    TextStyle.EMPTY
-                            .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
-                            .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
-            ).set(
-                    SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                    SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-                    SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.TIME_PARSER,
-                    SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()
-            ).set(
-                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
-                    50
-            ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATORS,
-                    ValidatorAliasSet.EMPTY
-            ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                    ConverterSelector.parse("collection(" +
-                            "null-to-number, simple, number-to-number, text-to-text, " +
-                            "error-to-number, text-to-error, " +
-                            "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
-                            "text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, " +
-                            "general)"
-                    )
-            ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                    ValidatorAliasSet.EMPTY
-            ).set(
-                    SpreadsheetMetadataPropertyName.numberedColor(1),
-                    Color.BLACK
-            ).set(
-                    SpreadsheetMetadataPropertyName.numberedColor(2),
-                    Color.WHITE
-            ).set(
-                    SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
-                    1
-            ).set(
-                    SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE),
-                    2
-            );
+        .set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            LOCALE
+        ).loadFromLocale(LOCALE_CONTEXT)
+        .set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                USER,
+                NOW.now(),
+                USER,
+                NOW.now()
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH,
+            1
+        ).set(
+            SpreadsheetMetadataPropertyName.COMPARATORS,
+            SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            CONVERTER_PROVIDER.converterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+            SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_PARSER,
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
+            Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+            DATE_TIME_SYMBOLS
+        ).set(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+            DECIMAL_NUMBER_SYMBOLS
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse("basic")
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+            2000
+        ).set(
+            SpreadsheetMetadataPropertyName.EXPORTERS,
+            SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
+            EXPRESSION_NUMBER_KIND
+        ).set(
+            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+            ConverterSelector.parse("collection(" +
+                "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, " +
+                "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
+                "general)"
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            ConverterSelector.parse("collection(" +
+                "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, " +
+                "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
+                "text-to-selection, selection-to-selection, selection-to-text, " +
+                "spreadsheet-cell-to, " +
+                "has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, " +
+                "general)"
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTERS,
+            SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            ConverterSelector.parse(
+                "collection(" +
+                    "null-to-number, simple, number-to-number, text-to-text, " +
+                    "error-to-number, error-throwing, text-to-error, " +
+                    "text-to-selection, selection-to-selection, selection-to-text, " +
+                    "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
+                    "general)"
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+            8
+        ).set(
+            SpreadsheetMetadataPropertyName.IMPORTERS,
+            SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+            SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+            SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.PARSERS,
+            SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
+                .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.PLUGINS,
+            PluginNameSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.PRECISION,
+            7
+        ).set(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+            RoundingMode.HALF_UP
+        ).set(
+            SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
+            SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
+        ).set(
+            SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+            ConverterSelector.parse("collection(" +
+                "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, " +
+                "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
+                "general)"
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.STYLE,
+            TextStyle.EMPTY
+                .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
+                .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
+        ).set(
+            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+            SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.TIME_PARSER,
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()
+        ).set(
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
+            50
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            ConverterSelector.parse("collection(" +
+                "null-to-number, simple, number-to-number, text-to-text, " +
+                "error-to-number, text-to-error, " +
+                "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
+                "text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, " +
+                "general)"
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.numberedColor(1),
+            Color.BLACK
+        ).set(
+            SpreadsheetMetadataPropertyName.numberedColor(2),
+            Color.WHITE
+        ).set(
+            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
+            1
+        ).set(
+            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE),
+            2
+        );
 
     EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with("Dummy123");
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
     EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.empty(
-            NOW,
-            Optional.of(USER)
+        NOW,
+        Optional.of(USER)
     );
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/6223
     // SpreadsheetMetadataTesting.PROVIDER_CONTEXT requires real CanConvert
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
-            ConverterContexts.fake(), // CanConvert TODO
-            METADATA_EN_AU.environmentContext(
+        ConverterContexts.fake(), // CanConvert TODO
+        METADATA_EN_AU.environmentContext(
 
-                    EnvironmentContexts.properties(
-                            Properties.EMPTY.set(
-                                    PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
-                                    DUMMY_ENVIRONMENTAL_VALUE
-                            ),
-                            ENVIRONMENT_CONTEXT
-                    )
-            ),
-            PluginStores.fake()
+            EnvironmentContexts.properties(
+                Properties.EMPTY.set(
+                    PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
+                    DUMMY_ENVIRONMENTAL_VALUE
+                ),
+                ENVIRONMENT_CONTEXT
+            )
+        ),
+        PluginStores.fake()
     );
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
-            SpreadsheetMetadata.NO_CELL,
-            SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            SPREADSHEET_LABEL_NAME_RESOLVER,
-            CONVERTER_PROVIDER,
-            LOCALE_CONTEXT,
-            PROVIDER_CONTEXT
+        SpreadsheetMetadata.NO_CELL,
+        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        CONVERTER_PROVIDER,
+        LOCALE_CONTEXT,
+        PROVIDER_CONTEXT
     );
 
     SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
-            SPREADSHEET_FORMULA_CONVERTER_CONTEXT
+        SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
     Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
-            (final Optional<Object> value) -> {
-                Objects.requireNonNull(value, "value");
-                throw new UnsupportedOperationException();
-            };
+        (final Optional<Object> value) -> {
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
+        };
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
-            SpreadsheetMetadata.NO_CELL,
-            FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-            SPREADSHEET_LABEL_NAME_RESOLVER,
-            CONVERTER_PROVIDER,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            LOCALE_CONTEXT,
-            PROVIDER_CONTEXT
+        SpreadsheetMetadata.NO_CELL,
+        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        CONVERTER_PROVIDER,
+        SPREADSHEET_FORMATTER_PROVIDER,
+        LOCALE_CONTEXT,
+        PROVIDER_CONTEXT
     );
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
-            FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-            SPREADSHEET_LABEL_NAME_RESOLVER,
-            CONVERTER_PROVIDER,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            LOCALE_CONTEXT,
-            PROVIDER_CONTEXT
+        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        CONVERTER_PROVIDER,
+        SPREADSHEET_FORMATTER_PROVIDER,
+        LOCALE_CONTEXT,
+        PROVIDER_CONTEXT
     );
 
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
@@ -454,33 +454,33 @@ public interface SpreadsheetMetadataTesting extends Testing {
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext();
 
     SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
-            SpreadsheetMetadata.NO_CELL,
-            LOCALE_CONTEXT,
-            NOW
+        SpreadsheetMetadata.NO_CELL,
+        LOCALE_CONTEXT,
+        NOW
     );
 
     SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
-            SpreadsheetProviders.basic(
-                    CONVERTER_PROVIDER,
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    SPREADSHEET_COMPARATOR_PROVIDER,
-                    SPREADSHEET_EXPORTER_PROVIDER,
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    FORM_HANDLER_PROVIDER,
-                    SPREADSHEET_IMPORTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER,
-                    VALIDATOR_PROVIDER
-            )
+        SpreadsheetProviders.basic(
+            CONVERTER_PROVIDER,
+            EXPRESSION_FUNCTION_PROVIDER,
+            SPREADSHEET_COMPARATOR_PROVIDER,
+            SPREADSHEET_EXPORTER_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            FORM_HANDLER_PROVIDER,
+            SPREADSHEET_IMPORTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER,
+            VALIDATOR_PROVIDER
+        )
     );
 
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
-                TextCursors.charSequence(text),
-                METADATA_EN_AU.spreadsheetParser(
-                        SPREADSHEET_PARSER_PROVIDER,
-                        PROVIDER_CONTEXT
-                ),
-                SPREADSHEET_PARSER_CONTEXT
+            TextCursors.charSequence(text),
+            METADATA_EN_AU.spreadsheetParser(
+                SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT
+            ),
+            SPREADSHEET_PARSER_CONTEXT
         );
     }
 }

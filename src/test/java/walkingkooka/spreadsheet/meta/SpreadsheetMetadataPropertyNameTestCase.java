@@ -42,7 +42,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> extends SpreadsheetMetadataTestCase2<N>
-        implements ToStringTesting<N> {
+    implements ToStringTesting<N> {
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -55,9 +55,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final N name = this.createName();
 
         this.checkEquals(
-                UrlFragment.parse(name.value()),
-                name.urlFragment(),
-                () -> name + " urlFragment"
+            UrlFragment.parse(name.value()),
+            name.urlFragment(),
+            () -> name + " urlFragment"
         );
     }
 
@@ -66,42 +66,42 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final String property = this.createName().value();
 
         this.checkEquals(
-                false,
-                TextStylePropertyName.VALUES
-                        .stream()
-                        .anyMatch(p -> p.value().equals(property))
+            false,
+            TextStylePropertyName.VALUES
+                .stream()
+                .anyMatch(p -> p.value().equals(property))
         );
     }
 
     @Test
     public final void testSpreadsheetMetadataJsonRoundtrip() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(this.createName(), this.propertyValue());
+            .set(this.createName(), this.propertyValue());
 
         final JsonNode node = JsonNodeMarshallContexts.basic()
-                .marshall(metadata);
+            .marshall(metadata);
         this.checkEquals(
-                metadata,
-                JsonNodeUnmarshallContexts.basic(
-                        ExpressionNumberKind.DOUBLE,
-                        MathContext.DECIMAL32
-                ).unmarshall(node, SpreadsheetMetadata.class)
+            metadata,
+            JsonNodeUnmarshallContexts.basic(
+                ExpressionNumberKind.DOUBLE,
+                MathContext.DECIMAL32
+            ).unmarshall(node, SpreadsheetMetadata.class)
         );
     }
 
     @Test
     public final void testCheckValueWithNullFails() {
         this.checkValueFails(
-                null,
-                "Metadata " + this.createName() + "=null, Missing value"
+            null,
+            "Metadata " + this.createName() + "=null, Missing value"
         );
     }
 
     @Test
     public final void testCheckValueWithInvalidFails() {
         this.checkValueFails(
-                this,
-                "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(this) + ", Expected " + this.propertyValueType());
+            this,
+            "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(this) + ", Expected " + this.propertyValueType());
     }
 
     @Test
@@ -111,8 +111,8 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         // sample:
         // Metadata decimal-separator="123abc", Expected Character symbol, not control character, whitespace, letter or digit
         this.checkValueFails(
-                value,
-                "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(value) + ", Expected " + this.propertyValueType()
+            value,
+            "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(value) + ", Expected " + this.propertyValueType()
         );
     }
 
@@ -129,14 +129,14 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final SpreadsheetMetadataPropertyName<?> propertyName = this.createName();
 
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(
-                SpreadsheetMetadataPropertyValueException.class,
-                () -> propertyName.checkValue(value)
+            SpreadsheetMetadataPropertyValueException.class,
+            () -> propertyName.checkValue(value)
         );
         this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
 
         final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(
-                SpreadsheetMetadataPropertyValueException.class,
-                () -> propertyName.checkValue(value)
+            SpreadsheetMetadataPropertyValueException.class,
+            () -> propertyName.checkValue(value)
         );
         this.checkSpreadsheetMetadataPropertyValueException(thrown2, message, propertyName, value);
     }
@@ -147,20 +147,20 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                                                                 final Object value) {
         if (null != message) {
             this.checkEquals(
-                    message,
-                    thrown.getMessage(),
-                    "message"
+                message,
+                thrown.getMessage(),
+                "message"
             );
         }
         this.checkEquals(
-                propertyName,
-                thrown.name(),
-                "propertyName"
+            propertyName,
+            thrown.name(),
+            "propertyName"
         );
         this.checkEquals(
-                value,
-                thrown.value(),
-                "value"
+            value,
+            thrown.value(),
+            "value"
         );
     }
 
@@ -170,9 +170,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                                                final V value) {
         final N propertyName = this.createName();
         this.checkEquals(
-                Optional.ofNullable(value),
-                propertyName.extractLocaleAwareValue(context),
-                propertyName + " extractLocaleAwareValue for locale " + context.locale()
+            Optional.ofNullable(value),
+            propertyName.extractLocaleAwareValue(context),
+            propertyName + " extractLocaleAwareValue for locale " + context.locale()
         );
     }
 
@@ -189,7 +189,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             final HasUrlFragment has = (HasUrlFragment) value;
             text = has.urlFragment().value();
         } else {
-            if(value instanceof HasText) {
+            if (value instanceof HasText) {
                 final HasText has = (HasText) value;
                 text = has.text();
             } else {
@@ -199,9 +199,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
         try {
             this.checkEquals(
-                    value,
-                    propertyName.parseUrlFragmentSaveValue(text),
-                    () -> "parseUrlFragmentSaveValue " + CharSequences.quoteAndEscape(text)
+                value,
+                propertyName.parseUrlFragmentSaveValue(text),
+                () -> "parseUrlFragmentSaveValue " + CharSequences.quoteAndEscape(text)
             );
         } catch (final UnsupportedOperationException ignore) {
 
@@ -215,12 +215,12 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final N propertyName = this.createName();
 
         this.checkEquals(
-                this.propertyValue() instanceof ConverterSelector,
-                propertyName.isConverterSelector(),
-                propertyName::toString
+            this.propertyValue() instanceof ConverterSelector,
+            propertyName.isConverterSelector(),
+            propertyName::toString
         );
     }
-    
+
     // isSpreadsheetFormatterSelector...................................................................................
 
     @Test
@@ -228,9 +228,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final N propertyName = this.createName();
 
         this.checkEquals(
-                this.propertyValue() instanceof SpreadsheetFormatterSelector,
-                propertyName.isSpreadsheetFormatterSelector(),
-                propertyName::toString
+            this.propertyValue() instanceof SpreadsheetFormatterSelector,
+            propertyName.isSpreadsheetFormatterSelector(),
+            propertyName::toString
         );
     }
 
@@ -242,9 +242,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         final N propertyName = this.createName();
 
         this.checkEquals(
-                this.propertyValue() instanceof SpreadsheetParserSelector,
-                propertyName.isSpreadsheetParserSelector(),
-                propertyName::toString
+            this.propertyValue() instanceof SpreadsheetParserSelector,
+            propertyName.isSpreadsheetParserSelector(),
+            propertyName::toString
         );
     }
 

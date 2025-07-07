@@ -30,30 +30,30 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTesting<SpreadsheetParserName,
-        SpreadsheetParserInfo,
-        SpreadsheetParserInfoSet,
-        SpreadsheetParserSelector,
-        SpreadsheetParserAlias,
-        SpreadsheetParserAliasSet>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetParserAliasSet>,
-        ToStringTesting<SpreadsheetParserAliasSet>,
-        JsonNodeMarshallingTesting<SpreadsheetParserAliasSet> {
+    SpreadsheetParserInfo,
+    SpreadsheetParserInfoSet,
+    SpreadsheetParserSelector,
+    SpreadsheetParserAlias,
+    SpreadsheetParserAliasSet>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetParserAliasSet>,
+    ToStringTesting<SpreadsheetParserAliasSet>,
+    JsonNodeMarshallingTesting<SpreadsheetParserAliasSet> {
 
     // with.............................................................................................................
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserAliasSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetParserAliasSet.with(null)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                SpreadsheetParserAliasSet.EMPTY,
-                SpreadsheetParserAliasSet.with(SortedSets.empty())
+            SpreadsheetParserAliasSet.EMPTY,
+            SpreadsheetParserAliasSet.with(SortedSets.empty())
         );
     }
 
@@ -64,35 +64,35 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
         final SpreadsheetParserName abc = SpreadsheetParserName.with("abc");
 
         this.aliasOrNameAndCheck(
-                this.createSet(),
-                abc,
-                abc
+            this.createSet(),
+            abc,
+            abc
         );
     }
 
     @Test
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
-                this.createSet(),
-                SpreadsheetParserName.with("sunshine-alias"),
-                SpreadsheetParserName.with("sunshine")
+            this.createSet(),
+            SpreadsheetParserName.with("sunshine-alias"),
+            SpreadsheetParserName.with("sunshine")
         );
     }
 
     @Test
     public void testAliasSelectorWithName() {
         this.aliasSelectorAndCheck(
-                this.createSet(),
-                SpreadsheetParserName.with("abc")
+            this.createSet(),
+            SpreadsheetParserName.with("abc")
         );
     }
 
     @Test
     public void testAliasSelectorWithAlias() {
         this.aliasSelectorAndCheck(
-                this.createSet(),
-                SpreadsheetParserName.with("custom-alias"),
-                SpreadsheetParserSelector.parse("custom(1)")
+            this.createSet(),
+            SpreadsheetParserName.with("custom-alias"),
+            SpreadsheetParserSelector.parse("custom(1)")
         );
     }
 
@@ -113,7 +113,7 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-                SpreadsheetParserAliasSet.parse("different")
+            SpreadsheetParserAliasSet.parse("different")
         );
     }
 
@@ -128,8 +128,8 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     public SpreadsheetParserAliasSet unmarshall(final JsonNode json,
                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserAliasSet.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

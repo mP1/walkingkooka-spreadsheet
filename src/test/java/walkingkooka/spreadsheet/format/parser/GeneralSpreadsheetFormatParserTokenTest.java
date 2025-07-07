@@ -100,12 +100,12 @@ public final class GeneralSpreadsheetFormatParserTokenTest extends ParentSpreads
 
         this.checkEquals("7137152871628428", b.toString());
         this.checkEquals(
-                Lists.of(token, token, token,
-                        general, general, general, general, general,
-                        whitespace, whitespace, whitespace, whitespace, whitespace,
-                        token, token, token),
-                visited,
-                "visited"
+            Lists.of(token, token, token,
+                general, general, general, general, general,
+                whitespace, whitespace, whitespace, whitespace, whitespace,
+                token, token, token),
+            visited,
+            "visited"
         );
     }
 
@@ -136,7 +136,7 @@ public final class GeneralSpreadsheetFormatParserTokenTest extends ParentSpreads
     @Override
     public GeneralSpreadsheetFormatParserToken createDifferentToken() {
         return GeneralSpreadsheetFormatParserToken.with(Lists.of(this.whitespace(), this.generalSymbol()),
-                WHITESPACE + GENERAL);
+            WHITESPACE + GENERAL);
     }
 
     private ParserToken generalSymbol() {

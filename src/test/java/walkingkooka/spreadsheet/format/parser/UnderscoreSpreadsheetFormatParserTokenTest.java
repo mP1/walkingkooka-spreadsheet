@@ -72,7 +72,7 @@ public final class UnderscoreSpreadsheetFormatParserTokenTest extends NonSymbolS
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.UNDERSCORE
+            SpreadsheetFormatParserTokenKind.UNDERSCORE
         );
     }
 

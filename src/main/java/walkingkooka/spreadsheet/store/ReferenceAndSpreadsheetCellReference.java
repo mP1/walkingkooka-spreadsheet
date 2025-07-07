@@ -34,8 +34,8 @@ public final class ReferenceAndSpreadsheetCellReference<T extends SpreadsheetExp
         Objects.requireNonNull(cell, "cell");
 
         return new ReferenceAndSpreadsheetCellReference<>(
-                reference,
-                cell
+            reference,
+            cell
         );
     }
 
@@ -53,11 +53,11 @@ public final class ReferenceAndSpreadsheetCellReference<T extends SpreadsheetExp
 
     public ReferenceAndSpreadsheetCellReference<T> setReference(final T reference) {
         return this.reference.equals(reference) ?
-                this :
-                new ReferenceAndSpreadsheetCellReference<>(
-                        Objects.requireNonNull(reference, "reference"),
-                        this.cell
-                );
+            this :
+            new ReferenceAndSpreadsheetCellReference<>(
+                Objects.requireNonNull(reference, "reference"),
+                this.cell
+            );
     }
 
     public SpreadsheetCellReference cell() {
@@ -66,11 +66,11 @@ public final class ReferenceAndSpreadsheetCellReference<T extends SpreadsheetExp
 
     public ReferenceAndSpreadsheetCellReference<T> setCell(final SpreadsheetCellReference cell) {
         return this.cell.equals(cell) ?
-                this :
-                new ReferenceAndSpreadsheetCellReference<>(
-                        this.reference,
-                        Objects.requireNonNull(cell, "cell")
-                );
+            this :
+            new ReferenceAndSpreadsheetCellReference<>(
+                this.reference,
+                Objects.requireNonNull(cell, "cell")
+            );
     }
 
     private final SpreadsheetCellReference cell;
@@ -80,21 +80,21 @@ public final class ReferenceAndSpreadsheetCellReference<T extends SpreadsheetExp
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.reference,
-                this.cell
+            this.reference,
+            this.cell
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ReferenceAndSpreadsheetCellReference &&
-                        this.equals0(Cast.to(other));
+            other instanceof ReferenceAndSpreadsheetCellReference &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final ReferenceAndSpreadsheetCellReference<?> other) {
         return this.reference.equals(other.reference) &&
-                this.cell.equalsIgnoreReferenceKind(other.cell); // not strictly necessary SpreadsheetReferenceKind should be the same
+            this.cell.equalsIgnoreReferenceKind(other.cell); // not strictly necessary SpreadsheetReferenceKind should be the same
     }
 
 

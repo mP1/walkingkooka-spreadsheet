@@ -31,18 +31,16 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
         super(name);
     }
 
-    @Override
-    final String checkValueNonNull(final Object value) {
+    @Override final String checkValueNonNull(final Object value) {
         final String stringValue = this.checkValueType(value,
-                v -> v instanceof String);
+            v -> v instanceof String);
         if (stringValue.isEmpty()) {
             throw new SpreadsheetMetadataPropertyValueException("Is empty", this, stringValue);
         }
         return stringValue;
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return String.class.getSimpleName();
     }
 
@@ -51,14 +49,13 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
         return String.class;
     }
 
-    @Override
-    final Optional<String> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<String> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.of(
-                this.extractLocaleValueString(
-                        DecimalFormatSymbols.getInstance(
-                                context.locale()
-                        )
+            this.extractLocaleValueString(
+                DecimalFormatSymbols.getInstance(
+                    context.locale()
                 )
+            )
         );
     }
 
@@ -66,8 +63,7 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final String parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final String parseUrlFragmentSaveValueNonNull(final String value) {
         return value;
     }
 }

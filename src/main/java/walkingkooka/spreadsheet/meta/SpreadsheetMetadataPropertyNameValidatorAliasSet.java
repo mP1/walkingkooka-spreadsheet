@@ -34,21 +34,18 @@ abstract class SpreadsheetMetadataPropertyNameValidatorAliasSet extends Spreadsh
         super(name);
     }
 
-    @Override
-    final ValidatorAliasSet checkValueNonNull(final Object value) {
+    @Override final ValidatorAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof ValidatorAliasSet
+            value,
+            v -> v instanceof ValidatorAliasSet
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return ValidatorAliasSet.class.getSimpleName();
     }
 
-    @Override
-    final Optional<ValidatorAliasSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<ValidatorAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 

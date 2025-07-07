@@ -32,7 +32,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<MergedMappedSpreadsheetComparatorProvider>,
-        ToStringTesting<MergedMappedSpreadsheetComparatorProvider> {
+    ToStringTesting<MergedMappedSpreadsheetComparatorProvider> {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/rename-comparator111");
 
@@ -55,151 +55,151 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
     @Test
     public void testWithNullInfosFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedSpreadsheetComparatorProvider.with(
-                        null,
-                        SpreadsheetComparatorProviders.fake()
-                )
+            NullPointerException.class,
+            () -> MergedMappedSpreadsheetComparatorProvider.with(
+                null,
+                SpreadsheetComparatorProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedSpreadsheetComparatorProvider.with(
-                        SpreadsheetComparatorInfoSet.EMPTY,
-                        null
-                )
+            NullPointerException.class,
+            () -> MergedMappedSpreadsheetComparatorProvider.with(
+                SpreadsheetComparatorInfoSet.EMPTY,
+                null
+            )
         );
     }
 
     @Test
     public void testSpreadsheetComparatorSelectorWithRenamedName() {
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorSelector.parse(RENAMED_RENAME_NAME + "(111)"),
-                PROVIDER_ONLY_CONTEXT,
-                RENAME_COMPARATOR
+            SpreadsheetComparatorSelector.parse(RENAMED_RENAME_NAME + "(111)"),
+            PROVIDER_ONLY_CONTEXT,
+            RENAME_COMPARATOR
         );
     }
 
     @Test
     public void testSpreadsheetComparatorSelectorWithProviderOnlyName() {
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorSelector.parse(PROVIDER_ONLY_NAME + "(111)"),
-                PROVIDER_ONLY_CONTEXT,
-                PROVIDER_ONLY_COMPARATOR
+            SpreadsheetComparatorSelector.parse(PROVIDER_ONLY_NAME + "(111)"),
+            PROVIDER_ONLY_CONTEXT,
+            PROVIDER_ONLY_COMPARATOR
         );
     }
 
     @Test
     public void testSpreadsheetComparatorSelectorUnknownFails() {
         this.spreadsheetComparatorFails(
-                SpreadsheetComparatorSelector.parse("unknown"),
-                PROVIDER_ONLY_CONTEXT
+            SpreadsheetComparatorSelector.parse("unknown"),
+            PROVIDER_ONLY_CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetComparatorNameWithRenamedName() {
         this.spreadsheetComparatorAndCheck(
-                RENAMED_RENAME_NAME,
-                VALUES,
-                PROVIDER_ONLY_CONTEXT,
-                RENAME_COMPARATOR
+            RENAMED_RENAME_NAME,
+            VALUES,
+            PROVIDER_ONLY_CONTEXT,
+            RENAME_COMPARATOR
         );
     }
 
     @Test
     public void testSpreadsheetComparatorNameWithProviderOnlyName() {
         this.spreadsheetComparatorAndCheck(
-                PROVIDER_ONLY_NAME,
-                VALUES,
-                PROVIDER_ONLY_CONTEXT,
-                PROVIDER_ONLY_COMPARATOR
+            PROVIDER_ONLY_NAME,
+            VALUES,
+            PROVIDER_ONLY_CONTEXT,
+            PROVIDER_ONLY_COMPARATOR
         );
     }
 
     @Test
     public void testSpreadsheetComparatorNameUnknownFails() {
         this.spreadsheetComparatorFails(
-                SpreadsheetComparatorName.with("unknown"),
-                VALUES,
-                PROVIDER_ONLY_CONTEXT
+            SpreadsheetComparatorName.with("unknown"),
+            VALUES,
+            PROVIDER_ONLY_CONTEXT
         );
     }
 
     @Test
     public void testInfos() {
         this.spreadsheetComparatorInfosAndCheck(
-                SpreadsheetComparatorInfo.with(
-                        RENAMED_URL,
-                        RENAMED_RENAME_NAME
-                ),
-                SpreadsheetComparatorInfo.with(
-                        PROVIDER_ONLY_URL,
-                        PROVIDER_ONLY_NAME
-                )
+            SpreadsheetComparatorInfo.with(
+                RENAMED_URL,
+                RENAMED_RENAME_NAME
+            ),
+            SpreadsheetComparatorInfo.with(
+                PROVIDER_ONLY_URL,
+                PROVIDER_ONLY_NAME
+            )
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createSpreadsheetComparatorProvider(),
-                "https://example.com/provider-only-comparator-222 provider-only-comparator-222,https://example.com/rename-comparator111 renamed-rename-comparator-111"
+            this.createSpreadsheetComparatorProvider(),
+            "https://example.com/provider-only-comparator-222 provider-only-comparator-222,https://example.com/rename-comparator111 renamed-rename-comparator-111"
         );
     }
 
     @Override
     public MergedMappedSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
         return MergedMappedSpreadsheetComparatorProvider.with(
-                SpreadsheetComparatorInfoSet.EMPTY.concat(
-                        SpreadsheetComparatorInfo.with(
-                                RENAMED_URL,
-                                RENAMED_RENAME_NAME
-                        )
-                ),
-                new FakeSpreadsheetComparatorProvider() {
+            SpreadsheetComparatorInfoSet.EMPTY.concat(
+                SpreadsheetComparatorInfo.with(
+                    RENAMED_URL,
+                    RENAMED_RENAME_NAME
+                )
+            ),
+            new FakeSpreadsheetComparatorProvider() {
 
-                    @Override
-                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
-                                                                          final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                                          final List<?> values,
-                                                                          final ProviderContext context) {
-                        if (name.equals(RENAME_PROVIDER_NAME)) {
-                            return RENAME_COMPARATOR;
-                        }
-                        if (name.equals(PROVIDER_ONLY_NAME)) {
-                            return PROVIDER_ONLY_COMPARATOR;
-                        }
-                        throw new IllegalArgumentException("Unknown comparator " + name);
-                    }
-
-                    @Override
-                    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-                        return SpreadsheetComparatorInfoSet.with(
-                                Sets.of(
-                                        SpreadsheetComparatorInfo.with(
-                                                RENAMED_URL,
-                                                RENAME_PROVIDER_NAME
-                                        ),
-                                        SpreadsheetComparatorInfo.with(
-                                                PROVIDER_ONLY_URL,
-                                                PROVIDER_ONLY_NAME
-                                        )
-                                )
-                        );
-                    }
+                @Override
+                public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                                      final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                      final List<?> values,
+                                                                      final ProviderContext context) {
+                    if (name.equals(RENAME_PROVIDER_NAME)) {
+                        return RENAME_COMPARATOR;
+                    }
+                    if (name.equals(PROVIDER_ONLY_NAME)) {
+                        return PROVIDER_ONLY_COMPARATOR;
+                    }
+                    throw new IllegalArgumentException("Unknown comparator " + name);
+                }
+
+                @Override
+                public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+                    return SpreadsheetComparatorInfoSet.with(
+                        Sets.of(
+                            SpreadsheetComparatorInfo.with(
+                                RENAMED_URL,
+                                RENAME_PROVIDER_NAME
+                            ),
+                            SpreadsheetComparatorInfo.with(
+                                PROVIDER_ONLY_URL,
+                                PROVIDER_ONLY_NAME
+                            )
+                        )
+                    );
+                }
+            }
         );
     }
 

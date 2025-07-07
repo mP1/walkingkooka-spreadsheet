@@ -67,17 +67,17 @@ enum BasicSpreadsheetEngineChangesCacheStatusLabel implements BasicSpreadsheetEn
         this.isReference = name.startsWith("REFERENCE_");
 
         this.isMissingValue = this.containsOrEqual(
-                name,
-                "UNLOAD"
+            name,
+            "UNLOAD"
         ) ||
-                this.containsOrEqual(
-                        name,
-                        "DELETE"
-                );
-
-        this.isDeleted = this.containsOrEqual(
+            this.containsOrEqual(
                 name,
                 "DELETE"
+            );
+
+        this.isDeleted = this.containsOrEqual(
+            name,
+            "DELETE"
         );
 
         this.referencesRefreshed = name.endsWith("REFERENCES_REFRESHED");
@@ -124,20 +124,20 @@ enum BasicSpreadsheetEngineChangesCacheStatusLabel implements BasicSpreadsheetEn
     @Override
     public boolean isRefreshable() {
         return this == UNLOADED ||
-                this == LOADED ||
-                this == SAVED ||
-                this == DELETED ||
-                this == REFERENCE_UNLOADED ||
-                this == REFERENCE_LOADED ||
-                this == REFERENCE_SAVED ||
-                this == REFERENCE_DELETED;
+            this == LOADED ||
+            this == SAVED ||
+            this == DELETED ||
+            this == REFERENCE_UNLOADED ||
+            this == REFERENCE_LOADED ||
+            this == REFERENCE_SAVED ||
+            this == REFERENCE_DELETED;
     }
 
     @Override
     public boolean isReferenceRefreshable() {
         return false == this.isUnloaded() &&
-                false == this.isSaving() &&
-                this.isRefreshable();
+            false == this.isSaving() &&
+            this.isRefreshable();
     }
 
     @Override
@@ -155,29 +155,29 @@ enum BasicSpreadsheetEngineChangesCacheStatusLabel implements BasicSpreadsheetEn
     @Override
     public BasicSpreadsheetEngineChangesCacheStatusLabel loaded() {
         return this.isReference ?
-                REFERENCE_LOADED :
-                LOADED;
+            REFERENCE_LOADED :
+            LOADED;
     }
 
     @Override
     public final BasicSpreadsheetEngineChangesCacheStatusLabel saved() {
         return this.isReference ?
-                REFERENCE_SAVED :
-                SAVED;
+            REFERENCE_SAVED :
+            SAVED;
     }
 
     @Override
     public final BasicSpreadsheetEngineChangesCacheStatusLabel deleted() {
         return this.isReference ?
-                REFERENCE_DELETED :
-                DELETED;
+            REFERENCE_DELETED :
+            DELETED;
     }
 
     @Override
     public final BasicSpreadsheetEngineChangesCacheStatusLabel forceReferencesRefresh() {
         final BasicSpreadsheetEngineChangesCacheStatusLabel newStatus;
 
-        switch(this) {
+        switch (this) {
             case UNLOADED:
                 newStatus = this;
                 break;
@@ -219,7 +219,7 @@ enum BasicSpreadsheetEngineChangesCacheStatusLabel implements BasicSpreadsheetEn
     public final BasicSpreadsheetEngineChangesCacheStatusLabel referencesRefreshed() {
         final BasicSpreadsheetEngineChangesCacheStatusLabel newStatus;
 
-        switch(this) {
+        switch (this) {
             case LOADED:
                 newStatus = LOADED_REFERENCES_REFRESHED;
                 break;
@@ -247,13 +247,13 @@ enum BasicSpreadsheetEngineChangesCacheStatusLabel implements BasicSpreadsheetEn
 
     @Override
     public BasicSpreadsheetEngineChangesCacheStatusLabel toNonReference() {
-        if(null == this.nonReference) {
+        if (null == this.nonReference) {
             this.nonReference = valueOf(
-                    this.name()
-                            .replace(
-                                    "REFERENCE_",
-                                    ""
-                            )
+                this.name()
+                    .replace(
+                        "REFERENCE_",
+                        ""
+                    )
             );
         }
         return this.nonReference;

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
 
 public final class SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor,
-        DateSpreadsheetFormatParserToken> {
+    DateSpreadsheetFormatParserToken> {
 
     @Override
     public SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor createVisitor() {

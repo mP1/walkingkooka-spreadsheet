@@ -58,17 +58,17 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final LocaleContext localeContext,
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
-                cell,
-                spreadsheetExpressionReferenceLoader,
-                serverUrl,
-                spreadsheetMetadata,
-                spreadsheetStoreRepository,
-                spreadsheetConverterContext,
-                spreadsheetFormatterContextFactory,
-                formHandlerContext,
-                expressionFunctionProvider,
-                localeContext,
-                providerContext
+            cell,
+            spreadsheetExpressionReferenceLoader,
+            serverUrl,
+            spreadsheetMetadata,
+            spreadsheetStoreRepository,
+            spreadsheetConverterContext,
+            spreadsheetFormatterContextFactory,
+            formHandlerContext,
+            expressionFunctionProvider,
+            localeContext,
+            providerContext
         );
     }
 
@@ -78,8 +78,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     public static SpreadsheetExpressionEvaluationContext cell(final Optional<SpreadsheetCell> cell,
                                                               final SpreadsheetExpressionEvaluationContext context) {
         return CellSpreadsheetExpressionEvaluationContext.with(
-                cell,
-                context
+            cell,
+            context
         );
     }
 
@@ -105,8 +105,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                          final SpreadsheetExpressionEvaluationContext context) {
 
         return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                referenceToValues,
-                context
+            referenceToValues,
+            context
         );
     }
 
@@ -124,8 +124,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
             }
 
             return new SpreadsheetExpressionEvaluationReferenceException(
-                    text,
-                    r
+                text,
+                r
             );
         };
     }

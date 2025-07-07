@@ -58,11 +58,11 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository(
-                id,
-                repository,
-                spreadsheetParserProvider,
-                localeContext,
-                providerContext
+            id,
+            repository,
+            spreadsheetParserProvider,
+            localeContext,
+            providerContext
         );
     }
 
@@ -86,15 +86,15 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
      */
     private void onSaveMetadata(final SpreadsheetMetadata metadata) {
         final SpreadsheetId id = metadata.id()
-                .orElseThrow(() -> new IllegalArgumentException("Metadata missing id"));
+            .orElseThrow(() -> new IllegalArgumentException("Metadata missing id"));
         final SpreadsheetId expected = this.id;
         if (expected.equals(id)) {
             this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
-                    this.repository.cells(),
-                    metadata,
-                    this.spreadsheetParserProvider,
-                    this.localeContext,
-                    this.providerContext
+                this.repository.cells(),
+                metadata,
+                this.spreadsheetParserProvider,
+                this.localeContext,
+                this.providerContext
             );
         }
     }
@@ -103,11 +103,11 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     public SpreadsheetCellStore cells() {
         if (null == this.cells) {
             this.cells = SpreadsheetCellStores.spreadsheetFormulaSpreadsheetMetadataAware(
-                    this.repository.cells(),
-                    this.repository.metadatas().loadOrFail(this.id),
-                    this.spreadsheetParserProvider,
-                    this.localeContext,
-                    this.providerContext
+                this.repository.cells(),
+                this.repository.metadatas().loadOrFail(this.id),
+                this.spreadsheetParserProvider,
+                this.localeContext,
+                this.providerContext
             );
         }
         return cells;

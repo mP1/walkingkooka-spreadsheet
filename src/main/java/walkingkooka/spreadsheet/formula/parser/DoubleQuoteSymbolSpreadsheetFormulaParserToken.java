@@ -28,8 +28,8 @@ public final class DoubleQuoteSymbolSpreadsheetFormulaParserToken extends Symbol
     static DoubleQuoteSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                final String text) {
         return new DoubleQuoteSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
 import java.util.Set;
 
 public final class SpreadsheetHateosResourceNamesTest implements PublicStaticHelperTesting<SpreadsheetHateosResourceNames>,
-        ConstantsTesting<SpreadsheetHateosResourceNames> {
+    ConstantsTesting<SpreadsheetHateosResourceNames> {
 
     // constants........................................................................................................
 

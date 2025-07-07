@@ -39,9 +39,9 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
                                                final int offset,
                                                final int count) {
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
-                mappings,
-                offset,
-                count
+            mappings,
+            offset,
+            count
         );
 
         if (reference.isLabelName()) {
@@ -53,7 +53,7 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
         // reference could be a label to another label and never resolves to a cell or cell-range
         if (null != visitor.filter) {
             mappings.values()
-                    .forEach(visitor::gatherMapping);
+                .forEach(visitor::gatherMapping);
         }
 
         return Sets.readOnly(visitor.labels);
@@ -108,7 +108,7 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
             this.filter = cellRange;
         } else {
             this.add = this.add | cellRange.cellStream()
-                    .anyMatch(this.filter::testCell);
+                .anyMatch(this.filter::testCell);
         }
     }
 

@@ -34,21 +34,18 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerSelector extends Spread
         super(name);
     }
 
-    @Override
-    final FormHandlerSelector checkValueNonNull(final Object value) {
+    @Override final FormHandlerSelector checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof FormHandlerSelector
+            value,
+            v -> v instanceof FormHandlerSelector
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return FormHandlerSelector.class.getSimpleName();
     }
 
-    @Override
-    final Optional<FormHandlerSelector> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<FormHandlerSelector> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 
@@ -59,8 +56,7 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerSelector extends Spread
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final FormHandlerSelector parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final FormHandlerSelector parseUrlFragmentSaveValueNonNull(final String value) {
         return FormHandlerSelector.parse(value);
     }
 }

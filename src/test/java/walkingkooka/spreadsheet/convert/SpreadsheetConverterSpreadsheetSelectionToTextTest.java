@@ -28,40 +28,40 @@ public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends Sp
     @Test
     public void testConvertSpreadsheetCellToString() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("$A$1"),
-                "$A$1"
+            SpreadsheetSelection.parseCell("$A$1"),
+            "$A$1"
         );
     }
 
     @Test
     public void testConvertSpreadsheetCellToCharacter() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseColumn("A"),
-                'A'
+            SpreadsheetSelection.parseColumn("A"),
+            'A'
         );
     }
 
     @Test
     public void testConvertSpreadsheetCellRangeToString() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                "A1:B2"
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            "A1:B2"
         );
     }
 
     @Test
     public void testConvertSpreadsheetLabelNameToString() {
         this.convertAndCheck(
-                SpreadsheetSelection.labelName("Label123"),
-                "Label123"
+            SpreadsheetSelection.labelName("Label123"),
+            "Label123"
         );
     }
 
     @Test
     public void testConvertStringToSpreadsheetCellFails() {
         this.convertFails(
-                "A1",
-                SpreadsheetCell.class
+            "A1",
+            SpreadsheetCell.class
         );
     }
 
@@ -78,9 +78,9 @@ public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends Sp
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return this.converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -88,9 +88,9 @@ public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends Sp
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
@@ -103,8 +103,8 @@ public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends Sp
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE,
-                "Selection to String"
+            SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE,
+            "Selection to String"
         );
     }
 

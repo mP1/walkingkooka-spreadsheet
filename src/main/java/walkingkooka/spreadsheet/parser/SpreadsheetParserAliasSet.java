@@ -40,22 +40,22 @@ import java.util.SortedSet;
  * A declaration of parser names and mapping of aliases to parser names with parameters.
  */
 public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetParserAlias>
-        implements PluginAliasSetLike<SpreadsheetParserName,
-        SpreadsheetParserInfo,
-        SpreadsheetParserInfoSet,
-        SpreadsheetParserSelector,
-        SpreadsheetParserAlias,
-        SpreadsheetParserAliasSet>,
-        ImmutableSortedSetDefaults<SpreadsheetParserAliasSet, SpreadsheetParserAlias> {
+    implements PluginAliasSetLike<SpreadsheetParserName,
+    SpreadsheetParserInfo,
+    SpreadsheetParserInfoSet,
+    SpreadsheetParserSelector,
+    SpreadsheetParserAlias,
+    SpreadsheetParserAliasSet>,
+    ImmutableSortedSetDefaults<SpreadsheetParserAliasSet, SpreadsheetParserAlias> {
 
     /**
      * An empty {@link SpreadsheetParserAliasSet}.
      */
     public final static SpreadsheetParserAliasSet EMPTY = new SpreadsheetParserAliasSet(
-            PluginAliasSet.with(
-                    SortedSets.empty(),
-                    SpreadsheetParserPluginHelper.INSTANCE
-            )
+        PluginAliasSet.with(
+            SortedSets.empty(),
+            SpreadsheetParserPluginHelper.INSTANCE
+        )
     );
 
     /**
@@ -72,10 +72,10 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
 
     public static SpreadsheetParserAliasSet parse(final String text) {
         return new SpreadsheetParserAliasSet(
-                PluginAliasSet.parse(
-                        text,
-                        SpreadsheetParserPluginHelper.INSTANCE
-                )
+            PluginAliasSet.parse(
+                text,
+                SpreadsheetParserPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -111,21 +111,21 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     @Override
     public SpreadsheetParserAliasSet concatOrReplace(final SpreadsheetParserAlias alias) {
         return new SpreadsheetParserAliasSet(
-                this.pluginAliasSet.concatOrReplace(alias)
+            this.pluginAliasSet.concatOrReplace(alias)
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet deleteAliasOrNameAll(final Collection<SpreadsheetParserName> aliasOrNames) {
         return this.setElements(
-                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+            this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet keepAliasOrNameAll(final Collection<SpreadsheetParserName> aliasOrNames) {
         return this.setElements(
-                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+            this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
         );
     }
 
@@ -149,14 +149,14 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     @Override
     public SpreadsheetParserAliasSet concat(final SpreadsheetParserAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.concat(alias)
+            this.pluginAliasSet.concat(alias)
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet concatAll(final Collection<SpreadsheetParserAlias> aliases) {
         return this.setElements(
-                this.pluginAliasSet.concatAll(aliases)
+            this.pluginAliasSet.concatAll(aliases)
         );
     }
 
@@ -164,24 +164,24 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     public SpreadsheetParserAliasSet replace(final SpreadsheetParserAlias oldAlias,
                                              final SpreadsheetParserAlias newAlias) {
         return this.setElements(
-                this.pluginAliasSet.replace(
-                        oldAlias,
-                        newAlias
-                )
+            this.pluginAliasSet.replace(
+                oldAlias,
+                newAlias
+            )
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet delete(final SpreadsheetParserAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.delete(alias)
+            this.pluginAliasSet.delete(alias)
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet deleteAll(final Collection<SpreadsheetParserAlias> aliases) {
         return this.setElements(
-                this.pluginAliasSet.deleteAll(aliases)
+            this.pluginAliasSet.deleteAll(aliases)
         );
     }
 
@@ -218,24 +218,24 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     public SpreadsheetParserAliasSet subSet(final SpreadsheetParserAlias from,
                                             final SpreadsheetParserAlias to) {
         return this.setElements(
-                this.pluginAliasSet.subSet(
-                        from,
-                        to
-                )
+            this.pluginAliasSet.subSet(
+                from,
+                to
+            )
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet headSet(final SpreadsheetParserAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.headSet(alias)
+            this.pluginAliasSet.headSet(alias)
         );
     }
 
     @Override
     public SpreadsheetParserAliasSet tailSet(final SpreadsheetParserAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.tailSet(alias)
+            this.pluginAliasSet.tailSet(alias)
         );
     }
 
@@ -274,23 +274,23 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.pluginAliasSet.text()
+            this.pluginAliasSet.text()
         );
     }
 
     static SpreadsheetParserAliasSet unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserAliasSet.class),
-                SpreadsheetParserAliasSet::unmarshall,
-                SpreadsheetParserAliasSet::marshall,
-                SpreadsheetParserAliasSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetParserAliasSet.class),
+            SpreadsheetParserAliasSet::unmarshall,
+            SpreadsheetParserAliasSet::marshall,
+            SpreadsheetParserAliasSet.class
         );
         SpreadsheetParserInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }

@@ -38,48 +38,48 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                                      final int number,
                                      final Optional<Color> color) {
         this.checkEquals(color,
-                context.colorNumber(number),
-                () -> "colorNumber " + number + " " + context);
+            context.colorNumber(number),
+            () -> "colorNumber " + number + " " + context);
     }
 
     default void colorNameAndCheck(final SpreadsheetFormatterContext context,
                                    final SpreadsheetColorName name,
                                    final Optional<Color> color) {
         this.checkEquals(color,
-                context.colorName(name),
-                () -> "colorName " + name + " " + context);
+            context.colorName(name),
+            () -> "colorName " + name + " " + context);
     }
 
     default void formatAndCheck(final Object value,
                                 final SpreadsheetText expected) {
         this.formatAndCheck(
-                Optional.of(value),
-                expected
+            Optional.of(value),
+            expected
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final SpreadsheetText expected) {
         this.formatAndCheck(
-                value,
-                expected.toTextNode()
+            value,
+            expected.toTextNode()
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final TextNode expected) {
         this.formatAndCheck(
-                value,
-                Optional.of(expected)
+            value,
+            Optional.of(expected)
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final Optional<TextNode> expected) {
         this.formatAndCheck(
-                this.createContext(),
-                value,
-                expected
+            this.createContext(),
+            value,
+            expected
         );
     }
 
@@ -87,16 +87,16 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                                 final Optional<Object> value,
                                 final Optional<TextNode> expected) {
         this.checkEquals(expected,
-                context.format(value),
-                () -> context + " " + CharSequences.quoteIfChars(value));
+            context.format(value),
+            () -> context + " " + CharSequences.quoteIfChars(value));
     }
 
     @Test
     default void testSpreadsheetExpressionEvaluationContextWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .spreadsheetExpressionEvaluationContext(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .spreadsheetExpressionEvaluationContext(null)
         );
     }
 

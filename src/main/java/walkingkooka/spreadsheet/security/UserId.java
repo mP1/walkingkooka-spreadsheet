@@ -25,7 +25,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * The primary key for a {@link User}.
  */
 public final class UserId extends IdentityId
-        implements Comparable<UserId> {
+    implements Comparable<UserId> {
 
     public static UserId with(final long value) {
         return new UserId(value);
@@ -49,10 +49,10 @@ public final class UserId extends IdentityId
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(UserId.class),
-                UserId::unmarshall,
-                UserId::marshall,
-                UserId.class
+            JsonNodeContext.computeTypeName(UserId.class),
+            UserId::unmarshall,
+            UserId::marshall,
+            UserId.class
         );
     }
 

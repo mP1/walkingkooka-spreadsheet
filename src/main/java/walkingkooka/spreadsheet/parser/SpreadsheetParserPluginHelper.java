@@ -36,11 +36,11 @@ import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetParserName,
-        SpreadsheetParserInfo,
-        SpreadsheetParserInfoSet,
-        SpreadsheetParserSelector,
-        SpreadsheetParserAlias,
-        SpreadsheetParserAliasSet> {
+    SpreadsheetParserInfo,
+    SpreadsheetParserInfoSet,
+    SpreadsheetParserSelector,
+    SpreadsheetParserAlias,
+    SpreadsheetParserAliasSet> {
 
     final static SpreadsheetParserPluginHelper INSTANCE = new SpreadsheetParserPluginHelper();
 
@@ -59,24 +59,24 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
         Objects.requireNonNull(context, "context");
 
         return Parsers.initialAndPartCharPredicateString(
-                c -> SpreadsheetParserName.isChar(0, c),
-                c -> SpreadsheetParserName.isChar(1, c),
-                SpreadsheetParserName.MIN_LENGTH, // minLength
-                SpreadsheetParserName.MAX_LENGTH // maxLength
+            c -> SpreadsheetParserName.isChar(0, c),
+            c -> SpreadsheetParserName.isChar(1, c),
+            SpreadsheetParserName.MIN_LENGTH, // minLength
+            SpreadsheetParserName.MAX_LENGTH // maxLength
         ).parse(
-                cursor,
-                context
+            cursor,
+            context
         ).map(
-                (final ParserToken token) -> this.name(
-                        token.cast(StringParserToken.class).value()
-                )
+            (final ParserToken token) -> this.name(
+                token.cast(StringParserToken.class).value()
+            )
         );
     }
 
     @Override
     public Set<SpreadsheetParserName> names(final Set<SpreadsheetParserName> names) {
         return Sets.immutable(
-                Objects.requireNonNull(names, "names")
+            Objects.requireNonNull(names, "names")
         );
     }
 
@@ -116,9 +116,9 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
                                         final Optional<SpreadsheetParserSelector> selector,
                                         final Optional<AbsoluteUrl> url) {
         return SpreadsheetParserAlias.with(
-                name,
-                selector,
-                url
+            name,
+            selector,
+            url
         );
     }
 

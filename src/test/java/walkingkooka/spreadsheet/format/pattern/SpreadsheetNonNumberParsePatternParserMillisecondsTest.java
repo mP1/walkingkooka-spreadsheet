@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 
 public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserMilliseconds>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserMilliseconds> {
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserMilliseconds> {
 
     @Test
     public void testParseFails() {
@@ -45,88 +45,88 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
     @Test
     public void testParse0() {
         this.parseAndCheck2(
-                "0",
-                0
+            "0",
+            0
         );
     }
 
     @Test
     public void testParse100000000() {
         this.parseAndCheck2(
-                "1",
-                100_000_000
+            "1",
+            100_000_000
         );
     }
 
     @Test
     public void testParse120000000() {
         this.parseAndCheck2(
-                "12",
-                120_000_000
+            "12",
+            120_000_000
         );
     }
 
     @Test
     public void testParse123000000() {
         this.parseAndCheck2(
-                "123",
-                123_000_000
+            "123",
+            123_000_000
         );
     }
 
     @Test
     public void testParse123400000() {
         this.parseAndCheck2(
-                "1234",
-                123_400_000
+            "1234",
+            123_400_000
         );
     }
 
     @Test
     public void testParse123450000() {
         this.parseAndCheck2(
-                "12345",
-                123_450_000
+            "12345",
+            123_450_000
         );
     }
 
     @Test
     public void testParse123456000() {
         this.parseAndCheck2(
-                "123456",
-                123_456_000
+            "123456",
+            123_456_000
         );
     }
 
     @Test
     public void testParse1234567055RoundLastDigit() {
         this.parseAndCheck2(
-                "1234567055",
-                123_456_706
+            "1234567055",
+            123_456_706
         );
     }
 
     @Test
     public void testParse000000000() {
         this.parseAndCheck2(
-                "000000000",
-                0
+            "000000000",
+            0
         );
     }
 
     @Test
     public void testParse0000000001() {
         this.parseAndCheck2(
-                "0000000001",
-                0
+            "0000000001",
+            0
         );
     }
 
     @Test
     public void testParse0000000005() {
         this.parseAndCheck2(
-                "0000000005",
-                1 // round up
+            "0000000005",
+            1 // round up
         );
     }
 
@@ -135,18 +135,18 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
         final MillisecondSpreadsheetFormulaParserToken token = SpreadsheetFormulaParserToken.millisecond(value, text);
 
         this.parseAndCheck(
-                text,
-                token,
-                text,
-                ""
+            text,
+            token,
+            text,
+            ""
         );
 
         final String after = "!";
         this.parseAndCheck(
-                text + after,
-                token,
-                text,
-                after
+            text + after,
+            token,
+            text,
+            after
         );
     }
 
@@ -157,12 +157,12 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
         final String text = arabicDigits(123);
 
         this.parseAndCheck(
-                SpreadsheetNonNumberParsePatternParserMilliseconds.with(PATTERN),
-                this.createContext(ARABIC_ZERO_DIGIT),
-                text,
-                SpreadsheetFormulaParserToken.millisecond(123_000_000, text),
-                text,
-                "" // textAfter
+            SpreadsheetNonNumberParsePatternParserMilliseconds.with(PATTERN),
+            this.createContext(ARABIC_ZERO_DIGIT),
+            text,
+            SpreadsheetFormulaParserToken.millisecond(123_000_000, text),
+            text,
+            "" // textAfter
         );
     }
 
@@ -195,7 +195,7 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
     @Test
     public void testEqualsDifferentPattern() {
         this.checkNotEquals(
-                SpreadsheetNonNumberParsePatternParserMilliseconds.with("sssss")
+            SpreadsheetNonNumberParsePatternParserMilliseconds.with("sssss")
         );
     }
 

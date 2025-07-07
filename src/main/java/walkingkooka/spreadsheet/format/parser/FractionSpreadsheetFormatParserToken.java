@@ -33,7 +33,7 @@ public final class FractionSpreadsheetFormatParserToken extends ParentSpreadshee
      */
     static FractionSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new FractionSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class FractionSpreadsheetFormatParserToken extends ParentSpreadshee
     @Override
     public FractionSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                FractionSpreadsheetFormatParserToken::with
+            this,
+            children,
+            FractionSpreadsheetFormatParserToken::with
         );
     }
 

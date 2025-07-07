@@ -27,10 +27,10 @@ public final class SpreadsheetMetadataPropertyNameCharacterValueSeparatorTest ex
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(
-                        Locale.forLanguageTag("EN-AU")
-                ),
-                ','
+            LocaleContexts.jre(
+                Locale.forLanguageTag("EN-AU")
+            ),
+            ','
         );
     }
 

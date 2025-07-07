@@ -54,13 +54,13 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                                   final boolean twelveHourTime,
                                   final int millisecondDecimals) {
         final SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetFormatParserTokenVisitor(value,
-                context,
-                twelveHourTime,
-                millisecondDecimals);
+            context,
+            twelveHourTime,
+            millisecondDecimals);
         visitor.accept(token);
 
         return SpreadsheetText.with(
-                visitor.text.toString()
+            visitor.text.toString()
         ).setColor(visitor.color);
     }
 
@@ -126,17 +126,17 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         final String ampm = this.context.ampm(this.value.getHour());
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
 
         final String text;
         switch (kind) {
             case AMPM_INITIAL_LOWER: // a/p
                 text = ampm.substring(0, 1)
-                        .toLowerCase();
+                    .toLowerCase();
                 break;
             case AMPM_INITIAL_UPPER: // A/P
                 text = ampm.substring(0, 1)
-                        .toUpperCase();
+                    .toUpperCase();
                 break;
             case AMPM_FULL_LOWER:
                 text = ampm.toLowerCase();
@@ -146,8 +146,8 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 break;
             default:
                 NeverError.unhandledCase(
-                        kind,
-                        SpreadsheetFormatParserTokenKind.values()
+                    kind,
+                    SpreadsheetFormatParserTokenKind.values()
                 );
                 text = null;
         }
@@ -158,14 +158,14 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     @Override
     protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = this.context.colorName(
-                token.colorName()
+            token.colorName()
         );
     }
 
     @Override
     protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.color = this.context.colorNumber(
-                token.value()
+            token.value()
         );
     }
 
@@ -176,37 +176,37 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         final LocalDateTime value = this.value;
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
 
         switch (kind) {
             case DAY_WITHOUT_LEADING_ZERO:
                 this.append(
-                        value.getDayOfMonth()
+                    value.getDayOfMonth()
                 );
                 break;
             case DAY_WITH_LEADING_ZERO:
                 this.appendWithLeadingZero(
-                        value.getDayOfMonth()
+                    value.getDayOfMonth()
                 );
                 break;
             case DAY_NAME_ABBREVIATION:
                 this.append(
-                        this.context.weekDayNameAbbreviation(
-                                dayOfWeekIndex(value)
-                        )
+                    this.context.weekDayNameAbbreviation(
+                        dayOfWeekIndex(value)
+                    )
                 );
                 break;
             case DAY_NAME_FULL:
                 this.append(
-                        this.context.weekDayName(
-                                dayOfWeekIndex(value)
-                        )
+                    this.context.weekDayName(
+                        dayOfWeekIndex(value)
+                    )
                 );
                 break;
             default:
                 NeverError.unhandledEnum(
-                        kind,
-                        SpreadsheetFormatParserTokenKind.values()
+                    kind,
+                    SpreadsheetFormatParserTokenKind.values()
                 );
         }
     }
@@ -215,8 +215,8 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     private static int dayOfWeekIndex(final LocalDateTime dateTime) {
         final int value = dateTime.getDayOfWeek().getValue();
         return 7 == value ?
-                0 :
-                value;
+            0 :
+            value;
     }
 
     @Override
@@ -235,7 +235,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         }
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
 
         switch (kind) {
             case HOUR_WITHOUT_LEADING_ZERO:
@@ -246,8 +246,8 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 break;
             default:
                 NeverError.unhandledEnum(
-                        kind,
-                        SpreadsheetFormatParserTokenKind.values()
+                    kind,
+                    SpreadsheetFormatParserTokenKind.values()
                 );
         }
     }
@@ -257,24 +257,24 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     @Override
     protected void visit(final MinuteSpreadsheetFormatParserToken token) {
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
         final LocalDateTime value = this.value;
 
         switch (kind) {
             case MINUTES_WITHOUT_LEADING_ZERO:
                 this.append(
-                        value.getMinute()
+                    value.getMinute()
                 );
                 break;
             case MINUTES_WITH_LEADING_ZERO:
                 this.appendWithLeadingZero(
-                        value.getMinute()
+                    value.getMinute()
                 );
                 break;
             default:
                 NeverError.unhandledEnum(
-                        kind,
-                        SpreadsheetFormatParserTokenKind.values()
+                    kind,
+                    SpreadsheetFormatParserTokenKind.values()
                 );
         }
     }
@@ -282,48 +282,48 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     @Override
     protected void visit(final MonthSpreadsheetFormatParserToken token) {
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
         final LocalDateTime value = this.value;
 
         switch (kind) {
             case MONTH_WITHOUT_LEADING_ZERO:
                 this.append(
-                        value.getMonthValue()
+                    value.getMonthValue()
                 );
                 break;
             case MONTH_WITH_LEADING_ZERO:
                 this.appendWithLeadingZero(
-                        value.getMonthValue()
+                    value.getMonthValue()
                 );
                 break;
             case MONTH_NAME_ABBREVIATION:
                 this.append(
-                        this.context.monthNameAbbreviation(
-                                value.getMonthValue() -
-                                        LOCALE_DATE_TIME_MONTH_BIAS
-                        )
+                    this.context.monthNameAbbreviation(
+                        value.getMonthValue() -
+                            LOCALE_DATE_TIME_MONTH_BIAS
+                    )
                 );
                 break;
             case MONTH_NAME_FULL:
                 this.append(
-                        this.context.monthName(
-                                value.getMonthValue() -
-                                        LOCALE_DATE_TIME_MONTH_BIAS
-                        )
+                    this.context.monthName(
+                        value.getMonthValue() -
+                            LOCALE_DATE_TIME_MONTH_BIAS
+                    )
                 );
                 break;
             case MONTH_NAME_INITIAL:
                 this.append(
-                        this.context.monthName(
-                                value.getMonthValue() -
-                                        LOCALE_DATE_TIME_MONTH_BIAS
-                        ).substring(0, 1)
+                    this.context.monthName(
+                        value.getMonthValue() -
+                            LOCALE_DATE_TIME_MONTH_BIAS
+                    ).substring(0, 1)
                 );
                 break;
             default:
                 NeverError.unhandledEnum(
-                        kind,
-                        SpreadsheetFormatParserTokenKind.values()
+                    kind,
+                    SpreadsheetFormatParserTokenKind.values()
                 );
         }
     }
@@ -342,7 +342,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         final int seconds = (int) secondsAndMills;
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
         switch (kind) {
             case SECONDS_WITHOUT_LEADING_ZERO:
                 this.append(seconds);
@@ -352,8 +352,8 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
                 break;
             default:
                 NeverError.unhandledEnum(
-                        kind,
-                        SpreadsheetFormatParserTokenKind.values()
+                    kind,
+                    SpreadsheetFormatParserTokenKind.values()
                 );
         }
 
@@ -370,7 +370,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
             for (int i = 0; i < millisecondDecimals; i++) {
                 millis = millis * 10;
                 this.append(
-                        (char)(zeroDigit + millis % 10)
+                    (char) (zeroDigit + millis % 10)
                 );
             }
         }
@@ -403,7 +403,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
         final int year = this.value.getYear();
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
-                .get();
+            .get();
 
         switch (kind) {
             case YEAR_TWO_DIGIT:
@@ -425,13 +425,13 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
 
         for (final char c : String.valueOf(value).toCharArray()) {
             this.append(
-                    (char) (c - '0' + zeroDigit)
+                (char) (c - '0' + zeroDigit)
             );
         }
     }
 
     private void appendWithLeadingZero(final int value) {
-        if(value < 10) {
+        if (value < 10) {
             this.append(0);
         }
         this.append(value);

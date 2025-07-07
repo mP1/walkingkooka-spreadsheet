@@ -41,8 +41,8 @@ public final class NumberSpreadsheetFormulaParserToken extends ValueSpreadsheetF
      */
     public ExpressionNumber toNumber(final ExpressionNumberContext context) {
         return NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor.toExpressionNumber(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -51,9 +51,9 @@ public final class NumberSpreadsheetFormulaParserToken extends ValueSpreadsheetF
     @Override
     public NumberSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                NumberSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            NumberSpreadsheetFormulaParserToken::with
         );
     }
 

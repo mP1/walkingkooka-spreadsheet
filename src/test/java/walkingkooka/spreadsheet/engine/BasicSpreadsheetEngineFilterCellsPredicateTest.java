@@ -53,7 +53,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements PredicateTesting2<BasicSpreadsheetEngineFilterCellsPredicate, SpreadsheetCell>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
 
@@ -69,160 +69,160 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
     @Test
     public void testTestFalseEmptyFormulaNoValueWithAny() {
         this.testFalse(
-                this.createPredicate(SpreadsheetValueType.ANY),
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            this.createPredicate(SpreadsheetValueType.ANY),
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
         );
     }
 
     @Test
     public void testTestTrueAnyValueTypeWithNotEmptyFormula() {
         this.testTrue(
-                this.createPredicate(SpreadsheetValueType.ANY),
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                )
+            this.createPredicate(SpreadsheetValueType.ANY),
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+            )
         );
     }
 
     @Test
     public void testTestTrueSameValueType() {
         this.testTrue(
-                this.createPredicate(SpreadsheetValueType.TEXT_STRING),
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=\"hello\"")
-                                .setValue(
-                                        Optional.of("hello")
-                                )
-                )
+            this.createPredicate(SpreadsheetValueType.TEXT_STRING),
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=\"hello\"")
+                    .setValue(
+                        Optional.of("hello")
+                    )
+            )
         );
     }
 
     @Test
     public void testTestFalseAnyValueType() {
         this.testFalse(
-                this.createPredicate(SpreadsheetValueType.ANY),
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(SpreadsheetFormula.EMPTY)
+            this.createPredicate(SpreadsheetValueType.ANY),
+            SpreadsheetSelection.parseCell("B2")
+                .setFormula(SpreadsheetFormula.EMPTY)
         );
     }
 
     @Test
     public void testTestFalseWrongValueType() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("=\"Hello\"")
-                        .setValue(
-                                Optional.of("Hello")
-                        )
+            SpreadsheetFormula.EMPTY.setText("=\"Hello\"")
+                .setValue(
+                    Optional.of("Hello")
+                )
         );
 
         this.testTrue(
-                this.createPredicate(SpreadsheetValueType.ANY),
-                cell
+            this.createPredicate(SpreadsheetValueType.ANY),
+            cell
         );
         this.testFalse(
-                this.createPredicate(SpreadsheetValueType.NUMBER_STRING),
-                cell
+            this.createPredicate(SpreadsheetValueType.NUMBER_STRING),
+            cell
         );
     }
 
     @Override
     public BasicSpreadsheetEngineFilterCellsPredicate createPredicate() {
         return this.createPredicate(
-                SpreadsheetValueType.ANY
+            SpreadsheetValueType.ANY
         );
     }
 
     private BasicSpreadsheetEngineFilterCellsPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
-                Expression.namedFunction(
-                        SpreadsheetExpressionFunctions.name("Test123")
-                ),
-                Expression.NO_CHILDREN
+            Expression.namedFunction(
+                SpreadsheetExpressionFunctions.name("Test123")
+            ),
+            Expression.NO_CHILDREN
         );
 
         return BasicSpreadsheetEngineFilterCellsPredicate.with(
-                valueType,
-                expression,
-                new FakeSpreadsheetEngineContext() {
+            valueType,
+            expression,
+            new FakeSpreadsheetEngineContext() {
 
-                    @Override
-                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
-                        Objects.requireNonNull(cell, "cell");
+                @Override
+                public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                     final SpreadsheetExpressionReferenceLoader loader) {
+                    Objects.requireNonNull(cell, "cell");
 
-                        return new FakeSpreadsheetExpressionEvaluationContext() {
-                            @Override
-                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
-                                Objects.requireNonNull(name, "name");
+                    return new FakeSpreadsheetExpressionEvaluationContext() {
+                        @Override
+                        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+                            Objects.requireNonNull(name, "name");
 
-                                return Cast.to(
-                                        new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
-                                            @Override
-                                            public Object apply(final List<Object> parameters,
-                                                                final SpreadsheetExpressionEvaluationContext context) {
-                                                assertEquals(
-                                                        Lists.empty(),
-                                                        parameters,
-                                                        "parameters"
-                                                );
+                            return Cast.to(
+                                new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                                    @Override
+                                    public Object apply(final List<Object> parameters,
+                                                        final SpreadsheetExpressionEvaluationContext context) {
+                                        assertEquals(
+                                            Lists.empty(),
+                                            parameters,
+                                            "parameters"
+                                        );
 
-                                                return true;
-                                            }
+                                        return true;
+                                    }
 
-                                            @Override
-                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                                return Lists.of(
-                                                        ExpressionFunctionParameterName.with("parameters")
-                                                                .variable(Object.class)
-                                                );
-                                            }
+                                    @Override
+                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                        return Lists.of(
+                                            ExpressionFunctionParameterName.with("parameters")
+                                                .variable(Object.class)
+                                        );
+                                    }
 
-                                            @Override
-                                            public boolean isPure(final ExpressionPurityContext context) {
-                                                return true;
-                                            }
-                                        }
-                                );
-                            }
+                                    @Override
+                                    public boolean isPure(final ExpressionPurityContext context) {
+                                        return true;
+                                    }
+                                }
+                            );
+                        }
 
-                            @Override
-                            public <T> Either<T, String> convert(final Object value,
-                                                                 final Class<T> target) {
-                                return this.successfulConversion(
-                                        target.cast(value),
-                                        target
-                                );
-                            }
-                        };
-                    }
+                        @Override
+                        public <T> Either<T, String> convert(final Object value,
+                                                             final Class<T> target) {
+                            return this.successfulConversion(
+                                target.cast(value),
+                                target
+                            );
+                        }
+                    };
+                }
 
-                    @Override
-                    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                               final List<?> values,
-                                                                               final ProviderContext context) {
-                        return CONVERTER_PROVIDER.converter(
-                                name,
-                                values,
-                                context
-                        );
-                    }
+                @Override
+                public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                           final List<?> values,
+                                                                           final ProviderContext context) {
+                    return CONVERTER_PROVIDER.converter(
+                        name,
+                        values,
+                        context
+                    );
+                }
 
-                    @Override
-                    public SpreadsheetMetadata spreadsheetMetadata() {
-                        return METADATA_EN_AU;
-                    }
+                @Override
+                public SpreadsheetMetadata spreadsheetMetadata() {
+                    return METADATA_EN_AU;
+                }
 
-                    @Override
-                    public String toString() {
-                        return CONTEXT_TO_STRING;
-                    }
-                },
-                new FakeSpreadsheetExpressionReferenceLoader(){
-                    @Override
-                    public String toString() {
-                        return LOADER_TO_STRING;
-                    }
-                } ///
+                @Override
+                public String toString() {
+                    return CONTEXT_TO_STRING;
+                }
+            },
+            new FakeSpreadsheetExpressionReferenceLoader() {
+                @Override
+                public String toString() {
+                    return LOADER_TO_STRING;
+                }
+            } ///
         );
     }
 
@@ -231,8 +231,8 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createPredicate(),
-                "* Test123() " + CONTEXT_TO_STRING + " " + LOADER_TO_STRING
+            this.createPredicate(),
+            "* Test123() " + CONTEXT_TO_STRING + " " + LOADER_TO_STRING
         );
     }
 

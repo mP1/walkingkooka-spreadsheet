@@ -19,7 +19,7 @@
 package walkingkooka.spreadsheet.reference;
 
 public abstract class SpreadsheetViewportNavigationSelectionSelectTestCase<T extends SpreadsheetViewportNavigationSelectionSelect<S>, S extends SpreadsheetSelection>
-        extends SpreadsheetViewportNavigationSelectionTestCase<T, S> {
+    extends SpreadsheetViewportNavigationSelectionTestCase<T, S> {
 
     SpreadsheetViewportNavigationSelectionSelectTestCase() {
     }

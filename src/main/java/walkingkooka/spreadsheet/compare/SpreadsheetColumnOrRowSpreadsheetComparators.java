@@ -51,24 +51,24 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                                                                            final SpreadsheetComparatorProvider provider,
                                                                            final ProviderContext context) {
         return list(
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text)
+            SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text)
+                .stream()
+                .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                    n.columnOrRow(),
+                    n.comparatorNameAndDirections()
                         .stream()
-                        .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                n.columnOrRow(),
-                                n.comparatorNameAndDirections()
-                                        .stream()
-                                        .map(nad -> nad.direction()
-                                                .apply(
-                                                        Cast.to(
-                                                                provider.spreadsheetComparator(
-                                                                        nad.name(),
-                                                                        Lists.empty(),
-                                                                        context
-                                                                )
-                                                        )
-                                                )
-                                        ).collect(Collectors.toList())
-                        )).collect(Collectors.toList())
+                        .map(nad -> nad.direction()
+                            .apply(
+                                Cast.to(
+                                    provider.spreadsheetComparator(
+                                        nad.name(),
+                                        Lists.empty(),
+                                        context
+                                    )
+                                )
+                            )
+                        ).collect(Collectors.toList())
+                )).collect(Collectors.toList())
         );
     }
 
@@ -76,10 +76,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                                                                     final List<SpreadsheetComparator<?>> comparators) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparators(
-                Objects.requireNonNull(columnOrRow, "columnOrRows"),
-                Lists.immutable(
-                        Objects.requireNonNull(comparators, "comparators")
-                )
+            Objects.requireNonNull(columnOrRow, "columnOrRows"),
+            Lists.immutable(
+                Objects.requireNonNull(comparators, "comparators")
+            )
         );
     }
 
@@ -108,16 +108,16 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
             Object convertedLeftValue = null;
             if (null != leftValue) {
                 convertedLeftValue = context.convert(
-                        leftValue,
-                        type
+                    leftValue,
+                    type
                 ).orElseLeft(null);
             }
 
             Object convertedRightValue = null;
             if (null != rightValue) {
                 convertedRightValue = context.convert(
-                        rightValue,
-                        type
+                    rightValue,
+                    type
                 ).orElseLeft(null);
             }
 
@@ -125,14 +125,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
             final boolean missingRight = null == convertedRightValue;
             if (missingLeft || missingRight) {
                 result = missingLeft && missingRight ?
-                        Comparators.EQUAL :
-                        missingLeft ?
-                                Comparators.MORE :
-                                Comparators.LESS; // missing | nulls etc come AFTER
+                    Comparators.EQUAL :
+                    missingLeft ?
+                        Comparators.MORE :
+                        Comparators.LESS; // missing | nulls etc come AFTER
             } else {
                 result = comparator.compare(
-                        Cast.to(convertedLeftValue),
-                        Cast.to(convertedRightValue)
+                    Cast.to(convertedLeftValue),
+                    Cast.to(convertedRightValue)
                 );
             }
 
@@ -146,10 +146,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
 
     private static Object valueOf(final SpreadsheetCell cell) {
         return null == cell ?
-                null :
-                cell.formula().
-                        errorOrValue()
-                        .orElse(null);
+            null :
+            cell.formula().
+                errorOrValue()
+                .orElse(null);
     }
 
     public SpreadsheetColumnOrRowReferenceOrRange columnOrRow() {
@@ -169,10 +169,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
      */
     public SpreadsheetColumnOrRowSpreadsheetComparatorNames toSpreadsheetColumnOrRowSpreadsheetComparatorNames() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                this.columnOrRow,
-                this.comparators.stream()
-                        .map(c -> c.name().setDirection(c.direction()))
-                        .collect(Collectors.toList())
+            this.columnOrRow,
+            this.comparators.stream()
+                .map(c -> c.name().setDirection(c.direction()))
+                .collect(Collectors.toList())
         );
     }
 
@@ -181,29 +181,29 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.columnOrRow,
-                this.comparators
+            this.columnOrRow,
+            this.comparators
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetColumnOrRowSpreadsheetComparators && this.equals0((SpreadsheetColumnOrRowSpreadsheetComparators) other);
+            other instanceof SpreadsheetColumnOrRowSpreadsheetComparators && this.equals0((SpreadsheetColumnOrRowSpreadsheetComparators) other);
     }
 
     private boolean equals0(final SpreadsheetColumnOrRowSpreadsheetComparators other) {
         return this.columnOrRow.equals(other.columnOrRow) &&
-                this.comparators.equals(other.comparators);
+            this.comparators.equals(other.comparators);
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .labelSeparator(String.valueOf(SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR))
-                .valueSeparator(String.valueOf(SpreadsheetColumnOrRowSpreadsheetComparatorNames.COMPARATOR_NAME_SEPARATOR))
-                .label(this.columnOrRow.text())
-                .value(this.comparators)
-                .build();
+            .labelSeparator(String.valueOf(SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR))
+            .valueSeparator(String.valueOf(SpreadsheetColumnOrRowSpreadsheetComparatorNames.COMPARATOR_NAME_SEPARATOR))
+            .label(this.columnOrRow.text())
+            .value(this.comparators)
+            .build();
     }
 }

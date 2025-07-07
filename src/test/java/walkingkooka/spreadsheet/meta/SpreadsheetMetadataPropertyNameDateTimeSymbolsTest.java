@@ -30,24 +30,24 @@ public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends Sp
     @Test
     public void testCheckValueWithInvalidDateTimeSymbolsFails() {
         this.checkValueFails(
-                "invalid",
-                "Metadata dateTimeSymbols=\"invalid\", Expected DateTimeSymbols"
+            "invalid",
+            "Metadata dateTimeSymbols=\"invalid\", Expected DateTimeSymbols"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                this.propertyValue()
+            LocaleContexts.jre(Locale.ENGLISH),
+            this.propertyValue()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameDateTimeSymbols.instance(),
-                "dateTimeSymbols"
+            SpreadsheetMetadataPropertyNameDateTimeSymbols.instance(),
+            "dateTimeSymbols"
         );
     }
 
@@ -59,7 +59,7 @@ public final class SpreadsheetMetadataPropertyNameDateTimeSymbolsTest extends Sp
     @Override
     DateTimeSymbols propertyValue() {
         return DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(Locale.ENGLISH)
+            new DateFormatSymbols(Locale.ENGLISH)
         );
     }
 

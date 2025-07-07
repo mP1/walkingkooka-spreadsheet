@@ -28,8 +28,8 @@ public final class PowerSymbolSpreadsheetFormulaParserToken extends SymbolSpread
     static PowerSymbolSpreadsheetFormulaParserToken with(final String value,
                                                          final String text) {
         return new PowerSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

@@ -93,9 +93,9 @@ final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatPars
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .valueSeparator(" ")
-                .value(this.relation)
-                .value(this.number)
-                .build();
+            .valueSeparator(" ")
+            .value(this.relation)
+            .value(this.number)
+            .build();
     }
 }

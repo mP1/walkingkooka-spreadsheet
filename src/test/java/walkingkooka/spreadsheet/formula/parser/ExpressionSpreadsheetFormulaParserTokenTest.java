@@ -76,66 +76,66 @@ public final class ExpressionSpreadsheetFormulaParserTokenTest extends ParentSpr
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
-                Expression.value(
-                        this.expressionNumber(NUMBER1)
-                )
+            Expression.value(
+                this.expressionNumber(NUMBER1)
+            )
         );
     }
 
     @Test
     public void testToExpressionAddition() {
         this.toExpressionAndCheck(
-                ExpressionSpreadsheetFormulaParserToken.with(
+            ExpressionSpreadsheetFormulaParserToken.with(
+                Lists.of(
+                    equalsSymbol(),
+                    SpreadsheetFormulaParserToken.addition(
                         Lists.of(
-                                equalsSymbol(),
-                                SpreadsheetFormulaParserToken.addition(
-                                        Lists.of(
-                                                number1(),
-                                                SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                                                number2()
-                                        ),
-                                        "1+2"
-                                )
+                            number1(),
+                            SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                            number2()
                         ),
-                        "=1+2"
+                        "1+2"
+                    )
                 ),
-                Expression.add(
-                        Expression.value(
-                                this.expressionNumber(NUMBER1)
-                        ),
-                        Expression.value(
-                                this.expressionNumber(NUMBER2)
-                        )
+                "=1+2"
+            ),
+            Expression.add(
+                Expression.value(
+                    this.expressionNumber(NUMBER1)
+                ),
+                Expression.value(
+                    this.expressionNumber(NUMBER2)
                 )
+            )
         );
     }
 
     @Test
     public void testToExpressionWhitespaceAddition() {
         this.toExpressionAndCheck(
-                ExpressionSpreadsheetFormulaParserToken.with(
+            ExpressionSpreadsheetFormulaParserToken.with(
+                Lists.of(
+                    equalsSymbol(),
+                    whitespace(),
+                    SpreadsheetFormulaParserToken.addition(
                         Lists.of(
-                                equalsSymbol(),
-                                whitespace(),
-                                SpreadsheetFormulaParserToken.addition(
-                                        Lists.of(
-                                                number1(),
-                                                SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                                                number2()
-                                        ),
-                                        "1+2"
-                                )
+                            number1(),
+                            SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                            number2()
                         ),
-                        "= 1+2"
+                        "1+2"
+                    )
                 ),
-                Expression.add(
-                        Expression.value(
-                                this.expressionNumber(NUMBER1)
-                        ),
-                        Expression.value(
-                                this.expressionNumber(NUMBER2)
-                        )
+                "= 1+2"
+            ),
+            Expression.add(
+                Expression.value(
+                    this.expressionNumber(NUMBER1)
+                ),
+                Expression.value(
+                    this.expressionNumber(NUMBER2)
                 )
+            )
         );
     }
 

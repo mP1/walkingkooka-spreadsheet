@@ -21,12 +21,12 @@ import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetParserPluginHelperTest implements PluginHelperTesting<SpreadsheetParserPluginHelper,
-        SpreadsheetParserName,
-        SpreadsheetParserInfo,
-        SpreadsheetParserInfoSet,
-        SpreadsheetParserSelector,
-        SpreadsheetParserAlias,
-        SpreadsheetParserAliasSet> {
+    SpreadsheetParserName,
+    SpreadsheetParserInfo,
+    SpreadsheetParserInfoSet,
+    SpreadsheetParserSelector,
+    SpreadsheetParserAlias,
+    SpreadsheetParserAliasSet> {
 
     @Override
     public SpreadsheetParserPluginHelper createPluginHelper() {

@@ -31,27 +31,27 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting2<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>>,
-        ToStringTesting<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> {
+    ToStringTesting<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> {
 
     @Test
     public void testWithNullReference() {
         assertThrows(
-                NullPointerException.class,
-                () -> ReferenceAndSpreadsheetCellReference.with(
-                        null,
-                        this.cell()
-                )
+            NullPointerException.class,
+            () -> ReferenceAndSpreadsheetCellReference.with(
+                null,
+                this.cell()
+            )
         );
     }
 
     @Test
     public void testWithNullCell() {
         assertThrows(
-                NullPointerException.class,
-                () -> ReferenceAndSpreadsheetCellReference.with(
-                        this.label(),
-                        null
-                )
+            NullPointerException.class,
+            () -> ReferenceAndSpreadsheetCellReference.with(
+                this.label(),
+                null
+            )
         );
     }
 
@@ -60,15 +60,15 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference reference = this.cell();
         final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> and = ReferenceAndSpreadsheetCellReference.with(
-                label,
-                reference
+            label,
+            reference
         );
 
         this.referenceAndCheck(
-                and
+            and
         );
         this.cellAndCheck(
-                and
+            and
         );
     }
 
@@ -76,17 +76,17 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     public void testWithSelfCell() {
         final SpreadsheetCellReference cell = this.cell();
         final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(
-                cell,
-                cell
+            cell,
+            cell
         );
 
         this.referenceAndCheck(
-                and,
-                cell
+            and,
+            cell
         );
         this.cellAndCheck(
-                and,
-                cell
+            and,
+            cell
         );
     }
 
@@ -95,9 +95,9 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     @Test
     public void testSetReferenceWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .setReference(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .setReference(null)
         );
     }
 
@@ -105,8 +105,8 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     public void testSetReferenceWithSame() {
         final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference = this.createObject();
         assertSame(
-                referenceAndSpreadsheetCellReference,
-                referenceAndSpreadsheetCellReference.setReference(this.label())
+            referenceAndSpreadsheetCellReference,
+            referenceAndSpreadsheetCellReference.setReference(this.label())
         );
     }
 
@@ -118,14 +118,14 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
         final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> different = referenceAndSpreadsheetCellReference.setReference(differentReference);
 
         assertNotSame(
-                referenceAndSpreadsheetCellReference,
-                different
+            referenceAndSpreadsheetCellReference,
+            different
         );
 
         this.referenceAndCheck(referenceAndSpreadsheetCellReference);
         this.referenceAndCheck(
-                different,
-                differentReference
+            different,
+            differentReference
         );
 
         this.cellAndCheck(referenceAndSpreadsheetCellReference);
@@ -137,9 +137,9 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     @Test
     public void testSetCellWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .setCell(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .setCell(null)
         );
     }
 
@@ -147,8 +147,8 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     public void testSetCellWithSame() {
         final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference = this.createObject();
         assertSame(
-                referenceAndSpreadsheetCellReference,
-                referenceAndSpreadsheetCellReference.setCell(this.cell())
+            referenceAndSpreadsheetCellReference,
+            referenceAndSpreadsheetCellReference.setCell(this.cell())
         );
     }
 
@@ -160,16 +160,16 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
         final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> different = referenceAndSpreadsheetCellReference.setCell(differentCell);
 
         assertNotSame(
-                referenceAndSpreadsheetCellReference,
-                different
+            referenceAndSpreadsheetCellReference,
+            different
         );
 
         this.cellAndCheck(
-                referenceAndSpreadsheetCellReference
+            referenceAndSpreadsheetCellReference
         );
         this.cellAndCheck(
-                different,
-                differentCell
+            different,
+            differentCell
         );
 
         this.referenceAndCheck(referenceAndSpreadsheetCellReference);
@@ -180,31 +180,31 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
 
     private void referenceAndCheck(final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference) {
         this.referenceAndCheck(
-                referenceAndSpreadsheetCellReference,
-                this.label()
+            referenceAndSpreadsheetCellReference,
+            this.label()
         );
     }
 
     private <TT extends SpreadsheetExpressionReference> void referenceAndCheck(final ReferenceAndSpreadsheetCellReference<TT> referenceAndSpreadsheetCellReference,
                                                                                final TT expected) {
         this.checkEquals(
-                expected,
-                referenceAndSpreadsheetCellReference.reference()
+            expected,
+            referenceAndSpreadsheetCellReference.reference()
         );
     }
 
     private void cellAndCheck(final ReferenceAndSpreadsheetCellReference<?> referenceAndSpreadsheetCellReference) {
         this.cellAndCheck(
-                referenceAndSpreadsheetCellReference,
-                this.cell()
+            referenceAndSpreadsheetCellReference,
+            this.cell()
         );
     }
 
     private void cellAndCheck(final ReferenceAndSpreadsheetCellReference<?> referenceAndSpreadsheetCellReference,
                               final SpreadsheetCellReference expected) {
         this.checkEquals(
-                expected,
-                referenceAndSpreadsheetCellReference.cell()
+            expected,
+            referenceAndSpreadsheetCellReference.cell()
         );
     }
 
@@ -213,28 +213,28 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     @Test
     public void testEqualsDifferentReference() {
         this.checkNotEquals(
-                ReferenceAndSpreadsheetCellReference.with(
-                        SpreadsheetSelection.labelName("Different"),
-                        this.cell()
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                SpreadsheetSelection.labelName("Different"),
+                this.cell()
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentCell() {
         this.checkNotEquals(
-                ReferenceAndSpreadsheetCellReference.with(
-                        this.label(),
-                        SpreadsheetSelection.parseCell("Z99")
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                this.label(),
+                SpreadsheetSelection.parseCell("Z99")
+            )
         );
     }
 
     @Override
     public ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> createObject() {
         return ReferenceAndSpreadsheetCellReference.with(
-                this.label(),
-                this.cell()
+            this.label(),
+            this.cell()
         );
     }
 
@@ -243,8 +243,8 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createObject(),
-                this.label() + "->" + this.cell()
+            this.createObject(),
+            this.label() + "->" + this.cell()
         );
     }
 

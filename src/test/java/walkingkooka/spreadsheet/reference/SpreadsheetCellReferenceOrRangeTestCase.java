@@ -36,8 +36,8 @@ public abstract class SpreadsheetCellReferenceOrRangeTestCase<R extends Spreadsh
         final SpreadsheetCellReferenceOrRange cellOrCellRange = selection.toCellOrCellRange();
 
         assertSame(
-                selection,
-                cellOrCellRange
+            selection,
+            cellOrCellRange
         );
     }
 
@@ -48,10 +48,10 @@ public abstract class SpreadsheetCellReferenceOrRangeTestCase<R extends Spreadsh
         final R selection = this.createSelection();
 
         this.toRangeAndCheck(
-                selection,
-                this.parseRange(
-                        selection.toString()
-                )
+            selection,
+            this.parseRange(
+                selection.toString()
+            )
         );
     }
 }

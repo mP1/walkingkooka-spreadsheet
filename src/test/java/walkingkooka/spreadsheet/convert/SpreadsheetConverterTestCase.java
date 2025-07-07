@@ -22,7 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterTesting2;
 
 public abstract class SpreadsheetConverterTestCase<C extends Converter<SpreadsheetConverterContext>> implements ConverterTesting2<C, SpreadsheetConverterContext>,
-        ToStringTesting<C> {
+    ToStringTesting<C> {
 
     SpreadsheetConverterTestCase() {
         super();

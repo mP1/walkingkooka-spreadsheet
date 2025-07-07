@@ -25,22 +25,22 @@ import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameFindQueryTest extends SpreadsheetMetadataPropertyNameTestCase<
-        SpreadsheetMetadataPropertyNameFindQuery,
-        SpreadsheetCellQuery> {
+    SpreadsheetMetadataPropertyNameFindQuery,
+    SpreadsheetCellQuery> {
 
     @Test
     public void testCheckValueWithInvalidFails3() {
         this.checkValueFails(
-                "invalid",
-                "Metadata findQuery=\"invalid\", Expected SpreadsheetCellQuery"
+            "invalid",
+            "Metadata findQuery=\"invalid\", Expected SpreadsheetCellQuery"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
@@ -51,9 +51,9 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
         final SpreadsheetCellQuery query = SpreadsheetCellQuery.parse("1+2");
 
         this.checkEquals(
-                query,
-                SpreadsheetMetadataPropertyName.FIND_QUERY
-                        .parseUrlFragmentSaveValue(query.text())
+            query,
+            SpreadsheetMetadataPropertyName.FIND_QUERY
+                .parseUrlFragmentSaveValue(query.text())
         );
     }
 
@@ -62,8 +62,8 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFindQuery.instance(),
-                "findQuery"
+            SpreadsheetMetadataPropertyNameFindQuery.instance(),
+            "findQuery"
         );
     }
 

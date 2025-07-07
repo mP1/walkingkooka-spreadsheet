@@ -33,11 +33,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SpreadsheetComparatorNameListTest implements ListTesting2<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
-        ClassTesting<SpreadsheetComparatorNameList>,
-        ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
-        HasUrlFragmentTesting,
-        ParseStringTesting<SpreadsheetComparatorNameList>,
-        JsonNodeMarshallingTesting<SpreadsheetComparatorNameList> {
+    ClassTesting<SpreadsheetComparatorNameList>,
+    ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
+    HasUrlFragmentTesting,
+    ParseStringTesting<SpreadsheetComparatorNameList>,
+    JsonNodeMarshallingTesting<SpreadsheetComparatorNameList> {
 
     private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;
 
@@ -46,8 +46,8 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorNameList.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetComparatorNameList.with(null)
         );
     }
 
@@ -55,18 +55,18 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public void testWithDoesntDoubleWrap() {
         final SpreadsheetComparatorNameList list = this.createList();
         assertSame(
-                list,
-                SpreadsheetComparatorNameList.with(list)
+            list,
+            SpreadsheetComparatorNameList.with(list)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                SpreadsheetComparatorNameList.EMPTY,
-                SpreadsheetComparatorNameList.with(
-                        Lists.empty()
-                )
+            SpreadsheetComparatorNameList.EMPTY,
+            SpreadsheetComparatorNameList.with(
+                Lists.empty()
+            )
         );
     }
 
@@ -75,27 +75,27 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     @Test
     public void testGet() {
         this.getAndCheck(
-                this.createList(),
-                0, // index
-                DATE1 // expected
+            this.createList(),
+            0, // index
+            DATE1 // expected
         );
     }
 
     @Test
     public void testGet2() {
         this.getAndCheck(
-                this.createList(),
-                1, // index
-                NUMBER2 // expected
+            this.createList(),
+            1, // index
+            NUMBER2 // expected
         );
     }
 
     @Test
     public void testSetFails() {
         this.setFails(
-                this.createList(),
-                0, // index
-                DATE1 // expected
+            this.createList(),
+            0, // index
+            DATE1 // expected
         );
     }
 
@@ -104,8 +104,8 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         final SpreadsheetComparatorNameList list = this.createList();
 
         this.removeIndexFails(
-                list,
-                0
+            list,
+            0
         );
     }
 
@@ -114,36 +114,36 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
         final SpreadsheetComparatorNameList list = this.createList();
 
         this.removeFails(
-                list,
-                list.get(0)
+            list,
+            list.get(0)
         );
     }
 
     @Test
     public void testSetElementsIncludesNullFails() {
         final NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> this.createList()
-                        .setElements(
-                                Lists.of(
-                                        SpreadsheetComparatorName.DATE,
-                                        null
-                                )
-                        )
+            NullPointerException.class,
+            () -> this.createList()
+                .setElements(
+                    Lists.of(
+                        SpreadsheetComparatorName.DATE,
+                        null
+                    )
+                )
         );
         this.checkEquals(
-                "includes null name",
-                thrown.getMessage()
+            "includes null name",
+            thrown.getMessage()
         );
     }
 
     @Override
     public SpreadsheetComparatorNameList createList() {
         return SpreadsheetComparatorNameList.with(
-                Lists.of(
-                        DATE1,
-                        NUMBER2
-                )
+            Lists.of(
+                DATE1,
+                NUMBER2
+            )
         );
     }
 
@@ -152,8 +152,8 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     @Test
     public void testHasUrlFragment() {
         this.urlFragmentAndCheck(
-                this.createList(),
-                "date,number"
+            this.createList(),
+            "date,number"
         );
     }
 
@@ -167,46 +167,46 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     @Test
     public void testParseEmpty() {
         this.parseStringAndCheck(
-                "",
-                SpreadsheetComparatorNameList.EMPTY
+            "",
+            SpreadsheetComparatorNameList.EMPTY
         );
     }
 
     @Test
     public void testParseName() {
         this.parseStringAndCheck(
-                "day-of-month",
-                SpreadsheetComparatorNameList.with(
-                        Lists.of(
-                                SpreadsheetComparatorName.DAY_OF_MONTH
-                        )
+            "day-of-month",
+            SpreadsheetComparatorNameList.with(
+                Lists.of(
+                    SpreadsheetComparatorName.DAY_OF_MONTH
                 )
+            )
         );
     }
 
     @Test
     public void testParseNameCommaName() {
         this.parseStringAndCheck(
-                "day-of-month,year",
-                SpreadsheetComparatorNameList.with(
-                        Lists.of(
-                                SpreadsheetComparatorName.DAY_OF_MONTH,
-                                SpreadsheetComparatorName.YEAR
-                        )
+            "day-of-month,year",
+            SpreadsheetComparatorNameList.with(
+                Lists.of(
+                    SpreadsheetComparatorName.DAY_OF_MONTH,
+                    SpreadsheetComparatorName.YEAR
                 )
+            )
         );
     }
 
     @Test
     public void testParseSpaceNameSpaceCommaName() {
         this.parseStringAndCheck(
-                " day-of-month ,year",
-                SpreadsheetComparatorNameList.with(
-                        Lists.of(
-                                SpreadsheetComparatorName.DAY_OF_MONTH,
-                                SpreadsheetComparatorName.YEAR
-                        )
+            " day-of-month ,year",
+            SpreadsheetComparatorNameList.with(
+                Lists.of(
+                    SpreadsheetComparatorName.DAY_OF_MONTH,
+                    SpreadsheetComparatorName.YEAR
                 )
+            )
         );
     }
 
@@ -242,16 +242,16 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createList(),
-                "\"date,number\""
+            this.createList(),
+            "\"date,number\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"date,number\"",
-                this.createList()
+            "\"date,number\"",
+            this.createList()
         );
     }
 
@@ -259,8 +259,8 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     public SpreadsheetComparatorNameList unmarshall(final JsonNode json,
                                                     final JsonNodeUnmarshallContext context) {
         return SpreadsheetComparatorNameList.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

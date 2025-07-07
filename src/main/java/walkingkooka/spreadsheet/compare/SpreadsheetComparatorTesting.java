@@ -24,18 +24,18 @@ public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>
     default <TT> void typeAndCheck(final SpreadsheetComparator<TT> comparator,
                                    final Class<TT> expected) {
         this.checkEquals(
-                expected,
-                comparator.type(),
-                comparator::toString
+            expected,
+            comparator.type(),
+            comparator::toString
         );
     }
 
     default void directionAndCheck(final SpreadsheetComparator<?> comparator,
                                    final SpreadsheetComparatorDirection direction) {
         this.checkEquals(
-                direction,
-                comparator.direction(),
-                () -> "direction of " + comparator
+            direction,
+            comparator.direction(),
+            () -> "direction of " + comparator
         );
     }
 }

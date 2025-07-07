@@ -30,9 +30,9 @@ public final class SpreadsheetParserSelectorTokenTest implements PluginSelectorT
                                                                         final String text,
                                                                         final List<SpreadsheetParserSelectorTokenAlternative> alternatives) {
         return SpreadsheetParserSelectorToken.with(
-                label,
-                text,
-                alternatives
+            label,
+            text,
+            alternatives
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetParserSelectorTokenTest implements PluginSelectorT
     public SpreadsheetParserSelectorTokenAlternative createPluginSelectorTokenAlternativesLike(final String label,
                                                                                                final String text) {
         return SpreadsheetParserSelectorTokenAlternative.with(
-                label,
-                text
+            label,
+            text
         );
     }
 
@@ -49,10 +49,10 @@ public final class SpreadsheetParserSelectorTokenTest implements PluginSelectorT
     public SpreadsheetParserSelectorToken unmarshall(final JsonNode json,
                                                      final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenLike.unmarshall(
-                json,
-                context,
-                SpreadsheetParserSelectorToken::with,
-                SpreadsheetParserSelectorTokenAlternative.class
+            json,
+            context,
+            SpreadsheetParserSelectorToken::with,
+            SpreadsheetParserSelectorTokenAlternative.class
         );
     }
 

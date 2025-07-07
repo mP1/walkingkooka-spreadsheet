@@ -70,9 +70,9 @@ import java.util.Set;
 import java.util.function.Function;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
-        FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
-        LocaleContextDelegator,
-        SpreadsheetConverterContextDelegator {
+    FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    LocaleContextDelegator,
+    SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
@@ -98,17 +98,17 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
-                cell,
-                spreadsheetExpressionReferenceLoader,
-                serverUrl,
-                spreadsheetMetadata,
-                spreadsheetStoreRepository,
-                spreadsheetConverterContext,
-                spreadsheetFormatterContextFactory,
-                formHandlerContext,
-                expressionFunctionProvider,
-                localeContext,
-                providerContext
+            cell,
+            spreadsheetExpressionReferenceLoader,
+            serverUrl,
+            spreadsheetMetadata,
+            spreadsheetStoreRepository,
+            spreadsheetConverterContext,
+            spreadsheetFormatterContextFactory,
+            formHandlerContext,
+            expressionFunctionProvider,
+            localeContext,
+            providerContext
         );
     }
 
@@ -144,8 +144,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
         return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
+            cell,
+            this
         );
     }
 
@@ -159,16 +159,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.spreadsheetExpressionReferenceLoader.loadCell(
-                cell,
-                this
+            cell,
+            this
         );
     }
 
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         return this.spreadsheetExpressionReferenceLoader.loadCellRange(
-                range,
-                this
+            range,
+            this
         );
     }
 
@@ -184,29 +184,29 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
-                .spreadsheetParserContext(
-                        this.cell,
-                        this.localeContext,
-                        this.spreadsheetConverterContext
-                );
+            .spreadsheetParserContext(
+                this.cell,
+                this.localeContext,
+                this.spreadsheetConverterContext
+            );
 
         return SpreadsheetFormulaParsers.expression()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(expression, parserContext)
-                .get()
-                .cast(SpreadsheetFormulaParserToken.class);
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(expression, parserContext)
+            .get()
+            .cast(SpreadsheetFormulaParserToken.class);
     }
 
     @Override
     public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
         return this.spreadsheetStoreRepository.cells()
-                .nextEmptyColumn(row);
+            .nextEmptyColumn(row);
     }
 
     @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
         return this.spreadsheetStoreRepository.cells()
-                .nextEmptyRow(column);
+            .nextEmptyRow(column);
     }
 
     @Override
@@ -221,13 +221,13 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         final SpreadsheetMetadata old = this.spreadsheetMetadata;
         final SpreadsheetId oldId = old.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
         final SpreadsheetId newId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
-        if(false == oldId.equals(newId)) {
+        if (false == oldId.equals(newId)) {
             throw new IllegalArgumentException("Invalid metadata id " + newId + " is different from " + oldId);
         }
 
         final SpreadsheetStoreRepository repo = this.spreadsheetStoreRepository;
         this.spreadsheetMetadata = repo.metadatas()
-                .save(metadata);
+            .save(metadata);
         // TODO maybe should clear parsed cell formulas.
     }
 
@@ -253,7 +253,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public Optional<Object> validationValue() {
         return this.reference(VALIDATION_VALUE)
-                .orElse(Optional.empty());
+            .orElse(Optional.empty());
     }
 
     // StorageExpressionEvaluationContext...............................................................................
@@ -275,11 +275,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
         return Cast.to(
-                this.expressionFunctionProvider.expressionFunction(
-                        name,
-                        Lists.empty(),
-                        this.providerContext
-                )
+            this.expressionFunctionProvider.expressionFunction(
+                name,
+                Lists.empty(),
+                this.providerContext
+            )
         );
     }
 
@@ -288,7 +288,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public boolean isPure(final ExpressionFunctionName name) {
         return this.expressionFunction(name)
-                .isPure(this);
+            .isPure(this);
     }
 
     private final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
@@ -313,7 +313,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         if (reference instanceof SpreadsheetExpressionReference) {
             SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) reference;
             final SpreadsheetSelection selection = this.resolveIfLabel(reference)
-                    .orElse(null);
+                .orElse(null);
 
             if (null != selection) {
                 spreadsheetExpressionReference = selection.toExpressionReference();
@@ -321,9 +321,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
             //}
             if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
                 value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
-                        (SpreadsheetExpressionReference) reference,
-                        this.spreadsheetExpressionReferenceLoader,
-                        this
+                    (SpreadsheetExpressionReference) reference,
+                    this.spreadsheetExpressionReferenceLoader,
+                    this
                 );
             }
         }
@@ -341,7 +341,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public Locale locale() {
         return this.localeContext()
-                .locale();
+            .locale();
     }
 
     private final LocaleContext localeContext;
@@ -370,7 +370,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         return Cast.to(
-                this.formHandlerContext.validatorContext(reference)
+            this.formHandlerContext.validatorContext(reference)
         );
     }
 
@@ -389,20 +389,20 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         final SpreadsheetConverterContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new BasicSpreadsheetExpressionEvaluationContext(
-                        this.cell,
-                        this.spreadsheetExpressionReferenceLoader,
-                        this.serverUrl,
-                        this.spreadsheetMetadata,
-                        this.spreadsheetStoreRepository,
-                        after,
-                        this.spreadsheetFormatterContextFactory,
-                        this.formHandlerContext,
-                        this.expressionFunctionProvider,
-                        this.localeContext,
-                        this.providerContext
-                );
+            this :
+            new BasicSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
+                this.serverUrl,
+                this.spreadsheetMetadata,
+                this.spreadsheetStoreRepository,
+                after,
+                this.spreadsheetFormatterContextFactory,
+                this.formHandlerContext,
+                this.expressionFunctionProvider,
+                this.localeContext,
+                this.providerContext
+            );
     }
 
     // Object...........................................................................................................

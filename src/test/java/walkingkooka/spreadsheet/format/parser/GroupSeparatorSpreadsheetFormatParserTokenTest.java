@@ -72,7 +72,7 @@ public final class GroupSeparatorSpreadsheetFormatParserTokenTest extends NonSym
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR
+            SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR
         );
     }
 

@@ -29,7 +29,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 final public class SpreadsheetParserNameTest implements PluginNameTesting<SpreadsheetParserName>,
-        ConstantsTesting<SpreadsheetParserName> {
+    ConstantsTesting<SpreadsheetParserName> {
 
     // constants........................................................................................................
 
@@ -55,17 +55,17 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
 
     private void verifyConstant(final String text) {
         assertSame(
-                SpreadsheetParserName.with(text),
-                SpreadsheetParserName.with(text)
+            SpreadsheetParserName.with(text),
+            SpreadsheetParserName.with(text)
         );
 
         final SpreadsheetParserName instance = SpreadsheetParserName.with(text);
         assertSame(
-                instance,
-                this.unmarshall(
-                        this.marshallContext()
-                                .marshall(instance)
-                )
+            instance,
+            this.unmarshall(
+                this.marshallContext()
+                    .marshall(instance)
+            )
         );
     }
 
@@ -79,49 +79,49 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     @Test
     public void testIsSpreadsheetParsePatternWithNonSpreadsheetParsePatternName() {
         this.isSpreadsheetParsePatternAndCheck(
-                "abc-123",
-                false
+            "abc-123",
+            false
         );
     }
 
     @Test
     public void testIsSpreadsheetParsePatternWithDateParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-                "date-parse-pattern",
-                true
+            "date-parse-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetParsePatternWithDateTimeParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-                "date-time-parse-pattern",
-                true
+            "date-time-parse-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetParsePatternWithNumberParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-                "number-parse-pattern",
-                true
+            "number-parse-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetParsePatternWithTimeParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-                "time-parse-pattern",
-                true
+            "time-parse-pattern",
+            true
         );
     }
 
     private void isSpreadsheetParsePatternAndCheck(final String name,
                                                    final boolean expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetParserName.with(name)
-                        .isSpreadsheetParsePattern()
+            expected,
+            SpreadsheetParserName.with(name)
+                .isSpreadsheetParsePattern()
         );
     }
 
@@ -151,8 +151,8 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
         final String text = "yyyy/mm/dd";
 
         this.checkEquals(
-                SpreadsheetParserSelector.with(name, text),
-                name.setValueText(text)
+            SpreadsheetParserSelector.with(name, text),
+            name.setValueText(text)
         );
     }
 }

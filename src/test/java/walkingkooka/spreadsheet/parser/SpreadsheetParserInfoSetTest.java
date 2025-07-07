@@ -30,7 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet>,
-        ClassTesting<SpreadsheetParserInfoSet> {
+    ClassTesting<SpreadsheetParserInfoSet> {
 
     // immutable set....................................................................................................
 
@@ -39,8 +39,8 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
         final SpreadsheetParserInfoSet set = this.createSet();
 
         assertSame(
-                set,
-                Sets.immutable(set)
+            set,
+            Sets.immutable(set)
         );
     }
 
@@ -61,10 +61,10 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
     @Override
     public SpreadsheetParserInfoSet createSet() {
         return SpreadsheetParserInfoSet.with(
-                Sets.of(
-                        this.info(),
-                        SpreadsheetParserInfo.parse("https://example.com/parser-222 parser-222")
-                )
+            Sets.of(
+                this.info(),
+                SpreadsheetParserInfo.parse("https://example.com/parser-222 parser-222")
+            )
         );
     }
 
@@ -90,27 +90,27 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetParserInfoSet.EMPTY,
-                JsonNode.array()
+            SpreadsheetParserInfoSet.EMPTY,
+            JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty2() {
         final SpreadsheetParserInfoSet set = SpreadsheetParserInfoSet.with(
-                Sets.of(
-                        SpreadsheetParserInfo.with(
-                                Url.parseAbsolute("https://example.com/test123"),
-                                SpreadsheetParserName.with("test123")
-                        )
+            Sets.of(
+                SpreadsheetParserInfo.with(
+                    Url.parseAbsolute("https://example.com/test123"),
+                    SpreadsheetParserName.with("test123")
                 )
+            )
         );
 
         this.marshallAndCheck(
-                set,
-                "[\n" +
-                        "  \"https://example.com/test123 test123\"\n" +
-                        "]"
+            set,
+            "[\n" +
+                "  \"https://example.com/test123 test123\"\n" +
+                "]"
         );
     }
 
@@ -120,24 +120,24 @@ public final class SpreadsheetParserInfoSetTest implements PluginInfoSetLikeTest
     public SpreadsheetParserInfoSet unmarshall(final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserInfoSet.unmarshall(
-                node,
-                context
+            node,
+            context
         );
     }
 
     @Override
     public SpreadsheetParserInfoSet createJsonNodeMarshallingValue() {
         return SpreadsheetParserInfoSet.with(
-                Sets.of(
-                        SpreadsheetParserInfo.with(
-                                Url.parseAbsolute("https://example.com/test111"),
-                                SpreadsheetParserName.with("test111")
-                        ),
-                        SpreadsheetParserInfo.with(
-                                Url.parseAbsolute("https://example.com/test222"),
-                                SpreadsheetParserName.with("test222")
-                        )
+            Sets.of(
+                SpreadsheetParserInfo.with(
+                    Url.parseAbsolute("https://example.com/test111"),
+                    SpreadsheetParserName.with("test111")
+                ),
+                SpreadsheetParserInfo.with(
+                    Url.parseAbsolute("https://example.com/test222"),
+                    SpreadsheetParserName.with("test222")
                 )
+            )
         );
     }
 

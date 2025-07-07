@@ -48,70 +48,70 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     @Test
     public void testWithNullCellStoreFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        null,
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                null,
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullMetadataFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        this.cellStore(),
-                        null,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                null,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetParserProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        this.cellStore(),
-                        METADATA,
-                        null,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                METADATA,
+                null,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullLocaleContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        this.cellStore(),
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        null,
-                        PROVIDER_CONTEXT
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                null,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
     @Test
     public void testWithNullProviderContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        this.cellStore(),
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                null
+            )
         );
     }
 
@@ -120,16 +120,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCellStore cellStore = this.cellStore();
 
         this.check(
-                SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        cellStore,
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                ),
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                 cellStore,
                 METADATA,
-                SPREADSHEET_PARSER_PROVIDER
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            ),
+            cellStore,
+            METADATA,
+            SPREADSHEET_PARSER_PROVIDER
         );
     }
 
@@ -138,22 +138,22 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCellStore cellStore = this.cellStore();
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore wrapped = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                cellStore,
+            cellStore,
+            METADATA,
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
+        );
+
+        assertSame(
+            wrapped,
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                wrapped,
                 METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
-        );
-
-        assertSame(
-                wrapped,
-                SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        wrapped,
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                ));
+            ));
     }
 
     @Test
@@ -161,28 +161,28 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCellStore cellStore = this.cellStore();
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore wrapped = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                cellStore,
-                METADATA,
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            cellStore,
+            METADATA,
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         final SpreadsheetMetadata differentMetadata = METADATA.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999L)
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(99999L)
         );
 
         this.check(
-                SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        wrapped,
-                        differentMetadata,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                ),
-                cellStore,
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                wrapped,
                 differentMetadata,
-                SPREADSHEET_PARSER_PROVIDER
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            ),
+            cellStore,
+            differentMetadata,
+            SPREADSHEET_PARSER_PROVIDER
         );
     }
 
@@ -202,28 +202,28 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "1";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(SpreadsheetFormulaParserToken.number(
-                                Lists.of(SpreadsheetFormulaParserToken.digits(text, text)),
-                                text
-                        ))
+            .setText(text)
+            .setToken(
+                Optional.of(SpreadsheetFormulaParserToken.number(
+                    Lists.of(SpreadsheetFormulaParserToken.digits(text, text)),
+                    text
+                ))
+            )
+            .setExpression(
+                Optional.of(
+                    number(1)
                 )
-                .setExpression(
-                        Optional.of(
-                                number(1)
-                        )
-                );
+            );
 
         final SpreadsheetCell cell = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        formula
-                );
+            .setFormula(
+                formula
+            );
 
         this.saveAndCheck(
-                cell,
-                cell,
-                cell
+            cell,
+            cell,
+            cell
         );
     }
 
@@ -232,33 +232,33 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "2";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text);
+            .setText(text);
 
         final SpreadsheetCell requires = SpreadsheetSelection.parseCell("B2")
-                .setFormula(
-                        formula
-                );
+            .setFormula(
+                formula
+            );
 
         final Optional<Expression> expression = Optional.of(
-                number(2)
+            number(2)
         );
 
         final SpreadsheetCell with = requires.setFormula(
-                formula.setToken(
-                                Optional.of(
-                                        SpreadsheetFormulaParserToken.number(
-                                                Lists.of(SpreadsheetFormulaParserToken.digits(text, text)),
-                                                text
-                                        )
-                                )
+            formula.setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.number(
+                            Lists.of(SpreadsheetFormulaParserToken.digits(text, text)),
+                            text
                         )
-                        .setExpression(expression)
+                    )
+                )
+                .setExpression(expression)
         );
 
         this.saveAndCheck(
-                requires,
-                with,
-                with
+            requires,
+            with,
+            with
         );
     }
 
@@ -267,25 +267,25 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "99:12:00";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text);
+            .setText(text);
 
         final SpreadsheetCell requires = SpreadsheetSelection.parseCell("B2")
-                .setFormula(formula);
+            .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
-                formula.setValue(
-                        Optional.of(
-                                SpreadsheetErrorKind.ERROR.setMessage(
-                                        "Invalid character \'9\' at 0 expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | \"d/m/y\" | \"d/m/y h:mm\" | \"#;#.#\" | \"hh:mm\""
-                                )
-                        )
+            formula.setValue(
+                Optional.of(
+                    SpreadsheetErrorKind.ERROR.setMessage(
+                        "Invalid character \'9\' at 0 expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | \"d/m/y\" | \"d/m/y h:mm\" | \"#;#.#\" | \"hh:mm\""
+                    )
                 )
+            )
         );
 
         this.saveAndCheck(
-                requires,
-                with,
-                with
+            requires,
+            with,
+            with
         );
     }
 
@@ -294,36 +294,36 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "99/12/00";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text);
+            .setText(text);
 
         final SpreadsheetCell requires = SpreadsheetSelection.parseCell("B2")
-                .setFormula(formula);
+            .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
-                formula.setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.date(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.dayNumber(99, "99"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.year(0, "00")
-                                        ),
-                                        text
-                                )
-                        )
-                ).setValue(
-                        Optional.of(
-                                SpreadsheetErrorKind.VALUE.setMessage("Invalid value for DayOfMonth (valid values 1 - 28/31): 99")
-                        )
+            formula.setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.dayNumber(99, "99"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.year(0, "00")
+                        ),
+                        text
+                    )
                 )
+            ).setValue(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Invalid value for DayOfMonth (valid values 1 - 28/31): 99")
+                )
+            )
         );
 
         this.saveAndCheck(
-                requires,
-                with,
-                with
+            requires,
+            with,
+            with
         );
     }
 
@@ -340,19 +340,19 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         };
 
         final SpreadsheetCell returned = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                cellStore,
-                METADATA,
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            cellStore,
+            METADATA,
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         ).save(cell);
         this.checkEquals(saved,
-                this.saved,
-                () -> "saved " + cell + " metadata=" + METADATA
+            this.saved,
+            () -> "saved " + cell + " metadata=" + METADATA
         );
         this.checkEquals(loaded,
-                returned,
-                () -> "returned saved " + cell + " metadata=" + METADATA
+            returned,
+            () -> "returned saved " + cell + " metadata=" + METADATA
         );
     }
 
@@ -363,23 +363,23 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "Tuesday 9/2/2021";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.date(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.dayName(2, "Tuesday"),
-                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
-                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                        ),
-                                        text
-                                )
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.dayName(2, "Tuesday"),
+                            SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                            SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.year(2021, "2021")
+                        ),
+                        text
+                    )
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -387,51 +387,51 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         store.save(requires);
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("ES")
-                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("ES")
+            ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         final String text2 = "martes 9/2/2021";
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                SpreadsheetFormulaParserToken.date(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.dayName(2, "martes"),
-                                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
-                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                                        ),
-                                                        text2
-                                                )
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                Expression.value(
-                                                        LocalDate.of(2021, 2, 9)
-                                                )
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text2)
+                    .setToken(
+                        Optional.of(
+                            SpreadsheetFormulaParserToken.date(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.dayName(2, "martes"),
+                                    SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                    SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.year(2021, "2021")
+                                ),
+                                text2
+                            )
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            Expression.value(
+                                LocalDate.of(2021, 2, 9)
+                            )
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
     private SpreadsheetCell cell(SpreadsheetFormula formula) {
         return SpreadsheetSelection.parseCell("C3")
-                .setFormula(formula);
+            .setFormula(formula);
     }
 
     @Test
@@ -439,23 +439,23 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "Tuesday 9/2/2021";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.date(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.dayNameAbbreviation(2, "Tuesday"),
-                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
-                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                        ),
-                                        text
-                                )
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.dayNameAbbreviation(2, "Tuesday"),
+                            SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                            SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.year(2021, "2021")
+                        ),
+                        text
+                    )
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -463,45 +463,45 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         store.save(requires);
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("ES")
-                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("ES")
+            ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         final String text2 = "mar. 9/2/2021";
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                SpreadsheetFormulaParserToken.date(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.dayNameAbbreviation(2, "mar."),
-                                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
-                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                                        ),
-                                                        text2
-                                                )
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                Expression.value(
-                                                        LocalDate.of(2021, 2, 9)
-                                                )
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text2)
+                    .setToken(
+                        Optional.of(
+                            SpreadsheetFormulaParserToken.date(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.dayNameAbbreviation(2, "mar."),
+                                    SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                    SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.year(2021, "2021")
+                                ),
+                                text2
+                            )
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            Expression.value(
+                                LocalDate.of(2021, 2, 9)
+                            )
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
@@ -510,21 +510,21 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "9/February/2021";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.date(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.monthName(2, "February"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                        ),
-                                        text
-                                )
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthName(2, "February"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.year(2021, "2021")
+                        ),
+                        text
+                    )
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -532,43 +532,43 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         store.save(requires);
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("ES")
-                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("ES")
+            ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         final String text2 = "9/marzo/2021";
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                SpreadsheetFormulaParserToken.date(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.monthName(2, "marzo"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                                        ),
-                                                        text2
-                                                )
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                Expression.value(
-                                                        LocalDate.of(2021, 2, 9)
-                                                )
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text2)
+                    .setToken(
+                        Optional.of(
+                            SpreadsheetFormulaParserToken.date(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.monthName(2, "marzo"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.year(2021, "2021")
+                                ),
+                                text2
+                            )
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            Expression.value(
+                                LocalDate.of(2021, 2, 9)
+                            )
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
@@ -577,21 +577,21 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "9/Feb/2021";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.date(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "Feb"),
-                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                        ),
-                                        text
-                                )
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "Feb"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.year(2021, "2021")
+                        ),
+                        text
+                    )
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -599,43 +599,43 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         store.save(requires);
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("ES")
-                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("ES")
+            ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         final String text2 = "9/mar./2021";
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                SpreadsheetFormulaParserToken.date(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "mar."),
-                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
-                                                        ),
-                                                        text2
-                                                )
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                Expression.value(
-                                                        LocalDate.of(2021, 2, 9)
-                                                )
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text2)
+                    .setToken(
+                        Optional.of(
+                            SpreadsheetFormulaParserToken.date(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "mar."),
+                                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                    SpreadsheetFormulaParserToken.year(2021, "2021")
+                                ),
+                                text2
+                            )
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            Expression.value(
+                                LocalDate.of(2021, 2, 9)
+                            )
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
@@ -643,12 +643,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenTextUpdateRequiredNumber() {
         final String text = "3" + DECIMAL_SEPARATOR + "5";
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                this.numberParserToken(DECIMAL_SEPARATOR)
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    this.numberParserToken(DECIMAL_SEPARATOR)
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -657,47 +657,47 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final char newDecimalSeparator = '*';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                        DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator(newDecimalSeparator)
-                ),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator(newDecimalSeparator)
+            ),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text.replace(DECIMAL_SEPARATOR, newDecimalSeparator))
-                                .setToken(
-                                        Optional.of(
-                                                this.numberParserToken(newDecimalSeparator)
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                number(3.5)
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text.replace(DECIMAL_SEPARATOR, newDecimalSeparator))
+                    .setToken(
+                        Optional.of(
+                            this.numberParserToken(newDecimalSeparator)
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            number(3.5)
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
     private SpreadsheetFormulaParserToken expressionNumberWithPercentParserToken(final char percentSymbol) {
         return SpreadsheetFormulaParserToken.expression(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                        SpreadsheetFormulaParserToken.number(
-                                Lists.of(
-                                        SpreadsheetFormulaParserToken.digits("150", "150"),
-                                        SpreadsheetFormulaParserToken.percentSymbol("" + percentSymbol, "" + percentSymbol)
-                                ),
-                                "150" + percentSymbol
-                        )
-                ),
-                "=150" + percentSymbol
+            Lists.of(
+                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                SpreadsheetFormulaParserToken.number(
+                    Lists.of(
+                        SpreadsheetFormulaParserToken.digits("150", "150"),
+                        SpreadsheetFormulaParserToken.percentSymbol("" + percentSymbol, "" + percentSymbol)
+                    ),
+                    "150" + percentSymbol
+                )
+            ),
+            "=150" + percentSymbol
         );
     }
 
@@ -705,16 +705,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testSaveFormulaWithTokenAndExpressionTextUpdateRequired() {
         final String text = "3" + DECIMAL_SEPARATOR + "5";
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                this.numberParserToken(DECIMAL_SEPARATOR)
-                        )
-                ).setExpression(
-                        Optional.of(
-                                number(3.5)
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    this.numberParserToken(DECIMAL_SEPARATOR)
+                )
+            ).setExpression(
+                Optional.of(
+                    number(3.5)
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -723,48 +723,48 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
 
         final char newDecimalSeparator = '*';
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                        DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator(newDecimalSeparator)
-                ),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                DECIMAL_NUMBER_SYMBOLS.setDecimalSeparator(newDecimalSeparator)
+            ),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text.replace(DECIMAL_SEPARATOR, newDecimalSeparator))
-                                .setToken(
-                                        Optional.of(
-                                                this.numberParserToken(newDecimalSeparator)
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                number(3.5)
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text.replace(DECIMAL_SEPARATOR, newDecimalSeparator))
+                    .setToken(
+                        Optional.of(
+                            this.numberParserToken(newDecimalSeparator)
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            number(3.5)
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
     private SpreadsheetFormulaParserToken numberParserToken(final char decimalSeparator) {
         return SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.digits("3", "3"),
-                        SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + decimalSeparator, "" + decimalSeparator),
-                        SpreadsheetFormulaParserToken.digits("5", "5")
-                ),
-                "3" + decimalSeparator + "5"
+            Lists.of(
+                SpreadsheetFormulaParserToken.digits("3", "3"),
+                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + decimalSeparator, "" + decimalSeparator),
+                SpreadsheetFormulaParserToken.digits("5", "5")
+            ),
+            "3" + decimalSeparator + "5"
         );
     }
 
     private Expression number(final Number number) {
         return Expression.value(
-                EXPRESSION_NUMBER_KIND.create(number)
+            EXPRESSION_NUMBER_KIND.create(number)
         );
     }
 
@@ -773,21 +773,21 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final String text = "9:59 PM";
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText(text)
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.time(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.hour(9, "9"),
-                                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                                                SpreadsheetFormulaParserToken.minute(59, "59"),
-                                                SpreadsheetFormulaParserToken.textLiteral(" ", " "),
-                                                SpreadsheetFormulaParserToken.amPm(12, "PM")
-                                        ),
-                                        text
-                                )
-                        )
-                );
+            .setText(text)
+            .setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.time(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.hour(9, "9"),
+                            SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                            SpreadsheetFormulaParserToken.minute(59, "59"),
+                            SpreadsheetFormulaParserToken.textLiteral(" ", " "),
+                            SpreadsheetFormulaParserToken.amPm(12, "PM")
+                        ),
+                        text
+                    )
+                )
+            );
 
         final SpreadsheetCell requires = this.cell(formula);
 
@@ -795,43 +795,43 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         store.save(requires);
 
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore loader = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                store,
-                METADATA.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.forLanguageTag("ES")
-                ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            store,
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("ES")
+            ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         final String text2 = "9:59 p. m.";
         this.checkEquals(
-                requires.setFormula(
-                        formula.setText(text2)
-                                .setToken(
-                                        Optional.of(
-                                                SpreadsheetFormulaParserToken.time(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.hour(9, "9"),
-                                                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                                                                SpreadsheetFormulaParserToken.minute(59, "59"),
-                                                                SpreadsheetFormulaParserToken.textLiteral(" ", " "),
-                                                                SpreadsheetFormulaParserToken.amPm(12, "p. m.")
-                                                        ),
-                                                        text2
-                                                )
-                                        )
-                                ).setExpression(
-                                        Optional.of(
-                                                Expression.value(
-                                                        LocalTime.of(9 + 12, 59)
-                                                )
-                                        )
-                                )
-                ),
-                loader.loadOrFail(requires.reference()),
-                () -> "didnt rewrite formula"
+            requires.setFormula(
+                formula.setText(text2)
+                    .setToken(
+                        Optional.of(
+                            SpreadsheetFormulaParserToken.time(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.hour(9, "9"),
+                                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                    SpreadsheetFormulaParserToken.minute(59, "59"),
+                                    SpreadsheetFormulaParserToken.textLiteral(" ", " "),
+                                    SpreadsheetFormulaParserToken.amPm(12, "p. m.")
+                                ),
+                                text2
+                            )
+                        )
+                    ).setExpression(
+                        Optional.of(
+                            Expression.value(
+                                LocalTime.of(9 + 12, 59)
+                            )
+                        )
+                    )
+            ),
+            loader.loadOrFail(requires.reference()),
+            () -> "didnt rewrite formula"
         );
     }
 
@@ -841,27 +841,27 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     public void testToString() {
         final SpreadsheetCellStore cellStore = SpreadsheetCellStores.fake();
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                cellStore,
-                METADATA,
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            cellStore,
+            METADATA,
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
 
         this.toStringAndCheck(
-                store,
-                METADATA + " " + cellStore + " " + SPREADSHEET_PARSER_PROVIDER + " " + LOCALE_CONTEXT + " " + PROVIDER_CONTEXT
+            store,
+            METADATA + " " + cellStore + " " + SPREADSHEET_PARSER_PROVIDER + " " + LOCALE_CONTEXT + " " + PROVIDER_CONTEXT
         );
     }
 
     @Override
     public SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore createStore() {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                this.cellStore(),
-                METADATA,
-                SPREADSHEET_PARSER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            this.cellStore(),
+            METADATA,
+            SPREADSHEET_PARSER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
     }
 

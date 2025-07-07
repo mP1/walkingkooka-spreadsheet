@@ -31,28 +31,28 @@ import java.util.Optional;
 public final class SpreadsheetExporterTestingTest implements SpreadsheetExporterTesting<SpreadsheetExporterTestingTest.TestSpreadsheetExporter> {
 
     private final static WebEntity WEB_ENTITY = WebEntity.empty()
-            .setContentType(Optional.of(MediaType.TEXT_PLAIN))
-            .setText("Hello");
+        .setContentType(Optional.of(MediaType.TEXT_PLAIN))
+        .setText("Hello");
 
     @Test
     public void testExportFails() {
         final String message = "Fail message 123";
 
         this.exportFails(
-                new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
-                    @Override
-                    public WebEntity export(final SpreadsheetCellRange cells,
-                                            final SpreadsheetCellValueKind valueKind,
-                                            final SpreadsheetExporterContext context) {
-                        throw new IllegalArgumentException(message);
-                    }
-                },
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.empty()
-                ),
-                SpreadsheetCellValueKind.CELL,
-                new IllegalArgumentException(message)
+            new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
+                @Override
+                public WebEntity export(final SpreadsheetCellRange cells,
+                                        final SpreadsheetCellValueKind valueKind,
+                                        final SpreadsheetExporterContext context) {
+                    throw new IllegalArgumentException(message);
+                }
+            },
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.empty()
+            ),
+            SpreadsheetCellValueKind.CELL,
+            new IllegalArgumentException(message)
         );
     }
 
@@ -61,29 +61,29 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
         final SpreadsheetCellValueKind valueKind = SpreadsheetCellValueKind.FORMULA;
 
         final WebEntity webEntity = WebEntity.empty()
-                .setContentType(
-                        Optional.of(MediaType.TEXT_PLAIN)
-                );
+            .setContentType(
+                Optional.of(MediaType.TEXT_PLAIN)
+            );
         final SpreadsheetCellRange cells = SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.empty()
+            SpreadsheetSelection.ALL_CELLS,
+            Sets.empty()
         );
 
         this.exportAndCheck(
-                new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
-                    @Override
-                    public WebEntity export(final SpreadsheetCellRange r,
-                                            final SpreadsheetCellValueKind k,
-                                            final SpreadsheetExporterContext context) {
-                        checkEquals(cells, r);
-                        checkEquals(valueKind, k);
+            new SpreadsheetExporterTestingTest.TestSpreadsheetExporter() {
+                @Override
+                public WebEntity export(final SpreadsheetCellRange r,
+                                        final SpreadsheetCellValueKind k,
+                                        final SpreadsheetExporterContext context) {
+                    checkEquals(cells, r);
+                    checkEquals(valueKind, k);
 
-                        return webEntity;
-                    }
-                },
-                cells,
-                valueKind,
-                webEntity
+                    return webEntity;
+                }
+            },
+            cells,
+            valueKind,
+            webEntity
         );
     }
 

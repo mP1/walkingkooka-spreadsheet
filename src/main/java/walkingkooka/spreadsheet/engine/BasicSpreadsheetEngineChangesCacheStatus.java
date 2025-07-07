@@ -103,6 +103,6 @@ interface BasicSpreadsheetEngineChangesCacheStatus<S extends SpreadsheetSelectio
     default boolean containsOrEqual(final String left,
                                     final String right) {
         return left.equals(right) ||
-                left.contains(right);
+            left.contains(right);
     }
 }

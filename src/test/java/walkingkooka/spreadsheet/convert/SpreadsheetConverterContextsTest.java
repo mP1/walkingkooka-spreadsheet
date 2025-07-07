@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
 import java.math.MathContext;
 
 public final class SpreadsheetConverterContextsTest implements ClassTesting2<SpreadsheetConverterContexts>,
-        PublicStaticHelperTesting<SpreadsheetConverterContexts> {
+    PublicStaticHelperTesting<SpreadsheetConverterContexts> {
 
     @Test
     public void testPublicStaticMethodsWithoutMathContextParameter() {

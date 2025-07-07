@@ -27,7 +27,7 @@ import java.util.Comparator;
  * Cells that could not be converted will be placed before or after the sorted list of cells.
  */
 public interface SpreadsheetComparator<T> extends Comparator<T>,
-        HasName<SpreadsheetComparatorName> {
+    HasName<SpreadsheetComparatorName> {
 
     /**
      * The type handled by this {@link Comparator}. This is used to convert the left/right values before calling {@link Comparator#compare(Object, Object)}.

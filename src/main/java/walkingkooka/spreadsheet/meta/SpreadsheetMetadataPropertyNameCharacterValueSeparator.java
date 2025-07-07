@@ -45,7 +45,7 @@ final class SpreadsheetMetadataPropertyNameCharacterValueSeparator extends Sprea
     Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
         final char decimal = symbols.getDecimalSeparator();
         return '.' == decimal ?
-                ',' :
-                ';';
+            ',' :
+            ';';
     }
 }

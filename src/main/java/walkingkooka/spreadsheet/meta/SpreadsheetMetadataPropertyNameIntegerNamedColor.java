@@ -47,10 +47,10 @@ final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends Spreadsheet
             SpreadsheetMetadataPropertyName.numberedColor(colorNumber);
         } catch (final Exception cause) {
             throw new SpreadsheetMetadataPropertyValueException(
-                    cause.getMessage(),
-                    this,
-                    value,
-                    cause
+                cause.getMessage(),
+                this,
+                value,
+                cause
             );
         }
         return colorNumber;
@@ -60,8 +60,8 @@ final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends Spreadsheet
     void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitNamedColor(
-                this.name,
-                value
+            this.name,
+            value
         );
     }
 

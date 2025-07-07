@@ -72,24 +72,24 @@ public final class MinuteSpreadsheetFormatParserTokenTest extends NonSymbolSprea
     @Test
     public void testKindMinutes1() {
         this.kindAndCheck(
-                "m",
-                SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO
+            "m",
+            SpreadsheetFormatParserTokenKind.MINUTES_WITHOUT_LEADING_ZERO
         );
     }
 
     @Test
     public void testKindMinutes2() {
         this.kindAndCheck(
-                "mm",
-                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO
+            "mm",
+            SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO
         );
     }
 
     @Test
     public void testKindMinutes3() {
         this.kindAndCheck(
-                "mmm",
-                SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO
+            "mmm",
+            SpreadsheetFormatParserTokenKind.MINUTES_WITH_LEADING_ZERO
         );
     }
 

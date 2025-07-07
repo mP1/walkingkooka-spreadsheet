@@ -32,8 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<SpreadsheetRow, SpreadsheetRowReference>
-        implements HasSpreadsheetReferenceTesting,
-        PatchableTesting<SpreadsheetRow> {
+    implements HasSpreadsheetReferenceTesting,
+    PatchableTesting<SpreadsheetRow> {
 
     private final static int ROW = 20;
     private final static SpreadsheetRowReference REFERENCE = reference(ROW);
@@ -102,15 +102,15 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testEqualsDifferentRow() {
         this.checkNotEquals(
-                this.createObject(ROW + 999)
+            this.createObject(ROW + 999)
         );
     }
 
     @Test
     public void testEqualsDifferentHidden() {
         this.checkNotEquals(
-                this.createObject()
-                        .setHidden(differentHidden())
+            this.createObject()
+                .setHidden(differentHidden())
         );
     }
 
@@ -119,37 +119,37 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                SpreadsheetSelection.parseRow("123").row(),
-                "{\n" +
-                        "  \"123\": {\n" +
-                        "    \"hidden\": false\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetSelection.parseRow("123").row(),
+            "{\n" +
+                "  \"123\": {\n" +
+                "    \"hidden\": false\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallAbsolute() {
         this.marshallAndCheck(
-                this.createRow(),
-                "{\n" +
-                        "  \"$21\": {\n" +
-                        "    \"hidden\": false\n" +
-                        "  }\n" +
-                        "}"
+            this.createRow(),
+            "{\n" +
+                "  \"$21\": {\n" +
+                "    \"hidden\": false\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallAbsoluteHidden() {
         this.marshallAndCheck(
-                this.createRow()
-                        .setHidden(true),
-                "{\n" +
-                        "  \"$21\": {\n" +
-                        "    \"hidden\": true\n" +
-                        "  }\n" +
-                        "}"
+            this.createRow()
+                .setHidden(true),
+            "{\n" +
+                "  \"$21\": {\n" +
+                "    \"hidden\": true\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -160,11 +160,11 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("1").row();
 
         this.patchAndCheck(
-                row,
-                "{\n" +
-                        "  \"hidden\": true\n" +
-                        "}",
-                row.setHidden(true)
+            row,
+            "{\n" +
+                "  \"hidden\": true\n" +
+                "}",
+            row.setHidden(true)
         );
     }
 
@@ -173,11 +173,11 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         final SpreadsheetRow row = SpreadsheetSelection.parseRow("2").row();
 
         this.patchAndCheck(
-                row.setHidden(true),
-                "{\n" +
-                        "  \"hidden\": false\n" +
-                        "}",
-                row.setHidden(false)
+            row.setHidden(true),
+            "{\n" +
+                "  \"hidden\": false\n" +
+                "}",
+            row.setHidden(false)
         );
     }
 
@@ -186,12 +186,12 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testTreePrintableHidden() {
         final SpreadsheetRow row = this.createObject()
-                .setHidden(true);
+            .setHidden(true);
 
         this.treePrintAndCheck(
-                row,
-                "" + REFERENCE + EOL +
-                        "  hidden" + EOL
+            row,
+            "" + REFERENCE + EOL +
+                "  hidden" + EOL
         );
     }
 
@@ -200,17 +200,17 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                REFERENCE.row(),
-                "$21"
+            REFERENCE.row(),
+            "$21"
         );
     }
 
     @Test
     public void testToStringHiddenTrue() {
         this.toStringAndCheck(
-                REFERENCE.row()
-                        .setHidden(true),
-                "$21 hidden=true"
+            REFERENCE.row()
+                .setHidden(true),
+            "$21 hidden=true"
         );
     }
 
@@ -221,8 +221,8 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
 
         this.referenceAndCheck(
-                row.row(),
-                row
+            row.row(),
+            row
         );
     }
 

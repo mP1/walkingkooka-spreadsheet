@@ -28,8 +28,8 @@ public final class MultiplySymbolSpreadsheetFormulaParserToken extends SymbolSpr
     static MultiplySymbolSpreadsheetFormulaParserToken with(final String value,
                                                             final String text) {
         return new MultiplySymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

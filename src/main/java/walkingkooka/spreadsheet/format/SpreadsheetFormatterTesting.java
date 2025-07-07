@@ -30,7 +30,7 @@ import java.util.Optional;
  * Mixin interface with default methods to assist testing of a given {@link SpreadsheetFormatter}.
  */
 public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
-        MathTesting {
+    MathTesting {
 
     // formatAndCheck...................................................................................................
 
@@ -38,9 +38,9 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final Object value,
                                 final SpreadsheetFormatterContext context) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                context
+            formatter,
+            Optional.of(value),
+            context
         );
     }
 
@@ -48,10 +48,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final Optional<Object> value,
                                 final SpreadsheetFormatterContext context) {
         this.formatAndCheck(
-                formatter,
-                value,
-                context,
-                Optional.empty()
+            formatter,
+            value,
+            context,
+            Optional.empty()
         );
     }
 
@@ -60,10 +60,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final String text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                context,
-                text
+            formatter,
+            Optional.of(value),
+            context,
+            text
         );
     }
 
@@ -72,10 +72,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final String text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                context,
-                SpreadsheetText.with(text)
+            formatter,
+            value,
+            context,
+            SpreadsheetText.with(text)
         );
     }
 
@@ -84,10 +84,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                context,
-                text
+            formatter,
+            Optional.of(value),
+            context,
+            text
         );
     }
 
@@ -96,10 +96,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                context,
-                Optional.of(text.toTextNode())
+            formatter,
+            value,
+            context,
+            Optional.of(text.toTextNode())
         );
     }
 
@@ -108,10 +108,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final TextNode text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                context,
-                text
+            formatter,
+            Optional.of(value),
+            context,
+            text
         );
     }
 
@@ -120,10 +120,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final TextNode text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                context,
-                Optional.of(text)
+            formatter,
+            value,
+            context,
+            Optional.of(text)
         );
     }
 
@@ -132,10 +132,10 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final Optional<TextNode> text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                context,
-                text
+            formatter,
+            Optional.of(value),
+            context,
+            text
         );
     }
 
@@ -144,9 +144,9 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final Optional<TextNode> text) {
         this.checkEquals(
-                text,
-                formatter.format(value, context),
-                () -> formatter + " " + CharSequences.quoteIfChars(value)
+            text,
+            formatter.format(value, context),
+            () -> formatter + " " + CharSequences.quoteIfChars(value)
         );
     }
 
@@ -156,9 +156,9 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetFormatterSelectorToken... expected) {
         this.tokensAndCheck(
-                formatter,
-                context,
-                Lists.of(expected)
+            formatter,
+            context,
+            Lists.of(expected)
         );
     }
 
@@ -166,9 +166,9 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
                                 final SpreadsheetFormatterContext context,
                                 final List<SpreadsheetFormatterSelectorToken> expected) {
         this.checkEquals(
-                expected,
-                formatter.tokens(context),
-                formatter::toString
+            expected,
+            formatter.tokens(context),
+            formatter::toString
         );
     }
 }

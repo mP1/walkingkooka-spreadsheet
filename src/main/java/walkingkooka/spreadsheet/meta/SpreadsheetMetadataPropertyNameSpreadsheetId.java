@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     @Override
     SpreadsheetId checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetId);
+            v -> v instanceof SpreadsheetId);
     }
 
     @Override

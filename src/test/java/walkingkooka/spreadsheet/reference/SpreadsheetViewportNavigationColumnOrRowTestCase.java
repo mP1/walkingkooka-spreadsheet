@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 public abstract class SpreadsheetViewportNavigationColumnOrRowTestCase<T extends SpreadsheetViewportNavigationColumnOrRow> extends
-        SpreadsheetViewportNavigationTestCase2<T> {
+    SpreadsheetViewportNavigationTestCase2<T> {
 
     SpreadsheetViewportNavigationColumnOrRowTestCase() {
         super();
@@ -28,24 +28,24 @@ public abstract class SpreadsheetViewportNavigationColumnOrRowTestCase<T extends
 
     final void updateAndCheck(final SpreadsheetSelection selection) {
         this.updateAndCheck(
-                selection,
-                selection
+            selection,
+            selection
         );
     }
 
     final void updateAndCheck(final SpreadsheetSelection selection,
                               final SpreadsheetSelection expected) {
         this.updateAndCheck(
-                selection,
-                expected.setDefaultAnchor()
+            selection,
+            expected.setDefaultAnchor()
         );
     }
 
     final void updateAndCheck(final SpreadsheetSelection selection,
                               final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
-                selection.setDefaultAnchor(),
-                expected
+            selection.setDefaultAnchor(),
+            expected
         );
     }
 }

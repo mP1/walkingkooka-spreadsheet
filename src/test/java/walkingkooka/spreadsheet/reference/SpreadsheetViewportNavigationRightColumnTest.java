@@ -24,23 +24,23 @@ public final class SpreadsheetViewportNavigationRightColumnTest extends Spreadsh
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetSelection.parseCell("D3")
+            SpreadsheetSelection.parseCell("C3"),
+            SpreadsheetSelection.parseCell("D3")
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseColumn("C"),
-                SpreadsheetSelection.parseColumn("D")
+            SpreadsheetSelection.parseColumn("C"),
+            SpreadsheetSelection.parseColumn("D")
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseRow("2")
+            SpreadsheetSelection.parseRow("2")
         );
     }
 

@@ -43,11 +43,11 @@ public interface SpreadsheetExpressionReferenceLoader extends Context {
     default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell,
                                            final SpreadsheetExpressionEvaluationContext context) {
         return this.loadCell(
-                cell,
-                context
+            cell,
+            context
         ).orElseThrow(
-                () -> SpreadsheetError.selectionNotFound(cell)
-                        .exception()
+            () -> SpreadsheetError.selectionNotFound(cell)
+                .exception()
         );
     }
 
@@ -68,10 +68,10 @@ public interface SpreadsheetExpressionReferenceLoader extends Context {
      */
     default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.loadLabel(
-                labelName
+            labelName
         ).orElseThrow(
-                () -> SpreadsheetError.selectionNotFound(labelName)
-                        .exception()
+            () -> SpreadsheetError.selectionNotFound(labelName)
+                .exception()
         );
     }
 }

@@ -65,9 +65,9 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFor
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .disable(ToStringBuilderOption.QUOTE)
-                .value(this.twelveHour ? "12h" : "24h")
-                .label("millisecond decimals").value(this.millisecondDecimals)
-                .build();
+            .disable(ToStringBuilderOption.QUOTE)
+            .value(this.twelveHour ? "12h" : "24h")
+            .label("millisecond decimals").value(this.millisecondDecimals)
+            .build();
     }
 }

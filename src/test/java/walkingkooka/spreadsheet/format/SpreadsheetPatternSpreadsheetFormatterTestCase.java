@@ -31,9 +31,9 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends SpreadsheetPatternSpreadsheetFormatter,
-        T extends SpreadsheetFormatParserToken>
-        implements SpreadsheetFormatterTesting2<F>,
-        HashCodeEqualsDefinedTesting2<F> {
+    T extends SpreadsheetFormatParserToken>
+    implements SpreadsheetFormatterTesting2<F>,
+    HashCodeEqualsDefinedTesting2<F> {
 
     SpreadsheetPatternSpreadsheetFormatterTestCase() {
         super();
@@ -42,13 +42,12 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
     @Test
     public final void testWithNullParserTokenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter0(null)
+            NullPointerException.class,
+            () -> this.createFormatter0(null)
         );
     }
 
-    @Override
-    final public F createFormatter() {
+    @Override final public F createFormatter() {
         return this.createFormatter(this.pattern());
     }
 
@@ -56,16 +55,16 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
 
     final F createFormatter(final String pattern) {
         return this.createFormatter0(
-                this.parsePatternOrFail(
-                        pattern
-                )
+            this.parsePatternOrFail(
+                pattern
+            )
         );
     }
 
     final T parsePatternOrFail(final String pattern) {
         return (T) this.parsePatternOrFail(
-                this.parser(),
-                pattern
+            this.parser(),
+            pattern
         );
     }
 
@@ -73,10 +72,10 @@ public abstract class SpreadsheetPatternSpreadsheetFormatterTestCase<F extends S
     final ParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser,
                                          final String pattern) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .parse(
+                TextCursors.charSequence(pattern),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     abstract Parser<SpreadsheetFormatParserContext> parser();

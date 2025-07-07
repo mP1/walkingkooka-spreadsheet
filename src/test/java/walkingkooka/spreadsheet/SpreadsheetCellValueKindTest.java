@@ -45,64 +45,64 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
     @Test
     public void testCellValue() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setValueType(
-                        Optional.of(
-                                ValidationValueTypeName.with("HelloValueType")
-                        )
+            SpreadsheetFormula.EMPTY.setValueType(
+                Optional.of(
+                    ValidationValueTypeName.with("HelloValueType")
                 )
+            )
         ).setDateTimeSymbols(
-                Optional.of(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(Locale.FRANCE)
-                        )
+            Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(Locale.FRANCE)
                 )
+            )
         ).setDecimalNumberSymbols(
-                Optional.of(
-                        DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                '+',
-                                new DecimalFormatSymbols(Locale.FRANCE)
-                        )
+            Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                    '+',
+                    new DecimalFormatSymbols(Locale.FRANCE)
                 )
+            )
         ).setLocale(
-                Optional.of(Locale.ENGLISH)
+            Optional.of(Locale.ENGLISH)
         ).setFormatter(
-                Optional.of(
-                        SpreadsheetFormatterSelector.parse("hello-formatter")
-                )
+            Optional.of(
+                SpreadsheetFormatterSelector.parse("hello-formatter")
+            )
         ).setFormattedValue(
-                Optional.of(
-                        TextNode.text("formatted-value")
-                )
+            Optional.of(
+                TextNode.text("formatted-value")
+            )
         ).setParser(
-                Optional.of(
-                        SpreadsheetParserSelector.parse("hello-parser")
-                )
+            Optional.of(
+                SpreadsheetParserSelector.parse("hello-parser")
+            )
         ).setStyle(
-                TextStyle.EMPTY.set(
-                        TextStylePropertyName.TEXT_ALIGN,
-                        TextAlign.CENTER
-                )
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+            )
         ).setValidator(
-                Optional.of(
-                        ValidatorSelector.parse("hello-validator")
-                )
+            Optional.of(
+                ValidatorSelector.parse("hello-validator")
+            )
         );
 
         final Set<Object> values = Sets.hash();
         for (final SpreadsheetCellValueKind kind : SpreadsheetCellValueKind.values()) {
             final Object value = values.add(
-                    kind.cellValue(cell)
+                kind.cellValue(cell)
             );
             this.checkNotEquals(
-                    Optional.empty(),
-                    value,
-                    () -> kind + " value missing returned Optional#empty"
+                Optional.empty(),
+                value,
+                () -> kind + " value missing returned Optional#empty"
             );
 
             this.checkEquals(
-                    true,
-                    value,
-                    () -> kind + " returned duplicate value (must be returning wrong property"
+                true,
+                value,
+                () -> kind + " returned duplicate value (must be returning wrong property"
             );
         }
     }
@@ -112,33 +112,33 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
     @Test
     public void testFileExtensionWithCell() {
         this.fileExtensionAndCheck(
-                SpreadsheetCellValueKind.CELL,
-                "cell"
+            SpreadsheetCellValueKind.CELL,
+            "cell"
         );
     }
 
     @Test
     public void testFileExtensionWithDecimalNumberSymbols() {
         this.fileExtensionAndCheck(
-                SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
-                "decimal-number-symbols"
+            SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
+            "decimal-number-symbols"
         );
     }
 
     @Test
     public void testFileExtensionWithValueType() {
         this.fileExtensionAndCheck(
-                SpreadsheetCellValueKind.VALUE_TYPE,
-                "value-type"
+            SpreadsheetCellValueKind.VALUE_TYPE,
+            "value-type"
         );
     }
 
     private void fileExtensionAndCheck(final SpreadsheetCellValueKind kind,
                                        final String expected) {
         this.checkEquals(
-                expected,
-                kind.fileExtension()
-                        .value()
+            expected,
+            kind.fileExtension()
+                .value()
         );
     }
 

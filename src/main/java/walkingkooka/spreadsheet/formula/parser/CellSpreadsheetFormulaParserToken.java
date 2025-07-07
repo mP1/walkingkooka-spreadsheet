@@ -28,8 +28,8 @@ import java.util.List;
  * A reference that includes a defined name or column and row.
  */
 public final class CellSpreadsheetFormulaParserToken extends ParentSpreadsheetFormulaParserToken
-        implements SpreadsheetReferenceParserToken,
-        HasSpreadsheetReference<SpreadsheetCellReference> {
+    implements SpreadsheetReferenceParserToken,
+    HasSpreadsheetReference<SpreadsheetCellReference> {
 
     static CellSpreadsheetFormulaParserToken with(final List<ParserToken> value, final String text) {
         return new CellSpreadsheetFormulaParserToken(Lists.immutable(value), checkText(text));
@@ -63,9 +63,9 @@ public final class CellSpreadsheetFormulaParserToken extends ParentSpreadsheetFo
     @Override
     public CellSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                CellSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            CellSpreadsheetFormulaParserToken::with
         );
     }
 

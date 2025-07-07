@@ -95,7 +95,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     private void deleteCells(final int columnOrRow) {
         this.cells(columnOrRow)
-                .forEach(c -> this.cellStore().delete(c.reference()));
+            .forEach(c -> this.cellStore().delete(c.reference()));
     }
 
     abstract void deleteColumnOrRow(final int columnOrRow);
@@ -112,7 +112,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     private void moveCells(final int columnOrRow) {
         this.cells(columnOrRow)
-                .forEach(this::moveCell);
+            .forEach(this::moveCell);
     }
 
     /**
@@ -145,7 +145,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     private void fixRowReferences(final SpreadsheetRowReference row) {
         this.rowCells(row)
-                .forEach(this::fixExpressionReferences);
+            .forEach(this::fixExpressionReferences);
     }
 
     /**
@@ -154,9 +154,9 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     private void fixExpressionReferences(final SpreadsheetCell cell) {
         final SpreadsheetCell fixed = this.engine.parseFormulaIfNecessary(
-                cell,
-                this::fixExpressionReferences0,
-                this.context
+            cell,
+            this::fixExpressionReferences0,
+            this.context
         );
         if (!cell.equals(fixed)) {
             this.saveCell(fixed);
@@ -168,35 +168,35 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     private SpreadsheetFormulaParserToken fixExpressionReferences0(final SpreadsheetFormulaParserToken token) {
         return token.replaceIf(
-                (t) -> t instanceof CellSpreadsheetFormulaParserToken,// predicate
-                (c) -> {
-                    boolean invalid = false;
+            (t) -> t instanceof CellSpreadsheetFormulaParserToken,// predicate
+            (c) -> {
+                boolean invalid = false;
 
-                    List<ParserToken> newChildren = Lists.array();
-                    for (final ParserToken parserToken : c.children()) {
-                        ParserToken add = parserToken;
-                        if (parserToken instanceof ColumnSpreadsheetFormulaParserToken) {
-                            add = this.fixColumnReferenceParserToken(
-                                    parserToken.cast(ColumnSpreadsheetFormulaParserToken.class)
+                List<ParserToken> newChildren = Lists.array();
+                for (final ParserToken parserToken : c.children()) {
+                    ParserToken add = parserToken;
+                    if (parserToken instanceof ColumnSpreadsheetFormulaParserToken) {
+                        add = this.fixColumnReferenceParserToken(
+                            parserToken.cast(ColumnSpreadsheetFormulaParserToken.class)
+                        ).orElse(null);
+                    } else {
+                        if (parserToken instanceof RowSpreadsheetFormulaParserToken) {
+                            add = this.fixRowReferenceParserToken(
+                                parserToken.cast(RowSpreadsheetFormulaParserToken.class)
                             ).orElse(null);
-                        } else {
-                            if (parserToken instanceof RowSpreadsheetFormulaParserToken) {
-                                add = this.fixRowReferenceParserToken(
-                                        parserToken.cast(RowSpreadsheetFormulaParserToken.class)
-                                ).orElse(null);
-                            }
                         }
-                        if (null == add) {
-                            invalid = true;
-                            break;
-                        }
-                        newChildren.add(add);
                     }
+                    if (null == add) {
+                        invalid = true;
+                        break;
+                    }
+                    newChildren.add(add);
+                }
 
-                    return invalid ?
-                            REF_ERROR :
-                            c.setChildren(newChildren);
-                }// mapper
+                return invalid ?
+                    REF_ERROR :
+                    c.setChildren(newChildren);
+            }// mapper
         ).cast(SpreadsheetFormulaParserToken.class);
     }
 
@@ -216,10 +216,10 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * This token will replace any {@link SpreadsheetCellReference} that become invalid such as a reference to a deleted cell.
      */
     private final static SpreadsheetFormulaParserToken REF_ERROR = SpreadsheetFormulaParserToken.error(
-            SpreadsheetError.selectionDeleted(),
-            SpreadsheetError.selectionDeleted()
-                    .kind()
-                    .text()
+        SpreadsheetError.selectionDeleted(),
+        SpreadsheetError.selectionDeleted()
+            .kind()
+            .text()
     );
 
     /**
@@ -232,7 +232,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final SpreadsheetColumnReference fixColumnReference(final SpreadsheetColumnReference reference) {
         return reference.add(
-                this.deleteOrInsert.fixColumnOrRowReference(this.count)
+            this.deleteOrInsert.fixColumnOrRowReference(this.count)
         );
     }
 
@@ -241,7 +241,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final SpreadsheetRowReference fixRowReference(final SpreadsheetRowReference reference) {
         return reference.add(
-                this.deleteOrInsert.fixColumnOrRowReference(this.count)
+            this.deleteOrInsert.fixColumnOrRowReference(this.count)
         );
     }
 
@@ -271,7 +271,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final void fixAllLabelMappings() {
         this.labelStore().all()
-                .forEach(this.deleteOrInsert::fixLabelMapping);
+            .forEach(this.deleteOrInsert::fixLabelMapping);
     }
 
     // DELETE .......................................................................................................
@@ -356,8 +356,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             } while (false);
 
             this.saveLabelIfUpdated(
-                    rangeBegin.cellRange(rangeEnd),
-                    mapping);
+                rangeBegin.cellRange(rangeEnd),
+                mapping);
         }
     }
 
@@ -420,8 +420,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final int maxRow() {
         return this.cellStore()
-                .rowCount()
-                - 1;
+            .rowCount()
+            - 1;
     }
 
     /**
@@ -452,17 +452,17 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     final SpreadsheetColumnStore columnStore() {
         return this.context.storeRepository()
-                .columns();
+            .columns();
     }
 
     final SpreadsheetCellStore cellStore() {
         return this.context.storeRepository()
-                .cells();
+            .cells();
     }
 
     final SpreadsheetRowStore rowStore() {
         return this.context.storeRepository()
-                .rows();
+            .rows();
     }
 
     final int value;
@@ -489,7 +489,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     final SpreadsheetLabelStore labelStore() {
         return this.context.storeRepository()
-                .labels();
+            .labels();
     }
 
     private final BasicSpreadsheetEngine engine;

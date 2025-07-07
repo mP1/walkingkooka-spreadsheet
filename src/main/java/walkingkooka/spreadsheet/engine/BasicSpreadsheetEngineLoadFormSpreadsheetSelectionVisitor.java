@@ -41,8 +41,8 @@ final class BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor extends Sp
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
         this.changes.getOrCreateCellCache(
-                cell,
-                BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+            cell,
+            BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
         );
     }
 
@@ -54,8 +54,8 @@ final class BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor extends Sp
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.changes.getOrCreateLabelCache(
-                label,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
+            label,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
         );
     }
 

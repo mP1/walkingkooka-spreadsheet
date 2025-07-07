@@ -34,8 +34,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
-        JsonNodeConverterContextDelegator,
-        UsesToStringBuilder {
+    JsonNodeConverterContextDelegator,
+    UsesToStringBuilder {
 
     static BasicSpreadsheetConverterContext with(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetExpressionReference> validationReference,
@@ -49,11 +49,11 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(context, "context");
 
         return new BasicSpreadsheetConverterContext(
-                spreadsheetMetadata,
-                validationReference,
-                converter,
-                spreadsheetLabelNameResolver,
-                context
+            spreadsheetMetadata,
+            validationReference,
+            converter,
+            spreadsheetLabelNameResolver,
+            context
         );
     }
 
@@ -74,14 +74,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         final JsonNodeConverterContext before = this.context;
         final JsonNodeConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
-                this :
-                new BasicSpreadsheetConverterContext(
-                        this.spreadsheetMetadata,
-                        this.validationReference,
-                        this.converter,
-                        this.spreadsheetLabelNameResolver,
-                        after
-                );
+            this :
+            new BasicSpreadsheetConverterContext(
+                this.spreadsheetMetadata,
+                this.validationReference,
+                this.converter,
+                this.spreadsheetLabelNameResolver,
+                after
+            );
     }
 
     // HasSpreadsheetName...............................................................................................
@@ -98,7 +98,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     @Override
     public SpreadsheetExpressionReference validationReference() {
         return this.validationReference.orElseThrow(
-                () -> new IllegalStateException("Missing validation reference")
+            () -> new IllegalStateException("Missing validation reference")
         );
     }
 
@@ -110,9 +110,9 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.converter.canConvert(
-                value,
-                type,
-                this
+            value,
+            type,
+            this
         );
     }
 
@@ -120,9 +120,9 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
         return this.converter.convert(
-                value,
-                type,
-                this
+            value,
+            type,
+            this
         );
     }
 

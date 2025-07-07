@@ -36,9 +36,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetViewportNavigationTestCase2<T extends SpreadsheetViewportNavigation> extends
-        SpreadsheetViewportNavigationTestCase<T> implements ParseStringTesting<List<T>>,
-        HasTextTesting,
-        TreePrintableTesting {
+    SpreadsheetViewportNavigationTestCase<T> implements ParseStringTesting<List<T>>,
+    HasTextTesting,
+    TreePrintableTesting {
 
     SpreadsheetViewportNavigationTestCase2() {
         super();
@@ -56,10 +56,10 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         final T navigation = this.createSpreadsheetViewportNavigation();
 
         this.parseStringAndCheck(
-                navigation.text(),
-                Lists.of(
-                        navigation
-                )
+            navigation.text(),
+            Lists.of(
+                navigation
+            )
         );
     }
 
@@ -67,10 +67,10 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     @Test
     public final void testIsExtend() {
         this.checkEquals(
-                this.type()
-                        .getName()
-                        .contains("Extend"),
-                this.createSpreadsheetViewportNavigation().isExtend()
+            this.type()
+                .getName()
+                .contains("Extend"),
+            this.createSpreadsheetViewportNavigation().isExtend()
         );
     }
 
@@ -78,10 +78,10 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     @Test
     public final void testIsPixel() {
         this.checkEquals(
-                this.type()
-                        .getName()
-                        .contains("Pixel"),
-                this.createSpreadsheetViewportNavigation().isPixel()
+            this.type()
+                .getName()
+                .contains("Pixel"),
+            this.createSpreadsheetViewportNavigation().isPixel()
         );
     }
 
@@ -109,8 +109,8 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     final void updateAndCheck(final AnchoredSpreadsheetSelection selection,
                               final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
-                Optional.of(selection),
-                Optional.of(expected)
+            Optional.of(selection),
+            Optional.of(expected)
         );
     }
 
@@ -118,20 +118,20 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                               final AnchoredSpreadsheetSelection selection,
                               final AnchoredSpreadsheetSelection expected) {
         this.updateAndCheck(
-                navigation,
-                Optional.of(selection),
-                Optional.of(expected)
+            navigation,
+            Optional.of(selection),
+            Optional.of(expected)
         );
     }
 
     final void updateAndCheck(final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                               final Optional<AnchoredSpreadsheetSelection> expected) {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                HOME_VIEWPORT_RECTANGLE.viewport()
-                        .setAnchoredSelection(anchoredSelection),
-                HOME_VIEWPORT_RECTANGLE.viewport()
-                        .setAnchoredSelection(expected)
+            this.createSpreadsheetViewportNavigation(),
+            HOME_VIEWPORT_RECTANGLE.viewport()
+                .setAnchoredSelection(anchoredSelection),
+            HOME_VIEWPORT_RECTANGLE.viewport()
+                .setAnchoredSelection(expected)
         );
     }
 
@@ -139,20 +139,20 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                               final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                               final Optional<AnchoredSpreadsheetSelection> expected) {
         this.updateAndCheck(
-                navigation,
-                HOME_VIEWPORT_RECTANGLE.viewport()
-                        .setAnchoredSelection(anchoredSelection),
-                HOME_VIEWPORT_RECTANGLE.viewport()
-                        .setAnchoredSelection(expected)
+            navigation,
+            HOME_VIEWPORT_RECTANGLE.viewport()
+                .setAnchoredSelection(anchoredSelection),
+            HOME_VIEWPORT_RECTANGLE.viewport()
+                .setAnchoredSelection(expected)
         );
     }
 
     final void updateAndCheck(final SpreadsheetViewport viewport,
                               final SpreadsheetViewport expected) {
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(),
-                viewport,
-                expected
+            this.createSpreadsheetViewportNavigation(),
+            viewport,
+            expected
         );
     }
 
@@ -160,11 +160,11 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                               final SpreadsheetViewport viewport,
                               final SpreadsheetViewport expected) {
         this.updateAndCheck(
-                navigation,
-                viewport,
-                Predicates.never(), // hiddenColumns
-                Predicates.never(), // hiddenRows
-                expected
+            navigation,
+            viewport,
+            Predicates.never(), // hiddenColumns
+            Predicates.never(), // hiddenRows
+            expected
         );
     }
 
@@ -174,7 +174,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                               final Predicate<SpreadsheetRowReference> hiddenRows,
                               final SpreadsheetViewport expected) {
         final SpreadsheetCellReference home = viewport.rectangle()
-                .home();
+            .home();
 
         SpreadsheetCellReference bottomRight = home;
         for (int i = 0; i < COLUMNS_ACROSS; i++) {
@@ -192,28 +192,28 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         }
 
         final SpreadsheetViewportWindows windows = SpreadsheetViewportWindows.with(
-                Sets.of(
-                        home.cellRange(bottomRight)
-                )
+            Sets.of(
+                home.cellRange(bottomRight)
+            )
         );
 
         this.checkEquals(
-                expected,
-                navigation.update(
-                        viewport,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                (r, i, s) -> {
-                                    checkEquals(true, i, "includeFrozenColumnsRows");
-                                    checkEquals(SpreadsheetViewportWindowsFunction.NO_SELECTION, s, "selection");
-                                    return windows;
-                                }
-                        )
-                ),
-                () -> navigation + " update " + viewport + " windows: " + windows
+            expected,
+            navigation.update(
+                viewport,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    (r, i, s) -> {
+                        checkEquals(true, i, "includeFrozenColumnsRows");
+                        checkEquals(SpreadsheetViewportWindowsFunction.NO_SELECTION, s, "selection");
+                        return windows;
+                    }
+                )
+            ),
+            () -> navigation + " update " + viewport + " windows: " + windows
         );
     }
 
@@ -223,23 +223,23 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
 
     final Predicate<SpreadsheetColumnReference> hiddenColumns(final String columns) {
         return hiddenPredicate(
-                columns,
-                SpreadsheetSelection::parseColumn
+            columns,
+            SpreadsheetSelection::parseColumn
         );
     }
 
     final Predicate<SpreadsheetRowReference> hiddenRows(final String rows) {
         return hiddenPredicate(
-                rows,
-                SpreadsheetSelection::parseRow
+            rows,
+            SpreadsheetSelection::parseRow
         );
     }
 
     private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
                                                                                  final Function<String, T> parser) {
         return (columnOrRow) -> CharacterConstant.COMMA.parse(
-                columnOrRows,
-                parser
+            columnOrRows,
+            parser
         ).contains(columnOrRow);
     }
 
@@ -250,7 +250,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     @Override
     public final List<T> parseString(final String string) {
         return Cast.to(
-                SpreadsheetViewportNavigationList.parse(string)
+            SpreadsheetViewportNavigationList.parse(string)
         );
     }
 

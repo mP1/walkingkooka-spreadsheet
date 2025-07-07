@@ -41,8 +41,8 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -55,9 +55,9 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
         Objects.requireNonNull(context, "context");
 
         return this.spreadsheetExporter0(
-                name,
-                Lists.immutable(values),
-                context
+            name,
+            Lists.immutable(values),
+            context
         );
     }
 
@@ -71,9 +71,9 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
         switch (name.value()) {
             case SpreadsheetExporterName.COLLECTION_STRING:
                 exporter = SpreadsheetExporters.collection(
-                        values.stream()
-                                .map(e -> (SpreadsheetExporter) e)
-                                .collect(Collectors.toList())
+                    values.stream()
+                        .map(e -> (SpreadsheetExporter) e)
+                        .collect(Collectors.toList())
                 );
                 break;
             case SpreadsheetExporterName.EMPTY_STRING:
@@ -103,17 +103,17 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
     }
 
     private final static SpreadsheetExporterInfoSet INFOS = SpreadsheetExporterInfoSet.with(
-            Sets.of(
-                    spreadsheetExporterInfo(SpreadsheetExporterName.COLLECTION),
-                    spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY),
-                    spreadsheetExporterInfo(SpreadsheetExporterName.JSON)
-            )
+        Sets.of(
+            spreadsheetExporterInfo(SpreadsheetExporterName.COLLECTION),
+            spreadsheetExporterInfo(SpreadsheetExporterName.EMPTY),
+            spreadsheetExporterInfo(SpreadsheetExporterName.JSON)
+        )
     );
 
     private static SpreadsheetExporterInfo spreadsheetExporterInfo(final SpreadsheetExporterName name) {
         return SpreadsheetExporterInfo.with(
-                SpreadsheetExporterProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
-                name
+            SpreadsheetExporterProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
+            name
         );
     }
 

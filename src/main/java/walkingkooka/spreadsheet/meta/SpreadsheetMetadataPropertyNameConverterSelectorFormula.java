@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorFormula extends Spre
      */
     private SpreadsheetMetadataPropertyNameConverterSelectorFormula() {
         super(
-                "formulaConverter"
+            "formulaConverter"
         );
     }
 

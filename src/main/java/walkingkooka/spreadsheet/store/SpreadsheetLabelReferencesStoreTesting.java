@@ -49,39 +49,39 @@ public interface SpreadsheetLabelReferencesStoreTesting<S extends SpreadsheetLab
     @Test
     default void testFindCellsWithCellOrCellRangeWithNullCellOrCellRangesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .findLabelsWithCellOrCellRange(
-                                null, // reference
-                                0, // offset
-                                0 // count
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .findLabelsWithCellOrCellRange(
+                    null, // reference
+                    0, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindCellsWithCellOrCellRangeWithNegativeOffsetFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findLabelsWithCellOrCellRange(
-                                SpreadsheetSelection.A1,
-                                -1, // offset
-                                0 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findLabelsWithCellOrCellRange(
+                    SpreadsheetSelection.A1,
+                    -1, // offset
+                    0 // count
+                )
         );
     }
 
     @Test
     default void testFindCellsWithCellOrCellRangeWithNegativeCountFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .findLabelsWithCellOrCellRange(
-                                SpreadsheetSelection.A1,
-                                0, // offset
-                                -1 // count
-                        )
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findLabelsWithCellOrCellRange(
+                    SpreadsheetSelection.A1,
+                    0, // offset
+                    -1 // count
+                )
         );
     }
 
@@ -91,11 +91,11 @@ public interface SpreadsheetLabelReferencesStoreTesting<S extends SpreadsheetLab
                                                        final int count,
                                                        final SpreadsheetLabelName... expected) {
         this.findLabelsWithCellOrCellRangeAndCheck(
-                store,
-                cellOrCellRange,
-                offset,
-                count,
-                Sets.of(expected)
+            store,
+            cellOrCellRange,
+            offset,
+            count,
+            Sets.of(expected)
         );
     }
 
@@ -105,13 +105,13 @@ public interface SpreadsheetLabelReferencesStoreTesting<S extends SpreadsheetLab
                                                        final int count,
                                                        final Set<SpreadsheetLabelName> expected) {
         this.checkEquals(
-                expected,
-                store.findLabelsWithCellOrCellRange(
-                        cellOrCellRange,
-                        offset,
-                        count
-                ),
-                "findLabelsWithCellOrCellRange " + cellOrCellRange + " offset=" + offset + ", count=" + count
+            expected,
+            store.findLabelsWithCellOrCellRange(
+                cellOrCellRange,
+                offset,
+                count
+            ),
+            "findLabelsWithCellOrCellRange " + cellOrCellRange + " offset=" + offset + ", count=" + count
         );
     }
 

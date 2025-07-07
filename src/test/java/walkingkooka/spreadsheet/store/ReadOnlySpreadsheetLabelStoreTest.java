@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<ReadOnlySpreadsheetLabelStore>
-        implements ReadOnlyStoreTesting<ReadOnlySpreadsheetLabelStore, SpreadsheetLabelName, SpreadsheetLabelMapping> {
+    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetLabelStore, SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
     @Test
     public void testWithNullStoreFails() {
@@ -116,12 +116,12 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store.save(c);
 
         this.valuesAndCheck(
-                ReadOnlySpreadsheetLabelStore.with(store),
-                0,
-                3,
-                a,
-                b,
-                c
+            ReadOnlySpreadsheetLabelStore.with(store),
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -137,22 +137,22 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(reference);
 
         this.findLabelsWithReferenceAndCheck(
-                ReadOnlySpreadsheetLabelStore.with(
-                        new FakeSpreadsheetLabelStore() {
-                            @Override
-                            public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference r,
-                                                                                        final int offset,
-                                                                                        final int count) {
-                                checkEquals(reference, r);
-                                checkEquals(0, offset, "offset");
-                                checkEquals(2, count, "count");
-                                return Sets.of(mapping);
-                            }
-                        }),
-                reference,
-                0,
-                2,
-                mapping
+            ReadOnlySpreadsheetLabelStore.with(
+                new FakeSpreadsheetLabelStore() {
+                    @Override
+                    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference r,
+                                                                                final int offset,
+                                                                                final int count) {
+                        checkEquals(reference, r);
+                        checkEquals(0, offset, "offset");
+                        checkEquals(2, count, "count");
+                        return Sets.of(mapping);
+                    }
+                }),
+            reference,
+            0,
+            2,
+            mapping
         );
     }
 

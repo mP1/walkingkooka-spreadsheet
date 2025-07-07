@@ -33,16 +33,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSortedSetTesting<SpreadsheetExpressionReferenceSet, SpreadsheetExpressionReference>,
-        HasTextTesting,
-        ParseStringTesting<SpreadsheetExpressionReferenceSet>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<SpreadsheetExpressionReferenceSet> {
+    HasTextTesting,
+    ParseStringTesting<SpreadsheetExpressionReferenceSet>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<SpreadsheetExpressionReferenceSet> {
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetExpressionReferenceSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetExpressionReferenceSet.with(null)
         );
     }
 
@@ -51,10 +51,10 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
         final SpreadsheetExpressionReference reference = SpreadsheetSelection.A1;
 
         assertSame(
-                SpreadsheetExpressionReferenceSet.EMPTY,
-                SpreadsheetExpressionReferenceSet.with(
-                        SortedSets.of(reference)
-                ).delete(reference)
+            SpreadsheetExpressionReferenceSet.EMPTY,
+            SpreadsheetExpressionReferenceSet.with(
+                SortedSets.of(reference)
+            ).delete(reference)
         );
     }
 
@@ -64,9 +64,9 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
         final SpreadsheetExpressionReferenceSet set = SpreadsheetExpressionReferenceSet.parse(text);
 
         assertSame(
-                set,
-                SpreadsheetExpressionReferenceSet.parse(text)
-                        .setElements(set)
+            set,
+            SpreadsheetExpressionReferenceSet.parse(text)
+                .setElements(set)
         );
     }
 
@@ -90,78 +90,78 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     @Test
     public void testParseInvalidCharacterFails() {
         this.parseStringInvalidCharacterFails(
-                "A1,Label2,C@3, D4",
-                '@'
+            "A1,Label2,C@3, D4",
+            '@'
         );
     }
 
     @Test
     public void testParseCellRangeFails() {
         this.parseStringInvalidCharacterFails(
-                "A1:B2",
-                ':'
+            "A1:B2",
+            ':'
         );
     }
 
     @Test
     public void testParseCellRangeFails2() {
         this.parseStringInvalidCharacterFails(
-                "A1,B2:C3",
-                ':'
+            "A1,B2:C3",
+            ':'
         );
     }
 
     @Test
     public void testParseEmpty() {
         assertSame(
-                SpreadsheetExpressionReferenceSet.EMPTY,
-                this.parseStringAndCheck(
-                        "",
-                        SpreadsheetExpressionReferenceSet.EMPTY
-                )
+            SpreadsheetExpressionReferenceSet.EMPTY,
+            this.parseStringAndCheck(
+                "",
+                SpreadsheetExpressionReferenceSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParseOnlySpaces() {
         assertSame(
-                SpreadsheetExpressionReferenceSet.EMPTY,
-                this.parseStringAndCheck(
-                        "   ",
-                        SpreadsheetExpressionReferenceSet.EMPTY
-                )
+            SpreadsheetExpressionReferenceSet.EMPTY,
+            this.parseStringAndCheck(
+                "   ",
+                SpreadsheetExpressionReferenceSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParseCell() {
         this.parseStringAndCheck(
-                "A1",
-                SpreadsheetExpressionReferenceSet.EMPTY.concat(SpreadsheetSelection.A1)
+            "A1",
+            SpreadsheetExpressionReferenceSet.EMPTY.concat(SpreadsheetSelection.A1)
         );
     }
 
     @Test
     public void testParseLabel() {
         this.parseStringAndCheck(
-                "Label2",
-                SpreadsheetExpressionReferenceSet.EMPTY.concat(SpreadsheetSelection.labelName("Label2"))
+            "Label2",
+            SpreadsheetExpressionReferenceSet.EMPTY.concat(SpreadsheetSelection.labelName("Label2"))
         );
     }
 
     @Test
     public void testParseCellsAndLabels() {
         this.parseStringAndCheck(
-                "A1,$B$2,Label3",
-                this.createSet()
+            "A1,$B$2,Label3",
+            this.createSet()
         );
     }
 
     @Test
     public void testParseWithExtraSpaces() {
         this.parseStringAndCheck(
-                " A1 , $B$2, Label3 ",
-                this.createSet()
+            " A1 , $B$2, Label3 ",
+            this.createSet()
         );
     }
 
@@ -185,8 +185,8 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     @Test
     public void testText() {
         this.textAndCheck(
-                this.createSet(),
-                "A1,$B$2,Label3"
+            this.createSet(),
+            "A1,$B$2,Label3"
         );
     }
 
@@ -195,10 +195,10 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createSet(),
-                "A1\n" +
-                        "$B$2\n" +
-                        "Label3\n"
+            this.createSet(),
+            "A1\n" +
+                "$B$2\n" +
+                "Label3\n"
         );
     }
 
@@ -207,16 +207,16 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"A1,$B$2,Label3\""
+            this.createJsonNodeMarshallingValue(),
+            "\"A1,$B$2,Label3\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"A1,$B$2,Label3\"",
-                this.createJsonNodeMarshallingValue()
+            "\"A1,$B$2,Label3\"",
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -224,8 +224,8 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     public SpreadsheetExpressionReferenceSet unmarshall(final JsonNode jsonNode,
                                                         final JsonNodeUnmarshallContext context) {
         return SpreadsheetExpressionReferenceSet.unmarshall(
-                jsonNode,
-                context
+            jsonNode,
+            context
         );
     }
 

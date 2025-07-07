@@ -28,8 +28,8 @@ public final class MinusSymbolSpreadsheetFormulaParserToken extends SymbolSpread
     static MinusSymbolSpreadsheetFormulaParserToken with(final String value,
                                                          final String text) {
         return new MinusSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

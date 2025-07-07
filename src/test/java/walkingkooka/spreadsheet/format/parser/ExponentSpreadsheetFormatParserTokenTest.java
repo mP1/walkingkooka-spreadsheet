@@ -97,11 +97,11 @@ public final class ExponentSpreadsheetFormatParserTokenTest extends ParentSpread
         }.accept(token);
         this.checkEquals("7137152871628428", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        symbol, symbol, symbol, symbol, symbol,
-                        digit, digit, digit, digit, digit,
-                        token, token, token),
-                visited,
-                "visited");
+                symbol, symbol, symbol, symbol, symbol,
+                digit, digit, digit, digit, digit,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     // kind............................................................................................................
@@ -131,10 +131,10 @@ public final class ExponentSpreadsheetFormatParserTokenTest extends ParentSpread
     @Override
     public ExponentSpreadsheetFormatParserToken createDifferentToken() {
         return ExponentSpreadsheetFormatParserToken.with(Lists.of(this.exponentSymbol(),
-                        this.whitespace(),
-                        this.digit(),
-                        this.digit()),
-                "E+ ##");
+                this.whitespace(),
+                this.digit(),
+                this.digit()),
+            "E+ ##");
     }
 
     private SpreadsheetFormatParserToken exponentSymbol() {

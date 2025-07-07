@@ -47,8 +47,8 @@ public final class SpreadsheetNumberParsePatternComponentCurrencyTest extends Sp
         this.checkEquals(CURRENCY.toUpperCase(), CURRENCY);
 
         this.parseAndCheck2(
-                CURRENCY,
-                ""
+            CURRENCY,
+            ""
         );
     }
 
@@ -57,8 +57,8 @@ public final class SpreadsheetNumberParsePatternComponentCurrencyTest extends Sp
         this.checkEquals(CURRENCY.toUpperCase(), CURRENCY);
 
         this.parseAndCheck2(
-                CURRENCY,
-                "!"
+            CURRENCY,
+            "!"
         );
     }
 
@@ -67,8 +67,8 @@ public final class SpreadsheetNumberParsePatternComponentCurrencyTest extends Sp
         this.checkNotEquals(CURRENCY.toLowerCase(), CURRENCY);
 
         this.parseAndCheck2(
-                CURRENCY.toLowerCase(),
-                ""
+            CURRENCY.toLowerCase(),
+            ""
         );
     }
 
@@ -77,26 +77,26 @@ public final class SpreadsheetNumberParsePatternComponentCurrencyTest extends Sp
         this.checkNotEquals(CURRENCY.toLowerCase(), CURRENCY);
 
         this.parseAndCheck2(
-                CURRENCY.toLowerCase(),
-                "!"
+            CURRENCY.toLowerCase(),
+            "!"
         );
     }
 
     @Test
     public void testCaseUnimportant() {
         this.parseAndCheck2(
-                CURRENCY.toLowerCase().charAt(0) + CURRENCY.toUpperCase().substring(1),
-                ""
+            CURRENCY.toLowerCase().charAt(0) + CURRENCY.toUpperCase().substring(1),
+            ""
         );
     }
 
     void parseAndCheck2(final String text,
                         final String textAfter) {
         this.parseAndCheck2(
-                text,
-                textAfter,
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.currencySymbol(text, text)
+            text,
+            textAfter,
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.currencySymbol(text, text)
         );
     }
 

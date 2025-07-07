@@ -24,38 +24,38 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetPatternSpreadsheetFormatterTesting2<F extends SpreadsheetPatternSpreadsheetFormatter> extends SpreadsheetPatternSpreadsheetFormatterTesting,
-        SpreadsheetFormatterTesting2<F> {
+    SpreadsheetFormatterTesting2<F> {
 
     @Test
     default void testFormatSpreadsheetTextWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter()
-                        .formatSpreadsheetText(
-                                null,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createFormatter()
+                .formatSpreadsheetText(
+                    null,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testFormatSpreadsheetTextWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter()
-                        .formatSpreadsheetText(
-                                Optional.of("Value"),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createFormatter()
+                .formatSpreadsheetText(
+                    Optional.of("Value"),
+                    null
+                )
         );
     }
 
     default void formatSpreadsheetTextAndCheck(final Optional<Object> value,
                                                final SpreadsheetFormatterContext context) {
         this.formatSpreadsheetTextAndCheck(
-                this.createFormatter(),
-                value,
-                context
+            this.createFormatter(),
+            value,
+            context
         );
     }
 
@@ -63,10 +63,10 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting2<F extends Spread
                                                final SpreadsheetFormatterContext context,
                                                final SpreadsheetText expected) {
         this.formatSpreadsheetTextAndCheck(
-                this.createFormatter(),
-                value,
-                context,
-                Optional.of(expected)
+            this.createFormatter(),
+            value,
+            context,
+            Optional.of(expected)
         );
     }
 
@@ -74,10 +74,10 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting2<F extends Spread
                                                final SpreadsheetFormatterContext context,
                                                final Optional<SpreadsheetText> expected) {
         this.formatSpreadsheetTextAndCheck(
-                this.createFormatter(),
-                value,
-                context,
-                expected
+            this.createFormatter(),
+            value,
+            context,
+            expected
         );
     }
 }

@@ -28,10 +28,10 @@ public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormat
     default SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
                                                       final ProviderContext context) {
         return this.spreadsheetFormatterProvider()
-                .spreadsheetFormatter(
-                        selector,
-                        context
-                );
+            .spreadsheetFormatter(
+                selector,
+                context
+            );
     }
 
     @Override
@@ -39,9 +39,9 @@ public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormat
                                                       final List<?> values,
                                                       final ProviderContext context) {
         return this.spreadsheetFormatterProvider().spreadsheetFormatter(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
     }
 
@@ -54,8 +54,8 @@ public interface SpreadsheetFormatterProviderDelegator extends SpreadsheetFormat
     default List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
                                                                          final SpreadsheetFormatterProviderSamplesContext context) {
         return this.spreadsheetFormatterProvider().spreadsheetFormatterSamples(
-                name,
-                context
+            name,
+            context
         );
     }
 

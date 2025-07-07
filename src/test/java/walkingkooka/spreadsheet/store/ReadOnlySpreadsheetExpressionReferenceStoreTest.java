@@ -29,7 +29,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
-        implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>> {
+    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>> {
 
     @Test
     public void testSaveAndLoad() {
@@ -44,19 +44,19 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
         this.loadAndCheck(readOnly, a1, b1); // a1 --> b1
         this.findReferencesWithCellAndCheck(
-                readOnly,
-                b1,
-                0, // offset
-                2, // count
-                a1
+            readOnly,
+            b1,
+            0, // offset
+            2, // count
+            a1
         ); // b1 --> a1
 
         this.loadAndCheck(readOnly, b1); // b1 -> nothing
         this.findReferencesWithCellAndCheck(
-                readOnly,
-                a1,
-                0, // offset
-                1 // count
+            readOnly,
+            a1,
+            0, // offset
+            1 // count
         ); // a1 --> nothing
     }
 
@@ -124,26 +124,26 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
         //noinspection unchecked
         this.valuesAndCheck(
-                ReadOnlySpreadsheetExpressionReferenceStore.with(store),
-                0,
-                3,
-                f,
-                g,
-                hi
+            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            0,
+            3,
+            f,
+            g,
+            hi
         );
     }
 
     @Test
     public void testSaveCellFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createStore()
-                        .saveCells(
-                                this.id(),
-                                Sets.of(
-                                        this.a1()
-                                )
-                        )
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .saveCells(
+                    this.id(),
+                    Sets.of(
+                        this.a1()
+                    )
+                )
         );
     }
 

@@ -39,8 +39,8 @@ public final class OptionalSpreadsheetFormatterSelector implements Value<Optiona
         Objects.requireNonNull(value, "value");
 
         return value.isPresent() ?
-                new OptionalSpreadsheetFormatterSelector(value) :
-                EMPTY;
+            new OptionalSpreadsheetFormatterSelector(value) :
+            EMPTY;
     }
 
     private OptionalSpreadsheetFormatterSelector(final Optional<SpreadsheetFormatterSelector> value) {
@@ -64,8 +64,8 @@ public final class OptionalSpreadsheetFormatterSelector implements Value<Optiona
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof OptionalSpreadsheetFormatterSelector &&
-                        this.equals0(Cast.to(other));
+            other instanceof OptionalSpreadsheetFormatterSelector &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final OptionalSpreadsheetFormatterSelector other) {
@@ -82,10 +82,10 @@ public final class OptionalSpreadsheetFormatterSelector implements Value<Optiona
     static OptionalSpreadsheetFormatterSelector unmarshall(final JsonNode node,
                                                            final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallOptional(
-                        node,
-                        SpreadsheetFormatterSelector.class
-                )
+            context.unmarshallOptional(
+                node,
+                SpreadsheetFormatterSelector.class
+            )
         );
     }
 
@@ -97,10 +97,10 @@ public final class OptionalSpreadsheetFormatterSelector implements Value<Optiona
         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT.name();
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(OptionalSpreadsheetFormatterSelector.class),
-                OptionalSpreadsheetFormatterSelector::unmarshall,
-                OptionalSpreadsheetFormatterSelector::marshall,
-                OptionalSpreadsheetFormatterSelector.class
+            JsonNodeContext.computeTypeName(OptionalSpreadsheetFormatterSelector.class),
+            OptionalSpreadsheetFormatterSelector::unmarshall,
+            OptionalSpreadsheetFormatterSelector::marshall,
+            OptionalSpreadsheetFormatterSelector.class
         );
     }
 }

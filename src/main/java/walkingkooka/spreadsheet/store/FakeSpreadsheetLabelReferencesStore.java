@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
 import java.util.Set;
 
-public class FakeSpreadsheetLabelReferencesStore extends FakeSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> implements SpreadsheetLabelReferencesStore{
+public class FakeSpreadsheetLabelReferencesStore extends FakeSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> implements SpreadsheetLabelReferencesStore {
 
     public FakeSpreadsheetLabelReferencesStore() {
         super();

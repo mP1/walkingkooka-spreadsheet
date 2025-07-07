@@ -41,26 +41,26 @@ import java.util.stream.Collectors;
  * column with a range sort.
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends AbstractList<SpreadsheetColumnOrRowSpreadsheetComparatorNames>
-        implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
-        HasText,
-        HasUrlFragment {
+    implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
+    HasText,
+    HasUrlFragment {
 
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList parse(final String text) {
         return (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList)
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text);
+            SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text);
     }
 
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         Objects.requireNonNull(comparatorNames, "comparatorNames");
 
         return comparatorNames instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList ?
-                (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) comparatorNames :
-                copyAndCreate(comparatorNames);
+            (SpreadsheetColumnOrRowSpreadsheetComparatorNamesList) comparatorNames :
+            copyAndCreate(comparatorNames);
     }
 
     static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copyAndCreate(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] copy = comparatorNames.toArray(
-                new SpreadsheetColumnOrRowSpreadsheetComparatorNames[comparatorNames.size()]
+            new SpreadsheetColumnOrRowSpreadsheetComparatorNames[comparatorNames.size()]
         );
 
         if (copy.length == 0) {
@@ -70,7 +70,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         final Set<SpreadsheetSelection> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
-            if(null == columnOrRowComparators) {
+            if (null == columnOrRowComparators) {
                 throw new NullPointerException("Includes null names");
             }
 
@@ -78,16 +78,16 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
 
             if (false == duplicates.isEmpty()) {
                 duplicates.iterator()
-                        .next()
-                        .ifDifferentColumnOrRowTypeFail(columnOrRow);
+                    .next()
+                    .ifDifferentColumnOrRowTypeFail(columnOrRow);
             }
 
             if (false == duplicates.add(columnOrRow)) {
                 throw new IllegalArgumentException(
-                        "Duplicate " +
-                                columnOrRow.cellColumnOrRowText() +
-                                " " +
-                                columnOrRow
+                    "Duplicate " +
+                        columnOrRow.cellColumnOrRowText() +
+                        " " +
+                        columnOrRow
                 );
             }
         }
@@ -116,8 +116,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     @Override
     public String text() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toSeparatedString(
-                this,
-                Object::toString
+            this,
+            Object::toString
         );
     }
 
@@ -128,10 +128,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
      */
     public Set<SpreadsheetComparatorName> names() {
         return Sets.immutable(
-                this.stream()
-                        .flatMap(n -> n.comparatorNameAndDirections().stream())
-                        .map(SpreadsheetComparatorNameAndDirection::name)
-                        .collect(Collectors.toCollection(Sets::ordered))
+            this.stream()
+                .flatMap(n -> n.comparatorNameAndDirections().stream())
+                .map(SpreadsheetComparatorNameAndDirection::name)
+                .collect(Collectors.toCollection(Sets::ordered))
         );
     }
 
@@ -148,10 +148,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class),
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::unmarshall,
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::marshall,
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class
+            JsonNodeContext.computeTypeName(SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class),
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::unmarshall,
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList::marshall,
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class
         );
     }
 
@@ -173,7 +173,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copy = with(names);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 }

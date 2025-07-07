@@ -44,11 +44,11 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
         Objects.requireNonNull(context, "context");
 
         return cell.equals(context.cell()) ?
-                context :
-                new CellSpreadsheetExpressionEvaluationContext(
-                        cell,
-                        context
-                );
+            context :
+            new CellSpreadsheetExpressionEvaluationContext(
+                cell,
+                context
+            );
     }
 
     private CellSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
@@ -60,8 +60,8 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
         return with(
-                cell,
-                this.context
+            cell,
+            this.context
         );
     }
 
@@ -118,11 +118,11 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
         final SpreadsheetExpressionEvaluationContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new CellSpreadsheetExpressionEvaluationContext(
-                        this.cell,
-                        after
-                );
+            this :
+            new CellSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                after
+            );
     }
 
     // 2025-05-25T06:25:48.9704295Z [DEBUG]         Originally at:

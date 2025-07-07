@@ -34,48 +34,48 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     private final static Locale DEFAULT_LOCALE = Locale.forLanguageTag("FR");
 
     private final static SpreadsheetMetadata CREATE_TEMPLATE = SpreadsheetMetadata.EMPTY.setDefaults(
-            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    DEFAULT_LOCALE
-            )
+        SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            DEFAULT_LOCALE
+        )
     );
 
     private final static LocalDateTime NOW = LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58
+        1999,
+        12,
+        31,
+        12,
+        58
     );
 
     @Test
     public void testCreate() {
         final EmailAddress creator = EmailAddress.parse("creator1@example.com");
         final Optional<Locale> locale = Optional.of(
-                Locale.forLanguageTag("EN-AU")
+            Locale.forLanguageTag("EN-AU")
         );
 
         this.checkEquals(
-                CREATE_TEMPLATE.set(
-                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                        SpreadsheetId.with(1)
-                ).set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        AuditInfo.with(
-                                creator,
-                                NOW,
-                                creator,
-                                NOW
-                        )
-                ).set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        locale.get()
-                ),
-                this.createStore()
-                        .create(
-                                creator,
-                                locale
-                        )
+            CREATE_TEMPLATE.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(1)
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    creator,
+                    NOW,
+                    creator,
+                    NOW
+                )
+            ).set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale.get()
+            ),
+            this.createStore()
+                .create(
+                    creator,
+                    locale
+                )
         );
     }
 
@@ -85,31 +85,31 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         final Optional<Locale> locale = Optional.empty();
 
         this.checkEquals(
-                CREATE_TEMPLATE.set(
-                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                        SpreadsheetId.with(1)
-                ).set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        AuditInfo.with(
-                                creator,
-                                NOW,
-                                creator,
-                                NOW
-                        )
-                ),
-                this.createStore()
-                        .create(
-                                creator,
-                                locale
-                        )
+            CREATE_TEMPLATE.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(1)
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    creator,
+                    NOW,
+                    creator,
+                    NOW
+                )
+            ),
+            this.createStore()
+                .create(
+                    creator,
+                    locale
+                )
         );
     }
 
     @Override
     public TreeMapSpreadsheetMetadataStore createStore() {
         return TreeMapSpreadsheetMetadataStore.with(
-                CREATE_TEMPLATE,
-                () -> NOW
+            CREATE_TEMPLATE,
+            () -> NOW
         );
     }
 
@@ -121,26 +121,26 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         store.save(this.metadata(2, "user2@example.com"));
 
         this.toStringAndCheck(
-                store,
-                "[{\n" +
-                        "  \"spreadsheetId\": \"1\",\n" +
-                        "  \"auditInfo\": {\n" +
-                        "    \"createdBy\": \"user1@example.com\",\n" +
-                        "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
-                        "    \"modifiedBy\": \"modified@example.com\",\n" +
-                        "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
-                        "  },\n" +
-                        "  \"locale\": \"en-AU\"\n" +
-                        "}, {\n" +
-                        "  \"spreadsheetId\": \"2\",\n" +
-                        "  \"auditInfo\": {\n" +
-                        "    \"createdBy\": \"user2@example.com\",\n" +
-                        "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
-                        "    \"modifiedBy\": \"modified@example.com\",\n" +
-                        "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
-                        "  },\n" +
-                        "  \"locale\": \"en-AU\"\n" +
-                        "}]"
+            store,
+            "[{\n" +
+                "  \"spreadsheetId\": \"1\",\n" +
+                "  \"auditInfo\": {\n" +
+                "    \"createdBy\": \"user1@example.com\",\n" +
+                "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                "    \"modifiedBy\": \"modified@example.com\",\n" +
+                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "  },\n" +
+                "  \"locale\": \"en-AU\"\n" +
+                "}, {\n" +
+                "  \"spreadsheetId\": \"2\",\n" +
+                "  \"auditInfo\": {\n" +
+                "    \"createdBy\": \"user2@example.com\",\n" +
+                "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                "    \"modifiedBy\": \"modified@example.com\",\n" +
+                "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                "  },\n" +
+                "  \"locale\": \"en-AU\"\n" +
+                "}]"
         );
     }
 

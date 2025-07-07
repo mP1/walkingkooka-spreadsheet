@@ -68,61 +68,61 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetCellRange>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
-        SpreadsheetMetadataTesting,
-        TreePrintableTesting {
+    HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
+    SpreadsheetMetadataTesting,
+    TreePrintableTesting {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("A1:b2");
 
     private final static SpreadsheetCell A1_CELL = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1")
+        SpreadsheetFormula.EMPTY.setText("=1")
     );
 
     private final static SpreadsheetCellReference B2 = SpreadsheetSelection.parseCell("B2");
 
     private final static SpreadsheetCell B2_CELL = B2.setFormula(SpreadsheetFormula.EMPTY.setText("=22"))
-            .setFormatter(
-                    Optional.of(
-                            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
-                    )
-            ).setParser(
-                    Optional.of(
-                            SpreadsheetPattern.parseNumberParsePattern("#.##")
-                                    .spreadsheetParserSelector()
-                    )
-            ).setStyle(
-                    TextStyle.EMPTY.set(
-                            TextStylePropertyName.TEXT_ALIGN,
-                            TextAlign.LEFT
-                    )
-            );
+        .setFormatter(
+            Optional.of(
+                SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+            )
+        ).setParser(
+            Optional.of(
+                SpreadsheetPattern.parseNumberParsePattern("#.##")
+                    .spreadsheetParserSelector()
+            )
+        ).setStyle(
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.LEFT
+            )
+        );
 
     private final static SpreadsheetCellReference C3 = SpreadsheetSelection.parseCell("C3");
 
     private final static Set<SpreadsheetCell> VALUE = Sets.of(
-            A1_CELL,
-            B2_CELL
+        A1_CELL,
+        B2_CELL
     );
 
     @Test
     public void testWithNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRange.with(
-                        null,
-                        VALUE
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCellRange.with(
+                null,
+                VALUE
+            )
         );
     }
 
     @Test
     public void testWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRange.with(
-                        RANGE,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCellRange.with(
+                RANGE,
+                null
+            )
         );
     }
 
@@ -132,29 +132,29 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("D4");
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetCellRange.with(
-                        RANGE,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                c3.setFormula(SpreadsheetFormula.EMPTY),
-                                d4.setFormula(SpreadsheetFormula.EMPTY)
-                        )
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellRange.with(
+                RANGE,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                    c3.setFormula(SpreadsheetFormula.EMPTY),
+                    d4.setFormula(SpreadsheetFormula.EMPTY)
                 )
+            )
         );
 
         this.checkEquals(
-                "Found 2 cells out of range A1:B2 got C3, D4",
-                thrown.getMessage(),
-                "message"
+            "Found 2 cells out of range A1:B2 got C3, D4",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testWith() {
         final SpreadsheetCellRange spreadsheetCellRange = SpreadsheetCellRange.with(
-                RANGE,
-                VALUE
+            RANGE,
+            VALUE
         );
         this.checkRange(spreadsheetCellRange);
         this.checkValue(spreadsheetCellRange);
@@ -166,8 +166,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testSetRangeNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject().setRange(null)
+            NullPointerException.class,
+            () -> this.createObject().setRange(null)
         );
     }
 
@@ -176,22 +176,22 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRange spreadsheetCellRange = this.createObject();
 
         assertSame(
-                spreadsheetCellRange,
-                spreadsheetCellRange.setRange(RANGE)
+            spreadsheetCellRange,
+            spreadsheetCellRange.setRange(RANGE)
         );
     }
 
     @Test
     public void testSetRangeOutOfBoundsFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createObject()
-                        .setRange(SpreadsheetSelection.parseCellRange("A1"))
+            IllegalArgumentException.class,
+            () -> this.createObject()
+                .setRange(SpreadsheetSelection.parseCellRange("A1"))
         );
 
         this.checkEquals(
-                "Found 1 cells out of range A1 got B2",
-                thrown.getMessage()
+            "Found 1 cells out of range A1 got B2",
+            thrown.getMessage()
         );
     }
 
@@ -203,8 +203,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRange different = spreadsheetCellRange.setRange(differentRange);
 
         assertNotSame(
-                spreadsheetCellRange,
-                different
+            spreadsheetCellRange,
+            different
         );
 
         this.checkRange(different, differentRange);
@@ -220,11 +220,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRangeReference differentRange = SpreadsheetSelection.parseCellRange("A1:C3");
 
         final SpreadsheetCellRange different = spreadsheetCellRange.setRange(differentRange)
-                .setRange(RANGE);
+            .setRange(RANGE);
 
         assertNotSame(
-                spreadsheetCellRange,
-                different
+            spreadsheetCellRange,
+            different
         );
 
         this.checkRange(different);
@@ -239,9 +239,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testSetValueNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .setValue(null)
+            NullPointerException.class,
+            () -> this.createObject()
+                .setValue(null)
         );
     }
 
@@ -250,8 +250,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRange spreadsheetCellRange = this.createObject();
 
         assertSame(
-                spreadsheetCellRange,
-                spreadsheetCellRange.setValue(VALUE)
+            spreadsheetCellRange,
+            spreadsheetCellRange.setValue(VALUE)
         );
     }
 
@@ -260,19 +260,19 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createObject()
-                        .setValue(
-                                Sets.of(
-                                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                                        c3.setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
-                                )
-                        )
+            IllegalArgumentException.class,
+            () -> this.createObject()
+                .setValue(
+                    Sets.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                        c3.setFormula(SpreadsheetFormula.EMPTY.setText("=1"))
+                    )
+                )
         );
 
         this.checkEquals(
-                "Found 1 cells out of range A1:B2 got C3",
-                thrown.getMessage()
+            "Found 1 cells out of range A1:B2 got C3",
+            thrown.getMessage()
         );
     }
 
@@ -280,16 +280,16 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     public void testSetValueDifferent() {
         final SpreadsheetCellRange spreadsheetCellRange = this.createObject();
         final Set<SpreadsheetCell> differentValue = Sets.of(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("'different")
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'different")
+            )
         );
 
         final SpreadsheetCellRange different = spreadsheetCellRange.setValue(differentValue);
 
         assertNotSame(
-                spreadsheetCellRange,
-                different
+            spreadsheetCellRange,
+            different
         );
 
         this.checkRange(different);
@@ -303,31 +303,31 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
 
     private void checkRange(final SpreadsheetCellRange spreadsheetCellRange) {
         this.checkRange(
-                spreadsheetCellRange,
-                RANGE
+            spreadsheetCellRange,
+            RANGE
         );
     }
 
     private void checkRange(final SpreadsheetCellRange spreadsheetCellRange,
                             final SpreadsheetCellRangeReference range) {
         this.checkEquals(
-                range,
-                spreadsheetCellRange.range()
+            range,
+            spreadsheetCellRange.range()
         );
     }
 
     private void checkValue(final SpreadsheetCellRange spreadsheetCellRange) {
         this.checkValue(
-                spreadsheetCellRange,
-                VALUE
+            spreadsheetCellRange,
+            VALUE
         );
     }
 
     private void checkValue(final SpreadsheetCellRange spreadsheetCellRange,
                             final Set<SpreadsheetCell> value) {
         this.checkEquals(
-                value,
-                spreadsheetCellRange.value()
+            value,
+            spreadsheetCellRange.value()
         );
     }
 
@@ -336,8 +336,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testMoveNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject().move(null)
+            NullPointerException.class,
+            () -> this.createObject().move(null)
         );
     }
 
@@ -346,8 +346,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRange range = this.createObject();
 
         assertSame(
-                range,
-                range.move(RANGE)
+            range,
+            range.move(RANGE)
         );
     }
 
@@ -356,9 +356,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRangeReference moveToRange = SpreadsheetSelection.parseCellRange("$A1:B2");
 
         this.moveAndCheck(
-                this.createObject(),
-                moveToRange,
-                moveToRange.setValue(VALUE)
+            this.createObject(),
+            moveToRange,
+            moveToRange.setValue(VALUE)
         );
     }
 
@@ -367,13 +367,13 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("A1:A2");
 
         this.moveAndCheck(
-                this.createObject(),
-                moveTo,
-                moveTo.setValue(
-                        Sets.of(
-                                A1_CELL
-                        )
+            this.createObject(),
+            moveTo,
+            moveTo.setValue(
+                Sets.of(
+                    A1_CELL
                 )
+            )
         );
     }
 
@@ -382,29 +382,29 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRangeReference moveTo = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Sets.of(
-                                SpreadsheetSelection.A1
-                                        .setFormula(
-                                                SpreadsheetMetadataTesting.parseFormula("=100+B2")
-                                        ),
-                                B2.setFormula(
-                                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
-                                )
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Sets.of(
-                                B2.setFormula(
-                                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
-                                ),
-                                C3.setFormula(
-                                        SpreadsheetMetadataTesting.parseFormula("=200+C4")
-                                )
-                        )
+            SpreadsheetCellRange.with(
+                RANGE,
+                Sets.of(
+                    SpreadsheetSelection.A1
+                        .setFormula(
+                            SpreadsheetMetadataTesting.parseFormula("=100+B2")
+                        ),
+                    B2.setFormula(
+                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
+                    )
                 )
+            ),
+            moveTo,
+            moveTo.setValue(
+                Sets.of(
+                    B2.setFormula(
+                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
+                    ),
+                    C3.setFormula(
+                        SpreadsheetMetadataTesting.parseFormula("=200+C4")
+                    )
+                )
+            )
         );
     }
 
@@ -413,26 +413,26 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCellRangeReference moveTo = B2.toCellRange();
 
         this.moveAndCheck(
-                SpreadsheetCellRange.with(
-                        RANGE,
-                        Sets.of(
-                                SpreadsheetSelection.A1
-                                        .setFormula(
-                                                SpreadsheetMetadataTesting.parseFormula("=100+B2")
-                                        ),
-                                B2.setFormula(
-                                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
-                                )
-                        )
-                ),
-                moveTo,
-                moveTo.setValue(
-                        Sets.of(
-                                B2.setFormula(
-                                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
-                                )
-                        )
+            SpreadsheetCellRange.with(
+                RANGE,
+                Sets.of(
+                    SpreadsheetSelection.A1
+                        .setFormula(
+                            SpreadsheetMetadataTesting.parseFormula("=100+B2")
+                        ),
+                    B2.setFormula(
+                        SpreadsheetMetadataTesting.parseFormula("=200+B3")
+                    )
                 )
+            ),
+            moveTo,
+            moveTo.setValue(
+                Sets.of(
+                    B2.setFormula(
+                        SpreadsheetMetadataTesting.parseFormula("=100+C3")
+                    )
+                )
+            )
         );
     }
 
@@ -441,15 +441,15 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                               final SpreadsheetCellRange expected) {
         final SpreadsheetCellRange moved = from.move(moveTo);
         assertNotSame(
-                expected,
-                moved
+            expected,
+            moved
         );
 
         this.checkRange(from);
 
         this.checkEquals(
-                expected,
-                moved
+            expected,
+            moved
         );
     }
 
@@ -462,109 +462,109 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testSortWithNullComparatorsFails() {
         this.sortFails(
-                null,
-                MOVED_CELLS_BICONSUMER,
-                SpreadsheetComparatorContexts.fake()
+            null,
+            MOVED_CELLS_BICONSUMER,
+            SpreadsheetComparatorContexts.fake()
         );
     }
 
     @Test
     public void testSortWithColumnComparatorsOutOfBoundsFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createObject()
-                        .sort(
-                                Lists.of(
-                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                SpreadsheetSelection.parseColumn("B"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                SpreadsheetSelection.parseColumn("C"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                SpreadsheetSelection.parseColumn("ZZ"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                )
-                                        )
-                                ),
-                                MOVED_CELLS_BICONSUMER,
-                                SpreadsheetComparatorContexts.fake()
+            IllegalArgumentException.class,
+            () -> this.createObject()
+                .sort(
+                    Lists.of(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                            SpreadsheetSelection.parseColumn("B"),
+                            Lists.of(
+                                SpreadsheetComparators.text()
+                            )
+                        ),
+                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                            SpreadsheetSelection.parseColumn("C"),
+                            Lists.of(
+                                SpreadsheetComparators.text()
+                            )
+                        ),
+                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                            SpreadsheetSelection.parseColumn("ZZ"),
+                            Lists.of(
+                                SpreadsheetComparators.text()
+                            )
                         )
+                    ),
+                    MOVED_CELLS_BICONSUMER,
+                    SpreadsheetComparatorContexts.fake()
+                )
         );
 
         this.checkEquals(
-                "Invalid column(s) C, ZZ are not within A1:B2",
-                thrown.getMessage()
+            "Invalid column(s) C, ZZ are not within A1:B2",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testSortWithRowComparatorsOutOfBoundsFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createObject()
-                        .sort(
-                                Lists.of(
-                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                SpreadsheetSelection.parseRow("2"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                SpreadsheetSelection.parseRow("3"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                )
-                                        ),
-                                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                SpreadsheetSelection.parseRow("99"),
-                                                Lists.of(
-                                                        SpreadsheetComparators.text()
-                                                )
-                                        )
-                                ),
-                                MOVED_CELLS_BICONSUMER,
-                                SpreadsheetComparatorContexts.fake()
+            IllegalArgumentException.class,
+            () -> this.createObject()
+                .sort(
+                    Lists.of(
+                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                            SpreadsheetSelection.parseRow("2"),
+                            Lists.of(
+                                SpreadsheetComparators.text()
+                            )
+                        ),
+                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                            SpreadsheetSelection.parseRow("3"),
+                            Lists.of(
+                                SpreadsheetComparators.text()
+                            )
+                        ),
+                        SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                            SpreadsheetSelection.parseRow("99"),
+                            Lists.of(
+                                SpreadsheetComparators.text()
+                            )
                         )
+                    ),
+                    MOVED_CELLS_BICONSUMER,
+                    SpreadsheetComparatorContexts.fake()
+                )
         );
 
         this.checkEquals(
-                "Invalid row(s) 3, 99 are not within A1:B2",
-                thrown.getMessage()
+            "Invalid row(s) 3, 99 are not within A1:B2",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testSortWithNullMovedCellsBiConsumerFails() {
         this.sortFails(
-                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                        "A=text",
-                        SpreadsheetComparatorProviders.spreadsheetComparators(),
-                        PROVIDER_CONTEXT
-                ),
-                null,
-                SpreadsheetComparatorContexts.fake()
+            SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                "A=text",
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                PROVIDER_CONTEXT
+            ),
+            null,
+            SpreadsheetComparatorContexts.fake()
         );
     }
 
     @Test
     public void testSortWithNullContextFails() {
         this.sortFails(
-                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                        "A=text",
-                        SpreadsheetComparatorProviders.spreadsheetComparators(),
-                        PROVIDER_CONTEXT
-                ),
-                MOVED_CELLS_BICONSUMER,
-                null
+            SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                "A=text",
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                PROVIDER_CONTEXT
+            ),
+            MOVED_CELLS_BICONSUMER,
+            null
         );
     }
 
@@ -572,85 +572,85 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                            final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
                            final SpreadsheetComparatorContext context) {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createObject()
-                        .sort(
-                                comparators,
-                                movedCells,
-                                context
-                        )
+            NullPointerException.class,
+            () -> this.createObject()
+                .sort(
+                    comparators,
+                    movedCells,
+                    context
+                )
         );
     }
 
     @Test
     public void testSortColumnNoChanges() {
         final Set<SpreadsheetCell> cells = Sets.of(
-                cellWithValue("A1", "1a"),
-                cellWithValue("B2", "2b")
+            cellWithValue("A1", "1a"),
+            cellWithValue("B2", "2b")
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                MOVED_CELLS_BICONSUMER,
-                cellRange
+            cellRange,
+            "A=text",
+            MOVED_CELLS_BICONSUMER,
+            cellRange
         );
     }
 
     @Test
     public void testSortColumnNoChanges2() {
         final Set<SpreadsheetCell> cells = Sets.of(
-                cell("A1"),
-                cell("B2")
+            cell("A1"),
+            cell("B2")
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                MOVED_CELLS_BICONSUMER,
-                cellRange
+            cellRange,
+            "A=text",
+            MOVED_CELLS_BICONSUMER,
+            cellRange
         );
     }
 
     @Test
     public void testSortRowNoChanges() {
         final Set<SpreadsheetCell> cells = Sets.of(
-                cellWithValue("A1", "1a"),
-                cellWithValue("B2", "2b")
+            cellWithValue("A1", "1a"),
+            cellWithValue("B2", "2b")
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         this.sortAndCheck(
-                cellRange,
-                "1=text",
-                MOVED_CELLS_BICONSUMER,
-                cellRange
+            cellRange,
+            "1=text",
+            MOVED_CELLS_BICONSUMER,
+            cellRange
         );
     }
 
     @Test
     public void testSortRowNoChanges2() {
         final Set<SpreadsheetCell> cells = Sets.of(
-                cell("A1"),
-                cell("B2")
+            cell("A1"),
+            cell("B2")
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         this.sortAndCheck(
-                cellRange,
-                "1=text",
-                MOVED_CELLS_BICONSUMER,
-                cellRange
+            cellRange,
+            "1=text",
+            MOVED_CELLS_BICONSUMER,
+            cellRange
         );
     }
 
@@ -660,12 +660,12 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell a2 = cellWithValue("A2", "AAA");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                a2
+            a1,
+            a2
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA");
         final SpreadsheetCell newA2 = this.cellWithValue("A2", "BBB");
@@ -673,24 +673,24 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                remapped::put,
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newA2
-                        )
+            cellRange,
+            "A=text",
+            remapped::put,
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newA2
                 )
+            )
         );
 
         this.checkEquals(
-                Maps.of(
-                        a1, newA2,
-                        a2, newA1
-                ),
-                remapped,
-                "remapped"
+            Maps.of(
+                a1, newA2,
+                a2, newA1
+            ),
+            remapped,
+            "remapped"
         );
     }
 
@@ -700,12 +700,12 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b1 = cellWithValue("B1", "AAA");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1
+            a1,
+            b1
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "BBB");
@@ -713,24 +713,24 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         this.sortAndCheck(
-                cellRange,
-                "1=text",
-                remapped::put,
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1
-                        )
+            cellRange,
+            "1=text",
+            remapped::put,
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1
                 )
+            )
         );
 
         this.checkEquals(
-                Maps.of(
-                        a1, newB1,
-                        b1, newA1
-                ),
-                remapped,
-                "remapped"
+            Maps.of(
+                a1, newB1,
+                b1, newA1
+            ),
+            remapped,
+            "remapped"
         );
     }
 
@@ -742,14 +742,14 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1,
-                a2,
-                b2
+            a1,
+            b1,
+            a2,
+            b2
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
@@ -757,22 +757,22 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1,
-                                newA2,
-                                newB2
-                        )
-                ),
-                Maps.of(
-                        a1, newA2,
-                        b1, newB2,
-                        a2, newA1,
-                        b2, newB1
+            cellRange,
+            "A=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1,
+                    newA2,
+                    newB2
                 )
+            ),
+            Maps.of(
+                a1, newA2,
+                b1, newB2,
+                a2, newA1,
+                b2, newB1
+            )
         );
     }
 
@@ -784,14 +784,14 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                a2,
-                b1,
-                b2
+            a1,
+            a2,
+            b1,
+            b2
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:B2")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newA2 = this.cellWithValue("A2", "AAA2");
@@ -799,22 +799,22 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
 
         this.sortAndCheck(
-                cellRange,
-                "1=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newA2,
-                                newB1,
-                                newB2
-                        )
-                ),
-                Maps.of(
-                        a1, newB1,
-                        a2, newB2,
-                        b1, newA1,
-                        b2, newA2
+            cellRange,
+            "1=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newA2,
+                    newB1,
+                    newB2
                 )
+            ),
+            Maps.of(
+                a1, newB1,
+                a2, newB2,
+                b1, newA1,
+                b2, newA2
+            )
         );
     }
 
@@ -826,14 +826,14 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1,
-                a2,
-                b2
+            a1,
+            b1,
+            a2,
+            b2
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
@@ -841,22 +841,22 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1,
-                                newA2,
-                                newB2
-                        )
-                ),
-                Maps.of(
-                        a1, newA2,
-                        b1, newB2,
-                        a2, newA1,
-                        b2, newB1
+            cellRange,
+            "A=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1,
+                    newA2,
+                    newB2
                 )
+            ),
+            Maps.of(
+                a1, newA2,
+                b1, newB2,
+                a2, newA1,
+                b2, newB1
+            )
         );
     }
 
@@ -870,15 +870,15 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell a3 = cellWithValue("A3", "ZZZ");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1,
-                a2,
-                b2,
-                a3
+            a1,
+            b1,
+            a2,
+            b2,
+            a3
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
@@ -886,23 +886,23 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1,
-                                newA2,
-                                newB2,
-                                a3
-                        )
-                ),
-                Maps.of(
-                        a1, newA2,
-                        b1, newB2,
-                        a2, newA1,
-                        b2, newB1
+            cellRange,
+            "A=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1,
+                    newA2,
+                    newB2,
+                    a3
                 )
+            ),
+            Maps.of(
+                a1, newA2,
+                b1, newB2,
+                a2, newA1,
+                b2, newB1
+            )
         );
     }
 
@@ -917,15 +917,15 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b3 = cellWithValue("B3", "AAA2");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1,
-                a2,
-                a3,
-                b3
+            a1,
+            b1,
+            a2,
+            a3,
+            b3
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
@@ -933,23 +933,23 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB3 = this.cellWithValue("B3", "ZZZ2");
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1,
-                                a2,
-                                newA3,
-                                newB3
-                        )
-                ),
-                Maps.of(
-                        a1, newA3,
-                        b1, newB3,
-                        a3, newA1,
-                        b3, newB1
+            cellRange,
+            "A=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1,
+                    a2,
+                    newA3,
+                    newB3
                 )
+            ),
+            Maps.of(
+                a1, newA3,
+                b1, newB3,
+                a3, newA1,
+                b3, newB1
+            )
         );
     }
 
@@ -961,14 +961,14 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1,
-                a2,
-                b2
+            a1,
+            b1,
+            a2,
+            b2
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
@@ -976,22 +976,22 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1,
-                                newA2,
-                                newB2
-                        )
-                ),
-                Maps.of(
-                        a1, newA2,
-                        b1, newB2,
-                        a2, newA1,
-                        b2, newB1
+            cellRange,
+            "A=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1,
+                    newA2,
+                    newB2
                 )
+            ),
+            Maps.of(
+                a1, newA2,
+                b1, newB2,
+                a2, newA1,
+                b2, newB1
+            )
         );
     }
 
@@ -1003,14 +1003,14 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell b2 = cellWithValue("B2", "AAA2");
 
         final Set<SpreadsheetCell> cells = Sets.of(
-                a1,
-                b1,
-                a2,
-                b2
+            a1,
+            b1,
+            a2,
+            b2
         );
 
         final SpreadsheetCellRange cellRange = SpreadsheetSelection.parseCellRange("A1:C3")
-                .setValue(cells);
+            .setValue(cells);
 
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA1");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "AAA2");
@@ -1018,54 +1018,54 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newB2 = this.cellWithValue("B2", "BBB2");
 
         this.sortAndCheck(
-                cellRange,
-                "A=text",
-                cellRange.setValue(
-                        Sets.of(
-                                newA1,
-                                newB1,
-                                newA2,
-                                newB2
-                        )
-                ),
-                Maps.of(
-                        a1, newA2,
-                        b1, newB2,
-                        a2, newA1,
-                        b2, newB1
+            cellRange,
+            "A=text",
+            cellRange.setValue(
+                Sets.of(
+                    newA1,
+                    newB1,
+                    newA2,
+                    newB2
                 )
+            ),
+            Maps.of(
+                a1, newA2,
+                b1, newB2,
+                a2, newA1,
+                b2, newB1
+            )
         );
     }
 
     private SpreadsheetCell cell(final String reference) {
         return this.cellWithValue(
-                reference,
-                Optional.empty()
+            reference,
+            Optional.empty()
         );
     }
 
     private SpreadsheetCell cellWithValue(final String reference,
                                           final Object value) {
         return this.cellWithValue(
-                reference,
-                Optional.of(value)
+            reference,
+            Optional.of(value)
         );
     }
 
     private SpreadsheetCell cellWithValue(final String reference,
                                           final Optional<Object> value) {
         return SpreadsheetSelection.parseCell(reference)
-                .setFormula(SpreadsheetFormula.EMPTY.setValue(
-                        value
-                ));
+            .setFormula(SpreadsheetFormula.EMPTY.setValue(
+                value
+            ));
     }
 
     private SpreadsheetCell cellWithFormula(final String reference,
                                             final String formula) {
         return this.cellWithFormula(
-                reference,
-                formula,
-                Optional.empty()
+            reference,
+            formula,
+            Optional.empty()
         );
     }
 
@@ -1073,9 +1073,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                             final String formula,
                                             final Object value) {
         return this.cellWithFormula(
-                reference,
-                formula,
-                Optional.of(value)
+            reference,
+            formula,
+            Optional.of(value)
         );
     }
 
@@ -1083,12 +1083,12 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                                             final String formula,
                                             final Optional<Object> value) {
         return SpreadsheetSelection.parseCell(reference)
-                .setFormula(
-                        SpreadsheetMetadataTesting.parseFormula(formula)
-                                .setValue(
-                                        value
-                                )
-                );
+            .setFormula(
+                SpreadsheetMetadataTesting.parseFormula(formula)
+                    .setValue(
+                        value
+                    )
+            );
     }
 
     private void sortAndCheck(final SpreadsheetCellRange range,
@@ -1098,17 +1098,17 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         this.sortAndCheck(
-                range,
-                comparators,
-                remapped::put,
-                SPREADSHEET_COMPARATOR_CONTEXT,
-                expected
+            range,
+            comparators,
+            remapped::put,
+            SPREADSHEET_COMPARATOR_CONTEXT,
+            expected
         );
 
         this.checkEquals(
-                expectedMovedCells,
-                remapped,
-                "remapped"
+            expectedMovedCells,
+            remapped,
+            "remapped"
         );
     }
 
@@ -1117,11 +1117,11 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                               final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
                               final SpreadsheetCellRange expected) {
         this.sortAndCheck(
-                range,
-                comparators,
-                movedCells,
-                SPREADSHEET_COMPARATOR_CONTEXT,
-                expected
+            range,
+            comparators,
+            movedCells,
+            SPREADSHEET_COMPARATOR_CONTEXT,
+            expected
         );
     }
 
@@ -1131,15 +1131,15 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                               final SpreadsheetComparatorContext context,
                               final SpreadsheetCellRange expected) {
         this.sortAndCheck(
-                range,
-                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                        comparators,
-                        SpreadsheetComparatorProviders.spreadsheetComparators(),
-                        PROVIDER_CONTEXT
-                ),
-                movedCells,
-                context,
-                expected
+            range,
+            SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                comparators,
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                PROVIDER_CONTEXT
+            ),
+            movedCells,
+            context,
+            expected
         );
     }
 
@@ -1149,13 +1149,13 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                               final SpreadsheetComparatorContext context,
                               final SpreadsheetCellRange expected) {
         this.checkEquals(
-                expected,
-                range.sort(
-                        comparators,
-                        movedCells,
-                        context
-                ),
-                () -> range.range() + " sort " + comparators
+            expected,
+            range.sort(
+                comparators,
+                movedCells,
+                context
+            ),
+            () -> range.range() + " sort " + comparators
         );
     }
 
@@ -1164,25 +1164,25 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createObject(),
-                "A1:B2\n" +
-                        "  Cell A1\n" +
-                        "    Formula\n" +
-                        "      text:\n" +
-                        "        \"=1\"\n" +
-                        "  Cell B2\n" +
-                        "    Formula\n" +
-                        "      text:\n" +
-                        "        \"=22\"\n" +
-                        "    formatter:\n" +
-                        "      text-format-pattern\n" +
-                        "        \"@\"\n" +
-                        "    parser:\n" +
-                        "      number-parse-pattern\n" +
-                        "        \"#.##\"\n" +
-                        "    style:\n" +
-                        "      TextStyle\n" +
-                        "        text-align=LEFT (walkingkooka.tree.text.TextAlign)\n"
+            this.createObject(),
+            "A1:B2\n" +
+                "  Cell A1\n" +
+                "    Formula\n" +
+                "      text:\n" +
+                "        \"=1\"\n" +
+                "  Cell B2\n" +
+                "    Formula\n" +
+                "      text:\n" +
+                "        \"=22\"\n" +
+                "    formatter:\n" +
+                "      text-format-pattern\n" +
+                "        \"@\"\n" +
+                "    parser:\n" +
+                "      number-parse-pattern\n" +
+                "        \"#.##\"\n" +
+                "    style:\n" +
+                "      TextStyle\n" +
+                "        text-align=LEFT (walkingkooka.tree.text.TextAlign)\n"
         );
     }
 
@@ -1203,8 +1203,8 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     @Override
     public SpreadsheetCellRange createObject() {
         return SpreadsheetCellRange.with(
-                RANGE,
-                VALUE
+            RANGE,
+            VALUE
         );
     }
 }

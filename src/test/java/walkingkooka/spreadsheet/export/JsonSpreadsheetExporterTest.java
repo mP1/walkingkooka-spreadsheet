@@ -39,260 +39,260 @@ import walkingkooka.validation.ValidationValueTypeName;
 import java.util.Optional;
 
 public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTesting<JsonSpreadsheetExporter>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     @Test
     public void testExportWithCells() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ).setFormatter(
-                                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                                ).setParser(
-                                        Optional.of(SpreadsheetParserSelector.parse("test-parser-123"))
-                                ).setStyle(
-                                        TextStyle.EMPTY.set(
-                                                TextStylePropertyName.COLOR,
-                                                Color.BLACK
-                                        )
-                                ).setFormattedValue(
-                                        Optional.of(
-                                                TextNode.text("Formatted text 123")
-                                        )
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setFormatter(
+                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
+                    ).setParser(
+                        Optional.of(SpreadsheetParserSelector.parse("test-parser-123"))
+                    ).setStyle(
+                        TextStyle.EMPTY.set(
+                            TextStylePropertyName.COLOR,
+                            Color.BLACK
                         )
-                ),
-                SpreadsheetCellValueKind.CELL,
-                "A1-XFD1048576.cell.json.txt",
-                SpreadsheetMediaTypes.JSON_CELLS,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    },\n" +
-                        "    \"formatter\": \"text-format-pattern @\",\n" +
-                        "    \"parser\": \"test-parser-123\",\n" +
-                        "    \"style\": {\n" +
-                        "      \"color\": \"black\"\n" +
-                        "    },\n" +
-                        "    \"formattedValue\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"Formatted text 123\"\n" +
-                        "    }\n" +
-                        "  },\n" +
-                        "  \"A2\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=333\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+                    ).setFormattedValue(
+                        Optional.of(
+                            TextNode.text("Formatted text 123")
+                        )
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
+                        )
+                )
+            ),
+            SpreadsheetCellValueKind.CELL,
+            "A1-XFD1048576.cell.json.txt",
+            SpreadsheetMediaTypes.JSON_CELLS,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"formatter\": \"text-format-pattern @\",\n" +
+                "    \"parser\": \"test-parser-123\",\n" +
+                "    \"style\": {\n" +
+                "      \"color\": \"black\"\n" +
+                "    },\n" +
+                "    \"formattedValue\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"Formatted text 123\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"A2\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=333\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithFormula() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ).setFormatter(
-                                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setFormatter(
+                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
                         )
-                ),
-                SpreadsheetCellValueKind.FORMULA,
-                "A1-XFD1048576.formula.json.txt",
-                SpreadsheetMediaTypes.JSON_FORMULAS,
-                "{\n" +
-                        "  \"A1\": \"=1+2\",\n" +
-                        "  \"A2\": \"=333\"\n" +
-                        "}"
+                )
+            ),
+            SpreadsheetCellValueKind.FORMULA,
+            "A1-XFD1048576.formula.json.txt",
+            SpreadsheetMediaTypes.JSON_FORMULAS,
+            "{\n" +
+                "  \"A1\": \"=1+2\",\n" +
+                "  \"A2\": \"=333\"\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithFormatter() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ).setFormatter(
-                                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setFormatter(
+                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
                         )
-                ),
-                SpreadsheetCellValueKind.FORMATTER,
-                "A1-XFD1048576.formatter.json.txt",
-                SpreadsheetMediaTypes.JSON_FORMATTERS,
-                "{\n" +
-                        "  \"A1\": \"text-format-pattern @\",\n" +
-                        "  \"A2\": null\n" +
-                        "}"
+                )
+            ),
+            SpreadsheetCellValueKind.FORMATTER,
+            "A1-XFD1048576.formatter.json.txt",
+            SpreadsheetMediaTypes.JSON_FORMATTERS,
+            "{\n" +
+                "  \"A1\": \"text-format-pattern @\",\n" +
+                "  \"A2\": null\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithParser() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ).setParser(
-                                        Optional.of(SpreadsheetParserSelector.parse("test-parser-123 @@@"))
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setParser(
+                        Optional.of(SpreadsheetParserSelector.parse("test-parser-123 @@@"))
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
                         )
-                ),
-                SpreadsheetCellValueKind.PARSER,
-                "A1-XFD1048576.parser.json.txt",
-                SpreadsheetMediaTypes.JSON_PARSERS,
-                "{\n" +
-                        "  \"A1\": \"test-parser-123 @@@\",\n" +
-                        "  \"A2\": null\n" +
-                        "}"
+                )
+            ),
+            SpreadsheetCellValueKind.PARSER,
+            "A1-XFD1048576.parser.json.txt",
+            SpreadsheetMediaTypes.JSON_PARSERS,
+            "{\n" +
+                "  \"A1\": \"test-parser-123 @@@\",\n" +
+                "  \"A2\": null\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithStyle() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ).setStyle(
-                                        TextStyle.EMPTY.set(
-                                                TextStylePropertyName.COLOR,
-                                                Color.BLACK
-                                        )
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setStyle(
+                        TextStyle.EMPTY.set(
+                            TextStylePropertyName.COLOR,
+                            Color.BLACK
                         )
-                ),
-                SpreadsheetCellValueKind.STYLE,
-                "A1-XFD1048576.style.json.txt",
-                SpreadsheetMediaTypes.JSON_STYLES,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"color\": \"black\"\n" +
-                        "  },\n" +
-                        "  \"A2\": {}\n" +
-                        "}"
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
+                        )
+                )
+            ),
+            SpreadsheetCellValueKind.STYLE,
+            "A1-XFD1048576.style.json.txt",
+            SpreadsheetMediaTypes.JSON_STYLES,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"color\": \"black\"\n" +
+                "  },\n" +
+                "  \"A2\": {}\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithFormattedValue() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ).setFormattedValue(
-                                        Optional.of(
-                                                TextNode.text("Formatted 123.5")
-                                        )
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setFormattedValue(
+                        Optional.of(
+                            TextNode.text("Formatted 123.5")
                         )
-                ),
-                SpreadsheetCellValueKind.VALUE,
-                "A1-XFD1048576.value.json.txt",
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"type\": \"text\",\n" +
-                        "    \"value\": \"Formatted 123.5\"\n" +
-                        "  },\n" +
-                        "  \"A2\": null\n" +
-                        "}"
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
+                        )
+                )
+            ),
+            SpreadsheetCellValueKind.VALUE,
+            "A1-XFD1048576.value.json.txt",
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"type\": \"text\",\n" +
+                "    \"value\": \"Formatted 123.5\"\n" +
+                "  },\n" +
+                "  \"A2\": null\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithMissingFormattedValue() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
                         )
-                ),
-                SpreadsheetCellValueKind.VALUE,
-                "A1-XFD1048576.value.json.txt",
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
-                "{\n" +
-                        "  \"A1\": null,\n" +
-                        "  \"A2\": null\n" +
-                        "}"
+                )
+            ),
+            SpreadsheetCellValueKind.VALUE,
+            "A1-XFD1048576.value.json.txt",
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+            "{\n" +
+                "  \"A1\": null,\n" +
+                "  \"A2\": null\n" +
+                "}"
         );
     }
 
     @Test
     public void testExportWithValueType() {
         this.exportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.of(
-                                SpreadsheetSelection.A1.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                                                .setValueType(
-                                                        Optional.of(
-                                                                ValidationValueTypeName.with("HelloValueType")
-                                                        )
-                                                )
-                                ),
-                                SpreadsheetSelection.parseCell("A2")
-                                        .setFormula(
-                                                SpreadsheetFormula.EMPTY.setText("=333")
-                                        )
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                            .setValueType(
+                                Optional.of(
+                                    ValidationValueTypeName.with("HelloValueType")
+                                )
+                            )
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
                         )
-                ),
-                SpreadsheetCellValueKind.VALUE_TYPE,
-                "A1-XFD1048576.value-type.json.txt",
-                SpreadsheetMediaTypes.JSON_VALUE_TYPE,
-                "{\n" +
-                        "  \"A1\": \"HelloValueType\",\n" +
-                        "  \"A2\": null\n" +
-                        "}"
+                )
+            ),
+            SpreadsheetCellValueKind.VALUE_TYPE,
+            "A1-XFD1048576.value-type.json.txt",
+            SpreadsheetMediaTypes.JSON_VALUE_TYPE,
+            "{\n" +
+                "  \"A1\": \"HelloValueType\",\n" +
+                "  \"A2\": null\n" +
+                "}"
         );
     }
 
@@ -302,16 +302,16 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                 final MediaType contentType,
                                 final String json) {
         this.exportAndCheck(
-                cells,
-                valueKind,
-                WebEntity.empty()
-                        .setContentType(
-                                Optional.of(contentType)
-                        ).setFilename(
-                                Optional.of(
-                                        WebEntityFileName.with(filename)
-                                )
-                        ).setText(json)
+            cells,
+            valueKind,
+            WebEntity.empty()
+                .setContentType(
+                    Optional.of(contentType)
+                ).setFilename(
+                    Optional.of(
+                        WebEntityFileName.with(filename)
+                    )
+                ).setText(json)
         );
     }
 
@@ -323,8 +323,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     @Override
     public SpreadsheetExporterContext createContext() {
         return SpreadsheetExporterContexts.basic(
-                SpreadsheetMetadataTesting.METADATA_EN_AU,
-                SpreadsheetMetadataTesting.JSON_NODE_MARSHALL_CONTEXT
+            SpreadsheetMetadataTesting.METADATA_EN_AU,
+            SpreadsheetMetadataTesting.JSON_NODE_MARSHALL_CONTEXT
         );
     }
 }

@@ -72,7 +72,7 @@ public final class TextPlaceholderSpreadsheetFormatParserTokenTest extends NonSy
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER
+            SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER
         );
     }
 

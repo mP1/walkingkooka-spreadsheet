@@ -23,9 +23,9 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<V>,
-        ClassTesting<V>,
-        TypeNameTesting<V> {
+    implements SpreadsheetFormatParserTokenVisitorTesting<V>,
+    ClassTesting<V>,
+    TypeNameTesting<V> {
 
     SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase() {
         super();

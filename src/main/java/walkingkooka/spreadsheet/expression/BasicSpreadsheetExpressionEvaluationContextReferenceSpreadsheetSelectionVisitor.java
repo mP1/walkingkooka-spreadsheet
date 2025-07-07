@@ -41,10 +41,10 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
                                              final SpreadsheetExpressionReferenceLoader loader,
                                              final SpreadsheetExpressionEvaluationContext context) {
         final BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor visitor =
-                new BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor(
-                        loader,
-                        context
-                );
+            new BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor(
+                loader,
+                context
+            );
         visitor.accept(reference);
         return visitor.value;
     }
@@ -61,12 +61,12 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
         this.value = this.loader.loadCell(
-                cell,
-                this.context
+            cell,
+            this.context
         ).map(c -> Optional.of(
                 c.formula()
-                        .errorOrValue()
-                )
+                    .errorOrValue()
+            )
         ).orElse(SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE);
     }
 
@@ -74,8 +74,8 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
     protected void visit(final SpreadsheetLabelName label) {
         // load the cell or cells pointed to by the label
         this.accept(
-                this.loader.loadLabelOrFail(label)
-                        .reference()
+            this.loader.loadLabelOrFail(label)
+                .reference()
         );
     }
 
@@ -87,14 +87,14 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
         final Map<SpreadsheetCellReference, Object> cellToValue = Maps.sorted();
 
         for (final SpreadsheetCell cell : this.loader.loadCellRange(
-                range,
-                this.context
+            range,
+            this.context
         )) {
             cellToValue.put(
-                    cell.reference(),
-                    cell.formula()
-                            .errorOrValue()
-                            .orElse(null)
+                cell.reference(),
+                cell.formula()
+                    .errorOrValue()
+                    .orElse(null)
             );
         }
 
@@ -102,14 +102,14 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
         final List<Object> value = Lists.array();
         for (final SpreadsheetCellReference cell : range) {
             value.add(
-                    //Optional.ofNullable(
-                            cellToValue.get(cell)
-                    //)
+                //Optional.ofNullable(
+                cellToValue.get(cell)
+                //)
             );
         }
 
         this.value = Optional.of(
-                Optional.of(value)
+            Optional.of(value)
         );
     }
 

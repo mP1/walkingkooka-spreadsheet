@@ -30,8 +30,8 @@ public final class TextSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
 
     static TextSpreadsheetFormulaParserToken with(final List<ParserToken> value, final String text) {
         return new TextSpreadsheetFormulaParserToken(
-                copyAndCheckTokens(value),
-                Objects.requireNonNull(text, "text") // empty text is allowed to support a formula with empty text
+            copyAndCheckTokens(value),
+            Objects.requireNonNull(text, "text") // empty text is allowed to support a formula with empty text
         );
     }
 
@@ -49,13 +49,13 @@ public final class TextSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
                 }
 
                 textValue = spreadsheetFormulaParserToken.cast(TextLiteralSpreadsheetFormulaParserToken.class)
-                        .value();
+                    .value();
             }
         }
 
         this.textValue = null == textValue ?
-                "" :
-                textValue;
+            "" :
+            textValue;
     }
 
     /**
@@ -72,9 +72,9 @@ public final class TextSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
     @Override
     public TextSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                TextSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            TextSpreadsheetFormulaParserToken::with
         );
     }
 

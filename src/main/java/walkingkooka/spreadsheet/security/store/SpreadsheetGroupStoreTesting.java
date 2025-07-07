@@ -28,14 +28,14 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> extends StoreTesting<S, GroupId, Group>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     default void loadUserGroupsAndCheck(final SpreadsheetGroupStore store,
                                         final UserId userId,
                                         final Set<Group> groups) {
         this.checkEquals(groups,
-                store.loadUserGroups(userId),
-                "store loadUserGroups " + userId + " incorrect result");
+            store.loadUserGroups(userId),
+            "store loadUserGroups " + userId + " incorrect result");
     }
 
     // StoreTesting...........................................................

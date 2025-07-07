@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<ReadOnlySpreadsheetMetadataStore>
-        implements ReadOnlyStoreTesting<ReadOnlySpreadsheetMetadataStore, SpreadsheetId, SpreadsheetMetadata> {
+    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetMetadataStore, SpreadsheetId, SpreadsheetMetadata> {
 
     @Test
     public void testWithNullStoreFails() {
@@ -98,9 +98,9 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(c);
 
         this.idsAndCheck(ReadOnlySpreadsheetMetadataStore.with(store),
-                0,
-                3,
-                a.id().get(), b.id().get(), c.id().get());
+            0,
+            3,
+            a.id().get(), b.id().get(), c.id().get());
     }
 
     @Override
@@ -122,12 +122,12 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(c);
 
         this.valuesAndCheck(
-                ReadOnlySpreadsheetMetadataStore.with(store),
-                0,
-                3,
-                a,
-                b,
-                c
+            ReadOnlySpreadsheetMetadataStore.with(store),
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -155,8 +155,8 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
 
     private SpreadsheetMetadataStore createTreeMap() {
         return SpreadsheetMetadataStores.treeMap(
-                CREATE_TEMPLATE,
-                LocalDateTime::now
+            CREATE_TEMPLATE,
+            LocalDateTime::now
         );
     }
 

@@ -36,12 +36,12 @@ import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetFormatterPluginHelper implements PluginHelper<
-        SpreadsheetFormatterName,
-        SpreadsheetFormatterInfo,
-        SpreadsheetFormatterInfoSet,
-        SpreadsheetFormatterSelector,
-        SpreadsheetFormatterAlias,
-        SpreadsheetFormatterAliasSet> {
+    SpreadsheetFormatterName,
+    SpreadsheetFormatterInfo,
+    SpreadsheetFormatterInfoSet,
+    SpreadsheetFormatterSelector,
+    SpreadsheetFormatterAlias,
+    SpreadsheetFormatterAliasSet> {
 
     final static SpreadsheetFormatterPluginHelper INSTANCE = new SpreadsheetFormatterPluginHelper();
 
@@ -60,24 +60,24 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
         Objects.requireNonNull(context, "context");
 
         return Parsers.initialAndPartCharPredicateString(
-                c -> SpreadsheetFormatterName.isChar(0, c),
-                c -> SpreadsheetFormatterName.isChar(1, c),
-                SpreadsheetFormatterName.MIN_LENGTH, // minLength
-                SpreadsheetFormatterName.MAX_LENGTH // maxLength
+            c -> SpreadsheetFormatterName.isChar(0, c),
+            c -> SpreadsheetFormatterName.isChar(1, c),
+            SpreadsheetFormatterName.MIN_LENGTH, // minLength
+            SpreadsheetFormatterName.MAX_LENGTH // maxLength
         ).parse(
-                cursor,
-                context
+            cursor,
+            context
         ).map(
-                (final ParserToken token) -> this.name(
-                        token.cast(StringParserToken.class).value()
-                )
+            (final ParserToken token) -> this.name(
+                token.cast(StringParserToken.class).value()
+            )
         );
     }
 
     @Override
     public Set<SpreadsheetFormatterName> names(final Set<SpreadsheetFormatterName> names) {
         return Sets.immutable(
-                Objects.requireNonNull(names, "names")
+            Objects.requireNonNull(names, "names")
         );
     }
 
@@ -117,9 +117,9 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
                                            final Optional<SpreadsheetFormatterSelector> selector,
                                            final Optional<AbsoluteUrl> url) {
         return SpreadsheetFormatterAlias.with(
-                name,
-                selector,
-                url
+            name,
+            selector,
+            url
         );
     }
 

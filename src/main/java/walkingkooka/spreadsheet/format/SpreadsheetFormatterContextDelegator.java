@@ -31,7 +31,7 @@ import java.util.Optional;
  * Simplifies implementing a delegate to a wrapped {@link SpreadsheetFormatterContext}.
  */
 public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatterContext,
-        SpreadsheetConverterContextDelegator {
+    SpreadsheetConverterContextDelegator {
 
     @Override
     default SpreadsheetConverterContext spreadsheetConverterContext() {
@@ -41,55 +41,55 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     @Override
     default int cellCharacterWidth() {
         return this.spreadsheetFormatterContext()
-                .cellCharacterWidth();
+            .cellCharacterWidth();
     }
 
     @Override
     default Optional<Color> colorNumber(final int number) {
         return this.spreadsheetFormatterContext()
-                .colorNumber(number);
+            .colorNumber(number);
     }
 
     @Override
     default Optional<Color> colorName(final SpreadsheetColorName name) {
         return this.spreadsheetFormatterContext()
-                .colorName(name);
+            .colorName(name);
     }
 
     @Override
     default Optional<TextNode> format(final Optional<Object> value) {
         return this.spreadsheetFormatterContext()
-                .format(value);
+            .format(value);
     }
 
     @Override
     default TextNode formatOrEmptyText(final Optional<Object> value) {
         return this.spreadsheetFormatterContext()
-                .formatOrEmptyText(value);
+            .formatOrEmptyText(value);
     }
 
     @Override
     default int generalFormatNumberDigitCount() {
         return this.spreadsheetFormatterContext()
-                .generalFormatNumberDigitCount();
+            .generalFormatNumberDigitCount();
     }
 
     @Override
     default SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
         return this.spreadsheetFormatterContext()
-                .spreadsheetExpressionEvaluationContext(value);
+            .spreadsheetExpressionEvaluationContext(value);
     }
 
     @Override
     default SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
         return this.spreadsheetFormatterContext()
-                .spreadsheetFormatter(selector);
+            .spreadsheetFormatter(selector);
     }
 
     @Override
     default SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetFormatterContext()
-                .spreadsheetMetadata();
+            .spreadsheetMetadata();
     }
 
     @Override

@@ -32,40 +32,40 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting<OptionalSpreadsheetParserSelector>,
-        HashCodeEqualsDefinedTesting2<OptionalSpreadsheetParserSelector>,
-        ToStringTesting<OptionalSpreadsheetParserSelector>,
-        JsonNodeMarshallingTesting<OptionalSpreadsheetParserSelector> {
+    HashCodeEqualsDefinedTesting2<OptionalSpreadsheetParserSelector>,
+    ToStringTesting<OptionalSpreadsheetParserSelector>,
+    JsonNodeMarshallingTesting<OptionalSpreadsheetParserSelector> {
     // with.............................................................................................................
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> OptionalSpreadsheetParserSelector.with(null)
+            NullPointerException.class,
+            () -> OptionalSpreadsheetParserSelector.with(null)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                OptionalSpreadsheetParserSelector.EMPTY,
-                OptionalSpreadsheetParserSelector.with(
-                        Optional.empty()
-                )
+            OptionalSpreadsheetParserSelector.EMPTY,
+            OptionalSpreadsheetParserSelector.with(
+                Optional.empty()
+            )
         );
     }
 
     @Test
     public void testWithNotEmpty() {
         final Optional<SpreadsheetParserSelector> selector = Optional.of(
-                SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText("yyyy/mm/ddd")
+            SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText("yyyy/mm/ddd")
         );
 
         final OptionalSpreadsheetParserSelector optional = OptionalSpreadsheetParserSelector.with(selector);
 
         assertSame(
-                selector,
-                optional.value()
+            selector,
+            optional.value()
         );
     }
 
@@ -74,11 +74,11 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-                OptionalSpreadsheetParserSelector.with(
-                        Optional.of(
-                                SpreadsheetParserSelector.parse("different")
-                        )
+            OptionalSpreadsheetParserSelector.with(
+                Optional.of(
+                    SpreadsheetParserSelector.parse("different")
                 )
+            )
         );
     }
 
@@ -92,11 +92,11 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     @Test
     public void testToString() {
         final Optional<SpreadsheetParserSelector> selector = Optional.of(
-                SpreadsheetParserSelector.parse("parser123")
+            SpreadsheetParserSelector.parse("parser123")
         );
         this.toStringAndCheck(
-                OptionalSpreadsheetParserSelector.with(selector),
-                selector.toString()
+            OptionalSpreadsheetParserSelector.with(selector),
+            selector.toString()
         );
     }
 
@@ -105,23 +105,23 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     @Test
     public void testJsonMarshallEmpty() {
         this.marshallAndCheck(
-                OptionalSpreadsheetParserSelector.EMPTY,
-                JsonNode.nullNode()
+            OptionalSpreadsheetParserSelector.EMPTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testJsonMarshallNotEmpty() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                JsonNode.string("date-parse-pattern yyyy/mm/ddd")
+            this.createJsonNodeMarshallingValue(),
+            JsonNode.string("date-parse-pattern yyyy/mm/ddd")
         );
     }
 
     @Test
     public void testJsonRoundtripEmpty() {
         this.marshallRoundTripTwiceAndCheck(
-                OptionalSpreadsheetParserSelector.EMPTY
+            OptionalSpreadsheetParserSelector.EMPTY
         );
     }
 
@@ -129,7 +129,7 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     @Test
     public void testJsonRoundtripNotEmpty() {
         this.marshallRoundTripTwiceAndCheck(
-                this.createJsonNodeMarshallingValue()
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -137,17 +137,17 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     public OptionalSpreadsheetParserSelector unmarshall(final JsonNode json,
                                                         final JsonNodeUnmarshallContext context) {
         return OptionalSpreadsheetParserSelector.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
     @Override
     public OptionalSpreadsheetParserSelector createJsonNodeMarshallingValue() {
         return OptionalSpreadsheetParserSelector.with(
-                Optional.of(
-                        SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/ddd")
-                )
+            Optional.of(
+                SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/ddd")
+            )
         );
     }
 

@@ -33,27 +33,27 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
     @Test
     default void testSpreadsheetExporterSelectorWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporterProvider()
-                        .spreadsheetExporter(
-                                null,
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporterProvider()
+                .spreadsheetExporter(
+                    null,
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetExporterSelectorWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporterProvider()
-                        .spreadsheetExporter(
-                                SpreadsheetExporterSelector.with(
-                                        SpreadsheetExporterName.with("exporter-123"),
-                                        ""
-                                ),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporterProvider()
+                .spreadsheetExporter(
+                    SpreadsheetExporterSelector.with(
+                        SpreadsheetExporterName.with("exporter-123"),
+                        ""
+                    ),
+                    null
+                )
         );
     }
 
@@ -62,9 +62,9 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
     default void spreadsheetExporterFails(final String selector,
                                           final ProviderContext context) {
         this.spreadsheetExporterFails(
-                this.createSpreadsheetExporterProvider(),
-                SpreadsheetExporterSelector.parse(selector),
-                context
+            this.createSpreadsheetExporterProvider(),
+            SpreadsheetExporterSelector.parse(selector),
+            context
         );
     }
 
@@ -72,18 +72,18 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                           final String selector,
                                           final ProviderContext context) {
         this.spreadsheetExporterFails(
-                provider,
-                SpreadsheetExporterSelector.parse(selector),
-                context
+            provider,
+            SpreadsheetExporterSelector.parse(selector),
+            context
         );
     }
 
     default void spreadsheetExporterFails(final SpreadsheetExporterSelector selector,
                                           final ProviderContext context) {
         this.spreadsheetExporterFails(
-                this.createSpreadsheetExporterProvider(),
-                selector,
-                context
+            this.createSpreadsheetExporterProvider(),
+            selector,
+            context
         );
     }
 
@@ -91,11 +91,11 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                           final SpreadsheetExporterSelector selector,
                                           final ProviderContext context) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetExporter(
-                        selector,
-                        context
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetExporter(
+                selector,
+                context
+            )
         );
     }
 
@@ -103,10 +103,10 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                              final ProviderContext context,
                                              final SpreadsheetExporter expected) {
         this.spreadsheetExporterAndCheck(
-                this.createSpreadsheetExporterProvider(),
-                SpreadsheetExporterSelector.parse(selector),
-                context,
-                expected
+            this.createSpreadsheetExporterProvider(),
+            SpreadsheetExporterSelector.parse(selector),
+            context,
+            expected
         );
     }
 
@@ -115,10 +115,10 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                              final ProviderContext context,
                                              final SpreadsheetExporter expected) {
         this.spreadsheetExporterAndCheck(
-                provider,
-                SpreadsheetExporterSelector.parse(selector),
-                context,
-                expected
+            provider,
+            SpreadsheetExporterSelector.parse(selector),
+            context,
+            expected
         );
     }
 
@@ -126,10 +126,10 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                              final ProviderContext context,
                                              final SpreadsheetExporter expected) {
         this.spreadsheetExporterAndCheck(
-                this.createSpreadsheetExporterProvider(),
-                selector,
-                context,
-                expected
+            this.createSpreadsheetExporterProvider(),
+            selector,
+            context,
+            expected
         );
     }
 
@@ -138,12 +138,12 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                              final ProviderContext context,
                                              final SpreadsheetExporter expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetExporter(
-                        selector,
-                        context
-                ),
-                selector::toString
+            expected,
+            provider.spreadsheetExporter(
+                selector,
+                context
+            ),
+            selector::toString
         );
     }
 
@@ -152,40 +152,40 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
     @Test
     default void testSpreadsheetExporterNameWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporterProvider()
-                        .spreadsheetExporter(
-                                null,
-                                Lists.empty(),
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporterProvider()
+                .spreadsheetExporter(
+                    null,
+                    Lists.empty(),
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetExporterNameWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporterProvider()
-                        .spreadsheetExporter(
-                                SpreadsheetExporterName.JSON,
-                                null,
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporterProvider()
+                .spreadsheetExporter(
+                    SpreadsheetExporterName.JSON,
+                    null,
 
-                                ProviderContexts.fake()
-                        )
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetExporterNameWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExporterProvider()
-                        .spreadsheetExporter(
-                                SpreadsheetExporterName.JSON,
-                                Lists.empty(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetExporterProvider()
+                .spreadsheetExporter(
+                    SpreadsheetExporterName.JSON,
+                    Lists.empty(),
+                    null
+                )
         );
     }
 
@@ -193,10 +193,10 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                           final List<?> values,
                                           final ProviderContext context) {
         this.spreadsheetExporterFails(
-                this.createSpreadsheetExporterProvider(),
-                name,
-                values,
-                context
+            this.createSpreadsheetExporterProvider(),
+            name,
+            values,
+            context
         );
     }
 
@@ -205,12 +205,12 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                           final List<?> values,
                                           final ProviderContext context) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetExporter(
-                        name,
-                        values,
-                        context
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetExporter(
+                name,
+                values,
+                context
+            )
         );
     }
 
@@ -219,11 +219,11 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                              final ProviderContext context,
                                              final SpreadsheetExporter expected) {
         this.spreadsheetExporterAndCheck(
-                this.createSpreadsheetExporterProvider(),
-                name,
-                values,
-                context,
-                expected
+            this.createSpreadsheetExporterProvider(),
+            name,
+            values,
+            context,
+            expected
         );
     }
 
@@ -233,13 +233,13 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                                              final ProviderContext context,
                                              final SpreadsheetExporter expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetExporter(
-                        name,
-                        values,
-                        context
-                ),
-                () -> name + " " + values
+            expected,
+            provider.spreadsheetExporter(
+                name,
+                values,
+                context
+            ),
+            () -> name + " " + values
         );
     }
 
@@ -247,36 +247,36 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
 
     default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterInfo... expected) {
         this.spreadsheetExporterInfosAndCheck(
-                this.createSpreadsheetExporterProvider(),
-                expected
+            this.createSpreadsheetExporterProvider(),
+            expected
         );
     }
 
     default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterProvider provider,
                                                   final SpreadsheetExporterInfo... expected) {
         this.spreadsheetExporterInfosAndCheck(
-                provider,
-                SpreadsheetExporterInfoSet.with(
-                        Sets.of(
-                                expected
-                        )
+            provider,
+            SpreadsheetExporterInfoSet.with(
+                Sets.of(
+                    expected
                 )
+            )
         );
     }
 
     default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterInfoSet expected) {
         this.spreadsheetExporterInfosAndCheck(
-                this.createSpreadsheetExporterProvider(),
-                expected
+            this.createSpreadsheetExporterProvider(),
+            expected
         );
     }
 
     default void spreadsheetExporterInfosAndCheck(final SpreadsheetExporterProvider provider,
                                                   final SpreadsheetExporterInfoSet expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetExporterInfos(),
-                provider::toString
+            expected,
+            provider.spreadsheetExporterInfos(),
+            provider::toString
         );
     }
 

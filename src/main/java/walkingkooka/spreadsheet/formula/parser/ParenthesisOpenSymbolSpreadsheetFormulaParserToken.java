@@ -28,8 +28,8 @@ public final class ParenthesisOpenSymbolSpreadsheetFormulaParserToken extends Sy
     static ParenthesisOpenSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                    final String text) {
         return new ParenthesisOpenSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

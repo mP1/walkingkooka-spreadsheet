@@ -29,15 +29,15 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet>,
-        ClassTesting<SpreadsheetComparatorInfoSet> {
+    ClassTesting<SpreadsheetComparatorInfoSet> {
 
     @Test
     public void testImmutableSet() {
         final SpreadsheetComparatorInfoSet set = this.createSet();
 
         assertSame(
-                set,
-                Sets.immutable(set)
+            set,
+            Sets.immutable(set)
         );
     }
 
@@ -58,14 +58,14 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     @Override
     public SpreadsheetComparatorInfoSet createSet() {
         return SpreadsheetComparatorProviders.spreadsheetComparators()
-                .spreadsheetComparatorInfos();
+            .spreadsheetComparatorInfos();
     }
 
     @Override
     public SpreadsheetComparatorInfo info() {
         return SpreadsheetComparatorInfo.with(
-                Url.parseAbsolute("https://example.com/test123"),
-                SpreadsheetComparatorName.with("Test123")
+            Url.parseAbsolute("https://example.com/test123"),
+            SpreadsheetComparatorName.with("Test123")
         );
     }
 
@@ -74,27 +74,27 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetComparatorInfoSet.EMPTY,
-                JsonNode.array()
+            SpreadsheetComparatorInfoSet.EMPTY,
+            JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty2() {
         final SpreadsheetComparatorInfoSet set = SpreadsheetComparatorInfoSet.with(
-                Sets.of(
-                        SpreadsheetComparatorInfo.with(
-                                Url.parseAbsolute("https://example.com/test123"),
-                                SpreadsheetComparatorName.with("test123")
-                        )
+            Sets.of(
+                SpreadsheetComparatorInfo.with(
+                    Url.parseAbsolute("https://example.com/test123"),
+                    SpreadsheetComparatorName.with("test123")
                 )
+            )
         );
 
         this.marshallAndCheck(
-                set,
-                "[\n" +
-                        "  \"https://example.com/test123 test123\"\n" +
-                        "]"
+            set,
+            "[\n" +
+                "  \"https://example.com/test123 test123\"\n" +
+                "]"
         );
     }
 
@@ -104,24 +104,24 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     public SpreadsheetComparatorInfoSet unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         return SpreadsheetComparatorInfoSet.unmarshall(
-                node,
-                context
+            node,
+            context
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet createJsonNodeMarshallingValue() {
         return SpreadsheetComparatorInfoSet.with(
-                Sets.of(
-                        SpreadsheetComparatorInfo.with(
-                                Url.parseAbsolute("https://example.com/test111"),
-                                SpreadsheetComparatorName.with("test111")
-                        ),
-                        SpreadsheetComparatorInfo.with(
-                                Url.parseAbsolute("https://example.com/test222"),
-                                SpreadsheetComparatorName.with("test222")
-                        )
+            Sets.of(
+                SpreadsheetComparatorInfo.with(
+                    Url.parseAbsolute("https://example.com/test111"),
+                    SpreadsheetComparatorName.with("test111")
+                ),
+                SpreadsheetComparatorInfo.with(
+                    Url.parseAbsolute("https://example.com/test222"),
+                    SpreadsheetComparatorName.with("test222")
                 )
+            )
         );
     }
 

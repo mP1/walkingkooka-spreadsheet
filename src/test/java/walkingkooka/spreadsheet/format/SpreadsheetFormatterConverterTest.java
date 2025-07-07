@@ -111,37 +111,37 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
 
     private SpreadsheetFormatter formatter(final String pattern) {
         return SpreadsheetFormatParsers.numberFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
-                .map(SpreadsheetFormatters::number)
-                .orElseThrow(UnsupportedOperationException::new);
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence(pattern),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
+            .map(SpreadsheetFormatters::number)
+            .orElseThrow(UnsupportedOperationException::new);
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                SpreadsheetConverters.basic(),
-                (s) -> {
-                    throw new UnsupportedOperationException();
-                },
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        DateTimeContexts.fake(),
-                                        DecimalNumberContexts.american(MathContext.UNLIMITED)
-                                ),
-                                EXPRESSION_NUMBER_KIND
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            SpreadsheetConverters.basic(),
+            (s) -> {
+                throw new UnsupportedOperationException();
+            },
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        Converters.fake(),
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.american(MathContext.UNLIMITED)
+                    ),
+                    EXPRESSION_NUMBER_KIND
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            )
         );
     }
 

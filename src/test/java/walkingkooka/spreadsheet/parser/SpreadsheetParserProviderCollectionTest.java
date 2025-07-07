@@ -35,8 +35,8 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserProviderCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetParserProviderCollection.with(null)
         );
     }
 
@@ -45,13 +45,13 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
         final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/dd"),
-                PROVIDER_CONTEXT,
-                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                        .parser()
+            SpreadsheetParserProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/dd"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                .parser()
         );
     }
 
@@ -60,14 +60,14 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
         final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetParserName.DATE_PARSER_PATTERN,
-                Lists.of("yyyy/mm/dd"),
-                PROVIDER_CONTEXT,
-                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                        .parser()
+            SpreadsheetParserProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetParserName.DATE_PARSER_PATTERN,
+            Lists.of("yyyy/mm/dd"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                .parser()
         );
     }
 
@@ -76,17 +76,17 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
         final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserNextTokenAndCheck(
-                SpreadsheetParserProviderCollection.with(
-                        Sets.of(provider)
-                ),
-                SpreadsheetParserSelector.parse("date-parse-pattern")
+            SpreadsheetParserProviderCollection.with(
+                Sets.of(provider)
+            ),
+            SpreadsheetParserSelector.parse("date-parse-pattern")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelector() {
         this.spreadsheetFormatterSelectorAndCheck(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
+            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
         );
     }
 
@@ -95,23 +95,23 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
         final SpreadsheetParserProvider provider = spreadsheetParsePatternSpreadsheetParserProvider();
 
         this.spreadsheetParserInfosAndCheck(
-                SpreadsheetParserProviderCollection.with(Sets.of(provider)),
-                provider.spreadsheetParserInfos()
+            SpreadsheetParserProviderCollection.with(Sets.of(provider)),
+            provider.spreadsheetParserInfos()
         );
     }
 
     @Override
     public SpreadsheetParserProviderCollection createSpreadsheetParserProvider() {
         return SpreadsheetParserProviderCollection.with(
-                Sets.of(
-                        spreadsheetParsePatternSpreadsheetParserProvider()
-                )
+            Sets.of(
+                spreadsheetParsePatternSpreadsheetParserProvider()
+            )
         );
     }
 
     private static SpreadsheetParserProvider spreadsheetParsePatternSpreadsheetParserProvider() {
         return SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.spreadsheetFormatters()
+            SpreadsheetFormatterProviders.spreadsheetFormatters()
         );
     }
 

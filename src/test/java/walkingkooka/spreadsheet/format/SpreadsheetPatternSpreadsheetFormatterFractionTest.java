@@ -41,29 +41,29 @@ import static org.junit.jupiter.api.Assertions.fail;
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
-        FractionSpreadsheetFormatParserToken> {
+    FractionSpreadsheetFormatParserToken> {
 
     // with.............................................................................................................
 
     @Test
     public void testWithNullTokenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(
-                        null,
-                        FRACTIONER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(
+                null,
+                FRACTIONER
+            )
         );
     }
 
     @Test
     public void testWithNullFractionerFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(
-                        this.token(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(
+                this.token(),
+                null
+            )
         );
     }
 
@@ -171,9 +171,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                this.createFormatter("#/#"), // format
-                Optional.empty(), // value
-                Optional.empty() // expected
+            this.createFormatter("#/#"), // format
+            Optional.empty(), // value
+            Optional.empty() // expected
         );
     }
 
@@ -182,72 +182,72 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatHashFractionHash0_0() {
         this.parseFormatAndCheck(
-                "#/#",
-                0.0,
-                "/1"
+            "#/#",
+            0.0,
+            "/1"
         );
     }
 
     @Test
     public void testFormatHashFractionHash0_2() {
         this.parseFormatAndCheck(
-                "#/#",
-                0.2,
-                "1/5"
+            "#/#",
+            0.2,
+            "1/5"
         );
     }
 
     @Test
     public void testFormatHashFractionHash0_6() {
         this.parseFormatAndCheck(
-                "#/#",
-                0.6,
-                "3/5"
+            "#/#",
+            0.6,
+            "3/5"
         );
     }
 
     @Test
     public void testFormatHashFractionHash0_71() {
         this.parseFormatAndCheck(
-                "#/#",
-                0.61,
-                "3/5"
+            "#/#",
+            0.61,
+            "3/5"
         );
     }
 
     @Test
     public void testFormatHashFractionHash0_85() {
         this.parseFormatAndCheck(
-                "#/#",
-                0.85,
-                "4/5"
+            "#/#",
+            0.85,
+            "4/5"
         );
     }
 
     @Test
     public void testFormatHashFractionHash1_0() {
         this.parseFormatAndCheck(
-                "#/#",
-                1,
-                "5/5"
+            "#/#",
+            1,
+            "5/5"
         );
     }
 
     @Test
     public void testFormatHashFractionHash1_99() {
         this.parseFormatAndCheck(
-                "#/#",
-                1.99,
-                "10/5"
+            "#/#",
+            1.99,
+            "10/5"
         );
     }
 
     @Test
     public void testFormatHashFractionHash0_025() {
         this.parseFormatAndCheck(
-                "#/#",
-                0.025,
-                "/1"
+            "#/#",
+            0.025,
+            "/1"
         );
     }
 
@@ -256,63 +256,63 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatQuestionFractionQuestion0_0() {
         this.parseFormatAndCheck(
-                "?/?",
-                0.0,
-                " /1"
+            "?/?",
+            0.0,
+            " /1"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestion0_2() {
         this.parseFormatAndCheck(
-                "?/?",
-                0.2,
-                "1/5"
+            "?/?",
+            0.2,
+            "1/5"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestion0_6() {
         this.parseFormatAndCheck(
-                "?/?",
-                0.6,
-                "3/5"
+            "?/?",
+            0.6,
+            "3/5"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestion0_85() {
         this.parseFormatAndCheck(
-                "?/?",
-                0.85,
-                "4/5"
+            "?/?",
+            0.85,
+            "4/5"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestion1_0() {
         this.parseFormatAndCheck(
-                "?/?",
-                1,
-                "5/5"
+            "?/?",
+            1,
+            "5/5"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestion1_99() {
         this.parseFormatAndCheck(
-                "?/?",
-                1.99,
-                "10/5"
+            "?/?",
+            1.99,
+            "10/5"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestion0_025() {
         this.parseFormatAndCheck(
-                "?/?",
-                0.025,
-                " /1"
+            "?/?",
+            0.025,
+            " /1"
         );
     }
 
@@ -321,81 +321,81 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatZeroFractionZero0_0() {
         this.parseFormatAndCheck(
-                "0/0",
-                0.0,
-                "0/1"
+            "0/0",
+            0.0,
+            "0/1"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero0_2() {
         this.parseFormatAndCheck(
-                "0/0",
-                0.2,
-                "1/5"
+            "0/0",
+            0.2,
+            "1/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero0_6() {
         this.parseFormatAndCheck(
-                "0/0",
-                0.6,
-                "3/5"
+            "0/0",
+            0.6,
+            "3/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero0_71() {
         this.parseFormatAndCheck(
-                "0/0",
-                0.71,
-                "3/5"
+            "0/0",
+            0.71,
+            "3/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero0_85() {
         this.parseFormatAndCheck(
-                "0/0",
-                0.85,
-                "4/5"
+            "0/0",
+            0.85,
+            "4/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero1_0() {
         this.parseFormatAndCheck(
-                "0/0",
-                1,
-                "5/5"
+            "0/0",
+            1,
+            "5/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero1_25() {
         this.parseFormatAndCheck(
-                "0/0",
-                1.25,
-                "6/5"
+            "0/0",
+            1.25,
+            "6/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero1_975() {
         this.parseFormatAndCheck(
-                "0/0",
-                1.975,
-                "10/5"
+            "0/0",
+            1.975,
+            "10/5"
         );
     }
 
     @Test
     public void testFormatZeroFractionZero0_025() {
         this.parseFormatAndCheck(
-                "0/0",
-                0.025,
-                "0/1"
+            "0/0",
+            0.025,
+            "0/1"
         );
     }
 
@@ -404,27 +404,27 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatHashFractionHashHashHash0_0000005() {
         this.parseFormatAndCheck(
-                "#/###",
-                0.0000005,
-                "/1"
+            "#/###",
+            0.0000005,
+            "/1"
         );
     }
 
     @Test
     public void testFormatQuestionFractionQuestionQuestionQuestion0_0000005() {
         this.parseFormatAndCheck(
-                "?/???",
-                0.0000005,
-                " /  1"
+            "?/???",
+            0.0000005,
+            " /  1"
         );
     }
 
     @Test
     public void testFormatZeroFractionZeroZeroZero0_0000005() {
         this.parseFormatAndCheck(
-                "0/000",
-                0.0000005,
-                "0/001"
+            "0/000",
+            0.0000005,
+            "0/001"
         );
     }
 
@@ -433,27 +433,27 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatHashFractionSpaceHash1_05() {
         this.parseFormatAndCheck(
-                "?/?#",
-                1.05,
-                "52/50"
+            "?/?#",
+            1.05,
+            "52/50"
         );
     }
 
     @Test
     public void testFormatHashFractionZeroHash1_05() {
         this.parseFormatAndCheck(
-                "?/?0",
-                1.05,
-                "52/50"
+            "?/?0",
+            1.05,
+            "52/50"
         );
     }
 
     @Test
     public void testFormatHashFractionSpaceZeroHash1_00005() {
         this.parseFormatAndCheck(
-                "?/?",
-                1.005,
-                "5/5"
+            "?/?",
+            1.005,
+            "5/5"
         );
     }
 
@@ -462,9 +462,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatCurrency() {
         this.parseFormatAndCheck(
-                "$0/0",
-                0.4,
-                "D2/5"
+            "$0/0",
+            0.4,
+            "D2/5"
         );
     }
 
@@ -473,27 +473,27 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatPercentage0() {
         this.parseFormatAndCheck(
-                "0/0%",
-                0,
-                "0/1%"
+            "0/0%",
+            0,
+            "0/1%"
         );
     }
 
     @Test
     public void testFormatPercentagePositive1() {
         this.parseFormatAndCheck(
-                "0/0%",
-                1,
-                "5/5%"
+            "0/0%",
+            1,
+            "5/5%"
         );
     }
 
     @Test
     public void testFormatPercentageNegative1() {
         this.parseFormatAndCheck(
-                "0/0%",
-                -1,
-                "M5/5%"
+            "0/0%",
+            -1,
+            "M5/5%"
         );
     }
 
@@ -502,49 +502,49 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testFormatThousandsDividerDigitComma0() {
         this.parseFormatAndCheck(
-                "0/0,",
-                1,
-                "5/5,"
+            "0/0,",
+            1,
+            "5/5,"
         );
     }
 
     @Test
     public void testFormatThousandsDividerCommaSlash12345() {
         this.parseFormatAndCheck(
-                "0,/#",
-                12345,
-                "61725,/5"
+            "0,/#",
+            12345,
+            "61725,/5"
         );
     }
 
     @Test
     public void testFormatThousandsDividerCommaTextLiteralSlash12345() {
         this.parseFormatAndCheck(
-                "0,\"Text\"/#",
-                12345,
-                "61725,Text/5"
+            "0,\"Text\"/#",
+            12345,
+            "61725,Text/5"
         );
     }
 
     @Test
     public void testFormatThousandsDividerCommaCommaSlash123456789() {
         this.parseFormatAndCheck(
-                "0,,/#",
-                123456789,
-                "617283945,,/5"
+            "0,,/#",
+            123456789,
+            "617283945,,/5"
         );
     }
 
     @Test
     public void testFormatWithArabicDigits() {
         this.formatAndCheck(
-                this.createFormatter("0/0"),
-                new BigDecimal(12),
-                this.createContext(ARABIC_ZERO_DIGIT),
-                arabicDigit(6) +
-                        arabicDigit(0) +
-                        "/" +
-                        arabicDigit(5)
+            this.createFormatter("0/0"),
+            new BigDecimal(12),
+            this.createContext(ARABIC_ZERO_DIGIT),
+            arabicDigit(6) +
+                arabicDigit(0) +
+                "/" +
+                arabicDigit(5)
         );
     }
 
@@ -552,16 +552,16 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     public void testFormatWithArabicDigits2() {
         // 6150/50
         this.formatAndCheck(
-                this.createFormatter("00/00"),
-                new BigDecimal(123),
-                this.createContext(ARABIC_ZERO_DIGIT),
-                arabicDigit(6) +
-                        arabicDigit(1) +
-                        arabicDigit(5) +
-                        arabicDigit(0) +
-                        "/" +
-                        arabicDigit(5) +
-                        arabicDigit(0)
+            this.createFormatter("00/00"),
+            new BigDecimal(123),
+            this.createContext(ARABIC_ZERO_DIGIT),
+            arabicDigit(6) +
+                arabicDigit(1) +
+                arabicDigit(5) +
+                arabicDigit(0) +
+                "/" +
+                arabicDigit(5) +
+                arabicDigit(0)
         );
     }
 
@@ -571,9 +571,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
                                      final double value,
                                      final String text) {
         this.parseFormatAndCheck(
-                pattern,
-                String.valueOf(value),
-                text
+            pattern,
+            String.valueOf(value),
+            text
         );
     }
 
@@ -581,9 +581,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
                                      final String value,
                                      final String text) {
         this.parseFormatAndCheck(
-                pattern,
-                value,
-                SpreadsheetText.with(text)
+            pattern,
+            value,
+            SpreadsheetText.with(text)
         );
     }
 
@@ -591,9 +591,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
                                      final String value,
                                      final SpreadsheetText text) {
         this.formatAndCheck(
-                this.createFormatter(pattern),
-                new BigDecimal(value),
-                text
+            this.createFormatter(pattern),
+            new BigDecimal(value),
+            text
         );
     }
 
@@ -610,8 +610,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Override
     SpreadsheetPatternSpreadsheetFormatterFraction createFormatter0(final FractionSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterFraction.with(
-                token,
-                FRACTIONER
+            token,
+            FRACTIONER
         );
     }
 
@@ -626,14 +626,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         final BigDecimal two = BigDecimal.valueOf(2);
 
         return Fraction.with(
-                value.scaleByPowerOfTen(scale).divide(two, MATH_CONTEXT).toBigInteger(),
-                BigDecimal.ONE.scaleByPowerOfTen(scale).divide(two, MATH_CONTEXT).toBigInteger());
+            value.scaleByPowerOfTen(scale).divide(two, MATH_CONTEXT).toBigInteger(),
+            BigDecimal.ONE.scaleByPowerOfTen(scale).divide(two, MATH_CONTEXT).toBigInteger());
     }
 
     @Override
     public Optional<BigDecimal> value() {
         return Optional.of(
-                new BigDecimal(123)
+            new BigDecimal(123)
         );
     }
 
@@ -684,33 +684,33 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testTokens() {
         this.tokensAndCheck(
-                this.createFormatter("00/00"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "0",
-                        "0",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetFormatterSelectorToken.with(
-                        "0",
-                        "0",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetFormatterSelectorToken.with(
-                        "/",
-                        "/",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetFormatterSelectorToken.with(
-                        "0",
-                        "0",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetFormatterSelectorToken.with(
-                        "0",
-                        "0",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                )
+            this.createFormatter("00/00"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "0",
+                "0",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetFormatterSelectorToken.with(
+                "0",
+                "0",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetFormatterSelectorToken.with(
+                "/",
+                "/",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetFormatterSelectorToken.with(
+                "0",
+                "0",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetFormatterSelectorToken.with(
+                "0",
+                "0",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            )
         );
     }
 
@@ -719,8 +719,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     @Test
     public void testEqualsDifferentToken() {
         this.checkNotEquals(
-                this.createFormatter("#/#"),
-                this.createFormatter("##/##")
+            this.createFormatter("#/#"),
+            this.createFormatter("##/##")
         );
     }
 
@@ -729,8 +729,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         final FractionSpreadsheetFormatParserToken token = this.token();
 
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null),
-                SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null)
+            SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null),
+            SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null)
         );
     }
 

@@ -77,7 +77,7 @@ public final class TextLiteralSpreadsheetFormatParserTokenTest extends NonSymbol
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.TEXT_LITERAL
+            SpreadsheetFormatParserTokenKind.TEXT_LITERAL
         );
     }
 

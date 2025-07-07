@@ -31,16 +31,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSetTesting<SpreadsheetCellReferenceSet, SpreadsheetCellReference>,
-        HasTextTesting,
-        ParseStringTesting<SpreadsheetCellReferenceSet>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<SpreadsheetCellReferenceSet> {
+    HasTextTesting,
+    ParseStringTesting<SpreadsheetCellReferenceSet>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceSet> {
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellReferenceSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellReferenceSet.with(null)
         );
     }
 
@@ -49,10 +49,10 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
         final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
 
         assertSame(
-                SpreadsheetCellReferenceSet.EMPTY,
-                SpreadsheetCellReferenceSet.with(
-                        SortedSets.of(reference)
-                ).delete(reference)
+            SpreadsheetCellReferenceSet.EMPTY,
+            SpreadsheetCellReferenceSet.with(
+                SortedSets.of(reference)
+            ).delete(reference)
         );
     }
 
@@ -61,19 +61,19 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
         final SpreadsheetCellReferenceSet set = SpreadsheetCellReferenceSet.parse("A1,B2,C3");
 
         assertSame(
-                set,
-                SpreadsheetCellReferenceSet.parse("D4")
-                        .setElements(set)
+            set,
+            SpreadsheetCellReferenceSet.parse("D4")
+                .setElements(set)
         );
     }
 
     @Override
     public SpreadsheetCellReferenceSet createSet() {
         return SpreadsheetCellReferenceSet.with(
-                SortedSets.of(
-                        SpreadsheetSelection.A1,
-                        SpreadsheetSelection.parseCell("$A$2")
-                )
+            SortedSets.of(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("$A$2")
+            )
         );
     }
 
@@ -87,62 +87,62 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
     @Test
     public void testParseInvalidCharacterFails() {
         this.parseStringInvalidCharacterFails(
-                "AB?1, A2",
-                '?'
+            "AB?1, A2",
+            '?'
         );
     }
 
     @Test
     public void testParseInvalidCharacterFails2() {
         this.parseStringInvalidCharacterFails(
-                "AB1?3, A2",
-                '?'
+            "AB1?3, A2",
+            '?'
         );
     }
 
     @Test
     public void testParseInvalidCharacterSecondSpreadsheetCellReferenceFails() {
         this.parseStringInvalidCharacterFails(
-                "A1, A?2",
-                '?'
+            "A1, A?2",
+            '?'
         );
     }
 
     @Test
     public void testParseEmpty() {
         assertSame(
-                SpreadsheetCellReferenceSet.EMPTY,
-                this.parseStringAndCheck(
-                        "",
-                        SpreadsheetCellReferenceSet.EMPTY
-                )
+            SpreadsheetCellReferenceSet.EMPTY,
+            this.parseStringAndCheck(
+                "",
+                SpreadsheetCellReferenceSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParseOnlySpaces() {
         assertSame(
-                SpreadsheetCellReferenceSet.EMPTY,
-                this.parseStringAndCheck(
-                        "   ",
-                        SpreadsheetCellReferenceSet.EMPTY
-                )
+            SpreadsheetCellReferenceSet.EMPTY,
+            this.parseStringAndCheck(
+                "   ",
+                SpreadsheetCellReferenceSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "A1,$A$2",
-                this.createSet()
+            "A1,$A$2",
+            this.createSet()
         );
     }
 
     @Test
     public void testParseWithExtraSpaces() {
         this.parseStringAndCheck(
-                " A1 , $A$2 ",
-                this.createSet()
+            " A1 , $A$2 ",
+            this.createSet()
         );
     }
 
@@ -166,8 +166,8 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
     @Test
     public void testText() {
         this.textAndCheck(
-                this.createSet(),
-                "A1,$A$2"
+            this.createSet(),
+            "A1,$A$2"
         );
     }
 
@@ -176,9 +176,9 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createSet(),
-                "A1\n" +
-                        "$A$2\n"
+            this.createSet(),
+            "A1\n" +
+                "$A$2\n"
         );
     }
 
@@ -187,8 +187,8 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"A1,$A$2\""
+            this.createJsonNodeMarshallingValue(),
+            "\"A1,$A$2\""
         );
     }
 
@@ -196,8 +196,8 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
     public SpreadsheetCellReferenceSet unmarshall(final JsonNode jsonNode,
                                                   final JsonNodeUnmarshallContext context) {
         return SpreadsheetCellReferenceSet.unmarshall(
-                jsonNode,
-                context
+            jsonNode,
+            context
         );
     }
 

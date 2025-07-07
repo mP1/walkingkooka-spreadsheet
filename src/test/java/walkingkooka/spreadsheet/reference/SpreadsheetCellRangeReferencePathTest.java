@@ -29,25 +29,25 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferencePathTest implements ParseStringTesting<SpreadsheetCellRangeReferencePath>,
-        ClassTesting<SpreadsheetCellRangeReferencePath> {
+    ClassTesting<SpreadsheetCellRangeReferencePath> {
 
     @Test
     public void testParseWithUnknownFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetCellRangeReferencePath.parse("123?")
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellRangeReferencePath.parse("123?")
         );
         this.checkEquals(
-                "Got \"123?\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL",
-                thrown.getMessage()
+            "Got \"123?\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testParseLRTD() {
         this.parseStringAndCheck(
-                "LRTD",
-                SpreadsheetCellRangeReferencePath.LRTD
+            "LRTD",
+            SpreadsheetCellRangeReferencePath.LRTD
         );
     }
 
@@ -55,8 +55,8 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     public void testParseAllValues() {
         for (final SpreadsheetCellRangeReferencePath path : SpreadsheetCellRangeReferencePath.values()) {
             this.parseStringAndCheck(
-                    path.name(),
-                    path
+                path.name(),
+                path
             );
         }
     }
@@ -100,207 +100,116 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testLRTD() {
         this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
-                A1,
-                B1,
-                C1,
-                A2,
-                B2,
+            SpreadsheetCellRangeReferencePath.LRTD,
+            List.of(
+                C3,
                 C2,
-                A3,
+                C1,
                 B3,
-                C3
+                B2,
+                B1,
+                A3,
+                A2,
+                A1
+            ),
+            A1,
+            B1,
+            C1,
+            A2,
+            B2,
+            C2,
+            A3,
+            B3,
+            C3
         );
     }
 
     @Test
     public void testRLTD() {
         this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
-                C1,
-                B1,
-                A1,
-                C2,
-                B2,
-                A2,
+            SpreadsheetCellRangeReferencePath.RLTD,
+            List.of(
                 C3,
+                C2,
+                C1,
                 B3,
-                A3
+                B2,
+                B1,
+                A3,
+                A2,
+                A1
+            ),
+            C1,
+            B1,
+            A1,
+            C2,
+            B2,
+            A2,
+            C3,
+            B3,
+            A3
         );
     }
 
     @Test
     public void testLRBU() {
         this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
-                A3,
-                B3,
+            SpreadsheetCellRangeReferencePath.LRBU,
+            List.of(
                 C3,
-                A2,
-                B2,
                 C2,
-                A1,
+                C1,
+                B3,
+                B2,
                 B1,
-                C1
+                A3,
+                A2,
+                A1
+            ),
+            A3,
+            B3,
+            C3,
+            A2,
+            B2,
+            C2,
+            A1,
+            B1,
+            C1
         );
     }
 
     @Test
     public void testRLBU() {
         this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
+            SpreadsheetCellRangeReferencePath.RLBU,
+            List.of(
                 C3,
-                B3,
-                A3,
                 C2,
-                B2,
-                A2,
                 C1,
+                B3,
+                B2,
                 B1,
+                A3,
+                A2,
                 A1
+            ),
+            C3,
+            B3,
+            A3,
+            C2,
+            B2,
+            A2,
+            C1,
+            B1,
+            A1
         );
     }
 
     @Test
     public void testTDLR() {
         this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
-                A1,
-                A2,
-                A3,
-                B1,
-                B2,
-                B3,
-                C1,
-                C2,
-                C3
-        );
-    }
-
-    @Test
-    public void testTDRL() {
-        this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
-                C1,
-                C2,
-                C3,
-                B1,
-                B2,
-                B3,
-                A1,
-                A2,
-                A3
-        );
-    }
-
-    @Test
-    public void testBULR() {
-        this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.BULR,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
-                A3,
-                A2,
-                A1,
-                B3,
-                B2,
-                B1,
-                C3,
-                C2,
-                C1
-        );
-    }
-
-    @Test
-    public void testBURL() {
-        this.sortAndCompare(
-                SpreadsheetCellRangeReferencePath.BURL,
-                List.of(
-                        C3,
-                        C2,
-                        C1,
-                        B3,
-                        B2,
-                        B1,
-                        A3,
-                        A2,
-                        A1
-                ),
+            SpreadsheetCellRangeReferencePath.TDLR,
+            List.of(
                 C3,
                 C2,
                 C1,
@@ -310,6 +219,97 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                 A3,
                 A2,
                 A1
+            ),
+            A1,
+            A2,
+            A3,
+            B1,
+            B2,
+            B3,
+            C1,
+            C2,
+            C3
+        );
+    }
+
+    @Test
+    public void testTDRL() {
+        this.sortAndCompare(
+            SpreadsheetCellRangeReferencePath.TDRL,
+            List.of(
+                C3,
+                C2,
+                C1,
+                B3,
+                B2,
+                B1,
+                A3,
+                A2,
+                A1
+            ),
+            C1,
+            C2,
+            C3,
+            B1,
+            B2,
+            B3,
+            A1,
+            A2,
+            A3
+        );
+    }
+
+    @Test
+    public void testBULR() {
+        this.sortAndCompare(
+            SpreadsheetCellRangeReferencePath.BULR,
+            List.of(
+                C3,
+                C2,
+                C1,
+                B3,
+                B2,
+                B1,
+                A3,
+                A2,
+                A1
+            ),
+            A3,
+            A2,
+            A1,
+            B3,
+            B2,
+            B1,
+            C3,
+            C2,
+            C1
+        );
+    }
+
+    @Test
+    public void testBURL() {
+        this.sortAndCompare(
+            SpreadsheetCellRangeReferencePath.BURL,
+            List.of(
+                C3,
+                C2,
+                C1,
+                B3,
+                B2,
+                B1,
+                A3,
+                A2,
+                A1
+            ),
+            C3,
+            C2,
+            C1,
+            B3,
+            B2,
+            B1,
+            A3,
+            A2,
+            A1
         );
     }
 
@@ -320,27 +320,27 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
         Arrays.sort(inArray, direction.comparator());
 
         this.checkEquals(
-                List.of(expected),
-                List.of(inArray),
-                direction + " sort " + in
+            List.of(expected),
+            List.of(inArray),
+            direction + " sort " + in
         );
     }
 
     @Test
     public void testSortDifferent() {
         final List<SpreadsheetCellReference> input = List.of(
-                C3,
-                C2,
-                C1,
-                B3,
-                B2,
-                B1,
-                A3,
-                A2,
-                A1
+            C3,
+            C2,
+            C1,
+            B3,
+            B2,
+            B1,
+            A3,
+            A2,
+            A1
         );
         final List<SpreadsheetCellRangeReferencePath> directions = Lists.of(
-                SpreadsheetCellRangeReferencePath.values()
+            SpreadsheetCellRangeReferencePath.values()
         );
         for (final SpreadsheetCellRangeReferencePath direction1 : directions) {
             final List<SpreadsheetCellReference> sorted1 = Lists.array();
@@ -354,9 +354,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                     sorted2.sort(direction2.comparator());
 
                     this.checkNotEquals(
-                            sorted1,
-                            sorted2,
-                            () -> direction1 + " " + direction2
+                        sorted1,
+                        sorted2,
+                        () -> direction1 + " " + direction2
                     );
                 }
             }
@@ -367,8 +367,8 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     public void testComparatorToString() {
         for (final SpreadsheetCellRangeReferencePath path : SpreadsheetCellRangeReferencePath.values()) {
             this.checkEquals(
-                    path.toString(),
-                    path.comparator().toString()
+                path.toString(),
+                path.comparator().toString()
             );
         }
     }
@@ -378,33 +378,33 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testLRTDLabelText() {
         this.labelTextAndCheck(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                "left-right top-down"
+            SpreadsheetCellRangeReferencePath.LRTD,
+            "left-right top-down"
         );
     }
 
     @Test
     public void testRLTDLabelText() {
         this.labelTextAndCheck(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                "right-left top-down"
+            SpreadsheetCellRangeReferencePath.RLTD,
+            "right-left top-down"
         );
     }
 
     @Test
     public void testLRBULabelText() {
         this.labelTextAndCheck(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                "left-right bottom-up"
+            SpreadsheetCellRangeReferencePath.LRBU,
+            "left-right bottom-up"
         );
     }
 
     private void labelTextAndCheck(final SpreadsheetCellRangeReferencePath path,
                                    final String expected) {
         this.checkEquals(
-                expected,
-                path.labelText(),
-                path::toString
+            expected,
+            path.labelText(),
+            path::toString
         );
     }
 
@@ -413,72 +413,72 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testFirstLRTD() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                "A1:C3",
-                "A1"
+            SpreadsheetCellRangeReferencePath.LRTD,
+            "A1:C3",
+            "A1"
         );
     }
 
     @Test
     public void testFirstRLTD() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                "A1:C3",
-                "C1"
+            SpreadsheetCellRangeReferencePath.RLTD,
+            "A1:C3",
+            "C1"
         );
     }
 
     @Test
     public void testFirstLRBU() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                "A1:C3",
-                "A3"
+            SpreadsheetCellRangeReferencePath.LRBU,
+            "A1:C3",
+            "A3"
         );
     }
 
     @Test
     public void testFirstRLBU() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                "A1:C3",
-                "C3"
+            SpreadsheetCellRangeReferencePath.RLBU,
+            "A1:C3",
+            "C3"
         );
     }
 
     @Test
     public void testFirstTDLR() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                "A1:C3",
-                "A1"
+            SpreadsheetCellRangeReferencePath.TDLR,
+            "A1:C3",
+            "A1"
         );
     }
 
     @Test
     public void testFirstTDRL() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                "A1:C3",
-                "C1"
+            SpreadsheetCellRangeReferencePath.TDRL,
+            "A1:C3",
+            "C1"
         );
     }
 
     @Test
     public void testFirstBULR() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.BULR,
-                "A1:C3",
-                "A3"
+            SpreadsheetCellRangeReferencePath.BULR,
+            "A1:C3",
+            "A3"
         );
     }
 
     @Test
     public void testFirstBURL() {
         this.firstAndCheck(
-                SpreadsheetCellRangeReferencePath.BURL,
-                "A1:C3",
-                "C3"
+            SpreadsheetCellRangeReferencePath.BURL,
+            "A1:C3",
+            "C3"
         );
     }
 
@@ -487,9 +487,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                final String range,
                                final String cell) {
         this.firstAndCheck(
-                path,
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(cell)
+            path,
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCell(cell)
         );
     }
 
@@ -497,9 +497,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                final SpreadsheetCellRangeReference range,
                                final SpreadsheetCellReference cell) {
         this.checkEquals(
-                cell,
-                path.first(range),
-                () -> path + " first " + range
+            cell,
+            path.first(range),
+            () -> path + " first " + range
         );
     }
 
@@ -508,80 +508,80 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testLastColumnLRTD() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                "A1",
-                "A1:C3",
-                "C1"
+            SpreadsheetCellRangeReferencePath.LRTD,
+            "A1",
+            "A1:C3",
+            "C1"
         );
     }
 
     @Test
     public void testLastColumnRLTD() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                "C1",
-                "A1:C3",
-                "A1"
+            SpreadsheetCellRangeReferencePath.RLTD,
+            "C1",
+            "A1:C3",
+            "A1"
         );
     }
 
     @Test
     public void testLastColumnLRBU() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                "A3",
-                "A1:C3",
-                "A1"
+            SpreadsheetCellRangeReferencePath.LRBU,
+            "A3",
+            "A1:C3",
+            "A1"
         );
     }
 
     @Test
     public void testLastColumnRLBU() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                "C3",
-                "A1:C3",
-                "C1"
+            SpreadsheetCellRangeReferencePath.RLBU,
+            "C3",
+            "A1:C3",
+            "C1"
         );
     }
 
     @Test
     public void testLastColumnTDLR() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                "A1",
-                "A1:C3",
-                "A3"
+            SpreadsheetCellRangeReferencePath.TDLR,
+            "A1",
+            "A1:C3",
+            "A3"
         );
     }
 
     @Test
     public void testLastColumnTDRL() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                "C1",
-                "A1:C3",
-                "C3"
+            SpreadsheetCellRangeReferencePath.TDRL,
+            "C1",
+            "A1:C3",
+            "C3"
         );
     }
 
     @Test
     public void testLastColumnBULR() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.BULR,
-                "A3",
-                "A1:C3",
-                "A1"
+            SpreadsheetCellRangeReferencePath.BULR,
+            "A3",
+            "A1:C3",
+            "A1"
         );
     }
 
     @Test
     public void testLastColumnBURL() {
         this.lastColumnAndCheck(
-                SpreadsheetCellRangeReferencePath.BURL,
-                "C3",
-                "A1:C3",
-                "C1"
+            SpreadsheetCellRangeReferencePath.BURL,
+            "C3",
+            "A1:C3",
+            "C1"
         );
     }
 
@@ -590,10 +590,10 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                     final String range,
                                     final String lastColumn) {
         this.lastColumnAndCheck(
-                path,
-                SpreadsheetSelection.parseCell(cell),
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(lastColumn)
+            path,
+            SpreadsheetSelection.parseCell(cell),
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCell(lastColumn)
         );
     }
 
@@ -602,12 +602,12 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                     final SpreadsheetCellRangeReference range,
                                     final SpreadsheetCellReference lastColumn) {
         this.checkEquals(
-                lastColumn,
-                path.lastColumn(
-                        cell,
-                        range
-                ),
-                () -> path + " lastColumn " + cell + " " + range
+            lastColumn,
+            path.lastColumn(
+                cell,
+                range
+            ),
+            () -> path + " lastColumn " + cell + " " + range
         );
     }
 
@@ -616,80 +616,80 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testNextRowLRTD() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                "A1",
-                "A1:C3",
-                "A2"
+            SpreadsheetCellRangeReferencePath.LRTD,
+            "A1",
+            "A1:C3",
+            "A2"
         );
     }
 
     @Test
     public void testNextRowRLTD() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                "C1",
-                "A1:C3",
-                "C2"
+            SpreadsheetCellRangeReferencePath.RLTD,
+            "C1",
+            "A1:C3",
+            "C2"
         );
     }
 
     @Test
     public void testNextRowLRBU() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                "A3",
-                "A1:C3",
-                "A2"
+            SpreadsheetCellRangeReferencePath.LRBU,
+            "A3",
+            "A1:C3",
+            "A2"
         );
     }
 
     @Test
     public void testNextRowRLBU() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                "C3",
-                "A1:C3",
-                "B3"
+            SpreadsheetCellRangeReferencePath.RLBU,
+            "C3",
+            "A1:C3",
+            "B3"
         );
     }
 
     @Test
     public void testNextRowTDLR() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                "A1",
-                "A1:C3",
-                "B1"
+            SpreadsheetCellRangeReferencePath.TDLR,
+            "A1",
+            "A1:C3",
+            "B1"
         );
     }
 
     @Test
     public void testNextRowTDRL() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                "C1",
-                "A1:C3",
-                "B1"
+            SpreadsheetCellRangeReferencePath.TDRL,
+            "C1",
+            "A1:C3",
+            "B1"
         );
     }
 
     @Test
     public void testNextRowBULR() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.BULR,
-                "A3",
-                "A1:C3",
-                "B3"
+            SpreadsheetCellRangeReferencePath.BULR,
+            "A3",
+            "A1:C3",
+            "B3"
         );
     }
 
     @Test
     public void testNextRowBURL() {
         this.nextRowAndCheck(
-                SpreadsheetCellRangeReferencePath.BURL,
-                "C3",
-                "A1:C3",
-                "B3"
+            SpreadsheetCellRangeReferencePath.BURL,
+            "C3",
+            "A1:C3",
+            "B3"
         );
     }
 
@@ -699,10 +699,10 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                  final String range,
                                  final String nextRow) {
         this.nextRowAndCheck(
-                path,
-                SpreadsheetSelection.parseCell(cell),
-                SpreadsheetSelection.parseCellRange(range),
-                SpreadsheetSelection.parseCell(nextRow)
+            path,
+            SpreadsheetSelection.parseCell(cell),
+            SpreadsheetSelection.parseCellRange(range),
+            SpreadsheetSelection.parseCell(nextRow)
         );
     }
 
@@ -711,12 +711,12 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                  final SpreadsheetCellRangeReference range,
                                  final SpreadsheetCellReference nextRow) {
         this.checkEquals(
-                nextRow,
-                path.nextRow(
-                        cell,
-                        range
-                ),
-                () -> path + " nextRow " + cell + " " + range
+            nextRow,
+            path.nextRow(
+                cell,
+                range
+            ),
+            () -> path + " nextRow " + cell + " " + range
         );
     }
 
@@ -725,72 +725,72 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testWidthLRTD() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.LRTD,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testWidthRLTD() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.RLTD,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testWidthLRBU() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.LRBU,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testWidthRLBU() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.RLBU,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testWidthTDLR() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.TDLR,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testWidthTDRL() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.TDRL,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testWidthBULR() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.BULR,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.BULR,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testWidthBURL() {
         this.widthAndCheck(
-                SpreadsheetCellRangeReferencePath.BURL,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.BURL,
+            "A1:D2",
+            2
         );
     }
 
@@ -798,9 +798,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                final String range,
                                final int width) {
         this.widthAndCheck(
-                path,
-                SpreadsheetSelection.parseCellRange(range),
-                width
+            path,
+            SpreadsheetSelection.parseCellRange(range),
+            width
         );
     }
 
@@ -808,9 +808,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                final SpreadsheetCellRangeReference range,
                                final int width) {
         this.checkEquals(
-                width,
-                path.width(range),
-                () -> path + " width " + range
+            width,
+            path.width(range),
+            () -> path + " width " + range
         );
     }
 
@@ -819,72 +819,72 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     @Test
     public void testHeightLRTD() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.LRTD,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.LRTD,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testHeightRLTD() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.RLTD,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.RLTD,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testHeightLRBU() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.LRBU,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.LRBU,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testHeightRLBU() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.RLBU,
-                "A1:D2",
-                2
+            SpreadsheetCellRangeReferencePath.RLBU,
+            "A1:D2",
+            2
         );
     }
 
     @Test
     public void testHeightTDLR() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.TDLR,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.TDLR,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testHeightTDRL() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.TDRL,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.TDRL,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testHeightBULR() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.BULR,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.BULR,
+            "A1:D2",
+            4
         );
     }
 
     @Test
     public void testHeightBURL() {
         this.heightAndCheck(
-                SpreadsheetCellRangeReferencePath.BURL,
-                "A1:D2",
-                4
+            SpreadsheetCellRangeReferencePath.BURL,
+            "A1:D2",
+            4
         );
     }
 
@@ -892,9 +892,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                 final String range,
                                 final int height) {
         this.heightAndCheck(
-                path,
-                SpreadsheetSelection.parseCellRange(range),
-                height
+            path,
+            SpreadsheetSelection.parseCellRange(range),
+            height
         );
     }
 
@@ -902,9 +902,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                                 final SpreadsheetCellRangeReference range,
                                 final int height) {
         this.checkEquals(
-                height,
-                path.height(range),
-                () -> path + " height " + range
+            height,
+            path.height(range),
+            () -> path + " height " + range
         );
     }
 

@@ -30,16 +30,16 @@ public final class SpreadsheetMetadataPropertyNameAuditInfoTest extends Spreadsh
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameAuditInfo.instance(),
-                "auditInfo"
+            SpreadsheetMetadataPropertyNameAuditInfo.instance(),
+            "auditInfo"
         );
     }
 
@@ -51,10 +51,10 @@ public final class SpreadsheetMetadataPropertyNameAuditInfoTest extends Spreadsh
     @Override
     AuditInfo propertyValue() {
         return AuditInfo.with(
-                EmailAddress.parse("creator@example.com"),
-                LocalDateTime.MIN,
-                EmailAddress.parse("modified@example.com"),
-                LocalDateTime.MAX
+            EmailAddress.parse("creator@example.com"),
+            LocalDateTime.MIN,
+            EmailAddress.parse("modified@example.com"),
+            LocalDateTime.MAX
         );
     }
 

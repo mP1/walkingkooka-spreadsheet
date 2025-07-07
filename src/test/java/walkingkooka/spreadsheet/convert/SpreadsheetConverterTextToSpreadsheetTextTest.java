@@ -30,8 +30,8 @@ public final class SpreadsheetConverterTextToSpreadsheetTextTest extends Spreads
         final SpreadsheetText text = SpreadsheetText.with("Hello");
 
         this.convertAndCheck(
-                text.text(),
-                text
+            text.text(),
+            text
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetConverterTextToSpreadsheetTextTest extends Spreads
         final SpreadsheetText text = SpreadsheetText.with("Hello2");
 
         this.convertAndCheck(
-                new StringBuilder(text.text()),
-                text
+            new StringBuilder(text.text()),
+            text
         );
     }
 
@@ -58,9 +58,9 @@ public final class SpreadsheetConverterTextToSpreadsheetTextTest extends Spreads
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -68,9 +68,9 @@ public final class SpreadsheetConverterTextToSpreadsheetTextTest extends Spreads
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

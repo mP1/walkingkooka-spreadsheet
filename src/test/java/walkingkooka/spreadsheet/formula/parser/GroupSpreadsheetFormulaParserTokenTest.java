@@ -76,9 +76,9 @@ public final class GroupSpreadsheetFormulaParserTokenTest extends ParentSpreadsh
     @Test
     public void testToExpression() {
         this.toExpressionAndCheck(
-                Expression.value(
-                        this.expressionNumber(NUMBER1)
-                )
+            Expression.value(
+                this.expressionNumber(NUMBER1)
+            )
         );
     }
 

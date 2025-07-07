@@ -89,7 +89,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
     @Override
     protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         this.add(
-                SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol()
+            SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol()
         );
 
         this.currency = true;
@@ -159,12 +159,12 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
     @Override
     protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.add(
-                walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(
-                        CharSequences.repeating(
-                                ' ',
-                                token.value().length()
-                        ).toString()
-                )
+            walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(
+                CharSequences.repeating(
+                    ' ',
+                    token.value().length()
+                ).toString()
+            )
         );
     }
 
@@ -207,8 +207,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
      */
     private void computeGroupSeparatorAndCommaAdjust() {
         this.groupSeparator = this.thousandsDivider ?
-                SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE :
-                SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE;
+            SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE :
+            SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE;
 
         final int comma = this.comma;
         if (comma > 0) {

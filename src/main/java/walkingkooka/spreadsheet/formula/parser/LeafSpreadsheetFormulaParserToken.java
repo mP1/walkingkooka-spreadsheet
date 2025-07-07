@@ -26,7 +26,7 @@ import java.util.Objects;
  * Base class for a leaf token. A leaf has no further breakdown into more detailed tokens.
  */
 abstract public class LeafSpreadsheetFormulaParserToken<T> extends SpreadsheetFormulaParserToken
-        implements Value<T> {
+    implements Value<T> {
 
     static <T> T checkValue(final T value) {
         return Objects.requireNonNull(value, "value");
@@ -51,8 +51,8 @@ abstract public class LeafSpreadsheetFormulaParserToken<T> extends SpreadsheetFo
     @Override
     public final ParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.leafSetChildren(
-                this,
-                children
+            this,
+            children
         );
     }
 

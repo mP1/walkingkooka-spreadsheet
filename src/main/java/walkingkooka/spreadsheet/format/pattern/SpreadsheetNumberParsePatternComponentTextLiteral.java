@@ -44,12 +44,12 @@ final class SpreadsheetNumberParsePatternComponentTextLiteral extends Spreadshee
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         return this.parseToken(
-                cursor,
-                this.text,
-                CaseSensitivity.SENSITIVE,
-                SpreadsheetFormulaParserToken::textLiteral,
-                null, // dont update mode
-                request
+            cursor,
+            this.text,
+            CaseSensitivity.SENSITIVE,
+            SpreadsheetFormulaParserToken::textLiteral,
+            null, // dont update mode
+            request
         );
     }
 

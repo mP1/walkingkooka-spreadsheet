@@ -31,8 +31,8 @@ public final class SpreadsheetConverterTextToSpreadsheetFormatterSelectorTest ex
         final SpreadsheetFormatterSelector selector = SpreadsheetFormatterSelector.parse("text-formatter");
 
         this.convertAndCheck(
-                selector.toString(),
-                selector
+            selector.toString(),
+            selector
         );
     }
 
@@ -41,8 +41,8 @@ public final class SpreadsheetConverterTextToSpreadsheetFormatterSelectorTest ex
         final SpreadsheetFormatterSelector selector = SpreadsheetFormatterSelector.parse("text-formatter");
 
         this.convertAndCheck(
-                new StringBuilder(selector.toString()),
-                selector
+            new StringBuilder(selector.toString()),
+            selector
         );
     }
 
@@ -58,9 +58,9 @@ public final class SpreadsheetConverterTextToSpreadsheetFormatterSelectorTest ex
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -68,9 +68,9 @@ public final class SpreadsheetConverterTextToSpreadsheetFormatterSelectorTest ex
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

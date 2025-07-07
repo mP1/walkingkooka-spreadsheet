@@ -39,7 +39,7 @@ public final class IllegalRowArgumentException extends IllegalColumnOrRowArgumen
         checkMessage(message);
 
         return message.equals(this.getMessage()) ?
-                this :
-                new IllegalRowArgumentException(message, this);
+            this :
+            new IllegalRowArgumentException(message, this);
     }
 }

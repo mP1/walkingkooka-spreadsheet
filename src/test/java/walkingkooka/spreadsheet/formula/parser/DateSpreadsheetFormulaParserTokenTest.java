@@ -38,129 +38,129 @@ public final class DateSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     @Test
     public void testToLocalDateDayNumberMonthNumberYear() {
         this.testToLocalDateAndCheck(
-                date(),
-                dayNumber(),
-                slashTextLiteral(),
-                monthNumber(),
-                slashTextLiteral(),
-                year()
+            date(),
+            dayNumber(),
+            slashTextLiteral(),
+            monthNumber(),
+            slashTextLiteral(),
+            year()
         );
     }
 
     @Test
     public void testToLocalDateYearMonthNumberDayNumber() {
         this.testToLocalDateAndCheck(
-                date(),
-                year(),
-                slashTextLiteral(),
-                monthNumber(),
-                slashTextLiteral(),
-                dayNumber()
+            date(),
+            year(),
+            slashTextLiteral(),
+            monthNumber(),
+            slashTextLiteral(),
+            dayNumber()
         );
     }
 
     @Test
     public void testToLocalDateDayNumberMonthNameYear() {
         this.testToLocalDateAndCheck(
-                date(),
-                dayNumber(),
-                slashTextLiteral(),
-                monthName(),
-                slashTextLiteral(),
-                year()
+            date(),
+            dayNumber(),
+            slashTextLiteral(),
+            monthName(),
+            slashTextLiteral(),
+            year()
         );
     }
 
     @Test
     public void testToLocalDateDayNumberMonthNameAbbreviationYear() {
         this.testToLocalDateAndCheck(
-                date(),
-                dayNumber(),
-                slashTextLiteral(),
-                monthNameAbbreviation(),
-                slashTextLiteral(),
-                year()
+            date(),
+            dayNumber(),
+            slashTextLiteral(),
+            monthNameAbbreviation(),
+            slashTextLiteral(),
+            year()
         );
     }
 
     @Test
     public void testToLocalDateDayNumberMonthNameInitialYear() {
         this.testToLocalDateAndCheck(
-                date(),
-                dayNumber(),
-                slashTextLiteral(),
-                monthNameInitial(),
-                slashTextLiteral(),
-                year()
+            date(),
+            dayNumber(),
+            slashTextLiteral(),
+            monthNameInitial(),
+            slashTextLiteral(),
+            year()
         );
     }
 
     @Test
     public void testToLocalDateDayNumberMonthNumber() {
         this.testToLocalDateAndCheck(
-                LocalDate.of(DEFAULT_YEAR, MONTH, DAY),
-                dayNumber(),
-                slashTextLiteral(),
-                monthNumber()
+            LocalDate.of(DEFAULT_YEAR, MONTH, DAY),
+            dayNumber(),
+            slashTextLiteral(),
+            monthNumber()
         );
     }
 
     @Test
     public void testToLocalDateDayNumberYear() {
         this.testToLocalDateAndCheck(
-                LocalDate.of(YEAR, 1, DAY),
-                dayNumber(),
-                slashTextLiteral(),
-                year()
+            LocalDate.of(YEAR, 1, DAY),
+            dayNumber(),
+            slashTextLiteral(),
+            year()
         );
     }
 
     @Test
     public void testToLocalDateMonthNumberYear() {
         this.testToLocalDateAndCheck(
-                LocalDate.of(YEAR, MONTH, 1),
-                monthNumber(),
-                slashTextLiteral(),
-                year()
+            LocalDate.of(YEAR, MONTH, 1),
+            monthNumber(),
+            slashTextLiteral(),
+            year()
         );
     }
 
     @Test
     public void testToLocalDateMonthNumberYearBeforeTwoDigitYearBefore() {
         this.testToLocalDateAndCheck(
-                LocalDate.of(2010, MONTH, 1),
-                monthNumber(),
-                slashTextLiteral(),
-                SpreadsheetFormulaParserToken.year(10, "10")
+            LocalDate.of(2010, MONTH, 1),
+            monthNumber(),
+            slashTextLiteral(),
+            SpreadsheetFormulaParserToken.year(10, "10")
         );
     }
 
     @Test
     public void testToLocalDateMonthNumberYearBeforeTwoDigitYearEqual() {
         this.testToLocalDateAndCheck(
-                LocalDate.of(1920, MONTH, 1),
-                monthNumber(),
-                slashTextLiteral(),
-                SpreadsheetFormulaParserToken.year(20, "20")
+            LocalDate.of(1920, MONTH, 1),
+            monthNumber(),
+            slashTextLiteral(),
+            SpreadsheetFormulaParserToken.year(20, "20")
         );
     }
 
     @Test
     public void testToLocalDateMonthNumberYearBeforeTwoDigitYearAfter() {
         this.testToLocalDateAndCheck(
-                LocalDate.of(1950, MONTH, 1),
-                monthNumber(),
-                slashTextLiteral(),
-                SpreadsheetFormulaParserToken.year(50, "50")
+            LocalDate.of(1950, MONTH, 1),
+            monthNumber(),
+            slashTextLiteral(),
+            SpreadsheetFormulaParserToken.year(50, "50")
         );
     }
 
     private void testToLocalDateAndCheck(final LocalDate expected,
                                          final SpreadsheetFormulaParserToken... tokens) {
         this.testToLocalDateAndCheck(
-                this.expressionEvaluationContext(DEFAULT_YEAR, 20),
-                expected,
-                tokens
+            this.expressionEvaluationContext(DEFAULT_YEAR, 20),
+            expected,
+            tokens
         );
     }
 
@@ -170,19 +170,19 @@ public final class DateSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         final List<ParserToken> tokensList = Lists.of(tokens);
 
         final DateSpreadsheetFormulaParserToken dateParserToken = DateSpreadsheetFormulaParserToken.with(
-                tokensList,
-                ParserToken.text(tokensList)
+            tokensList,
+            ParserToken.text(tokensList)
         );
 
         this.checkEquals(
-                expected,
-                dateParserToken.toLocalDate(context),
-                () -> "toLocalDate() " + dateParserToken
+            expected,
+            dateParserToken.toLocalDate(context),
+            () -> "toLocalDate() " + dateParserToken
         );
 
         this.toExpressionAndCheck(
-                dateParserToken,
-                Expression.value(expected)
+            dateParserToken,
+            Expression.value(expected)
         );
     }
 
@@ -199,11 +199,11 @@ public final class DateSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                this.dayNumber(),
-                this.slashTextLiteral(),
-                this.monthNumber(),
-                this.slashTextLiteral(),
-                this.year()
+            this.dayNumber(),
+            this.slashTextLiteral(),
+            this.monthNumber(),
+            this.slashTextLiteral(),
+            this.year()
         );
     }
 
@@ -216,12 +216,12 @@ public final class DateSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         final String different = "" + YEAR + "/" + MONTH + "/" + DAY;
 
         return this.createToken(
-                different,
-                year(),
-                slashTextLiteral(),
-                monthNumber(),
-                slashTextLiteral(),
-                dayNumber()
+            different,
+            year(),
+            slashTextLiteral(),
+            monthNumber(),
+            slashTextLiteral(),
+            dayNumber()
         );
     }
 

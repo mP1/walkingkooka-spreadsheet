@@ -58,8 +58,8 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testEffectiveStyle() {
         this.effectiveStyleAndCheck(
-                SpreadsheetMetadata.EMPTY,
-                TextStyle.EMPTY
+            SpreadsheetMetadata.EMPTY,
+            TextStyle.EMPTY
         );
     }
 
@@ -69,24 +69,24 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testSet() {
         final SpreadsheetMetadataPropertyName<AuditInfo> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
         final AuditInfo auditInfo = AuditInfo.with(
-                EmailAddress.parse("created@example.com"),
-                LocalDateTime.MIN,
-                EmailAddress.parse("modified@example.com"),
-                LocalDateTime.MAX
+            EmailAddress.parse("created@example.com"),
+            LocalDateTime.MIN,
+            EmailAddress.parse("modified@example.com"),
+            LocalDateTime.MAX
         );
 
         this.setAndCheck(
-                SpreadsheetMetadata.EMPTY,
-                propertyName,
-                auditInfo,
-                "{\n" +
-                        "  \"auditInfo\": {\n" +
-                        "    \"createdBy\": \"created@example.com\",\n" +
-                        "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
-                        "    \"modifiedBy\": \"modified@example.com\",\n" +
-                        "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetMetadata.EMPTY,
+            propertyName,
+            auditInfo,
+            "{\n" +
+                "  \"auditInfo\": {\n" +
+                "    \"createdBy\": \"created@example.com\",\n" +
+                "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
+                "    \"modifiedBy\": \"modified@example.com\",\n" +
+                "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -110,21 +110,21 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testMissingProperties() {
         this.missingRequiredPropertiesAndCheck(
-                SpreadsheetMetadata.EMPTY,
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                SpreadsheetMetadataPropertyName.LOCALE
+            SpreadsheetMetadata.EMPTY,
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            SpreadsheetMetadataPropertyName.LOCALE
         );
     }
 
     @Test
     public void testMissingPropertiesIgnoresDefaults() {
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
+            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
 
         this.missingRequiredPropertiesAndCheck(
-                SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                SpreadsheetMetadataPropertyName.LOCALE
+            SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            SpreadsheetMetadataPropertyName.LOCALE
         );
     }
 
@@ -133,13 +133,13 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testEnvironmentContext() {
         this.environmentValueAndCheck(
-                SpreadsheetMetadata.EMPTY.environmentContext(
-                        EnvironmentContexts.empty(
-                                LocalDateTime::now,
-                                EnvironmentContext.ANONYMOUS
-                        )
-                ),
-                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO)
+            SpreadsheetMetadata.EMPTY.environmentContext(
+                EnvironmentContexts.empty(
+                    LocalDateTime::now,
+                    EnvironmentContext.ANONYMOUS
+                )
+            ),
+            EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO)
         );
     }
 
@@ -148,16 +148,16 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testExpressionNumberContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.expressionNumberContext(
-                        SpreadsheetMetadata.NO_CELL,
-                        LOCALE_CONTEXT
-                )
+            IllegalStateException.class,
+            () -> SpreadsheetMetadata.EMPTY.expressionNumberContext(
+                SpreadsheetMetadata.NO_CELL,
+                LOCALE_CONTEXT
+            )
         );
         this.checkEquals(
-                "Metadata missing: expressionNumberKind, locale, precision, roundingMode",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: expressionNumberKind, locale, precision, roundingMode",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -166,13 +166,13 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testUnmarshallContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext
+            IllegalStateException.class,
+            SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext
         );
         this.checkEquals(
-                "Metadata missing: expressionNumberKind, precision, roundingMode",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: expressionNumberKind, precision, roundingMode",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -181,16 +181,16 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testSpreadsheetParserAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetParser(
-                        SpreadsheetParserProviders.fake(),
-                        PROVIDER_CONTEXT
-                )
+            IllegalStateException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetParser(
+                SpreadsheetParserProviders.fake(),
+                PROVIDER_CONTEXT
+            )
         );
         this.checkEquals(
-                "Metadata missing: dateParser, dateTimeParser, numberParser, timeParser",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: dateParser, dateTimeParser, numberParser, timeParser",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -199,35 +199,35 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testSpreadsheetParserContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(
-                        SpreadsheetMetadata.NO_CELL,
-                        LOCALE_CONTEXT,
-                        LocalDateTime::now
-                )
+            IllegalStateException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(
+                SpreadsheetMetadata.NO_CELL,
+                LOCALE_CONTEXT,
+                LocalDateTime::now
+            )
         );
         this.checkEquals(
-                "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testSpreadsheetParserContextAllRequiredPropertiesAbsentFails2() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY
-                        .spreadsheetParserContext(
-                                SpreadsheetMetadata.NO_CELL,
-                                LOCALE_CONTEXT,
-                                LocalDateTime::now
-                        )
+            IllegalStateException.class,
+            () -> SpreadsheetMetadata.EMPTY
+                .spreadsheetParserContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    LOCALE_CONTEXT,
+                    LocalDateTime::now
+                )
         );
         this.checkEquals(
-                "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -236,26 +236,26 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testSpreadsheetValidatorContextMissingPropertiesFails() {
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetValidatorContext(
-                        SpreadsheetSelection.A1,
-                        (final ValidatorSelector validatorSelector) -> {
-                            throw new UnsupportedOperationException();
-                        },
-                        (final Object value,
-                         final SpreadsheetExpressionReference cellOrLabel) -> {
-                            throw new UnsupportedOperationException();
-                        },
-                        LABEL_NAME_RESOLVER,
-                        CONVERTER_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+            IllegalStateException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetValidatorContext(
+                SpreadsheetSelection.A1,
+                (final ValidatorSelector validatorSelector) -> {
+                    throw new UnsupportedOperationException();
+                },
+                (final Object value,
+                 final SpreadsheetExpressionReference cellOrLabel) -> {
+                    throw new UnsupportedOperationException();
+                },
+                LABEL_NAME_RESOLVER,
+                CONVERTER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
         this.checkEquals(
-                "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter",
-                thrown.getMessage(),
-                "message"
+            "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -276,12 +276,12 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testMarshallWithDefaults() {
         final SpreadsheetMetadata defaultNotEmpty = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+            .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         this.checkEquals(JsonNode.object()
-                        .set(SpreadsheetMetadata.DEFAULTS, context.marshall(defaultNotEmpty)),
-                context.marshall(SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)));
+                .set(SpreadsheetMetadata.DEFAULTS, context.marshall(defaultNotEmpty)),
+            context.marshall(SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)));
     }
 
     // TreePrintable....................................................................................................
@@ -289,8 +289,8 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetMetadata.EMPTY,
-                ""
+            SpreadsheetMetadata.EMPTY,
+            ""
         );
     }
 

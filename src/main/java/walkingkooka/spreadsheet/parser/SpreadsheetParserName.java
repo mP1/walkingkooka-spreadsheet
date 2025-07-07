@@ -63,8 +63,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
      * The name of the date {@link Parser}
      */
     public final static SpreadsheetParserName DATE_PARSER_PATTERN = new SpreadsheetParserName(
-            DATE_PARSER_PATTERN_STRING,
-            SpreadsheetPatternKind.DATE_PARSE_PATTERN
+        DATE_PARSER_PATTERN_STRING,
+        SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
     final static String DATE_TIME_PARSER_PATTERN_STRING = "date-time-parse-pattern";
@@ -73,8 +73,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
      * The name of the date-time {@link Parser}
      */
     public final static SpreadsheetParserName DATE_TIME_PARSER_PATTERN = new SpreadsheetParserName(
-            DATE_TIME_PARSER_PATTERN_STRING,
-            SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+        DATE_TIME_PARSER_PATTERN_STRING,
+        SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
     final static String NUMBER_PARSER_PATTERN_STRING = "number-parse-pattern";
@@ -83,8 +83,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
      * The name of the number {@link Parser}
      */
     public final static SpreadsheetParserName NUMBER_PARSER_PATTERN = new SpreadsheetParserName(
-            NUMBER_PARSER_PATTERN_STRING,
-            SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+        NUMBER_PARSER_PATTERN_STRING,
+        SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
     );
 
     final static String TIME_PARSER_PATTERN_STRING = "time-parse-pattern";
@@ -93,8 +93,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
      * The name of the time {@link Parser}
      */
     public final static SpreadsheetParserName TIME_PARSER_PATTERN = new SpreadsheetParserName(
-            TIME_PARSER_PATTERN_STRING,
-            SpreadsheetPatternKind.TIME_PARSE_PATTERN
+        TIME_PARSER_PATTERN_STRING,
+        SpreadsheetPatternKind.TIME_PARSE_PATTERN
     );
 
     /**
@@ -120,8 +120,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
                 break;
             default:
                 parserName = new SpreadsheetParserName(
-                        name,
-                        null // other SpreadsheetParserNames dont have a SpreadsheetPatternKind
+                    name,
+                    null // other SpreadsheetParserNames dont have a SpreadsheetPatternKind
                 );
                 break;
         }
@@ -136,7 +136,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
                                   final SpreadsheetPatternKind patternKind) {
         super();
         this.name = PluginName.with(name)
-                .checkLength("Parser");
+            .checkLength("Parser");
         this.patternKind = patternKind;
     }
 
@@ -167,8 +167,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetParserName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetParserName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetParserName other) {
@@ -193,10 +193,10 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserName.class),
-                SpreadsheetParserName::unmarshall,
-                SpreadsheetParserName::marshall,
-                SpreadsheetParserName.class
+            JsonNodeContext.computeTypeName(SpreadsheetParserName.class),
+            SpreadsheetParserName::unmarshall,
+            SpreadsheetParserName::marshall,
+            SpreadsheetParserName.class
         );
     }
 
@@ -207,8 +207,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
      */
     public SpreadsheetParserSelector setValueText(final String text) {
         return SpreadsheetParserSelector.with(
-                this,
-                text
+            this,
+            text
         );
     }
 }

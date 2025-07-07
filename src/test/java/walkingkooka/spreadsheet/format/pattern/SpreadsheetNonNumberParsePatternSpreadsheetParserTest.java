@@ -29,73 +29,73 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTokenAlternative
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 
 public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
-        ClassTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
-        ToStringTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser> {
+    ClassTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
+    ToStringTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser> {
 
     @Test
     public void testTokens() {
         this.tokensAndCheck(
-                this.createContext(),
-                SpreadsheetParserSelectorToken.with(
-                        "dd",
-                        "dd",
-                        Lists.of(
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "d",
-                                        "d"
-                                ),
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "ddd",
-                                        "ddd"
-                                ),
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "dddd",
-                                        "dddd"
-                                )
-                        )
-                ),
-                SpreadsheetParserSelectorToken.with(
-                        "/",
-                        "/",
-                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetParserSelectorToken.with(
-                        "mm",
-                        "mm",
-                        Lists.of(
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "m",
-                                        "m"
-                                ),
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "mmm",
-                                        "mmm"
-                                ),
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "mmmm",
-                                        "mmmm"
-                                ),
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "mmmmm",
-                                        "mmmmm"
-                                )
-                        )
-                ),
-                SpreadsheetParserSelectorToken.with(
-                        "/",
-                        "/",
-                        SpreadsheetParserSelectorToken.NO_ALTERNATIVES
-                ),
-                SpreadsheetParserSelectorToken.with(
-                        "yyyy",
-                        "yyyy",
-                        Lists.of(
-                                SpreadsheetParserSelectorTokenAlternative.with(
-                                        "yy",
-                                        "yy"
-                                )
-                        )
+            this.createContext(),
+            SpreadsheetParserSelectorToken.with(
+                "dd",
+                "dd",
+                Lists.of(
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "d",
+                        "d"
+                    ),
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "ddd",
+                        "ddd"
+                    ),
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "dddd",
+                        "dddd"
+                    )
                 )
+            ),
+            SpreadsheetParserSelectorToken.with(
+                "/",
+                "/",
+                SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetParserSelectorToken.with(
+                "mm",
+                "mm",
+                Lists.of(
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "m",
+                        "m"
+                    ),
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "mmm",
+                        "mmm"
+                    ),
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "mmmm",
+                        "mmmm"
+                    ),
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "mmmmm",
+                        "mmmmm"
+                    )
+                )
+            ),
+            SpreadsheetParserSelectorToken.with(
+                "/",
+                "/",
+                SpreadsheetParserSelectorToken.NO_ALTERNATIVES
+            ),
+            SpreadsheetParserSelectorToken.with(
+                "yyyy",
+                "yyyy",
+                Lists.of(
+                    SpreadsheetParserSelectorTokenAlternative.with(
+                        "yy",
+                        "yy"
+                    )
+                )
+            )
         );
     }
 
@@ -114,8 +114,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest impleme
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                "\"dd/mm/yyyy\""
+            this.createParser(),
+            "\"dd/mm/yyyy\""
         );
     }
 

@@ -30,8 +30,8 @@ public final class SpreadsheetConverterTextToSpreadsheetErrorTest extends Spread
         final SpreadsheetError error = SpreadsheetError.parse("#N/A Hello");
 
         this.convertAndCheck(
-                error.toString(),
-                error
+            error.toString(),
+            error
         );
     }
 
@@ -40,8 +40,8 @@ public final class SpreadsheetConverterTextToSpreadsheetErrorTest extends Spread
         final SpreadsheetError error = SpreadsheetError.parse("#N/A Hello");
 
         this.convertAndCheck(
-                new StringBuilder(error.toString()),
-                error
+            new StringBuilder(error.toString()),
+            error
         );
     }
 
@@ -58,9 +58,9 @@ public final class SpreadsheetConverterTextToSpreadsheetErrorTest extends Spread
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -68,9 +68,9 @@ public final class SpreadsheetConverterTextToSpreadsheetErrorTest extends Spread
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

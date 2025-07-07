@@ -33,18 +33,15 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
         super(name);
     }
 
-    @Override
-    final Boolean checkValueNonNull(final Object value) {
+    @Override final Boolean checkValueNonNull(final Object value) {
         return this.checkValueType(value, v -> v instanceof Boolean);
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return Boolean.class.getSimpleName();
     }
 
-    @Override
-    final Optional<Boolean> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<Boolean> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty(); // always empty
     }
 
@@ -55,8 +52,7 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final Boolean parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final Boolean parseUrlFragmentSaveValueNonNull(final String value) {
         return Boolean.valueOf(value);
     }
 }

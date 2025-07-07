@@ -29,7 +29,7 @@ public final class GreaterThanEqualsSpreadsheetFormatParserToken extends Conditi
 
     static GreaterThanEqualsSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new GreaterThanEqualsSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     private GreaterThanEqualsSpreadsheetFormatParserToken(final List<ParserToken> value, final String text) {
@@ -46,9 +46,9 @@ public final class GreaterThanEqualsSpreadsheetFormatParserToken extends Conditi
     @Override
     public GreaterThanEqualsSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                GreaterThanEqualsSpreadsheetFormatParserToken::with
+            this,
+            children,
+            GreaterThanEqualsSpreadsheetFormatParserToken::with
         );
     }
 

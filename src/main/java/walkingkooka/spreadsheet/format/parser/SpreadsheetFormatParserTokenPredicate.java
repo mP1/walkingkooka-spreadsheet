@@ -42,7 +42,7 @@ final class SpreadsheetFormatParserTokenPredicate implements Predicate<ParserTok
     @Override
     public boolean test(final ParserToken token) {
         return token instanceof SpreadsheetFormatParserToken &&
-                this.predicate.test(token.cast(SpreadsheetFormatParserToken.class));
+            this.predicate.test(token.cast(SpreadsheetFormatParserToken.class));
     }
 
     private final Predicate<SpreadsheetFormatParserToken> predicate;

@@ -47,10 +47,10 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
         final List<Expression> nodes = visitor.children;
         final int count = nodes.size();
         return count == 1 ?
-                Optional.of(nodes.get(0)) :
-                count == 0 ?
-                        Optional.empty() :
-                        fail(count, nodes);
+            Optional.of(nodes.get(0)) :
+            count == 0 ?
+                Optional.empty() :
+                fail(count, nodes);
     }
 
     private static Optional<Expression> fail(final int count, final List<Expression> nodes) {
@@ -82,8 +82,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     protected void endVisit(final BooleanSpreadsheetFormulaParserToken token) {
         this.exit();
         this.add(
-                Expression.value(token.toBoolean()),
-                token
+            Expression.value(token.toBoolean()),
+            token
         );
     }
 
@@ -176,8 +176,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     protected void endVisit(final DateSpreadsheetFormulaParserToken token) {
         this.exit();
         this.add(
-                Expression.value(token.toLocalDate(this.context)),
-                token
+            Expression.value(token.toLocalDate(this.context)),
+            token
         );
     }
 
@@ -190,8 +190,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     protected void endVisit(final DateTimeSpreadsheetFormulaParserToken token) {
         this.exit();
         this.add(
-                Expression.value(token.toLocalDateTime(this.context)),
-                token
+            Expression.value(token.toLocalDateTime(this.context)),
+            token
         );
     }
 
@@ -270,14 +270,14 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
         final int parameterCount = parametersTokens.parameters().size();
 
         final Expression call = Expression.call(
-                Expression.call(
-                        Expression.namedFunction(
-                                token.functionName()
-                                        .toExpressionFunctionName()
-                        ),
-                        children.subList(0, parameterCount)
+            Expression.call(
+                Expression.namedFunction(
+                    token.functionName()
+                        .toExpressionFunctionName()
                 ),
-                children.subList(parameterCount, children.size())
+                children.subList(0, parameterCount)
+            ),
+            children.subList(parameterCount, children.size())
         );
 
         this.exit();
@@ -322,11 +322,11 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     @Override
     protected void endVisit(final NamedFunctionSpreadsheetFormulaParserToken token) {
         final Expression callNamedFunction = Expression.call(
-                Expression.namedFunction(
-                        token.functionName()
-                                .toExpressionFunctionName()
-                ),
-                this.children
+            Expression.namedFunction(
+                token.functionName()
+                    .toExpressionFunctionName()
+            ),
+            this.children
         );
         this.exit();
         this.add(callNamedFunction, token);
@@ -361,8 +361,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     protected void endVisit(final NumberSpreadsheetFormulaParserToken token) {
         this.exit();
         this.add(
-                Expression.value(token.toNumber(this.context)),
-                token
+            Expression.value(token.toNumber(this.context)),
+            token
         );
     }
 
@@ -396,8 +396,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     protected void endVisit(final TextSpreadsheetFormulaParserToken token) {
         this.exit();
         this.add(
-                Expression.value(this.text.toString()),
-                token
+            Expression.value(this.text.toString()),
+            token
         );
         this.text = null;
     }
@@ -416,8 +416,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     protected void endVisit(final TimeSpreadsheetFormulaParserToken token) {
         this.exit();
         this.add(
-                Expression.value(token.toLocalTime()),
-                token
+            Expression.value(token.toLocalTime()),
+            token
         );
     }
 
@@ -427,28 +427,28 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     @Override
     protected void visit(final ErrorSpreadsheetFormulaParserToken token) {
         this.add(
-                Expression.value(
-                        token.value()
-                                .kind()
-                                .toError()
-                ),
-                token
+            Expression.value(
+                token.value()
+                    .kind()
+                    .toError()
+            ),
+            token
         );
     }
 
     @Override
     protected void visit(final LabelSpreadsheetFormulaParserToken token) {
         this.addReference(
-                token.value(),
-                token
+            token.value(),
+            token
         );
     }
 
     @Override
     protected void visit(final TemplateValueNameSpreadsheetFormulaParserToken token) {
         this.addReference(
-                token.value(),
-                token
+            token.value(),
+            token
         );
     }
 
@@ -499,8 +499,8 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     private void addReference(final ExpressionReference reference,
                               final SpreadsheetFormulaParserToken token) {
         this.add(
-                Expression.reference(reference),
-                token
+            Expression.reference(reference),
+            token
         );
     }
 

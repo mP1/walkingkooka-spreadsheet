@@ -41,15 +41,15 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
                                                     final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                     final ProviderContext providerContext) {
         return BasicSpreadsheetFormatterContext.with(
-                numberToColor,
-                nameToColor,
-                cellCharacterWidth,
-                generalFormatNumberDigitCount,
-                defaultSpreadsheetFormatter,
-                spreadsheetExpressionEvaluationContext,
-                spreadsheetConverterContext,
-                spreadsheetFormatterProvider,
-                providerContext
+            numberToColor,
+            nameToColor,
+            cellCharacterWidth,
+            generalFormatNumberDigitCount,
+            defaultSpreadsheetFormatter,
+            spreadsheetExpressionEvaluationContext,
+            spreadsheetConverterContext,
+            spreadsheetFormatterProvider,
+            providerContext
         );
     }
 

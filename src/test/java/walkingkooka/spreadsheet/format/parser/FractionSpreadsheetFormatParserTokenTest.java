@@ -97,12 +97,12 @@ public final class FractionSpreadsheetFormatParserTokenTest extends ParentSpread
         }.accept(token);
         this.checkEquals("713715287162871528428", b.toString());
         this.checkEquals(Lists.of(token, token, token,
-                        digit1, digit1, digit1, digit1, digit1,
-                        symbol, symbol, symbol, symbol, symbol,
-                        digit2, digit2, digit2, digit2, digit2,
-                        token, token, token),
-                visited,
-                "visited");
+                digit1, digit1, digit1, digit1, digit1,
+                symbol, symbol, symbol, symbol, symbol,
+                digit2, digit2, digit2, digit2, digit2,
+                token, token, token),
+            visited,
+            "visited");
     }
 
     // kind............................................................................................................
@@ -132,11 +132,11 @@ public final class FractionSpreadsheetFormatParserTokenTest extends ParentSpread
     @Override
     public FractionSpreadsheetFormatParserToken createDifferentToken() {
         return FractionSpreadsheetFormatParserToken.with(Lists.of(this.digit(),
-                        this.digit(),
-                        this.fractionSymbol(),
-                        this.digit(),
-                        this.digit()),
-                "##/##");
+                this.digit(),
+                this.fractionSymbol(),
+                this.digit(),
+                this.digit()),
+            "##/##");
     }
 
     @Override

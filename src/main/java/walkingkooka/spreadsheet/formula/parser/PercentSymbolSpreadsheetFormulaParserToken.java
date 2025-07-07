@@ -28,8 +28,8 @@ public final class PercentSymbolSpreadsheetFormulaParserToken extends SymbolSpre
     static PercentSymbolSpreadsheetFormulaParserToken with(final String value,
                                                            final String text) {
         return new PercentSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

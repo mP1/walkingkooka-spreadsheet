@@ -41,17 +41,17 @@ import java.util.function.Predicate;
 public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> {
 
     public final static SpreadsheetComparatorInfoSet EMPTY = new SpreadsheetComparatorInfoSet(
-            PluginInfoSet.with(
-                    Sets.<SpreadsheetComparatorInfo>empty()
-            )
+        PluginInfoSet.with(
+            Sets.<SpreadsheetComparatorInfo>empty()
+        )
     );
 
     public static SpreadsheetComparatorInfoSet parse(final String text) {
         return new SpreadsheetComparatorInfoSet(
-                PluginInfoSet.parse(
-                        text,
-                        SpreadsheetComparatorInfo::parse
-                )
+            PluginInfoSet.parse(
+                text,
+                SpreadsheetComparatorInfo::parse
+            )
         );
     }
 
@@ -96,53 +96,53 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     @Override
     public SpreadsheetComparatorInfoSet filter(final SpreadsheetComparatorInfoSet infos) {
         return this.setElements(
-                this.pluginInfoSet.filter(
-                        infos.pluginInfoSet
-                )
+            this.pluginInfoSet.filter(
+                infos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet renameIfPresent(SpreadsheetComparatorInfoSet renameInfos) {
         return this.setElements(
-                this.pluginInfoSet.renameIfPresent(
-                        renameInfos.pluginInfoSet
-                )
+            this.pluginInfoSet.renameIfPresent(
+                renameInfos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet concat(final SpreadsheetComparatorInfo info) {
         return this.setElements(
-                this.pluginInfoSet.concat(info)
+            this.pluginInfoSet.concat(info)
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet concatAll(final Collection<SpreadsheetComparatorInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.concatAll(infos)
+            this.pluginInfoSet.concatAll(infos)
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet delete(final SpreadsheetComparatorInfo info) {
         return this.setElements(
-                this.pluginInfoSet.delete(info)
+            this.pluginInfoSet.delete(info)
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet deleteAll(final Collection<SpreadsheetComparatorInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.deleteAll(infos)
+            this.pluginInfoSet.deleteAll(infos)
         );
     }
 
     @Override
     public SpreadsheetComparatorInfoSet deleteIf(final Predicate<? super SpreadsheetComparatorInfo> predicate) {
         return this.setElements(
-                this.pluginInfoSet.deleteIf(predicate)
+            this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
@@ -150,19 +150,19 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     public SpreadsheetComparatorInfoSet replace(final SpreadsheetComparatorInfo oldInfo,
                                                 final SpreadsheetComparatorInfo newInfo) {
         return this.setElements(
-                this.pluginInfoSet.replace(
-                        oldInfo,
-                        newInfo
-                )
+            this.pluginInfoSet.replace(
+                oldInfo,
+                newInfo
+            )
         );
     }
 
     @Override
     public ImmutableSet<SpreadsheetComparatorInfo> setElementsFailIfDifferent(final Set<SpreadsheetComparatorInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.setElementsFailIfDifferent(
-                        infos
-                )
+            this.pluginInfoSet.setElementsFailIfDifferent(
+                infos
+            )
         );
     }
 
@@ -233,10 +233,10 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     static SpreadsheetComparatorInfoSet unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallSet(
-                        node,
-                        SpreadsheetComparatorInfo.class
-                )
+            context.unmarshallSet(
+                node,
+                SpreadsheetComparatorInfo.class
+            )
         );
     }
 
@@ -244,10 +244,10 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
         SpreadsheetComparatorInfo.register(); // force registry of json marshaller
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorInfoSet.class),
-                SpreadsheetComparatorInfoSet::unmarshall,
-                SpreadsheetComparatorInfoSet::marshall,
-                SpreadsheetComparatorInfoSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetComparatorInfoSet.class),
+            SpreadsheetComparatorInfoSet::unmarshall,
+            SpreadsheetComparatorInfoSet::marshall,
+            SpreadsheetComparatorInfoSet.class
         );
     }
 }

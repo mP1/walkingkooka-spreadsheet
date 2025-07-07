@@ -33,38 +33,38 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
 
     static SpreadsheetFormatterProviderCollection with(final Set<SpreadsheetFormatterProvider> providers) {
         return new SpreadsheetFormatterProviderCollection(
-                Objects.requireNonNull(providers, "providers")
+            Objects.requireNonNull(providers, "providers")
         );
     }
 
     private SpreadsheetFormatterProviderCollection(final Set<SpreadsheetFormatterProvider> providers) {
         this.providers = ProviderCollection.with(
-                new ProviderCollectionProviderGetter<>() {
-                    @Override
-                    public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
-                                                    final SpreadsheetFormatterName name,
-                                                    final List<?> values,
-                                                    final ProviderContext context) {
-                        return provider.spreadsheetFormatter(
-                                name,
-                                values,
-                                context
-                        );
-                    }
+            new ProviderCollectionProviderGetter<>() {
+                @Override
+                public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
+                                                final SpreadsheetFormatterName name,
+                                                final List<?> values,
+                                                final ProviderContext context) {
+                    return provider.spreadsheetFormatter(
+                        name,
+                        values,
+                        context
+                    );
+                }
 
-                    @Override
-                    public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
-                                                    final SpreadsheetFormatterSelector selector,
-                                                    final ProviderContext context) {
-                        return provider.spreadsheetFormatter(
-                                selector,
-                                context
-                        );
-                    }
-                },
-                SpreadsheetFormatterProvider::spreadsheetFormatterInfos,
-                SpreadsheetFormatter.class.getSimpleName(),
-                providers
+                @Override
+                public SpreadsheetFormatter get(final SpreadsheetFormatterProvider provider,
+                                                final SpreadsheetFormatterSelector selector,
+                                                final ProviderContext context) {
+                    return provider.spreadsheetFormatter(
+                        selector,
+                        context
+                    );
+                }
+            },
+            SpreadsheetFormatterProvider::spreadsheetFormatterInfos,
+            SpreadsheetFormatter.class.getSimpleName(),
+            providers
         );
     }
 
@@ -75,8 +75,8 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                selector,
-                context
+            selector,
+            context
         );
     }
 
@@ -89,9 +89,9 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
     }
 
@@ -114,7 +114,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
     @Override
     public SpreadsheetFormatterInfoSet spreadsheetFormatterInfos() {
         return SpreadsheetFormatterInfoSet.with(
-                this.providers.infos()
+            this.providers.infos()
         );
     }
 

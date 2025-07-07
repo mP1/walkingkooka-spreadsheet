@@ -31,26 +31,26 @@ public final class SpreadsheetFormatterContextTest implements ClassTesting<Sprea
     public void testFormatOrEmptyText() {
         final String value = "Abc123";
         final TextNode expected = SpreadsheetText.EMPTY.setText(value + value + value)
-                .setColor(
-                        Optional.of(
-                                Color.parse("#234")
-                        )
-                ).toTextNode();
+            .setColor(
+                Optional.of(
+                    Color.parse("#234")
+                )
+            ).toTextNode();
 
         this.checkEquals(
-                expected,
-                new FakeSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<TextNode> format(final Optional<Object> v) {
-                        checkEquals(
-                                Optional.of(value),
-                                v
-                        );
-                        return Optional.of(expected);
-                    }
-                }.formatOrEmptyText(
-                        Optional.of(value)
-                )
+            expected,
+            new FakeSpreadsheetFormatterContext() {
+                @Override
+                public Optional<TextNode> format(final Optional<Object> v) {
+                    checkEquals(
+                        Optional.of(value),
+                        v
+                    );
+                    return Optional.of(expected);
+                }
+            }.formatOrEmptyText(
+                Optional.of(value)
+            )
         );
     }
 

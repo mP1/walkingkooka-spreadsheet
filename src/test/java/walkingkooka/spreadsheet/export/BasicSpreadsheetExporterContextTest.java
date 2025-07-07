@@ -25,35 +25,35 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExporterContextTesting<BasicSpreadsheetExporterContext>,
-        ToStringTesting<BasicSpreadsheetExporterContext> {
+    ToStringTesting<BasicSpreadsheetExporterContext> {
 
     @Test
     public void testWithNullSpreadsheetMetadataFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetExporterContext.with(
-                        null,
-                        JsonNodeMarshallContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetExporterContext.with(
+                null,
+                JsonNodeMarshallContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullJsonNodeMarshallContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetExporterContext.with(
-                        SpreadsheetMetadata.EMPTY,
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetExporterContext.with(
+                SpreadsheetMetadata.EMPTY,
+                null
+            )
         );
     }
 
     @Override
     public BasicSpreadsheetExporterContext createContext() {
         return BasicSpreadsheetExporterContext.with(
-                SpreadsheetMetadata.EMPTY,
-                JsonNodeMarshallContexts.basic()
+            SpreadsheetMetadata.EMPTY,
+            JsonNodeMarshallContexts.basic()
         );
     }
 
@@ -62,11 +62,11 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createContext(),
-                SpreadsheetMetadata.EMPTY +
-                        " " +
-                        JsonNodeMarshallContexts.basic()
-                                .toString()
+            this.createContext(),
+            SpreadsheetMetadata.EMPTY +
+                " " +
+                JsonNodeMarshallContexts.basic()
+                    .toString()
         );
     }
 

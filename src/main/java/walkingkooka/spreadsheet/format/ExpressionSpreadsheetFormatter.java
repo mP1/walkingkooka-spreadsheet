@@ -31,7 +31,7 @@ final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter {
 
     static ExpressionSpreadsheetFormatter with(final Expression expression) {
         return new ExpressionSpreadsheetFormatter(
-                Objects.requireNonNull(expression, "expression")
+            Objects.requireNonNull(expression, "expression")
         );
     }
 
@@ -44,12 +44,12 @@ final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter {
     public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
         return Optional.of(
-                context.convertOrFail(
-                        context.spreadsheetExpressionEvaluationContext(
-                                value // formatValue
-                        ).evaluateExpression(this.expression),
-                        TextNode.class
-                )
+            context.convertOrFail(
+                context.spreadsheetExpressionEvaluationContext(
+                    value // formatValue
+                ).evaluateExpression(this.expression),
+                TextNode.class
+            )
         );
     }
 

@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import java.time.LocalDateTime;
 
 public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor>
-        implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor> {
+    implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor> {
 
     @Override
     public void testAllConstructorsVisibility() {
@@ -40,24 +40,24 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
     @Test
     public void testToString() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        AuditInfo.with(
-                                EmailAddress.parse("created@example.com"),
-                                LocalDateTime.MIN,
-                                EmailAddress.parse("modified@example.com"),
-                                LocalDateTime.MAX
-                        )
-                ).set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
-                .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
-                .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
-                .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 2);
+            .set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    EmailAddress.parse("created@example.com"),
+                    LocalDateTime.MIN,
+                    EmailAddress.parse("modified@example.com"),
+                    LocalDateTime.MAX
+                )
+            ).set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
+            .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
+            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
+            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 2);
         final SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor(metadata);
 
         visitor.accept(metadata);
         this.toStringAndCheck(
-                visitor,
-                "{apple=#123456, banana=#89abcd}"
+            visitor,
+            "{apple=#123456, banana=#89abcd}"
         );
     }
 

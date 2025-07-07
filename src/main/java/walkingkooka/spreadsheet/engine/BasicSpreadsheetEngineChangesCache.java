@@ -28,9 +28,9 @@ import java.util.Objects;
 final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V> {
 
     static <S extends SpreadsheetSelection, V> BasicSpreadsheetEngineChangesCache<S, V> getOrCreate(
-            final S reference,
-            final Map<S, BasicSpreadsheetEngineChangesCache<S, V>> referenceToValue,
-            final BasicSpreadsheetEngineChangesCacheStatus<S> initialStatus) {
+        final S reference,
+        final Map<S, BasicSpreadsheetEngineChangesCache<S, V>> referenceToValue,
+        final BasicSpreadsheetEngineChangesCacheStatus<S> initialStatus) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(referenceToValue, "referenceToValue");
         Objects.requireNonNull(initialStatus, "initialStatus");
@@ -38,13 +38,13 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
         BasicSpreadsheetEngineChangesCache<S, V> cache = referenceToValue.get(reference);
         if (null == cache) {
             cache = new BasicSpreadsheetEngineChangesCache<>(
-                    reference,
-                    initialStatus
+                reference,
+                initialStatus
             );
 
             referenceToValue.put(
-                    reference,
-                    cache
+                reference,
+                cache
             );
         }
 
@@ -67,15 +67,15 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
      */
     BasicSpreadsheetEngineChangesCache<S, V> loadingOrMissing(final V value) {
         return null != value ?
-                this.loading(value) :
-                this.deleted();
+            this.loading(value) :
+            this.deleted();
     }
 
     BasicSpreadsheetEngineChangesCache<S, V> loading(final V value) {
         final BasicSpreadsheetEngineChangesCacheStatus<S> oldStatus = this.status;
         final BasicSpreadsheetEngineChangesCacheStatus<S> newStatus = null != value ?
-                oldStatus.loading() :
-                oldStatus.deleted();
+            oldStatus.loading() :
+            oldStatus.deleted();
 
         // if status changed
 
@@ -89,8 +89,8 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
 
     BasicSpreadsheetEngineChangesCache<S, V> loadedOrMissing(final V value) {
         return null != value ?
-                this.loaded(value) :
-                this.deleted();
+            this.loaded(value) :
+            this.deleted();
     }
 
     BasicSpreadsheetEngineChangesCache<S, V> loaded(final V value) {
@@ -102,8 +102,8 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
         // loaded -> different SpreadsheetCell -> saved
         // loaded -> same SpreadsheetCell -> loaded
         final BasicSpreadsheetEngineChangesCacheStatus<S> newStatus = oldStatus.isUnloaded() || Objects.equals(this.value, value) ?
-                oldStatus.loaded() :
-                oldStatus.saved();
+            oldStatus.loaded() :
+            oldStatus.saved();
 
         // if status changed
 
@@ -138,19 +138,19 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
 
     BasicSpreadsheetEngineChangesCache<S, V> deleted() {
         return this.setStatus(
-                this.status.deleted()
+            this.status.deleted()
         );
     }
 
     BasicSpreadsheetEngineChangesCache<S, V> forceReferencesRefresh() {
         return this.setStatus(
-                this.status.forceReferencesRefresh()
+            this.status.forceReferencesRefresh()
         );
     }
 
     BasicSpreadsheetEngineChangesCache<S, V> referencesRefreshed() {
         return this.setStatus(
-                this.status.referencesRefreshed()
+            this.status.referencesRefreshed()
         );
     }
 
@@ -163,8 +163,8 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
      */
     V value() {
         return this.status.value(
-                this.reference,
-                this.value
+            this.reference,
+            this.value
         );
     }
 
@@ -213,11 +213,11 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
             b.append(value);
         } else {
             b.append(reference)
-                    .append(" value=null");
+                .append(" value=null");
         }
 
         b.append(" status=")
-                .append(this.status);
+            .append(this.status);
         return b.toString();
     }
 }

@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStore<String>>
-        implements SpreadsheetCellRangeStoreTesting<TreeMapSpreadsheetCellRangeStore<String>, String> {
+    implements SpreadsheetCellRangeStoreTesting<TreeMapSpreadsheetCellRangeStore<String>, String> {
 
     /**
      * RANGE1A and RANGE1B share a common TOPLEFT.
@@ -40,7 +40,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     private final static SpreadsheetCellRangeReference RANGE1C = CENTER1.cellRange(BOTTOMRIGHT1);
 
     private final static SpreadsheetCellRangeReference RANGE1AABSOLUTE = TOPLEFT1.toAbsolute()
-            .cellRange(BOTTOMRIGHT1.toAbsolute());
+        .cellRange(BOTTOMRIGHT1.toAbsolute());
 
     private final static SpreadsheetCellReference TOPLEFT2 = SpreadsheetCellRangeStoreTesting.cell(30, 40);
     private final static SpreadsheetCellReference CENTER2 = TOPLEFT2.add(1, 1);
@@ -55,7 +55,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     private final static SpreadsheetCellRangeReference RANGE3 = TOPLEFT3.cellRange(BOTTOMRIGHT3);
 
     private final static SpreadsheetCellRangeReference RANGE4 = SpreadsheetCellRangeStoreTesting.cell(70, 70)
-            .cellRange(SpreadsheetCellRangeStoreTesting.cell(80, 80));
+        .cellRange(SpreadsheetCellRangeStoreTesting.cell(80, 80));
 
     private final static String VALUE1 = "value1";
     private final static String VALUE2 = "value2";
@@ -303,12 +303,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
         //noinspection unchecked
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                Lists.of(VALUE1),
-                Lists.of(VALUE2, VALUE2B),
-                Lists.of(VALUE3)
+            store,
+            0,
+            3,
+            Lists.of(VALUE1),
+            Lists.of(VALUE2, VALUE2B),
+            Lists.of(VALUE3)
         );
     }
 
@@ -323,12 +323,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
         //noinspection unchecked
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                Lists.of(VALUE1),
-                Lists.of(VALUE2, VALUE2B),
-                Lists.of(VALUE3)
+            store,
+            0,
+            3,
+            Lists.of(VALUE1),
+            Lists.of(VALUE2, VALUE2B),
+            Lists.of(VALUE3)
         );
     }
 
@@ -343,12 +343,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
         //noinspection unchecked
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                Lists.of(VALUE1),
-                Lists.of(VALUE2, VALUE2B),
-                Lists.of(VALUE3)
+            store,
+            0,
+            3,
+            Lists.of(VALUE1),
+            Lists.of(VALUE2, VALUE2B),
+            Lists.of(VALUE3)
         );
     }
 
@@ -364,11 +364,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
 
         //noinspection unchecked
         this.valuesAndCheck(
-                store,
-                1,
-                2,
-                Lists.of(VALUE2, VALUE2B),
-                Lists.of(VALUE4)
+            store,
+            1,
+            2,
+            Lists.of(VALUE2, VALUE2B),
+            Lists.of(VALUE4)
         );
     }
 

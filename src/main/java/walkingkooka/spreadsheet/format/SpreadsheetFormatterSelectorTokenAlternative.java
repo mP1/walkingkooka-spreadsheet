@@ -32,10 +32,10 @@ public final class SpreadsheetFormatterSelectorTokenAlternative implements Plugi
     public static SpreadsheetFormatterSelectorTokenAlternative with(final String label,
                                                                     final String text) {
         return new SpreadsheetFormatterSelectorTokenAlternative(
-                PluginSelectorTokenAlternative.with(
-                        label,
-                        text
-                )
+            PluginSelectorTokenAlternative.with(
+                label,
+                text
+            )
         );
     }
 
@@ -65,8 +65,8 @@ public final class SpreadsheetFormatterSelectorTokenAlternative implements Plugi
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterSelectorTokenAlternative &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFormatterSelectorTokenAlternative &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormatterSelectorTokenAlternative other) {
@@ -83,18 +83,18 @@ public final class SpreadsheetFormatterSelectorTokenAlternative implements Plugi
     static SpreadsheetFormatterSelectorTokenAlternative unmarshall(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenAlternativeLike.unmarshall(
-                node,
-                context,
-                SpreadsheetFormatterSelectorTokenAlternative::with
+            node,
+            context,
+            SpreadsheetFormatterSelectorTokenAlternative::with
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTokenAlternative.class),
-                SpreadsheetFormatterSelectorTokenAlternative::unmarshall,
-                SpreadsheetFormatterSelectorTokenAlternative::marshall,
-                SpreadsheetFormatterSelectorTokenAlternative.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTokenAlternative.class),
+            SpreadsheetFormatterSelectorTokenAlternative::unmarshall,
+            SpreadsheetFormatterSelectorTokenAlternative::marshall,
+            SpreadsheetFormatterSelectorTokenAlternative.class
         );
     }
 }

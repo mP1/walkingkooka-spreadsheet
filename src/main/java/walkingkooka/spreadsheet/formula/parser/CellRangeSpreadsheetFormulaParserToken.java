@@ -27,7 +27,7 @@ import java.util.List;
  * Represents a cell-range, including the component begin, end, columns/rows.
  */
 public final class CellRangeSpreadsheetFormulaParserToken extends BinarySpreadsheetFormulaParserToken
-        implements HasSpreadsheetReference<SpreadsheetCellRangeReference> {
+    implements HasSpreadsheetReference<SpreadsheetCellRangeReference> {
 
     static CellRangeSpreadsheetFormulaParserToken with(final List<ParserToken> value, final String text) {
         return new CellRangeSpreadsheetFormulaParserToken(copyAndCheckTokens(value), checkText(text));
@@ -49,7 +49,7 @@ public final class CellRangeSpreadsheetFormulaParserToken extends BinarySpreadsh
                 throw new IllegalArgumentException("Missing end");
             case 2:
                 this.cellRange = components.get(0).cell()
-                        .cellRange(components.get(1).cell());
+                    .cellRange(components.get(1).cell());
                 break;
             default:
                 throw new IllegalArgumentException("Ranges must only have begin & end");
@@ -67,9 +67,9 @@ public final class CellRangeSpreadsheetFormulaParserToken extends BinarySpreadsh
     @Override
     public CellRangeSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                CellRangeSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            CellRangeSpreadsheetFormulaParserToken::with
         );
     }
 

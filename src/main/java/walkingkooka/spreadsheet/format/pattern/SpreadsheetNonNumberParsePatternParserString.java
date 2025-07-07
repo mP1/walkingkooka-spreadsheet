@@ -37,9 +37,9 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
                                                              final BiFunction<Integer, String, SpreadsheetFormulaParserToken> tokenFactory,
                                                              final String pattern) {
         return new SpreadsheetNonNumberParsePatternParserString(
-                values,
-                tokenFactory,
-                pattern
+            values,
+            tokenFactory,
+            pattern
         );
     }
 
@@ -136,8 +136,8 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
     private SpreadsheetFormulaParserToken token(final int choice,
                                                 final TextCursorSavePoint start) {
         return this.tokenFactory.apply(
-                choice,
-                start.textBetween().toString()
+            choice,
+            start.textBetween().toString()
         );
     }
 

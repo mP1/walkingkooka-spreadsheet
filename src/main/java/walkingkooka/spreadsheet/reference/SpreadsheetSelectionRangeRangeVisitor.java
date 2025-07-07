@@ -33,7 +33,7 @@ final class SpreadsheetSelectionRangeRangeVisitor<S extends SpreadsheetSelection
         Objects.requireNonNull(range, "range");
 
         new SpreadsheetSelectionRangeRangeVisitor<S>()
-                .accept(range);
+            .accept(range);
     }
 
     private SpreadsheetSelectionRangeRangeVisitor() {

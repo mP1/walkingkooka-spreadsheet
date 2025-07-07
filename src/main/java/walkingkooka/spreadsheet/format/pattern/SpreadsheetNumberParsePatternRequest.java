@@ -38,9 +38,9 @@ final class SpreadsheetNumberParsePatternRequest {
                                                      final SpreadsheetNumberParsePatternMode mode,
                                                      final DecimalNumberContext context) {
         return new SpreadsheetNumberParsePatternRequest(
-                next,
-                mode,
-                context
+            next,
+            mode,
+            context
         );
     }
 
@@ -89,10 +89,10 @@ final class SpreadsheetNumberParsePatternRequest {
         if (added) {
             final String text = digits.toString();
             this.add0(
-                    SpreadsheetFormulaParserToken.digits(
-                            text,
-                            text
-                    )
+                SpreadsheetFormulaParserToken.digits(
+                    text,
+                    text
+                )
             );
         }
         return added;
@@ -114,7 +114,7 @@ final class SpreadsheetNumberParsePatternRequest {
      */
     boolean nextComponent(final TextCursor cursor) {
         return !this.next.hasNext() || this.next.next()
-                .parse(cursor, this); // finished!
+            .parse(cursor, this); // finished!
     }
 
     /**
@@ -125,10 +125,10 @@ final class SpreadsheetNumberParsePatternRequest {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("context").value(this.context)
-                .label("digitMode").value(this.digitMode)
-                .label("digits").value(this.digits)
-                .label("tokens").value(this.tokens)
-                .build();
+            .label("context").value(this.context)
+            .label("digitMode").value(this.digitMode)
+            .label("digits").value(this.digits)
+            .label("tokens").value(this.tokens)
+            .build();
     }
 }

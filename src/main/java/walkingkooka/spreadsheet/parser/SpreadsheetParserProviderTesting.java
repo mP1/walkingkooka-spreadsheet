@@ -36,33 +36,33 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     @Test
     default void testSpreadsheetParserSelectorWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider()
-                        .spreadsheetParser(
-                                null,
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider()
+                .spreadsheetParser(
+                    null,
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetParserSelectorWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider()
-                        .spreadsheetParser(
-                                SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText(""),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider()
+                .spreadsheetParser(
+                    SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText(""),
+                    null
+                )
         );
     }
 
     default void spreadsheetParserFails(final String selector,
                                         final ProviderContext context) {
         this.spreadsheetParserFails(
-                this.createSpreadsheetParserProvider(),
-                SpreadsheetParserSelector.parse(selector),
-                context
+            this.createSpreadsheetParserProvider(),
+            SpreadsheetParserSelector.parse(selector),
+            context
         );
     }
 
@@ -70,18 +70,18 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                         final String selector,
                                         final ProviderContext context) {
         this.spreadsheetParserFails(
-                provider,
-                SpreadsheetParserSelector.parse(selector),
-                context
+            provider,
+            SpreadsheetParserSelector.parse(selector),
+            context
         );
     }
 
     default void spreadsheetParserFails(final SpreadsheetParserSelector selector,
                                         final ProviderContext context) {
         this.spreadsheetParserFails(
-                this.createSpreadsheetParserProvider(),
-                selector,
-                context
+            this.createSpreadsheetParserProvider(),
+            selector,
+            context
         );
     }
 
@@ -89,11 +89,11 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                         final SpreadsheetParserSelector selector,
                                         final ProviderContext context) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetParser(
-                        selector,
-                        context
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetParser(
+                selector,
+                context
+            )
         );
     }
 
@@ -101,10 +101,10 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                            final ProviderContext context,
                                            final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
-                this.createSpreadsheetParserProvider(),
-                SpreadsheetParserSelector.parse(selector),
-                context,
-                expected
+            this.createSpreadsheetParserProvider(),
+            SpreadsheetParserSelector.parse(selector),
+            context,
+            expected
         );
     }
 
@@ -113,10 +113,10 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                            final ProviderContext context,
                                            final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
-                provider,
-                SpreadsheetParserSelector.parse(selector),
-                context,
-                expected
+            provider,
+            SpreadsheetParserSelector.parse(selector),
+            context,
+            expected
         );
     }
 
@@ -124,10 +124,10 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                            final ProviderContext context,
                                            final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector,
-                context,
-                expected
+            this.createSpreadsheetParserProvider(),
+            selector,
+            context,
+            expected
         );
     }
 
@@ -136,12 +136,12 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                            final ProviderContext context,
                                            final SpreadsheetParser expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetParser(
-                        selector,
-                        context
-                ),
-                selector::toString
+            expected,
+            provider.spreadsheetParser(
+                selector,
+                context
+            ),
+            selector::toString
         );
     }
 
@@ -150,37 +150,37 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     @Test
     default void testSpreadsheetParserNameWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider()
-                        .spreadsheetParser(
-                                null,
-                                Lists.empty(),
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider()
+                .spreadsheetParser(
+                    null,
+                    Lists.empty(),
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testSpreadsheetParserNameWithNullValuesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider().spreadsheetParser(
-                        SpreadsheetParserName.TIME_PARSER_PATTERN,
-                        null,
-                        ProviderContexts.fake()
-                )
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider().spreadsheetParser(
+                SpreadsheetParserName.TIME_PARSER_PATTERN,
+                null,
+                ProviderContexts.fake()
+            )
         );
     }
 
     @Test
     default void testSpreadsheetParserNameWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider().spreadsheetParser(
-                        SpreadsheetParserName.TIME_PARSER_PATTERN,
-                        Lists.empty(),
-                        null
-                )
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider().spreadsheetParser(
+                SpreadsheetParserName.TIME_PARSER_PATTERN,
+                Lists.empty(),
+                null
+            )
         );
     }
 
@@ -188,10 +188,10 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                         final List<?> values,
                                         final ProviderContext context) {
         this.spreadsheetParserFails(
-                this.createSpreadsheetParserProvider(),
-                name,
-                values,
-                context
+            this.createSpreadsheetParserProvider(),
+            name,
+            values,
+            context
         );
     }
 
@@ -200,12 +200,12 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                         final List<?> values,
                                         final ProviderContext context) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetParser(
-                        name,
-                        values,
-                        context
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetParser(
+                name,
+                values,
+                context
+            )
         );
     }
 
@@ -214,11 +214,11 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                            final ProviderContext context,
                                            final SpreadsheetParser expected) {
         this.spreadsheetParserAndCheck(
-                this.createSpreadsheetParserProvider(),
-                name,
-                values,
-                context,
-                expected
+            this.createSpreadsheetParserProvider(),
+            name,
+            values,
+            context,
+            expected
         );
     }
 
@@ -228,13 +228,13 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                            final ProviderContext context,
                                            final SpreadsheetParser expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetParser(
-                        name,
-                        values,
-                        context
-                ),
-                () -> name + " " + values
+            expected,
+            provider.spreadsheetParser(
+                name,
+                values,
+                context
+            ),
+            () -> name + " " + values
         );
     }
 
@@ -243,59 +243,59 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     @Test
     default void testSpreadsheetParserNextTokenWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider().spreadsheetParserNextToken(null)
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider().spreadsheetParserNextToken(null)
         );
     }
 
     default void spreadsheetParserNextTokenFails(final SpreadsheetParserSelector selector) {
         this.spreadsheetParserNextTokenFails(
-                this.createSpreadsheetParserProvider(),
-                selector
+            this.createSpreadsheetParserProvider(),
+            selector
         );
     }
 
     default void spreadsheetParserNextTokenFails(final SpreadsheetParserProvider provider,
                                                  final SpreadsheetParserSelector selector) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetParserNextToken(
-                        selector
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetParserNextToken(
+                selector
+            )
         );
     }
 
     default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserSelector selector) {
         this.spreadsheetParserNextTokenAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector
+            this.createSpreadsheetParserProvider(),
+            selector
         );
     }
 
     default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserSelector selector,
                                                     final SpreadsheetParserSelectorToken expected) {
         this.spreadsheetParserNextTokenAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector,
-                expected
+            this.createSpreadsheetParserProvider(),
+            selector,
+            expected
         );
     }
 
     default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserSelector selector,
                                                     final Optional<SpreadsheetParserSelectorToken> expected) {
         this.spreadsheetParserNextTokenAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector,
-                expected
+            this.createSpreadsheetParserProvider(),
+            selector,
+            expected
         );
     }
 
     default void spreadsheetParserNextTokenAndCheck(final SpreadsheetParserProvider provider,
                                                     final SpreadsheetParserSelector selector) {
         this.spreadsheetParserNextTokenAndCheck(
-                provider,
-                selector,
-                Optional.empty()
+            provider,
+            selector,
+            Optional.empty()
         );
     }
 
@@ -303,9 +303,9 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                                     final SpreadsheetParserSelector selector,
                                                     final SpreadsheetParserSelectorToken expected) {
         this.spreadsheetParserNextTokenAndCheck(
-                provider,
-                selector,
-                Optional.of(expected)
+            provider,
+            selector,
+            Optional.of(expected)
         );
     }
 
@@ -313,9 +313,9 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                                     final SpreadsheetParserSelector selector,
                                                     final Optional<SpreadsheetParserSelectorToken> expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetParserNextToken(selector),
-                provider::toString
+            expected,
+            provider.spreadsheetParserNextToken(selector),
+            provider::toString
         );
     }
 
@@ -324,59 +324,59 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     @Test
     default void testSpreadsheetFormatterSelectorWithNullParserSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetParserProvider().spreadsheetFormatterSelector(null)
+            NullPointerException.class,
+            () -> this.createSpreadsheetParserProvider().spreadsheetFormatterSelector(null)
         );
     }
 
     default void spreadsheetFormatterSelectorFails(final SpreadsheetParserSelector selector) {
         this.spreadsheetFormatterSelectorFails(
-                this.createSpreadsheetParserProvider(),
-                selector
+            this.createSpreadsheetParserProvider(),
+            selector
         );
     }
 
     default void spreadsheetFormatterSelectorFails(final SpreadsheetParserProvider provider,
                                                    final SpreadsheetParserSelector selector) {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> provider.spreadsheetFormatterSelector(
-                        selector
-                )
+            IllegalArgumentException.class,
+            () -> provider.spreadsheetFormatterSelector(
+                selector
+            )
         );
     }
 
     default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserSelector selector) {
         this.spreadsheetFormatterSelectorAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector
+            this.createSpreadsheetParserProvider(),
+            selector
         );
     }
 
     default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserSelector selector,
                                                       final SpreadsheetFormatterSelector expected) {
         this.spreadsheetFormatterSelectorAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector,
-                expected
+            this.createSpreadsheetParserProvider(),
+            selector,
+            expected
         );
     }
 
     default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserSelector selector,
                                                       final Optional<SpreadsheetFormatterSelector> expected) {
         this.spreadsheetFormatterSelectorAndCheck(
-                this.createSpreadsheetParserProvider(),
-                selector,
-                expected
+            this.createSpreadsheetParserProvider(),
+            selector,
+            expected
         );
     }
 
     default void spreadsheetFormatterSelectorAndCheck(final SpreadsheetParserProvider provider,
                                                       final SpreadsheetParserSelector selector) {
         this.spreadsheetFormatterSelectorAndCheck(
-                provider,
-                selector,
-                Optional.empty()
+            provider,
+            selector,
+            Optional.empty()
         );
     }
 
@@ -384,9 +384,9 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                                       final SpreadsheetParserSelector selector,
                                                       final SpreadsheetFormatterSelector expected) {
         this.spreadsheetFormatterSelectorAndCheck(
-                provider,
-                selector,
-                Optional.of(expected)
+            provider,
+            selector,
+            Optional.of(expected)
         );
     }
 
@@ -394,9 +394,9 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                                                       final SpreadsheetParserSelector selector,
                                                       final Optional<SpreadsheetFormatterSelector> expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetFormatterSelector(selector),
-                provider::toString
+            expected,
+            provider.spreadsheetFormatterSelector(selector),
+            provider::toString
         );
     }
 
@@ -404,36 +404,36 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
 
     default void spreadsheetParserInfosAndCheck(final SpreadsheetParserInfo... expected) {
         this.spreadsheetParserInfosAndCheck(
-                this.createSpreadsheetParserProvider(),
-                Sets.of(
-                        expected
-                )
+            this.createSpreadsheetParserProvider(),
+            Sets.of(
+                expected
+            )
         );
     }
 
     default void spreadsheetParserInfosAndCheck(final SpreadsheetParserProvider provider,
                                                 final SpreadsheetParserInfo... expected) {
         this.spreadsheetParserInfosAndCheck(
-                provider,
-                Sets.of(
-                        expected
-                )
+            provider,
+            Sets.of(
+                expected
+            )
         );
     }
 
     default void spreadsheetParserInfosAndCheck(final Set<SpreadsheetParserInfo> expected) {
         this.spreadsheetParserInfosAndCheck(
-                this.createSpreadsheetParserProvider(),
-                expected
+            this.createSpreadsheetParserProvider(),
+            expected
         );
     }
 
     default void spreadsheetParserInfosAndCheck(final SpreadsheetParserProvider provider,
                                                 final Set<SpreadsheetParserInfo> expected) {
         this.checkEquals(
-                expected,
-                provider.spreadsheetParserInfos(),
-                provider::toString
+            expected,
+            provider.spreadsheetParserInfos(),
+            provider::toString
         );
     }
 

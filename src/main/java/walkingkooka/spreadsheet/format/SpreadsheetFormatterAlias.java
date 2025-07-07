@@ -30,10 +30,10 @@ public final class SpreadsheetFormatterAlias implements PluginAliasLike<Spreadsh
 
     public static SpreadsheetFormatterAlias parse(final String text) {
         return with(
-                PluginAlias.parse(
-                        text,
-                        SpreadsheetFormatterPluginHelper.INSTANCE
-                )
+            PluginAlias.parse(
+                text,
+                SpreadsheetFormatterPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -41,17 +41,17 @@ public final class SpreadsheetFormatterAlias implements PluginAliasLike<Spreadsh
                                                  final Optional<SpreadsheetFormatterSelector> selector,
                                                  final Optional<AbsoluteUrl> url) {
         return with(
-                PluginAlias.with(
-                        name,
-                        selector,
-                        url
-                )
+            PluginAlias.with(
+                name,
+                selector,
+                url
+            )
         );
     }
 
     static SpreadsheetFormatterAlias with(final PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector> pluginAlias) {
         return new SpreadsheetFormatterAlias(
-                Objects.requireNonNull(pluginAlias, "pluginAlias")
+            Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 

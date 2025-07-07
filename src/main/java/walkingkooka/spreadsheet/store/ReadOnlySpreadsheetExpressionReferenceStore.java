@@ -30,7 +30,7 @@ import java.util.function.Consumer;
  * A read only wrapper around a {@link SpreadsheetExpressionReferenceStore}
  */
 final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference>
-        implements SpreadsheetExpressionReferenceStore<T> {
+    implements SpreadsheetExpressionReferenceStore<T> {
 
     static <T extends SpreadsheetExpressionReference> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
         Objects.requireNonNull(store, "store");
@@ -74,8 +74,8 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     public Set<T> ids(final int offset,
                       final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -83,8 +83,8 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     public List<Set<SpreadsheetCellReference>> values(final int offset,
                                                       final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -92,8 +92,8 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     public List<Set<SpreadsheetCellReference>> between(final T from,
                                                        final T to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 
@@ -139,9 +139,9 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
                                                                 final int offset,
                                                                 final int count) {
         return this.store.findCellsWithReference(
-                reference,
-                offset,
-                count
+            reference,
+            offset,
+            count
         );
     }
 
@@ -155,9 +155,9 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
                                          final int offset,
                                          final int count) {
         return this.store.findReferencesWithCell(
-                cell,
-                offset,
-                count
+            cell,
+            offset,
+            count
         );
     }
 

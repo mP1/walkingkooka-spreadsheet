@@ -32,40 +32,40 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTesting<OptionalSpreadsheetFormatterSelector>,
-        HashCodeEqualsDefinedTesting2<OptionalSpreadsheetFormatterSelector>,
-        ToStringTesting<OptionalSpreadsheetFormatterSelector>,
-        JsonNodeMarshallingTesting<OptionalSpreadsheetFormatterSelector> {
+    HashCodeEqualsDefinedTesting2<OptionalSpreadsheetFormatterSelector>,
+    ToStringTesting<OptionalSpreadsheetFormatterSelector>,
+    JsonNodeMarshallingTesting<OptionalSpreadsheetFormatterSelector> {
     // with.............................................................................................................
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> OptionalSpreadsheetFormatterSelector.with(null)
+            NullPointerException.class,
+            () -> OptionalSpreadsheetFormatterSelector.with(null)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                OptionalSpreadsheetFormatterSelector.EMPTY,
-                OptionalSpreadsheetFormatterSelector.with(
-                        Optional.empty()
-                )
+            OptionalSpreadsheetFormatterSelector.EMPTY,
+            OptionalSpreadsheetFormatterSelector.with(
+                Optional.empty()
+            )
         );
     }
 
     @Test
     public void testWithNotEmpty() {
         final Optional<SpreadsheetFormatterSelector> selector = Optional.of(
-                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+            SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
         );
 
         final OptionalSpreadsheetFormatterSelector optional = OptionalSpreadsheetFormatterSelector.with(selector);
 
         assertSame(
-                selector,
-                optional.value()
+            selector,
+            optional.value()
         );
     }
 
@@ -74,11 +74,11 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-                OptionalSpreadsheetFormatterSelector.with(
-                        Optional.of(
-                                SpreadsheetFormatterSelector.parse("different")
-                        )
+            OptionalSpreadsheetFormatterSelector.with(
+                Optional.of(
+                    SpreadsheetFormatterSelector.parse("different")
                 )
+            )
         );
     }
 
@@ -92,11 +92,11 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
     @Test
     public void testToString() {
         final Optional<SpreadsheetFormatterSelector> selector = Optional.of(
-                SpreadsheetFormatterSelector.parse("different")
+            SpreadsheetFormatterSelector.parse("different")
         );
         this.toStringAndCheck(
-                OptionalSpreadsheetFormatterSelector.with(selector),
-                selector.toString()
+            OptionalSpreadsheetFormatterSelector.with(selector),
+            selector.toString()
         );
     }
 
@@ -105,23 +105,23 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
     @Test
     public void testJsonMarshallEmpty() {
         this.marshallAndCheck(
-                OptionalSpreadsheetFormatterSelector.EMPTY,
-                JsonNode.nullNode()
+            OptionalSpreadsheetFormatterSelector.EMPTY,
+            JsonNode.nullNode()
         );
     }
 
     @Test
     public void testJsonMarshallNotEmpty() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                JsonNode.string("text-format-pattern @")
+            this.createJsonNodeMarshallingValue(),
+            JsonNode.string("text-format-pattern @")
         );
     }
 
     @Test
     public void testJsonRoundtripEmpty() {
         this.marshallRoundTripTwiceAndCheck(
-                OptionalSpreadsheetFormatterSelector.EMPTY
+            OptionalSpreadsheetFormatterSelector.EMPTY
         );
     }
 
@@ -129,7 +129,7 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
     @Test
     public void testJsonRoundtripNotEmpty() {
         this.marshallRoundTripTwiceAndCheck(
-                this.createJsonNodeMarshallingValue()
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -137,17 +137,17 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
     public OptionalSpreadsheetFormatterSelector unmarshall(final JsonNode json,
                                                            final JsonNodeUnmarshallContext context) {
         return OptionalSpreadsheetFormatterSelector.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
     @Override
     public OptionalSpreadsheetFormatterSelector createJsonNodeMarshallingValue() {
         return OptionalSpreadsheetFormatterSelector.with(
-                Optional.of(
-                        SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
-                )
+            Optional.of(
+                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+            )
         );
     }
 

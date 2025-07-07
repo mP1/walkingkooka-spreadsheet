@@ -24,39 +24,39 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 public final class SpreadsheetExportSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<SpreadsheetExportSpreadsheetExporterProvider>,
-        TreePrintableTesting {
+    TreePrintableTesting {
 
     @Test
     public void testSpreadsheetExporterSelectorCollection() {
         this.spreadsheetExporterAndCheck(
-                "collection (empty, empty)",
-                ProviderContexts.fake(),
-                SpreadsheetExporters.collection(
-                        Lists.of(
-                                SpreadsheetExporters.empty(),
-                                SpreadsheetExporters.empty()
-                        )
+            "collection (empty, empty)",
+            ProviderContexts.fake(),
+            SpreadsheetExporters.collection(
+                Lists.of(
+                    SpreadsheetExporters.empty(),
+                    SpreadsheetExporters.empty()
                 )
+            )
         );
     }
 
     @Test
     public void testSpreadsheetExporterSelectorEmpty() {
         this.spreadsheetExporterAndCheck(
-                "empty",
-                ProviderContexts.fake(),
-                SpreadsheetExporters.empty()
+            "empty",
+            ProviderContexts.fake(),
+            SpreadsheetExporters.empty()
         );
     }
 
     @Test
     public void testSpreadsheetExporterInfo() {
         this.treePrintAndCheck(
-                SpreadsheetExportSpreadsheetExporterProvider.INSTANCE.spreadsheetExporterInfos(),
-                "SpreadsheetExporterInfoSet\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\n"
+            SpreadsheetExportSpreadsheetExporterProvider.INSTANCE.spreadsheetExporterInfos(),
+            "SpreadsheetExporterInfoSet\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/collection collection\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/empty empty\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\n"
         );
     }
 

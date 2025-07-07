@@ -24,8 +24,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentS
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.INSTANCE,
-                "%"
+            SpreadsheetPatternSpreadsheetFormatterNumberComponentPercentSymbol.INSTANCE,
+            "%"
         );
     }
 

@@ -30,7 +30,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
 
     static SpreadsheetLabelStoreSpreadsheetLabelNameResolver with(final SpreadsheetLabelStore labelStore) {
         return new SpreadsheetLabelStoreSpreadsheetLabelNameResolver(
-                Objects.requireNonNull(labelStore, "labelStore")
+            Objects.requireNonNull(labelStore, "labelStore")
         );
     }
 
@@ -41,7 +41,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return Cast.to(
-                this.labelStore.resolveLabel(labelName)
+            this.labelStore.resolveLabel(labelName)
         );
     }
 

@@ -32,9 +32,9 @@ public abstract class ConditionRightSpreadsheetFormulaParserTokenTestCase<T exte
     @Test
     public final void testSetConditionLeftWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken()
-                        .setConditionLeft(null)
+            NullPointerException.class,
+            () -> this.createToken()
+                .setConditionLeft(null)
         );
     }
 
@@ -42,21 +42,21 @@ public abstract class ConditionRightSpreadsheetFormulaParserTokenTestCase<T exte
                                         final SpreadsheetFormulaParserToken left,
                                         final ConditionSpreadsheetFormulaParserToken expected) {
         this.checkEquals(
-                expected,
-                token.setConditionLeft(left),
-                () -> token + " setConditionLeft " + left
+            expected,
+            token.setConditionLeft(left),
+            () -> token + " setConditionLeft " + left
         );
 
         this.checkEquals(
-                left,
-                expected.left(),
-                "left"
+            left,
+            expected.left(),
+            "left"
         );
 
         this.checkEquals(
-                token,
-                expected.right(),
-                "right"
+            token,
+            expected.right(),
+            "right"
         );
     }
 
@@ -67,8 +67,8 @@ public abstract class ConditionRightSpreadsheetFormulaParserTokenTestCase<T exte
     @Override
     public final List<ParserToken> tokens() {
         return Lists.of(
-                this.symbolParserToken(),
-                this.number(ARGUMENT_TEXT)
+            this.symbolParserToken(),
+            this.number(ARGUMENT_TEXT)
         );
     }
 
@@ -80,12 +80,12 @@ public abstract class ConditionRightSpreadsheetFormulaParserTokenTestCase<T exte
     @Override
     public T createDifferentToken() {
         final String symbol = this.symbolParserToken()
-                .text();
+            .text();
         final String differentNumber = "999";
 
         return this.createToken(
-                symbol + differentNumber,
-                differentNumber
+            symbol + differentNumber,
+            differentNumber
         );
     }
 
@@ -93,29 +93,29 @@ public abstract class ConditionRightSpreadsheetFormulaParserTokenTestCase<T exte
                           final String number) {
         final ParserToken symbol = this.symbolParserToken();
         final ParserToken parameter = SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                        this.number(number)
-                ),
-                number
+            Lists.of(
+                this.number(number)
+            ),
+            number
         );
 
         return this.createToken(
-                text, Lists.of(
-                        symbol,
-                        parameter
-                )
+            text, Lists.of(
+                symbol,
+                parameter
+            )
         );
     }
 
     final SpreadsheetFormulaParserToken number(final String text) {
         return SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.digits(
-                                text,
-                                text
-                        )
-                ),
-                text
+            Lists.of(
+                SpreadsheetFormulaParserToken.digits(
+                    text,
+                    text
+                )
+            ),
+            text
         );
     }
 }

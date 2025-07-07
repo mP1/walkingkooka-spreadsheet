@@ -36,14 +36,14 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 final public class SpreadsheetColorNameTest implements ClassTesting2<SpreadsheetColorName>,
-        NameTesting2<SpreadsheetColorName, SpreadsheetColorName>,
-        ConstantsTesting<SpreadsheetColorName> {
+    NameTesting2<SpreadsheetColorName, SpreadsheetColorName>,
+    ConstantsTesting<SpreadsheetColorName> {
 
     @Test
     public void testEqualsDifferentCase() {
         this.checkEquals(
-                SpreadsheetColorName.with("RED"),
-                SpreadsheetColorName.with("red")
+            SpreadsheetColorName.with("RED"),
+            SpreadsheetColorName.with("red")
         );
     }
 
@@ -57,14 +57,14 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
         final SpreadsheetColorName yellow = SpreadsheetColorName.with("YELLOW");
 
         this.compareToArraySortAndCheck(
-                yellow,
-                green,
-                red,
-                blue,
-                blue,
-                green,
-                red,
-                yellow
+            yellow,
+            green,
+            red,
+            blue,
+            blue,
+            green,
+            red,
+            yellow
         );
     }
 
@@ -118,8 +118,8 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     @Test
     public void testSpreadsheetMetadataPropertyName() {
         this.checkEquals(
-                SpreadsheetColorName.BLACK.spreadsheetMetadataPropertyName(),
-                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK)
+            SpreadsheetColorName.BLACK.spreadsheetMetadataPropertyName(),
+            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK)
         );
     }
 
@@ -128,16 +128,16 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     @Test
     public void testWithBlack() {
         assertSame(
-                SpreadsheetColorName.BLACK,
-                SpreadsheetColorName.with(SpreadsheetColorName.BLACK.value())
+            SpreadsheetColorName.BLACK,
+            SpreadsheetColorName.with(SpreadsheetColorName.BLACK.value())
         );
     }
 
     @Test
     public void testWithBLACK() {
         assertNotSame(
-                SpreadsheetColorName.BLACK,
-                SpreadsheetColorName.with("BLACK")
+            SpreadsheetColorName.BLACK,
+            SpreadsheetColorName.with("BLACK")
         );
     }
 
@@ -145,8 +145,8 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     public void testWithEachConstants() {
         for (final SpreadsheetColorName color : SpreadsheetColorName.DEFAULTS) {
             assertSame(
-                    color,
-                    SpreadsheetColorName.with(color.value())
+                color,
+                SpreadsheetColorName.with(color.value())
             );
         }
     }
@@ -154,20 +154,20 @@ final public class SpreadsheetColorNameTest implements ClassTesting2<Spreadsheet
     @Test
     public void testWithEachConstantFields() {
         final Set<SpreadsheetColorName> constants = Arrays.stream(SpreadsheetColorName.class.getDeclaredFields())
-                .filter(FieldAttributes.STATIC::is)
-                .filter(f -> f.getType() == SpreadsheetColorName.class)
-                .map(f -> {
-                    try {
-                        return SpreadsheetColorName.class.cast(f.get(null));
-                    } catch (final Exception cause) {
-                        throw new Error(cause);
-                    }
-                }).collect(Collectors.toCollection(SortedSets::tree));
+            .filter(FieldAttributes.STATIC::is)
+            .filter(f -> f.getType() == SpreadsheetColorName.class)
+            .map(f -> {
+                try {
+                    return SpreadsheetColorName.class.cast(f.get(null));
+                } catch (final Exception cause) {
+                    throw new Error(cause);
+                }
+            }).collect(Collectors.toCollection(SortedSets::tree));
 
         for (final SpreadsheetColorName color : constants) {
             assertSame(
-                    color,
-                    SpreadsheetColorName.with(color.value())
+                color,
+                SpreadsheetColorName.with(color.value())
             );
         }
     }

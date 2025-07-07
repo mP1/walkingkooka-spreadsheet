@@ -49,7 +49,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
         this.token = token;
 
         final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor =
-                SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor.analyze(token);
+            SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor.analyze(token);
 
         this.currency = visitor.currency;
 
@@ -73,28 +73,28 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
         Objects.requireNonNull(context, "context");
 
         final Either<ExpressionNumber, String> valueAsNumber = context.convert(
-                value.orElse(null),
-                ExpressionNumber.class
+            value.orElse(null),
+            ExpressionNumber.class
         );
 
         final ExpressionNumber expressionNumber = valueAsNumber.isLeft() ?
-                valueAsNumber.leftValue() :
-                null;
+            valueAsNumber.leftValue() :
+            null;
 
         return Optional.ofNullable(
-                null != expressionNumber ?
-                        SpreadsheetText.with(
-                                this.formatSpreadsheetTextExpressionNumber(
-                                        this.normalOrScientific.context(
-                                                expressionNumber.bigDecimal(),
-                                                this,
-                                                context
-                                        )
-                                )
-                        ).setColor(
-                                this.color(context)
-                        ) :
-                        null
+            null != expressionNumber ?
+                SpreadsheetText.with(
+                    this.formatSpreadsheetTextExpressionNumber(
+                        this.normalOrScientific.context(
+                            expressionNumber.bigDecimal(),
+                            this,
+                            context
+                        )
+                    )
+                ).setColor(
+                    this.color(context)
+                ) :
+                null
         );
     }
 
@@ -109,12 +109,12 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
 
         if (colorNameOrNumber instanceof Integer) {
             color = context.colorNumber(
-                    (Integer) colorNameOrNumber
+                (Integer) colorNameOrNumber
             );
         } else {
             if (colorNameOrNumber instanceof SpreadsheetColorName) {
                 color = context.colorName(
-                        (SpreadsheetColorName) colorNameOrNumber
+                    (SpreadsheetColorName) colorNameOrNumber
                 );
             }
         }
@@ -172,7 +172,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterNumber && this.equals0((SpreadsheetPatternSpreadsheetFormatterNumber) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterNumber && this.equals0((SpreadsheetPatternSpreadsheetFormatterNumber) other);
     }
 
     // all other fields are derived from examining the token, so no need to include them in hashCode/equals

@@ -32,9 +32,9 @@ public interface SpreadsheetParserTesting extends ParserTesting {
                                 final SpreadsheetParserContext context,
                                 final SpreadsheetParserSelectorToken... expected) {
         this.tokensAndCheck(
-                parser,
-                context,
-                Lists.of(expected)
+            parser,
+            context,
+            Lists.of(expected)
         );
     }
 
@@ -42,9 +42,9 @@ public interface SpreadsheetParserTesting extends ParserTesting {
                                 final SpreadsheetParserContext context,
                                 final List<SpreadsheetParserSelectorToken> expected) {
         this.checkEquals(
-                expected,
-                parser.tokens(context),
-                parser::toString
+            expected,
+            parser.tokens(context),
+            parser::toString
         );
     }
 
@@ -52,25 +52,25 @@ public interface SpreadsheetParserTesting extends ParserTesting {
 
     default void valueTypeAndCheck(final SpreadsheetParser parser) {
         this.valueTypeAndCheck(
-                parser,
-                SpreadsheetParser.NO_VALUE_TYPE
+            parser,
+            SpreadsheetParser.NO_VALUE_TYPE
         );
     }
 
     default void valueTypeAndCheck(final SpreadsheetParser parser,
                                    final ValidationValueTypeName expected) {
         this.valueTypeAndCheck(
-                parser,
-                Optional.of(expected)
+            parser,
+            Optional.of(expected)
         );
     }
 
     default void valueTypeAndCheck(final SpreadsheetParser parser,
                                    final Optional<ValidationValueTypeName> expected) {
         this.checkEquals(
-                expected,
-                parser.valueType(),
-                parser::toString
+            expected,
+            parser.valueType(),
+            parser::toString
         );
     }
 }

@@ -32,8 +32,8 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
     static AliasesSpreadsheetComparatorProvider with(final SpreadsheetComparatorAliasSet aliases,
                                                      final SpreadsheetComparatorProvider provider) {
         return new AliasesSpreadsheetComparatorProvider(
-                Objects.requireNonNull(aliases, "aliases"),
-                Objects.requireNonNull(provider, "provider")
+            Objects.requireNonNull(aliases, "aliases"),
+            Objects.requireNonNull(provider, "provider")
         );
     }
 
@@ -49,8 +49,8 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                           final ProviderContext context) {
         return this.provider.spreadsheetComparator(
-                this.aliases.selector(selector),
-                context
+            this.aliases.selector(selector),
+            context
         );
     }
 
@@ -74,15 +74,15 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
             }
             // assumes that $provider caches selectors to comparator
             comparator = provider.spreadsheetComparator(
-                    selector.get(),
-                    context
+                selector.get(),
+                context
             );
         } else {
             comparator = provider.spreadsheetComparator(
-                    aliases.aliasOrName(name)
-                            .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name)),
-                    values,
-                    context
+                aliases.aliasOrName(name)
+                    .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name)),
+                values,
+                context
             );
         }
 

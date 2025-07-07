@@ -51,8 +51,7 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
     /**
      * Select navigations have no opposite.
      */
-    @Override
-    final boolean isOpposite(final SpreadsheetViewportNavigation other) {
+    @Override final boolean isOpposite(final SpreadsheetViewportNavigation other) {
         return false;
     }
 
@@ -66,7 +65,7 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetViewportNavigationSelection && this.equals0((SpreadsheetViewportNavigationSelection<?>) other);
+            other instanceof SpreadsheetViewportNavigationSelection && this.equals0((SpreadsheetViewportNavigationSelection<?>) other);
     }
 
     private boolean equals0(final SpreadsheetViewportNavigationSelection<?> other) {

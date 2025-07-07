@@ -51,8 +51,8 @@ abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitor extends Spr
 
     final Visiting failInvalid() {
         throw new InvalidCharacterException(
-                this.token.text(),
-                this.position
+            this.token.text(),
+            this.position
         );
     }
 

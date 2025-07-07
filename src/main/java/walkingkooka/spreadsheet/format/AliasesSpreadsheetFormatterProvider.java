@@ -34,8 +34,8 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
     static AliasesSpreadsheetFormatterProvider with(final SpreadsheetFormatterAliasSet aliases,
                                                     final SpreadsheetFormatterProvider provider) {
         return new AliasesSpreadsheetFormatterProvider(
-                Objects.requireNonNull(aliases, "aliases"),
-                Objects.requireNonNull(provider, "provider")
+            Objects.requireNonNull(aliases, "aliases"),
+            Objects.requireNonNull(provider, "provider")
         );
     }
 
@@ -51,8 +51,8 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
                                                      final ProviderContext context) {
         return this.provider.spreadsheetFormatter(
-                this.aliases.selector(selector),
-                context
+            this.aliases.selector(selector),
+            context
         );
     }
 
@@ -76,15 +76,15 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
             }
             // assumes that $provider caches selectors to function
             formatter = provider.spreadsheetFormatter(
-                    selector.get(),
-                    context
+                selector.get(),
+                context
             );
         } else {
             formatter = provider.spreadsheetFormatter(
-                    aliases.aliasOrName(name)
-                            .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
-                    values,
-                    context
+                aliases.aliasOrName(name)
+                    .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
+                values,
+                context
             );
         }
 
@@ -98,7 +98,7 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
         final SpreadsheetFormatterName name = selector.name();
 
         return this.aliases.aliasOrName(name)
-                .flatMap(n -> this.provider.spreadsheetFormatterNextToken(selector.setName(n)));
+            .flatMap(n -> this.provider.spreadsheetFormatterNextToken(selector.setName(n)));
     }
 
     @Override
@@ -109,11 +109,11 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
 
         // return empty list if unknown alias/name
         return this.aliases.aliasOrName(name)
-                .map(n -> this.provider.spreadsheetFormatterSamples(n, context))
-                .orElse(Lists.empty())
-                .stream()
-                .map(s -> s.setSelector(s.selector().setName(name)))
-                .collect(Collectors.toList());
+            .map(n -> this.provider.spreadsheetFormatterSamples(n, context))
+            .orElse(Lists.empty())
+            .stream()
+            .map(s -> s.setSelector(s.selector().setName(name)))
+            .collect(Collectors.toList());
     }
 
     private final SpreadsheetFormatterAliasSet aliases;

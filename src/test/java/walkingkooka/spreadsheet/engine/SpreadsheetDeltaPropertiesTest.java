@@ -33,32 +33,32 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<Set<SpreadsheetDeltaProperties>>,
-        ClassTesting<SpreadsheetDeltaProperties> {
+    ClassTesting<SpreadsheetDeltaProperties> {
 
     // with...................................................................................................
 
     @Test
     public void testWithCells() {
         this.withAndCheck(
-                "cells",
-                SpreadsheetDeltaProperties.CELLS
+            "cells",
+            SpreadsheetDeltaProperties.CELLS
         );
     }
 
     @Test
     public void testWithDeleted_Cells() {
         this.withAndCheck(
-                "deleted-cells",
-                SpreadsheetDeltaProperties.DELETED_CELLS
+            "deleted-cells",
+            SpreadsheetDeltaProperties.DELETED_CELLS
         );
     }
 
     private void withAndCheck(final String kebabCase,
                               final SpreadsheetDeltaProperties properties) {
         this.checkEquals(
-                properties,
-                SpreadsheetDeltaProperties.with(kebabCase),
-                () -> "with " + kebabCase
+            properties,
+            SpreadsheetDeltaProperties.with(kebabCase),
+            () -> "with " + kebabCase
         );
     }
 
@@ -77,69 +77,69 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
     @Test
     public void testParseWithNull() {
         this.parseStringAndCheck(
-                null,
-                EnumSet.allOf(SpreadsheetDeltaProperties.class)
+            null,
+            EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
 
     @Test
     public void testParseWithEmptyString() {
         this.parseStringAndCheck(
-                "",
-                EnumSet.allOf(SpreadsheetDeltaProperties.class)
+            "",
+            EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
 
     @Test
     public void testParseWithCells() {
         this.parseStringAndCheck(
-                "cells",
-                EnumSet.of(SpreadsheetDeltaProperties.CELLS)
+            "cells",
+            EnumSet.of(SpreadsheetDeltaProperties.CELLS)
         );
     }
 
     @Test
     public void testParseWithDeletedCells() {
         this.parseStringAndCheck(
-                "deleted-cells",
-                EnumSet.of(SpreadsheetDeltaProperties.DELETED_CELLS)
+            "deleted-cells",
+            EnumSet.of(SpreadsheetDeltaProperties.DELETED_CELLS)
         );
     }
 
     @Test
     public void testParseWithSeveral() {
         this.parseStringAndCheck(
-                "cells,columns,deleted-cells",
-                EnumSet.of(
-                        SpreadsheetDeltaProperties.CELLS,
-                        SpreadsheetDeltaProperties.COLUMNS,
-                        SpreadsheetDeltaProperties.DELETED_CELLS
-                )
+            "cells,columns,deleted-cells",
+            EnumSet.of(
+                SpreadsheetDeltaProperties.CELLS,
+                SpreadsheetDeltaProperties.COLUMNS,
+                SpreadsheetDeltaProperties.DELETED_CELLS
+            )
         );
     }
 
     @Test
     public void testParseWithSeveralReadOnly() {
         final Set<SpreadsheetDeltaProperties> properties = this.parseStringAndCheck(
-                "cells,columns,deleted-cells",
-                EnumSet.of(
-                        SpreadsheetDeltaProperties.CELLS,
-                        SpreadsheetDeltaProperties.COLUMNS,
-                        SpreadsheetDeltaProperties.DELETED_CELLS
-                )
+            "cells,columns,deleted-cells",
+            EnumSet.of(
+                SpreadsheetDeltaProperties.CELLS,
+                SpreadsheetDeltaProperties.COLUMNS,
+                SpreadsheetDeltaProperties.DELETED_CELLS
+            )
         );
 
         assertThrows(
-                UnsupportedOperationException.class,
-                properties::clear
+            UnsupportedOperationException.class,
+            properties::clear
         );
     }
 
     @Test
     public void testParseWithStar() {
         this.parseStringAndCheck(
-                "*",
-                EnumSet.allOf(SpreadsheetDeltaProperties.class)
+            "*",
+            EnumSet.allOf(SpreadsheetDeltaProperties.class)
         );
     }
 
@@ -163,66 +163,66 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
     @Test
     public void testExtractNullParametersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDeltaProperties.extract(
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetDeltaProperties.extract(
+                null
+            )
         );
     }
 
     @Test
     public void testExtractMissing() {
         this.extractAndCheck(
-                Maps.empty(),
-                SpreadsheetDeltaProperties.ALL
+            Maps.empty(),
+            SpreadsheetDeltaProperties.ALL
         );
     }
 
     @Test
     public void testExtractEmpty() {
         this.extractAndCheck(
-                Maps.of(
-                        SpreadsheetDeltaProperties.PROPERTIES,
-                        Lists.empty()
-                ),
-                SpreadsheetDeltaProperties.ALL
+            Maps.of(
+                SpreadsheetDeltaProperties.PROPERTIES,
+                Lists.empty()
+            ),
+            SpreadsheetDeltaProperties.ALL
         );
     }
 
     @Test
     public void testExtractAll() {
         this.extractAndCheck(
-                Maps.of(
-                        SpreadsheetDeltaProperties.PROPERTIES,
-                        Lists.of("*")
-                ),
-                SpreadsheetDeltaProperties.ALL
+            Maps.of(
+                SpreadsheetDeltaProperties.PROPERTIES,
+                Lists.of("*")
+            ),
+            SpreadsheetDeltaProperties.ALL
         );
     }
 
     @Test
     public void testExtractPresent() {
         this.extractAndCheck(
-                Maps.of(
-                        SpreadsheetDeltaProperties.PROPERTIES,
-                        Lists.of("cells,labels,column-count")
-                ),
-                Sets.of(
-                        SpreadsheetDeltaProperties.CELLS,
-                        SpreadsheetDeltaProperties.COLUMN_COUNT,
-                        SpreadsheetDeltaProperties.LABELS
-                )
+            Maps.of(
+                SpreadsheetDeltaProperties.PROPERTIES,
+                Lists.of("cells,labels,column-count")
+            ),
+            Sets.of(
+                SpreadsheetDeltaProperties.CELLS,
+                SpreadsheetDeltaProperties.COLUMN_COUNT,
+                SpreadsheetDeltaProperties.LABELS
+            )
         );
     }
 
     private void extractAndCheck(final Map<HttpRequestAttribute<?>, Object> parameters,
                                  final Set<SpreadsheetDeltaProperties> expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetDeltaProperties.extract(
-                        parameters
-                ),
-                parameters::toString
+            expected,
+            SpreadsheetDeltaProperties.extract(
+                parameters
+            ),
+            parameters::toString
         );
     }
 

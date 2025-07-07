@@ -26,14 +26,14 @@ import walkingkooka.validation.ValidatorContextDelegator;
 import java.util.Objects;
 
 final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
-        ValidatorContextDelegator<SpreadsheetExpressionReference> {
+    ValidatorContextDelegator<SpreadsheetExpressionReference> {
 
     static SpreadsheetValidatorContext with(final ValidatorContext<SpreadsheetExpressionReference> context) {
         Objects.requireNonNull(context, "context");
 
         return context instanceof SpreadsheetValidatorContext ?
-                (SpreadsheetValidatorContext) context :
-                new BasicSpreadsheetValidatorContext(context);
+            (SpreadsheetValidatorContext) context :
+            new BasicSpreadsheetValidatorContext(context);
     }
 
     private BasicSpreadsheetValidatorContext(final ValidatorContext<SpreadsheetExpressionReference> context) {
@@ -52,21 +52,21 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     @Override
     public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
         return this.validatorContext()
-                .validationReference()
-                .equalsIgnoreReferenceKind(cellOrLabel) ?
-                this :
-                new BasicSpreadsheetValidatorContext(
-                        this.validatorContext()
-                                .setValidationReference(
-                                        Objects.requireNonNull(cellOrLabel, "cellOrLabel")
-                                )
-                );
+            .validationReference()
+            .equalsIgnoreReferenceKind(cellOrLabel) ?
+            this :
+            new BasicSpreadsheetValidatorContext(
+                this.validatorContext()
+                    .setValidationReference(
+                        Objects.requireNonNull(cellOrLabel, "cellOrLabel")
+                    )
+            );
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Object value) {
         return Cast.to(
-                this.context.expressionEvaluationContext(value)
+            this.context.expressionEvaluationContext(value)
         );
     }
 

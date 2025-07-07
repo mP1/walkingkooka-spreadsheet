@@ -36,43 +36,43 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesting2<SpreadsheetCellRangeComparator, List<SpreadsheetCell>>,
-        TreePrintableTesting,
-        SpreadsheetMetadataTesting {
+    TreePrintableTesting,
+    SpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullComparatorsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRangeComparator.with(
-                        null, // spreadsheetComparators
-                        SpreadsheetComparatorContexts.fake()
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCellRangeComparator.with(
+                null, // spreadsheetComparators
+                SpreadsheetComparatorContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithEmptyComparatorsFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetCellRangeComparator.with(
-                        Lists.empty(), // spreadsheetComparators
-                        SpreadsheetComparatorContexts.fake()
-                )
+            IllegalArgumentException.class,
+            () -> SpreadsheetCellRangeComparator.with(
+                Lists.empty(), // spreadsheetComparators
+                SpreadsheetComparatorContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRangeComparator.with(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                                "A=text",
-                                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                                PROVIDER_CONTEXT
-                        ), // spreadsheetComparators
-                        null // context
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCellRangeComparator.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                    "A=text",
+                    SpreadsheetComparatorProviders.spreadsheetComparators(),
+                    PROVIDER_CONTEXT
+                ), // spreadsheetComparators
+                null // context
+            )
         );
     }
 
@@ -81,258 +81,258 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
     @Test
     public void testCompareSingleColumn() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                LocalDate.of(1999, 12, 1)
+            "A1",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                LocalDate.of(1999, 12, 2)
+            "A2",
+            LocalDate.of(1999, 12, 2)
         );
         final SpreadsheetCell a3 = this.cell(
-                "A3",
-                LocalDate.of(1999, 12, 3)
+            "A3",
+            LocalDate.of(1999, 12, 3)
         );
         this.comparatorArraySortAndCheck(
-                list(a1),
-                list(a2),
-                list(a3),
-                list(a1), // expected
-                list(a2),
-                list(a3)
+            list(a1),
+            list(a2),
+            list(a3),
+            list(a1), // expected
+            list(a2),
+            list(a3)
         );
     }
 
     @Test
     public void testCompareSingleColumnSomeEqual() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                LocalDate.of(1999, 12, 1)
+            "A1",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                LocalDate.of(1999, 12, 2)
+            "A2",
+            LocalDate.of(1999, 12, 2)
         );
         final SpreadsheetCell a3 = this.cell(
-                "A3",
-                LocalDate.of(1999, 12, 1)
+            "A3",
+            LocalDate.of(1999, 12, 1)
         );
         this.comparatorArraySortAndCheck(
-                list(a1),
-                list(a2),
-                list(a3),
-                list(a1), // expected
-                list(a3),
-                list(a2)
+            list(a1),
+            list(a2),
+            list(a3),
+            list(a1), // expected
+            list(a3),
+            list(a2)
         );
     }
 
     @Test
     public void testCompareSingleColumnSomeMissing() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                LocalDate.of(1999, 12, 1)
+            "A1",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                LocalDate.of(1999, 12, 2)
+            "A2",
+            LocalDate.of(1999, 12, 2)
         );
         final SpreadsheetCell a3 = this.cell(
-                "A3",
-                LocalDate.of(1999, 12, 1)
+            "A3",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a4 = null;
 
         this.comparatorArraySortAndCheck(
-                list(a1),
-                list(a2),
-                list(a3),
-                list(),
-                list(a1), // expected
-                list(a3),
-                list(a2),
-                list()
+            list(a1),
+            list(a2),
+            list(a3),
+            list(),
+            list(a1), // expected
+            list(a3),
+            list(a2),
+            list()
         );
     }
 
     @Test
     public void testCompareMultipleColumn() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                LocalDate.of(1999, 12, 1)
+            "A1",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                LocalDate.of(1999, 12, 1)
+            "A2",
+            LocalDate.of(1999, 12, 1)
         );
 
         final SpreadsheetCell b1 = this.cell(
-                "b1",
-                "Second"
+            "b1",
+            "Second"
         );
         final SpreadsheetCell b2 = this.cell(
-                "b2",
-                "First"
+            "b2",
+            "First"
         );
 
         this.comparatorArraySortAndCheck(
-                list(a1, b1),
-                list(a2, b2),
-                list(a2, b2), // expected
-                list(a1, b1)
+            list(a1, b1),
+            list(a2, b2),
+            list(a2, b2), // expected
+            list(a1, b1)
         );
     }
 
     @Test
     public void testCompareMultipleColumnSomeMissing() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                LocalDate.of(1999, 12, 1)
+            "A1",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                LocalDate.of(1999, 12, 1)
+            "A2",
+            LocalDate.of(1999, 12, 1)
         );
 
         final SpreadsheetCell b1 = this.cell(
-                "b1",
-                "First"
+            "b1",
+            "First"
         );
         final SpreadsheetCell b2 = null;
 
         this.comparatorArraySortAndCheck(
-                list(a1, b1),
-                list(a2, b2),
-                list(a1, b1), // expected
-                list(a2, b2) // null is after
+            list(a1, b1),
+            list(a2, b2),
+            list(a1, b1), // expected
+            list(a2, b2) // null is after
         );
     }
 
     @Test
     public void testCompareMultipleColumn2() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                LocalDate.of(1999, 12, 1)
+            "A1",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                LocalDate.of(1999, 12, 1)
+            "A2",
+            LocalDate.of(1999, 12, 1)
         );
         final SpreadsheetCell a3 = this.cell(
-                "A3",
-                LocalDate.of(1999, 12, 3)
+            "A3",
+            LocalDate.of(1999, 12, 3)
         );
         final SpreadsheetCell a4 = this.cell(
-                "A4",
-                LocalDate.of(1999, 12, 3)
+            "A4",
+            LocalDate.of(1999, 12, 3)
         );
         final SpreadsheetCell a5 = this.cell(
-                "A5",
-                LocalDate.of(1999, 12, 5)
+            "A5",
+            LocalDate.of(1999, 12, 5)
         );
 
         final SpreadsheetCell b1 = this.cell(
-                "b1",
-                "Second"
+            "b1",
+            "Second"
         );
         final SpreadsheetCell b2 = this.cell(
-                "b2",
-                "First"
+            "b2",
+            "First"
         );
         final SpreadsheetCell b3 = this.cell(
-                "b3",
-                "Third"
+            "b3",
+            "Third"
         );
         final SpreadsheetCell b4 = this.cell(
-                "b4",
-                "TT Fourth"
+            "b4",
+            "TT Fourth"
         );
         final SpreadsheetCell b5 = this.cell(
-                "b5",
-                "Fifth"
+            "b5",
+            "Fifth"
         );
 
         this.comparatorArraySortAndCheck(
-                list(a1, b1),
-                list(a2, b2),
-                list(a3, b3),
-                list(a4, b4),
-                list(a5, b5),
-                list(a2, b2), // expected
-                list(a1, b1),
-                list(a3, b3),
-                list(a4, b4),
-                list(a5, b5)
+            list(a1, b1),
+            list(a2, b2),
+            list(a3, b3),
+            list(a4, b4),
+            list(a5, b5),
+            list(a2, b2), // expected
+            list(a1, b1),
+            list(a3, b3),
+            list(a4, b4),
+            list(a5, b5)
         );
     }
 
     @Test
     public void testCompareMoreColumnsThanComparators() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                "same"
+            "A1",
+            "same"
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                "same"
+            "A2",
+            "same"
         );
 
         final SpreadsheetCell b1 = this.cell(
-                "b1",
-                "same"
+            "b1",
+            "same"
         );
         final SpreadsheetCell b2 = this.cell(
-                "b2",
-                "same"
+            "b2",
+            "same"
         );
         this.comparatorArraySortAndCheck(
-                this.createComparator(
-                        "A=text"
-                ),
-                list(a1, b1),
-                list(a2, b2),
-                list(a1, b1), // expected
-                list(a2, b2)
+            this.createComparator(
+                "A=text"
+            ),
+            list(a1, b1),
+            list(a2, b2),
+            list(a1, b1), // expected
+            list(a2, b2)
         );
     }
 
     @Test
     public void testCompareLessColumnsThanComparators() {
         final SpreadsheetCell a1 = this.cell(
-                "A1",
-                "same"
+            "A1",
+            "same"
         );
         final SpreadsheetCell a2 = this.cell(
-                "A2",
-                "same"
+            "A2",
+            "same"
         );
 
         final SpreadsheetCell b1 = this.cell(
-                "b1",
-                "same"
+            "b1",
+            "same"
         );
         final SpreadsheetCell b2 = this.cell(
-                "b2",
-                "same"
+            "b2",
+            "same"
         );
         this.comparatorArraySortAndCheck(
-                this.createComparator(
-                        "A=text;B=text;C=text"
-                ),
-                list(a1, b1),
-                list(a2, b2),
-                list(a1, b1), // expected
-                list(a2, b2)
+            this.createComparator(
+                "A=text;B=text;C=text"
+            ),
+            list(a1, b1),
+            list(a2, b2),
+            list(a1, b1), // expected
+            list(a2, b2)
         );
     }
 
     private SpreadsheetCell cell(final String reference,
                                  final Object value) {
         return SpreadsheetSelection.parseCell(reference)
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                                Optional.ofNullable(value)
-                        )
-                );
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.ofNullable(value)
+                )
+            );
     }
 
     private static List<SpreadsheetCell> list(final SpreadsheetCell... cells) {
@@ -346,15 +346,15 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
 
         this.toStringAndCheck(
-                SpreadsheetCellRangeComparator.with(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                                "B=day-of-month",
-                                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                                PROVIDER_CONTEXT
-                        ),
-                        context
+            SpreadsheetCellRangeComparator.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                    "B=day-of-month",
+                    SpreadsheetComparatorProviders.spreadsheetComparators(),
+                    PROVIDER_CONTEXT
                 ),
-                "B=day-of-month " + context
+                context
+            ),
+            "B=day-of-month " + context
         );
     }
 
@@ -363,15 +363,15 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
 
         this.toStringAndCheck(
-                SpreadsheetCellRangeComparator.with(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                                "B=day-of-month DOWN",
-                                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                                PROVIDER_CONTEXT
-                        ),
-                        context
+            SpreadsheetCellRangeComparator.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                    "B=day-of-month DOWN",
+                    SpreadsheetComparatorProviders.spreadsheetComparators(),
+                    PROVIDER_CONTEXT
                 ),
-                "B=day-of-month DOWN " + context
+                context
+            ),
+            "B=day-of-month DOWN " + context
         );
     }
 
@@ -380,15 +380,15 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
 
         this.toStringAndCheck(
-                SpreadsheetCellRangeComparator.with(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                                "B=day-of-month,month-of-year,year",
-                                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                                PROVIDER_CONTEXT
-                        ),
-                        context
+            SpreadsheetCellRangeComparator.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                    "B=day-of-month,month-of-year,year",
+                    SpreadsheetComparatorProviders.spreadsheetComparators(),
+                    PROVIDER_CONTEXT
                 ),
-                "B=day-of-month,month-of-year,year " + context
+                context
+            ),
+            "B=day-of-month,month-of-year,year " + context
         );
     }
 
@@ -397,15 +397,15 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
 
         this.toStringAndCheck(
-                SpreadsheetCellRangeComparator.with(
-                        SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                                "B=day-of-month,month-of-year DOWN,year DOWN",
-                                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                                PROVIDER_CONTEXT
-                        ),
-                        context
+            SpreadsheetCellRangeComparator.with(
+                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                    "B=day-of-month,month-of-year DOWN,year DOWN",
+                    SpreadsheetComparatorProviders.spreadsheetComparators(),
+                    PROVIDER_CONTEXT
                 ),
-                "B=day-of-month,month-of-year DOWN,year DOWN " + context
+                context
+            ),
+            "B=day-of-month,month-of-year DOWN,year DOWN " + context
         );
     }
 
@@ -416,12 +416,12 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
 
     private SpreadsheetCellRangeComparator createComparator(final String comparators) {
         return SpreadsheetCellRangeComparator.with(
-                SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                        comparators,
-                        SpreadsheetComparatorProviders.spreadsheetComparators(),
-                        PROVIDER_CONTEXT
-                ),
-                SPREADSHEET_COMPARATOR_CONTEXT
+            SpreadsheetColumnOrRowSpreadsheetComparators.parse(
+                comparators,
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                PROVIDER_CONTEXT
+            ),
+            SPREADSHEET_COMPARATOR_CONTEXT
         );
     }
 

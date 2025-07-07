@@ -35,8 +35,8 @@ import java.util.function.Predicate;
  * only comparing the value.
  */
 public final class SpreadsheetColumnReference extends SpreadsheetColumnReferenceOrRange
-        implements Value<Integer>,
-        Comparable<SpreadsheetColumnReference> {
+    implements Value<Integer>,
+    Comparable<SpreadsheetColumnReference> {
 
     /**
      * The maximum value, columns -1.
@@ -49,18 +49,18 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
      * The highest legal column.
      */
     public final static String MAX_VALUE_STRING = toString0(
-            MAX_VALUE + 1,
-            SpreadsheetReferenceKind.RELATIVE
+        MAX_VALUE + 1,
+        SpreadsheetReferenceKind.RELATIVE
     );
 
     static SpreadsheetColumnReference[] absoluteCache() {
         if (null == ABSOLUTE_CACHE) {
             ABSOLUTE_CACHE = fillCache(
-                    i -> new SpreadsheetColumnReference(
-                            i,
-                            SpreadsheetReferenceKind.ABSOLUTE
-                    ),
-                    new SpreadsheetColumnReference[CACHE_SIZE]
+                i -> new SpreadsheetColumnReference(
+                    i,
+                    SpreadsheetReferenceKind.ABSOLUTE
+                ),
+                new SpreadsheetColumnReference[CACHE_SIZE]
             );
         }
         return ABSOLUTE_CACHE;
@@ -74,11 +74,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     static SpreadsheetColumnReference[] relativeCache() {
         if (null == RELATIVE_CACHE) {
             RELATIVE_CACHE = fillCache(
-                    i -> new SpreadsheetColumnReference(
-                            i,
-                            SpreadsheetReferenceKind.RELATIVE
-                    ),
-                    new SpreadsheetColumnReference[CACHE_SIZE]
+                i -> new SpreadsheetColumnReference(
+                    i,
+                    SpreadsheetReferenceKind.RELATIVE
+                ),
+                new SpreadsheetColumnReference[CACHE_SIZE]
             );
         }
         return RELATIVE_CACHE;
@@ -94,8 +94,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
         Objects.requireNonNull(referenceKind, "referenceKind");
 
         return value < CACHE_SIZE ?
-                referenceKind.columnFromCache(value) :
-                new SpreadsheetColumnReference(value, referenceKind);
+            referenceKind.columnFromCache(value) :
+            new SpreadsheetColumnReference(value, referenceKind);
     }
 
     /**
@@ -123,14 +123,14 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     public SpreadsheetColumnReference setValue(final int value) {
         checkValue(value);
         return this.value == value ?
-                this :
-                new SpreadsheetColumnReference(value, this.referenceKind());
+            this :
+            new SpreadsheetColumnReference(value, this.referenceKind());
     }
 
     private static void checkValue(final int value) {
         if (value < 0 || value > MAX_VALUE) {
             throw new IllegalColumnArgumentException(
-                    "Invalid column=" + value + " not between 0 and " + (1 + MAX_VALUE)
+                "Invalid column=" + value + " not between 0 and " + (1 + MAX_VALUE)
             );
         }
     }
@@ -149,11 +149,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
         Objects.requireNonNull(referenceKind, "referenceKind");
 
         return this.referenceKind == referenceKind ?
-                this :
-                new SpreadsheetColumnReference(
-                        this.value,
-                        referenceKind
-                );
+            this :
+            new SpreadsheetColumnReference(
+                this.value,
+                referenceKind
+            );
     }
 
     @Override
@@ -166,17 +166,17 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     @Override
     public SpreadsheetColumnReference add(final int value) {
         return this.setValue(
-                this.value + value
+            this.value + value
         );
     }
 
     @Override
     public SpreadsheetColumnReference addSaturated(final int value) {
         return this.setValue(
-                Math.min(
-                        Math.max(this.value + value, 0),
-                        this.max()
-                )
+            Math.min(
+                Math.max(this.value + value, 0),
+                this.max()
+            )
         );
     }
 
@@ -197,8 +197,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     @Override
     public SpreadsheetColumnReference addIfRelative(final int delta) {
         return this.referenceKind() == SpreadsheetReferenceKind.ABSOLUTE ?
-                this :
-                this.add(delta);
+            this :
+            this.add(delta);
     }
 
     // replaceReferencesMapper..........................................................................................
@@ -209,16 +209,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
             throw new IllegalArgumentException("Expected column(s) or cell(s) but got " + moveTo);
         }
         final int delta = moveTo.toColumn()
-                .value() -
-                this.value;
+            .value() -
+            this.value;
 
         return Optional.ofNullable(
-                0 != delta ?
-                        SpreadsheetSelectionReplaceReferencesMapperFunction.with(
-                                delta,
-                                0
-                        ) :
-                        null
+            0 != delta ?
+                SpreadsheetSelectionReplaceReferencesMapperFunction.with(
+                    delta,
+                    0
+                ) :
+                null
         );
     }
 
@@ -249,8 +249,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     public SpreadsheetColumnReference max(final SpreadsheetColumnReference other) {
         Objects.requireNonNull(other, "other");
         return this.value >= other.value ?
-                this :
-                other;
+            this :
+            other;
     }
 
     // min..............................................................................................................
@@ -261,8 +261,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     public SpreadsheetColumnReference min(final SpreadsheetColumnReference other) {
         Objects.requireNonNull(other, "other");
         return this.value <= other.value ?
-                this :
-                other;
+            this :
+            other;
     }
 
     // testXXX.........................................................................................................
@@ -280,7 +280,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
         Objects.requireNonNull(range, "range");
 
         return this.compareTo(range.begin().column()) >= 0 &&
-                this.compareTo(range.end().column()) <= 0;
+            this.compareTo(range.end().column()) <= 0;
     }
 
     @Override
@@ -293,7 +293,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     @Override
     public SpreadsheetCellReference toCell() {
         return this.setRow(
-                SpreadsheetReferenceKind.RELATIVE.firstRow()
+            SpreadsheetReferenceKind.RELATIVE.firstRow()
         );
     }
 
@@ -336,7 +336,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
      */
     public SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference other) {
         return SpreadsheetColumnRangeReference.with(
-                this.range(other)
+            this.range(other)
         );
     }
 
@@ -410,7 +410,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
                                               final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
-                context.leftColumn(this)
+            context.leftColumn(this)
         );
     }
 
@@ -419,10 +419,10 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                               final int count,
                                               final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
-                context.leftPixels(
-                        this,
-                        count
-                )
+            context.leftPixels(
+                this,
+                count
+            )
         );
     }
 
@@ -430,7 +430,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
                                                final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
-                context.rightColumn(this)
+            context.rightColumn(this)
         );
     }
 
@@ -439,10 +439,10 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                                final int count,
                                                final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
-                context.rightPixels(
-                        this,
-                        count
-                )
+            context.rightPixels(
+                this,
+                count
+            )
         );
     }
 
@@ -476,13 +476,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<AnchoredSpreadsheetSelection> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
                                                             final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-                this.leftColumn(
-                        anchor,
-                        context
-                ),
-                anchor
+            this.leftColumn(
+                anchor,
+                context
+            ),
+            anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.RIGHT)
+            s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.RIGHT)
         );
     }
 
@@ -491,14 +491,14 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                                             final int count,
                                                             final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-                this.leftPixels(
-                        anchor,
-                        count,
-                        context
-                ),
-                anchor
+            this.leftPixels(
+                anchor,
+                count,
+                context
+            ),
+            anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.RIGHT)
+            s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.RIGHT)
         );
     }
 
@@ -506,13 +506,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<AnchoredSpreadsheetSelection> extendRightColumn(final SpreadsheetViewportAnchor anchor,
                                                              final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-                this.rightColumn(
-                        anchor,
-                        context
-                ),
-                anchor
+            this.rightColumn(
+                anchor,
+                context
+            ),
+            anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.LEFT)
+            s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.LEFT)
         );
     }
 
@@ -521,14 +521,14 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                                              final int count,
                                                              final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-                this.rightPixels(
-                        anchor,
-                        count,
-                        context
-                ),
-                anchor
+            this.rightPixels(
+                anchor,
+                count,
+                context
+            ),
+            anchor
         ).map(
-                s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.LEFT)
+            s -> s.setAnchorOrDefault(SpreadsheetViewportAnchor.LEFT)
         );
     }
 
@@ -536,8 +536,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<AnchoredSpreadsheetSelection> extendUpRow(final SpreadsheetViewportAnchor anchor,
                                                        final SpreadsheetViewportNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 
@@ -546,8 +546,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                                           final int count,
                                                           final SpreadsheetViewportNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 
@@ -555,8 +555,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<AnchoredSpreadsheetSelection> extendDownRow(final SpreadsheetViewportAnchor anchor,
                                                          final SpreadsheetViewportNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 
@@ -566,8 +566,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                                             final int count,
                                                             final SpreadsheetViewportNavigationContext context) {
         return this.setAnchorEmptyIfHidden(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 
@@ -575,8 +575,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Optional<SpreadsheetSelection> extendRange(final Optional<? extends SpreadsheetSelection> other,
                                                final SpreadsheetViewportAnchor anchor) {
         return other.map(
-                o -> this.columnRange(o.toColumn())
-                        .toScalarIfUnit()
+            o -> this.columnRange(o.toColumn())
+                .toScalarIfUnit()
         );
     }
 
@@ -593,8 +593,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     @Override
     public ColumnSpreadsheetFormulaParserToken toParserToken() {
         return SpreadsheetFormulaParserToken.column(
-                this,
-                this.text()
+            this,
+            this.text()
         );
     }
 
@@ -609,15 +609,15 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     boolean equalsNotSameAndNotNull(final Object other,
                                     final boolean includeKind) {
         return this.equals1(
-                (SpreadsheetColumnReference) other,
-                includeKind
+            (SpreadsheetColumnReference) other,
+            includeKind
         );
     }
 
     boolean equals1(final SpreadsheetColumnReference other,
                     final boolean includeKind) {
         return this.value == other.value &&
-                (includeKind ? this.referenceKind == other.referenceKind : true);
+            (includeKind ? this.referenceKind == other.referenceKind : true);
     }
 
     // Object...........................................................................................................

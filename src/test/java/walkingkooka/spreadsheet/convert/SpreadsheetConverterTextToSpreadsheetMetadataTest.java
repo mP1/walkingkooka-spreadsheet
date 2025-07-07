@@ -47,10 +47,10 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY;
 
         this.convertAndCheck(
-                MARSHALL_CONTEXT.marshall(metadata)
-                        .toString(),
-                SpreadsheetMetadata.class,
-                metadata
+            MARSHALL_CONTEXT.marshall(metadata)
+                .toString(),
+            SpreadsheetMetadata.class,
+            metadata
         );
     }
 
@@ -59,45 +59,45 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY;
 
         this.convertAndCheck(
-                MARSHALL_CONTEXT.marshall(metadata)
-                        .toString(),
-                metadata
+            MARSHALL_CONTEXT.marshall(metadata)
+                .toString(),
+            metadata
         );
     }
 
     @Test
     public void testConvertStringToSpreadsheetMetadata3() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                SpreadsheetName.with("Spreadsheet123")
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("Spreadsheet123")
         ).set(
-                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
-                RoundingMode.CEILING
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+            RoundingMode.CEILING
         );
 
         this.convertAndCheck(
-                MARSHALL_CONTEXT.marshall(metadata)
-                        .toString(),
-                metadata
+            MARSHALL_CONTEXT.marshall(metadata)
+                .toString(),
+            metadata
         );
     }
 
     @Test
     public void testConvertCharSequenceToSpreadsheetMetadata2() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                SpreadsheetName.with("Spreadsheet123")
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("Spreadsheet123")
         ).set(
-                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
-                RoundingMode.CEILING
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+            RoundingMode.CEILING
         );
 
         this.convertAndCheck(
-                new StringBuilder(
-                        MARSHALL_CONTEXT.marshall(metadata)
-                                .toString()
-                ),
-                metadata
+            new StringBuilder(
+                MARSHALL_CONTEXT.marshall(metadata)
+                    .toString()
+            ),
+            metadata
         );
     }
 
@@ -113,9 +113,9 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -123,32 +123,32 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
             private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
-                    Lists.of(
-                            SpreadsheetConverters.textToText(),
-                            JsonNodeConverters.textToJsonNode(), // parses String -> JsonNode
-                            JsonNodeConverters.jsonNodeTo() // unmarshall JsonNode -> SpreadsheetMetadata
-                    )
+                Lists.of(
+                    SpreadsheetConverters.textToText(),
+                    JsonNodeConverters.textToJsonNode(), // parses String -> JsonNode
+                    JsonNodeConverters.jsonNodeTo() // unmarshall JsonNode -> SpreadsheetMetadata
+                )
             );
 
             private final JsonNodeUnmarshallContext unmarshallContext = JsonNodeUnmarshallContexts.basic(
-                        ExpressionNumberKind.BIG_DECIMAL,
-                        MathContext.UNLIMITED
-                );
+                ExpressionNumberKind.BIG_DECIMAL,
+                MathContext.UNLIMITED
+            );
 
             @Override
             public <T> T unmarshall(final JsonNode jsonNode,
                                     final Class<T> type) {
                 return this.unmarshallContext.unmarshall(
-                                jsonNode,
-                                type
-                        );
+                    jsonNode,
+                    type
+                );
             }
 
             @Override

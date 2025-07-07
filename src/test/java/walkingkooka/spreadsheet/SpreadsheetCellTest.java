@@ -80,49 +80,49 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest implements CanBeEmptyTesting,
-        ClassTesting2<SpreadsheetCell>,
-        CanReplaceReferencesTesting<SpreadsheetCell>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
-        HasTextStyleTesting,
-        HasTextTesting,
-        ParseStringTesting<SpreadsheetCell>,
-        JsonNodeMarshallingTesting<SpreadsheetCell>,
-        HasSpreadsheetReferenceTesting,
-        HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
-        PatchableTesting<SpreadsheetCell>,
-        ToStringTesting<SpreadsheetCell>,
-        TreePrintableTesting,
-        SpreadsheetMetadataTesting {
+    ClassTesting2<SpreadsheetCell>,
+    CanReplaceReferencesTesting<SpreadsheetCell>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+    HasTextStyleTesting,
+    HasTextTesting,
+    ParseStringTesting<SpreadsheetCell>,
+    JsonNodeMarshallingTesting<SpreadsheetCell>,
+    HasSpreadsheetReferenceTesting,
+    HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
+    PatchableTesting<SpreadsheetCell>,
+    ToStringTesting<SpreadsheetCell>,
+    TreePrintableTesting,
+    SpreadsheetMetadataTesting {
     private final static SpreadsheetCellReference REFERENCE = SpreadsheetSelection.A1;
     private final static String FORMULA = "=1+2";
 
     private final static TextStyle BOLD_ITALICS = TextStyle.EMPTY.setValues(
-                Maps.of(
-                        TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
-                        TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC
-                )
-        );
+        Maps.of(
+            TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD,
+            TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC
+        )
+    );
 
 
     @Test
     public void testWithNullReferenceFails() {
         assertThrows(
-                NullPointerException.class, 
-                () -> SpreadsheetCell.with(
-                        null,
-                        this.formula()
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCell.with(
+                null,
+                this.formula()
+            )
         );
     }
 
     @Test
     public void testWithNullFormulaFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCell.with(
-                        REFERENCE,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetCell.with(
+                REFERENCE,
+                null
+            )
         );
     }
 
@@ -145,11 +145,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testWithAbsoluteReference() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetSelection.parseCell("$B$2"),
-                formula(FORMULA));
+            formula(FORMULA));
 
         this.referenceAndCheck(
-                cell,
-                reference.toRelative()
+            cell,
+            reference.toRelative()
         );
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
@@ -159,8 +159,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
         this.formattedValueAndCheck(
-                cell,
-                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+            cell,
+            SpreadsheetCell.NO_FORMATTED_VALUE_CELL
         );
     }
 
@@ -182,21 +182,21 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testWithFormulaListValue() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                REFERENCE,
-                SpreadsheetFormula.EMPTY.setText("=1+2")
-                        .setValue(
-                                Optional.of(Lists.empty())
-                        )
+            REFERENCE,
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+                .setValue(
+                    Optional.of(Lists.empty())
+                )
         );
 
         this.referenceAndCheck(cell);
         this.formulaAndCheck(
-                cell,
-                SpreadsheetFormula.EMPTY.setText("=1+2")
-                        .setValue(
-                                Optional.of(
-                                        SpreadsheetErrorKind.VALUE)
-                        )
+            cell,
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+                .setValue(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE)
+                )
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
@@ -210,20 +210,20 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testWithFormulaWithValue() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(
-                Optional.of(
-                        Optional.of(123)
-                )
+            Optional.of(
+                Optional.of(123)
+            )
         );
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                REFERENCE,
-                formula
+            REFERENCE,
+            formula
         );
 
         this.referenceAndCheck(cell);
         this.formulaAndCheck(
-                cell,
-                formula
+            cell,
+            formula
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
@@ -239,9 +239,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetReferenceNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setReference(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setReference(null)
         );
     }
 
@@ -249,10 +249,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetReferenceSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setReference(
-                        cell.reference()
-                )
+            cell,
+            cell.setReference(
+                cell.reference()
+            )
         );
     }
 
@@ -270,16 +270,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.localeAndCheck(cell);
         this.referenceAndCheck(cell);
         this.checkEquals(
-                cell.parser(),
-                different.parser(),
-                "parser"
+            cell.parser(),
+            different.parser(),
+            "parser"
         );
 
         this.formulaAndCheck(cell);
         this.checkEquals(
-                cell.formatter(),
-                different.formatter(),
-                "formatter"
+            cell.formatter(),
+            different.formatter(),
+            "formatter"
         );
         this.validatorAndCheck(cell);
         this.validatorAndCheck(different);
@@ -295,17 +295,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private void referenceAndCheck(final SpreadsheetCell cell) {
         this.referenceAndCheck(
-                cell,
-                REFERENCE
+            cell,
+            REFERENCE
         );
     }
 
     private void referenceAndCheck(final SpreadsheetCell cell,
                                    final SpreadsheetCellReference reference) {
         this.checkEquals(
-                reference,
-                cell.reference(),
-                "reference"
+            reference,
+            cell.reference(),
+            "reference"
         );
     }
 
@@ -314,9 +314,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetFormulaNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setFormula(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setFormula(null)
         );
     }
 
@@ -324,10 +324,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetFormulaSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setFormula(
-                        cell.formula()
-                )
+            cell,
+            cell.setFormula(
+                cell.formula()
+            )
         );
     }
 
@@ -337,14 +337,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetFormula differentFormula = this.formula("different");
         final SpreadsheetCell different = cell.setFormula(differentFormula);
         assertNotSame(
-                cell,
-                different
+            cell,
+            different
         );
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                differentFormula
+            different,
+            differentFormula
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
@@ -361,18 +361,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = this.createCell();
 
         final SpreadsheetCell different = cell.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setValue(Optional.of(Lists.empty()))
+            SpreadsheetFormula.EMPTY
+                .setValue(Optional.of(Lists.empty()))
         );
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                SpreadsheetFormula.EMPTY
-                        .setValue(
-                                Optional.of(SpreadsheetErrorKind.VALUE)
-                        )
+            different,
+            SpreadsheetFormula.EMPTY
+                .setValue(
+                    Optional.of(SpreadsheetErrorKind.VALUE)
+                )
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(cell);
@@ -390,7 +390,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private SpreadsheetFormula formula(final String text) {
         return SpreadsheetFormula.EMPTY
-                .setText(text);
+            .setText(text);
     }
 
     private void formulaAndCheck(final SpreadsheetCell cell) {
@@ -400,9 +400,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     private void formulaAndCheck(final SpreadsheetCell cell,
                                  final SpreadsheetFormula formula) {
         this.checkEquals(
-                formula,
-                cell.formula(),
-                "formula"
+            formula,
+            cell.formula(),
+            "formula"
         );
     }
 
@@ -411,9 +411,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetDateTimeSymbolsNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setDateTimeSymbols(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setDateTimeSymbols(null)
         );
     }
 
@@ -421,10 +421,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetDateTimeSymbolsSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setDateTimeSymbols(
-                        cell.dateTimeSymbols()
-                )
+            cell,
+            cell.setDateTimeSymbols(
+                cell.dateTimeSymbols()
+            )
         );
     }
 
@@ -439,8 +439,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.referenceAndCheck(different);
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(
-                different,
-                differentDateTimeSymbols
+            different,
+            differentDateTimeSymbols
         );
         this.decimalNumberSymbolsAndCheck(cell);
         this.localeAndCheck(cell);
@@ -457,25 +457,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<DateTimeSymbols> dateTimeSymbols(final Locale locale) {
         return Optional.of(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(locale)
-                )
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+            )
         );
     }
 
     private void dateTimeSymbolsAndCheck(final SpreadsheetCell cell) {
         this.dateTimeSymbolsAndCheck(
-                cell,
-                this.dateTimeSymbols()
+            cell,
+            this.dateTimeSymbols()
         );
     }
 
     private void dateTimeSymbolsAndCheck(final SpreadsheetCell cell,
                                          final Optional<DateTimeSymbols> dateTimeSymbols) {
         this.checkEquals(
-                dateTimeSymbols,
-                cell.dateTimeSymbols(),
-                "dateTimeSymbols"
+            dateTimeSymbols,
+            cell.dateTimeSymbols(),
+            "dateTimeSymbols"
         );
     }
 
@@ -484,9 +484,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetDecimalNumberSymbolsNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setDecimalNumberSymbols(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setDecimalNumberSymbols(null)
         );
     }
 
@@ -494,10 +494,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetDecimalNumberSymbolsSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setDecimalNumberSymbols(
-                        cell.decimalNumberSymbols()
-                )
+            cell,
+            cell.setDecimalNumberSymbols(
+                cell.decimalNumberSymbols()
+            )
         );
     }
 
@@ -513,8 +513,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(
-                different,
-                differentDecimalNumberSymbols
+            different,
+            differentDecimalNumberSymbols
         );
         this.localeAndCheck(cell);
         this.formatterAndCheck(different);
@@ -530,26 +530,26 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<DecimalNumberSymbols> decimalNumberSymbols(final Locale locale) {
         return Optional.of(
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(locale)
-                )
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(locale)
+            )
         );
     }
 
     private void decimalNumberSymbolsAndCheck(final SpreadsheetCell cell) {
         this.decimalNumberSymbolsAndCheck(
-                cell,
-                this.decimalNumberSymbols()
+            cell,
+            this.decimalNumberSymbols()
         );
     }
 
     private void decimalNumberSymbolsAndCheck(final SpreadsheetCell cell,
                                               final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
         this.checkEquals(
-                decimalNumberSymbols,
-                cell.decimalNumberSymbols(),
-                "decimalNumberSymbols"
+            decimalNumberSymbols,
+            cell.decimalNumberSymbols(),
+            "decimalNumberSymbols"
         );
     }
 
@@ -558,9 +558,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetLocaleNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setLocale(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setLocale(null)
         );
     }
 
@@ -568,10 +568,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetLocaleSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setLocale(
-                        cell.locale()
-                )
+            cell,
+            cell.setLocale(
+                cell.locale()
+            )
         );
     }
 
@@ -582,14 +582,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final Optional<Locale> differentLocale = this.differentLocale();
         final SpreadsheetCell different = cell.setLocale(differentLocale);
         assertNotSame(
-                cell,
-                different
+            cell,
+            different
         );
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                this.formula()
+            different,
+            this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
@@ -599,8 +599,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheck(
-                different,
-                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+            different,
+            SpreadsheetCell.NO_FORMATTED_VALUE_CELL
         );
     }
 
@@ -610,42 +610,42 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<Locale> differentLocale() {
         return Optional.ofNullable(
-                Locale.FRANCE
+            Locale.FRANCE
         );
     }
 
     private void localeAndCheck(final SpreadsheetCell cell) {
         this.localeAndCheck(
-                cell,
-                this.locale()
+            cell,
+            this.locale()
         );
     }
 
     private void localeAndCheckNone(final SpreadsheetCell cell) {
         this.localeAndCheck(
-                cell,
-                Optional.empty()
+            cell,
+            Optional.empty()
         );
     }
 
     private void localeAndCheck(final SpreadsheetCell cell,
                                 final Optional<Locale> expected) {
         this.checkEquals(
-                expected,
-                cell.locale(),
-                "locale"
+            expected,
+            cell.locale(),
+            "locale"
         );
     }
-    
+
     // SetFormatter.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetFormatterNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setFormatter(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setFormatter(null)
         );
     }
 
@@ -653,10 +653,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetFormatterSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setFormatter(
-                        cell.formatter()
-                )
+            cell,
+            cell.setFormatter(
+                cell.formatter()
+            )
         );
     }
 
@@ -664,24 +664,24 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetFormatterDifferent() {
         final SpreadsheetCell cell = this.createCell();
         final Optional<SpreadsheetFormatterSelector> differentFormatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
+                .spreadsheetFormatterSelector()
         );
         final SpreadsheetCell different = cell.setFormatter(differentFormatter);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                this.formula()
+            different,
+            this.formula()
         );
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
         this.localeAndCheck(cell);
         this.formatterAndCheck(
-                different,
-                differentFormatter
+            different,
+            differentFormatter
         );
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -709,15 +709,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<SpreadsheetFormatterSelector> formatter() {
         return Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@@")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseTextFormatPattern("@@")
+                .spreadsheetFormatterSelector()
         );
     }
 
     private void formatterAndCheckNone(final SpreadsheetCell cell) {
         this.formatterAndCheck(
-                cell,
-                SpreadsheetCell.NO_FORMATTER
+            cell,
+            SpreadsheetCell.NO_FORMATTER
         );
     }
 
@@ -728,9 +728,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     private void formatterAndCheck(final SpreadsheetCell cell,
                                    final Optional<SpreadsheetFormatterSelector> formatter) {
         this.checkEquals(
-                formatter,
-                cell.formatter(),
-                "formatter"
+            formatter,
+            cell.formatter(),
+            "formatter"
         );
     }
 
@@ -740,9 +740,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetParserNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setParser(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setParser(null)
         );
     }
 
@@ -750,34 +750,34 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetParserSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setParser(
-                        cell.parser()
-                )
+            cell,
+            cell.setParser(
+                cell.parser()
+            )
         );
     }
 
     @Test
     public void testSetParserSameDoesntClearFormulaToken() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText("'A");
+            .setText("'A");
 
         final SpreadsheetCell cell = this.createCell()
-                .setFormula(
-                        formula.setToken(
-                                Optional.of(
-                                        SpreadsheetFormulaParserToken.text(
-                                                Lists.of(
-                                                        SpreadsheetFormulaParserToken.textLiteral("'A", "'A")
-                                                ),
-                                                "'A"
-                                        )
-                                )
+            .setFormula(
+                formula.setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.text(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.textLiteral("'A", "'A")
+                            ),
+                            "'A"
                         )
-                );
+                    )
+                )
+            );
         assertSame(
-                cell,
-                cell.setParser(cell.parser())
+            cell,
+            cell.setParser(cell.parser())
         );
     }
 
@@ -785,16 +785,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetParserDifferent() {
         final SpreadsheetCell cell = this.createCell();
         final Optional<SpreadsheetParserSelector> differentParser = Optional.of(
-                SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
+                .spreadsheetParserSelector()
         );
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                this.formula()
+            different,
+            this.formula()
         );
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
@@ -802,8 +802,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.localeAndCheck(cell);
         this.formatterAndCheck(different);
         this.parserAndCheck(
-                different,
-                differentParser
+            different,
+            differentParser
         );
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -813,24 +813,24 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetParserDifferentClearsFormulaTokenAndExpression() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
-                .setText("'A");
+            .setText("'A");
 
         final SpreadsheetCell cell = this.createCell()
-                .setFormula(
-                        formula.setToken(
-                                Optional.of(
-                                        SpreadsheetFormulaParserToken.text(
-                                                Lists.of(
-                                                        SpreadsheetFormulaParserToken.textLiteral("'A", "'A")
-                                                ),
-                                                "'A"
-                                        )
-                                )
+            .setFormula(
+                formula.setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.text(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.textLiteral("'A", "'A")
+                            ),
+                            "'A"
                         )
-                );
+                    )
+                )
+            );
         final Optional<SpreadsheetParserSelector> differentParser = Optional.of(
-                SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
+                .spreadsheetParserSelector()
         );
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
@@ -866,31 +866,31 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<SpreadsheetParserSelector> parser() {
         return Optional.of(
-                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
+                .spreadsheetParserSelector()
         );
     }
 
     private void parserAndCheckNone(final SpreadsheetCell cell) {
         this.parserAndCheck(
-                cell,
-                SpreadsheetCell.NO_PARSER
+            cell,
+            SpreadsheetCell.NO_PARSER
         );
     }
 
     private void parserAndCheck(final SpreadsheetCell cell) {
         this.parserAndCheck(
-                cell,
-                this.parser()
+            cell,
+            this.parser()
         );
     }
 
     private void parserAndCheck(final SpreadsheetCell cell,
                                 final Optional<SpreadsheetParserSelector> selector) {
         this.checkEquals(
-                selector,
-                cell.parser(),
-                "parser"
+            selector,
+            cell.parser(),
+            "parser"
         );
     }
 
@@ -899,9 +899,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetStyleNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setStyle(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setStyle(null)
         );
     }
 
@@ -909,10 +909,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetStyleSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setStyle(
-                        cell.style()
-                )
+            cell,
+            cell.setStyle(
+                cell.style()
+            )
         );
     }
 
@@ -920,19 +920,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetStyleDifferent() {
         final SpreadsheetCell cell = this.createCell();
         final TextStyle differentTextStyle = TextStyle.EMPTY.set(
-                TextStylePropertyName.FONT_STYLE,
-                FontStyle.ITALIC
+            TextStylePropertyName.FONT_STYLE,
+            FontStyle.ITALIC
         );
         final SpreadsheetCell different = cell.setStyle(differentTextStyle);
         assertNotSame(
-                cell,
-                different
+            cell,
+            different
         );
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                this.formula()
+            different,
+            this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
@@ -940,8 +940,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
         this.styleAndCheck(
-                different,
-                differentTextStyle
+            different,
+            differentTextStyle
         );
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of text properties change
@@ -949,17 +949,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private void styleAndCheck(final SpreadsheetCell cell) {
         this.styleAndCheck(
-                cell,
-                SpreadsheetCell.NO_STYLE
+            cell,
+            SpreadsheetCell.NO_STYLE
         );
     }
 
     private void styleAndCheck(final SpreadsheetCell cell,
                                final TextStyle style) {
         this.checkEquals(
-                style,
-                cell.style(),
-                "style"
+            style,
+            cell.style(),
+            "style"
         );
     }
 
@@ -968,9 +968,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetValidatorNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell()
-                        .setValidator(null)
+            NullPointerException.class,
+            () -> this.createCell()
+                .setValidator(null)
         );
     }
 
@@ -978,10 +978,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetValidatorSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setValidator(
-                        cell.validator()
-                )
+            cell,
+            cell.setValidator(
+                cell.validator()
+            )
         );
     }
 
@@ -992,14 +992,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final Optional<ValidatorSelector> differentValidator = this.differentValidator();
         final SpreadsheetCell different = cell.setValidator(differentValidator);
         assertNotSame(
-                cell,
-                different
+            cell,
+            different
         );
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                this.formula()
+            different,
+            this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
@@ -1008,47 +1008,47 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(
-                different,
-                differentValidator
+            different,
+            differentValidator
         );
         this.formattedValueAndCheck(
-                different,
-                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+            different,
+            SpreadsheetCell.NO_FORMATTED_VALUE_CELL
         );
     }
 
     private Optional<ValidatorSelector> validator() {
         return Optional.ofNullable(
-                ValidatorSelector.parse("validator123")
+            ValidatorSelector.parse("validator123")
         );
     }
 
     private Optional<ValidatorSelector> differentValidator() {
         return Optional.ofNullable(
-                ValidatorSelector.parse("different-validator-456")
+            ValidatorSelector.parse("different-validator-456")
         );
     }
 
     private void validatorAndCheck(final SpreadsheetCell cell) {
         this.validatorAndCheck(
-                cell,
-                this.validator()
+            cell,
+            this.validator()
         );
     }
 
     private void validatorAndCheckNone(final SpreadsheetCell cell) {
         this.validatorAndCheck(
-                cell,
-                Optional.empty()
+            cell,
+            Optional.empty()
         );
     }
 
     private void validatorAndCheck(final SpreadsheetCell cell,
                                    final Optional<ValidatorSelector> expected) {
         this.checkEquals(
-                expected,
-                cell.validator(),
-                "validator"
+            expected,
+            cell.validator(),
+            "validator"
         );
     }
 
@@ -1058,8 +1058,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testSetFormattedValueNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createCell().setFormattedValue(null)
+            NullPointerException.class,
+            () -> this.createCell().setFormattedValue(null)
         );
     }
 
@@ -1067,8 +1067,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testSetFormattedValueSame() {
         final SpreadsheetCell cell = this.createCell();
         assertSame(
-                cell,
-                cell.setFormattedValue(cell.formattedValue())
+            cell,
+            cell.setFormattedValue(cell.formattedValue())
         );
     }
 
@@ -1081,51 +1081,51 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.referenceAndCheck(different);
         this.formulaAndCheck(
-                different,
-                this.formula()
+            different,
+            this.formula()
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
         this.localeAndCheck(cell);
         this.formatterAndCheck(
-                different,
-                this.formatter()
+            different,
+            this.formatter()
         );
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheck(
-                different,
-                differentFormatted
+            different,
+            differentFormatted
         );
     }
 
     private Optional<TextNode> formattedValue() {
         return Optional.of(
-                TextNode.text("formattedValue-text")
+            TextNode.text("formattedValue-text")
         );
     }
 
     private void formattedValueAndCheckNone(final SpreadsheetCell cell) {
         this.formattedValueAndCheck(
-                cell,
-                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+            cell,
+            SpreadsheetCell.NO_FORMATTED_VALUE_CELL
         );
     }
 
     private void formattedValueAndCheck(final SpreadsheetCell cell) {
         this.formattedValueAndCheck(
-                cell,
-                this.formattedValue()
+            cell,
+            this.formattedValue()
         );
     }
 
     private void formattedValueAndCheck(final SpreadsheetCell cell,
                                         final Optional<TextNode> formatted) {
         this.checkEquals(
-                formatted,
-                cell.formattedValue(),
-                "formattedValue"
+            formatted,
+            cell.formattedValue(),
+            "formattedValue"
         );
     }
 
@@ -1134,44 +1134,44 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testReplaceReferencesWithMapperReturnsEmptyForReference() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .replaceReferences((cell) -> Optional.empty())
+            IllegalArgumentException.class,
+            () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .replaceReferences((cell) -> Optional.empty())
         );
         this.checkEquals(
-                "Mapper returned nothing for A1",
-                thrown.getMessage()
+            "Mapper returned nothing for A1",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testReplaceReferencesMapperReturnsCell() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                parseFormula("=1+B2")
+            parseFormula("=1+B2")
         );
         this.replaceReferencesAndCheck(
-                cell,
-                Optional::of
+            cell,
+            Optional::of
         );
     }
 
     @Test
     public void testReplaceReferencesMove() {
         this.replaceReferencesAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        parseFormula("=1+B2")
+            SpreadsheetSelection.A1.setFormula(
+                parseFormula("=1+B2")
+            ),
+            (c) ->
+                Optional.of(
+                    c.add(
+                        1,
+                        2
+                    )
                 ),
-                (c) ->
-                        Optional.of(
-                                c.add(
-                                        1,
-                                        2
-                                )
-                        ),
-                SpreadsheetSelection.parseCell("B3")
-                        .setFormula(
-                                parseFormula("=1+C4")
-                        )
+            SpreadsheetSelection.parseCell("B3")
+                .setFormula(
+                    parseFormula("=1+C4")
+                )
         );
     }
 
@@ -1185,87 +1185,87 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testTextWhenReferenceAndEmptyFormulaText() {
         this.textAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                "A1,,,,,,,,,,,"
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+            "A1,,,,,,,,,,,"
         );
     }
 
     @Test
     public void testTextWhenReferenceAndNonEmptyFormulaText() {
         this.textAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2+magic(\"hello\")")),
-                "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,,"
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2+magic(\"hello\")")),
+            "A1,\"=1+2+magic(\"\"hello\"\")\",,,,,,,,,,"
         );
     }
 
     @Test
     public void testTextWhenReferenceAndValueTypeAndFormattedValue() {
         this.textAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setValueType(
-                                Optional.of(ValidationValueTypeName.TEXT)
-                        ).setValue(
-                                Optional.of(123)
-                        )
-                ).setFormattedValue(
-                        Optional.of(
-                                SpreadsheetText.with("Formatted-value-text")
-                                        .setColor(
-                                                Optional.of(
-                                                        Color.parse("#123456")
-                                                )
-                                        ).toTextNode()
-                        )
-                ),
-                "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValueType(
+                    Optional.of(ValidationValueTypeName.TEXT)
+                ).setValue(
+                    Optional.of(123)
+                )
+            ).setFormattedValue(
+                Optional.of(
+                    SpreadsheetText.with("Formatted-value-text")
+                        .setColor(
+                            Optional.of(
+                                Color.parse("#123456")
+                            )
+                        ).toTextNode()
+                )
+            ),
+            "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
         );
     }
 
     @Test
     public void testTextWhenAllPropertiesSet() {
         this.textAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("123")
-                                .setValue(
-                                        Optional.of(123)
-                                )
-                ).setFormatter(
-                        Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
-                ).setParser(
-                        Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
-                ).setValidator(
-                        Optional.of(ValidatorSelector.parse("helloValidator3"))
-                ).setStyle(
-                        TextStyle.EMPTY.set(
-                                TextStylePropertyName.TEXT_ALIGN,
-                                TextAlign.CENTER
-                        )
-                ).setDateTimeSymbols(
-                        Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                ).setDecimalNumberSymbols(
-                        Optional.of(
-                                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                        '+',
-                                        new DecimalFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                ).setLocale(
-                        Optional.of(LOCALE)
-                ).setFormattedValue(
-                        Optional.of(
-                                SpreadsheetText.with("Formatted-value-text")
-                                        .setColor(
-                                                Optional.of(
-                                                        Color.parse("#123456")
-                                                )
-                                        ).toTextNode()
-                        )
-                ),
-                "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("123")
+                    .setValue(
+                        Optional.of(123)
+                    )
+            ).setFormatter(
+                Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
+            ).setParser(
+                Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
+            ).setValidator(
+                Optional.of(ValidatorSelector.parse("helloValidator3"))
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            ).setDateTimeSymbols(
+                Optional.of(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            ).setDecimalNumberSymbols(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            ).setLocale(
+                Optional.of(LOCALE)
+            ).setFormattedValue(
+                Optional.of(
+                    SpreadsheetText.with("Formatted-value-text")
+                        .setColor(
+                            Optional.of(
+                                Color.parse("#123456")
+                            )
+                        ).toTextNode()
+                )
+            ),
+            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
         );
     }
 
@@ -1274,89 +1274,89 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testParseReferenceAndFormulaText() {
         this.textAndParseAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("123")
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("123")
+            )
         );
     }
 
     @Test
     public void testParseValueInteger() {
         this.textAndParseAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("123")
-                                .setValue(
-                                        Optional.of(123)
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("123")
+                    .setValue(
+                        Optional.of(123)
+                    )
+            )
         );
     }
 
     @Test
     public void testParseValueExpressionNumber() {
         this.textAndParseAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("123")
-                                .setValue(
-                                        Optional.of(
-                                                EXPRESSION_NUMBER_KIND.create(456.75)
-                                        )
-                                )
-                )
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("123")
+                    .setValue(
+                        Optional.of(
+                            EXPRESSION_NUMBER_KIND.create(456.75)
+                        )
+                    )
+            )
         );
     }
 
     @Test
     public void testParseAllProperties() {
         this.textAndParseAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("123")
-                                .setValue(
-                                        Optional.of(
-                                                LocalDate.of(1999,12,31)
-                                        )
-                                )
-                ).setFormatter(
-                        Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
-                ).setParser(
-                        Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
-                ).setValidator(
-                        Optional.of(ValidatorSelector.parse("helloValidator3"))
-                ).setStyle(
-                        TextStyle.EMPTY.set(
-                                TextStylePropertyName.TEXT_ALIGN,
-                                TextAlign.CENTER
-                        )
-                ).setDateTimeSymbols(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("123")
+                    .setValue(
                         Optional.of(
-                                DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.ENGLISH)
-                                )
+                            LocalDate.of(1999, 12, 31)
                         )
-                ).setDecimalNumberSymbols(
-                        Optional.of(
-                                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                        '+',
-                                        new DecimalFormatSymbols(Locale.ENGLISH)
-                                )
-                        )
-                ).setFormattedValue(
-                        Optional.of(
-                                SpreadsheetText.with("Formatted-value-text")
-                                        .setColor(
-                                                Optional.of(
-                                                        Color.parse("#123456")
-                                                )
-                                        ).toTextNode()
-                        )
+                    )
+            ).setFormatter(
+                Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
+            ).setParser(
+                Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
+            ).setValidator(
+                Optional.of(ValidatorSelector.parse("helloValidator3"))
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
                 )
+            ).setDateTimeSymbols(
+                Optional.of(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            ).setDecimalNumberSymbols(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.ENGLISH)
+                    )
+                )
+            ).setFormattedValue(
+                Optional.of(
+                    SpreadsheetText.with("Formatted-value-text")
+                        .setColor(
+                            Optional.of(
+                                Color.parse("#123456")
+                            )
+                        ).toTextNode()
+                )
+            )
         );
     }
 
     private void textAndParseAndCheck(final SpreadsheetCell cell) {
         this.parseStringAndCheck(
-                cell.text(),
-                cell
+            cell.text(),
+            cell
         );
     }
 
@@ -1380,23 +1380,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-                this.createObject()
-                        .setParser(
-                                Optional.of(
-                                        SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
-                                                .spreadsheetParserSelector()
-                                )
-                        )
+            this.createObject()
+                .setParser(
+                    Optional.of(
+                        SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
+                            .spreadsheetParserSelector()
+                    )
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentReference() {
         this.checkNotEquals(
-                this.createObject(
-                        REFERENCE.add(1,1),
-                        FORMULA
-                )
+            this.createObject(
+                REFERENCE.add(1, 1),
+                FORMULA
+            )
         );
     }
 
@@ -1404,110 +1404,110 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testEqualsDifferentFormula() {
         this.checkNotEquals(
-                this.createObject(
-                        REFERENCE,
-                        FORMULA + "99"
-                )
+            this.createObject(
+                REFERENCE,
+                FORMULA + "99"
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentDateTimeSymbols() {
         this.checkNotEquals(
-                this.createObject()
-                        .setDateTimeSymbols(
-                                this.dateTimeSymbols(Locale.FRANCE)
-                        )
+            this.createObject()
+                .setDateTimeSymbols(
+                    this.dateTimeSymbols(Locale.FRANCE)
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentDecimalNumberSymbols() {
         this.checkNotEquals(
-                this.createObject()
-                        .setDecimalNumberSymbols(
-                                this.decimalNumberSymbols(Locale.FRANCE)
-                        )
+            this.createObject()
+                .setDecimalNumberSymbols(
+                    this.decimalNumberSymbols(Locale.FRANCE)
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentLocale() {
         this.checkNotEquals(
-                this.createObject()
-                        .setLocale(
-                                Optional.of(Locale.FRANCE)
-                        )
+            this.createObject()
+                .setLocale(
+                    Optional.of(Locale.FRANCE)
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentTextStyle() {
         this.checkNotEquals(
-                this.createObject()
-                        .setStyle(
-                                TextStyle.EMPTY.set(
-                                        TextStylePropertyName.FONT_STYLE,
-                                        FontStyle.ITALIC
-                                )
-                        )
+            this.createObject()
+                .setStyle(
+                    TextStyle.EMPTY.set(
+                        TextStylePropertyName.FONT_STYLE,
+                        FontStyle.ITALIC
+                    )
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentValidator() {
         this.checkNotEquals(
-                this.createObject()
-                        .setValidator(
-                                this.differentValidator()
-                        )
+            this.createObject()
+                .setValidator(
+                    this.differentValidator()
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentFormatter() {
         this.checkNotEquals(
-                this.createObject()
-                        .setFormatter(
-                                Optional.of(
-                                        SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
-                                                .spreadsheetFormatterSelector()
-                                )
-                        )
+            this.createObject()
+                .setFormatter(
+                    Optional.of(
+                        SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
+                            .spreadsheetFormatterSelector()
+                    )
+                )
         );
     }
 
     @Test
     public void testEqualsDifferentFormatted() {
         this.checkNotEquals(
-                this.createObject()
-                        .setFormattedValue(
-                                Optional.of(
-                                        TextNode.text("different-formattedValue")
-                                )
-                        )
+            this.createObject()
+                .setFormattedValue(
+                    Optional.of(
+                        TextNode.text("different-formattedValue")
+                    )
+                )
         );
     }
 
     @Override
     public SpreadsheetCell createObject() {
         return this.createObject(
-                REFERENCE,
-                FORMULA
+            REFERENCE,
+            FORMULA
         );
     }
 
     private SpreadsheetCell createObject(final SpreadsheetCellReference reference,
                                          final String formula) {
         return SpreadsheetCell.with(
-                        reference,
-                        this.formula(formula)
-                ).setDateTimeSymbols(this.dateTimeSymbols())
-                .setDecimalNumberSymbols(this.decimalNumberSymbols())
-                .setParser(this.parser())
-                .setFormatter(this.formatter())
-                .setValidator(this.validator())
-                .setFormattedValue(this.formattedValue());
+                reference,
+                this.formula(formula)
+            ).setDateTimeSymbols(this.dateTimeSymbols())
+            .setDecimalNumberSymbols(this.decimalNumberSymbols())
+            .setParser(this.parser())
+            .setFormatter(this.formatter())
+            .setValidator(this.validator())
+            .setFormattedValue(this.formattedValue());
     }
 
     // json.............................................................................................................
@@ -1540,14 +1540,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testUnmarshallObjectReferenceMissingFails() {
         this.unmarshallFails(
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.FORMULA_PROPERTY, 
-                                this.marshallContext()
-                                        .marshall(
-                                                this.formula()
-                                        )
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.FORMULA_PROPERTY,
+                    this.marshallContext()
+                        .marshall(
+                            this.formula()
                         )
+                )
         );
     }
 
@@ -1556,13 +1556,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallFails(
-                JsonNode.object()
+            JsonNode.object()
                 .set(
-                        SpreadsheetCell.FORMULA_PROPERTY, 
-                        context.marshall(this.formula()))
+                    SpreadsheetCell.FORMULA_PROPERTY,
+                    context.marshall(this.formula()))
                 .set(
-                        SpreadsheetCell.STYLE_PROPERTY,
-                        context.marshall(BOLD_ITALICS)
+                    SpreadsheetCell.STYLE_PROPERTY,
+                    context.marshall(BOLD_ITALICS)
                 )
         );
     }
@@ -1572,23 +1572,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
-                JsonNode.object()
+            JsonNode.object()
+                .set(
+                    JsonPropertyName.with(reference()
+                        .toString()
+                    ), JsonNode.object()
                         .set(
-                                JsonPropertyName.with(reference()
-                                        .toString()
-                                ), JsonNode.object()
-                                        .set(
-                                                SpreadsheetCell.FORMULA_PROPERTY,
-                                                context.marshall(this.formula())
-                                        ).set(
-                                                SpreadsheetCell.STYLE_PROPERTY,
-                                                context.marshall(BOLD_ITALICS)
-                                        )
-                        ),
-                SpreadsheetCell.with(
-                        reference(),
-                        this.formula()
-                ).setStyle(BOLD_ITALICS)
+                            SpreadsheetCell.FORMULA_PROPERTY,
+                            context.marshall(this.formula())
+                        ).set(
+                            SpreadsheetCell.STYLE_PROPERTY,
+                            context.marshall(BOLD_ITALICS)
+                        )
+                ),
+            SpreadsheetCell.with(
+                reference(),
+                this.formula()
+            ).setStyle(BOLD_ITALICS)
         );
     }
 
@@ -1598,17 +1598,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
-                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                        ),
-                SpreadsheetCell.with(
-                                reference(),
-                                this.formula()
-                        ).setStyle(BOLD_ITALICS)
-                        .setFormatter(formatter())
+            JsonNode.object()
+                .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                    .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                    .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
+                    .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
+                ),
+            SpreadsheetCell.with(
+                    reference(),
+                    this.formula()
+                ).setStyle(BOLD_ITALICS)
+                .setFormatter(formatter())
         );
     }
 
@@ -1618,19 +1618,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(
-                                JsonPropertyName.with(
-                                        reference().toString()
-                                ),
-                                JsonNode.object()
-                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
-                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
-                        ),
-                SpreadsheetCell.with(reference(), this.formula())
-                        .setStyle(BOLD_ITALICS)
-                        .setFormattedValue(formattedValue()));
+            JsonNode.object()
+                .set(
+                    JsonPropertyName.with(
+                        reference().toString()
+                    ),
+                    JsonNode.object()
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
+                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                ),
+            SpreadsheetCell.with(reference(), this.formula())
+                .setStyle(BOLD_ITALICS)
+                .setFormattedValue(formattedValue()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -1639,31 +1639,31 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         final SpreadsheetFormula formula = this.formula()
-                .setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.text(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.textLiteral("'A", "'A")
-                                        ),
-                                        "'A"
-                                )
-                        )
-                );
+            .setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.text(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.textLiteral("'A", "'A")
+                        ),
+                        "'A"
+                    )
+                )
+            );
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(
-                                JsonPropertyName.with(reference().toString()),
-                                JsonNode.object()
-                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
-                                        .set(SpreadsheetCell.PARSER_PROPERTY, context.marshall(this.parser().get()))
-                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
-                        ),
-                reference()
-                        .setFormula(SpreadsheetFormula.EMPTY)
-                        .setParser(this.parser())
-                        .setFormula(formula)
-                        .setFormattedValue(formattedValue())
+            JsonNode.object()
+                .set(
+                    JsonPropertyName.with(reference().toString()),
+                    JsonNode.object()
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
+                        .set(SpreadsheetCell.PARSER_PROPERTY, context.marshall(this.parser().get()))
+                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                ),
+            reference()
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setParser(this.parser())
+                .setFormula(formula)
+                .setFormattedValue(formattedValue())
         );
     }
 
@@ -1675,18 +1675,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final Optional<DateTimeSymbols> dateTimeSymbols = this.dateTimeSymbols(Locale.ENGLISH);
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()),
-                                JsonNode.object()
-                                        .set(
-                                                SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
-                                                context.marshall(dateTimeSymbols.get())
-                                        )
-                        ),
-                SpreadsheetCell.with(
-                        reference(),
-                        SpreadsheetFormula.EMPTY
-                ).setDateTimeSymbols(dateTimeSymbols)
+            JsonNode.object()
+                .set(JsonPropertyName.with(reference().toString()),
+                    JsonNode.object()
+                        .set(
+                            SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
+                            context.marshall(dateTimeSymbols.get())
+                        )
+                ),
+            SpreadsheetCell.with(
+                reference(),
+                SpreadsheetFormula.EMPTY
+            ).setDateTimeSymbols(dateTimeSymbols)
         );
     }
 
@@ -1699,18 +1699,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final Optional<DecimalNumberSymbols> decimalNumberSymbols = this.decimalNumberSymbols(Locale.ENGLISH);
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()),
-                                JsonNode.object()
-                                        .set(
-                                                SpreadsheetCell.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
-                                                context.marshall(decimalNumberSymbols.get())
-                                        )
-                        ),
-                SpreadsheetCell.with(
-                        reference(),
-                        SpreadsheetFormula.EMPTY
-                ).setDecimalNumberSymbols(decimalNumberSymbols)
+            JsonNode.object()
+                .set(JsonPropertyName.with(reference().toString()),
+                    JsonNode.object()
+                        .set(
+                            SpreadsheetCell.DECIMAL_NUMBER_SYMBOLS_PROPERTY,
+                            context.marshall(decimalNumberSymbols.get())
+                        )
+                ),
+            SpreadsheetCell.with(
+                reference(),
+                SpreadsheetFormula.EMPTY
+            ).setDecimalNumberSymbols(decimalNumberSymbols)
         );
     }
 
@@ -1720,20 +1720,20 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()),
-                                JsonNode.object()
-                                        .set(
-                                                SpreadsheetCell.LOCALE_PROPERTY,
-                                                context.marshall(LOCALE)
-                                        )
-                        ),
-                SpreadsheetCell.with(
-                        reference(),
-                        SpreadsheetFormula.EMPTY
-                ).setLocale(
-                        Optional.of(LOCALE)
-                )
+            JsonNode.object()
+                .set(JsonPropertyName.with(reference().toString()),
+                    JsonNode.object()
+                        .set(
+                            SpreadsheetCell.LOCALE_PROPERTY,
+                            context.marshall(LOCALE)
+                        )
+                ),
+            SpreadsheetCell.with(
+                reference(),
+                SpreadsheetFormula.EMPTY
+            ).setLocale(
+                Optional.of(LOCALE)
+            )
         );
     }
 
@@ -1743,16 +1743,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()),
-                                JsonNode.object()
-                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
-                        ),
-                SpreadsheetCell.with(reference(), this.formula())
-                        .setFormatter(formatter())
-                        .setFormattedValue(formattedValue()));
+            JsonNode.object()
+                .set(JsonPropertyName.with(reference().toString()),
+                    JsonNode.object()
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
+                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                ),
+            SpreadsheetCell.with(reference(), this.formula())
+                .setFormatter(formatter())
+                .setFormattedValue(formattedValue()));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -1761,19 +1761,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(
-                JsonNode.object()
-                        .set(
-                                JsonPropertyName.with(reference().toString()),
-                                JsonNode.object()
-                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
-                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
-                                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
-                        ),
-                SpreadsheetCell.with(reference(), this.formula())
-                        .setStyle(BOLD_ITALICS)
-                        .setFormatter(formatter())
-                        .setFormattedValue(formattedValue()));
+            JsonNode.object()
+                .set(
+                    JsonPropertyName.with(reference().toString()),
+                    JsonNode.object()
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(BOLD_ITALICS))
+                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
+                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                ),
+            SpreadsheetCell.with(reference(), this.formula())
+                .setStyle(BOLD_ITALICS)
+                .setFormatter(formatter())
+                .setFormattedValue(formattedValue()));
     }
 
     // json.............................................................................................................
@@ -1781,193 +1781,193 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testMarshallWithFormula() {
         this.marshallAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        SpreadsheetFormula.EMPTY
-                                .setText(FORMULA)
-                ),
-                "{\"A1\": {\"formula\": {\"text\": \"=1+2\"}}}");
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA)
+            ),
+            "{\"A1\": {\"formula\": {\"text\": \"=1+2\"}}}");
     }
 
     @Test
     public void testMarshallWithDateTimeSymbols() {
         this.marshallAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        SpreadsheetFormula.EMPTY
-                                .setText(FORMULA)
-                ).setDateTimeSymbols(
-                        this.dateTimeSymbols(Locale.ENGLISH)
-                ),
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    },\n" +
-                        "    \"dateTimeSymbols\": {\n" +
-                        "      \"ampms\": [\n" +
-                        "        \"AM\",\n" +
-                        "        \"PM\"\n" +
-                        "      ],\n" +
-                        "      \"monthNames\": [\n" +
-                        "        \"January\",\n" +
-                        "        \"February\",\n" +
-                        "        \"March\",\n" +
-                        "        \"April\",\n" +
-                        "        \"May\",\n" +
-                        "        \"June\",\n" +
-                        "        \"July\",\n" +
-                        "        \"August\",\n" +
-                        "        \"September\",\n" +
-                        "        \"October\",\n" +
-                        "        \"November\",\n" +
-                        "        \"December\"\n" +
-                        "      ],\n" +
-                        "      \"monthNameAbbreviations\": [\n" +
-                        "        \"Jan\",\n" +
-                        "        \"Feb\",\n" +
-                        "        \"Mar\",\n" +
-                        "        \"Apr\",\n" +
-                        "        \"May\",\n" +
-                        "        \"Jun\",\n" +
-                        "        \"Jul\",\n" +
-                        "        \"Aug\",\n" +
-                        "        \"Sep\",\n" +
-                        "        \"Oct\",\n" +
-                        "        \"Nov\",\n" +
-                        "        \"Dec\"\n" +
-                        "      ],\n" +
-                        "      \"weekDayNames\": [\n" +
-                        "        \"Sunday\",\n" +
-                        "        \"Monday\",\n" +
-                        "        \"Tuesday\",\n" +
-                        "        \"Wednesday\",\n" +
-                        "        \"Thursday\",\n" +
-                        "        \"Friday\",\n" +
-                        "        \"Saturday\"\n" +
-                        "      ],\n" +
-                        "      \"weekDayNameAbbreviations\": [\n" +
-                        "        \"Sun\",\n" +
-                        "        \"Mon\",\n" +
-                        "        \"Tue\",\n" +
-                        "        \"Wed\",\n" +
-                        "        \"Thu\",\n" +
-                        "        \"Fri\",\n" +
-                        "        \"Sat\"\n" +
-                        "      ]\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA)
+            ).setDateTimeSymbols(
+                this.dateTimeSymbols(Locale.ENGLISH)
+            ),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"dateTimeSymbols\": {\n" +
+                "      \"ampms\": [\n" +
+                "        \"AM\",\n" +
+                "        \"PM\"\n" +
+                "      ],\n" +
+                "      \"monthNames\": [\n" +
+                "        \"January\",\n" +
+                "        \"February\",\n" +
+                "        \"March\",\n" +
+                "        \"April\",\n" +
+                "        \"May\",\n" +
+                "        \"June\",\n" +
+                "        \"July\",\n" +
+                "        \"August\",\n" +
+                "        \"September\",\n" +
+                "        \"October\",\n" +
+                "        \"November\",\n" +
+                "        \"December\"\n" +
+                "      ],\n" +
+                "      \"monthNameAbbreviations\": [\n" +
+                "        \"Jan\",\n" +
+                "        \"Feb\",\n" +
+                "        \"Mar\",\n" +
+                "        \"Apr\",\n" +
+                "        \"May\",\n" +
+                "        \"Jun\",\n" +
+                "        \"Jul\",\n" +
+                "        \"Aug\",\n" +
+                "        \"Sep\",\n" +
+                "        \"Oct\",\n" +
+                "        \"Nov\",\n" +
+                "        \"Dec\"\n" +
+                "      ],\n" +
+                "      \"weekDayNames\": [\n" +
+                "        \"Sunday\",\n" +
+                "        \"Monday\",\n" +
+                "        \"Tuesday\",\n" +
+                "        \"Wednesday\",\n" +
+                "        \"Thursday\",\n" +
+                "        \"Friday\",\n" +
+                "        \"Saturday\"\n" +
+                "      ],\n" +
+                "      \"weekDayNameAbbreviations\": [\n" +
+                "        \"Sun\",\n" +
+                "        \"Mon\",\n" +
+                "        \"Tue\",\n" +
+                "        \"Wed\",\n" +
+                "        \"Thu\",\n" +
+                "        \"Fri\",\n" +
+                "        \"Sat\"\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallWithDecimalNumberSymbols() {
         this.marshallAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        SpreadsheetFormula.EMPTY
-                                .setText(FORMULA)
-                ).setDecimalNumberSymbols(
-                        this.decimalNumberSymbols(Locale.ENGLISH)
-                ),
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    },\n" +
-                        "    \"decimalNumberSymbols\": {\n" +
-                        "      \"negativeSign\": \"-\",\n" +
-                        "      \"positiveSign\": \"+\",\n" +
-                        "      \"zeroDigit\": \"0\",\n" +
-                        "      \"currencySymbol\": \"¤\",\n" +
-                        "      \"decimalSeparator\": \".\",\n" +
-                        "      \"exponentSymbol\": \"E\",\n" +
-                        "      \"groupSeparator\": \",\",\n" +
-                        "      \"infinitySymbol\": \"∞\",\n" +
-                        "      \"monetaryDecimalSeparator\": \".\",\n" +
-                        "      \"nanSymbol\": \"NaN\",\n" +
-                        "      \"percentSymbol\": \"%\",\n" +
-                        "      \"permillSymbol\": \"‰\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA)
+            ).setDecimalNumberSymbols(
+                this.decimalNumberSymbols(Locale.ENGLISH)
+            ),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"decimalNumberSymbols\": {\n" +
+                "      \"negativeSign\": \"-\",\n" +
+                "      \"positiveSign\": \"+\",\n" +
+                "      \"zeroDigit\": \"0\",\n" +
+                "      \"currencySymbol\": \"¤\",\n" +
+                "      \"decimalSeparator\": \".\",\n" +
+                "      \"exponentSymbol\": \"E\",\n" +
+                "      \"groupSeparator\": \",\",\n" +
+                "      \"infinitySymbol\": \"∞\",\n" +
+                "      \"monetaryDecimalSeparator\": \".\",\n" +
+                "      \"nanSymbol\": \"NaN\",\n" +
+                "      \"percentSymbol\": \"%\",\n" +
+                "      \"permillSymbol\": \"‰\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallWithStyle() {
         final TextStyle italics = TextStyle.EMPTY
-                .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
+            .set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
 
         this.marshallAndCheck(
-                SpreadsheetCell.with(
-                                REFERENCE,
-                                SpreadsheetFormula.EMPTY
-                                        .setText(FORMULA)
-                        )
-                        .setStyle(italics),
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    },\n" +
-                        "    \"style\": {\n" +
-                        "      \"fontStyle\": \"ITALIC\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetCell.with(
+                    REFERENCE,
+                    SpreadsheetFormula.EMPTY
+                        .setText(FORMULA)
+                )
+                .setStyle(italics),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"style\": {\n" +
+                "      \"fontStyle\": \"ITALIC\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallWithFormattedValue() {
         this.marshallAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        SpreadsheetFormula.EMPTY
-                                .setText(FORMULA)
-                ).setFormattedValue(
-                        this.formattedValue()
-                ),
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    },\n" +
-                        "    \"formattedValue\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"formattedValue-text\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA)
+            ).setFormattedValue(
+                this.formattedValue()
+            ),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"formattedValue\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"formattedValue-text\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
     }
 
     @Test
     public void testMarshallWithStyleAndFormattedValue() {
         this.marshallAndCheck(
-                this.createCell()
-                        .setStyle(BOLD_ITALICS)
-                        .setFormattedValue(this.formattedValue()),
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    },\n" +
-                        "    \"formatter\": \"text-format-pattern @@\",\n" +
-                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
-                        "    \"style\": {\n" +
-                        "      \"fontStyle\": \"ITALIC\",\n" +
-                        "      \"fontWeight\": \"bold\"\n" +
-                        "    },\n" +
-                        "    \"formattedValue\": {\n" +
-                        "      \"type\": \"text\",\n" +
-                        "      \"value\": \"formattedValue-text\"\n" +
-                        "    },\n" +
-                        "    \"validator\": \"validator123\"\n" +
-                        "  }\n" +
-                        "}"
+            this.createCell()
+                .setStyle(BOLD_ITALICS)
+                .setFormattedValue(this.formattedValue()),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"formatter\": \"text-format-pattern @@\",\n" +
+                "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
+                "    \"style\": {\n" +
+                "      \"fontStyle\": \"ITALIC\",\n" +
+                "      \"fontWeight\": \"bold\"\n" +
+                "    },\n" +
+                "    \"formattedValue\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"formattedValue-text\"\n" +
+                "    },\n" +
+                "    \"validator\": \"validator123\"\n" +
+                "  }\n" +
+                "}"
         );
     }
 
@@ -1979,49 +1979,49 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testMarshallStyleRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseCell("A99")
-                        .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(
-                                TextStyle.EMPTY.set(
-                                        TextStylePropertyName.BACKGROUND_COLOR,
-                                        Color.parse("#123456")
-                                )
-                        )
+            SpreadsheetSelection.parseCell("A99")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(
+                    TextStyle.EMPTY.set(
+                        TextStylePropertyName.BACKGROUND_COLOR,
+                        Color.parse("#123456")
+                    )
+                )
         );
     }
 
     @Test
     public void testMarshallFormulaStyleFormatterAndFormattedRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetSelection.parseCell("A99")
-                        .setFormula(SpreadsheetFormula.EMPTY.setText("=123.5"))
-                        .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
-                        .setFormatter(
-                                Optional.of(
-                                        SpreadsheetPattern.parseNumberFormatPattern("##")
-                                                .spreadsheetFormatterSelector()
-                                )
-                        ).setFormattedValue(
-                                Optional.of(
-                                        TextNode.text("abc123")
-                                )
-                        )
+            SpreadsheetSelection.parseCell("A99")
+                .setFormula(SpreadsheetFormula.EMPTY.setText("=123.5"))
+                .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
+                .setFormatter(
+                    Optional.of(
+                        SpreadsheetPattern.parseNumberFormatPattern("##")
+                            .spreadsheetFormatterSelector()
+                    )
+                ).setFormattedValue(
+                    Optional.of(
+                        TextNode.text("abc123")
+                    )
+                )
         );
     }
 
     @Test
     public void testUnmarshallWithStyle() {
         this.unmarshallAndCheck(
-                "{\n" +
-                        "   \"A123\": {\n" +
-                        "      \"style\": {\n" +
-                        "          \"background-color\": \"#123456\"\n" +
-                        "      }\n" +
-                        "   }\n" +
-                        "}",
-                SpreadsheetSelection.parseCell("A123")
-                        .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
+            "{\n" +
+                "   \"A123\": {\n" +
+                "      \"style\": {\n" +
+                "          \"background-color\": \"#123456\"\n" +
+                "      }\n" +
+                "   }\n" +
+                "}",
+            SpreadsheetSelection.parseCell("A123")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
         );
     }
 
@@ -2043,9 +2043,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     private void checkEquals(final JsonNode node,
                              final String expected) {
         this.checkEquals(
-                JsonNode.parse(expected),
-                JsonNode.object()
-                        .appendChild(node)
+            JsonNode.parse(expected),
+            JsonNode.object()
+                .appendChild(node)
         );
     }
 
@@ -2054,16 +2054,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testHateosLinkIdAbsoluteReference() {
         this.hateosLinkIdAndCheck(
-                this.createCell("$B$21"),
-                "B21"
+            this.createCell("$B$21"),
+            "B21"
         );
     }
 
     @Test
     public void testHateosLinkIdRelativeReference() {
         this.hateosLinkIdAndCheck(
-                this.createCell("C9"),
-                "C9"
+            this.createCell("C9"),
+            "C9"
         );
     }
 
@@ -2077,8 +2077,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testPatchEmptyObject() {
         this.patchAndCheck(
-                this.createPatchable(),
-                JsonNode.object()
+            this.createPatchable(),
+            JsonNode.object()
         );
     }
 
@@ -2087,19 +2087,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final String text = "=123";
 
         this.patchAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.A1,
-                        formula(text)
-                ),
-                JsonNode.object()
+            SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                formula(text)
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.FORMULA_PROPERTY,
+                    JsonObject.object()
                         .set(
-                                SpreadsheetCell.FORMULA_PROPERTY,
-                                JsonObject.object()
-                                        .set(
-                                                JsonPropertyName.with("text"),
-                                                JsonNode.string(text)
-                                        )
+                            JsonPropertyName.with("text"),
+                            JsonNode.string(text)
                         )
+                )
         );
     }
 
@@ -2109,23 +2109,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final String text = "=2";
 
         this.patchAndCheck(
-                SpreadsheetCell.with(
-                        cellReference,
-                        formula("=1")
-                ),
-                JsonNode.object()
+            SpreadsheetCell.with(
+                cellReference,
+                formula("=1")
+            ),
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.FORMULA_PROPERTY,
+                    JsonObject.object()
                         .set(
-                                SpreadsheetCell.FORMULA_PROPERTY,
-                                JsonObject.object()
-                                        .set(
-                                                JsonPropertyName.with("text"),
-                                                JsonNode.string(text)
-                                        )
-                        ),
-                SpreadsheetCell.with(
-                        cellReference,
-                        formula(text)
-                )
+                            JsonPropertyName.with("text"),
+                            JsonNode.string(text)
+                        )
+                ),
+            SpreadsheetCell.with(
+                cellReference,
+                formula(text)
+            )
         );
     }
 
@@ -2134,19 +2134,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final Optional<DateTimeSymbols> dateTimeSymbols = dateTimeSymbols(LOCALE);
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         );
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
-                                marshallContext()
-                                        .marshall(dateTimeSymbols.get())
-                        ),
-                cell.setDateTimeSymbols(dateTimeSymbols)
+            cell,
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.DATE_TIME_SYMBOLS_PROPERTY,
+                    marshallContext()
+                        .marshall(dateTimeSymbols.get())
+                ),
+            cell.setDateTimeSymbols(dateTimeSymbols)
         );
     }
 
@@ -2155,148 +2155,148 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final Optional<Locale> locale = Optional.of(LOCALE);
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         );
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.LOCALE_PROPERTY,
-                                marshallContext()
-                                        .marshall(locale.get())
-                        ),
-                cell.setLocale(locale)
+            cell,
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.LOCALE_PROPERTY,
+                    marshallContext()
+                        .marshall(locale.get())
+                ),
+            cell.setLocale(locale)
         );
     }
 
     @Test
     public void testPatchFormatter() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         ).setFormatter(
-                Optional.of(
-                        SpreadsheetPattern.parseTextFormatPattern("@")
-                                .spreadsheetFormatterSelector()
-                )
+            Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@")
+                    .spreadsheetFormatterSelector()
+            )
         );
 
         final SpreadsheetFormatterSelector formatter = SpreadsheetPattern.parseTextFormatPattern("@@@")
-                .spreadsheetFormatterSelector();
+            .spreadsheetFormatterSelector();
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.FORMATTER_PROPERTY,
-                                JsonNodeMarshallContexts.basic()
-                                        .marshall(formatter)
-                        ),
-                cell.setFormatter(
-                        Optional.of(
-                                formatter
-                        )
+            cell,
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.FORMATTER_PROPERTY,
+                    JsonNodeMarshallContexts.basic()
+                        .marshall(formatter)
+                ),
+            cell.setFormatter(
+                Optional.of(
+                    formatter
                 )
+            )
         );
     }
 
     @Test
     public void testPatchFormatterRemove() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         ).setFormatter(
-                Optional.of(
-                        SpreadsheetPattern.parseTextFormatPattern("@")
-                                .spreadsheetFormatterSelector()
-                )
+            Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@")
+                    .spreadsheetFormatterSelector()
+            )
         );
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.FORMATTER_PROPERTY,
-                                JsonNode.nullNode()
-                        ),
-                cell.setFormatter(
-                        SpreadsheetCell.NO_FORMATTER
-                )
+            cell,
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.FORMATTER_PROPERTY,
+                    JsonNode.nullNode()
+                ),
+            cell.setFormatter(
+                SpreadsheetCell.NO_FORMATTER
+            )
         );
     }
 
     @Test
     public void testPatchStyle() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         );
 
         final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"));
+            .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"));
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.STYLE_PROPERTY,
-                                JsonNodeMarshallContexts.basic()
-                                        .marshall(style)
-                        ),
-                cell.setStyle(style)
+            cell,
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.STYLE_PROPERTY,
+                    JsonNodeMarshallContexts.basic()
+                        .marshall(style)
+                ),
+            cell.setStyle(style)
         );
     }
 
     @Test
     public void testPatchStyle2() {
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         );
 
         final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"))
-                .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
+            .set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456"))
+            .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT);
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(
-                                SpreadsheetCell.STYLE_PROPERTY,
-                                JsonNodeMarshallContexts.basic()
-                                        .marshall(style)
-                        ),
-                cell.setStyle(style)
+            cell,
+            JsonNode.object()
+                .set(
+                    SpreadsheetCell.STYLE_PROPERTY,
+                    JsonNodeMarshallContexts.basic()
+                        .marshall(style)
+                ),
+            cell.setStyle(style)
         );
     }
 
     @Test
     public void testPatchStyleAddProperty() {
         final TextStyle style = TextStyle.EMPTY
-                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
+            .set(TextStylePropertyName.BACKGROUND_COLOR, Color.BLACK);
 
         final SpreadsheetCell cell = SpreadsheetCell.with(
-                SpreadsheetSelection.A1,
-                formula("=1")
+            SpreadsheetSelection.A1,
+            formula("=1")
         ).setStyle(style);
 
         final TextStylePropertyName<Color> color = TextStylePropertyName.COLOR;
         final Color colorValue = Color.WHITE;
 
         this.patchAndCheck(
-                cell,
-                JsonNode.object()
-                        .set(SpreadsheetCell.STYLE_PROPERTY, JsonObject.object()
-                                .set(
-                                        JsonPropertyName.with(color.value()),
-                                        JsonNodeMarshallContexts.basic().marshall(colorValue)
-                                )
-                        ),
-                cell.setStyle(
-                        style.set(color, colorValue)
-                )
+            cell,
+            JsonNode.object()
+                .set(SpreadsheetCell.STYLE_PROPERTY, JsonObject.object()
+                    .set(
+                        JsonPropertyName.with(color.value()),
+                        JsonNodeMarshallContexts.basic().marshall(colorValue)
+                    )
+                ),
+            cell.setStyle(
+                style.set(color, colorValue)
+            )
         );
     }
 
@@ -2306,11 +2306,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNode value = JsonNode.string("A1");
 
         this.patchInvalidPropertyFails(
-                this.createPatchable(),
-                JsonNode.object()
-                        .set(name, value),
-                name,
-                value
+            this.createPatchable(),
+            JsonNode.object()
+                .set(name, value),
+            name,
+            value
         );
     }
 
@@ -2320,11 +2320,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final JsonNode value = JsonNode.string("@");
 
         this.patchInvalidPropertyFails(
-                this.createPatchable(),
-                JsonNode.object()
-                        .set(name, value),
-                name,
-                value
+            this.createPatchable(),
+            JsonNode.object()
+                .set(name, value),
+            name,
+            value
         );
     }
 
@@ -2343,8 +2343,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
-                ExpressionNumberKind.BIG_DECIMAL,
-                MathContext.UNLIMITED
+            ExpressionNumberKind.BIG_DECIMAL,
+            MathContext.UNLIMITED
         );
     }
 
@@ -2353,9 +2353,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testFormulaPatchNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .formulaPatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .formulaPatch(null)
         );
     }
 
@@ -2363,70 +2363,70 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testFormulaPatch() {
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+                .spreadsheetFormatterSelector()
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(formula)
-                .setFormatter(formatter);
+            .setFormatter(formatter);
 
         final JsonNode patch = cell.formulaPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
 
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formula\": {\n" +
-                        "      \"text\": \"=1+2\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setFormatter(formatter),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatter(formatter),
+            patch,
+            cell
         );
     }
 
     @Test
     public void testFormatterPatchNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .formatterPatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .formatterPatch(null)
         );
     }
 
     @Test
     public void testFormatterPatchNotEmpty() {
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+                .spreadsheetFormatterSelector()
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(formatter);
+            .setFormatter(formatter);
 
         final JsonNode patch = cell.formatterPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formatter\": \"date-format-pattern dd/mm/yyyy\"\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formatter\": \"date-format-pattern dd/mm/yyyy\"\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setFormatter(formatter),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatter(formatter),
+            patch,
+            cell
         );
     }
 
@@ -2434,63 +2434,63 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testFormatterPatchEmpty() {
         final Optional<SpreadsheetFormatterSelector> formatter = SpreadsheetCell.NO_FORMATTER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setFormatter(formatter);
+            .setFormatter(formatter);
 
         final JsonNode patch = cell.formatterPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"formatter\": null\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formatter\": null\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setFormatter(formatter),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatter(formatter),
+            patch,
+            cell
         );
     }
 
     @Test
     public void testParserPatchNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .parserPatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .parserPatch(null)
         );
     }
 
     @Test
     public void testParserPatchNotEmpty() {
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
-                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                        .spreadsheetParserSelector()
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                .spreadsheetParserSelector()
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(parser);
+            .setParser(parser);
 
         final JsonNode patch = cell.parserPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"parser\": \"date-parse-pattern yyyy/mm/dd\"\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"parser\": \"date-parse-pattern yyyy/mm/dd\"\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setParser(parser),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setParser(parser),
+            patch,
+            cell
         );
     }
 
@@ -2498,75 +2498,75 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testParserPatchEmpty() {
         final Optional<SpreadsheetParserSelector> parser = SpreadsheetCell.NO_PARSER;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setParser(parser);
+            .setParser(parser);
 
         final JsonNode patch = cell.parserPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"parser\": null\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"parser\": null\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setParser(parser),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setParser(parser),
+            patch,
+            cell
         );
     }
 
     @Test
     public void testStylePatchNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .stylePatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .stylePatch(null)
         );
     }
 
     @Test
     public void testStylePatch() {
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.CENTER
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.CENTER
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("=1+2")
+            SpreadsheetFormula.EMPTY.setText("=1+2")
         ).setStyle(
-                TextStyle.EMPTY.set(
-                        TextStylePropertyName.TEXT_ALIGN,
-                        TextAlign.CENTER
-                )
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+            )
         );
 
         final JsonNode patch = cell.stylePatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"style\": {\n" +
-                        "      \"textAlign\": \"CENTER\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"style\": {\n" +
+                "      \"textAlign\": \"CENTER\"\n" +
+                "    }\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                cell.setStyle(
-                        TextStyle.EMPTY.set(
-                                TextStylePropertyName.TEXT_ALIGN,
-                                TextAlign.CENTER
-                        )
-                ),
-                patch,
-                cell.setStyle(style)
+            cell.setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            ),
+            patch,
+            cell.setStyle(style)
         );
     }
 
@@ -2575,37 +2575,37 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testValidatorPatchNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .validatorPatch(null)
+            NullPointerException.class,
+            () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .validatorPatch(null)
         );
     }
 
     @Test
     public void testValidatorPatchNotEmpty() {
         final Optional<ValidatorSelector> validator = Optional.of(
-                ValidatorSelector.parse("hello-validator")
+            ValidatorSelector.parse("hello-validator")
         );
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(validator);
+            .setValidator(validator);
 
         final JsonNode patch = cell.validatorPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                        "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"validator\": \"hello-validator\"\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"validator\": \"hello-validator\"\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setValidator(validator),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(validator),
+            patch,
+            cell
         );
     }
 
@@ -2613,249 +2613,249 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testValidatorPatchEmpty() {
         final Optional<ValidatorSelector> validator = SpreadsheetCell.NO_VALIDATOR;
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                .setValidator(validator);
+            .setValidator(validator);
 
         final JsonNode patch = cell.validatorPatch(
-                this.jsonNodeMarshallContext()
+            this.jsonNodeMarshallContext()
         );
         this.checkEquals(
-                patch,
-                "{\n" +
-                        "  \"A1\": {\n" +
-                        "    \"validator\": null\n" +
-                        "  }\n" +
-                        "}"
+            patch,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"validator\": null\n" +
+                "  }\n" +
+                "}"
         );
 
         this.patchAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setValidator(validator),
-                patch,
-                cell
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(validator),
+            patch,
+            cell
         );
     }
-    
+
     // treePrintable....................................................................................................
 
     @Test
     public void testTreePrintableFormula() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula("1+2")
-                ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    text:\n" +
-                        "      \"1+2\"\n"
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula("1+2")
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    text:\n" +
+                "      \"1+2\"\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaToken() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                                .setToken(token())
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+                    .setToken(token())
 
-                ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n"
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpression() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                                .setToken(token())
-                                .setExpression(expression())
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+                    .setToken(token())
+                    .setExpression(expression())
 
-                ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n"
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionValue() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                                .setToken(token())
-                                .setExpression(expression())
-                                .setValue(Optional.of(3))
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+                    .setToken(token())
+                    .setExpression(expression())
+                    .setValue(Optional.of(3))
 
-                ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n"
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionError() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                                .setToken(token())
-                                .setExpression(expression())
-                                .setValue(
-                                        Optional.of(
-                                                SpreadsheetErrorKind.VALUE.setMessage("error message 1")
-                                        )
-                                )
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+                    .setToken(token())
+                    .setExpression(expression())
+                    .setValue(
+                        Optional.of(
+                            SpreadsheetErrorKind.VALUE.setMessage("error message 1")
+                        )
+                    )
 
-                ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      #VALUE!\n" +
-                        "        \"error message 1\"\n"
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      #VALUE!\n" +
+                "        \"error message 1\"\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyle() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                                .setToken(token())
-                                .setExpression(expression())
-                                .setValue(Optional.of(3))
-                ).setStyle(BOLD_ITALICS),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n" +
-                        "  style:\n" +
-                        "    TextStyle\n" +
-                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+                    .setToken(token())
+                    .setExpression(expression())
+                    .setValue(Optional.of(3))
+            ).setStyle(BOLD_ITALICS),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n" +
+                "  style:\n" +
+                "    TextStyle\n" +
+                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaDateTimeSymbols() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    text:\n" +
-                        "      \"=1+2\"\n" +
-                        "  dateTimeSymbols:\n" +
-                        "    DateTimeSymbols\n" +
-                        "      ampms\n" +
-                        "        am\n" +
-                        "        pm\n" +
-                        "      monthNames\n" +
-                        "        January\n" +
-                        "        February\n" +
-                        "        March\n" +
-                        "        April\n" +
-                        "        May\n" +
-                        "        June\n" +
-                        "        July\n" +
-                        "        August\n" +
-                        "        September\n" +
-                        "        October\n" +
-                        "        November\n" +
-                        "        December\n" +
-                        "      monthNameAbbreviations\n" +
-                        "        Jan.\n" +
-                        "        Feb.\n" +
-                        "        Mar.\n" +
-                        "        Apr.\n" +
-                        "        May\n" +
-                        "        Jun.\n" +
-                        "        Jul.\n" +
-                        "        Aug.\n" +
-                        "        Sep.\n" +
-                        "        Oct.\n" +
-                        "        Nov.\n" +
-                        "        Dec.\n" +
-                        "      weekDayNames\n" +
-                        "        Sunday\n" +
-                        "        Monday\n" +
-                        "        Tuesday\n" +
-                        "        Wednesday\n" +
-                        "        Thursday\n" +
-                        "        Friday\n" +
-                        "        Saturday\n" +
-                        "      weekDayNameAbbreviations\n" +
-                        "        Sun.\n" +
-                        "        Mon.\n" +
-                        "        Tue.\n" +
-                        "        Wed.\n" +
-                        "        Thu.\n" +
-                        "        Fri.\n" +
-                        "        Sat.\n"
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+            ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    text:\n" +
+                "      \"=1+2\"\n" +
+                "  dateTimeSymbols:\n" +
+                "    DateTimeSymbols\n" +
+                "      ampms\n" +
+                "        am\n" +
+                "        pm\n" +
+                "      monthNames\n" +
+                "        January\n" +
+                "        February\n" +
+                "        March\n" +
+                "        April\n" +
+                "        May\n" +
+                "        June\n" +
+                "        July\n" +
+                "        August\n" +
+                "        September\n" +
+                "        October\n" +
+                "        November\n" +
+                "        December\n" +
+                "      monthNameAbbreviations\n" +
+                "        Jan.\n" +
+                "        Feb.\n" +
+                "        Mar.\n" +
+                "        Apr.\n" +
+                "        May\n" +
+                "        Jun.\n" +
+                "        Jul.\n" +
+                "        Aug.\n" +
+                "        Sep.\n" +
+                "        Oct.\n" +
+                "        Nov.\n" +
+                "        Dec.\n" +
+                "      weekDayNames\n" +
+                "        Sunday\n" +
+                "        Monday\n" +
+                "        Tuesday\n" +
+                "        Wednesday\n" +
+                "        Thursday\n" +
+                "        Friday\n" +
+                "        Saturday\n" +
+                "      weekDayNameAbbreviations\n" +
+                "        Sun.\n" +
+                "        Mon.\n" +
+                "        Tue.\n" +
+                "        Wed.\n" +
+                "        Thu.\n" +
+                "        Fri.\n" +
+                "        Sat.\n"
         );
     }
 
@@ -2863,248 +2863,248 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testTreePrintableFormulaDecimalNumberSymbols() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                ).setDecimalNumberSymbols(this.decimalNumberSymbols(LOCALE)),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    text:\n" +
-                        "      \"=1+2\"\n" +
-                        "  decimalNumberSymbols:\n" +
-                        "    DecimalNumberSymbols\n" +
-                        "      negativeSign\n" +
-                        "        '-'\n" +
-                        "      positiveSign\n" +
-                        "        '+'\n" +
-                        "      zeroDigit\n" +
-                        "        '0'\n" +
-                        "      currencySymbol\n" +
-                        "        \"$\"\n" +
-                        "      decimalSeparator\n" +
-                        "        '.'\n" +
-                        "      exponentSymbol\n" +
-                        "        \"e\"\n" +
-                        "      groupSeparator\n" +
-                        "        ','\n" +
-                        "      infinitySymbol\n" +
-                        "        \"∞\"\n" +
-                        "      monetaryDecimalSeparator\n" +
-                        "        '.'\n" +
-                        "      nanSymbol\n" +
-                        "        \"NaN\"\n" +
-                        "      percentSymbol\n" +
-                        "        '%'\n" +
-                        "      permillSymbol\n" +
-                        "        '‰'\n"
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+            ).setDecimalNumberSymbols(this.decimalNumberSymbols(LOCALE)),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    text:\n" +
+                "      \"=1+2\"\n" +
+                "  decimalNumberSymbols:\n" +
+                "    DecimalNumberSymbols\n" +
+                "      negativeSign\n" +
+                "        '-'\n" +
+                "      positiveSign\n" +
+                "        '+'\n" +
+                "      zeroDigit\n" +
+                "        '0'\n" +
+                "      currencySymbol\n" +
+                "        \"$\"\n" +
+                "      decimalSeparator\n" +
+                "        '.'\n" +
+                "      exponentSymbol\n" +
+                "        \"e\"\n" +
+                "      groupSeparator\n" +
+                "        ','\n" +
+                "      infinitySymbol\n" +
+                "        \"∞\"\n" +
+                "      monetaryDecimalSeparator\n" +
+                "        '.'\n" +
+                "      nanSymbol\n" +
+                "        \"NaN\"\n" +
+                "      percentSymbol\n" +
+                "        '%'\n" +
+                "      permillSymbol\n" +
+                "        '‰'\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaLocale() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                        SpreadsheetSelection.parseCell("$A$1"),
-                        formula(FORMULA_TEXT)
-                ).setLocale(
-                        Optional.of(LOCALE)
-                ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    text:\n" +
-                        "      \"=1+2\"\n" +
-                        "  locale:\n" +
-                        "    en_AU (java.util.Locale)\n"
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+            ).setLocale(
+                Optional.of(LOCALE)
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    text:\n" +
+                "      \"=1+2\"\n" +
+                "  locale:\n" +
+                "    en_AU (java.util.Locale)\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleParser() {
         this.treePrintAndCheck(
-                SpreadsheetSelection.parseCell("$A$1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(BOLD_ITALICS)
-                        .setParser(this.parser())
-                        .setFormula(
-                                this.formula(FORMULA_TEXT)
-                                        .setToken(this.token())
-                                        .setExpression(this.expression())
-                                        .setValue(Optional.of(3))
-                        ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n" +
-                        "  parser:\n" +
-                        "    date-time-parse-pattern\n" +
-                        "      \"dd/mm/yyyy\"\n" +
-                        "  style:\n" +
-                        "    TextStyle\n" +
-                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+            SpreadsheetSelection.parseCell("$A$1")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(BOLD_ITALICS)
+                .setParser(this.parser())
+                .setFormula(
+                    this.formula(FORMULA_TEXT)
+                        .setToken(this.token())
+                        .setExpression(this.expression())
+                        .setValue(Optional.of(3))
+                ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n" +
+                "  parser:\n" +
+                "    date-time-parse-pattern\n" +
+                "      \"dd/mm/yyyy\"\n" +
+                "  style:\n" +
+                "    TextStyle\n" +
+                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleParserFormatter() {
         this.treePrintAndCheck(
-                SpreadsheetSelection.parseCell("$A$1")
-                        .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(BOLD_ITALICS)
-                        .setParser(this.parser())
-                        .setFormatter(this.formatter())
-                        .setFormula(
-                                this.formula(FORMULA_TEXT)
-                                        .setToken(this.token())
-                                        .setExpression(this.expression())
-                                        .setValue(Optional.of(3))
-                        ),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n" +
-                        "  formatter:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n" +
-                        "  parser:\n" +
-                        "    date-time-parse-pattern\n" +
-                        "      \"dd/mm/yyyy\"\n" +
-                        "  style:\n" +
-                        "    TextStyle\n" +
-                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+            SpreadsheetSelection.parseCell("$A$1")
+                .setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(BOLD_ITALICS)
+                .setParser(this.parser())
+                .setFormatter(this.formatter())
+                .setFormula(
+                    this.formula(FORMULA_TEXT)
+                        .setToken(this.token())
+                        .setExpression(this.expression())
+                        .setValue(Optional.of(3))
+                ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n" +
+                "  formatter:\n" +
+                "    text-format-pattern\n" +
+                "      \"@@\"\n" +
+                "  parser:\n" +
+                "    date-time-parse-pattern\n" +
+                "      \"dd/mm/yyyy\"\n" +
+                "  style:\n" +
+                "    TextStyle\n" +
+                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleFormatter() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                                SpreadsheetSelection.parseCell("$A$1"),
-                                formula(FORMULA_TEXT)
-                                        .setToken(token())
-                                        .setExpression(expression())
-                                        .setValue(Optional.of(3))
-                        ).setStyle(BOLD_ITALICS)
-                        .setFormatter(formatter()),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n" +
-                        "  formatter:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n" +
-                        "  style:\n" +
-                        "    TextStyle\n" +
-                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+            SpreadsheetCell.with(
+                    SpreadsheetSelection.parseCell("$A$1"),
+                    formula(FORMULA_TEXT)
+                        .setToken(token())
+                        .setExpression(expression())
+                        .setValue(Optional.of(3))
+                ).setStyle(BOLD_ITALICS)
+                .setFormatter(formatter()),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n" +
+                "  formatter:\n" +
+                "    text-format-pattern\n" +
+                "      \"@@\"\n" +
+                "  style:\n" +
+                "    TextStyle\n" +
+                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaTokenExpressionValueStyleFormatterFormatted() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                                SpreadsheetSelection.parseCell("$A$1"),
-                                formula(FORMULA_TEXT)
-                                        .setToken(token())
-                                        .setExpression(expression())
-                                        .setValue(Optional.of(3))
-                        ).setStyle(BOLD_ITALICS)
-                        .setFormatter(formatter())
-                        .setFormattedValue(formattedValue()),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n" +
-                        "  formatter:\n" +
-                        "    text-format-pattern\n" +
-                        "      \"@@\"\n" +
-                        "  style:\n" +
-                        "    TextStyle\n" +
-                        "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                        "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
-                        "  formattedValue:\n" +
-                        "    Text \"formattedValue-text\"\n"
+            SpreadsheetCell.with(
+                    SpreadsheetSelection.parseCell("$A$1"),
+                    formula(FORMULA_TEXT)
+                        .setToken(token())
+                        .setExpression(expression())
+                        .setValue(Optional.of(3))
+                ).setStyle(BOLD_ITALICS)
+                .setFormatter(formatter())
+                .setFormattedValue(formattedValue()),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n" +
+                "  formatter:\n" +
+                "    text-format-pattern\n" +
+                "      \"@@\"\n" +
+                "  style:\n" +
+                "    TextStyle\n" +
+                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
+                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                "  formattedValue:\n" +
+                "    Text \"formattedValue-text\"\n"
         );
     }
 
     @Test
     public void testTreePrintableFormulaValidator() {
         this.treePrintAndCheck(
-                SpreadsheetCell.with(
-                                SpreadsheetSelection.parseCell("$A$1"),
-                                formula(FORMULA_TEXT)
-                                        .setToken(token())
-                                        .setExpression(expression())
-                                        .setValue(Optional.of(3))
-                        ).setValidator(this.validator()),
-                "Cell A1\n" +
-                        "  Formula\n" +
-                        "    token:\n" +
-                        "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
-                        "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
-                        "        AdditionSpreadsheetFormula \"1+2\"\n" +
-                        "          NumberSpreadsheetFormula \"1\"\n" +
-                        "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
-                        "          NumberSpreadsheetFormula \"2\"\n" +
-                        "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
-                        "    expression:\n" +
-                        "      AddExpression\n" +
-                        "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
-                        "    value:\n" +
-                        "      3\n" +
-                        "  validator:\n" +
-                        "    validator123\n"
+            SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell("$A$1"),
+                formula(FORMULA_TEXT)
+                    .setToken(token())
+                    .setExpression(expression())
+                    .setValue(Optional.of(3))
+            ).setValidator(this.validator()),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    token:\n" +
+                "      ExpressionSpreadsheetFormula \"=1+2\"\n" +
+                "        EqualsSymbolSpreadsheetFormula \"=\" \"=\"\n" +
+                "        AdditionSpreadsheetFormula \"1+2\"\n" +
+                "          NumberSpreadsheetFormula \"1\"\n" +
+                "            DigitsSpreadsheetFormula \"1\" \"1\"\n" +
+                "          NumberSpreadsheetFormula \"2\"\n" +
+                "            DigitsSpreadsheetFormula \"2\" \"2\"\n" +
+                "    expression:\n" +
+                "      AddExpression\n" +
+                "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "        ValueExpression 2 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
+                "    value:\n" +
+                "      3\n" +
+                "  validator:\n" +
+                "    validator123\n"
         );
     }
 
@@ -3112,43 +3112,43 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private Optional<SpreadsheetFormulaParserToken> token() {
         return Optional.of(
-                SpreadsheetFormulaParserToken.expression(
+            SpreadsheetFormulaParserToken.expression(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                    SpreadsheetFormulaParserToken.addition(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                                SpreadsheetFormulaParserToken.addition(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.number(
-                                                        List.of(
-                                                                SpreadsheetFormulaParserToken.digits("1", "1")
-                                                        ),
-                                                        "1"
-                                                ),
-                                                SpreadsheetFormulaParserToken.number(
-                                                        List.of(
-                                                                SpreadsheetFormulaParserToken.digits("2", "2")
-                                                        ),
-                                                        "2"
-                                                )
-                                        ),
-                                        FORMULA_TEXT.substring(1)
-                                )
+                            SpreadsheetFormulaParserToken.number(
+                                List.of(
+                                    SpreadsheetFormulaParserToken.digits("1", "1")
+                                ),
+                                "1"
+                            ),
+                            SpreadsheetFormulaParserToken.number(
+                                List.of(
+                                    SpreadsheetFormulaParserToken.digits("2", "2")
+                                ),
+                                "2"
+                            )
                         ),
-                        FORMULA_TEXT
-                )
+                        FORMULA_TEXT.substring(1)
+                    )
+                ),
+                FORMULA_TEXT
+            )
         );
     }
 
     private Optional<Expression> expression() {
         final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
         return Optional.of(
-                Expression.add(
-                        Expression.value(
-                                kind.one()
-                        ),
-                        Expression.value(
-                                kind.create(2)
-                        )
+            Expression.add(
+                Expression.value(
+                    kind.one()
+                ),
+                Expression.value(
+                    kind.create(2)
                 )
+            )
         );
     }
 
@@ -3157,54 +3157,54 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testToStringEmptyFormula() {
         this.toStringAndCheck(
-                REFERENCE.setFormula(SpreadsheetFormula.EMPTY),
-                REFERENCE.toString()
+            REFERENCE.setFormula(SpreadsheetFormula.EMPTY),
+            REFERENCE.toString()
         );
     }
 
     @Test
     public void testToStringWithDateTimeSymbols() {
         this.toStringAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        this.formula()
-                ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
-                "A1 =1+2 ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\""
+            SpreadsheetCell.with(
+                REFERENCE,
+                this.formula()
+            ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
+            "A1 =1+2 ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\""
         );
     }
 
     @Test
     public void testToStringWithLocale() {
         this.toStringAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        this.formula()
-                ).setLocale(
-                        Optional.of(LOCALE)
-                ),
-                "A1 =1+2 en_AU"
+            SpreadsheetCell.with(
+                REFERENCE,
+                this.formula()
+            ).setLocale(
+                Optional.of(LOCALE)
+            ),
+            "A1 =1+2 en_AU"
         );
     }
 
     @Test
     public void testToStringWithFormatter() {
         this.toStringAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        this.formula()
-                ).setFormatter(this.formatter()),
-                "A1 =1+2 \"text-format-pattern @@\""
+            SpreadsheetCell.with(
+                REFERENCE,
+                this.formula()
+            ).setFormatter(this.formatter()),
+            "A1 =1+2 \"text-format-pattern @@\""
         );
     }
 
     @Test
     public void testToStringWithParser() {
         this.toStringAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        this.formula()
-                ).setParser(this.parser()),
-                "A1 =1+2 \"date-time-parse-pattern dd/mm/yyyy\""
+            SpreadsheetCell.with(
+                REFERENCE,
+                this.formula()
+            ).setParser(this.parser()),
+            "A1 =1+2 \"date-time-parse-pattern dd/mm/yyyy\""
         );
     }
 
@@ -3213,22 +3213,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final TextStyle boldAndItalics = BOLD_ITALICS;
 
         this.toStringAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        this.formula()
-                ).setStyle(boldAndItalics),
-                "A1 =1+2 {font-style=ITALIC, font-weight=bold}"
+            SpreadsheetCell.with(
+                REFERENCE,
+                this.formula()
+            ).setStyle(boldAndItalics),
+            "A1 =1+2 {font-style=ITALIC, font-weight=bold}"
         );
     }
 
     @Test
     public void testToStringWithValidator() {
         this.toStringAndCheck(
-                SpreadsheetCell.with(
-                        REFERENCE,
-                        this.formula()
-                ).setValidator(this.differentValidator()),
-                "A1 =1+2 \"different-validator-456\""
+            SpreadsheetCell.with(
+                REFERENCE,
+                this.formula()
+            ).setValidator(this.differentValidator()),
+            "A1 =1+2 \"different-validator-456\""
         );
     }
 
@@ -3239,8 +3239,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("AB123");
 
         this.referenceAndCheck(
-                cell.setFormula(SpreadsheetFormula.EMPTY),
-                cell
+            cell.setFormula(SpreadsheetFormula.EMPTY),
+            cell
         );
     }
 
@@ -3249,14 +3249,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testHasTextStyle() {
         final TextStyle textStyle = TextStyle.EMPTY.set(
-                TextStylePropertyName.TEXT_ALIGN,
-                TextAlign.LEFT
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.LEFT
         );
 
         this.textStyleAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(textStyle),
-                textStyle
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(textStyle),
+            textStyle
         );
     }
 
@@ -3265,18 +3265,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testCanBeEmptyEmpty() {
         this.isEmptyAndCheck(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                true
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+            true
         );
     }
 
     @Test
     public void testCanBeEmptyNotEmpty() {
         this.isEmptyAndCheck(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1")
-                ),
-                false
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+            ),
+            false
         );
     }
 
@@ -3288,18 +3288,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     private SpreadsheetCell createCell(final String reference) {
         return SpreadsheetCell.with(
-                SpreadsheetSelection.parseCell(reference),
-                formula("1+2")
+            SpreadsheetSelection.parseCell(reference),
+            formula("1+2")
         );
     }
 
     private SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
-                TextCursors.charSequence(text),
-                SpreadsheetFormulaParsers.valueOrExpression(
-                        Parsers.never()
-                ),
-                SPREADSHEET_PARSER_CONTEXT
+            TextCursors.charSequence(text),
+            SpreadsheetFormulaParsers.valueOrExpression(
+                Parsers.never()
+            ),
+            SPREADSHEET_PARSER_CONTEXT
         );
     }
 

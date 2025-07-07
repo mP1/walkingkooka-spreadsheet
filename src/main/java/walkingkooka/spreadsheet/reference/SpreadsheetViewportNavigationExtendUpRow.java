@@ -44,8 +44,8 @@ final class SpreadsheetViewportNavigationExtendUpRow extends SpreadsheetViewport
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.extendUpRow(
-                anchor,
-                context
+            anchor,
+            context
         );
     }
 }

@@ -33,23 +33,23 @@ public final class ConditionRightGreaterThanEqualsSpreadsheetFormulaParserTokenT
         final SpreadsheetFormulaParserToken left = number("999");
 
         this.setConditionLeftAndCheck(
-                token,
-                left,
-                SpreadsheetFormulaParserToken.greaterThanEquals(
-                        Lists.of(
-                                left,
-                                token
-                        ),
-                        left.text() + token.text()
-                )
+            token,
+            left,
+            SpreadsheetFormulaParserToken.greaterThanEquals(
+                Lists.of(
+                    left,
+                    token
+                ),
+                left.text() + token.text()
+            )
         );
     }
 
     @Override
     SymbolSpreadsheetFormulaParserToken symbolParserToken() {
         return SpreadsheetFormulaParserToken.greaterThanEqualsSymbol(
-                ">=",
-                ">="
+            ">=",
+            ">="
         );
     }
 
@@ -57,8 +57,8 @@ public final class ConditionRightGreaterThanEqualsSpreadsheetFormulaParserTokenT
     ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken createToken(final String text,
                                                                              final List<ParserToken> tokens) {
         return ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken.with(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -66,8 +66,8 @@ public final class ConditionRightGreaterThanEqualsSpreadsheetFormulaParserTokenT
     public ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken unmarshall(final JsonNode json,
                                                                                    final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormulaParserToken.unmarshallConditionRightGreaterThanEquals(
-                json,
-                context
+            json,
+            context
         );
     }
 

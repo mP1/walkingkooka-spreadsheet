@@ -72,7 +72,7 @@ public final class EscapeSpreadsheetFormatParserTokenTest extends NonSymbolSprea
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.TEXT_LITERAL
+            SpreadsheetFormatParserTokenKind.TEXT_LITERAL
         );
     }
 

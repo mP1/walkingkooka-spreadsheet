@@ -87,14 +87,14 @@ import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CO
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_STORE_CONTEXT;
 
 public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL128);
 
     private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("B2");
 
     private final static Optional<SpreadsheetCell> CELL = Optional.of(
-            CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
+        CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
     );
 
     private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT = SpreadsheetExpressionReferenceLoaders.fake();
@@ -104,19 +104,19 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DOUBLE;
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
-            .loadFromLocale(
-                    LocaleContexts.jre(Locale.forLanguageTag("EN-US"))
-            ).set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
-            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
-            .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
-            .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("general"))
-            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("$#.##").spreadsheetFormatterSelector());
+        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
+        .loadFromLocale(
+            LocaleContexts.jre(Locale.forLanguageTag("EN-US"))
+        ).set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
+        .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
+        .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
+        .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
+        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
+        .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("general"))
+        .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+        .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
+        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+        .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("$#.##").spreadsheetFormatterSelector());
 
     /**
      * Concats all the given parameters.
@@ -126,24 +126,24 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public String apply(final List<Object> objects,
                             final SpreadsheetExpressionEvaluationContext context) {
             return CharacterConstant.COMMA.toSeparatedString(
-                    objects,
-                    Object::toString
+                objects,
+                Object::toString
             );
         }
 
         @Override
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
-                    SpreadsheetExpressionFunctions.name("test-concat-1")
+                SpreadsheetExpressionFunctions.name("test-concat-1")
             );
         }
 
         @Override
         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
             return Lists.of(
-                    ExpressionFunctionParameterName.with("strings")
-                            .variable(String.class)
-                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                ExpressionFunctionParameterName.with("strings")
+                    .variable(String.class)
+                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
             );
         }
 
@@ -166,7 +166,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         @Override
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
-                    SpreadsheetExpressionFunctions.name("test-echo-2")
+                SpreadsheetExpressionFunctions.name("test-echo-2")
             );
         }
 
@@ -176,8 +176,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("number")
-                .required(ExpressionNumber.class)
-                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+            .required(ExpressionNumber.class)
+            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
 
         @Override
         public Class<ExpressionNumber> returnType() {
@@ -194,8 +194,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             Objects.requireNonNull(context, "context");
 
             return selector.evaluateValueText(
-                    this,
-                    context
+                this,
+                context
             );
         }
 
@@ -219,16 +219,16 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         @Override
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
             return SpreadsheetExpressionFunctions.infoSet(
-                    Sets.of(
-                            SpreadsheetExpressionFunctions.info(
-                                    Url.parseAbsolute("https://example.com/test/" + CONCAT),
-                                    CONCAT.name().get()
-                            ),
-                            SpreadsheetExpressionFunctions.info(
-                                    Url.parseAbsolute("https://example.com/test/" + ECHO),
-                                    ECHO.name().get()
-                            )
+                Sets.of(
+                    SpreadsheetExpressionFunctions.info(
+                        Url.parseAbsolute("https://example.com/test/" + CONCAT),
+                        CONCAT.name().get()
+                    ),
+                    SpreadsheetExpressionFunctions.info(
+                        Url.parseAbsolute("https://example.com/test/" + ECHO),
+                        ECHO.name().get()
                     )
+                )
             );
         }
 
@@ -247,22 +247,22 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Test
     public void testWithNullConverterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ConverterSpreadsheetExpressionEvaluationContext.with(
-                        null,
-                        SpreadsheetExpressionEvaluationContexts.fake()
-                )
+            NullPointerException.class,
+            () -> ConverterSpreadsheetExpressionEvaluationContext.with(
+                null,
+                SpreadsheetExpressionEvaluationContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ConverterSpreadsheetExpressionEvaluationContext.with(
-                        Converters.fake(),
-                        null
-                )
+            NullPointerException.class,
+            () -> ConverterSpreadsheetExpressionEvaluationContext.with(
+                Converters.fake(),
+                null
+            )
         );
     }
 
@@ -272,8 +272,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
         final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
         final ConverterSpreadsheetExpressionEvaluationContext created = ConverterSpreadsheetExpressionEvaluationContext.with(
-                converter,
-                context
+            converter,
+            context
         );
 
         assertSame(converter, created.converter, "converter");
@@ -285,14 +285,14 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         final ConverterSpreadsheetExpressionEvaluationContext first = ConverterSpreadsheetExpressionEvaluationContext.with(
-                Converters.fake(),
-                context
+            Converters.fake(),
+            context
         );
 
         final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
         final ConverterSpreadsheetExpressionEvaluationContext doubleWrapped = ConverterSpreadsheetExpressionEvaluationContext.with(
-                converter,
-                first
+            converter,
+            first
         );
 
         assertSame(converter, doubleWrapped.converter, "converter");
@@ -314,33 +314,33 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     @Test
     public void testEvaluateFunction() {
         this.evaluateFunctionAndCheck(
-                CONCAT,
-                Lists.of(
-                        EXPRESSION_NUMBER_KIND.create(111),
-                        EXPRESSION_NUMBER_KIND.create(222)
-                ),
-                "$111.,$222."
+            CONCAT,
+            Lists.of(
+                EXPRESSION_NUMBER_KIND.create(111),
+                EXPRESSION_NUMBER_KIND.create(222)
+            ),
+            "$111.,$222."
         );
     }
 
     @Test
     public void testEvaluateFunctionNestedFunctionNotConverted() {
         this.evaluateFunctionAndCheck(
-                CONCAT,
-                Lists.of(
-                        Expression.call(
-                                Expression.namedFunction(
-                                        ECHO.name()
-                                                .get()
-                                ),
-                                Lists.of(
-                                        Expression.value(
-                                                EXPRESSION_NUMBER_KIND.create(111)
-                                        )
-                                )
+            CONCAT,
+            Lists.of(
+                Expression.call(
+                    Expression.namedFunction(
+                        ECHO.name()
+                            .get()
+                    ),
+                    Lists.of(
+                        Expression.value(
+                            EXPRESSION_NUMBER_KIND.create(111)
                         )
-                ),
-                "$111."
+                    )
+                )
+            ),
+            "$111."
         );
     }
 
@@ -349,119 +349,119 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(111);
 
         this.evaluateExpressionAndCheck(
-                Expression.value(
-                        value
-                ),
+            Expression.value(
                 value
+            ),
+            value
         );
     }
 
     @Test
     public void testEvaluateExpression2() {
         this.evaluateExpressionAndCheck(
-                Expression.add(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                ),
-                EXPRESSION_NUMBER_KIND.create(333)
+            Expression.add(
+                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                Expression.value(EXPRESSION_NUMBER_KIND.create(222))
+            ),
+            EXPRESSION_NUMBER_KIND.create(333)
         );
     }
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted() {
         this.executeNamedFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
-                Lists.of(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                ),
-                "!!!111,!!!222"
+            CONCAT.name()
+                .get(),
+            Lists.of(
+                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                Expression.value(EXPRESSION_NUMBER_KIND.create(222))
+            ),
+            "!!!111,!!!222"
         );
     }
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted2() {
         this.executeNamedFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
-                Lists.of(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.add(
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(222)),
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(333))
-                        )
-                ),
-                "!!!111,!!!555"
+            CONCAT.name()
+                .get(),
+            Lists.of(
+                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                Expression.add(
+                    Expression.value(EXPRESSION_NUMBER_KIND.create(222)),
+                    Expression.value(EXPRESSION_NUMBER_KIND.create(333))
+                )
+            ),
+            "!!!111,!!!555"
         );
     }
 
     @Test
     public void testEvaluateExpressionFunctionParametersConverted3() {
         this.executeNamedFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
-                Lists.of(
-                        Expression.add(
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                                Expression.value(EXPRESSION_NUMBER_KIND.create(222))
-                        ),
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(444))
+            CONCAT.name()
+                .get(),
+            Lists.of(
+                Expression.add(
+                    Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                    Expression.value(EXPRESSION_NUMBER_KIND.create(222))
                 ),
-                "!!!333,!!!444"
+                Expression.value(EXPRESSION_NUMBER_KIND.create(444))
+            ),
+            "!!!333,!!!444"
         );
     }
 
     @Test
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted() {
         this.executeNamedFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
-                Lists.of(
-                        Expression.call(
-                                Expression.namedFunction(
-                                        ECHO.name()
-                                                .get()
-                                ),
-                                Lists.of(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(111))
-                                )
-                        )
-                ),
-                "!!!111"
+            CONCAT.name()
+                .get(),
+            Lists.of(
+                Expression.call(
+                    Expression.namedFunction(
+                        ECHO.name()
+                            .get()
+                    ),
+                    Lists.of(
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(111))
+                    )
+                )
+            ),
+            "!!!111"
         );
     }
 
     @Test
     public void testEvaluateExpressionFunctionParametersConvertedNestedFunctionParameterNotConverted2() {
         this.executeNamedFunctionAndCheck(
-                CONCAT.name()
-                        .get(),
-                Lists.of(
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
-                        Expression.call(
-                                Expression.namedFunction(
-                                        ECHO.name()
-                                                .get()
-                                ),
-                                Lists.of(
-                                        Expression.value(
-                                                EXPRESSION_NUMBER_KIND.create(222)
-                                        )
-                                )
-                        ),
-                        Expression.value(EXPRESSION_NUMBER_KIND.create(333)),
-                        Expression.call(
-                                Expression.namedFunction(
-                                        ECHO.name()
-                                                .get()
-                                ),
-                                Lists.of(
-                                        Expression.value(EXPRESSION_NUMBER_KIND.create(444))
-                                )
+            CONCAT.name()
+                .get(),
+            Lists.of(
+                Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
+                Expression.call(
+                    Expression.namedFunction(
+                        ECHO.name()
+                            .get()
+                    ),
+                    Lists.of(
+                        Expression.value(
+                            EXPRESSION_NUMBER_KIND.create(222)
                         )
+                    )
                 ),
-                "!!!111,!!!222,!!!333,!!!444"
+                Expression.value(EXPRESSION_NUMBER_KIND.create(333)),
+                Expression.call(
+                    Expression.namedFunction(
+                        ECHO.name()
+                            .get()
+                    ),
+                    Lists.of(
+                        Expression.value(EXPRESSION_NUMBER_KIND.create(444))
+                    )
+                )
+            ),
+            "!!!111,!!!222,!!!333,!!!444"
         );
     }
 
@@ -470,23 +470,23 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                                                   final T expected) {
         final ConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
         final ExpressionFunction<T, ExpressionEvaluationContext> function2 =
-                Cast.to(
-                        context.expressionFunction(functionName)
-                );
+            Cast.to(
+                context.expressionFunction(functionName)
+            );
 
         this.checkEquals(
-                expected,
-                function2.apply(
-                        context.prepareParameters(
-                                function2,
-                                Cast.to(parameters)
-                        ),
-                        context
+            expected,
+            function2.apply(
+                context.prepareParameters(
+                    function2,
+                    Cast.to(parameters)
                 ),
-                () -> "" + Expression.call(
-                        Expression.namedFunction(functionName),
-                        parameters
-                )
+                context
+            ),
+            () -> "" + Expression.call(
+                Expression.namedFunction(functionName),
+                parameters
+            )
         );
     }
 
@@ -509,8 +509,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 if (this.canConvert(value, type, context)) {
                     if (type == String.class) {
                         return this.successfulConversion(
-                                "!!!" + value,
-                                type
+                            "!!!" + value,
+                            type
                         );
                     }
                 }
@@ -519,76 +519,76 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         };
 
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                METADATA,
-                SpreadsheetFormatterProviders.spreadsheetFormatters(),
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                        SpreadsheetFormatterProviders.fake()
-                )
+            METADATA,
+            SpreadsheetFormatterProviders.spreadsheetFormatters(),
+            SpreadsheetParserProviders.spreadsheetParsePattern(
+                SpreadsheetFormatterProviders.fake()
+            )
         );
 
         return ConverterSpreadsheetExpressionEvaluationContext.with(
-                converter,
-                SpreadsheetExpressionEvaluationContexts.basic(
-                        CELL,
-                        SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
-                        SERVER_URL,
-                        METADATA,
-                        new FakeSpreadsheetStoreRepository() {
-                            @Override
-                            public StorageStore storage() {
-                                return this.storage;
-                            }
+            converter,
+            SpreadsheetExpressionEvaluationContexts.basic(
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SERVER_URL,
+                METADATA,
+                new FakeSpreadsheetStoreRepository() {
+                    @Override
+                    public StorageStore storage() {
+                        return this.storage;
+                    }
 
-                            private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
-                        },
-                        METADATA.spreadsheetConverterContext(
-                                CELL,
-                                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                LABEL_NAME_RESOLVER,
-                                converterProvider,
-                                LOCALE_CONTEXT,
-                                PROVIDER_CONTEXT
-                        ),
-                        ((Optional<SpreadsheetCell> cell) -> {
-                            Objects.requireNonNull(cell, "cell");
-                            throw new UnsupportedOperationException();
-                        }),
-                        new FakeFormHandlerContext<>() {
-                            @Override
-                            public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
-                                Objects.requireNonNull(reference, "reference");
-                                throw new UnsupportedOperationException();
-                            }
+                    private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
+                },
+                METADATA.spreadsheetConverterContext(
+                    CELL,
+                    SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                    LABEL_NAME_RESOLVER,
+                    converterProvider,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                ),
+                ((Optional<SpreadsheetCell> cell) -> {
+                    Objects.requireNonNull(cell, "cell");
+                    throw new UnsupportedOperationException();
+                }),
+                new FakeFormHandlerContext<>() {
+                    @Override
+                    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+                        Objects.requireNonNull(reference, "reference");
+                        throw new UnsupportedOperationException();
+                    }
 
-                            @Override
-                            public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-                                Objects.requireNonNull(fields, "fields");
-                                throw new UnsupportedOperationException();
-                            }
+                    @Override
+                    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+                        Objects.requireNonNull(fields, "fields");
+                        throw new UnsupportedOperationException();
+                    }
 
-                            @Override
-                            public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                                Objects.requireNonNull(name, "name");
-                                throw new UnsupportedOperationException();
-                            }
+                    @Override
+                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                        Objects.requireNonNull(name, "name");
+                        throw new UnsupportedOperationException();
+                    }
 
-                            @Override
-                            public Optional<EmailAddress> user() {
-                                return Optional.empty();
-                            }
+                    @Override
+                    public Optional<EmailAddress> user() {
+                        return Optional.empty();
+                    }
 
-                            @Override
-                            public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-                                Objects.requireNonNull(reference, "reference");
+                    @Override
+                    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+                        Objects.requireNonNull(reference, "reference");
 
-                                throw new UnsupportedOperationException();
-                            }
-                        },
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        LOCALE_CONTEXT,
-                        PROVIDER_CONTEXT
-                )
+                        throw new UnsupportedOperationException();
+                    }
+                },
+                EXPRESSION_FUNCTION_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
         );
     }
 
@@ -615,11 +615,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.toStringAndCheck(
-                ConverterSpreadsheetExpressionEvaluationContext.with(
-                        converter,
-                        context
-                ),
-                converter + " " + context
+            ConverterSpreadsheetExpressionEvaluationContext.with(
+                converter,
+                context
+            ),
+            converter + " " + context
         );
     }
 

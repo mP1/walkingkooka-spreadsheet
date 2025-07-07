@@ -77,56 +77,56 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     private final static String TEXT_SUFFIX = "text-literal-123";
 
     private final static SpreadsheetFormatter DATE_FORMATTER = dateTimeFormatter(
-            "\\D yyyy-mm-dd",
-            LocalDate.class
+        "\\D yyyy-mm-dd",
+        LocalDate.class
     );
 
     private final static Parser<SpreadsheetParserContext> DATE_PARSER = SpreadsheetPattern.parseDateParsePattern("\\D yyyy-mm-dd")
-            .parser();
+        .parser();
 
     private final static SpreadsheetFormatter DATE_TIME_FORMATTER = dateTimeFormatter(
-            "\"DT\" yyyy-mm-dd hh-mm",
-            LocalDateTime.class
+        "\"DT\" yyyy-mm-dd hh-mm",
+        LocalDateTime.class
     );
 
     private final static Parser<SpreadsheetParserContext> DATE_TIME_PARSER = SpreadsheetPattern.parseDateTimeParsePattern("\"DT\" dd mm yyyy hh mm ss")
-            .parser();
+        .parser();
 
     private final static SpreadsheetFormatter NUMBER_FORMATTER = formatter(
-            "\\N #.#",
-            SpreadsheetFormatParsers.numberParse(),
-            NumberSpreadsheetFormatParserToken.class,
-            SpreadsheetFormatters::number
+        "\\N #.#",
+        SpreadsheetFormatParsers.numberParse(),
+        NumberSpreadsheetFormatParserToken.class,
+        SpreadsheetFormatters::number
     );
 
     private final static Parser<SpreadsheetParserContext> NUMBER_PARSER = SpreadsheetPattern.parseNumberParsePattern("\"N\" #;\"N\" #.#")
-            .parser();
+        .parser();
 
     private final static SpreadsheetFormatter TEXT_FORMATTER = formatter(
-            "@\"" + TEXT_SUFFIX + "\"",
-            SpreadsheetFormatParsers.textFormat(),
-            TextSpreadsheetFormatParserToken.class,
-            SpreadsheetFormatters::text
+        "@\"" + TEXT_SUFFIX + "\"",
+        SpreadsheetFormatParsers.textFormat(),
+        TextSpreadsheetFormatParserToken.class,
+        SpreadsheetFormatters::text
     );
 
     private final static SpreadsheetFormatter TIME_FORMATTER = dateTimeFormatter(
-            "\\T hh-mm",
-            LocalTime.class
+        "\\T hh-mm",
+        LocalTime.class
     );
 
     private final static Parser<SpreadsheetParserContext> TIME_PARSER = SpreadsheetPattern.parseTimeParsePattern("\\T hh mm ss")
-            .parser();
+        .parser();
 
     private static SpreadsheetFormatter dateTimeFormatter(final String pattern,
                                                           final Class<? extends Temporal> type) {
         return formatter(
-                pattern,
-                SpreadsheetFormatParsers.dateTimeFormat(),
-                DateTimeSpreadsheetFormatParserToken.class,
-                (t) -> SpreadsheetFormatters.dateTime(
-                        t,
-                        type
-                )
+            pattern,
+            SpreadsheetFormatParsers.dateTimeFormat(),
+            DateTimeSpreadsheetFormatParserToken.class,
+            (t) -> SpreadsheetFormatters.dateTime(
+                t,
+                type
+            )
         );
     }
 
@@ -135,15 +135,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                                                                            final Class<T> token,
                                                                                            final Function<T, SpreadsheetFormatter> formatterFactory) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).map(t -> t instanceof SequenceParserToken ?
-                        t.cast(SequenceParserToken.class).value().get(0) :
-                        t
-                ).map(t -> t.cast(token))
-                .map(formatterFactory)
-                .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
+            .parse(
+                TextCursors.charSequence(pattern),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).map(t -> t instanceof SequenceParserToken ?
+                t.cast(SequenceParserToken.class).value().get(0) :
+                t
+            ).map(t -> t.cast(token))
+            .map(formatterFactory)
+            .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
     }
 
     // with.............................................................................................................
@@ -151,162 +151,162 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testWithNullDateFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        null,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                null,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullDateParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        null,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                null,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullDateTimeFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        null,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                null,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullDateTimeParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        null,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                null,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullNumberFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        null,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                null,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullNumberParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        null,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                null,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullTextFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        null,
-                        TIME_FORMATTER,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                null,
+                TIME_FORMATTER,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullTimeFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        null,
-                        TIME_PARSER
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                null,
+                TIME_PARSER
+            )
         );
     }
 
     @Test
     public void testWithNullTimeParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterGeneral.with(
-                        DATE_FORMATTER,
-                        DATE_PARSER,
-                        DATE_TIME_FORMATTER,
-                        DATE_TIME_PARSER,
-                        NUMBER_FORMATTER,
-                        NUMBER_PARSER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetConverterGeneral.with(
+                DATE_FORMATTER,
+                DATE_PARSER,
+                DATE_TIME_FORMATTER,
+                DATE_TIME_PARSER,
+                NUMBER_FORMATTER,
+                NUMBER_PARSER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER,
+                null
+            )
         );
     }
 
@@ -339,40 +339,40 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithNullToObject() {
         this.convertAndCheck(
-                null,
-                Object.class
+            null,
+            Object.class
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToObject() {
         this.convertAndCheck(
-                true,
-                Object.class
+            true,
+            Object.class
         );
     }
 
     @Test
     public void testConvertWithExpressionNumberToObject() {
         this.convertAndCheck(
-                EXPRESSION_NUMBER_KIND.create(123),
-                Object.class
+            EXPRESSION_NUMBER_KIND.create(123),
+            Object.class
         );
     }
 
     @Test
     public void testConvertWithIntegerTOObject() {
         this.convertAndCheck(
-                1,
-                Object.class
+            1,
+            Object.class
         );
     }
 
     @Test
     public void testConvertWithStringToObject() {
         this.convertAndCheck(
-                "abc123",
-                Object.class
+            "abc123",
+            Object.class
         );
     }
 
@@ -381,8 +381,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetCellReferenceToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.A1,
-                String.class
+            SpreadsheetSelection.A1,
+            String.class
         );
     }
 
@@ -391,8 +391,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetCellRangeToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                String.class
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            String.class
         );
     }
 
@@ -401,8 +401,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetColumnReferenceToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.parseColumn("C"),
-                String.class
+            SpreadsheetSelection.parseColumn("C"),
+            String.class
         );
     }
 
@@ -411,8 +411,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetColumnRangeReferenceToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.parseColumnRange("D:E"),
-                String.class
+            SpreadsheetSelection.parseColumnRange("D:E"),
+            String.class
         );
     }
 
@@ -421,8 +421,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetLabelNameToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.labelName("Label123"),
-                String.class
+            SpreadsheetSelection.labelName("Label123"),
+            String.class
         );
     }
 
@@ -431,8 +431,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetRowReferenceToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.parseRow("5"),
-                String.class
+            SpreadsheetSelection.parseRow("5"),
+            String.class
         );
     }
 
@@ -441,8 +441,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetRowRangeReferenceToStringFails() {
         this.convertFails(
-                SpreadsheetSelection.parseRowRange("6:7"),
-                String.class
+            SpreadsheetSelection.parseRowRange("6:7"),
+            String.class
         );
     }
 
@@ -451,16 +451,16 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithSpreadsheetErrorToExpressionNumberFails() {
         this.convertFails(
-                SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
-                ExpressionNumber.class
+            SpreadsheetErrorKind.ERROR.setMessage("Ignored"),
+            ExpressionNumber.class
         );
     }
 
     @Test
     public void testConvertWithSpreadsheetErrorToStringFails() {
         this.convertFails(
-                SpreadsheetErrorKind.DIV0.setMessage("Ignored"),
-                String.class
+            SpreadsheetErrorKind.DIV0.setMessage("Ignored"),
+            String.class
         );
     }
 
@@ -469,8 +469,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithExpressionValueToExpression() {
         this.convertAndCheck(
-                Expression.value(123),
-                Expression.class
+            Expression.value(123),
+            Expression.class
         );
     }
 
@@ -489,208 +489,208 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithBooleanTrueToDate() {
         this.convertAndBackCheck(
-                true,
-                DATE_TRUE
+            true,
+            DATE_TRUE
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToDate() {
         this.convertAndBackCheck(
-                false,
-                DATE_FALSE
+            false,
+            DATE_FALSE
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToDateTime() {
         this.convertAndBackCheck(
-                true,
-                DATE_TIME_TRUE
+            true,
+            DATE_TIME_TRUE
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToDateTime() {
         this.convertAndBackCheck(
-                false,
-                DATE_TIME_FALSE
+            false,
+            DATE_TIME_FALSE
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToByte() {
         this.convertAndCheck(
-                true,
-                (byte)1
+            true,
+            (byte) 1
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToByte() {
         this.convertAndCheck(
-                false,
-                (byte)0
+            false,
+            (byte) 0
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToShort() {
         this.convertAndCheck(
-                true,
-                (short)1
+            true,
+            (short) 1
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToShort() {
         this.convertAndCheck(
-                false,
-                (short)0
+            false,
+            (short) 0
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToInteger() {
         this.convertAndCheck(
-                true,
-                1
+            true,
+            1
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToInteger() {
         this.convertAndCheck(
-                false,
-                0
+            false,
+            0
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToLong() {
         this.convertAndCheck(
-                true,
-                1L
+            true,
+            1L
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToLong() {
         this.convertAndCheck(
-                false,
-                0L
+            false,
+            0L
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToFloat() {
         this.convertAndCheck(
-                true,
-                1f
+            true,
+            1f
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToFloat() {
         this.convertAndCheck(
-                false,
-                0f
+            false,
+            0f
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToDouble() {
         this.convertAndCheck(
-                true,
-                1.0
+            true,
+            1.0
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToDouble() {
         this.convertAndCheck(
-                false,
-                0.0
+            false,
+            0.0
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToExpressionNumber() {
         this.convertAndCheck(
-                true,
-                EXPRESSION_NUMBER_KIND.one()
+            true,
+            EXPRESSION_NUMBER_KIND.one()
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToExpressionNumber() {
         this.convertAndCheck(
-                false,
-                EXPRESSION_NUMBER_KIND.zero()
+            false,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToBigInteger() {
         this.convertAndCheck(
-                true,
-                BigInteger.ONE
+            true,
+            BigInteger.ONE
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToBigInteger() {
         this.convertAndCheck(
-                false,
-                BigInteger.ZERO
+            false,
+            BigInteger.ZERO
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToBigDecimal() {
         this.convertAndCheck(
-                true,
-                BigDecimal.ONE
+            true,
+            BigDecimal.ONE
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToBigDecimal() {
         this.convertAndCheck(
-                false,
-                BigDecimal.ZERO
+            false,
+            BigDecimal.ZERO
         );
     }
-    
+
     @Test
     public void testConvertWithBooleanTrueToString() {
         this.convertAndCheck(
-                true,
-                STRING_TRUE + TEXT_SUFFIX
+            true,
+            STRING_TRUE + TEXT_SUFFIX
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToString() {
         this.convertAndCheck(
-                false,
-                false + TEXT_SUFFIX
+            false,
+            false + TEXT_SUFFIX
         );
     }
 
     @Test
     public void testConvertWithBooleanTrueToTime() {
         this.convertAndBackCheck(
-                true,
-                TIME_TRUE
+            true,
+            TIME_TRUE
         );
     }
 
     @Test
     public void testConvertWithBooleanFalseToTime() {
         this.convertAndBackCheck(
-                false,
-                TIME_FALSE
+            false,
+            TIME_FALSE
         );
     }
 
@@ -699,9 +699,9 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithCharacterToString() {
         this.convertAndCheck(
-                'A',
-                String.class,
-                "A"
+            'A',
+            String.class,
+            "A"
         );
     }
 
@@ -710,58 +710,58 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithNullToBoolean() {
         this.convertAndCheck(
-                null,
-                Boolean.class
+            null,
+            Boolean.class
         );
     }
 
     @Test
     public void testConvertWithNullToDate() {
         this.convertAndCheck(
-                null,
-                LocalDate.class
+            null,
+            LocalDate.class
         );
     }
 
     @Test
     public void testConvertWithNullToDateTime() {
         this.convertAndCheck(
-                null,
-                LocalDateTime.class
+            null,
+            LocalDateTime.class
         );
     }
 
     @Test
     public void testConvertWithNullToTime() {
         this.convertAndCheck(
-                null,
-                LocalTime.class
+            null,
+            LocalTime.class
         );
     }
 
     @Test
     public void testConvertWithNullToExpressionNumber() {
         this.convertAndCheck(
-                null,
-                ExpressionNumber.class,
-                EXPRESSION_NUMBER_KIND.zero()
+            null,
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertWithNullToNumber() {
         this.convertAndCheck(
-                null,
-                Number.class,
-                EXPRESSION_NUMBER_KIND.zero()
+            null,
+            Number.class,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertWithNullToString() {
         this.convertAndCheck(
-                null,
-                String.class
+            null,
+            String.class
         );
     }
 
@@ -770,167 +770,167 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithDateTrueToBoolean() {
         this.convertAndCheck(
-                DATE_TRUE,
-                true
+            DATE_TRUE,
+            true
         );
     }
 
     @Test
     public void testConvertWithDateFalseToBoolean() {
         this.convertAndCheck(
-                DATE_FALSE,
-                false
+            DATE_FALSE,
+            false
         );
     }
 
     @Test
     public void testConvertWithDateToDate() {
         this.convertAndCheck(
-                LocalDate.of(2000, 12, 31)
+            LocalDate.of(2000, 12, 31)
         );
     }
 
     @Test
     public void testConvertWithDateTrueToDateTime() {
         this.convertAndBackCheck(
-                DATE_TRUE,
-                LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT)
+            DATE_TRUE,
+            LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT)
         );
     }
 
     @Test
     public void testConvertWithDateFalseToDateTime() {
         this.convertAndBackCheck(
-                DATE_FALSE,
-                LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT)
+            DATE_FALSE,
+            LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT)
         );
     }
 
     @Test
     public void testConvertWithDateTrueToByte() {
         this.convertAndCheck(
-                DATE_TRUE,
-                NUMBER_TRUE.byteValue()
+            DATE_TRUE,
+            NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToByte() {
         this.convertAndCheck(
-                DATE_FALSE,
-                NUMBER_FALSE.byteValue()
+            DATE_FALSE,
+            NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToShort() {
         this.convertAndCheck(
-                DATE_TRUE,
-                NUMBER_TRUE.shortValue()
+            DATE_TRUE,
+            NUMBER_TRUE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToShort() {
         this.convertAndCheck(
-                DATE_FALSE,
-                NUMBER_FALSE.shortValue()
+            DATE_FALSE,
+            NUMBER_FALSE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToInteger() {
         this.convertAndCheck(
-                DATE_TRUE,
-                NUMBER_TRUE.intValue()
+            DATE_TRUE,
+            NUMBER_TRUE.intValue()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToInteger() {
         this.convertAndCheck(
-                DATE_FALSE,
-                NUMBER_FALSE.intValue()
+            DATE_FALSE,
+            NUMBER_FALSE.intValue()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToLong() {
         this.convertAndCheck(
-                DATE_TRUE,
-                NUMBER_TRUE.longValue()
+            DATE_TRUE,
+            NUMBER_TRUE.longValue()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToLong() {
         this.convertAndCheck(
-                DATE_FALSE,
-                NUMBER_FALSE.longValue()
+            DATE_FALSE,
+            NUMBER_FALSE.longValue()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToFloat() {
         this.convertAndCheck(
-                DATE_TRUE,
-                NUMBER_TRUE.floatValue()
+            DATE_TRUE,
+            NUMBER_TRUE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToFloat() {
         this.convertAndCheck(
-                DATE_FALSE,
-                NUMBER_FALSE.floatValue()
+            DATE_FALSE,
+            NUMBER_FALSE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToDouble() {
         this.convertAndCheck(
-                DATE_TRUE,
-                NUMBER_TRUE.doubleValue()
+            DATE_TRUE,
+            NUMBER_TRUE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToDouble() {
         this.convertAndCheck(
-                DATE_FALSE,
-                NUMBER_FALSE.doubleValue()
+            DATE_FALSE,
+            NUMBER_FALSE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToExpressionNumber() {
         this.convertAndCheck(
-                DATE_TRUE,
-                EXPRESSION_NUMBER_KIND.one()
+            DATE_TRUE,
+            EXPRESSION_NUMBER_KIND.one()
         );
     }
 
     @Test
     public void testConvertWithDateFalseToExpressionNumber() {
         this.convertAndCheck(
-                DATE_FALSE,
-                EXPRESSION_NUMBER_KIND.zero()
+            DATE_FALSE,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertWithDateTrueToString() {
         this.convertAndCheck(
-                DATE,
-                "D 2000-12-31"
+            DATE,
+            "D 2000-12-31"
         );
     }
 
     @Test
     public void testConvertWithDateToTimeFails() {
         this.convertFails(
-                DATE,
-                LocalTime.class
+            DATE,
+            LocalTime.class
         );
     }
 
@@ -939,24 +939,24 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithDateTimeTrueToBoolean() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                true
+            DATE_TIME_TRUE,
+            true
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToBoolean() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                false
+            DATE_TIME_FALSE,
+            false
         );
     }
 
     @Test
     public void testConvertWithDateTimeToDate() {
         this.convertAndCheck(
-                DATE_TIME,
-                DATE
+            DATE_TIME,
+            DATE
         );
     }
 
@@ -968,128 +968,128 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithDateTimeTrueToByte() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                NUMBER_TRUE.byteValue()
+            DATE_TIME_TRUE,
+            NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToByte() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                NUMBER_FALSE.byteValue()
+            DATE_TIME_FALSE,
+            NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToShort() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                NUMBER_TRUE.shortValue()
+            DATE_TIME_TRUE,
+            NUMBER_TRUE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToShort() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                NUMBER_FALSE.shortValue()
+            DATE_TIME_FALSE,
+            NUMBER_FALSE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToInteger() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                NUMBER_TRUE.intValue()
+            DATE_TIME_TRUE,
+            NUMBER_TRUE.intValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToInteger() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                NUMBER_FALSE.intValue()
+            DATE_TIME_FALSE,
+            NUMBER_FALSE.intValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToLong() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                NUMBER_TRUE.longValue()
+            DATE_TIME_TRUE,
+            NUMBER_TRUE.longValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToLong() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                NUMBER_FALSE.longValue()
+            DATE_TIME_FALSE,
+            NUMBER_FALSE.longValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToFloat() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                NUMBER_TRUE.floatValue()
+            DATE_TIME_TRUE,
+            NUMBER_TRUE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToFloat() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                NUMBER_FALSE.floatValue()
+            DATE_TIME_FALSE,
+            NUMBER_FALSE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToDouble() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                NUMBER_TRUE.doubleValue()
+            DATE_TIME_TRUE,
+            NUMBER_TRUE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToDouble() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                NUMBER_FALSE.doubleValue()
+            DATE_TIME_FALSE,
+            NUMBER_FALSE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToExpressionNumber() {
         this.convertAndCheck(
-                DATE_TIME_TRUE,
-                EXPRESSION_NUMBER_KIND.one()
+            DATE_TIME_TRUE,
+            EXPRESSION_NUMBER_KIND.one()
         );
     }
 
     @Test
     public void testConvertWithDateTimeFalseToExpressionNumber() {
         this.convertAndCheck(
-                DATE_TIME_FALSE,
-                EXPRESSION_NUMBER_KIND.zero()
+            DATE_TIME_FALSE,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertWithDateTimeTrueToString() {
         this.convertAndCheck(
-                DATE_TIME,
-                "DT 2000-12-31 12-58"
+            DATE_TIME,
+            "DT 2000-12-31 12-58"
         );
     }
 
     @Test
     public void testConvertWithDateTimeToTime() {
         this.convertAndCheck(
-                DATE_TIME,
-                TIME
+            DATE_TIME,
+            TIME
         );
     }
 
@@ -1098,63 +1098,63 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithHasTextToBooleanFalseFails() {
         this.convertFails(
-                hasText("false"),
-                Boolean.class
+            hasText("false"),
+            Boolean.class
         );
     }
 
     @Test
     public void testConvertWithHasTextToBooleanTrueFails() {
         this.convertFails(
-                hasText("true"),
-                Boolean.class
+            hasText("true"),
+            Boolean.class
         );
     }
 
     @Test
     public void testConvertWithHasTextToDateFails() {
         this.convertFails(
-                hasText("D 2000-12-31"),
-                LocalDate.class
+            hasText("D 2000-12-31"),
+            LocalDate.class
         );
     }
 
     @Test
     public void testConvertWithHasTextToDateTimeFails() {
         this.convertFails(
-                hasText("DT 31 12 2000 12 58 59"),
-                LocalDateTime.class
+            hasText("DT 31 12 2000 12 58 59"),
+            LocalDateTime.class
         );
     }
 
     @Test
     public void testConvertWithHasTextToExpressionNumberFails() {
         this.convertFails(
-                hasText("N 123"),
-                ExpressionNumber.class
+            hasText("N 123"),
+            ExpressionNumber.class
         );
     }
 
     @Test
     public void testConvertWithHasTextToTimeFails() {
         this.convertFails(
-                hasText("T 12 58 59"),
-                LocalTime.class
+            hasText("T 12 58 59"),
+            LocalTime.class
         );
     }
 
     @Test
     public void testConvertWithHasTextToStringFails() {
         this.convertFails(
-                hasText("A"),
-                String.class
+            hasText("A"),
+            String.class
         );
     }
 
     private static TextNode hasText(final String text) {
         return SpreadsheetText.with(text)
-                .setColor(Optional.of(Color.BLACK))
-                .toTextNode();
+            .setColor(Optional.of(Color.BLACK))
+            .toTextNode();
     }
 
     @Test
@@ -1162,31 +1162,31 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         final String url = "https://example.com";
 
         this.convertFails(
-                Url.parseAbsolute(url),
-                String.class//,
-                //url
+            Url.parseAbsolute(url),
+            String.class//,
+            //url
         );
     }
 
     @Test
     public void testConvertWithColorToStringFails() {
         this.convertFails(
-                Color.BLACK,
-                String.class
+            Color.BLACK,
+            String.class
         );
     }
 
     @Test
     public void testConvertWithTextStyleToStringFails() {
         this.convertFails(
-                TextStyle.EMPTY.set(
-                        TextStylePropertyName.COLOR,
-                        Color.BLACK
-                ).set(
-                        TextStylePropertyName.TEXT_ALIGN,
-                        TextAlign.LEFT
-                ),
-                String.class
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+            ).set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.LEFT
+            ),
+            String.class
         );
     }
 
@@ -1195,8 +1195,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithLocaleToStringFails() {
         this.convertFails(
-                Locale.forLanguageTag("en-AU"),
-                String.class
+            Locale.forLanguageTag("en-AU"),
+            String.class
         );
     }
 
@@ -1205,144 +1205,144 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithByteTrueToBoolean() {
         this.convertAndCheck(
-                NUMBER_TRUE.byteValue(),
-                true
+            NUMBER_TRUE.byteValue(),
+            true
         );
     }
 
     @Test
     public void testConvertWithByteFalseToBoolean() {
         this.convertAndCheck(
-                NUMBER_FALSE.byteValue(),
-                false
+            NUMBER_FALSE.byteValue(),
+            false
         );
     }
 
     @Test
     public void testConvertWithShortTrueToBoolean() {
         this.convertAndCheck(
-                NUMBER_TRUE.shortValue(),
-                true
+            NUMBER_TRUE.shortValue(),
+            true
         );
     }
 
     @Test
     public void testConvertWithShortFalseToBoolean() {
         this.convertAndCheck(
-                NUMBER_FALSE.shortValue(),
-                false
+            NUMBER_FALSE.shortValue(),
+            false
         );
     }
-    
+
     @Test
     public void testConvertWithIntegerTrueToBoolean() {
         this.convertAndCheck(
-                NUMBER_TRUE.intValue(),
-                true
+            NUMBER_TRUE.intValue(),
+            true
         );
     }
 
     @Test
     public void testConvertWithIntegerFalseToBoolean() {
         this.convertAndCheck(
-                NUMBER_FALSE.intValue(),
-                false
+            NUMBER_FALSE.intValue(),
+            false
         );
     }
 
     @Test
     public void testConvertWithLongTrueToBoolean() {
         this.convertAndCheck(
-                NUMBER_TRUE.longValue(),
-                true
+            NUMBER_TRUE.longValue(),
+            true
         );
     }
 
     @Test
     public void testConvertWithLongFalseToBoolean() {
         this.convertAndCheck(
-                NUMBER_FALSE.longValue(),
-                false
+            NUMBER_FALSE.longValue(),
+            false
         );
     }
 
     @Test
     public void testConvertWithFloatTrueToBoolean() {
         this.convertAndCheck(
-                NUMBER_TRUE.floatValue(),
-                true
+            NUMBER_TRUE.floatValue(),
+            true
         );
     }
 
     @Test
     public void testConvertWithFloatFalseToBoolean() {
         this.convertAndCheck(
-                NUMBER_FALSE.floatValue(),
-                false
+            NUMBER_FALSE.floatValue(),
+            false
         );
     }
 
     @Test
     public void testConvertWithDoubleTrueToBoolean() {
         this.convertAndCheck(
-                NUMBER_TRUE.doubleValue(),
-                true
+            NUMBER_TRUE.doubleValue(),
+            true
         );
     }
 
     @Test
     public void testConvertWithDoubleFalseToBoolean() {
         this.convertAndCheck(
-                NUMBER_FALSE.doubleValue(),
-                false
+            NUMBER_FALSE.doubleValue(),
+            false
         );
     }
 
     @Test
     public void testConvertWithExpressionNumberTrueToBoolean() {
         this.convertAndCheck(
-                EXPRESSION_NUMBER_KIND.one(),
-                true
+            EXPRESSION_NUMBER_KIND.one(),
+            true
         );
     }
 
     @Test
     public void testConvertWithExpressionNumberFalseToBoolean() {
         this.convertAndCheck(
-                EXPRESSION_NUMBER_KIND.zero(),
-                false
+            EXPRESSION_NUMBER_KIND.zero(),
+            false
         );
     }
 
     @Test
     public void testConvertWithBigDecimalTrueToBoolean() {
         this.convertAndCheck(
-                BigDecimal.ONE,
-                true
+            BigDecimal.ONE,
+            true
         );
     }
 
     @Test
     public void testConvertWithBigDecimalFalseToBoolean() {
         this.convertAndCheck(
-                BigDecimal.ZERO,
-                false
+            BigDecimal.ZERO,
+            false
         );
     }
-    
+
     @Test
     public void testConvertWithBigIntegerTrueToBoolean() {
         this.convertAndCheck(
-                BigInteger.ONE,
-                true
+            BigInteger.ONE,
+            true
         );
     }
 
     @Test
     public void testConvertWithBigIntegerFalseToBoolean() {
         this.convertAndCheck(
-                BigInteger.ZERO,
-                false
+            BigInteger.ZERO,
+            false
         );
     }
 
@@ -1351,40 +1351,40 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithCharacterToString2() {
         this.convertAndCheck(
-                'A',
-                "A"
+            'A',
+            "A"
         );
     }
 
     @Test
     public void testConvertWithStringToBooleanFalse() {
         this.convertAndCheck(
-                STRING_FALSE,
-                false
+            STRING_FALSE,
+            false
         );
     }
 
     @Test
     public void testConvertWithStringToBooleanTrue() {
         this.convertAndCheck(
-                STRING_TRUE,
-                true
+            STRING_TRUE,
+            true
         );
     }
 
     @Test
     public void testConvertWithStringToCharacter() {
         this.convertAndCheck(
-                "A",
-                'A'
+            "A",
+            'A'
         );
     }
 
     @Test
     public void testConvertWithStringToDate() {
         this.convertAndCheck(
-                "D 2000-12-31",
-                DATE
+            "D 2000-12-31",
+            DATE
         );
     }
 
@@ -1393,136 +1393,136 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringToDateTime() {
         this.convertAndCheck(
-                "DT 31 12 2000 12 58 59",
-                DATE_TIME
+            "DT 31 12 2000 12 58 59",
+            DATE_TIME
         );
     }
 
     @Test
     public void testConvertWithStringToByte() {
         this.convertAndCheck(
-                "N 123",
-                (byte) 123
+            "N 123",
+            (byte) 123
         );
     }
 
     @Test
     public void testConvertWithStringToShort() {
         this.convertAndCheck(
-                "N 123",
-                (short) 123
+            "N 123",
+            (short) 123
         );
     }
 
     @Test
     public void testConvertWithStringToInteger() {
         this.convertAndCheck(
-                "N 123",
-                123
+            "N 123",
+            123
         );
     }
 
     @Test
     public void testConvertWithStringToLong() {
         this.convertAndCheck(
-                "N 123",
-                123L
+            "N 123",
+            123L
         );
     }
 
     @Test
     public void testConvertWithStringToFloat() {
         this.convertAndCheck(
-                "N 123",
-                123f
+            "N 123",
+            123f
         );
     }
 
     @Test
     public void testConvertWithStringToDouble() {
         this.convertAndCheck(
-                "N 123",
-                123f
+            "N 123",
+            123f
         );
     }
 
     @Test
     public void testConvertWithStringToBigInteger() {
         this.convertAndCheck(
-                "N 123",
-                BigInteger.valueOf(123)
+            "N 123",
+            BigInteger.valueOf(123)
         );
     }
 
     @Test
     public void testConvertWithStringToBigDecimal() {
         this.convertAndCheck(
-                "N 123",
-                BigDecimal.valueOf(123)
+            "N 123",
+            BigDecimal.valueOf(123)
         );
     }
 
     @Test
     public void testConvertWithStringToExpressionNumber() {
         this.convertAndCheck(
-                "N 123",
-                EXPRESSION_NUMBER_KIND.create(123)
+            "N 123",
+            EXPRESSION_NUMBER_KIND.create(123)
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetCellReferenceFails() {
         this.convertFails(
-                SpreadsheetSelection.parseCell("Z99"),
-                String.class
+            SpreadsheetSelection.parseCell("Z99"),
+            String.class
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetCellRangeFails() {
         this.convertFails(
-                SpreadsheetSelection.parseCellRange("Z99:Z100"),
-                String.class
+            SpreadsheetSelection.parseCellRange("Z99:Z100"),
+            String.class
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetColumnReferenceFails() {
         this.convertFails(
-                SpreadsheetSelection.parseColumn("Z"),
-                String.class
+            SpreadsheetSelection.parseColumn("Z"),
+            String.class
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetColumnRangeReferenceFails() {
         this.convertFails(
-                SpreadsheetSelection.parseColumnRange("X:Y"),
-                String.class
+            SpreadsheetSelection.parseColumnRange("X:Y"),
+            String.class
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetLabelNameFails() {
         this.convertFails(
-                SpreadsheetSelection.labelName("Label123"),
-                String.class
+            SpreadsheetSelection.labelName("Label123"),
+            String.class
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetRowReferenceFails() {
         this.convertFails(
-                SpreadsheetSelection.parseRow("123"),
-                String.class
+            SpreadsheetSelection.parseRow("123"),
+            String.class
         );
     }
 
     @Test
     public void testConvertWithStringToSpreadsheetRowRangeReferenceFails() {
         this.convertFails(
-                SpreadsheetSelection.parseRowRange("123:456"),
-                String.class
+            SpreadsheetSelection.parseRowRange("123:456"),
+            String.class
         );
     }
 
@@ -1535,216 +1535,216 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringToTime() {
         this.convertAndCheck(
-                "T 12 58 59",
-                TIME
+            "T 12 58 59",
+            TIME
         );
     }
 
     @Test
     public void testConvertWithStringTrueToByte() {
         this.convertAndCheck(
-                STRING_TRUE,
-                NUMBER_TRUE.byteValue()
+            STRING_TRUE,
+            NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToByte() {
         this.convertAndCheck(
-                STRING_FALSE,
-                NUMBER_FALSE.byteValue()
+            STRING_FALSE,
+            NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToShort() {
         this.convertAndCheck(
-                STRING_TRUE,
-                NUMBER_TRUE.shortValue()
+            STRING_TRUE,
+            NUMBER_TRUE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToShort() {
         this.convertAndCheck(
-                STRING_FALSE,
-                NUMBER_FALSE.byteValue()
+            STRING_FALSE,
+            NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToInteger() {
         this.convertAndCheck(
-                STRING_TRUE,
-                NUMBER_TRUE.intValue()
+            STRING_TRUE,
+            NUMBER_TRUE.intValue()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToInteger() {
         this.convertAndCheck(
-                STRING_FALSE,
-                NUMBER_FALSE.intValue()
+            STRING_FALSE,
+            NUMBER_FALSE.intValue()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToLong() {
         this.convertAndCheck(
-                STRING_TRUE,
-                NUMBER_TRUE.longValue()
+            STRING_TRUE,
+            NUMBER_TRUE.longValue()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToLong() {
         this.convertAndCheck(
-                STRING_FALSE,
-                NUMBER_FALSE.longValue()
+            STRING_FALSE,
+            NUMBER_FALSE.longValue()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToFloat() {
         this.convertAndCheck(
-                STRING_TRUE,
-                NUMBER_TRUE.floatValue()
+            STRING_TRUE,
+            NUMBER_TRUE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToFloat() {
         this.convertAndCheck(
-                STRING_FALSE,
-                NUMBER_FALSE.floatValue()
+            STRING_FALSE,
+            NUMBER_FALSE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToDouble() {
         this.convertAndCheck(
-                STRING_TRUE,
-                NUMBER_TRUE.doubleValue()
+            STRING_TRUE,
+            NUMBER_TRUE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToDouble() {
         this.convertAndCheck(
-                STRING_FALSE,
-                NUMBER_FALSE.doubleValue()
+            STRING_FALSE,
+            NUMBER_FALSE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToBigInteger() {
         this.convertAndCheck(
-                STRING_TRUE,
-                new BigInteger(NUMBER_TRUE.toString())
+            STRING_TRUE,
+            new BigInteger(NUMBER_TRUE.toString())
         );
     }
 
     @Test
     public void testConvertWithStringFalseToBigInteger() {
         this.convertAndCheck(
-                STRING_FALSE,
-                new BigInteger(NUMBER_FALSE.toString())
+            STRING_FALSE,
+            new BigInteger(NUMBER_FALSE.toString())
         );
     }
 
     @Test
     public void testConvertWithStringTrueToBigDecimal() {
         this.convertAndCheck(
-                STRING_TRUE,
-                new BigDecimal(NUMBER_TRUE.toString())
+            STRING_TRUE,
+            new BigDecimal(NUMBER_TRUE.toString())
         );
     }
 
     @Test
     public void testConvertWithStringFalseToBigDecimal() {
         this.convertAndCheck(
-                STRING_FALSE,
-                new BigDecimal(NUMBER_FALSE.toString())
+            STRING_FALSE,
+            new BigDecimal(NUMBER_FALSE.toString())
         );
     }
 
     @Test
     public void testConvertWithStringTrueToNumberFails() {
         this.convertFails(
-                STRING_TRUE,
-                Number.class
+            STRING_TRUE,
+            Number.class
         );
     }
 
     @Test
     public void testConvertWithStringFalseToNumberFails() {
         this.convertFails(
-                STRING_FALSE,
-                Number.class
+            STRING_FALSE,
+            Number.class
         );
     }
 
     @Test
     public void testConvertWithStringTrueToExpressionNumber() {
         this.convertAndCheck(
-                STRING_TRUE,
-                EXPRESSION_NUMBER_KIND.one()
+            STRING_TRUE,
+            EXPRESSION_NUMBER_KIND.one()
         );
     }
 
     @Test
     public void testConvertWithStringFalseToExpressionNumber() {
         this.convertAndCheck(
-                STRING_FALSE,
-                EXPRESSION_NUMBER_KIND.zero()
+            STRING_FALSE,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
     @Test
     public void testConvertWithStringTrueToDate() {
         this.convertAndCheck(
-                STRING_TRUE,
-                DATE_TRUE
+            STRING_TRUE,
+            DATE_TRUE
         );
     }
 
     @Test
     public void testConvertWithStringFalseToDate() {
         this.convertAndCheck(
-                STRING_FALSE,
-                DATE_FALSE
+            STRING_FALSE,
+            DATE_FALSE
         );
     }
 
     @Test
     public void testConvertWithStringTrueToDateTime() {
         this.convertAndCheck(
-                STRING_TRUE,
-                DATE_TIME_TRUE
+            STRING_TRUE,
+            DATE_TIME_TRUE
         );
     }
 
     @Test
     public void testConvertWithStringFalseToDateTime() {
         this.convertAndCheck(
-                STRING_FALSE,
-                DATE_TIME_FALSE
+            STRING_FALSE,
+            DATE_TIME_FALSE
         );
     }
 
     @Test
     public void testConvertWithStringTrueToTime() {
         this.convertAndCheck(
-                STRING_TRUE,
-                TIME_TRUE
+            STRING_TRUE,
+            TIME_TRUE
         );
     }
 
     @Test
     public void testConvertWithStringFalseToTime() {
         this.convertAndCheck(
-                STRING_FALSE,
-                TIME_FALSE
+            STRING_FALSE,
+            TIME_FALSE
         );
     }
 
@@ -1753,152 +1753,152 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithTimeTrueToBoolean() {
         this.convertAndCheck(
-                TIME_TRUE,
-                true
+            TIME_TRUE,
+            true
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToBoolean() {
         this.convertAndCheck(
-                TIME_FALSE,
-                false
+            TIME_FALSE,
+            false
         );
     }
 
     @Test
     public void testConvertWithTimeToDate() {
         this.convertFails(
-                TIME,
-                LocalDate.class
+            TIME,
+            LocalDate.class
         );
     }
 
     @Test
     public void testConvertWithTimeToDateTime() {
         this.convertAndCheck(
-                TIME,
-                LocalDateTime.of(DATE_FALSE, TIME)
+            TIME,
+            LocalDateTime.of(DATE_FALSE, TIME)
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToByte() {
         this.convertAndCheck(
-                TIME_TRUE,
-                NUMBER_TRUE.byteValue()
+            TIME_TRUE,
+            NUMBER_TRUE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToByte() {
         this.convertAndCheck(
-                TIME_FALSE,
-                NUMBER_FALSE.byteValue()
+            TIME_FALSE,
+            NUMBER_FALSE.byteValue()
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToShort() {
         this.convertAndCheck(
-                TIME_TRUE,
-                NUMBER_TRUE.shortValue()
+            TIME_TRUE,
+            NUMBER_TRUE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToShort() {
         this.convertAndCheck(
-                TIME_FALSE,
-                NUMBER_FALSE.shortValue()
+            TIME_FALSE,
+            NUMBER_FALSE.shortValue()
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToInteger() {
         this.convertAndCheck(
-                TIME_TRUE,
-                NUMBER_TRUE.intValue()
+            TIME_TRUE,
+            NUMBER_TRUE.intValue()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToInteger() {
         this.convertAndCheck(
-                TIME_FALSE,
-                NUMBER_FALSE.intValue()
+            TIME_FALSE,
+            NUMBER_FALSE.intValue()
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToLong() {
         this.convertAndCheck(
-                TIME_TRUE,
-                NUMBER_TRUE.longValue()
+            TIME_TRUE,
+            NUMBER_TRUE.longValue()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToLong() {
         this.convertAndCheck(
-                TIME_FALSE,
-                NUMBER_FALSE.longValue()
+            TIME_FALSE,
+            NUMBER_FALSE.longValue()
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToFloat() {
         this.convertAndCheck(
-                TIME_TRUE,
-                NUMBER_TRUE.floatValue()
+            TIME_TRUE,
+            NUMBER_TRUE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToFloat() {
         this.convertAndCheck(
-                TIME_FALSE,
-                NUMBER_FALSE.floatValue()
+            TIME_FALSE,
+            NUMBER_FALSE.floatValue()
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToDouble() {
         this.convertAndCheck(
-                TIME_TRUE,
-                NUMBER_TRUE.doubleValue()
+            TIME_TRUE,
+            NUMBER_TRUE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToDouble() {
         this.convertAndCheck(
-                TIME_FALSE,
-                NUMBER_FALSE.doubleValue()
+            TIME_FALSE,
+            NUMBER_FALSE.doubleValue()
         );
     }
 
     @Test
     public void testConvertWithTimeTrueToExpressionNumber() {
         this.convertAndCheck(
-                TIME_TRUE,
-                EXPRESSION_NUMBER_KIND.one()
+            TIME_TRUE,
+            EXPRESSION_NUMBER_KIND.one()
         );
     }
 
     @Test
     public void testConvertWithTimeFalseToExpressionNumber() {
         this.convertAndCheck(
-                TIME_FALSE,
-                EXPRESSION_NUMBER_KIND.zero()
+            TIME_FALSE,
+            EXPRESSION_NUMBER_KIND.zero()
         );
     }
-    
+
     @Test
     public void testConvertWithDateTrueToString2() {
         this.convertAndCheck(
-                DATE,
-                "D 2000-12-31"
+            DATE,
+            "D 2000-12-31"
         );
     }
 
@@ -1910,22 +1910,22 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Override
     public SpreadsheetConverterGeneral createConverter() {
         return SpreadsheetConverterGeneral.with(
-                DATE_FORMATTER,
-                DATE_PARSER,
-                DATE_TIME_FORMATTER,
-                DATE_TIME_PARSER,
-                NUMBER_FORMATTER,
-                NUMBER_PARSER,
-                TEXT_FORMATTER,
-                TIME_FORMATTER,
-                TIME_PARSER
+            DATE_FORMATTER,
+            DATE_PARSER,
+            DATE_TIME_FORMATTER,
+            DATE_TIME_PARSER,
+            NUMBER_FORMATTER,
+            NUMBER_PARSER,
+            TEXT_FORMATTER,
+            TIME_FORMATTER,
+            TIME_PARSER
         );
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
         return this.createContext(
-                SpreadsheetLabelNameResolvers.fake()
+            SpreadsheetLabelNameResolvers.fake()
         );
     }
 
@@ -1933,48 +1933,48 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         final Locale locale = Locale.ENGLISH;
 
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                SpreadsheetConverters.basic(),
-                labelNameResolver,
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        DATE_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        DateTimeContexts.basic(
-                                                DateTimeSymbols.fromDateFormatSymbols(
-                                                        new DateFormatSymbols(locale)
-                                                ),
-                                                locale,
-                                                1900,
-                                                20,
-                                                LocalDateTime::now
-                                        ),
-                                        DecimalNumberContexts.basic(
-                                                DecimalNumberSymbols.with(
-                                                        ':', // negativeSign
-                                                        ';', // positiveSign
-                                                        '0',
-                                                        "CC",
-                                                        '*', // decimalSeparator
-                                                        "EE",
-                                                        '/', // groupSeparator
-                                                        "Infinity!",
-                                                        '*',
-                                                        "Nan!",
-                                                        '^', // percentSymbol,
-                                                        '&'
-                                                ),
-                                                locale,
-                                                MathContext.DECIMAL32
-                                        )
-                                ),
-                                EXPRESSION_NUMBER_KIND
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            SpreadsheetConverters.basic(),
+            labelNameResolver,
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                        DATE_OFFSET, // dateOffset
+                        Converters.fake(),
+                        DateTimeContexts.basic(
+                            DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(locale)
+                            ),
+                            locale,
+                            1900,
+                            20,
+                            LocalDateTime::now
                         ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
+                        DecimalNumberContexts.basic(
+                            DecimalNumberSymbols.with(
+                                ':', // negativeSign
+                                ';', // positiveSign
+                                '0',
+                                "CC",
+                                '*', // decimalSeparator
+                                "EE",
+                                '/', // groupSeparator
+                                "Infinity!",
+                                '*',
+                                "Nan!",
+                                '^', // percentSymbol,
+                                '&'
+                            ),
+                            locale,
+                            MathContext.DECIMAL32
+                        )
+                    ),
+                    EXPRESSION_NUMBER_KIND
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            )
         );
     }
 
@@ -1989,8 +1989,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createConverter(),
-                SpreadsheetConverterGeneral.class.getSimpleName()
+            this.createConverter(),
+            SpreadsheetConverterGeneral.class.getSimpleName()
         );
     }
 

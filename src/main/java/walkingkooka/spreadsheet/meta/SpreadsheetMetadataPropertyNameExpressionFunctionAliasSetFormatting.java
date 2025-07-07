@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting 
      */
     private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting() {
         super(
-                "formattingFunctions"
+            "formattingFunctions"
         );
     }
 

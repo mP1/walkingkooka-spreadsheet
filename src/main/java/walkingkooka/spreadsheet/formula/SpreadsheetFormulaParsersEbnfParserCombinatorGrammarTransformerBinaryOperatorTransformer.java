@@ -50,7 +50,7 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinar
     @Override
     public int priority(final ParserToken token) {
         return token.cast(SpreadsheetFormulaParserToken.class)
-                .operatorPriority();
+            .operatorPriority();
     }
 
     @Override
@@ -58,7 +58,7 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinar
                                      final String text,
                                      final ParserToken parent) {
         return parent.cast(SpreadsheetFormulaParserToken.class)
-                .binaryOperand(tokens, text);
+            .binaryOperand(tokens, text);
     }
 
     @Override

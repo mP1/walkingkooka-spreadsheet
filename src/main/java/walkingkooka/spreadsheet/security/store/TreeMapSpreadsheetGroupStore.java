@@ -87,8 +87,8 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     public Set<GroupId> ids(final int offset,
                             final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -96,8 +96,8 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     public List<Group> values(final int offset,
                               final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -105,8 +105,8 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     public List<Group> between(final GroupId from,
                                final GroupId to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

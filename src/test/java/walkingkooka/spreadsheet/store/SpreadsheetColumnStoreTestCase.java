@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumnStore> implements SpreadsheetColumnStoreTesting<S>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     final static SpreadsheetColumnReference REFERENCE = SpreadsheetSelection.parseColumn("B");
 
@@ -60,10 +60,10 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         this.checkEquals(column, store.save(column), "incorrect key returned");
 
         assertSame(
-                column,
-                store.loadOrFail(
-                        reference.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
-                )
+            column,
+            store.loadOrFail(
+                reference.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)
+            )
         );
     }
 
@@ -114,9 +114,9 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(c);
 
         this.idsAndCheck(store,
-                0,
-                3,
-                a.reference(), b.reference(), c.reference());
+            0,
+            3,
+            a.reference(), b.reference(), c.reference());
     }
 
     @Test
@@ -134,9 +134,9 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(d);
 
         this.idsAndCheck(store,
-                1,
-                2,
-                b.reference(), c.reference());
+            1,
+            2,
+            b.reference(), c.reference());
     }
 
     @Test
@@ -152,12 +152,12 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(c);
 
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                a,
-                b,
-                c
+            store,
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -176,11 +176,11 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(d);
 
         this.valuesAndCheck(
-                store,
-                1,
-                2,
-                b,
-                c
+            store,
+            1,
+            2,
+            b,
+            c
         );
     }
 
@@ -196,7 +196,7 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
 
     private SpreadsheetColumn column(final String text) {
         return this.column(
-                SpreadsheetSelection.parseColumn(text)
+            SpreadsheetSelection.parseColumn(text)
         );
     }
 

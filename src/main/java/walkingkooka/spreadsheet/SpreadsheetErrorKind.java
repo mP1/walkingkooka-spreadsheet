@@ -149,17 +149,17 @@ public enum SpreadsheetErrorKind implements HasText {
 
     public SpreadsheetError setMessage(final String message) {
         return this.setMessageAndValue(
-                message,
-                null
+            message,
+            null
         );
     }
 
     public SpreadsheetError setMessageAndValue(final String message,
                                                final Object value) {
         return SpreadsheetError.with(
-                this,
-                message,
-                Optional.ofNullable(value)
+            this,
+            message,
+            Optional.ofNullable(value)
         );
     }
 
@@ -277,7 +277,7 @@ public enum SpreadsheetErrorKind implements HasText {
 
             // #NUM! 	A formula has invalid numeric data for the type of operation
             if (cause instanceof NullPointerException ||
-                    cause instanceof IllegalArgumentException) {
+                cause instanceof IllegalArgumentException) {
                 kind = VALUE;
                 break;
             }
@@ -288,7 +288,7 @@ public enum SpreadsheetErrorKind implements HasText {
 
                 final UnknownExpressionFunctionException unknown = (UnknownExpressionFunctionException) cause;
                 error = SpreadsheetError.functionNotFound(
-                        unknown.name()
+                    unknown.name()
                 );
                 break;
             }
@@ -297,18 +297,18 @@ public enum SpreadsheetErrorKind implements HasText {
         } while (false);
 
         return null != error ?
-                error :
-                kind.setMessageAndValue(
-                        CharSequences.nullToEmpty(message).toString(),
-                        value
-                );
+            error :
+            kind.setMessageAndValue(
+                CharSequences.nullToEmpty(message).toString(),
+                value
+            );
     }
 
     public static SpreadsheetErrorKind withValue(final int value) {
         return Arrays.stream(values())
-                .filter(k -> k.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown value=" + value));
+            .filter(k -> k.value == value)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Unknown value=" + value));
     }
 
     /**

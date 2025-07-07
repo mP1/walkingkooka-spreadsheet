@@ -72,14 +72,14 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
      * A {@link Set} holding the default {@link SpreadsheetColorName color names}.
      */
     public final static Set<SpreadsheetColorName> DEFAULTS = Sets.of(
-            BLACK,
-            WHITE,
-            RED,
-            GREEN,
-            BLUE,
-            YELLOW,
-            MAGENTA,
-            CYAN
+        BLACK,
+        WHITE,
+        RED,
+        GREEN,
+        BLUE,
+        YELLOW,
+        MAGENTA,
+        CYAN
     );
 
     /**
@@ -87,8 +87,8 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
      */
     public static SpreadsheetColorName with(final String name) {
         LETTER.failIfNullOrEmptyOrFalse(
-                SpreadsheetColorName.class.getSimpleName(),
-                name
+            SpreadsheetColorName.class.getSimpleName(),
+            name
         );
 
         final SpreadsheetColorName spreadsheetColorName;
@@ -160,8 +160,8 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetColorName &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetColorName &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetColorName other) {

@@ -38,8 +38,8 @@ import java.util.Objects;
  * Holds a {@link ParserToken} typically a date/dateime/time and possibly color or conditions.
  */
 public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
-        implements HasConverter<SpreadsheetConverterContext>,
-        HasParser<SpreadsheetParserContext> {
+    implements HasConverter<SpreadsheetConverterContext>,
+    HasParser<SpreadsheetParserContext> {
 
     // ctor.............................................................................................................
 
@@ -61,23 +61,22 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
      */
     public final SpreadsheetParserSelector spreadsheetParserSelector() {
         final String parserName = CaseKind.CAMEL.change(
-                this.getClass().getSimpleName()
-                        .substring("Spreadsheet".length()),
-                CaseKind.KEBAB
+            this.getClass().getSimpleName()
+                .substring("Spreadsheet".length()),
+            CaseKind.KEBAB
         );
 
         return SpreadsheetParserSelector.with(
-                SpreadsheetParserName.with(parserName),
-                this.text()
+            SpreadsheetParserName.with(parserName),
+            this.text()
         );
     }
 
     // HasFormatter.....................................................................................................
 
-    @Override
-    final SpreadsheetPatternSpreadsheetFormatter createFormatter() {
+    @Override final SpreadsheetPatternSpreadsheetFormatter createFormatter() {
         return this.toFormat()
-                .formatter();
+            .formatter();
     }
 
     // HasConverter.....................................................................................................

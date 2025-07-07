@@ -28,7 +28,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
-        JsonNodeConverterContextDelegator {
+    JsonNodeConverterContextDelegator {
 
     @Override
     default JsonNodeConverterContext jsonNodeConverterContext() {
@@ -38,25 +38,25 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     @Override
     default Converter<SpreadsheetConverterContext> converter() {
         return this.spreadsheetConverterContext()
-                .converter();
+            .converter();
     }
 
     @Override
     default SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetConverterContext()
-                .spreadsheetMetadata();
+            .spreadsheetMetadata();
     }
 
     @Override
     default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetConverterContext()
-                .resolveLabel(labelName);
+            .resolveLabel(labelName);
     }
 
     @Override
     default SpreadsheetExpressionReference validationReference() {
         return this.spreadsheetConverterContext()
-                .validationReference();
+            .validationReference();
     }
 
     SpreadsheetConverterContext spreadsheetConverterContext();

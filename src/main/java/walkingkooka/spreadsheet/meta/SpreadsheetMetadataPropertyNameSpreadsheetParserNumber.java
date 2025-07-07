@@ -44,8 +44,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumber extends Sprea
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParserNumber() {
         super(
-                "numberParser",
-                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
+            "numberParser",
+            SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
         );
     }
 
@@ -58,20 +58,20 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumber extends Sprea
     @Override
     Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale) {
         final SpreadsheetNumberParsePattern number = SpreadsheetPattern.decimalFormat(
-                (DecimalFormat) DecimalFormat.getInstance(locale)
+            (DecimalFormat) DecimalFormat.getInstance(locale)
         );
         final SpreadsheetNumberParsePattern integer = SpreadsheetPattern.decimalFormat(
-                (DecimalFormat) DecimalFormat.getIntegerInstance(locale)
+            (DecimalFormat) DecimalFormat.getIntegerInstance(locale)
         );
 
         return Optional.of(
-                number.equals(integer) ?
-                        number :
-                        SpreadsheetPattern.parseNumberParsePattern(
-                                number.text() +
-                                        SpreadsheetPattern.SEPARATOR.string() +
-                                        integer.text()
-                        )
+            number.equals(integer) ?
+                number :
+                SpreadsheetPattern.parseNumberParsePattern(
+                    number.text() +
+                        SpreadsheetPattern.SEPARATOR.string() +
+                        integer.text()
+                )
         );
     }
 }

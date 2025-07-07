@@ -37,8 +37,8 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     public SpreadsheetFormatterSelector createPluginSelectorLike(final SpreadsheetFormatterName name,
                                                                  final String text) {
         return SpreadsheetFormatterSelector.with(
-                name,
-                text
+            name,
+            text
         );
     }
 
@@ -53,11 +53,11 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         final String patternText = "@@";
 
         this.parseStringAndCheck(
-                name + " " + patternText,
-                SpreadsheetFormatterSelector.with(
-                        SpreadsheetFormatterName.with(name),
-                        patternText
-                )
+            name + " " + patternText,
+            SpreadsheetFormatterSelector.with(
+                SpreadsheetFormatterName.with(name),
+                patternText
+            )
         );
     }
 
@@ -71,11 +71,11 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     @Test
     public void testSpreadsheetFormatPatternWithTextFormatPatternInvalidPatternFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetFormatterSelector.with(
-                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                        ""
-                ).spreadsheetFormatPattern()
+            IllegalArgumentException.class,
+            () -> SpreadsheetFormatterSelector.with(
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                ""
+            ).spreadsheetFormatPattern()
         );
     }
 
@@ -84,60 +84,60 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         final String selector = "date-format-pattern yyyy/!";
 
         final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> SpreadsheetFormatterSelector.parse(selector)
-                        .spreadsheetFormatPattern()
+            InvalidCharacterException.class,
+            () -> SpreadsheetFormatterSelector.parse(selector)
+                .spreadsheetFormatPattern()
         );
 
         this.checkEquals(
-                "Invalid character '!' at 25 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}",
-                thrown.getMessage(),
-                "message"
+            "Invalid character '!' at 25 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}",
+            thrown.getMessage(),
+            "message"
         );
 
         this.checkEquals(
-                '!',
-                selector.charAt(25)
+            '!',
+            selector.charAt(25)
         );
     }
 
     @Test
     public void testSpreadsheetFormatPatternWithDateFormatPattern() {
         this.spreadsheetFormatPatternAndCheck(
-                "date-format-pattern dd/mm/yyyy",
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
+            "date-format-pattern dd/mm/yyyy",
+            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
         );
     }
 
     @Test
     public void testSpreadsheetFormatPatternWithDateFormatWithoutPattern() {
         this.spreadsheetFormatPatternAndCheck(
-                "date-format"
+            "date-format"
         );
     }
 
     private void spreadsheetFormatPatternAndCheck(final String text) {
         this.spreadsheetFormatPatternAndCheck(
-                text,
-                Optional.empty()
+            text,
+            Optional.empty()
         );
     }
 
     private void spreadsheetFormatPatternAndCheck(final String text,
                                                   final SpreadsheetFormatPattern expected) {
         this.spreadsheetFormatPatternAndCheck(
-                text,
-                Optional.of(expected)
+            text,
+            Optional.of(expected)
         );
     }
 
     private void spreadsheetFormatPatternAndCheck(final String text,
                                                   final Optional<SpreadsheetFormatPattern> expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetFormatterSelector.parse(text)
-                        .spreadsheetFormatPattern(),
-                () -> "spreadsheetFormatPattern " + CharSequences.quote(text)
+            expected,
+            SpreadsheetFormatterSelector.parse(text)
+                .spreadsheetFormatPattern(),
+            () -> "spreadsheetFormatPattern " + CharSequences.quote(text)
         );
     }
 
@@ -158,16 +158,16 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"text-format-pattern @@\""
+            this.createJsonNodeMarshallingValue(),
+            "\"text-format-pattern @@\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"text-format-pattern @@\"",
-                this.createJsonNodeMarshallingValue()
+            "\"text-format-pattern @@\"",
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -175,16 +175,16 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     public SpreadsheetFormatterSelector unmarshall(final JsonNode json,
                                                    final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatterSelector.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
     @Override
     public SpreadsheetFormatterSelector createJsonNodeMarshallingValue() {
         return SpreadsheetFormatterSelector.with(
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
-                "@@"
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            "@@"
         );
     }
 

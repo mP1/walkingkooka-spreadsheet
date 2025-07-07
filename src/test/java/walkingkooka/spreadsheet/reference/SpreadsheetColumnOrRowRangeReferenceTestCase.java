@@ -25,9 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends SpreadsheetSelection & Comparable<S>,
-        R extends SpreadsheetSelection & Comparable<R>>
-        extends SpreadsheetSelectionTestCase<S>
-        implements ComparableTesting2<S> {
+    R extends SpreadsheetSelection & Comparable<R>>
+    extends SpreadsheetSelectionTestCase<S>
+    implements ComparableTesting2<S> {
 
     SpreadsheetColumnOrRowRangeReferenceTestCase() {
         super();
@@ -44,8 +44,8 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     public final void testAddZero() {
         final S selection = this.createSelection();
         assertSame(
-                selection,
-                selection.add(0)
+            selection,
+            selection.add(0)
         );
     }
 
@@ -55,8 +55,8 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     public final void testAddSaturatedZero() {
         final S selection = this.createSelection();
         assertSame(
-                selection,
-                selection.addSaturated(0)
+            selection,
+            selection.addSaturated(0)
         );
     }
 
@@ -65,8 +65,8 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     @Test
     public final void testAddIfRelativeZero() {
         this.addIfRelativeAndCheck(
-                this.createSelection(),
-                0
+            this.createSelection(),
+            0
         );
     }
 
@@ -89,7 +89,7 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     @Test
     public final void testToRange() {
         this.toRangeAndCheck(
-                this.createSelection()
+            this.createSelection()
         );
     }
 
@@ -98,8 +98,8 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     @Test
     public final void testToParserTokenFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().toParserToken()
+            UnsupportedOperationException.class,
+            () -> this.createSelection().toParserToken()
         );
     }
 

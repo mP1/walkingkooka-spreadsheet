@@ -28,8 +28,8 @@ public final class BetweenSymbolSpreadsheetFormulaParserToken extends SymbolSpre
     static BetweenSymbolSpreadsheetFormulaParserToken with(final String value,
                                                            final String text) {
         return new BetweenSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

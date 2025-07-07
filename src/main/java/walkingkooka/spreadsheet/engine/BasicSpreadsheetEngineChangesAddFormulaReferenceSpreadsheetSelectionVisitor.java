@@ -32,8 +32,8 @@ final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelection
     static BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor with(final SpreadsheetCellReference cell,
                                                                                             final SpreadsheetStoreRepository repository) {
         return new BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor(
-                cell,
-                repository
+            cell,
+            repository
         );
     }
 
@@ -48,32 +48,32 @@ final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelection
     @Override
     protected void visit(final SpreadsheetCellReference formulaCell) {
         this.repository.cellReferences()
-                .addCell(
-                        ReferenceAndSpreadsheetCellReference.with(
-                                formulaCell,
-                                this.cell
-                        )
-                );
+            .addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                    formulaCell,
+                    this.cell
+                )
+            );
     }
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.repository.labelReferences()
-                .addCell(
-                        ReferenceAndSpreadsheetCellReference.with(
-                                label,
-                                this.cell
-                        )
-                );
+            .addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                    label,
+                    this.cell
+                )
+            );
     }
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference cellRange) {
         this.repository.rangeToCells()
-                .addValue(
-                        cellRange,
-                        this.cell
-                );
+            .addValue(
+                cellRange,
+                this.cell
+            );
     }
 
     /**

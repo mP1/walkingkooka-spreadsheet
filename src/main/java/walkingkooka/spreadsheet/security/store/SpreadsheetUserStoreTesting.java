@@ -26,7 +26,7 @@ import walkingkooka.store.StoreTesting;
 import java.util.Optional;
 
 public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends StoreTesting<S, UserId, User>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     // StoreTesting...........................................................
 

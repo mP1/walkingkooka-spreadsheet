@@ -94,9 +94,9 @@ enum BasicSpreadsheetEngineChangesCacheStatusCell implements BasicSpreadsheetEng
         this.isReference = name.startsWith("REFERENCE_");
 
         this.isMissingValue = this.containsOrEqual(name, "UNLOAD") ||
-                // LOADING must have a cell but it requires being evaluated.
-                this.containsOrEqual(name, "SAVING") ||
-                this.containsOrEqual(name, "DELETE");
+            // LOADING must have a cell but it requires being evaluated.
+            this.containsOrEqual(name, "SAVING") ||
+            this.containsOrEqual(name, "DELETE");
 
         this.isDeleted = this.containsOrEqual(name, "DELETE");
 
@@ -144,25 +144,25 @@ enum BasicSpreadsheetEngineChangesCacheStatusCell implements BasicSpreadsheetEng
     @Override
     public boolean isRefreshable() {
         return this == UNLOADED ||
-                this == LOADING ||
-                this == LOADED ||
-                this == SAVING ||
-                this == SAVED ||
-                this == DELETED ||
-                this == REFERENCE_UNLOADED ||
-                this == REFERENCE_LOADING ||
-                this == REFERENCE_LOADED ||
-                this == REFERENCE_SAVING ||
-                this == REFERENCE_SAVED ||
-                this == REFERENCE_DELETED;
+            this == LOADING ||
+            this == LOADED ||
+            this == SAVING ||
+            this == SAVED ||
+            this == DELETED ||
+            this == REFERENCE_UNLOADED ||
+            this == REFERENCE_LOADING ||
+            this == REFERENCE_LOADED ||
+            this == REFERENCE_SAVING ||
+            this == REFERENCE_SAVED ||
+            this == REFERENCE_DELETED;
     }
 
     @Override
     public boolean isReferenceRefreshable() {
         return false == this.isUnloaded() &&
-                false == this.isLoading() &&
-                false == this.isSaving() &&
-                this.isRefreshable();
+            false == this.isLoading() &&
+            false == this.isSaving() &&
+            this.isRefreshable();
     }
 
     @Override
@@ -175,36 +175,36 @@ enum BasicSpreadsheetEngineChangesCacheStatusCell implements BasicSpreadsheetEng
     @Override
     public BasicSpreadsheetEngineChangesCacheStatusCell loading() {
         return this.isReference ?
-                REFERENCE_LOADING :
-                LOADING;
+            REFERENCE_LOADING :
+            LOADING;
     }
 
     @Override
     public BasicSpreadsheetEngineChangesCacheStatusCell loaded() {
         return this.isReference ?
-                REFERENCE_LOADED :
-                LOADED;
+            REFERENCE_LOADED :
+            LOADED;
     }
 
     @Override
     public final BasicSpreadsheetEngineChangesCacheStatusCell saved() {
         return this.isReference ?
-                REFERENCE_SAVED :
-                SAVED;
+            REFERENCE_SAVED :
+            SAVED;
     }
 
     @Override
     public final BasicSpreadsheetEngineChangesCacheStatusCell deleted() {
         return this.isReference ?
-                REFERENCE_DELETED :
-                DELETED;
+            REFERENCE_DELETED :
+            DELETED;
     }
 
     @Override
     public final BasicSpreadsheetEngineChangesCacheStatusCell forceReferencesRefresh() {
         final BasicSpreadsheetEngineChangesCacheStatusCell newStatus;
 
-        switch(this) {
+        switch (this) {
             case UNLOADED:
             case LOADING:
                 newStatus = this;
@@ -254,7 +254,7 @@ enum BasicSpreadsheetEngineChangesCacheStatusCell implements BasicSpreadsheetEng
     public final BasicSpreadsheetEngineChangesCacheStatusCell referencesRefreshed() {
         final BasicSpreadsheetEngineChangesCacheStatusCell newStatus;
 
-        switch(this) {
+        switch (this) {
             case LOADED:
                 newStatus = LOADED_REFERENCES_REFRESHED;
                 break;
@@ -282,13 +282,13 @@ enum BasicSpreadsheetEngineChangesCacheStatusCell implements BasicSpreadsheetEng
 
     @Override
     public BasicSpreadsheetEngineChangesCacheStatusCell toNonReference() {
-        if(null == this.nonReference) {
+        if (null == this.nonReference) {
             this.nonReference = valueOf(
-                    this.name()
-                            .replace(
-                                    "REFERENCE_",
-                                    ""
-                            )
+                this.name()
+                    .replace(
+                        "REFERENCE_",
+                        ""
+                    )
             );
         }
         return this.nonReference;

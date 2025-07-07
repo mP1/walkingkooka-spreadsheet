@@ -69,13 +69,13 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     @Test
     public void testWithUnknownParserName() {
         AliasesSpreadsheetParserProvider.with(
-                SpreadsheetParserAliasSet.parse("unknown-parser404"),
-                new FakeSpreadsheetParserProvider() {
-                    @Override
-                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.parse("https://example.com/parser111 parser111");
-                    }
+            SpreadsheetParserAliasSet.parse("unknown-parser404"),
+            new FakeSpreadsheetParserProvider() {
+                @Override
+                public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                    return SpreadsheetParserInfoSet.parse("https://example.com/parser111 parser111");
                 }
+            }
         );
     }
 
@@ -84,57 +84,57 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     @Test
     public void testSpreadsheetParserNameWithName() {
         this.spreadsheetParserAndCheck(
-                NAME1,
-                Lists.empty(),
-                CONTEXT,
-                PARSER1
+            NAME1,
+            Lists.empty(),
+            CONTEXT,
+            PARSER1
         );
     }
 
     @Test
     public void testSpreadsheetParserSelectorWithName() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserSelector.parse(NAME1 + ""),
-                CONTEXT,
-                PARSER1
+            SpreadsheetParserSelector.parse(NAME1 + ""),
+            CONTEXT,
+            PARSER1
         );
     }
 
     @Test
     public void testSpreadsheetParserNameWithAlias() {
         this.spreadsheetParserAndCheck(
-                ALIAS2,
-                Lists.empty(),
-                CONTEXT,
-                PARSER2
+            ALIAS2,
+            Lists.empty(),
+            CONTEXT,
+            PARSER2
         );
     }
 
     @Test
     public void testSpreadsheetParserSelectorWithAlias() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserSelector.parse(ALIAS2 + ""),
-                CONTEXT,
-                PARSER2
+            SpreadsheetParserSelector.parse(ALIAS2 + ""),
+            CONTEXT,
+            PARSER2
         );
     }
 
     @Test
     public void testSpreadsheetParserNameWithSelector() {
         this.spreadsheetParserAndCheck(
-                NAME4,
-                Lists.empty(),
-                CONTEXT,
-                PARSER3
+            NAME4,
+            Lists.empty(),
+            CONTEXT,
+            PARSER3
         );
     }
 
     @Test
     public void testSpreadsheetParserSelectorWithSelector() {
         this.spreadsheetParserAndCheck(
-                SpreadsheetParserSelector.parse(NAME4 + ""),
-                CONTEXT,
-                PARSER3
+            SpreadsheetParserSelector.parse(NAME4 + ""),
+            CONTEXT,
+            PARSER3
         );
     }
 
@@ -143,21 +143,21 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     @Test
     public void testSpreadsheetParserNextTokenWithUnknown() {
         this.spreadsheetParserNextTokenAndCheck(
-                AliasesSpreadsheetParserProvider.with(
-                        SpreadsheetParserAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetParserProvider() {
+            AliasesSpreadsheetParserProvider.with(
+                SpreadsheetParserAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetParserProvider() {
 
-                            @Override
-                            public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                                return SpreadsheetParserInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                SpreadsheetParserSelector.parse("unknown444")
+                    @Override
+                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                        return SpreadsheetParserInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetParserSelector.parse("unknown444")
         );
     }
 
@@ -165,34 +165,34 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     public void testSpreadsheetParserNextTokenWithName() {
         final SpreadsheetParserSelector selector = SpreadsheetParserSelector.parse(NAME1_STRING + "(999)");
         final SpreadsheetParserSelectorToken token = SpreadsheetParserSelectorToken.with(
-                "label1",
-                "text1",
-                Lists.empty()
+            "label1",
+            "text1",
+            Lists.empty()
         );
 
         this.spreadsheetParserNextTokenAndCheck(
-                AliasesSpreadsheetParserProvider.with(
-                        SpreadsheetParserAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetParserProvider() {
+            AliasesSpreadsheetParserProvider.with(
+                SpreadsheetParserAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetParserProvider() {
 
-                            @Override
-                            public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector s) {
-                                checkEquals(selector, s, "selector");
-                                return Optional.of(token);
-                            }
+                    @Override
+                    public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector s) {
+                        checkEquals(selector, s, "selector");
+                        return Optional.of(token);
+                    }
 
-                            @Override
-                            public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                                return SpreadsheetParserInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                selector,
-                token
+                    @Override
+                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                        return SpreadsheetParserInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            selector,
+            token
         );
     }
 
@@ -200,34 +200,34 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     public void testSpreadsheetParserNextTokenWithAlias() {
         final String selectorParams = "(999)";
         final SpreadsheetParserSelectorToken token = SpreadsheetParserSelectorToken.with(
-                "label1",
-                "text1",
-                Lists.empty()
+            "label1",
+            "text1",
+            Lists.empty()
         );
 
         this.spreadsheetParserNextTokenAndCheck(
-                AliasesSpreadsheetParserProvider.with(
-                        SpreadsheetParserAliasSet.parse(ALIAS2 + " " + NAME2_STRING),
-                        new FakeSpreadsheetParserProvider() {
+            AliasesSpreadsheetParserProvider.with(
+                SpreadsheetParserAliasSet.parse(ALIAS2 + " " + NAME2_STRING),
+                new FakeSpreadsheetParserProvider() {
 
-                            @Override
-                            public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector s) {
-                                checkEquals(SpreadsheetParserSelector.parse(NAME2_STRING + selectorParams), s, "selector");
-                                return Optional.of(token);
-                            }
+                    @Override
+                    public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector s) {
+                        checkEquals(SpreadsheetParserSelector.parse(NAME2_STRING + selectorParams), s, "selector");
+                        return Optional.of(token);
+                    }
 
-                            @Override
-                            public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                                return SpreadsheetParserInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                SpreadsheetParserSelector.parse(ALIAS2 + selectorParams),
-                token
+                    @Override
+                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                        return SpreadsheetParserInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetParserSelector.parse(ALIAS2 + selectorParams),
+            token
         );
     }
 
@@ -236,21 +236,21 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     @Test
     public void testSpreadsheetFormatterSelectorWithUnknown() {
         this.spreadsheetFormatterSelectorAndCheck(
-                AliasesSpreadsheetParserProvider.with(
-                        SpreadsheetParserAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetParserProvider() {
+            AliasesSpreadsheetParserProvider.with(
+                SpreadsheetParserAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetParserProvider() {
 
-                            @Override
-                            public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                                return SpreadsheetParserInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
-                        }
-                ),
-                SpreadsheetParserSelector.parse("unknown404")
+                    @Override
+                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                        return SpreadsheetParserInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetParserSelector.parse("unknown404")
         );
     }
 
@@ -259,31 +259,31 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
         final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("formatter123");
 
         this.spreadsheetFormatterSelectorAndCheck(
-                AliasesSpreadsheetParserProvider.with(
-                        SpreadsheetParserAliasSet.parse(NAME1_STRING),
-                        new FakeSpreadsheetParserProvider() {
-                            @Override
-                            public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
-                                switch (selector.toString()) {
-                                    case NAME1_STRING:
-                                        return Optional.of(formatter);
-                                    default:
-                                        throw new IllegalArgumentException("Unknown formatter " + selector);
-                                }
-                            }
-
-                            @Override
-                            public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                                return SpreadsheetParserInfoSet.with(
-                                        Sets.of(
-                                                INFO1
-                                        )
-                                );
-                            }
+            AliasesSpreadsheetParserProvider.with(
+                SpreadsheetParserAliasSet.parse(NAME1_STRING),
+                new FakeSpreadsheetParserProvider() {
+                    @Override
+                    public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
+                        switch (selector.toString()) {
+                            case NAME1_STRING:
+                                return Optional.of(formatter);
+                            default:
+                                throw new IllegalArgumentException("Unknown formatter " + selector);
                         }
-                ),
-                SpreadsheetParserSelector.parse(NAME1 + ""),
-                formatter
+                    }
+
+                    @Override
+                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                        return SpreadsheetParserInfoSet.with(
+                            Sets.of(
+                                INFO1
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetParserSelector.parse(NAME1 + ""),
+            formatter
         );
     }
 
@@ -293,32 +293,32 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
         final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("formatter123");
 
         this.spreadsheetFormatterSelectorAndCheck(
-                AliasesSpreadsheetParserProvider.with(
-                        SpreadsheetParserAliasSet.parse(ALIAS2 + " " + NAME2),
-                        new FakeSpreadsheetParserProvider() {
+            AliasesSpreadsheetParserProvider.with(
+                SpreadsheetParserAliasSet.parse(ALIAS2 + " " + NAME2),
+                new FakeSpreadsheetParserProvider() {
 
-                            @Override
-                            public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
-                                switch (selector.toString()) {
-                                    case NAME2_STRING + params:
-                                        return Optional.of(formatter);
-                                    default:
-                                        throw new IllegalArgumentException("Unknown formatter " + selector);
-                                }
-                            }
-
-                            @Override
-                            public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                                return SpreadsheetParserInfoSet.with(
-                                        Sets.of(
-                                                INFO2
-                                        )
-                                );
-                            }
+                    @Override
+                    public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
+                        switch (selector.toString()) {
+                            case NAME2_STRING + params:
+                                return Optional.of(formatter);
+                            default:
+                                throw new IllegalArgumentException("Unknown formatter " + selector);
                         }
-                ),
-                SpreadsheetParserSelector.parse(ALIAS2 + params),
-                formatter
+                    }
+
+                    @Override
+                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                        return SpreadsheetParserInfoSet.with(
+                            Sets.of(
+                                INFO2
+                            )
+                        );
+                    }
+                }
+            ),
+            SpreadsheetParserSelector.parse(ALIAS2 + params),
+            formatter
         );
     }
 
@@ -327,9 +327,9 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
     @Test
     public void testInfos() {
         this.spreadsheetParserInfosAndCheck(
-                INFO1,
-                INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from SpreadsheetParserAliasSet
+            INFO1,
+            INFO2.setName(ALIAS2),
+            INFO4.setName(NAME4) // from SpreadsheetParserAliasSet
         );
     }
 
@@ -338,59 +338,59 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
         final String aliases = "parser1, alias2 parser2, custom4 parser3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
-                NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
-                aliases
+            NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
+            aliases
         );
 
         return AliasesSpreadsheetParserProvider.with(
-                SpreadsheetParserAliasSet.parse(aliases),
-                new FakeSpreadsheetParserProvider() {
-                    @Override
-                    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
-                                                               final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                                               final List<?> values,
-                                                               final ProviderContext context) {
-                        SpreadsheetParser parser;
-
-                        switch (name.toString()) {
-                            case NAME1_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                parser = PARSER1;
-                                break;
-                            case NAME2_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                parser = PARSER2;
-                                break;
-                            case NAME3_STRING:
-                                checkEquals(Lists.of(VALUE3), values, "values");
-                                parser = PARSER3;
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Unknown parser " + name);
-                        }
-
-                        return parser;
-                    }
-
-                    @Override
-                    public SpreadsheetParserInfoSet spreadsheetParserInfos() {
-                        return SpreadsheetParserInfoSet.with(
-                                Sets.of(
-                                        INFO1,
-                                        INFO2,
-                                        INFO3
-                                )
-                        );
-                    }
+            SpreadsheetParserAliasSet.parse(aliases),
+            new FakeSpreadsheetParserProvider() {
+                @Override
+                public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
+                                                           final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
+                                                           final List<?> values,
+                                                           final ProviderContext context) {
+                    SpreadsheetParser parser;
+
+                    switch (name.toString()) {
+                        case NAME1_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            parser = PARSER1;
+                            break;
+                        case NAME2_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            parser = PARSER2;
+                            break;
+                        case NAME3_STRING:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            parser = PARSER3;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unknown parser " + name);
+                    }
+
+                    return parser;
+                }
+
+                @Override
+                public SpreadsheetParserInfoSet spreadsheetParserInfos() {
+                    return SpreadsheetParserInfoSet.with(
+                        Sets.of(
+                            INFO1,
+                            INFO2,
+                            INFO3
+                        )
+                    );
+                }
+            }
         );
     }
 

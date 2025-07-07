@@ -48,11 +48,11 @@ import java.util.Optional;
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
 public final class SpreadsheetError implements Value<Optional<Object>>,
-        HasText,
-        TreePrintable,
-        HasSpreadsheetErrorKind,
-        UsesToStringBuilder,
-        HasConvertError {
+    HasText,
+    TreePrintable,
+    HasSpreadsheetErrorKind,
+    UsesToStringBuilder,
+    HasConvertError {
 
     public static final Optional<Object> NO_VALUE = Optional.empty();
 
@@ -63,8 +63,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(reference, "reference");
 
         return SpreadsheetErrorKind.REF.setMessageAndValue(
-                "Cycle involving " + CharSequences.quoteAndEscape(reference.text()),
-                reference
+            "Cycle involving " + CharSequences.quoteAndEscape(reference.text()),
+            reference
         );
     }
 
@@ -74,8 +74,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      */
     public static SpreadsheetError formatterNotFound(final Object value) {
         return SpreadsheetErrorKind.ERROR.setMessageAndValue(
-                "Formatter not found",
-                value
+            "Formatter not found",
+            value
         );
     }
 
@@ -86,8 +86,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(function, "function");
 
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
-                function.notFoundText(),
-                function
+            function.notFoundText(),
+            function
         );
     }
 
@@ -100,8 +100,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(reference, "reference");
 
         return reference instanceof SpreadsheetExpressionReference ?
-                selectionNotFound((SpreadsheetExpressionReference) reference) :
-                referenceNotSpreadsheetExpressionReferenceNotFound(reference);
+            selectionNotFound((SpreadsheetExpressionReference) reference) :
+            referenceNotSpreadsheetExpressionReferenceNotFound(reference);
     }
 
     private static SpreadsheetError referenceNotSpreadsheetExpressionReferenceNotFound(final ExpressionReference reference) {
@@ -115,8 +115,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         }
 
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
-                text,
-                reference
+            text,
+            reference
         );
     }
 
@@ -134,8 +134,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(reference, "reference");
 
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
-                reference.notFoundText(),
-                reference
+            reference.notFoundText(),
+            reference
         );
     }
 
@@ -151,9 +151,9 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
             final ValidationError<SpreadsheetExpressionReference> firstError = errors.get(0);
 
             error = SpreadsheetError.parse(
-                    firstError.text()
+                firstError.text()
             ).setValue(
-                    Optional.of(firstError.reference())
+                Optional.of(firstError.reference())
             );
         }
 
@@ -178,11 +178,11 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         if (text.charAt(0) == SpreadsheetErrorKind.PREFIX) {
             final int nextToken = text.indexOf(' ');
             final String kindText = -1 == nextToken ?
-                    text :
-                    text.substring(
-                            0,
-                            nextToken
-                    );
+                text :
+                text.substring(
+                    0,
+                    nextToken
+                );
             if (kindText.isEmpty()) {
                 throw new IllegalArgumentException("Missing error kind");
             }
@@ -194,8 +194,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
             }
 
             message = -1 == nextToken ?
-                    "" :
-                    text.substring(nextToken + 1);
+                "" :
+                text.substring(nextToken + 1);
         } else {
             kind = SpreadsheetErrorKind.MISSING_PREFIX;
             message = text;
@@ -215,9 +215,9 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(value, "value");
 
         return new SpreadsheetError(
-                kind,
-                message,
-                value
+            kind,
+            message,
+            value
         );
     }
 
@@ -251,12 +251,12 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     public SpreadsheetError setMessage(final String message) {
         return this.message.equals(message) ?
-                this :
-                new SpreadsheetError(
-                        this.kind,
-                        Objects.requireNonNull(message, "message"),
-                        this.value
-                );
+            this :
+            new SpreadsheetError(
+                this.kind,
+                Objects.requireNonNull(message, "message"),
+                this.value
+            );
     }
 
     private final String message;
@@ -269,7 +269,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(context, "context");
 
         return Optional.ofNullable(
-                this.isMissingCell() ?
+            this.isMissingCell() ?
                 context.missingCellNumberValue() :
                 null
         );
@@ -287,12 +287,12 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         Objects.requireNonNull(value, "value");
 
         return this.value.equals(value) ?
-                this :
-                new SpreadsheetError(
-                        this.kind,
-                        this.message,
-                        value
-                );
+            this :
+            new SpreadsheetError(
+                this.kind,
+                this.message,
+                value
+            );
     }
 
     /**
@@ -311,7 +311,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      */
     public boolean isMissingCell() {
         return this.kind() == SpreadsheetErrorKind.NAME &&
-                this.value().orElse(null) instanceof SpreadsheetCellReference;
+            this.value().orElse(null) instanceof SpreadsheetCellReference;
     }
 
     // HasText..........................................................................................................
@@ -337,12 +337,12 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
         // #DIV0 Message
         return message.isEmpty() ?
-                kindText :
-                kindText +
-                        ' ' +
-                        CharSequences.trimLeft(
-                                this.message
-                        );
+            kindText :
+            kindText +
+                ' ' +
+                CharSequences.trimLeft(
+                    this.message
+                );
     }
 
     // setNameString...................................................................................................
@@ -354,25 +354,25 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     public SpreadsheetError setNameString() {
         final SpreadsheetErrorKind kind = this.kind;
         return kind == SpreadsheetErrorKind.NAME_STRING ?
-                this :
-                this.setNameStringDifferent();
+            this :
+            this.setNameStringDifferent();
     }
 
     private SpreadsheetError setNameStringDifferent() {
         final SpreadsheetErrorKind kind = this.kind;
         if (kind != SpreadsheetErrorKind.NAME) {
             throw new IllegalStateException(
-                    "SpreadsheetError.kind is not " +
-                            SpreadsheetErrorKind.NAME +
-                            " but is " +
-                            kind
+                "SpreadsheetError.kind is not " +
+                    SpreadsheetErrorKind.NAME +
+                    " but is " +
+                    kind
             );
         }
 
         return new SpreadsheetError(
-                SpreadsheetErrorKind.NAME_STRING,
-                this.message,
-                this.value
+            SpreadsheetErrorKind.NAME_STRING,
+            this.message,
+            this.value
         );
     }
 
@@ -385,8 +385,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         }
 
         return ValidationError.with(
-                cellOrLabel,
-                this.message
+            cellOrLabel,
+            this.message
         ).setValue(this.value);
     }
 
@@ -402,9 +402,9 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     @Override
     public Optional<String> convertErrorMessage() {
         return Optional.ofNullable(
-                SpreadsheetErrorKind.VALUE == this.kind && false == CharSequences.isNullOrEmpty(this.message) ?
-                        this.message :
-                        null
+            SpreadsheetErrorKind.VALUE == this.kind && false == CharSequences.isNullOrEmpty(this.message) ?
+                this.message :
+                null
         );
     }
 
@@ -419,17 +419,17 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         final String message = this.message();
         if (false == message.isEmpty()) {
             printer.println(
-                    CharSequences.quoteAndEscape(this.message())
+                CharSequences.quoteAndEscape(this.message())
             );
         }
 
         final Object value = this.value()
-                .orElse(null);
+            .orElse(null);
 
         if (null != value) {
             TreePrintable.printTreeOrToString(
-                    value,
-                    printer
+                value,
+                printer
             );
         }
 
@@ -441,30 +441,30 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.kind,
-                this.message,
-                this.value
+            this.kind,
+            this.message,
+            this.value
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetError &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetError &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetError error) {
         return this.kind == error.kind &&
-                this.message.equals(error.message) &&
-                this.value.equals(error.value);
+            this.message.equals(error.message) &&
+            this.value.equals(error.value);
     }
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.kind)
-                .value(this.message)
-                .value(this.value);
+            .value(this.message)
+            .value(this.value);
     }
 
     @Override
@@ -506,23 +506,23 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         }
 
         return new SpreadsheetError(
-                kind,
-                message,
-                Optional.ofNullable(value)
+            kind,
+            message,
+            Optional.ofNullable(value)
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject json = JsonNode.object()
-                .set(KIND_PROPERTY, JsonNode.string(this.kind.name()))
-                .set(MESSAGE_PROPERTY, JsonNode.string(this.message));
+            .set(KIND_PROPERTY, JsonNode.string(this.kind.name()))
+            .set(MESSAGE_PROPERTY, JsonNode.string(this.message));
 
         final Object value = this.value()
-                .orElse(null);
+            .orElse(null);
         if (null != value) {
             json = json.set(
-                    VALUE_PROPERTY,
-                    context.marshallWithType(value)
+                VALUE_PROPERTY,
+                context.marshallWithType(value)
             );
         }
 
@@ -541,10 +541,10 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetError.class),
-                SpreadsheetError::unmarshall,
-                SpreadsheetError::marshall,
-                SpreadsheetError.class
+            JsonNodeContext.computeTypeName(SpreadsheetError.class),
+            SpreadsheetError::unmarshall,
+            SpreadsheetError::marshall,
+            SpreadsheetError.class
         );
     }
 }

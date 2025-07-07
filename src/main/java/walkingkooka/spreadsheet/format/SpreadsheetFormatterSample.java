@@ -40,9 +40,9 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
                                                   final SpreadsheetFormatterSelector selector,
                                                   final TextNode value) {
         return new SpreadsheetFormatterSample(
-                CharSequences.failIfNullOrEmpty(label, "label"),
-                Objects.requireNonNull(selector, "selector"),
-                Objects.requireNonNull(value, "value")
+            CharSequences.failIfNullOrEmpty(label, "label"),
+            Objects.requireNonNull(selector, "selector"),
+            Objects.requireNonNull(value, "value")
         );
     }
 
@@ -68,12 +68,12 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
         Objects.requireNonNull(selector, "selector");
 
         return this.selector.equals(selector) ?
-                this :
-                new SpreadsheetFormatterSample(
-                        this.label,
-                        selector,
-                        this.value
-                );
+            this :
+            new SpreadsheetFormatterSample(
+                this.label,
+                selector,
+                this.value
+            );
     }
 
     private final SpreadsheetFormatterSelector selector;
@@ -87,12 +87,12 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
         Objects.requireNonNull(value, "value");
 
         return this.value.equals(value) ?
-                this :
-                new SpreadsheetFormatterSample(
-                        this.label,
-                        this.selector,
-                        value
-                );
+            this :
+            new SpreadsheetFormatterSample(
+                this.label,
+                this.selector,
+                value
+            );
     }
 
     private final TextNode value;
@@ -102,22 +102,22 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.label,
-                this.selector,
-                this.value
+            this.label,
+            this.selector,
+            this.value
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterSample && this.equals0((SpreadsheetFormatterSample) other);
+            other instanceof SpreadsheetFormatterSample && this.equals0((SpreadsheetFormatterSample) other);
     }
 
     private boolean equals0(final SpreadsheetFormatterSample other) {
         return this.label.equals(other.label) &&
-                this.selector.equals(other.selector) &&
-                this.value.equals(other.value);
+            this.selector.equals(other.selector) &&
+            this.value.equals(other.value);
     }
 
     @Override
@@ -135,8 +135,8 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
         {
             this.selector.printTree(printer);
             TreePrintable.printTreeOrToString(
-                    this.value,
-                    printer
+                this.value,
+                printer
             );
             printer.lineStart();
         }
@@ -159,8 +159,8 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
                     break;
                 case SELECTOR_PROPERTY_STRING:
                     selector = context.unmarshall(
-                            child,
-                            SpreadsheetFormatterSelector.class
+                        child,
+                        SpreadsheetFormatterSelector.class
                     );
                     break;
                 case VALUE_PROPERTY_STRING:
@@ -183,21 +183,21 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
         }
 
         return SpreadsheetFormatterSample.with(
-                label,
-                selector,
-                value
+            label,
+            selector,
+            value
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .setChildren(
-                        Lists.of(
-                                JsonNode.string(this.label).setName(LABEL_PROPERTY),
-                                context.marshall(this.selector).setName(SELECTOR_PROPERTY),
-                                context.marshallWithType(this.value).setName(VALUE_PROPERTY)
-                        )
-                );
+            .setChildren(
+                Lists.of(
+                    JsonNode.string(this.label).setName(LABEL_PROPERTY),
+                    context.marshall(this.selector).setName(SELECTOR_PROPERTY),
+                    context.marshallWithType(this.value).setName(VALUE_PROPERTY)
+                )
+            );
     }
 
     private final static String LABEL_PROPERTY_STRING = "label";
@@ -213,10 +213,10 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSample.class),
-                SpreadsheetFormatterSample::unmarshall,
-                SpreadsheetFormatterSample::marshall,
-                SpreadsheetFormatterSample.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterSample.class),
+            SpreadsheetFormatterSample::unmarshall,
+            SpreadsheetFormatterSample::marshall,
+            SpreadsheetFormatterSample.class
         );
     }
 }

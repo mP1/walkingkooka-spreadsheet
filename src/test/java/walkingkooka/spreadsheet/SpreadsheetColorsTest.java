@@ -32,24 +32,24 @@ public final class SpreadsheetColorsTest implements PublicStaticHelperTesting<Sp
     @Test
     public void testCheckNumberZero() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNumber(0)
+            IllegalArgumentException.class,
+            () -> SpreadsheetColors.checkNumber(0)
         );
     }
 
     @Test
     public void testCheckNumberNegative() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNumber(-1)
+            IllegalArgumentException.class,
+            () -> SpreadsheetColors.checkNumber(-1)
         );
     }
 
     @Test
     public void testCheckNumberMaxPlus1() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetColors.checkNumber(SpreadsheetColors.MAX + 1)
+            IllegalArgumentException.class,
+            () -> SpreadsheetColors.checkNumber(SpreadsheetColors.MAX + 1)
         );
     }
 

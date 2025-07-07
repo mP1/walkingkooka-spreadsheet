@@ -44,15 +44,15 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
                                             final SpreadsheetParserProvider spreadsheetParserProvider,
                                             final ValidatorProvider validatorProvider) {
         return BasicSpreadsheetProvider.with(
-                converterProvider,
-                expressionFunctionProvider,
-                spreadsheetComparatorProvider,
-                spreadsheetExporterProvider,
-                spreadsheetFormatterProvider,
-                formHandlerProvider,
-                spreadsheetImporterProvider,
-                spreadsheetParserProvider,
-                validatorProvider
+            converterProvider,
+            expressionFunctionProvider,
+            spreadsheetComparatorProvider,
+            spreadsheetExporterProvider,
+            spreadsheetFormatterProvider,
+            formHandlerProvider,
+            spreadsheetImporterProvider,
+            spreadsheetParserProvider,
+            validatorProvider
         );
     }
 

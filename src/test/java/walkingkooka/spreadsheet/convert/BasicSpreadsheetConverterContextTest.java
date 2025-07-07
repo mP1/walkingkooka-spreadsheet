@@ -48,7 +48,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext>,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
 
@@ -63,56 +63,56 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Test
     public void testWithNullSpreadsheetMetadataFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetConverterContext.with(
-                        null,
-                        VALIDATION_REFERENCE,
-                        CONVERTER,
-                        LABEL_RESOLVER,
-                        JsonNodeConverterContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                null,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                LABEL_RESOLVER,
+                JsonNodeConverterContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullConverterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetConverterContext.with(
-                        SpreadsheetConverterContexts.NO_METADATA,
-                        VALIDATION_REFERENCE,
-                        null,
-                        LABEL_RESOLVER,
-                        JsonNodeConverterContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                null,
+                LABEL_RESOLVER,
+                JsonNodeConverterContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullSpreadsheetLabelNameResolverFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetConverterContext.with(
-                        SpreadsheetConverterContexts.NO_METADATA,
-                        VALIDATION_REFERENCE,
-                        CONVERTER,
-                        null,
-                        JsonNodeConverterContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                null,
+                JsonNodeConverterContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetConverterContext.with(
-                        SpreadsheetConverterContexts.NO_METADATA,
-                        VALIDATION_REFERENCE,
-                        CONVERTER,
-                        LABEL_RESOLVER,
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                LABEL_RESOLVER,
+                null
+            )
         );
     }
 
@@ -121,51 +121,51 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Test
     public void testConvert() {
         this.convertAndCheck(
-                123,
-                Float.class,
-                123f
+            123,
+            Float.class,
+            123f
         );
     }
 
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
-                SpreadsheetConverterContexts.NO_METADATA,
-                VALIDATION_REFERENCE,
-                CONVERTER,
-                LABEL_RESOLVER,
-                this.jsonNodeConverterContext()
+            SpreadsheetConverterContexts.NO_METADATA,
+            VALIDATION_REFERENCE,
+            CONVERTER,
+            LABEL_RESOLVER,
+            this.jsonNodeConverterContext()
         );
     }
 
     private JsonNodeConverterContext jsonNodeConverterContext() {
         return JsonNodeConverterContexts.basic(
-                ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                Converters.fake(),
-                                DateTimeContexts.basic(
-                                        DateTimeSymbols.fromDateFormatSymbols(
-                                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
-                                        ),
-                                        Locale.forLanguageTag("EN-AU"),
-                                        1900,
-                                        20,
-                                        LocalDateTime::now
-                                ),
-                                this.decimalNumberContext()
+            ExpressionNumberConverterContexts.basic(
+                Converters.fake(),
+                ConverterContexts.basic(
+                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    Converters.fake(),
+                    DateTimeContexts.basic(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                            new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
                         ),
-                        KIND
+                        Locale.forLanguageTag("EN-AU"),
+                        1900,
+                        20,
+                        LocalDateTime::now
+                    ),
+                    this.decimalNumberContext()
                 ),
-                JsonNodeMarshallUnmarshallContexts.basic(
-                        JsonNodeMarshallContexts.basic(),
-                        JsonNodeUnmarshallContexts.basic(
-                                KIND,
-                                this.decimalNumberContext()
-                                        .mathContext()
-                        )
+                KIND
+            ),
+            JsonNodeMarshallUnmarshallContexts.basic(
+                JsonNodeMarshallContexts.basic(),
+                JsonNodeUnmarshallContexts.basic(
+                    KIND,
+                    this.decimalNumberContext()
+                        .mathContext()
                 )
+            )
         );
     }
 
@@ -189,13 +189,13 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         final JsonNodeMarshallUnmarshallContext marshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.fake();
 
         this.toStringAndCheck(
-                JsonNodeConverterContexts.basic(
-                        converterContext,
-                        marshallUnmarshallContext
-                ),
-                converterContext +
-                        " " +
-                        marshallUnmarshallContext
+            JsonNodeConverterContexts.basic(
+                converterContext,
+                marshallUnmarshallContext
+            ),
+            converterContext +
+                " " +
+                marshallUnmarshallContext
         );
     }
 

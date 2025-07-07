@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Locale;
 
 public final class SpreadsheetNonNumberParsePatternParserStringTest extends SpreadsheetNonNumberParsePatternParserTestCase<SpreadsheetNonNumberParsePatternParserString>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserString> {
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetNonNumberParsePatternParserString> {
 
     private final static String PATTERN = "Pattern-123";
 
@@ -57,7 +57,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     @Test
     public void testParseInitial() {
         this.parseAndCheck2(
-                "O"
+            "O"
         );
     }
 
@@ -74,52 +74,52 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     @Test
     public void testParseIncomplete() {
         this.parseAndCheck2(
-                "Jul"
+            "Jul"
         );
     }
 
     @Test
     public void testParseIncomplete2() {
         this.parseAndCheck2(
-                "Jun"
+            "Jun"
         );
     }
 
     @Test
     public void testParseIncompleteCaseInsensitive() {
         this.parseAndCheck2(
-                "JUN"
+            "JUN"
         );
     }
 
     @Test
     public void testParseComplete() {
         this.parseAndCheck2(
-                "May",
-                "!"
+            "May",
+            "!"
         );
     }
 
     @Test
     public void testParseComplete2() {
         this.parseAndCheck2(
-                "December"
+            "December"
         );
     }
 
     @Test
     public void testParseComplete3() {
         this.parseAndCheck2(
-                "December",
-                "123"
+            "December",
+            "123"
         );
     }
 
     @Test
     public void testParseCompleteCaseInsensitive() {
         this.parseAndCheck2(
-                "DECEMBER",
-                "123"
+            "DECEMBER",
+            "123"
         );
     }
 
@@ -127,16 +127,16 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     public void testParseCompleteAll() {
         for (final String month : this.monthNames()) {
             this.parseAndCheck2(
-                    month,
-                    "123"
+                month,
+                "123"
             );
         }
     }
 
     private void parseAndCheck2(final String text) {
         this.parseAndCheck2(
-                text,
-                ""
+            text,
+            ""
         );
     }
 
@@ -154,13 +154,13 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
         this.checkNotEquals(-1, index, () -> "failed to match a month with " + CharSequences.quote(text));
 
         this.parseAndCheck(
-                text + after,
-                SpreadsheetFormulaParserToken.monthName(
-                        index,
-                        text
-                ),
-                text,
-                after
+            text + after,
+            SpreadsheetFormulaParserToken.monthName(
+                index,
+                text
+            ),
+            text,
+            after
         );
     }
 
@@ -172,9 +172,9 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     @Override
     public SpreadsheetNonNumberParsePatternParserString createParser() {
         return SpreadsheetNonNumberParsePatternParserString.stringChoices(
-                DateTimeContext::monthNames,
-                SpreadsheetFormulaParserToken::monthName,
-                PATTERN
+            DateTimeContext::monthNames,
+            SpreadsheetFormulaParserToken::monthName,
+            PATTERN
         );
     }
 
@@ -190,15 +190,15 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
 
     private List<String> monthNames() {
         return DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
-                        ),
-                        Locale.forLanguageTag("EN-AU"),
-                        1900,
-                        20,
-                        LocalDateTime::now
-                )
-                .monthNames();
+                DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
+                ),
+                Locale.forLanguageTag("EN-AU"),
+                1900,
+                20,
+                LocalDateTime::now
+            )
+            .monthNames();
     }
 
     // hashCode/equals..................................................................................................
@@ -206,20 +206,20 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     @Test
     public void testEqualsDifferentPattern() {
         this.checkNotEquals(
-                SpreadsheetNonNumberParsePatternParserString.with(
-                        (c) -> Lists.of("AM/PM"),
-                        SpreadsheetFormulaParserToken::amPm,
-                        "AM/PM"
-                )
+            SpreadsheetNonNumberParsePatternParserString.with(
+                (c) -> Lists.of("AM/PM"),
+                SpreadsheetFormulaParserToken::amPm,
+                "AM/PM"
+            )
         );
     }
 
     @Override
     public SpreadsheetNonNumberParsePatternParserString createObject() {
         return SpreadsheetNonNumberParsePatternParserString.with(
-                (c) -> Lists.of("am/pm"),
-                SpreadsheetFormulaParserToken::amPm,
-                "am/pm"
+            (c) -> Lists.of("am/pm"),
+            SpreadsheetFormulaParserToken::amPm,
+            "am/pm"
         );
     }
 

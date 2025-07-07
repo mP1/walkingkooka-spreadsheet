@@ -28,8 +28,8 @@ public final class PlusSymbolSpreadsheetFormulaParserToken extends SymbolSpreads
     static PlusSymbolSpreadsheetFormulaParserToken with(final String value,
                                                         final String text) {
         return new PlusSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

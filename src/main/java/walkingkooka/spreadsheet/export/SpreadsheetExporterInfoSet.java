@@ -41,17 +41,17 @@ import java.util.function.Predicate;
 public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExporterInfo> implements PluginInfoSetLike<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias, SpreadsheetExporterAliasSet> {
 
     public final static SpreadsheetExporterInfoSet EMPTY = new SpreadsheetExporterInfoSet(
-            PluginInfoSet.with(
-                    Sets.<SpreadsheetExporterInfo>empty()
-            )
+        PluginInfoSet.with(
+            Sets.<SpreadsheetExporterInfo>empty()
+        )
     );
 
     public static SpreadsheetExporterInfoSet parse(final String text) {
         return new SpreadsheetExporterInfoSet(
-                PluginInfoSet.parse(
-                        text,
-                        SpreadsheetExporterInfo::parse
-                )
+            PluginInfoSet.parse(
+                text,
+                SpreadsheetExporterInfo::parse
+            )
         );
     }
 
@@ -96,53 +96,53 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     @Override
     public SpreadsheetExporterInfoSet filter(final SpreadsheetExporterInfoSet infos) {
         return this.setElements(
-                this.pluginInfoSet.filter(
-                        infos.pluginInfoSet
-                )
+            this.pluginInfoSet.filter(
+                infos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet renameIfPresent(SpreadsheetExporterInfoSet renameInfos) {
         return this.setElements(
-                this.pluginInfoSet.renameIfPresent(
-                        renameInfos.pluginInfoSet
-                )
+            this.pluginInfoSet.renameIfPresent(
+                renameInfos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet concat(final SpreadsheetExporterInfo info) {
         return this.setElements(
-                this.pluginInfoSet.concat(info)
+            this.pluginInfoSet.concat(info)
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet concatAll(final Collection<SpreadsheetExporterInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.concatAll(infos)
+            this.pluginInfoSet.concatAll(infos)
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet delete(final SpreadsheetExporterInfo info) {
         return this.setElements(
-                this.pluginInfoSet.delete(info)
+            this.pluginInfoSet.delete(info)
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet deleteAll(final Collection<SpreadsheetExporterInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.deleteAll(infos)
+            this.pluginInfoSet.deleteAll(infos)
         );
     }
 
     @Override
     public SpreadsheetExporterInfoSet deleteIf(final Predicate<? super SpreadsheetExporterInfo> predicate) {
         return this.setElements(
-                this.pluginInfoSet.deleteIf(predicate)
+            this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
@@ -150,19 +150,19 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     public SpreadsheetExporterInfoSet replace(final SpreadsheetExporterInfo oldInfo,
                                               final SpreadsheetExporterInfo newInfo) {
         return this.setElements(
-                this.pluginInfoSet.replace(
-                        oldInfo,
-                        newInfo
-                )
+            this.pluginInfoSet.replace(
+                oldInfo,
+                newInfo
+            )
         );
     }
 
     @Override
     public ImmutableSet<SpreadsheetExporterInfo> setElementsFailIfDifferent(final Set<SpreadsheetExporterInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.setElementsFailIfDifferent(
-                        infos
-                )
+            this.pluginInfoSet.setElementsFailIfDifferent(
+                infos
+            )
         );
     }
 
@@ -233,10 +233,10 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     static SpreadsheetExporterInfoSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallSet(
-                        node,
-                        SpreadsheetExporterInfo.class
-                )
+            context.unmarshallSet(
+                node,
+                SpreadsheetExporterInfo.class
+            )
         );
     }
 
@@ -244,10 +244,10 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
         SpreadsheetExporterInfo.register(); // force registry of json marshaller
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetExporterInfoSet.class),
-                SpreadsheetExporterInfoSet::unmarshall,
-                SpreadsheetExporterInfoSet::marshall,
-                SpreadsheetExporterInfoSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetExporterInfoSet.class),
+            SpreadsheetExporterInfoSet::unmarshall,
+            SpreadsheetExporterInfoSet::marshall,
+            SpreadsheetExporterInfoSet.class
         );
     }
 }

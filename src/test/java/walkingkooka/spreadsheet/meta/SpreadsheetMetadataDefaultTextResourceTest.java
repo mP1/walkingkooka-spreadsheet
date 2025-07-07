@@ -35,18 +35,18 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
         SpreadsheetMetadata.EMPTY.id();
 
         final JsonObject resource = JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text())
-                .objectOrFail();
+            .objectOrFail();
         final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(
-                        ExpressionNumberKind.DEFAULT,
-                        MathContext.DECIMAL32
-                )
-                .unmarshall(resource, SpreadsheetMetadata.class);
+                ExpressionNumberKind.DEFAULT,
+                MathContext.DECIMAL32
+            )
+            .unmarshall(resource, SpreadsheetMetadata.class);
         this.checkEquals(
-                Converters.EXCEL_1900_DATE_SYSTEM_OFFSET,
-                metadata.getOrFail(
-                        SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET
-                ),
-                resource::toString
+            Converters.EXCEL_1900_DATE_SYSTEM_OFFSET,
+            metadata.getOrFail(
+                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET
+            ),
+            resource::toString
         );
     }
 

@@ -41,10 +41,10 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
                                                            final SpreadsheetEngineContext context,
                                                            final SpreadsheetExpressionReferenceLoader loader) {
         return new BasicSpreadsheetEngineFilterCellsPredicate(
-                valueType,
-                expression,
-                context,
-                loader
+            valueType,
+            expression,
+            context,
+            loader
         );
     }
 
@@ -53,15 +53,15 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
                                                        final SpreadsheetEngineContext context,
                                                        final SpreadsheetExpressionReferenceLoader loader) {
         this.valueType = Predicates.customToString(
-                SpreadsheetValueType.ANY.equals(valueType) ?
-                        v -> Boolean.TRUE :
-                        v -> null != v &&
-                                valueType.equals(
-                                        SpreadsheetValueType.toValueType(v.getClass())
-                                                .map(HasText::text)
-                                                .orElse(null)
-                                ),
-                valueType
+            SpreadsheetValueType.ANY.equals(valueType) ?
+                v -> Boolean.TRUE :
+                v -> null != v &&
+                    valueType.equals(
+                        SpreadsheetValueType.toValueType(v.getClass())
+                            .map(HasText::text)
+                            .orElse(null)
+                    ),
+            valueType
         );
         this.expression = expression;
         this.context = context;
@@ -71,17 +71,17 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
     @Override
     public boolean test(final SpreadsheetCell cell) {
         return null != cell &&
-                this.testNonNull(cell);
+            this.testNonNull(cell);
     }
 
     private boolean testNonNull(final SpreadsheetCell cell) {
         final SpreadsheetFormula formula = cell.formula();
         return false == formula.text().isEmpty() &&
-                this.valueType.test(
-                        formula.errorOrValue()
-                                .orElse(null)
-                ) &&
-                this.evaluateExpressionAsBoolean(cell);
+            this.valueType.test(
+                formula.errorOrValue()
+                    .orElse(null)
+            ) &&
+            this.evaluateExpressionAsBoolean(cell);
     }
 
     private boolean evaluateExpressionAsBoolean(final SpreadsheetCell cell) {
@@ -89,10 +89,10 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
 
         try {
             test = this.expression.toBoolean(
-                    this.context.spreadsheetExpressionEvaluationContext(
-                            Optional.of(cell),
-                            this.loader
-                    )
+                this.context.spreadsheetExpressionEvaluationContext(
+                    Optional.of(cell),
+                    this.loader
+                )
             );
         } catch (final RuntimeException ignore) {
             test = false;

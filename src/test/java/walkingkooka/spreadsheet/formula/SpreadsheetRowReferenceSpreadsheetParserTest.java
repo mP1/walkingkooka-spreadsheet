@@ -47,11 +47,11 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
         final String text = "$ABC";
 
         this.parseThrows(
+            text,
+            new InvalidCharacterException(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        1
-                ).getMessage()
+                1
+            ).getMessage()
         );
     }
 
@@ -121,10 +121,10 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
                                 final SpreadsheetReferenceKind referenceKind,
                                 final int row) {
         this.parseAndCheck2(
-                text,
-                referenceKind,
-                row,
-                ""
+            text,
+            referenceKind,
+            row,
+            ""
         );
     }
 
@@ -133,9 +133,9 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
                                 final int row,
                                 final String textAfter) {
         this.parseAndCheck(text + textAfter,
-                this.token(referenceKind, row, text),
-                text,
-                textAfter
+            this.token(referenceKind, row, text),
+            text,
+            textAfter
         );
     }
 
@@ -143,8 +143,8 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
                                                    final int row,
                                                    final String text) {
         return SpreadsheetFormulaParserToken.row(
-                referenceKind.row(row),
-                text
+            referenceKind.row(row),
+            text
         );
     }
 

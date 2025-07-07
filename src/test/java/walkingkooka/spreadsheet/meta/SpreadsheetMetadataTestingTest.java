@@ -27,14 +27,14 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
-        TreePrintableTesting {
+    TreePrintableTesting {
 
     @Test
     public void testGeneralConverter() {
         METADATA_EN_AU.generalConverter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                PROVIDER_CONTEXT
+            SPREADSHEET_FORMATTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER,
+            PROVIDER_CONTEXT
         );
     }
 
@@ -46,8 +46,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testFormatter() {
         METADATA_EN_AU.spreadsheetFormatter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
+            SPREADSHEET_FORMATTER_PROVIDER,
+            PROVIDER_CONTEXT
         );
     }
 
@@ -64,66 +64,66 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testParseFormula() {
         this.checkEquals(
-                SpreadsheetFormula.EMPTY.setToken(
-                        Optional.of(
-                                SpreadsheetFormulaParserToken.expression(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.equalsSymbol(
-                                                        "=",
-                                                        "="
-                                                ),
-                                                SpreadsheetFormulaParserToken.number(
-                                                        Lists.of(
-                                                                SpreadsheetFormulaParserToken.digits(
-                                                                        "1",
-                                                                        "1"
-                                                                )
-                                                        ),
-                                                        "1"
-                                                )
-                                        ),
-                                        "=1"
-                                )
-                        )
-                ),
-                SpreadsheetMetadataTesting.parseFormula(
+            SpreadsheetFormula.EMPTY.setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.expression(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.equalsSymbol(
+                                "=",
+                                "="
+                            ),
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits(
+                                        "1",
+                                        "1"
+                                    )
+                                ),
+                                "1"
+                            )
+                        ),
                         "=1"
+                    )
                 )
+            ),
+            SpreadsheetMetadataTesting.parseFormula(
+                "=1"
+            )
         );
     }
 
     @Test
     public void testSpreadsheetFormatterContext() {
         METADATA_EN_AU.spreadsheetFormatterContext(
-                SpreadsheetMetadata.NO_CELL,
-                (final Optional<Object> value) -> {
-                    throw new UnsupportedOperationException();
-                },
-                (label) -> {
-                    throw new UnsupportedOperationException();
-                },
-                CONVERTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            SpreadsheetMetadata.NO_CELL,
+            (final Optional<Object> value) -> {
+                throw new UnsupportedOperationException();
+            },
+            (label) -> {
+                throw new UnsupportedOperationException();
+            },
+            CONVERTER_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetParser() {
         METADATA_EN_AU.spreadsheetParser(
-                SPREADSHEET_PARSER_PROVIDER,
-                PROVIDER_CONTEXT
+            SPREADSHEET_PARSER_PROVIDER,
+            PROVIDER_CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetParserContext() {
         METADATA_EN_AU
-                .spreadsheetParserContext(
-                        SpreadsheetMetadata.NO_CELL,
-                        LOCALE_CONTEXT,
-                        LocalDateTime::now
-                );
+            .spreadsheetParserContext(
+                SpreadsheetMetadata.NO_CELL,
+                LOCALE_CONTEXT,
+                LocalDateTime::now
+            );
     }
 }

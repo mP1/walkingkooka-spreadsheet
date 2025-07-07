@@ -30,8 +30,8 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorProviderCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetComparatorProviderCollection.with(null)
         );
     }
 
@@ -40,10 +40,10 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
         final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.spreadsheetComparators();
 
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
-                SpreadsheetComparatorSelector.parse("day-of-month"),
-                ProviderContexts.fake(),
-                SpreadsheetComparators.dayOfMonth()
+            SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
+            SpreadsheetComparatorSelector.parse("day-of-month"),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.dayOfMonth()
         );
     }
 
@@ -52,11 +52,11 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
         final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.spreadsheetComparators();
 
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
-                SpreadsheetComparatorName.with("day-of-month"),
-                Lists.empty(),
-                ProviderContexts.fake(),
-                SpreadsheetComparators.dayOfMonth()
+            SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
+            SpreadsheetComparatorName.with("day-of-month"),
+            Lists.empty(),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.dayOfMonth()
         );
     }
 
@@ -65,17 +65,17 @@ public final class SpreadsheetComparatorProviderCollectionTest implements Spread
         final SpreadsheetComparatorProvider provider = SpreadsheetComparatorProviders.spreadsheetComparators();
 
         this.spreadsheetComparatorInfosAndCheck(
-                SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
-                provider.spreadsheetComparatorInfos()
+            SpreadsheetComparatorProviderCollection.with(Sets.of(provider)),
+            provider.spreadsheetComparatorInfos()
         );
     }
 
     @Override
     public SpreadsheetComparatorProviderCollection createSpreadsheetComparatorProvider() {
         return SpreadsheetComparatorProviderCollection.with(
-                Sets.of(
-                        SpreadsheetComparatorProviders.spreadsheetComparators()
-                )
+            Sets.of(
+                SpreadsheetComparatorProviders.spreadsheetComparators()
+            )
         );
     }
 

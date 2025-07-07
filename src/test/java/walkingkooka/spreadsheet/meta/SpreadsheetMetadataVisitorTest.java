@@ -102,10 +102,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitSpreadsheetMetadataPropertyNameSkip() {
         final SpreadsheetMetadataPropertyName<AuditInfo> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
         final AuditInfo value = AuditInfo.with(
-                EmailAddress.parse("created@example.com"),
-                LocalDateTime.MIN,
-                EmailAddress.parse("modified@example.com"),
-                LocalDateTime.MAX
+            EmailAddress.parse("created@example.com"),
+            LocalDateTime.MIN,
+            EmailAddress.parse("modified@example.com"),
+            LocalDateTime.MAX
         );
         final SpreadsheetMetadata metadata = metadata(propertyName, value);
 
@@ -142,13 +142,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                        EmailAddress.parse("created@example.com"),
-                        LocalDateTime.MIN,
-                        EmailAddress.parse("modified@example.com"),
-                        LocalDateTime.MAX
-                )
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                EmailAddress.parse("created@example.com"),
+                LocalDateTime.MIN,
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.MAX
+            )
         );
     }
 
@@ -170,8 +170,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.CLIPBOARD_EXPORTER,
-                SpreadsheetExporterAliasSet.parse("json")
+            SpreadsheetMetadataPropertyName.CLIPBOARD_EXPORTER,
+            SpreadsheetExporterAliasSet.parse("json")
         );
     }
 
@@ -183,8 +183,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorAliasSet.parse("day, month, year")
+            SpreadsheetMetadataPropertyName.COMPARATORS,
+            SpreadsheetComparatorAliasSet.parse("day, month, year")
         );
     }
 
@@ -196,10 +196,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterProviders.converters()
-                        .converterInfos()
-                        .aliasSet()
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            ConverterProviders.converters()
+                .converterInfos()
+                .aliasSet()
         );
     }
 
@@ -211,9 +211,9 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY")
-                        .spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+            SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY")
+                .spreadsheetFormatterSelector()
         );
     }
 
@@ -225,9 +225,9 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = p;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DATE_PARSER,
-                SpreadsheetDateTimeParsePattern.parseDateParsePattern("DD/MM/YYYY")
-                        .spreadsheetParserSelector()
+            SpreadsheetMetadataPropertyName.DATE_PARSER,
+            SpreadsheetDateTimeParsePattern.parseDateParsePattern("DD/MM/YYYY")
+                .spreadsheetParserSelector()
         );
     }
 
@@ -239,8 +239,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector()
         );
     }
 
@@ -262,9 +262,9 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-                SpreadsheetDateTimeParsePattern.parseDateTimeParsePattern("DD/MM/YYYY HH:MM:SS;DDMMYYYY HHMMSS")
-                        .spreadsheetParserSelector()
+            SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+            SpreadsheetDateTimeParsePattern.parseDateTimeParsePattern("DD/MM/YYYY HH:MM:SS;DDMMYYYY HHMMSS")
+                .spreadsheetParserSelector()
         );
     }
 
@@ -276,12 +276,12 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.ENGLISH)
-                ));
+            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.ENGLISH)
+            ));
     }
-    
+
     @Test
     public void testVisitDecimalNumberSymbols() {
         new TestSpreadsheetMetadataVisitor() {
@@ -290,11 +290,11 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                DecimalNumberSymbols.fromDecimalFormatSymbols(
-                        '+',
-                        new DecimalFormatSymbols(Locale.ENGLISH)
-                ));
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+            DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(Locale.ENGLISH)
+            ));
     }
 
     @Test
@@ -305,8 +305,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse("hello-form-handler")
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse("hello-form-handler")
         );
     }
 
@@ -328,8 +328,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                ConverterSelector.parse("general")
+            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+            ConverterSelector.parse("general")
         );
     }
 
@@ -341,8 +341,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("abs")
+            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
     }
 
@@ -364,8 +364,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = q;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FIND_QUERY,
-                SpreadsheetCellQuery.parse("1+2")
+            SpreadsheetMetadataPropertyName.FIND_QUERY,
+            SpreadsheetCellQuery.parse("1+2")
         );
     }
 
@@ -377,8 +377,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
     }
 
@@ -390,8 +390,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                ConverterSelector.parse("general")
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            ConverterSelector.parse("general")
         );
     }
 
@@ -403,8 +403,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
     }
 
@@ -416,8 +416,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse("hello")
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse("hello")
         );
     }
 
@@ -429,8 +429,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                ConverterSelector.parse("general")
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            ConverterSelector.parse("general")
         );
     }
 
@@ -442,8 +442,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("abs")
+            SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
     }
 
@@ -455,8 +455,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = r;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
-                SpreadsheetSelection.parseColumnRange("A:B")
+            SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
+            SpreadsheetSelection.parseColumnRange("A:B")
         );
     }
 
@@ -468,8 +468,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = r;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FROZEN_ROWS,
-                SpreadsheetSelection.parseRowRange("1:2")
+            SpreadsheetMetadataPropertyName.FROZEN_ROWS,
+            SpreadsheetSelection.parseRowRange("1:2")
         );
     }
 
@@ -481,8 +481,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("abs")
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
     }
 
@@ -519,8 +519,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.namedColor(name),
-                colorNumber
+            SpreadsheetMetadataPropertyName.namedColor(name),
+            colorNumber
         );
     }
 
@@ -545,8 +545,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-                SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+            SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector()
         );
     }
 
@@ -558,9 +558,9 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                SpreadsheetPattern.parseNumberParsePattern("#0.0;#0.00")
-                        .spreadsheetParserSelector()
+            SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+            SpreadsheetPattern.parseNumberParsePattern("#0.0;#0.00")
+                .spreadsheetParserSelector()
         );
     }
 
@@ -572,8 +572,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = n;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.PLUGINS,
-                PluginNameSet.parse("TestPlugin111, TestPlugin222")
+            SpreadsheetMetadataPropertyName.PLUGINS,
+            PluginNameSet.parse("TestPlugin111, TestPlugin222")
         );
     }
 
@@ -605,8 +605,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = comparatorNames;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
-                SpreadsheetComparatorNameList.parse("day-of-month")
+            SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
+            SpreadsheetComparatorNameList.parse("day-of-month")
         );
     }
 
@@ -618,8 +618,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-                ConverterSelector.parse("hello")
+            SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+            ConverterSelector.parse("hello")
         );
     }
 
@@ -631,8 +631,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorAliasSet.EMPTY
+            SpreadsheetMetadataPropertyName.COMPARATORS,
+            SpreadsheetComparatorAliasSet.EMPTY
         );
     }
 
@@ -644,8 +644,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterAliasSet.EMPTY
+            SpreadsheetMetadataPropertyName.EXPORTERS,
+            SpreadsheetExporterAliasSet.EMPTY
         );
     }
 
@@ -657,8 +657,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.FORMATTERS,
-                SpreadsheetFormatterAliasSet.EMPTY
+            SpreadsheetMetadataPropertyName.FORMATTERS,
+            SpreadsheetFormatterAliasSet.EMPTY
         );
     }
 
@@ -680,8 +680,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterAliasSet.EMPTY
+            SpreadsheetMetadataPropertyName.IMPORTERS,
+            SpreadsheetImporterAliasSet.EMPTY
         );
     }
 
@@ -693,8 +693,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.PARSERS,
-                SpreadsheetParserAliasSet.EMPTY
+            SpreadsheetMetadataPropertyName.PARSERS,
+            SpreadsheetParserAliasSet.EMPTY
         );
     }
 
@@ -716,8 +716,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+            SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector()
         );
     }
 
@@ -729,8 +729,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-                SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+            SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector()
         );
     }
 
@@ -762,8 +762,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                ConverterSelector.parse("hello-converter")
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            ConverterSelector.parse("hello-converter")
         );
     }
 
@@ -775,8 +775,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("requiredFormFields")
+            SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("requiredFormFields")
         );
     }
 
@@ -788,8 +788,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                ValidatorAliasSet.parse("first-validator, second-validator")
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.parse("first-validator, second-validator")
         );
     }
 
@@ -801,8 +801,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = a;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.parse("nonNull")
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.parse("nonNull")
         );
     }
 
@@ -824,10 +824,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = selection;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.VIEWPORT,
-                SpreadsheetSelection.parseCell("A2")
-                        .viewportRectangle(100, 50)
-                        .viewport()
+            SpreadsheetMetadataPropertyName.VIEWPORT,
+            SpreadsheetSelection.parseCell("A2")
+                .viewportRectangle(100, 50)
+                .viewport()
         );
     }
 

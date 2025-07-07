@@ -51,14 +51,14 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColor extends Spreadshe
                            final Class<?> type,
                            final SpreadsheetConverterContext context) {
         return SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatParserTokenVisitor.color(
-                SpreadsheetFormatParsers.color()
-                        .parseText(
-                                text,
-                                SpreadsheetFormatParserContexts.basic(
-                                        InvalidCharacterExceptionFactory.POSITION
-                                )
-                        ),
-                context
+            SpreadsheetFormatParsers.color()
+                .parseText(
+                    text,
+                    SpreadsheetFormatParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION
+                    )
+                ),
+            context
         );
     }
 

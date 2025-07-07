@@ -40,60 +40,60 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterColor,
-        ColorSpreadsheetFormatParserToken> {
+    ColorSpreadsheetFormatParserToken> {
 
     private final static String TEXT_PATTERN = "@@";
 
     @Test
     public void testWithNullWrappedFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        this.parsePatternOrFail(
-                                this.pattern()
-                        ),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail(
+                    this.pattern()
+                ),
+                null
+            )
         );
     }
 
     @Test
     public void testWithColorSpreadsheetFormatter() {
         final SpreadsheetPatternSpreadsheetFormatter text = SpreadsheetFormatters.text(
-                SpreadsheetFormatParserToken.text(
-                        Lists.of(
-                                SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
-                                SpreadsheetFormatParserToken.textPlaceholder("@", "@")
-                        ),
-                        "@@"
-                )
+            SpreadsheetFormatParserToken.text(
+                Lists.of(
+                    SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
+                    SpreadsheetFormatParserToken.textPlaceholder("@", "@")
+                ),
+                "@@"
+            )
         );
         final SpreadsheetPatternSpreadsheetFormatterColor color = SpreadsheetPatternSpreadsheetFormatterColor.with(
-                this.parsePatternOrFail("[COLOR 1]"),
-                text
+            this.parsePatternOrFail("[COLOR 1]"),
+            text
         );
         final SpreadsheetPatternSpreadsheetFormatterColor wrapper = SpreadsheetPatternSpreadsheetFormatterColor.with(
-                this.parsePatternOrFail("[COLOR 2]"),
-                color
+            this.parsePatternOrFail("[COLOR 2]"),
+            color
         );
         assertSame(
-                text,
-                wrapper.formatter,
-                "formatter"
+            text,
+            wrapper.formatter,
+            "formatter"
         );
     }
 
     @Test
     public void testWithWrappedFormatterFails() {
         this.formatAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        this.parsePatternOrFail(
-                                this.pattern()
-                        ),
-                        SpreadsheetFormatters.general()
+            SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail(
+                    this.pattern()
                 ),
-                "Ignored text",
-                this.createContext()
+                SpreadsheetFormatters.general()
+            ),
+            "Ignored text",
+            this.createContext()
         );
     }
 
@@ -104,20 +104,20 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final Optional<Color> color = Optional.of(Color.BLACK);
 
         this.formatAndCheck(
-                this.createFormatter("[BLACK]"),
-                Optional.empty(), // value
-                new TestSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<Color> colorName(final SpreadsheetColorName name) {
-                        checkEquals(
-                                SpreadsheetColorName.with("BLACK"),
-                                name,
-                                "color name"
-                        );
-                        return color;
-                    }
-                },
-                Optional.empty()
+            this.createFormatter("[BLACK]"),
+            Optional.empty(), // value
+            new TestSpreadsheetFormatterContext() {
+                @Override
+                public Optional<Color> colorName(final SpreadsheetColorName name) {
+                    checkEquals(
+                        SpreadsheetColorName.with("BLACK"),
+                        name,
+                        "color name"
+                    );
+                    return color;
+                }
+            },
+            Optional.empty()
         );
     }
 
@@ -126,17 +126,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
         this.parsePatternFormatAndCheck(
-                "[RED]",
-                text,
-                new TestSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<Color> colorName(final SpreadsheetColorName name) {
-                        checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
-                        return color;
-                    }
-                },
-                SpreadsheetText.with(text + text)
-                        .setColor(color)
+            "[RED]",
+            text,
+            new TestSpreadsheetFormatterContext() {
+                @Override
+                public Optional<Color> colorName(final SpreadsheetColorName name) {
+                    checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                    return color;
+                }
+            },
+            SpreadsheetText.with(text + text)
+                .setColor(color)
         );
     }
 
@@ -145,17 +145,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
         this.parsePatternFormatAndCheck(
-                "[RED]",
-                text,
-                new TestSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<Color> colorName(final SpreadsheetColorName name) {
-                        checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
-                        return color;
-                    }
-                },
-                SpreadsheetText.with(text + text)
-                        .setColor(color)
+            "[RED]",
+            text,
+            new TestSpreadsheetFormatterContext() {
+                @Override
+                public Optional<Color> colorName(final SpreadsheetColorName name) {
+                    checkEquals(SpreadsheetColorName.with("RED"), name, "color name");
+                    return color;
+                }
+            },
+            SpreadsheetText.with(text + text)
+                .setColor(color)
         );
     }
 
@@ -164,17 +164,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
         this.parsePatternFormatAndCheck(
-                "[COLOR 15]",
-                text,
-                new TestSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<Color> colorNumber(final int number) {
-                        checkEquals(15, number);
-                        return color;
-                    }
-                },
-                SpreadsheetText.with(text + text)
-                        .setColor(color)
+            "[COLOR 15]",
+            text,
+            new TestSpreadsheetFormatterContext() {
+                @Override
+                public Optional<Color> colorNumber(final int number) {
+                    checkEquals(15, number);
+                    return color;
+                }
+            },
+            SpreadsheetText.with(text + text)
+                .setColor(color)
         );
     }
 
@@ -184,31 +184,31 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final Optional<Color> color = Optional.of(Color.BLACK);
 
         this.parsePatternFormatAndCheck(
+            SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail("[COLOR 2]"),
                 SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        this.parsePatternOrFail("[COLOR 2]"),
-                        SpreadsheetPatternSpreadsheetFormatterColor.with(
-                                this.parsePatternOrFail("[COLOR 1]"),
-                                SpreadsheetFormatters.text(
-                                        SpreadsheetFormatParserToken.text(
-                                                Lists.of(
-                                                        SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
-                                                        SpreadsheetFormatParserToken.textPlaceholder("@", "@")
-                                                ),
-                                                "@@"
-                                        )
-                                )
+                    this.parsePatternOrFail("[COLOR 1]"),
+                    SpreadsheetFormatters.text(
+                        SpreadsheetFormatParserToken.text(
+                            Lists.of(
+                                SpreadsheetFormatParserToken.textPlaceholder("@", "@"),
+                                SpreadsheetFormatParserToken.textPlaceholder("@", "@")
+                            ),
+                            "@@"
                         )
-                ),
-                text,
-                new TestSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<Color> colorNumber(final int number) {
-                        checkEquals(2, number);
-                        return color;
-                    }
-                },
-                SpreadsheetText.with(text + text)
-                        .setColor(color)
+                    )
+                )
+            ),
+            text,
+            new TestSpreadsheetFormatterContext() {
+                @Override
+                public Optional<Color> colorNumber(final int number) {
+                    checkEquals(2, number);
+                    return color;
+                }
+            },
+            SpreadsheetText.with(text + text)
+                .setColor(color)
         );
     }
 
@@ -217,17 +217,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
         this.parsePatternFormatAndCheck(
-                "[COLOR 15]",
-                text,
-                new TestSpreadsheetFormatterContext() {
-                    @Override
-                    public Optional<Color> colorNumber(final int number) {
-                        checkEquals(15, number);
-                        return color;
-                    }
-                },
-                SpreadsheetText.with(text + text)
-                        .setColor(color)
+            "[COLOR 15]",
+            text,
+            new TestSpreadsheetFormatterContext() {
+                @Override
+                public Optional<Color> colorNumber(final int number) {
+                    checkEquals(15, number);
+                    return color;
+                }
+            },
+            SpreadsheetText.with(text + text)
+                .setColor(color)
         );
     }
 
@@ -236,10 +236,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                                             final SpreadsheetFormatterContext context,
                                             final SpreadsheetText formattedText) {
         this.parsePatternFormatAndCheck(
-                this.createFormatter(pattern),
-                value,
-                context,
-                formattedText
+            this.createFormatter(pattern),
+            value,
+            context,
+            formattedText
         );
     }
 
@@ -248,27 +248,27 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                                             final SpreadsheetFormatterContext context,
                                             final SpreadsheetText formattedText) {
         this.formatAndCheck(
-                formatter,
-                value,
-                context,
-                formattedText.toTextNode()
+            formatter,
+            value,
+            context,
+            formattedText.toTextNode()
         );
     }
 
     @Override
     SpreadsheetPatternSpreadsheetFormatterColor createFormatter0(final ColorSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterColor.with(
-                token,
-                this.textFormatter()
+            token,
+            this.textFormatter()
         );
     }
 
     private SpreadsheetPatternSpreadsheetFormatter textFormatter() {
         return SpreadsheetFormatters.text(
-                this.parsePatternOrFail(
-                        SpreadsheetFormatParsers.textFormat(),
-                        TEXT_PATTERN
-                ).cast(TextSpreadsheetFormatParserToken.class)
+            this.parsePatternOrFail(
+                SpreadsheetFormatParsers.textFormat(),
+                TEXT_PATTERN
+            ).cast(TextSpreadsheetFormatParserToken.class)
         );
     }
 
@@ -323,14 +323,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         @Override
         public <T> Either<T, String> convert(final Object value, final Class<T> target) {
             return this.canConvert(value, target) ?
-                    this.successfulConversion(
-                            value.toString(),
-                            target
-                    ) :
-                    this.failConversion(
-                            value,
-                            target
-                    );
+                this.successfulConversion(
+                    value.toString(),
+                    target
+                ) :
+                this.failConversion(
+                    value,
+                    target
+                );
         }
     }
 
@@ -339,48 +339,48 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     @Test
     public void testTokensColorNumber() {
         this.tokensAndCheck(
-                this.createFormatter("[Color 1]"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "[Color 1]",
-                        "[Color 1]",
-                        alternatives(
-                                "Black,White,Red,Green,Blue,Yellow,Magenta,Cyan," +
-                                        IntStream.rangeClosed(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
-                                                .filter(i -> i != 1)
-                                                .mapToObj(i -> "Color " + i)
-                                                .collect(Collectors.joining(","))
-                        )
+            this.createFormatter("[Color 1]"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "[Color 1]",
+                "[Color 1]",
+                alternatives(
+                    "Black,White,Red,Green,Blue,Yellow,Magenta,Cyan," +
+                        IntStream.rangeClosed(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
+                            .filter(i -> i != 1)
+                            .mapToObj(i -> "Color " + i)
+                            .collect(Collectors.joining(","))
                 )
+            )
         );
     }
 
     @Test
     public void testTokensColorName() {
         this.tokensAndCheck(
-                this.createFormatter("[Red]"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "[Red]",
-                        "[Red]",
-                        alternatives(
-                                "Black,White,Green,Blue,Yellow,Magenta,Cyan," +
-                                        IntStream.rangeClosed(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
-                                                .mapToObj(i -> "Color " + i)
-                                                .collect(Collectors.joining(","))
-                        )
+            this.createFormatter("[Red]"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "[Red]",
+                "[Red]",
+                alternatives(
+                    "Black,White,Green,Blue,Yellow,Magenta,Cyan," +
+                        IntStream.rangeClosed(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
+                            .mapToObj(i -> "Color " + i)
+                            .collect(Collectors.joining(","))
                 )
+            )
         );
     }
 
     private List<SpreadsheetFormatterSelectorTokenAlternative> alternatives(final String csv) {
         return Arrays.stream(csv.split(","))
-                .map(t -> "[" + t + "]")
-                .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(
-                                t,
-                                t
-                        )
-                ).collect(Collectors.toList());
+            .map(t -> "[" + t + "]")
+            .map(t -> SpreadsheetFormatterSelectorTokenAlternative.with(
+                    t,
+                    t
+                )
+            ).collect(Collectors.toList());
     }
 
     // toString.........................................................................................................
@@ -395,17 +395,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     @Test
     public void testEqualsDifferentColor() {
         final SpreadsheetPatternSpreadsheetFormatter formatter = SpreadsheetPattern.parseTextFormatPattern("@")
-                .formatter();
+            .formatter();
 
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        this.parsePatternOrFail("[RED]"),
-                        formatter
-                ),
-                SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        this.parsePatternOrFail("[COLOR01]"),
-                        formatter
-                )
+            SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail("[RED]"),
+                formatter
+            ),
+            SpreadsheetPatternSpreadsheetFormatterColor.with(
+                this.parsePatternOrFail("[COLOR01]"),
+                formatter
+            )
         );
     }
 
@@ -414,16 +414,16 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final ColorSpreadsheetFormatParserToken token = this.parsePatternOrFail("[RED]");
 
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        token,
-                        SpreadsheetPattern.parseTextFormatPattern("@")
-                                .formatter()
-                ),
-                SpreadsheetPatternSpreadsheetFormatterColor.with(
-                        token,
-                        SpreadsheetPattern.parseTextFormatPattern("@@@")
-                                .formatter()
-                )
+            SpreadsheetPatternSpreadsheetFormatterColor.with(
+                token,
+                SpreadsheetPattern.parseTextFormatPattern("@")
+                    .formatter()
+            ),
+            SpreadsheetPatternSpreadsheetFormatterColor.with(
+                token,
+                SpreadsheetPattern.parseTextFormatPattern("@@@")
+                    .formatter()
+            )
         );
     }
 

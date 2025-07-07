@@ -27,33 +27,33 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 public final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor>
-        implements ToStringTesting<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor> {
+    implements ToStringTesting<SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testColorName() {
         final List<ParserToken> tokens = Lists.of(
-                SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
-                SpreadsheetFormatParserToken.colorName("RED", "RED"),
-                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+            SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
+            SpreadsheetFormatParserToken.colorName("RED", "RED"),
+            SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
         );
         colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
-                SpreadsheetPatternSpreadsheetFormatterColorColorSource.NAME,
-                SpreadsheetColorName.with("RED"));
+            SpreadsheetPatternSpreadsheetFormatterColorColorSource.NAME,
+            SpreadsheetColorName.with("RED"));
     }
 
     @Test
     public void testColorNumber() {
         final List<ParserToken> tokens = Lists.of(
-                SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
-                SpreadsheetFormatParserToken.colorLiteralSymbol("COLOR", "COLOR"),
-                SpreadsheetFormatParserToken.whitespace(" ", " "),
-                SpreadsheetFormatParserToken.colorNumber(13, "13"),
-                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+            SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
+            SpreadsheetFormatParserToken.colorLiteralSymbol("COLOR", "COLOR"),
+            SpreadsheetFormatParserToken.whitespace(" ", " "),
+            SpreadsheetFormatParserToken.colorNumber(13, "13"),
+            SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
         );
 
         colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
-                SpreadsheetPatternSpreadsheetFormatterColorColorSource.NUMBER,
-                13);
+            SpreadsheetPatternSpreadsheetFormatterColorColorSource.NUMBER,
+            13);
     }
 
     private void colorNameOrNumberOrFailAndCheck(final ColorSpreadsheetFormatParserToken color,
@@ -74,9 +74,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatP
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor();
 
         final List<ParserToken> tokens = Lists.of(
-                SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
-                SpreadsheetFormatParserToken.colorName("RED", "RED"),
-                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+            SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
+            SpreadsheetFormatParserToken.colorName("RED", "RED"),
+            SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
         );
 
         final ColorSpreadsheetFormatParserToken color = SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));

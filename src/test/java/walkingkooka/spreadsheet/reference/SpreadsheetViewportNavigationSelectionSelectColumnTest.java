@@ -27,8 +27,8 @@ public final class SpreadsheetViewportNavigationSelectionSelectColumnTest extend
     @Test
     public void testHasText() {
         this.textAndCheck(
-                SpreadsheetViewportNavigationSelectionSelectColumn.with(SpreadsheetSelection.parseColumn("ABC")),
-                "select column ABC"
+            SpreadsheetViewportNavigationSelectionSelectColumn.with(SpreadsheetSelection.parseColumn("ABC")),
+            "select column ABC"
         );
     }
 
@@ -39,9 +39,9 @@ public final class SpreadsheetViewportNavigationSelectionSelectColumnTest extend
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("C");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(column),
-                SpreadsheetSelection.A1.setDefaultAnchor(),
-                column.setDefaultAnchor()
+            this.createSpreadsheetViewportNavigation(column),
+            SpreadsheetSelection.A1.setDefaultAnchor(),
+            column.setDefaultAnchor()
         );
     }
 
@@ -50,11 +50,11 @@ public final class SpreadsheetViewportNavigationSelectionSelectColumnTest extend
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell.toColumn()),
-                viewportRectangle(HOME)
-                        .viewport(),
-                viewportRectangle(cell.setRow(HOME.row()))
-                        .viewport()
+            this.createSpreadsheetViewportNavigation(cell.toColumn()),
+            viewportRectangle(HOME)
+                .viewport(),
+            viewportRectangle(cell.setRow(HOME.row()))
+                .viewport()
         );
     }
 

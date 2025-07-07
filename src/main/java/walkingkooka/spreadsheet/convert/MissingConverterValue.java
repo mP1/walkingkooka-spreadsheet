@@ -38,8 +38,8 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
     public static MissingConverterValue with(final Object value,
                                              final String type) {
         return new MissingConverterValue(
-                value,
-                CharSequences.failIfNullOrEmpty(type, "type")
+            value,
+            CharSequences.failIfNullOrEmpty(type, "type")
         );
     }
 
@@ -67,20 +67,20 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.value,
-                this.type
+            this.value,
+            this.type
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof MissingConverterValue && this.equals0((MissingConverterValue) other);
+            other instanceof MissingConverterValue && this.equals0((MissingConverterValue) other);
     }
 
     private boolean equals0(final MissingConverterValue other) {
         return Objects.equals(this.value, other.value) &&
-                this.type == other.type;
+            this.type == other.type;
     }
 
     @Override
@@ -93,8 +93,8 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
     @Override
     public void printTree(final IndentingPrinter printer) {
         TreePrintable.printTreeOrToString(
-                this.value,
-                printer
+            this.value,
+            printer
         );
         printer.indent();
         {
@@ -118,8 +118,8 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
                     break;
                 case TYPE_PROPERTY_STRING:
                     type = context.unmarshall(
-                            child,
-                            String.class
+                        child,
+                        String.class
                     );
                     break;
                 default:
@@ -129,8 +129,8 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
         }
 
         return with(
-                value,
-                type
+            value,
+            type
         );
     }
 
@@ -140,14 +140,14 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
         final Object value = this.value;
         if (null != value) {
             object = object.set(
-                    VALUE_PROPERTY,
-                    context.marshallWithType(value)
+                VALUE_PROPERTY,
+                context.marshallWithType(value)
             );
         }
 
         return object.set(
-                TYPE_PROPERTY,
-                context.marshall(this.type)
+            TYPE_PROPERTY,
+            context.marshall(this.type)
         );
     }
 
@@ -159,10 +159,10 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(MissingConverterValue.class),
-                MissingConverterValue::unmarshall,
-                MissingConverterValue::marshall,
-                MissingConverterValue.class
+            JsonNodeContext.computeTypeName(MissingConverterValue.class),
+            MissingConverterValue::unmarshall,
+            MissingConverterValue::marshall,
+            MissingConverterValue.class
         );
     }
 }

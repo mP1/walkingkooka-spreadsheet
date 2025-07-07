@@ -62,36 +62,36 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
         final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetParserContext, ParserToken>> identifierToTransformer = Maps.sorted();
 
         identifierToTransformer.put(
-                APOSTROPHE_STRING,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformApostropheString
+            APOSTROPHE_STRING,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformApostropheString
         );
         identifierToTransformer.put(
-                EXPRESSION,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformExpression
+            EXPRESSION,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformExpression
         );
         identifierToTransformer.put(
-                FUNCTION_PARAMETERS,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformFunctionParameters
+            FUNCTION_PARAMETERS,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformFunctionParameters
         );
         identifierToTransformer.put(
-                GROUP,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformGroup
+            GROUP,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformGroup
         );
         identifierToTransformer.put(
-                LAMBDA_FUNCTION,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformLambdaFunction
+            LAMBDA_FUNCTION,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformLambdaFunction
         );
         identifierToTransformer.put(
-                NAMED_FUNCTION,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformNamedFunction
+            NAMED_FUNCTION,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformNamedFunction
         );
         identifierToTransformer.put(
-                NEGATIVE,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformNegative
+            NEGATIVE,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformNegative
         );
         identifierToTransformer.put(
-                PERCENTAGE,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformPercentage
+            PERCENTAGE,
+            SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::transformPercentage
         );
 
         this.identifierToTransformer = identifierToTransformer;
@@ -107,8 +107,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
         }
 
         return name.value().endsWith("REQUIRED") ?
-                result.orReport(ParserReporters.basic()) :
-                result;
+            result.orReport(ParserReporters.basic()) :
+            result;
     }
 
     private final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetParserContext, ParserToken>> identifierToTransformer;
@@ -118,8 +118,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformApostropheString(final ParserToken token,
                                                          final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::text
+            token,
+            SpreadsheetFormulaParserToken::text
         );
     }
 
@@ -133,11 +133,11 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformExpression(final ParserToken token,
                                                    final SpreadsheetParserContext context) {
         return token instanceof SpreadsheetFormulaParserToken ?
-                token :
-                SpreadsheetFormulaParserToken.expression(
-                        token.cast(SequenceParserToken.class).value(),
-                        token.text()
-                );
+            token :
+            SpreadsheetFormulaParserToken.expression(
+                token.cast(SequenceParserToken.class).value(),
+                token.text()
+            );
     }
 
     private static final EbnfIdentifierName FUNCTION_PARAMETERS = EbnfIdentifierName.with("FUNCTION_PARAMETERS");
@@ -145,8 +145,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformFunctionParameters(final ParserToken token,
                                                            final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::functionParameters
+            token,
+            SpreadsheetFormulaParserToken::functionParameters
         );
     }
 
@@ -155,8 +155,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformGroup(final ParserToken token,
                                               final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::group
+            token,
+            SpreadsheetFormulaParserToken::group
         );
     }
 
@@ -165,8 +165,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformLambdaFunction(final ParserToken token,
                                                        final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::lambdaFunction
+            token,
+            SpreadsheetFormulaParserToken::lambdaFunction
         );
     }
 
@@ -175,8 +175,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformNamedFunction(final ParserToken token,
                                                       final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::namedFunction
+            token,
+            SpreadsheetFormulaParserToken::namedFunction
         );
     }
 
@@ -185,8 +185,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformNegative(final ParserToken token,
                                                  final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::negative
+            token,
+            SpreadsheetFormulaParserToken::negative
         );
     }
 
@@ -195,23 +195,23 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private static ParserToken transformPercentage(final ParserToken token,
                                                    final SpreadsheetParserContext context) {
         return flat(
-                token,
-                SpreadsheetFormulaParserToken::number
+            token,
+            SpreadsheetFormulaParserToken::number
         );
     }
 
     private static ParserToken flat(final ParserToken token,
                                     final BiFunction<List<ParserToken>, String, ParserToken> factory) {
         return factory.apply(
-                flat0(token),
-                token.text()
+            flat0(token),
+            token.text()
         );
     }
 
     private static List<ParserToken> flat0(final ParserToken token) {
         return token.cast(RepeatedOrSequenceParserToken.class)
-                .flat()
-                .value();
+            .flat()
+            .value();
     }
 
     // EbnfParserCombinator.............................................................................................
@@ -234,7 +234,7 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     private ParserToken transformConcatenation(final ParserToken token,
                                                final SpreadsheetParserContext context) {
         return token.cast(SequenceParserToken.class)
-                .binaryOperator(SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE);
+            .binaryOperator(SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override
@@ -253,8 +253,8 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     public Parser<SpreadsheetParserContext> identifier(final IdentifierEbnfParserToken token,
                                                        final Parser<SpreadsheetParserContext> parser) {
         return this.transformIfNecessary(
-                token.value(),
-                parser
+            token.value(),
+            parser
         );
     }
 
@@ -281,9 +281,9 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     public Parser<SpreadsheetParserContext> rule(final RuleEbnfParserToken token,
                                                  final Parser<SpreadsheetParserContext> parser) {
         return this.transformIfNecessary(
-                token.identifier()
-                        .value(),
-                parser
+            token.identifier()
+                .value(),
+            parser
         );
     }
 

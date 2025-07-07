@@ -37,8 +37,8 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
     public SpreadsheetParserSelector createPluginSelectorLike(final SpreadsheetParserName name,
                                                               final String text) {
         return SpreadsheetParserSelector.with(
-                name,
-                text
+            name,
+            text
         );
     }
 
@@ -53,11 +53,11 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         final String patternText = "@@";
 
         this.parseStringAndCheck(
-                name + " " + patternText,
-                SpreadsheetParserSelector.with(
-                        SpreadsheetParserName.with(name),
-                        patternText
-                )
+            name + " " + patternText,
+            SpreadsheetParserSelector.with(
+                SpreadsheetParserName.with(name),
+                patternText
+            )
         );
     }
 
@@ -73,60 +73,60 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         final String selector = "date-parse-pattern yyyy/!";
 
         final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> SpreadsheetParserSelector.parse(selector)
-                        .spreadsheetParsePattern()
+            InvalidCharacterException.class,
+            () -> SpreadsheetParserSelector.parse(selector)
+                .spreadsheetParsePattern()
         );
 
         this.checkEquals(
-                "Invalid character '!' at 24 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]",
-                thrown.getMessage(),
-                "message"
+            "Invalid character '!' at 24 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]",
+            thrown.getMessage(),
+            "message"
         );
 
         this.checkEquals(
-                '!',
-                selector.charAt(24)
+            '!',
+            selector.charAt(24)
         );
     }
 
     @Test
     public void testSpreadsheetParsePatternWithDateParsePattern() {
         this.spreadsheetParsePatternAndCheck(
-                "date-parse-pattern dd/mm/yyyy",
-                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
+            "date-parse-pattern dd/mm/yyyy",
+            SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
         );
     }
 
     @Test
     public void testSpreadsheetParsePatternWithDateFormatWithoutPattern() {
         this.spreadsheetParsePatternAndCheck(
-                "date-format"
+            "date-format"
         );
     }
 
     private void spreadsheetParsePatternAndCheck(final String text) {
         this.spreadsheetParsePatternAndCheck(
-                text,
-                Optional.empty()
+            text,
+            Optional.empty()
         );
     }
 
     private void spreadsheetParsePatternAndCheck(final String text,
                                                  final SpreadsheetParsePattern expected) {
         this.spreadsheetParsePatternAndCheck(
-                text,
-                Optional.of(expected)
+            text,
+            Optional.of(expected)
         );
     }
 
     private void spreadsheetParsePatternAndCheck(final String text,
                                                  final Optional<SpreadsheetParsePattern> expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetParserSelector.parse(text)
-                        .spreadsheetParsePattern(),
-                () -> "spreadsheetParsePattern " + CharSequences.quote(text)
+            expected,
+            SpreadsheetParserSelector.parse(text)
+                .spreadsheetParsePattern(),
+            () -> "spreadsheetParsePattern " + CharSequences.quote(text)
         );
     }
 
@@ -147,16 +147,16 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"number-parse-pattern $0.00\""
+            this.createJsonNodeMarshallingValue(),
+            "\"number-parse-pattern $0.00\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"number-parse-pattern $0.00\"",
-                this.createJsonNodeMarshallingValue()
+            "\"number-parse-pattern $0.00\"",
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -164,16 +164,16 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
     public SpreadsheetParserSelector unmarshall(final JsonNode json,
                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserSelector.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
     @Override
     public SpreadsheetParserSelector createJsonNodeMarshallingValue() {
         return SpreadsheetParserSelector.with(
-                SpreadsheetParserName.NUMBER_PARSER_PATTERN,
-                "$0.00"
+            SpreadsheetParserName.NUMBER_PARSER_PATTERN,
+            "$0.00"
         );
     }
 

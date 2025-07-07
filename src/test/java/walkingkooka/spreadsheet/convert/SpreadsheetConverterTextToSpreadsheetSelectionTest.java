@@ -35,32 +35,32 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     @Test
     public void testConvertWithStringToSpreadsheetSelectionFails() {
         this.convertFails(
-                "A1",
-                SpreadsheetSelection.class
+            "A1",
+            SpreadsheetSelection.class
         );
     }
 
     @Test
     public void testConvertWithStringToCell() {
         this.convertAndCheck2(
-                "A1",
-                SpreadsheetSelection::parseCell
+            "A1",
+            SpreadsheetSelection::parseCell
         );
     }
 
     @Test
     public void testConvertWithStringToCellAndTargetSpreadsheetExpressionReference() {
         this.convertSpreadsheetExpressionReferenceAndCheck(
-                "A1",
-                SpreadsheetSelection::parseCell
+            "A1",
+            SpreadsheetSelection::parseCell
         );
     }
 
     @Test
     public void testConvertWithCharSequenceToCell() {
         this.convertAndCheck(
-                new StringBuilder("A1"),
-                SpreadsheetSelection.A1
+            new StringBuilder("A1"),
+            SpreadsheetSelection.A1
         );
     }
 
@@ -70,35 +70,35 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         this.convertAndCheck(
-                label,
-                SpreadsheetCellReference.class,
-                this.createContext(label, cell),
-                cell
+            label,
+            SpreadsheetCellReference.class,
+            this.createContext(label, cell),
+            cell
         );
     }
 
     @Test
     public void testConvertWithStringToCellRange() {
         this.convertAndCheck2(
-                "B2:C3",
-                SpreadsheetSelection::parseCellRange
+            "B2:C3",
+            SpreadsheetSelection::parseCellRange
         );
     }
 
     @Test
     public void testConvertWithStringToCellRangeAndTargetSpreadsheetExpressionReference() {
         this.convertSpreadsheetExpressionReferenceAndCheck(
-                "B2:C3",
-                SpreadsheetSelection::parseCellRange
+            "B2:C3",
+            SpreadsheetSelection::parseCellRange
         );
     }
 
     @Test
     public void testConvertWithStringToCellOrCellRangeWithCell() {
         this.convertAndCheck(
-                "A1",
-                SpreadsheetCellReferenceOrRange.class,
-                SpreadsheetSelection.A1
+            "A1",
+            SpreadsheetCellReferenceOrRange.class,
+            SpreadsheetSelection.A1
         );
     }
 
@@ -108,10 +108,10 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         this.convertAndCheck(
-                label,
-                SpreadsheetCellReferenceOrRange.class,
-                this.createContext(label, cell),
-                cell
+            label,
+            SpreadsheetCellReferenceOrRange.class,
+            this.createContext(label, cell),
+            cell
         );
     }
 
@@ -121,36 +121,36 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.convertAndCheck(
-                label,
-                SpreadsheetCellReferenceOrRange.class,
-                this.createContext(label, range),
-                range
+            label,
+            SpreadsheetCellReferenceOrRange.class,
+            this.createContext(label, range),
+            range
         );
     }
 
     @Test
     public void testConvertWithStringToLabelAndSpreadsheetExpressionReference() {
         this.convertSpreadsheetExpressionReferenceAndCheck(
-                "Label123",
-                SpreadsheetSelection::labelName
+            "Label123",
+            SpreadsheetSelection::labelName
         );
     }
 
     @Test
     public void testConvertWithStringToCellOrCellRangeWithCellRange() {
         this.convertAndCheck(
-                "B2:C3",
-                SpreadsheetCellReferenceOrRange.class,
-                SpreadsheetSelection.parseCellRange("B2:C3")
+            "B2:C3",
+            SpreadsheetCellReferenceOrRange.class,
+            SpreadsheetSelection.parseCellRange("B2:C3")
         );
     }
 
     @Test
     public void testConvertWithStringToCellOrCellRangeWithCellRangeSingle() {
         this.convertAndCheck(
-                "D4:D4",
-                SpreadsheetCellReferenceOrRange.class,
-                SpreadsheetSelection.parseCellRange("D4")
+            "D4:D4",
+            SpreadsheetCellReferenceOrRange.class,
+            SpreadsheetSelection.parseCellRange("D4")
         );
     }
 
@@ -160,131 +160,131 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
 
         this.convertAndCheck(
-                label,
-                SpreadsheetCellRangeReference.class,
-                this.createContext(label, range),
-                range
+            label,
+            SpreadsheetCellRangeReference.class,
+            this.createContext(label, range),
+            range
         );
     }
 
     @Test
     public void testConvertWithStringToColumn() {
         this.convertAndCheck2(
-                "D",
-                SpreadsheetSelection::parseColumn
+            "D",
+            SpreadsheetSelection::parseColumn
         );
     }
 
     @Test
     public void testConvertWithStringToColumnWithCellFails() {
         this.convertFails(
-                "A1",
-                SpreadsheetColumnReference.class
+            "A1",
+            SpreadsheetColumnReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToColumnWithCellRangeFails() {
         this.convertFails(
-                "A1:B2",
-                SpreadsheetColumnReference.class
+            "A1:B2",
+            SpreadsheetColumnReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToColumnWithRowFails() {
         this.convertFails(
-                "1",
-                SpreadsheetColumnReference.class
+            "1",
+            SpreadsheetColumnReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToColumnWithRowRangeFails() {
         this.convertFails(
-                "2:3",
-                SpreadsheetColumnReference.class
+            "2:3",
+            SpreadsheetColumnReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToColumnRange() {
         this.convertAndCheck2(
-                "E:F",
-                SpreadsheetSelection::parseColumnRange
+            "E:F",
+            SpreadsheetSelection::parseColumnRange
         );
     }
 
     @Test
     public void testConvertWithStringToLabel() {
         this.convertAndCheck2(
-                "Label123",
-                SpreadsheetSelection::labelName
+            "Label123",
+            SpreadsheetSelection::labelName
         );
     }
 
     @Test
     public void testConvertWithStringToRow() {
         this.convertAndCheck2(
-                "6",
-                SpreadsheetSelection::parseRow
+            "6",
+            SpreadsheetSelection::parseRow
         );
     }
 
     @Test
     public void testConvertWithStringToRowRange() {
         this.convertAndCheck2(
-                "7:8",
-                SpreadsheetSelection::parseRowRange
+            "7:8",
+            SpreadsheetSelection::parseRowRange
         );
     }
 
     @Test
     public void testConvertWithStringToRowWithCellFails() {
         this.convertFails(
-                "A1",
-                SpreadsheetRowReference.class
+            "A1",
+            SpreadsheetRowReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToRowRangeWithCellRangeFails() {
         this.convertFails(
-                "B2:C3",
-                SpreadsheetRowReference.class
+            "B2:C3",
+            SpreadsheetRowReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToRowWithColumnFails() {
         this.convertFails(
-                "A",
-                SpreadsheetRowReference.class
+            "A",
+            SpreadsheetRowReference.class
         );
     }
 
     @Test
     public void testConvertWithStringToRowRangeWithColumnRangeFails() {
         this.convertFails(
-                "B:C",
-                SpreadsheetRowReference.class
+            "B:C",
+            SpreadsheetRowReference.class
         );
     }
 
     private void convertAndCheck2(final String string,
                                   final Function<String, ? extends SpreadsheetSelection> parse) {
         this.convertAndCheck(
-                string,
-                parse.apply(string)
+            string,
+            parse.apply(string)
         );
     }
 
     private void convertSpreadsheetExpressionReferenceAndCheck(final String string,
                                                                final Function<String, ? extends SpreadsheetExpressionReference> parser) {
         this.convertAndCheck(
-                string,
-                SpreadsheetExpressionReference.class,
-                parser.apply(string)
+            string,
+            SpreadsheetExpressionReference.class,
+            parser.apply(string)
         );
     }
 
@@ -296,19 +296,19 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
     @Override
     public SpreadsheetConverterContext createContext() {
         return this.createContext(
-                (s) -> {
-                    throw new UnsupportedOperationException();
-                }
+            (s) -> {
+                throw new UnsupportedOperationException();
+            }
         );
     }
 
     private SpreadsheetConverterContext createContext(final String label,
                                                       final SpreadsheetSelection cellOrLabel) {
         return this.createContext(
-                (s) -> {
-                    this.checkEquals(SpreadsheetSelection.labelName(label), s, "label");
-                    return cellOrLabel;
-                }
+            (s) -> {
+                this.checkEquals(SpreadsheetSelection.labelName(label), s, "label");
+                return cellOrLabel;
+            }
         );
     }
 
@@ -319,9 +319,9 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -329,9 +329,9 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionTest extends Sp
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

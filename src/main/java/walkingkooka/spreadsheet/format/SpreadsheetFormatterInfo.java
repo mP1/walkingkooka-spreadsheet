@@ -31,24 +31,24 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetFormatterName} for a {@link SpreadsheetFormatter}.
  */
 public final class SpreadsheetFormatterInfo implements PluginInfoLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
-        HateosResource<SpreadsheetFormatterName> {
+    HateosResource<SpreadsheetFormatterName> {
 
     public static SpreadsheetFormatterInfo parse(final String text) {
         return new SpreadsheetFormatterInfo(
-                PluginInfo.parse(
-                        text,
-                        SpreadsheetFormatterName::with
-                )
+            PluginInfo.parse(
+                text,
+                SpreadsheetFormatterName::with
+            )
         );
     }
 
     public static SpreadsheetFormatterInfo with(final AbsoluteUrl url,
                                                 final SpreadsheetFormatterName name) {
         return new SpreadsheetFormatterInfo(
-                PluginInfo.with(
-                        url,
-                        name
-                )
+            PluginInfo.with(
+                url,
+                name
+            )
         );
     }
 
@@ -73,10 +73,10 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
     @Override
     public SpreadsheetFormatterInfo setName(final SpreadsheetFormatterName name) {
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetFormatterInfo(
-                        this.pluginInfo.setName(name)
-                );
+            this :
+            new SpreadsheetFormatterInfo(
+                this.pluginInfo.setName(name)
+            );
     }
 
     private final PluginInfo<SpreadsheetFormatterName> pluginInfo;
@@ -98,8 +98,8 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterInfo &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFormatterInfo &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormatterInfo other) {
@@ -124,16 +124,16 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
     static SpreadsheetFormatterInfo unmarshall(final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatterInfo.parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterInfo.class),
-                SpreadsheetFormatterInfo::unmarshall,
-                SpreadsheetFormatterInfo::marshall,
-                SpreadsheetFormatterInfo.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterInfo.class),
+            SpreadsheetFormatterInfo::unmarshall,
+            SpreadsheetFormatterInfo::marshall,
+            SpreadsheetFormatterInfo.class
         );
         SpreadsheetFormatterName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }

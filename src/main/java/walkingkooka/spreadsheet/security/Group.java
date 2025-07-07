@@ -59,8 +59,8 @@ public final class Group extends Identity<GroupId> {
         checkId(id);
 
         return this.id.equals(id) ?
-                this :
-                new Group(id, this.name);
+            this :
+            new Group(id, this.name);
     }
 
     public GroupName name() {
@@ -105,7 +105,7 @@ public final class Group extends Identity<GroupId> {
         properties.add(context.marshall(this.name).setName(NAME_PROPERTY));
 
         return JsonNode.object()
-                .setChildren(properties);
+            .setChildren(properties);
     }
 
     private final static String NAME_PROPERTY_STRING = "name";
@@ -113,10 +113,10 @@ public final class Group extends Identity<GroupId> {
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(Group.class),
-                Group::unmarshall,
-                Group::marshall,
-                Group.class
+            JsonNodeContext.computeTypeName(Group.class),
+            Group::unmarshall,
+            Group::marshall,
+            Group.class
         );
     }
 
@@ -135,8 +135,8 @@ public final class Group extends Identity<GroupId> {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .value(this.id)
-                .value(this.name)
-                .build();
+            .value(this.id)
+            .value(this.name)
+            .build();
     }
 }

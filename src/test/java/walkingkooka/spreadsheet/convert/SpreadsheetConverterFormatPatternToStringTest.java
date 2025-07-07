@@ -46,23 +46,23 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterFormatPatternToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterFormatPatternToString>
-        implements HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetConverterFormatPatternToString> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     @Test
     public void testWithNullPatternFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetConverterFormatPatternToString.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetConverterFormatPatternToString.with(null)
         );
     }
 
     @Test
     public void testWithEmptyPatternFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetConverterFormatPatternToString.with("")
+            IllegalArgumentException.class,
+            () -> SpreadsheetConverterFormatPatternToString.with("")
         );
     }
 
@@ -71,18 +71,18 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertBooleanFalseToString() {
         this.convertToStringAndCheck(
-                "$000.000",
-                false,
-                "$000.000"
+            "$000.000",
+            false,
+            "$000.000"
         );
     }
 
     @Test
     public void testConvertBooleanTrueToString() {
         this.convertToStringAndCheck(
-                "$000.000",
-                true,
-                "$001.000"
+            "$000.000",
+            true,
+            "$001.000"
         );
     }
 
@@ -93,64 +93,64 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertBigDecimalToString() {
         this.convertNumberToStringAndCheck(
-                BigDecimal.valueOf(NUMBER)
+            BigDecimal.valueOf(NUMBER)
         );
     }
 
     @Test
     public void testConvertBigIntegerToString() {
         this.convertNumberToStringAndCheck(
-                BigInteger.valueOf(NUMBER)
+            BigInteger.valueOf(NUMBER)
         );
     }
 
     @Test
     public void testConvertFloatToString() {
         this.convertNumberToStringAndCheck(
-                Float.valueOf(NUMBER)
+            Float.valueOf(NUMBER)
         );
     }
 
     @Test
     public void testConvertDoubleToString() {
         this.convertNumberToStringAndCheck(
-                Double.valueOf(NUMBER)
+            Double.valueOf(NUMBER)
         );
     }
 
     @Test
     public void testConvertExpressionNumberToString() {
         this.convertNumberToStringAndCheck(
-                KIND.create(NUMBER)
+            KIND.create(NUMBER)
         );
     }
 
     @Test
     public void testConvertIntegerToString() {
         this.convertNumberToStringAndCheck(
-                (Integer)NUMBER
+            (Integer) NUMBER
         );
     }
 
     @Test
     public void testConvertLongToString() {
         this.convertNumberToStringAndCheck(
-                (long)NUMBER
+            (long) NUMBER
         );
     }
 
     @Test
     public void testConvertShortToString() {
         this.convertNumberToStringAndCheck(
-                (short) NUMBER
+            (short) NUMBER
         );
     }
 
     private void convertNumberToStringAndCheck(final Number number) {
         this.convertToStringAndCheck(
-                "$000.000",
-                number,
-                "$123.000"
+            "$000.000",
+            number,
+            "$123.000"
         );
     }
 
@@ -159,27 +159,27 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertLocalDateToString() {
         this.convertToStringAndCheck(
-                "yyyy mm dd",
-                LocalDate.of(1999, 12, 31),
-                "1999 12 31"
+            "yyyy mm dd",
+            LocalDate.of(1999, 12, 31),
+            "1999 12 31"
         );
     }
 
     @Test
     public void testConvertLocalDateTimeToString() {
         this.convertToStringAndCheck(
-                "yyyy mm dd hh mm ss",
-                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                "1999 12 31 12 58 59"
+            "yyyy mm dd hh mm ss",
+            LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+            "1999 12 31 12 58 59"
         );
     }
 
     @Test
     public void testConvertLocalTimeToString() {
         this.convertToStringAndCheck(
-                "ss mm hh",
-                LocalTime.of(12, 58, 59),
-                "59 58 12"
+            "ss mm hh",
+            LocalTime.of(12, 58, 59),
+            "59 58 12"
         );
     }
 
@@ -198,57 +198,57 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertCellToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseCell("$A1")
+            SpreadsheetSelection.parseCell("$A1")
         );
     }
 
     @Test
     public void testConvertCellRangeToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseCellRange("$A1:$B2")
+            SpreadsheetSelection.parseCellRange("$A1:$B2")
         );
     }
 
     @Test
     public void testConvertColumnToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseColumn("$A")
+            SpreadsheetSelection.parseColumn("$A")
         );
     }
 
     @Test
     public void testConvertColumnRangeToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseColumnRange("$A:$B")
+            SpreadsheetSelection.parseColumnRange("$A:$B")
         );
     }
 
     @Test
     public void testConvertRowToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseRow("$12")
+            SpreadsheetSelection.parseRow("$12")
         );
     }
 
     @Test
     public void testConvertRowRangeToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseRowRange("$12:$34")
+            SpreadsheetSelection.parseRowRange("$12:$34")
         );
     }
 
     @Test
     public void testConvertLabelToString() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.labelName("Label123")
+            SpreadsheetSelection.labelName("Label123")
         );
     }
 
     private void convertToStringAndCheck(final Object value) {
         this.convertToStringAndCheck(
-                this.createConverter(),
-                value,
-                value.toString()
+            this.createConverter(),
+            value,
+            value.toString()
         );
     }
 
@@ -256,9 +256,9 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                                          final Object value,
                                          final String expected) {
         this.convertToStringAndCheck(
-                SpreadsheetConverterFormatPatternToString.with(pattern),
-                value,
-                expected
+            SpreadsheetConverterFormatPatternToString.with(pattern),
+            value,
+            expected
         );
     }
 
@@ -266,11 +266,11 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                                          final Object value,
                                          final String expected) {
         this.convertAndCheck(
-                converter,
-                value,
-                String.class,
-                this.createContext(),
-                expected
+            converter,
+            value,
+            String.class,
+            this.createContext(),
+            expected
         );
     }
 
@@ -282,44 +282,44 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Override
     public SpreadsheetConverterContext createContext() {
         final Converter<SpreadsheetConverterContext> converter = Converters.collection(
-                Lists.of(
-                        Converters.simple(),
-                        Converters.booleanToNumber(),
-                        SpreadsheetConverters.textToText(),
-                        SpreadsheetConverters.numberToNumber(),
-                        Converters.localDateToLocalDateTime(),
-                        Converters.localTimeToLocalDateTime()
-                )
+            Lists.of(
+                Converters.simple(),
+                Converters.booleanToNumber(),
+                SpreadsheetConverters.textToText(),
+                SpreadsheetConverters.numberToNumber(),
+                Converters.localDateToLocalDateTime(),
+                Converters.localTimeToLocalDateTime()
+            )
         );
 
         final Locale locale = Locale.FRANCE;
 
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                converter,
-                SpreadsheetLabelNameResolvers.fake(),
-                JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.fake(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        converter.cast(ConverterContext.class),
-                                        DateTimeContexts.basic(
-                                                DateTimeSymbols.fromDateFormatSymbols(
-                                                        new DateFormatSymbols(locale)
-                                                ),
-                                                locale,
-                                                1900,
-                                                50,
-                                                LocalDateTime::now
-                                        ),
-                                        DecimalNumberContexts.american(MathContext.DECIMAL128)
-                                ),
-                                KIND
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            converter,
+            SpreadsheetLabelNameResolvers.fake(),
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    ConverterContexts.basic(
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        converter.cast(ConverterContext.class),
+                        DateTimeContexts.basic(
+                            DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(locale)
+                            ),
+                            locale,
+                            1900,
+                            50,
+                            LocalDateTime::now
                         ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                )
+                        DecimalNumberContexts.american(MathContext.DECIMAL128)
+                    ),
+                    KIND
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            )
         );
     }
 
@@ -328,7 +328,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testEqualsDifferentPattern() {
         this.checkNotEquals(
-                SpreadsheetConverterFormatPatternToString.with("#.##")
+            SpreadsheetConverterFormatPatternToString.with("#.##")
         );
     }
 

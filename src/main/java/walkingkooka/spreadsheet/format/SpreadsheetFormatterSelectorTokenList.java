@@ -59,7 +59,7 @@ import java.util.Objects;
  * </pre>
  */
 public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<SpreadsheetFormatterSelectorToken>
-        implements ImmutableListDefaults<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken> {
+    implements ImmutableListDefaults<SpreadsheetFormatterSelectorTokenList, SpreadsheetFormatterSelectorToken> {
 
     public final static SpreadsheetFormatterSelectorTokenList EMPTY = new SpreadsheetFormatterSelectorTokenList(Lists.empty());
 
@@ -74,14 +74,14 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
             final List<SpreadsheetFormatterSelectorToken> copy = Lists.array();
             for (final SpreadsheetFormatterSelectorToken token : tokens) {
                 copy.add(
-                        Objects.requireNonNull(token, "Includes null token")
+                    Objects.requireNonNull(token, "Includes null token")
                 );
             }
 
             spreadsheetFormatterSelectorTokens =
-                    copy.isEmpty() ?
-                            EMPTY :
-                            new SpreadsheetFormatterSelectorTokenList(copy);
+                copy.isEmpty() ?
+                    EMPTY :
+                    new SpreadsheetFormatterSelectorTokenList(copy);
         }
 
         return spreadsheetFormatterSelectorTokens;
@@ -112,8 +112,8 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
     public SpreadsheetFormatterSelectorTokenList setElements(final List<SpreadsheetFormatterSelectorToken> tokens) {
         final SpreadsheetFormatterSelectorTokenList copy = with(tokens);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     // json.............................................................................................................
@@ -121,12 +121,12 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
     static SpreadsheetFormatterSelectorTokenList unmarshall(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return with(
-                Cast.to(
-                        context.unmarshallList(
-                                node,
-                                SpreadsheetFormatterSelectorToken.class
-                        )
+            Cast.to(
+                context.unmarshallList(
+                    node,
+                    SpreadsheetFormatterSelectorToken.class
                 )
+            )
         );
     }
 
@@ -136,16 +136,16 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
 
     static {
         SpreadsheetFormatterSelectorToken.with(
-                "", // label
-                "", // text
-                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            "", // label
+            "", // text
+            SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
         );
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTokenList.class),
-                SpreadsheetFormatterSelectorTokenList::unmarshall,
-                SpreadsheetFormatterSelectorTokenList::marshall,
-                SpreadsheetFormatterSelectorTokenList.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorTokenList.class),
+            SpreadsheetFormatterSelectorTokenList::unmarshall,
+            SpreadsheetFormatterSelectorTokenList::marshall,
+            SpreadsheetFormatterSelectorTokenList.class
         );
     }
 }

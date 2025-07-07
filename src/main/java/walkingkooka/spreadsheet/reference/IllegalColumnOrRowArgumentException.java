@@ -28,7 +28,7 @@ public abstract class IllegalColumnOrRowArgumentException extends IllegalArgumen
 
     IllegalColumnOrRowArgumentException(final String message) {
         super(
-                checkMessage(message)
+            checkMessage(message)
         );
     }
 

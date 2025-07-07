@@ -70,9 +70,9 @@ import java.util.Set;
  * public methods requests.
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
-        SpreadsheetProviderDelegator,
-        ProviderContextDelegator,
-        LocaleContextDelegator {
+    SpreadsheetProviderDelegator,
+    ProviderContextDelegator,
+    LocaleContextDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
@@ -94,13 +94,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
 
         return new BasicSpreadsheetEngineContext(
-                serverUrl,
-                metadata,
-                storeRepository,
-                functionAliases,
-                localeContext,
-                spreadsheetProvider,
-                providerContext
+            serverUrl,
+            metadata,
+            storeRepository,
+            functionAliases,
+            localeContext,
+            spreadsheetProvider,
+            providerContext
         );
     }
 
@@ -123,7 +123,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.storeRepository = storeRepository;
 
         this.labelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
-                storeRepository.labels()
+            storeRepository.labels()
         );
 
         this.functionAliases = functionAliases;
@@ -156,16 +156,16 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(functionAliases, "functionAliases");
 
         return this.functionAliases.equals(functionAliases) ?
-                this :
-                new BasicSpreadsheetEngineContext(
-                        this.serverUrl,
-                        this.metadata,
-                        this.storeRepository,
-                        functionAliases,
-                        this.localeContext,
-                        this.spreadsheetProvider,
-                        this.providerContext
-                );
+            this :
+            new BasicSpreadsheetEngineContext(
+                this.serverUrl,
+                this.metadata,
+                this.storeRepository,
+                functionAliases,
+                this.localeContext,
+                this.spreadsheetProvider,
+                this.providerContext
+            );
     }
 
     // resolveLabel.....................................................................................................
@@ -183,21 +183,21 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                       final Optional<SpreadsheetCell> cell) {
         return SpreadsheetFormulaParsers.valueOrExpression(
-                        this.metadata.spreadsheetParser(
-                                this, // SpreadsheetParserProvider
-                                this // ProviderContext
-                        )
+                this.metadata.spreadsheetParser(
+                    this, // SpreadsheetParserProvider
+                    this // ProviderContext
                 )
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        formula,
-                        this.metadata.spreadsheetParserContext(
-                                cell,
-                                this, // LocaleContext
-                                this // HasNow
-                        )
-                ).get()
-                .cast(SpreadsheetFormulaParserToken.class);
+            )
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                formula,
+                this.metadata.spreadsheetParserContext(
+                    cell,
+                    this, // LocaleContext
+                    this // HasNow
+                )
+            ).get()
+            .cast(SpreadsheetFormulaParserToken.class);
     }
 
     @Override
@@ -205,10 +205,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(
-                this.spreadsheetExpressionEvaluationContext(
-                        NO_CELL,
-                        SpreadsheetExpressionReferenceLoaders.fake() // toExpression never loads references
-                )
+            this.spreadsheetExpressionEvaluationContext(
+                NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake() // toExpression never loads references
+            )
         );
     }
 
@@ -228,8 +228,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             // the $cell changes
             if (null == this.expressionFunctionProvider) {
                 this.expressionFunctionProvider = metadata.expressionFunctionProvider(
-                        functionAliases,
-                        spreadsheetProvider
+                    functionAliases,
+                    spreadsheetProvider
                 );
             }
 
@@ -251,19 +251,19 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 }
 
                 this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
-                        cell,
-                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                        converterSelector,
-                        this, // SpreadsheetLabelNameResolver,
-                        spreadsheetProvider, // SpreadsheetConverterProvider
-                        this, // LocaleContext
-                        this.providerContext
+                    cell,
+                    SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                    converterSelector,
+                    this, // SpreadsheetLabelNameResolver,
+                    spreadsheetProvider, // SpreadsheetConverterProvider
+                    this, // LocaleContext
+                    this.providerContext
                 );
             }
 
-            if(null == this.formHandlerContext) {
+            if (null == this.formHandlerContext) {
                 final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
-                if(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
+                if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
                     // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
                     // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
                     this.formHandlerContext = FormHandlerContexts.fake();
@@ -274,17 +274,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
-                cell,
-                loader,
-                this.serverUrl,
-                metadata,
-                this.storeRepository,
-                this.spreadsheetConverterContext,
-                (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
-                this.formHandlerContext,
-                this.expressionFunctionProvider,
-                this.localeContext,
-                this // ProviderContext
+            cell,
+            loader,
+            this.serverUrl,
+            metadata,
+            this.storeRepository,
+            this.spreadsheetConverterContext,
+            (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
+            this.formHandlerContext,
+            this.expressionFunctionProvider,
+            this.localeContext,
+            this // ProviderContext
         );
     }
 
@@ -308,9 +308,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public boolean isPure(final ExpressionFunctionName function) {
         return this.spreadsheetProvider.expressionFunction(
-                function,
-                Lists.empty(),
-                this
+            function,
+            Lists.empty(),
+            this
         ).isPure(this);
     }
 
@@ -326,24 +326,26 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
 
         final SpreadsheetFormatter spreadsheetFormatter = formatter
-                .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
-                                selector,
-                                this
-                        )
-                ).orElseGet(
-                        () -> metadata.spreadsheetFormatter(
-                                spreadsheetProvider,
-                                this // ProviderContext
-                        )
-                );
+            .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
+                    selector,
+                    this
+                )
+            ).orElseGet(
+                () -> metadata.spreadsheetFormatter(
+                    spreadsheetProvider,
+                    this // ProviderContext
+                )
+            );
 
         return spreadsheetFormatter.format(
-                value,
-                this.spreadsheetFormatterContext(
-                        Optional.of(cell)
-                )
+            value,
+            this.spreadsheetFormatterContext(
+                Optional.of(cell)
+            )
         );
-    };
+    }
+
+    ;
 
     // FORMAT .........................................................................................................
 
@@ -357,18 +359,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(formatter, "formatter");
 
         final SpreadsheetFormula formula = cell
-                .formula();
+            .formula();
         final Optional<Object> value = formula.errorOrValue();
 
         SpreadsheetCell formattedCell = cell;
         Optional<TextNode> formatted = this.formatValue(
-                        cell,
-                        value,
-                        formatter
-                ).map(
-                        f -> cell.style()
-                                .replace(f)
-                );
+            cell,
+            value,
+            formatter
+        ).map(
+            f -> cell.style()
+                .replace(f)
+        );
 
 
         SpreadsheetError error = null;
@@ -377,21 +379,21 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         if (false == formatted.isPresent()) {
             error = SpreadsheetError.formatterNotFound(value);
             formatted = Optional.of(
-                    TextNode.text(error.text())
+                TextNode.text(error.text())
             );
         }
 
         // if no ERROR save new "formatted not found" ERROR if no error was present.
         if (null != error && false == formula.error().isPresent()) {
             formattedCell = formattedCell.setFormula(
-                    formula.setError(
-                            Optional.of(error)
-                    )
+                formula.setError(
+                    Optional.of(error)
+                )
             );
         }
 
         return this.applyConditionalRules(
-                formattedCell.setFormattedValue(formatted)
+            formattedCell.setFormattedValue(formatted)
         );
     }
 
@@ -404,34 +406,34 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         // load rules for cell
         final Set<SpreadsheetConditionalFormattingRule> rules = SortedSets.tree(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
         rules.addAll(
-                this.storeRepository()
-                        .rangeToConditionalFormattingRules()
-                        .findValuesWithCell(cell.reference())
+            this.storeRepository()
+                .rangeToConditionalFormattingRules()
+                .findValuesWithCell(cell.reference())
         );
 
         // apply them
         for (final SpreadsheetConditionalFormattingRule rule : rules) {
             final boolean ruleResult = rule.formula()
-                    .expression()
-                    .get()
-                    .toBoolean(
-                            this.spreadsheetExpressionEvaluationContext(
-                                    Optional.of(
-                                            cell
-                                    ),
-                                    SpreadsheetExpressionReferenceLoaders.fake() ///
-                            )
-                    );
+                .expression()
+                .get()
+                .toBoolean(
+                    this.spreadsheetExpressionEvaluationContext(
+                        Optional.of(
+                            cell
+                        ),
+                        SpreadsheetExpressionReferenceLoaders.fake() ///
+                    )
+                );
 
             if (Boolean.TRUE.equals(ruleResult)) {
                 final TextNode formattedText = cell.formattedValue()
-                        .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formattedValue cell=" + cell));
+                    .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formattedValue cell=" + cell));
                 formatted = formatted.setFormattedValue(
-                        Optional.of(
-                                rule.style()
-                                        .apply(cell)
-                                        .replace(formattedText)
-                        )
+                    Optional.of(
+                        rule.style()
+                            .apply(cell)
+                            .replace(formattedText)
+                    )
                 );
                 break;
             }
@@ -443,21 +445,21 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
 
         return this.metadata.spreadsheetFormatterContext(
+            cell,
+            (final Optional<Object> v) -> this.spreadsheetEngineContext(
+                SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
+            ).spreadsheetExpressionEvaluationContext(
                 cell,
-                (final Optional<Object> v) -> this.spreadsheetEngineContext(
-                        SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
-                ).spreadsheetExpressionEvaluationContext(
-                        cell,
-                        SpreadsheetExpressionReferenceLoaders.fake()
-                ).addLocalVariable(
-                        SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
-                        v
-                ),
-                this, // SpreadsheetLabelNameResolver,
-                spreadsheetProvider, // ConverterProvider,
-                spreadsheetProvider, // SpreadsheetFormatterProvider,
-                this, // LocaleContext
-                this // ProviderContext
+                SpreadsheetExpressionReferenceLoaders.fake()
+            ).addLocalVariable(
+                SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
+                v
+            ),
+            this, // SpreadsheetLabelNameResolver,
+            spreadsheetProvider, // ConverterProvider,
+            spreadsheetProvider, // SpreadsheetFormatterProvider,
+            this, // LocaleContext
+            this // ProviderContext
         );
     }
 
@@ -502,12 +504,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .globalLength(Integer.MAX_VALUE)
-                .valueLength(Integer.MAX_VALUE)
-                .label("serverUrl").value(this.serverUrl)
-                .value(LineEnding.NL)
-                .label("metadata")
-                .value(this.metadata)
-                .build();
+            .globalLength(Integer.MAX_VALUE)
+            .valueLength(Integer.MAX_VALUE)
+            .label("serverUrl").value(this.serverUrl)
+            .value(LineEnding.NL)
+            .label("metadata")
+            .value(this.metadata)
+            .build();
     }
 }

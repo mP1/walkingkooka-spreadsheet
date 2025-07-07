@@ -25,8 +25,7 @@ public abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetT
         super();
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return ExpressionFunctionAliasSet.class.getSimpleName();
     }
 }

@@ -32,35 +32,35 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Mixin interface with default methods to assist testing of an {@link SpreadsheetFormatter}.
  */
 public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
-        extends SpreadsheetFormatterTesting,
-        ToStringTesting<F>,
-        TypeNameTesting<F> {
+    extends SpreadsheetFormatterTesting,
+    ToStringTesting<F>,
+    TypeNameTesting<F> {
 
     // format...........................................................................................................
 
     @Test
     default void testFormatWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter()
-                        .format(
-                                null,
-                                this.createContext()
-                        )
+            NullPointerException.class,
+            () -> this.createFormatter()
+                .format(
+                    null,
+                    this.createContext()
+                )
         );
     }
 
     @Test
     default void testFormatWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter()
-                        .format(
-                                Optional.of(
-                                        this.value()
-                                ),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createFormatter()
+                .format(
+                    Optional.of(
+                        this.value()
+                    ),
+                    null
+                )
         );
     }
 
@@ -77,66 +77,66 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     default void formatAndCheck(final Object value,
                                 final String text) {
         this.formatAndCheck(
-                Optional.of(value),
-                text
+            Optional.of(value),
+            text
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final String text) {
         this.formatAndCheck(
-                value,
-                SpreadsheetText.with(text)
+            value,
+            SpreadsheetText.with(text)
         );
     }
 
     default void formatAndCheck(final Object value,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
-                Optional.of(value),
-                text
+            Optional.of(value),
+            text
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
-                this.createFormatter(),
-                value,
-                text.toTextNode()
+            this.createFormatter(),
+            value,
+            text.toTextNode()
         );
     }
 
     default void formatAndCheck(final Object value,
                                 final TextNode text) {
         this.formatAndCheck(
-                Optional.of(value),
-                text
+            Optional.of(value),
+            text
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final TextNode text) {
         this.formatAndCheck(
-                value,
-                Optional.of(text)
+            value,
+            Optional.of(text)
         );
     }
 
     default void formatAndCheck(final Object value,
                                 final Optional<TextNode> text) {
         this.formatAndCheck(
-                Optional.of(value),
-                text
+            Optional.of(value),
+            text
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final Optional<TextNode> text) {
         this.formatAndCheck(
-                this.createFormatter(),
-                value,
-                text
+            this.createFormatter(),
+            value,
+            text
         );
     }
 
@@ -144,9 +144,9 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Object value,
                                 final String text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                text
+            formatter,
+            Optional.of(value),
+            text
         );
     }
 
@@ -154,9 +154,9 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Optional<Object> value,
                                 final String text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                SpreadsheetText.with(text)
+            formatter,
+            value,
+            SpreadsheetText.with(text)
         );
     }
 
@@ -164,9 +164,9 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Object value,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                text
+            formatter,
+            Optional.of(value),
+            text
         );
     }
 
@@ -174,9 +174,9 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Optional<Object> value,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                text.toTextNode()
+            formatter,
+            value,
+            text.toTextNode()
         );
     }
 
@@ -184,9 +184,9 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Object value,
                                 final TextNode text) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value),
-                text
+            formatter,
+            Optional.of(value),
+            text
         );
     }
 
@@ -194,9 +194,9 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Optional<Object> value,
                                 final TextNode text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                Optional.of(text)
+            formatter,
+            value,
+            Optional.of(text)
         );
     }
 
@@ -204,10 +204,10 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                 final Optional<Object> value,
                                 final Optional<TextNode> text) {
         this.formatAndCheck(
-                formatter,
-                value,
-                this.createContext(),
-                text
+            formatter,
+            value,
+            this.createContext(),
+            text
         );
     }
 
@@ -215,48 +215,48 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     default void formatAndCheck(final Object value) {
         this.formatAndCheck(
-                Optional.of(value)
+            Optional.of(value)
         );
     }
 
     default void formatAndCheck(final Optional<Object> value) {
         this.formatAndCheck(
-                value,
-                this.createContext()
+            value,
+            this.createContext()
         );
     }
 
     default void formatAndCheck(final Object value,
                                 final SpreadsheetFormatterContext context) {
         this.formatAndCheck(
-                Optional.of(value),
-                context
+            Optional.of(value),
+            context
         );
     }
 
     default void formatAndCheck(final Optional<Object> value,
                                 final SpreadsheetFormatterContext context) {
         this.formatAndCheck(
-                this.createFormatter(),
-                value,
-                context
+            this.createFormatter(),
+            value,
+            context
         );
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value) {
         this.formatAndCheck(
-                formatter,
-                Optional.of(value)
+            formatter,
+            Optional.of(value)
         );
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Optional<Object> value) {
         this.formatAndCheck(
-                formatter,
-                value,
-                this.createContext()
+            formatter,
+            value,
+            this.createContext()
         );
     }
 
@@ -265,31 +265,31 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     @Test
     default void testTokenWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createFormatter().tokens(null)
+            NullPointerException.class,
+            () -> this.createFormatter().tokens(null)
         );
     }
 
     default void tokensAndCheck() {
         this.tokensAndCheck(
-                this.createContext()
+            this.createContext()
         );
     }
 
     default void tokensAndCheck(final SpreadsheetFormatterContext context,
                                 final SpreadsheetFormatterSelectorToken... expected) {
         this.tokensAndCheck(
-                context,
-                Lists.of(expected)
+            context,
+            Lists.of(expected)
         );
     }
 
     default void tokensAndCheck(final SpreadsheetFormatterContext context,
                                 final List<SpreadsheetFormatterSelectorToken> expected) {
         this.tokensAndCheck(
-                this.createFormatter(),
-                context,
-                expected
+            this.createFormatter(),
+            context,
+            expected
         );
     }
 

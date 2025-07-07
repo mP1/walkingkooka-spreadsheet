@@ -24,13 +24,13 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import java.util.Objects;
 
 final class BasicSpreadsheetExporterContext implements SpreadsheetExporterContext,
-        JsonNodeMarshallContextDelegator {
+    JsonNodeMarshallContextDelegator {
 
     static BasicSpreadsheetExporterContext with(final SpreadsheetMetadata spreadsheetMetadata,
                                                 final JsonNodeMarshallContext context) {
         return new BasicSpreadsheetExporterContext(
-                Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata"),
-                Objects.requireNonNull(context, "context")
+            Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata"),
+            Objects.requireNonNull(context, "context")
         );
     }
 

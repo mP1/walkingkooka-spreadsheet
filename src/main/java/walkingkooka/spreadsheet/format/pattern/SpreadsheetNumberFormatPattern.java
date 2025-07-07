@@ -39,7 +39,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
      */
     static SpreadsheetNumberFormatPattern with(final ParserToken token) {
         SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor.with()
-                .startAccept(token);
+            .startAccept(token);
 
         return new SpreadsheetNumberFormatPattern(token);
     }
@@ -63,23 +63,23 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                 break;
             case 2:
                 this.missingCondition2(
-                        index,
-                        formatter,
-                        formatters
+                    index,
+                    formatter,
+                    formatters
                 );
                 break;
             case 3:
                 this.missingCondition3(
-                        index,
-                        formatter,
-                        formatters
+                    index,
+                    formatter,
+                    formatters
                 );
                 break;
             case 4:
                 this.missingCondition4(
-                        index,
-                        formatter,
-                        formatters
+                    index,
+                    formatter,
+                    formatters
                 );
                 break;
             default:
@@ -94,18 +94,18 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         switch (index) {
             case 0:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                POSITIVE_OR_ZERO,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        POSITIVE_OR_ZERO,
+                        formatter
+                    )
                 );
                 break;
             case 1:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                NEGATIVE,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        NEGATIVE,
+                        formatter
+                    )
                 );
                 formatters.accept(TEXT);
                 break;
@@ -120,26 +120,26 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         switch (index) {
             case 0:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                POSITIVE,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        POSITIVE,
+                        formatter
+                    )
                 );
                 break;
             case 1:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                NEGATIVE,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        NEGATIVE,
+                        formatter
+                    )
                 );
                 break;
             case 2:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                ZERO,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        ZERO,
+                        formatter
+                    )
                 );
                 formatters.accept(TEXT);
                 break;
@@ -154,26 +154,26 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         switch (index) {
             case 0:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                POSITIVE,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        POSITIVE,
+                        formatter
+                    )
                 );
                 break;
             case 1:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                NEGATIVE,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        NEGATIVE,
+                        formatter
+                    )
                 );
                 break;
             case 2:
                 formatters.accept(
-                        SpreadsheetFormatters.conditional(
-                                ZERO,
-                                formatter
-                        )
+                    SpreadsheetFormatters.conditional(
+                        ZERO,
+                        formatter
+                    )
                 );
                 break;
             case 3:
@@ -185,39 +185,39 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     }
 
     private final static SpreadsheetFormatParserToken NUMBER_ZERO = SpreadsheetFormatParserToken.conditionNumber(
-            BigDecimal.ZERO, "0"
+        BigDecimal.ZERO, "0"
     );
 
     private final static ConditionSpreadsheetFormatParserToken ZERO = SpreadsheetFormatParserToken.equalsSpreadsheetFormatParserToken(
-            Lists.of(
-                    SpreadsheetFormatParserToken.equalsSymbol("=", "="),
-                    NUMBER_ZERO
-            ),
-            "=0"
+        Lists.of(
+            SpreadsheetFormatParserToken.equalsSymbol("=", "="),
+            NUMBER_ZERO
+        ),
+        "=0"
     );
 
     private final static ConditionSpreadsheetFormatParserToken POSITIVE = SpreadsheetFormatParserToken.greaterThan(
-            Lists.of(
-                    SpreadsheetFormatParserToken.greaterThanSymbol(">", ">"),
-                    NUMBER_ZERO
-            ),
-            ">0"
+        Lists.of(
+            SpreadsheetFormatParserToken.greaterThanSymbol(">", ">"),
+            NUMBER_ZERO
+        ),
+        ">0"
     );
 
     private final static ConditionSpreadsheetFormatParserToken POSITIVE_OR_ZERO = SpreadsheetFormatParserToken.greaterThanEquals(
-            Lists.of(
-                    SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">="),
-                    NUMBER_ZERO
-            ),
-            ">=0"
+        Lists.of(
+            SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">="),
+            NUMBER_ZERO
+        ),
+        ">=0"
     );
 
     private final static ConditionSpreadsheetFormatParserToken NEGATIVE = SpreadsheetFormatParserToken.lessThan(
-            Lists.of(
-                    SpreadsheetFormatParserToken.lessThanSymbol("<", "<"),
-                    NUMBER_ZERO
-            ),
-            "<0"
+        Lists.of(
+            SpreadsheetFormatParserToken.lessThanSymbol("<", "<"),
+            NUMBER_ZERO
+        ),
+        "<0"
     );
 
     private final static SpreadsheetPatternSpreadsheetFormatter TEXT = SpreadsheetFormatters.defaultText();
@@ -228,8 +228,8 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     public List<SpreadsheetNumberFormatPattern> patterns() {
         if (null == this.patterns) {
             this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                    this,
-                    SpreadsheetNumberFormatPattern::new
+                this,
+                SpreadsheetNumberFormatPattern::new
             );
         }
 
@@ -241,8 +241,8 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     @Override
     public SpreadsheetNumberFormatPattern removeColor() {
         return this.removeIf0(
-                COLOR_PREDICATE,
-                SpreadsheetNumberFormatPattern::new
+            COLOR_PREDICATE,
+            SpreadsheetNumberFormatPattern::new
         );
     }
 
@@ -251,16 +251,16 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     @Override
     public SpreadsheetNumberFormatPattern setColorName(final SpreadsheetColorName name) {
         return this.setColorName0(
-                name,
-                SpreadsheetPattern::parseNumberFormatPattern
+            name,
+            SpreadsheetPattern::parseNumberFormatPattern
         );
     }
 
     @Override
     public SpreadsheetNumberFormatPattern setColorNumber(final int colorNumber) {
         return this.setColorNumber0(
-                colorNumber,
-                SpreadsheetPattern::parseNumberFormatPattern
+            colorNumber,
+            SpreadsheetPattern::parseNumberFormatPattern
         );
     }
 
@@ -269,8 +269,8 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
     @Override
     public SpreadsheetNumberFormatPattern removeCondition() {
         return this.removeIf0(
-                CONDITION_PREDICATE,
-                SpreadsheetNumberFormatPattern::new
+            CONDITION_PREDICATE,
+            SpreadsheetNumberFormatPattern::new
         );
     }
 

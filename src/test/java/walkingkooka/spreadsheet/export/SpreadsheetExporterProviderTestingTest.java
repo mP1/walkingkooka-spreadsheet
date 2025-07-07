@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.Objects;
 
 public final class SpreadsheetExporterProviderTestingTest implements SpreadsheetExporterProviderTesting<SpreadsheetExporterProviderTestingTest.TestSpreadsheetExporterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static String SELECTOR = "export-123 @@";
 
     private final static SpreadsheetExporter EXPORTER = SpreadsheetExporters.fake();
 
     private final static SpreadsheetExporterInfo INFO = SpreadsheetExporterInfo.with(
-            Url.parseAbsolute("https://example.com/123"),
-            SpreadsheetExporterName.with("exporter-123")
+        Url.parseAbsolute("https://example.com/123"),
+        SpreadsheetExporterName.with("exporter-123")
     );
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -45,27 +45,27 @@ public final class SpreadsheetExporterProviderTestingTest implements Spreadsheet
     @Test
     public void testSpreadsheetExporterSelectorAndCheck() {
         this.spreadsheetExporterAndCheck(
-                SELECTOR,
-                CONTEXT,
-                EXPORTER
+            SELECTOR,
+            CONTEXT,
+            EXPORTER
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameAndCheck() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterName.with("export-123"),
-                Lists.empty(),
-                CONTEXT,
-                EXPORTER
+            SpreadsheetExporterName.with("export-123"),
+            Lists.empty(),
+            CONTEXT,
+            EXPORTER
         );
     }
 
     @Test
     public void testSpreadsheetExporterInfosAndCheck() {
         this.spreadsheetExporterInfosAndCheck(
-                new TestSpreadsheetExporterProvider(),
-                INFO
+            new TestSpreadsheetExporterProvider(),
+            INFO
         );
     }
 

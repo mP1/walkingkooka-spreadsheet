@@ -35,19 +35,19 @@ abstract class SpreadsheetViewportNavigationNonExtendPixel extends SpreadsheetVi
                                                                          final SpreadsheetViewportNavigationContext context) {
         // check if original selection is within the moved viewport
         final SpreadsheetViewportWindows windows = context.windows(
-                rectangle,
-                true, //includeFrozenColumnsRows
-                SpreadsheetViewportWindowsFunction.NO_SELECTION
+            rectangle,
+            true, //includeFrozenColumnsRows
+            SpreadsheetViewportWindowsFunction.NO_SELECTION
         );
 
         return windows.test(
-                anchoredSelection.anchor()
-                        .opposite()
-                        .selection(
-                                anchoredSelection.selection()
-                        )
+            anchoredSelection.anchor()
+                .opposite()
+                .selection(
+                    anchoredSelection.selection()
+                )
         ) ?
-                Optional.of(anchoredSelection) :
-                SpreadsheetViewport.NO_ANCHORED_SELECTION;
+            Optional.of(anchoredSelection) :
+            SpreadsheetViewport.NO_ANCHORED_SELECTION;
     }
 }

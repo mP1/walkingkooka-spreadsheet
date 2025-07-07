@@ -28,9 +28,8 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
         super();
     }
 
-    @Override
-    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                      final SpreadsheetViewportNavigationContext context) {
+    @Override final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                                final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
 
         final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
@@ -38,17 +37,17 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
             // selection present try and move it.
             final AnchoredSpreadsheetSelection anchoredSelection = maybeAnchored.get();
             final Optional<AnchoredSpreadsheetSelection> maybeMovedSelection = this.updateSelection(
-                    anchoredSelection.selection(),
-                    anchoredSelection.anchor(),
-                    context
+                anchoredSelection.selection(),
+                anchoredSelection.anchor(),
+                context
             );
 
             if (maybeMovedSelection.isPresent()) {
                 final AnchoredSpreadsheetSelection movedSelection = maybeMovedSelection.get();
                 result = updateViewport(
-                        movedSelection,
-                        viewport,
-                        context
+                    movedSelection,
+                    viewport,
+                    context
                 );
             } else {
                 result = viewport.setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
@@ -62,11 +61,11 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference cell,
                                                   final SpreadsheetViewportNavigationContext context) {
         return this.updateSelection(
-                cell,
-                SpreadsheetViewportAnchor.CELL,
-                context
+            cell,
+            SpreadsheetViewportAnchor.CELL,
+            context
         ).map(
-                a -> a.selection().toCell()
+            a -> a.selection().toCell()
         );
     }
 }

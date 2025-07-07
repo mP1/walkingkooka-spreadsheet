@@ -24,15 +24,15 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.VisitorTesting;
 
 public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitorTest implements ClassTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor>,
-        VisitorTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor, ParserToken> {
+    VisitorTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor, ParserToken> {
 
     @Override
     public SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor createVisitor() {
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null
         );
     }
 

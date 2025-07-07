@@ -33,8 +33,8 @@ public final class SpreadsheetExporterContexts implements PublicStaticHelper {
     public static SpreadsheetExporterContext basic(final SpreadsheetMetadata spreadsheetMetadata,
                                                    final JsonNodeMarshallContext context) {
         return BasicSpreadsheetExporterContext.with(
-                spreadsheetMetadata,
-                context
+            spreadsheetMetadata,
+            context
         );
     }
 

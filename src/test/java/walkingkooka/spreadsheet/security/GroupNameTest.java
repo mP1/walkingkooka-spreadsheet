@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
-        JsonNodeMarshallingTesting<GroupName> {
+    JsonNodeMarshallingTesting<GroupName> {
 
     @Test
     public void testCreateEmptyStringFails() {
@@ -101,7 +101,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
         final GroupName d4 = GroupName.with("d4");
 
         this.compareToArraySortAndCheck(d4, c3, a1, b2,
-                b2, c3, a1, d4);
+            b2, c3, a1, d4);
     }
 
     // marshall ......................................................................................................

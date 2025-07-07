@@ -68,19 +68,19 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
     public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
-                .flatMap(f -> optionalStream(
-                                f.formatSpreadsheetText(
-                                        value,
-                                        context
-                                )
-                        )
-                ).findFirst();
+            .flatMap(f -> optionalStream(
+                    f.formatSpreadsheetText(
+                        value,
+                        context
+                    )
+                )
+            ).findFirst();
     }
 
     // TODO Missing GWT JRE Optional#stream
     private Stream<SpreadsheetText> optionalStream(final Optional<SpreadsheetText> optional) {
         return optional.map(Stream::of)
-                .orElse(Stream.of());
+            .orElse(Stream.of());
     }
 
     final List<SpreadsheetPatternSpreadsheetFormatter> formatters;
@@ -102,7 +102,7 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterCollection && this.equals0((SpreadsheetPatternSpreadsheetFormatterCollection) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterCollection && this.equals0((SpreadsheetPatternSpreadsheetFormatterCollection) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterCollection other) {
@@ -112,8 +112,8 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
     @Override
     public String toString() {
         return SpreadsheetPattern.SEPARATOR.toSeparatedString(
-                this.formatters,
-                SpreadsheetFormatter::toString
+            this.formatters,
+            SpreadsheetFormatter::toString
         );
     }
 }

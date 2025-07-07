@@ -30,30 +30,30 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLikeTesting<SpreadsheetImporterName,
-        SpreadsheetImporterInfo,
-        SpreadsheetImporterInfoSet,
-        SpreadsheetImporterSelector,
-        SpreadsheetImporterAlias,
-        SpreadsheetImporterAliasSet>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetImporterAliasSet>,
-        ToStringTesting<SpreadsheetImporterAliasSet>,
-        JsonNodeMarshallingTesting<SpreadsheetImporterAliasSet> {
+    SpreadsheetImporterInfo,
+    SpreadsheetImporterInfoSet,
+    SpreadsheetImporterSelector,
+    SpreadsheetImporterAlias,
+    SpreadsheetImporterAliasSet>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetImporterAliasSet>,
+    ToStringTesting<SpreadsheetImporterAliasSet>,
+    JsonNodeMarshallingTesting<SpreadsheetImporterAliasSet> {
 
     // with.............................................................................................................
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterAliasSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetImporterAliasSet.with(null)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                SpreadsheetImporterAliasSet.EMPTY,
-                SpreadsheetImporterAliasSet.with(SortedSets.empty())
+            SpreadsheetImporterAliasSet.EMPTY,
+            SpreadsheetImporterAliasSet.with(SortedSets.empty())
         );
     }
 
@@ -64,35 +64,35 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
         final SpreadsheetImporterName abc = SpreadsheetImporterName.with("abc");
 
         this.aliasOrNameAndCheck(
-                this.createSet(),
-                abc,
-                abc
+            this.createSet(),
+            abc,
+            abc
         );
     }
 
     @Test
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
-                this.createSet(),
-                SpreadsheetImporterName.with("hello-alias"),
-                SpreadsheetImporterName.with("hello")
+            this.createSet(),
+            SpreadsheetImporterName.with("hello-alias"),
+            SpreadsheetImporterName.with("hello")
         );
     }
 
     @Test
     public void testAliasSelectorWithName() {
         this.aliasSelectorAndCheck(
-                this.createSet(),
-                SpreadsheetImporterName.with("abc")
+            this.createSet(),
+            SpreadsheetImporterName.with("abc")
         );
     }
 
     @Test
     public void testAliasSelectorWithAlias() {
         this.aliasSelectorAndCheck(
-                this.createSet(),
-                SpreadsheetImporterName.with("custom-alias"),
-                SpreadsheetImporterSelector.parse("custom(1)")
+            this.createSet(),
+            SpreadsheetImporterName.with("custom-alias"),
+            SpreadsheetImporterSelector.parse("custom(1)")
         );
     }
 
@@ -113,7 +113,7 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-                SpreadsheetImporterAliasSet.parse("different")
+            SpreadsheetImporterAliasSet.parse("different")
         );
     }
 
@@ -128,8 +128,8 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     public SpreadsheetImporterAliasSet unmarshall(final JsonNode json,
                                                   final JsonNodeUnmarshallContext context) {
         return SpreadsheetImporterAliasSet.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

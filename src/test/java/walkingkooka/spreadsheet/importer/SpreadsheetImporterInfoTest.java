@@ -32,15 +32,15 @@ public final class SpreadsheetImporterInfoTest implements PluginInfoLikeTesting<
         final SpreadsheetImporterName different = SpreadsheetImporterName.with("different");
 
         this.setNameAndCheck(
-                SpreadsheetImporterInfo.with(
-                        url,
-                        SpreadsheetImporterName.with("original-importer-name")
-                ),
-                different,
-                SpreadsheetImporterInfo.with(
-                        url,
-                        different
-                )
+            SpreadsheetImporterInfo.with(
+                url,
+                SpreadsheetImporterName.with("original-importer-name")
+            ),
+            different,
+            SpreadsheetImporterInfo.with(
+                url,
+                different
+            )
         );
     }
 
@@ -62,8 +62,8 @@ public final class SpreadsheetImporterInfoTest implements PluginInfoLikeTesting<
     public SpreadsheetImporterInfo createPluginInfoLike(final AbsoluteUrl url,
                                                         final SpreadsheetImporterName name) {
         return SpreadsheetImporterInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -73,8 +73,8 @@ public final class SpreadsheetImporterInfoTest implements PluginInfoLikeTesting<
     public SpreadsheetImporterInfo unmarshall(final JsonNode json,
                                               final JsonNodeUnmarshallContext context) {
         return SpreadsheetImporterInfo.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

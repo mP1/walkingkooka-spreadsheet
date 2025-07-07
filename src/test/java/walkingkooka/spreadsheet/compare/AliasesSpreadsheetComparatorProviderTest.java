@@ -67,79 +67,79 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
     @Test
     public void testWithUnknownComparatorName() {
         AliasesSpreadsheetComparatorProvider.with(
-                SpreadsheetComparatorAliasSet.parse("unknown-comparator404"),
-                new FakeSpreadsheetComparatorProvider() {
-                    @Override
-                    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-                        return SpreadsheetComparatorInfoSet.parse("https://example.com/comparator111 comparator111");
-                    }
+            SpreadsheetComparatorAliasSet.parse("unknown-comparator404"),
+            new FakeSpreadsheetComparatorProvider() {
+                @Override
+                public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+                    return SpreadsheetComparatorInfoSet.parse("https://example.com/comparator111 comparator111");
                 }
+            }
         );
     }
 
     @Test
     public void testSpreadsheetComparatorNameWithName() {
         this.spreadsheetComparatorAndCheck(
-                NAME1,
-                Lists.empty(),
-                CONTEXT,
-                COMPARATOR1
+            NAME1,
+            Lists.empty(),
+            CONTEXT,
+            COMPARATOR1
         );
     }
 
     @Test
     public void testSpreadsheetComparatorSelectorWithName() {
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorSelector.parse(NAME1 + ""),
-                CONTEXT,
-                COMPARATOR1
+            SpreadsheetComparatorSelector.parse(NAME1 + ""),
+            CONTEXT,
+            COMPARATOR1
         );
     }
 
     @Test
     public void testSpreadsheetComparatorNameWithAlias() {
         this.spreadsheetComparatorAndCheck(
-                ALIAS2,
-                Lists.empty(),
-                CONTEXT,
-                COMPARATOR2
+            ALIAS2,
+            Lists.empty(),
+            CONTEXT,
+            COMPARATOR2
         );
     }
 
     @Test
     public void testSpreadsheetComparatorSelectorWithAlias() {
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorSelector.parse(ALIAS2 + ""),
-                CONTEXT,
-                COMPARATOR2
+            SpreadsheetComparatorSelector.parse(ALIAS2 + ""),
+            CONTEXT,
+            COMPARATOR2
         );
     }
 
     @Test
     public void testSpreadsheetComparatorNameWithSelector() {
         this.spreadsheetComparatorAndCheck(
-                NAME4,
-                Lists.empty(),
-                CONTEXT,
-                COMPARATOR3
+            NAME4,
+            Lists.empty(),
+            CONTEXT,
+            COMPARATOR3
         );
     }
 
     @Test
     public void testSpreadsheetComparatorSelectorWithSelector() {
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorSelector.parse(NAME4 + ""),
-                CONTEXT,
-                COMPARATOR3
+            SpreadsheetComparatorSelector.parse(NAME4 + ""),
+            CONTEXT,
+            COMPARATOR3
         );
     }
 
     @Test
     public void testInfos() {
         this.spreadsheetComparatorInfosAndCheck(
-                INFO1,
-                INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from SpreadsheetComparatorAliasSet
+            INFO1,
+            INFO2.setName(ALIAS2),
+            INFO4.setName(NAME4) // from SpreadsheetComparatorAliasSet
         );
     }
 
@@ -148,59 +148,59 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
         final String aliases = "comparator1, alias2 comparator2, custom4 comparator3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
-                NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
-                aliases
+            NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
+            aliases
         );
 
         return AliasesSpreadsheetComparatorProvider.with(
-                SpreadsheetComparatorAliasSet.parse(aliases),
-                new FakeSpreadsheetComparatorProvider() {
-                    @Override
-                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
-                                                                       final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                                       final List<?> values,
-                                                                       final ProviderContext context) {
-                        SpreadsheetComparator<?> comparator;
-
-                        switch (name.toString()) {
-                            case NAME1_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                comparator = COMPARATOR1;
-                                break;
-                            case NAME2_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                comparator = COMPARATOR2;
-                                break;
-                            case NAME3_STRING:
-                                checkEquals(Lists.of(VALUE3), values, "values");
-                                comparator = COMPARATOR3;
-                                break;
-                            default:
-                                throw new IllegalArgumentException("Unknown comparator " + name);
-                        }
-
-                        return comparator;
-                    }
-
-                    @Override
-                    public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
-                        return SpreadsheetComparatorInfoSet.with(
-                                Sets.of(
-                                        INFO1,
-                                        INFO2,
-                                        INFO3
-                                )
-                        );
-                    }
+            SpreadsheetComparatorAliasSet.parse(aliases),
+            new FakeSpreadsheetComparatorProvider() {
+                @Override
+                public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                                      final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                      final List<?> values,
+                                                                      final ProviderContext context) {
+                    SpreadsheetComparator<?> comparator;
+
+                    switch (name.toString()) {
+                        case NAME1_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            comparator = COMPARATOR1;
+                            break;
+                        case NAME2_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            comparator = COMPARATOR2;
+                            break;
+                        case NAME3_STRING:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            comparator = COMPARATOR3;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unknown comparator " + name);
+                    }
+
+                    return comparator;
+                }
+
+                @Override
+                public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+                    return SpreadsheetComparatorInfoSet.with(
+                        Sets.of(
+                            INFO1,
+                            INFO2,
+                            INFO3
+                        )
+                    );
+                }
+            }
         );
     }
 

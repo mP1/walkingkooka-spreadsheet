@@ -28,8 +28,8 @@ public final class ValueSeparatorSymbolSpreadsheetFormulaParserToken extends Sym
     static ValueSeparatorSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                   final String text) {
         return new ValueSeparatorSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

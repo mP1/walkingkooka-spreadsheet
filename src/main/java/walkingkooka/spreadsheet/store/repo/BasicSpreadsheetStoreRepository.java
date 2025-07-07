@@ -68,19 +68,19 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(users, "users");
 
         return new BasicSpreadsheetStoreRepository(
-                cells,
-                cellReferences,
-                columns,
-                forms,
-                groups,
-                labels,
-                labelReferences,
-                metadatas,
-                rangeToCells,
-                rangeToConditionalFormattingRules,
-                rows,
-                storage,
-                users
+            cells,
+            cellReferences,
+            columns,
+            forms,
+            groups,
+            labels,
+            labelReferences,
+            metadatas,
+            rangeToCells,
+            rangeToConditionalFormattingRules,
+            rows,
+            storage,
+            users
         );
     }
 
@@ -206,17 +206,17 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     @Override
     public String toString() {
         return this.cells + " " +
-                this.cellReferences + " " +
-                this.columns + " " +
-                this.forms + " " +
-                this.groups + " " +
-                this.labels + " " +
-                this.labelReferences + " " +
-                this.metadatas + " " +
-                this.rangeToCells + " " +
-                this.rangeToConditionalFormattingRules + " " +
-                this.rows + " " +
-                this.storage + " " +
-                this.users;
+            this.cellReferences + " " +
+            this.columns + " " +
+            this.forms + " " +
+            this.groups + " " +
+            this.labels + " " +
+            this.labelReferences + " " +
+            this.metadatas + " " +
+            this.rangeToCells + " " +
+            this.rangeToConditionalFormattingRules + " " +
+            this.rows + " " +
+            this.storage + " " +
+            this.users;
     }
 }

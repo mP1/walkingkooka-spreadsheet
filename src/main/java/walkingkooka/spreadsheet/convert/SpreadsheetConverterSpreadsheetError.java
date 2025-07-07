@@ -36,11 +36,11 @@ abstract class SpreadsheetConverterSpreadsheetError extends SpreadsheetConverter
                                     final Class<?> type,
                                     final SpreadsheetConverterContext context) {
         return value instanceof SpreadsheetError &&
-                this.canConvertSpreadsheetError(
-                        (SpreadsheetError) value,
-                        type,
-                        context
-                );
+            this.canConvertSpreadsheetError(
+                (SpreadsheetError) value,
+                type,
+                context
+            );
     }
 
     abstract boolean canConvertSpreadsheetError(final SpreadsheetError error,
@@ -52,9 +52,9 @@ abstract class SpreadsheetConverterSpreadsheetError extends SpreadsheetConverter
                                                  final Class<T> targetType,
                                                  final SpreadsheetConverterContext context) {
         return this.convertSpreadsheetError(
-                (SpreadsheetError) value,
-                targetType,
-                context
+            (SpreadsheetError) value,
+            targetType,
+            context
         );
     }
 

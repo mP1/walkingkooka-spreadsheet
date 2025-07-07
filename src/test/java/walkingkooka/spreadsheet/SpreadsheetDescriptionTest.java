@@ -27,8 +27,8 @@ import walkingkooka.text.CharSequences;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDescriptionTest implements ClassTesting2<SpreadsheetDescription>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetDescription>,
-        ToStringTesting<SpreadsheetDescription> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetDescription>,
+    ToStringTesting<SpreadsheetDescription> {
 
     private final static String TEXT = "description #1";
 
@@ -70,7 +70,7 @@ public final class SpreadsheetDescriptionTest implements ClassTesting2<Spreadshe
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createObject(),
-                CharSequences.quote(TEXT).toString());
+            CharSequences.quote(TEXT).toString());
     }
 
     @Override

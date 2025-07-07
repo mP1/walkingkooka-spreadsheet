@@ -40,8 +40,8 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
                                                      final Object value,
                                                      final Throwable cause) {
         super(
-                checkMessage(message),
-                checkCause(cause)
+            checkMessage(message),
+            checkCause(cause)
         );
 
         this.name = checkName(name);
@@ -64,11 +64,11 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
     public String getMessage() {
         // Metadata frozen-column A:B: Column range must begin at 'A'
         return "Metadata " +//
-                this.name.value() + //
-                "=" +
-                CharSequences.quoteIfChars(this.value()) +
-                ", " +
-                super.getMessage();
+            this.name.value() + //
+            "=" +
+            CharSequences.quoteIfChars(this.value()) +
+            ", " +
+            super.getMessage();
     }
 
     public SpreadsheetMetadataPropertyName<?> name() {

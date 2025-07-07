@@ -21,7 +21,7 @@ import walkingkooka.tree.json.marshall.FakeJsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 public class FakeSpreadsheetImporterContext extends FakeJsonNodeUnmarshallContext
-        implements SpreadsheetImporterContext {
+    implements SpreadsheetImporterContext {
 
     @Override
     public SpreadsheetImporterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {

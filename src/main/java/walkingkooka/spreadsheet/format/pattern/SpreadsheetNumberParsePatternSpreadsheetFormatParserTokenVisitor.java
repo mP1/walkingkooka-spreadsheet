@@ -87,8 +87,8 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
         final int lastDigit = this.lastDigit;
         if (-1 != lastDigit) {
             components.set(
-                    lastDigit,
-                    components.get(lastDigit).lastDigit(this.mode)
+                lastDigit,
+                components.get(lastDigit).lastDigit(this.mode)
             );
         }
 
@@ -139,10 +139,10 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     @Override
     protected void visit(final DigitSpreadsheetFormatParserToken token) {
         this.addComponent(
-                SpreadsheetNumberParsePatternComponent.digit(
-                        this.mode,
-                        this.digitMaxCount()
-                )
+            SpreadsheetNumberParsePatternComponent.digit(
+                this.mode,
+                this.digitMaxCount()
+            )
         );
         this.nextDigit();
     }
@@ -150,10 +150,10 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     @Override
     protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
         this.addComponent(
-                SpreadsheetNumberParsePatternComponent.digitSpace(
-                        this.mode,
-                        this.digitMaxCount()
-                )
+            SpreadsheetNumberParsePatternComponent.digitSpace(
+                this.mode,
+                this.digitMaxCount()
+            )
         );
         this.nextDigit();
     }
@@ -161,10 +161,10 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     @Override
     protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
         this.addComponent(
-                SpreadsheetNumberParsePatternComponent.digitZero(
-                        this.mode,
-                        this.digitMaxCount()
-                )
+            SpreadsheetNumberParsePatternComponent.digitZero(
+                this.mode,
+                this.digitMaxCount()
+            )
         );
         this.nextDigit();
     }
@@ -209,9 +209,9 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
     @Override
     protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.addComponent(
-                SpreadsheetNumberParsePatternComponent.whitespace(
-                        token.textLength()
-                )
+            SpreadsheetNumberParsePatternComponent.whitespace(
+                token.textLength()
+            )
         );
     }
 
@@ -239,8 +239,8 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
 
     private int digitMaxCount() {
         return this.mode.isFirstDigit() ?
-                Integer.MAX_VALUE :
-                1;
+            Integer.MAX_VALUE :
+            1;
     }
 
     private void nextDigit() {

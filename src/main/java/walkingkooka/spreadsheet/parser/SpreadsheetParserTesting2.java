@@ -29,26 +29,26 @@ public interface SpreadsheetParserTesting2<P extends SpreadsheetParser> extends 
     @Test
     default void testTokensWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createParser().tokens(null)
+            NullPointerException.class,
+            () -> this.createParser().tokens(null)
         );
     }
 
     default void tokensAndCheck(final SpreadsheetParserContext context,
                                 final SpreadsheetParserSelectorToken... expected) {
         this.tokensAndCheck(
-                this.createParser(),
-                context,
-                Lists.of(expected)
+            this.createParser(),
+            context,
+            Lists.of(expected)
         );
     }
 
     default void tokensAndCheck(final SpreadsheetParserContext context,
                                 final List<SpreadsheetParserSelectorToken> expected) {
         this.tokensAndCheck(
-                this.createParser(),
-                context,
-                expected
+            this.createParser(),
+            context,
+            expected
         );
     }
 
@@ -57,8 +57,8 @@ public interface SpreadsheetParserTesting2<P extends SpreadsheetParser> extends 
     @Test
     default void testValueTypeNotNull() {
         this.checkNotEquals(
-                null,
-                this.createParser()
+            null,
+            this.createParser()
         );
     }
 }

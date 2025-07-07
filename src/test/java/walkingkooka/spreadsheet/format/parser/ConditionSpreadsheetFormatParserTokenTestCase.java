@@ -46,7 +46,7 @@ public abstract class ConditionSpreadsheetFormatParserTokenTestCase<T extends Co
     @Test
     public final void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CONDITION
+            SpreadsheetFormatParserTokenKind.CONDITION
         );
     }
 
@@ -75,6 +75,6 @@ public abstract class ConditionSpreadsheetFormatParserTokenTestCase<T extends Co
     @Override
     public T createDifferentToken() {
         return this.createToken(this.operatorSymbol().text() + NUMBER2,
-                Lists.of(this.operatorSymbol(), this.number2()));
+            Lists.of(this.operatorSymbol(), this.number2()));
     }
 }

@@ -36,86 +36,86 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
-        implements ComparableTesting2<SpreadsheetLabelName>,
-        NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
+    implements ComparableTesting2<SpreadsheetLabelName>,
+    NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
     public void testWithTrueFails() {
         withFails(
-                "true",
-                IllegalArgumentException.class,
-                "Invalid label with \"true\""
+            "true",
+            IllegalArgumentException.class,
+            "Invalid label with \"true\""
         );
     }
 
     @Test
     public void testWithTrueFails2() {
         withFails(
-                "TRue",
-                IllegalArgumentException.class,
-                "Invalid label with \"TRue\""
+            "TRue",
+            IllegalArgumentException.class,
+            "Invalid label with \"TRue\""
         );
     }
 
     @Test
     public void testWithFalseFails() {
         withFails(
-                "false",
-                IllegalArgumentException.class,
-                "Invalid label with \"false\""
+            "false",
+            IllegalArgumentException.class,
+            "Invalid label with \"false\""
         );
     }
 
     @Test
     public void testWithInvalidInitialFails() {
         this.withFails(
-                "1abc",
-                InvalidCharacterException.class,
-                "Invalid character '1' at 0"
+            "1abc",
+            InvalidCharacterException.class,
+            "Invalid character '1' at 0"
         );
     }
 
     @Test
     public void testWithInvalidPartFails() {
         this.withFails(
-                "abc$def",
-                InvalidCharacterException.class,
-                "Invalid character '$' at 3"
+            "abc$def",
+            InvalidCharacterException.class,
+            "Invalid character '$' at 3"
         );
     }
 
     @Test
     public void testWithContainsBackslashFails() {
         this.withFails(
-                "Label\\",
-                InvalidCharacterException.class,
-                "Invalid character '\\\\' at 5"
+            "Label\\",
+            InvalidCharacterException.class,
+            "Invalid character '\\\\' at 5"
         );
     }
 
     @Test
     public void testWithCellReferenceFails() {
         this.withFails(
-                "A1",
-                IllegalArgumentException.class,
-                "Label cannot be a valid cell reference=\"A1\""
+            "A1",
+            IllegalArgumentException.class,
+            "Label cannot be a valid cell reference=\"A1\""
         );
     }
 
     @Test
     public void testWithCellReferenceFails2() {
         this.withFails(
-                "AB12",
-                IllegalArgumentException.class,
-                "Label cannot be a valid cell reference=\"AB12\""
+            "AB12",
+            IllegalArgumentException.class,
+            "Label cannot be a valid cell reference=\"AB12\""
         );
     }
 
     @Test
     public void testWithCellRangeFails() {
         this.withFails(
-                "A1:B2",
-                IllegalArgumentException.class
+            "A1:B2",
+            IllegalArgumentException.class
         );
     }
 
@@ -123,9 +123,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                                                                 final Class<T> throwsClass) {
 
         this.withFails(
-                text,
-                throwsClass,
-                null
+            text,
+            throwsClass,
+            null
         );
     }
 
@@ -133,22 +133,22 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                                                                 final Class<T> throwsClass,
                                                                 final String message) {
         final T thrown = assertThrows(
-                throwsClass,
-                () -> SpreadsheetLabelName.with(text)
+            throwsClass,
+            () -> SpreadsheetLabelName.with(text)
         );
 
         if (null != message) {
             this.checkEquals(
-                    message,
-                    thrown.getMessage(),
-                    "message"
+                message,
+                thrown.getMessage(),
+                "message"
             );
         }
 
         this.checkEquals(
-                false,
-                SpreadsheetLabelName.isLabelText0(text),
-                () -> "isLabelText0(" + CharSequences.quoteAndEscape(text) + ")"
+            false,
+            SpreadsheetLabelName.isLabelText0(text),
+            () -> "isLabelText0(" + CharSequences.quoteAndEscape(text) + ")"
         );
     }
 
@@ -190,35 +190,35 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testWithLetterDigits() {
         this.createNameAndCheck2(
-                "A1234567"
+            "A1234567"
         );
     }
 
     @Test
     public void testWithLetterDigitsLetters() {
         this.createNameAndCheck2(
-                "A1B"
+            "A1B"
         );
     }
 
     @Test
     public void testWithLetterUnderscore() {
         this.createNameAndCheck2(
-                "A_"
+            "A_"
         );
     }
 
     @Test
     public void testWithLetterDot() {
         this.createNameAndCheck2(
-                "A."
+            "A."
         );
     }
 
     @Test
     public void testWithLetterNonAsciiLetter() {
         this.createNameAndCheck2(
-                "A\u0100"
+            "A\u0100"
         );
     }
 
@@ -251,9 +251,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.createNameAndCheck(value);
 
         this.checkEquals(
-                true,
-                SpreadsheetLabelName.isLabelText0(value),
-                () -> "with " + CharSequences.quoteAndEscape(value) + " was successful "
+            true,
+            SpreadsheetLabelName.isLabelText0(value),
+            () -> "with " + CharSequences.quoteAndEscape(value) + " was successful "
         );
     }
 
@@ -290,8 +290,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testNotFound() {
         this.notFoundTextAndCheck(
-                SpreadsheetSelection.labelName("Hello"),
-                "Label not found: \"Hello\""
+            SpreadsheetSelection.labelName("Hello"),
+            "Label not found: \"Hello\""
         );
     }
 
@@ -307,9 +307,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testToCellFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .toCell()
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toCell()
         );
     }
 
@@ -367,9 +367,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testContainsAllFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .containsAll(SpreadsheetViewportWindows.EMPTY)
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .containsAll(SpreadsheetViewportWindows.EMPTY)
         );
     }
 
@@ -378,7 +378,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testToScalar() {
         this.toScalarAndCheck(
-                this.createSelection()
+            this.createSelection()
         );
     }
 
@@ -387,9 +387,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testToRange() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .toRange()
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toRange()
         );
     }
 
@@ -403,7 +403,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         final SpreadsheetLabelName d4 = SpreadsheetLabelName.with("LABELd4");
 
         this.compareToArraySortAndCheck(d4, c3, a1, b2,
-                a1, b2, c3, d4);
+            a1, b2, c3, d4);
     }
 
     // count...........................................................................................................
@@ -411,8 +411,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testCount() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().count()
+            UnsupportedOperationException.class,
+            () -> this.createSelection().count()
         );
     }
 
@@ -423,8 +423,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         final SpreadsheetLabelName label = this.createSelection();
 
         assertSame(
-                label,
-                label.addIfRelative(1, 2)
+            label,
+            label.addIfRelative(1, 2)
         );
     }
 
@@ -433,8 +433,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testTestCellFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().testCell(SpreadsheetSelection.A1)
+            UnsupportedOperationException.class,
+            () -> this.createSelection().testCell(SpreadsheetSelection.A1)
         );
     }
 
@@ -450,9 +450,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testColumnFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .testColumn(SpreadsheetReferenceKind.RELATIVE.firstColumn())
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .testColumn(SpreadsheetReferenceKind.RELATIVE.firstColumn())
         );
     }
 
@@ -461,17 +461,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testRowFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .testRow(SpreadsheetReferenceKind.RELATIVE.firstRow())
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .testRow(SpreadsheetReferenceKind.RELATIVE.firstRow())
         );
     }
 
     @Test
     public void testToCellRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> SpreadsheetLabelName.with("Label123").toCellRange()
+            UnsupportedOperationException.class,
+            () -> SpreadsheetLabelName.with("Label123").toCellRange()
         );
     }
 
@@ -517,12 +517,12 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testExtendRange() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .extendRange(
-                                Optional.empty(),
-                                SpreadsheetViewportAnchor.NONE
-                        )
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .extendRange(
+                    Optional.empty(),
+                    SpreadsheetViewportAnchor.NONE
+                )
         );
     }
 
@@ -531,8 +531,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testFocusedFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().focused(SpreadsheetViewportAnchor.NONE)
+            UnsupportedOperationException.class,
+            () -> this.createSelection().focused(SpreadsheetViewportAnchor.NONE)
         );
     }
 
@@ -543,12 +543,12 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         final String text = "Label123";
 
         this.toParserTokenAndCheck(
+            SpreadsheetSelection.labelName(text),
+            SpreadsheetFormulaParserToken.label(
                 SpreadsheetSelection.labelName(text),
-                SpreadsheetFormulaParserToken.label(
-                        SpreadsheetSelection.labelName(text),
-                        text
-                ),
-                SpreadsheetFormulaParsers.labelName()
+                text
+            ),
+            SpreadsheetFormulaParsers.labelName()
         );
     }
 
@@ -557,8 +557,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testEqualsIgnoreReferenceDifferentName() {
         this.equalsIgnoreReferenceKindAndCheck(this.createSelection(),
-                SpreadsheetLabelName.with("different"),
-                false);
+            SpreadsheetLabelName.with("different"),
+            false);
     }
 
     // toRelative.......................................................................................................
@@ -575,8 +575,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetSelection.labelName("Label123"),
-                "label Label123" + EOL
+            SpreadsheetSelection.labelName("Label123"),
+            "label Label123" + EOL
         );
     }
 
@@ -587,8 +587,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testToString() {
         final SpreadsheetLabelName labelName = this.createSelection();
         this.toStringAndCheck(
-                labelName,
-                labelName.text()
+            labelName,
+            labelName.text()
         );
     }
 
@@ -598,7 +598,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testToStringMaybeStar() {
         final SpreadsheetLabelName labelName = this.createSelection();
         this.toStringMaybeStarAndCheck(
-                labelName
+            labelName
         );
     }
 
@@ -608,7 +608,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testUnmarshallString() {
         final String value = "LABEL123";
         this.unmarshallAndCheck(JsonNode.string(value),
-                SpreadsheetLabelName.with(value));
+            SpreadsheetLabelName.with(value));
     }
 
     // equalsIgnoreReferenceKind.................................................................................................
@@ -616,17 +616,17 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testEqualsIgnoreReferenceKindDifferent() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "Label1",
-                "Label2",
-                false
+            "Label1",
+            "Label2",
+            false
         );
     }
 
     @Test
     public void testEqualsDifferentCase() {
         this.checkEqualsAndHashCode(
-                SpreadsheetLabelName.with("Label123"),
-                SpreadsheetLabelName.with("LABEL123")
+            SpreadsheetLabelName.with("Label123"),
+            SpreadsheetLabelName.with("LABEL123")
         );
     }
 
@@ -673,15 +673,15 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Override
     public String possibleValidChars(final int position) {
         return 0 == position ?
-                ASCII_LETTERS + "\\_" :
-                ASCII_LETTERS_DIGITS + "_.";
+            ASCII_LETTERS + "\\_" :
+            ASCII_LETTERS_DIGITS + "_.";
     }
 
     @Override
     public String possibleInvalidChars(final int position) {
         return 0 == position ?
-                ASCII_DIGITS + CONTROL + "!@#$%^&*()" :
-                CONTROL + "!@#$%^&*()";
+            ASCII_DIGITS + CONTROL + "!@#$%^&*()" :
+            CONTROL + "!@#$%^&*()";
     }
 
     // ClassTesting.....................................................................................................

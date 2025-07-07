@@ -28,8 +28,8 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import java.util.Comparator;
 
 public final class SpreadsheetCellReferenceComparatorTest implements ComparatorTesting2<SpreadsheetCellReferenceComparator, SpreadsheetCell>,
-        ClassTesting<SpreadsheetCellReferenceComparator>,
-        ToStringTesting<SpreadsheetCellReferenceComparator> {
+    ClassTesting<SpreadsheetCellReferenceComparator>,
+    ToStringTesting<SpreadsheetCellReferenceComparator> {
 
     private final static Comparator<SpreadsheetCellReference> COMPARATOR = SpreadsheetCellRangeReferencePath.RLTD.comparator();
 
@@ -38,26 +38,26 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCell b1 = SpreadsheetSelection.parseCell("b1")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCell c1 = SpreadsheetSelection.parseCell("c1")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCell b3 = SpreadsheetSelection.parseCell("B3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         this.comparatorArraySortAndCheck(
-                SpreadsheetCellReferenceComparator.with(
-                        SpreadsheetCellRangeReferencePath.LRTD.comparator()
-                ),
-                a1,
-                b1,
-                c1,
-                b3,
-                a1, // expected
-                b1,
-                c1,
-                b3
+            SpreadsheetCellReferenceComparator.with(
+                SpreadsheetCellRangeReferencePath.LRTD.comparator()
+            ),
+            a1,
+            b1,
+            c1,
+            b3,
+            a1, // expected
+            b1,
+            c1,
+            b3
         );
     }
 
@@ -66,41 +66,41 @@ public final class SpreadsheetCellReferenceComparatorTest implements ComparatorT
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCell b1 = SpreadsheetSelection.parseCell("b1")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCell c1 = SpreadsheetSelection.parseCell("c1")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCell b3 = SpreadsheetSelection.parseCell("B3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         this.comparatorArraySortAndCheck(
-                SpreadsheetCellReferenceComparator.with(
-                        SpreadsheetCellRangeReferencePath.RLTD.comparator()
-                ),
-                a1,
-                b3,
-                b1,
-                c1,
-                c1, // expected
-                b1,
-                a1,
-                b3
+            SpreadsheetCellReferenceComparator.with(
+                SpreadsheetCellRangeReferencePath.RLTD.comparator()
+            ),
+            a1,
+            b3,
+            b1,
+            c1,
+            c1, // expected
+            b1,
+            a1,
+            b3
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createComparator(),
-                COMPARATOR.toString()
+            this.createComparator(),
+            COMPARATOR.toString()
         );
     }
 
     @Override
     public SpreadsheetCellReferenceComparator createComparator() {
         return SpreadsheetCellReferenceComparator.with(
-                COMPARATOR
+            COMPARATOR
         );
     }
 

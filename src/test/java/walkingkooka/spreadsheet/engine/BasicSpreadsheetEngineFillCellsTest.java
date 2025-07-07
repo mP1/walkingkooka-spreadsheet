@@ -21,19 +21,19 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 
 public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineFillCells>
-        implements ToStringTesting<BasicSpreadsheetEngineFillCells> {
+    implements ToStringTesting<BasicSpreadsheetEngineFillCells> {
 
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.INSTANCE;
 
         this.toStringAndCheck(
-                new BasicSpreadsheetEngineFillCells(
-                        engine,
-                        null, // BasicSpreadsheetEngineChanges
-                        SpreadsheetEngineContexts.fake()
-                ),
-                engine.toString()
+            new BasicSpreadsheetEngineFillCells(
+                engine,
+                null, // BasicSpreadsheetEngineChanges
+                SpreadsheetEngineContexts.fake()
+            ),
+            engine.toString()
         );
     }
 

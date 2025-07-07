@@ -38,7 +38,7 @@ import java.util.Set;
  * Part of a report about a Converter and value and type that was not supported by a {@link walkingkooka.convert.Converter}.
  */
 public final class MissingConverter implements Comparable<MissingConverter>,
-        TreePrintable {
+    TreePrintable {
 
     /**
      * Tests if the given {@link Converter} is able to convert a minimum of all expected values, creating a {@link MissingConverterSet}
@@ -48,19 +48,19 @@ public final class MissingConverter implements Comparable<MissingConverter>,
                                                final SpreadsheetMetadataPropertyName<ConverterSelector> selector,
                                                final SpreadsheetConverterContext context) {
         return MissingConverterVerifier.verify(
-                converter,
-                selector,
-                context
+            converter,
+            selector,
+            context
         );
     }
 
     public static MissingConverter with(final ConverterName name,
                                         final Set<MissingConverterValue> values) {
         return new MissingConverter(
-                Objects.requireNonNull(name, "name"),
-                Sets.immutable(
-                        Objects.requireNonNull(values, "values")
-                )
+            Objects.requireNonNull(name, "name"),
+            Sets.immutable(
+                Objects.requireNonNull(values, "values")
+            )
         );
     }
 
@@ -88,11 +88,11 @@ public final class MissingConverter implements Comparable<MissingConverter>,
         newValues.add(value);
 
         return this.values.equals(newValues) ?
-                this :
-                MissingConverter.with(
-                        this.name,
-                        newValues
-                );
+            this :
+            MissingConverter.with(
+                this.name,
+                newValues
+            );
     }
 
     private final Set<MissingConverterValue> values;
@@ -102,28 +102,28 @@ public final class MissingConverter implements Comparable<MissingConverter>,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.values
+            this.name,
+            this.values
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof MissingConverter && this.equals0((MissingConverter) other);
+            other instanceof MissingConverter && this.equals0((MissingConverter) other);
     }
 
     private boolean equals0(final MissingConverter other) {
         return this.name.equals(other.name) &&
-                this.values.equals(other.values);
+            this.values.equals(other.values);
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .value(this.name)
-                .value(this.values)
-                .build();
+            .value(this.name)
+            .value(this.values)
+            .build();
     }
 
     // Comparable.......................................................................................................
@@ -142,8 +142,8 @@ public final class MissingConverter implements Comparable<MissingConverter>,
         {
             for (final Object value : this.values) {
                 TreePrintable.printTreeOrToString(
-                        value,
-                        printer
+                    value,
+                    printer
                 );
             }
         }
@@ -162,14 +162,14 @@ public final class MissingConverter implements Comparable<MissingConverter>,
             switch (name.value()) {
                 case NAME_PROPERTY_STRING:
                     converterName = context.unmarshall(
-                            child,
-                            ConverterName.class
+                        child,
+                        ConverterName.class
                     );
                     break;
                 case VALUES_PROPERTY_STRING:
                     values = context.unmarshallSet(
-                            child,
-                            MissingConverterValue.class
+                        child,
+                        MissingConverterValue.class
                     );
                     break;
                 default:
@@ -180,32 +180,32 @@ public final class MissingConverter implements Comparable<MissingConverter>,
 
         if (converterName == null) {
             JsonNodeUnmarshallContext.missingProperty(
-                    NAME_PROPERTY,
-                    node
+                NAME_PROPERTY,
+                node
             );
         }
         if (values == null) {
             JsonNodeUnmarshallContext.missingProperty(
-                    VALUES_PROPERTY,
-                    node
+                VALUES_PROPERTY,
+                node
             );
         }
 
         return with(
-                converterName,
-                values
+            converterName,
+            values
         );
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(
-                        NAME_PROPERTY,
-                        context.marshall(this.name)
-                ).set(
-                        VALUES_PROPERTY,
-                        context.marshallCollection(this.values)
-                );
+            .set(
+                NAME_PROPERTY,
+                context.marshall(this.name)
+            ).set(
+                VALUES_PROPERTY,
+                context.marshallCollection(this.values)
+            );
     }
 
     private final static String NAME_PROPERTY_STRING = "name";
@@ -216,10 +216,10 @@ public final class MissingConverter implements Comparable<MissingConverter>,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(MissingConverter.class),
-                MissingConverter::unmarshall,
-                MissingConverter::marshall,
-                MissingConverter.class
+            JsonNodeContext.computeTypeName(MissingConverter.class),
+            MissingConverter::unmarshall,
+            MissingConverter::marshall,
+            MissingConverter.class
         );
     }
 }

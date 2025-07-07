@@ -25,8 +25,7 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSet
         super();
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return SpreadsheetExporterAliasSet.class.getSimpleName();
     }
 }

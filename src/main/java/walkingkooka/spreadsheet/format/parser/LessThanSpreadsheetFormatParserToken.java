@@ -29,7 +29,7 @@ public final class LessThanSpreadsheetFormatParserToken extends ConditionSpreads
 
     static LessThanSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new LessThanSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     private LessThanSpreadsheetFormatParserToken(final List<ParserToken> value, final String text) {
@@ -46,9 +46,9 @@ public final class LessThanSpreadsheetFormatParserToken extends ConditionSpreads
     @Override
     public LessThanSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                LessThanSpreadsheetFormatParserToken::with
+            this,
+            children,
+            LessThanSpreadsheetFormatParserToken::with
         );
     }
 

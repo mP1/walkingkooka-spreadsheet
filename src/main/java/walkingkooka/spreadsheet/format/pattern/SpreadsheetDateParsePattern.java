@@ -76,11 +76,11 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
     public LocalDate parse(final String text,
                            final SpreadsheetParserContext context) {
         return this.parser()
-                .parseText(
-                        text,
-                        context
-                ).cast(DateSpreadsheetFormulaParserToken.class)
-                .toLocalDate(context);
+            .parseText(
+                text,
+                context
+            ).cast(DateSpreadsheetFormulaParserToken.class)
+            .toLocalDate(context);
     }
 
     // patterns.........................................................................................................
@@ -89,8 +89,8 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
     public List<SpreadsheetDateParsePattern> patterns() {
         if (null == this.patterns) {
             this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                    this,
-                    SpreadsheetDateParsePattern::new
+                this,
+                SpreadsheetDateParsePattern::new
             );
         }
         return this.patterns;

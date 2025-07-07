@@ -27,8 +27,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 final public class SpreadsheetFunctionNameTest implements ClassTesting2<SpreadsheetFunctionName>,
-        NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName>,
-        JsonNodeMarshallingTesting<SpreadsheetFunctionName> {
+    NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName>,
+    JsonNodeMarshallingTesting<SpreadsheetFunctionName> {
 
     // toExpressionFunctionName ........................................................................................
 
@@ -37,9 +37,9 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
         final String name = "Hello123";
 
         this.checkEquals(
-                SpreadsheetExpressionFunctions.name(name),
-                SpreadsheetFunctionName.with(name)
-                        .toExpressionFunctionName()
+            SpreadsheetExpressionFunctions.name(name),
+            SpreadsheetFunctionName.with(name)
+                .toExpressionFunctionName()
         );
     }
 
@@ -53,8 +53,8 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
         final SpreadsheetFunctionName d4 = SpreadsheetFunctionName.with("d4");
 
         this.compareToArraySortAndCheck(
-                d4, c3, a1, b2,
-                a1, b2, c3, d4
+            d4, c3, a1, b2,
+            a1, b2, c3, d4
         );
     }
 
@@ -96,8 +96,8 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
     @Override
     public String possibleValidChars(final int position) {
         return 0 == position ?
-                ASCII_LETTERS :
-                ASCII_LETTERS_DIGITS + ".";
+            ASCII_LETTERS :
+            ASCII_LETTERS_DIGITS + ".";
     }
 
     @Override

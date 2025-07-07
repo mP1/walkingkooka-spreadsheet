@@ -42,15 +42,15 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
-        ClassTesting<SpreadsheetErrorKind> {
+    ClassTesting<SpreadsheetErrorKind> {
 
     // translate.......................................................................................................
 
     @Test
     public void testTranslateNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetErrorKind.translate(null)
+            NullPointerException.class,
+            () -> SpreadsheetErrorKind.translate(null)
         );
     }
 
@@ -59,9 +59,9 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Custom message 123");
 
         this.checkEquals(
-                error,
-                error,
-                () -> "spreadsheetError: " + error
+            error,
+            error,
+            () -> "spreadsheetError: " + error
         );
     }
 
@@ -70,20 +70,20 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     @Test
     public void testTranslateExpressionEvaluateExceptionWithoutCause() {
         this.translateAndCheck(
-                new ExpressionEvaluationException(MESSAGE),
-                SpreadsheetErrorKind.VALUE
+            new ExpressionEvaluationException(MESSAGE),
+            SpreadsheetErrorKind.VALUE
         );
     }
 
     @Test
     public void testTranslateExpressionEvaluateExceptionWithArithmeticExceptionCause() {
         this.translateAndCheck(
-                new ExpressionEvaluationException(
-                        "ignored!",
-                        new ArithmeticException(MESSAGE)
-                ),
-                SpreadsheetErrorKind.DIV0,
-                "Division by zero"
+            new ExpressionEvaluationException(
+                "ignored!",
+                new ArithmeticException(MESSAGE)
+            ),
+            SpreadsheetErrorKind.DIV0,
+            "Division by zero"
         );
     }
 
@@ -91,11 +91,11 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     public void testTranslateHasSpreadsheetErrorKindException() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
             this.translateAndCheck(
-                    new TestHasSpreadsheetErrorKindException(
-                            MESSAGE,
-                            kind
-                    ),
+                new TestHasSpreadsheetErrorKindException(
+                    MESSAGE,
                     kind
+                ),
+                kind
             );
         }
     }
@@ -123,13 +123,13 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.translateAndCheck(
-                new ExpressionEvaluationReferenceException(
-                        MESSAGE,
-                        cell
-                ),
-                SpreadsheetErrorKind.NAME,
+            new ExpressionEvaluationReferenceException(
                 MESSAGE,
                 cell
+            ),
+            SpreadsheetErrorKind.NAME,
+            MESSAGE,
+            cell
         );
     }
 
@@ -138,65 +138,65 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
 
         this.translateAndCheck(
-                new MissingStoreException(cell),
-                SpreadsheetErrorKind.NAME,
-                "Cell not found: \"B2\"",
-                cell
+            new MissingStoreException(cell),
+            SpreadsheetErrorKind.NAME,
+            "Cell not found: \"B2\"",
+            cell
         );
     }
 
     @Test
     public void testTranslateArithmeticExceptionDivideByZeroBigDecimal() {
         final ExpressionEvaluationException thrown = assertThrows(
-                ExpressionEvaluationException.class,
-                () -> ExpressionNumberKind.BIG_DECIMAL.one()
-                        .divide(
-                                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                                new FakeExpressionNumberContext() {
-                                    @Override
-                                    public MathContext mathContext() {
-                                        return MathContext.DECIMAL32;
-                                    }
-                                }
-                        )
+            ExpressionEvaluationException.class,
+            () -> ExpressionNumberKind.BIG_DECIMAL.one()
+                .divide(
+                    ExpressionNumberKind.BIG_DECIMAL.zero(),
+                    new FakeExpressionNumberContext() {
+                        @Override
+                        public MathContext mathContext() {
+                            return MathContext.DECIMAL32;
+                        }
+                    }
+                )
         );
 
         this.translateAndCheck(
-                thrown,
-                SpreadsheetErrorKind.DIV0,
-                thrown.getMessage()
+            thrown,
+            SpreadsheetErrorKind.DIV0,
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testTranslateArithmeticExceptionDivideByZeroDouble() {
         final ExpressionEvaluationException thrown = assertThrows(
-                ExpressionEvaluationException.class,
-                () -> ExpressionNumberKind.DOUBLE.one()
-                        .divide(
-                                ExpressionNumberKind.DOUBLE.zero(),
-                                new FakeExpressionNumberContext() {
-                                    @Override
-                                    public MathContext mathContext() {
-                                        return MathContext.DECIMAL32;
-                                    }
-                                }
-                        )
+            ExpressionEvaluationException.class,
+            () -> ExpressionNumberKind.DOUBLE.one()
+                .divide(
+                    ExpressionNumberKind.DOUBLE.zero(),
+                    new FakeExpressionNumberContext() {
+                        @Override
+                        public MathContext mathContext() {
+                            return MathContext.DECIMAL32;
+                        }
+                    }
+                )
         );
 
         this.translateAndCheck(
-                thrown,
-                SpreadsheetErrorKind.DIV0,
-                thrown.getMessage()
+            thrown,
+            SpreadsheetErrorKind.DIV0,
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testTranslateClassCastExceptionCustomMessage() {
         this.translateAndCheck(
-                new ClassCastException(MESSAGE),
-                SpreadsheetErrorKind.VALUE,
-                MESSAGE
+            new ClassCastException(MESSAGE),
+            SpreadsheetErrorKind.VALUE,
+            MESSAGE
         );
     }
 
@@ -212,9 +212,9 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         }
 
         this.translateAndCheck(
-                new ClassCastException(thrown.getMessage()),
-                SpreadsheetErrorKind.VALUE,
-                "Failed to convert " + this.getClass().getSimpleName() + " to Void"
+            new ClassCastException(thrown.getMessage()),
+            SpreadsheetErrorKind.VALUE,
+            "Failed to convert " + this.getClass().getSimpleName() + " to Void"
         );
     }
 
@@ -224,61 +224,61 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     @Test
     public void testTranslateClassCastExceptionClassClassNameCannotBeCastToClasClassName() {
         this.translateAndCheck(
-                new ClassCastException("class walkingkooka.spreadsheet.SpreadsheetError cannot be cast to class walkingkooka.tree.expression.ExpressionNumber(walkingkooka.spreadsheet.SpreadsheetError and walkingkooka.tree.expression.ExpressionNumber are in unnamed module of loader 'app')"),
-                SpreadsheetErrorKind.VALUE,
-                "Failed to convert SpreadsheetError to ExpressionNumber"
+            new ClassCastException("class walkingkooka.spreadsheet.SpreadsheetError cannot be cast to class walkingkooka.tree.expression.ExpressionNumber(walkingkooka.spreadsheet.SpreadsheetError and walkingkooka.tree.expression.ExpressionNumber are in unnamed module of loader 'app')"),
+            SpreadsheetErrorKind.VALUE,
+            "Failed to convert SpreadsheetError to ExpressionNumber"
         );
     }
 
     @Test
     public void testTranslateConversionException() {
         this.translateAndCheck(
-                new ConversionException(
-                        MESSAGE,
-                        "abc",
-                        ExpressionNumber.class
-                ),
-                SpreadsheetErrorKind.VALUE,
-                "Cannot convert \"abc\" to ExpressionNumber",
-                "abc"
+            new ConversionException(
+                MESSAGE,
+                "abc",
+                ExpressionNumber.class
+            ),
+            SpreadsheetErrorKind.VALUE,
+            "Cannot convert \"abc\" to ExpressionNumber",
+            "abc"
         );
     }
 
     @Test
     public void testTranslateInvalidCharacterException() {
         final InvalidCharacterException ice = new InvalidCharacterException(
-                "abc123",
-                2
+            "abc123",
+            2
         );
 
         this.translateAndCheck(
-                ice,
-                SpreadsheetErrorKind.ERROR,
-                ice.getMessage()
+            ice,
+            SpreadsheetErrorKind.ERROR,
+            ice.getMessage()
         );
     }
 
     @Test
     public void testTranslateParserException() {
         this.translateAndCheck(
-                new ParserException(MESSAGE),
-                SpreadsheetErrorKind.ERROR
+            new ParserException(MESSAGE),
+            SpreadsheetErrorKind.ERROR
         );
     }
 
     @Test
     public void testTranslateNullPointerException() {
         this.translateAndCheck(
-                new NullPointerException(MESSAGE),
-                SpreadsheetErrorKind.VALUE
+            new NullPointerException(MESSAGE),
+            SpreadsheetErrorKind.VALUE
         );
     }
 
     @Test
     public void testTranslateIllegalArgumentException() {
         this.translateAndCheck(
-                new IllegalArgumentException(MESSAGE),
-                SpreadsheetErrorKind.VALUE
+            new IllegalArgumentException(MESSAGE),
+            SpreadsheetErrorKind.VALUE
         );
     }
 
@@ -287,46 +287,46 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         final ExpressionFunctionName badFunction = SpreadsheetExpressionFunctions.name("badFunction");
 
         this.translateAndCheck(
-                new UnknownExpressionFunctionException(badFunction),
-                SpreadsheetErrorKind.NAME,
-                SpreadsheetError.functionNotFound(badFunction).message(),
-                badFunction
+            new UnknownExpressionFunctionException(badFunction),
+            SpreadsheetErrorKind.NAME,
+            SpreadsheetError.functionNotFound(badFunction).message(),
+            badFunction
         );
     }
 
     @Test
     public void testTranslateException() {
         this.translateAndCheck(
-                new Exception(MESSAGE),
-                SpreadsheetErrorKind.VALUE
+            new Exception(MESSAGE),
+            SpreadsheetErrorKind.VALUE
         );
     }
 
     @Test
     public void testTranslateExceptionNullMessage() {
         this.translateAndCheck(
-                new Exception(),
-                SpreadsheetErrorKind.VALUE,
-                ""
+            new Exception(),
+            SpreadsheetErrorKind.VALUE,
+            ""
         );
     }
 
     @Test
     public void testTranslateExceptionEmptyMessage() {
         this.translateAndCheck(
-                new Exception(""),
-                SpreadsheetErrorKind.VALUE,
-                ""
+            new Exception(""),
+            SpreadsheetErrorKind.VALUE,
+            ""
         );
     }
 
     private void translateAndCheck(final Throwable cause,
                                    final SpreadsheetErrorKind kind) {
         this.translateAndCheck0(
-                cause,
-                kind,
-                MESSAGE,
-                Optional.empty()
+            cause,
+            kind,
+            MESSAGE,
+            Optional.empty()
         );
     }
 
@@ -334,10 +334,10 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                                    final SpreadsheetErrorKind kind,
                                    final String message) {
         this.translateAndCheck0(
-                cause,
-                kind,
-                message,
-                Optional.empty()
+            cause,
+            kind,
+            message,
+            Optional.empty()
         );
     }
 
@@ -346,10 +346,10 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                                    final String message,
                                    final Object value) {
         this.translateAndCheck0(
-                cause,
-                kind,
-                message,
-                Optional.of(value)
+            cause,
+            kind,
+            message,
+            Optional.of(value)
         );
     }
 
@@ -358,9 +358,9 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                                     final String message,
                                     final Optional<?> value) {
         this.checkEquals(
-                kind.setMessageAndValue(message, value.orElse(null)),
-                SpreadsheetErrorKind.translate(cause),
-                () -> "translate " + cause
+            kind.setMessageAndValue(message, value.orElse(null)),
+            SpreadsheetErrorKind.translate(cause),
+            () -> "translate " + cause
         );
     }
 
@@ -372,12 +372,12 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
             final SpreadsheetError error = kind.toError();
 
             this.checkEquals(
-                    SpreadsheetError.with(
-                            kind,
-                            "",
-                            Optional.empty()
-                    ),
-                    error
+                SpreadsheetError.with(
+                    kind,
+                    "",
+                    Optional.empty()
+                ),
+                error
             );
         }
     }
@@ -402,14 +402,14 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     @Test
     public void testWithValueUnknownValueFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetErrorKind.withValue(9999)
+            IllegalArgumentException.class,
+            () -> SpreadsheetErrorKind.withValue(9999)
         );
 
         this.checkEquals(
-                "Unknown value=9999",
-                thrown.getMessage(),
-                "message"
+            "Unknown value=9999",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -421,8 +421,8 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
             }
 
             this.checkEquals(
-                    kind,
-                    SpreadsheetErrorKind.withValue(kind.value())
+                kind,
+                SpreadsheetErrorKind.withValue(kind.value())
             );
         }
     }
@@ -432,8 +432,8 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     @Test
     public void testParseHashDivSlashZeroExclamationMark() {
         this.parseStringAndCheck(
-                "#DIV/0!",
-                SpreadsheetErrorKind.DIV0
+            "#DIV/0!",
+            SpreadsheetErrorKind.DIV0
         );
     }
 
@@ -445,8 +445,8 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                     break;
                 default:
                     this.parseStringAndCheck(
-                            kind.text(),
-                            kind
+                        kind.text(),
+                        kind
                     );
             }
         }

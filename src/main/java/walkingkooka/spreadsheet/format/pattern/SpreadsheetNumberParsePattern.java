@@ -40,8 +40,8 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
      */
     static SpreadsheetNumberParsePattern with(final ParserToken token) {
         return new SpreadsheetNumberParsePattern(
-                token,
-                SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor.patterns(token)
+            token,
+            SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor.patterns(token)
         );
     }
 
@@ -63,11 +63,11 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     public ExpressionNumber parse(final String text,
                                   final SpreadsheetParserContext context) {
         return this.parser()
-                .parseText(
-                        text,
-                        context
-                ).cast(NumberSpreadsheetFormulaParserToken.class)
-                .toNumber(context);
+            .parseText(
+                text,
+                context
+            ).cast(NumberSpreadsheetFormulaParserToken.class)
+            .toNumber(context);
     }
 
     // toFormat.........................................................................................................
@@ -91,14 +91,14 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
         // the parser returns an ExpressionNumber
         // the 2nd converter handles converting tht ExpressionNumber to Number if target is a number
         return ExpressionNumberConverters.toExpressionNumberThen(
-                SpreadsheetConverters.textToNumber(
-                        this.parser()
-                ),
-                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                        .to(
-                                Number.class,
-                                Converters.numberToNumber()
-                        ).cast(SpreadsheetConverterContext.class)
+            SpreadsheetConverters.textToNumber(
+                this.parser()
+            ),
+            ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                .to(
+                    Number.class,
+                    Converters.numberToNumber()
+                ).cast(SpreadsheetConverterContext.class)
         );
     }
 
@@ -136,8 +136,8 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
     public List<SpreadsheetNumberParsePattern> patterns() {
         if (null == this.patterns) {
             this.patterns = SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor.patterns(
-                    this,
-                    SpreadsheetNumberParsePattern::with
+                this,
+                SpreadsheetNumberParsePattern::with
             );
         }
 

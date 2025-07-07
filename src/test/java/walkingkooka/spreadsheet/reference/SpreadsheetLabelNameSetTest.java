@@ -30,16 +30,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTesting<SpreadsheetLabelNameSet, SpreadsheetLabelName>,
-        HasTextTesting,
-        ParseStringTesting<SpreadsheetLabelNameSet>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<SpreadsheetLabelNameSet> {
+    HasTextTesting,
+    ParseStringTesting<SpreadsheetLabelNameSet>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<SpreadsheetLabelNameSet> {
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetLabelNameSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetLabelNameSet.with(null)
         );
     }
 
@@ -48,10 +48,10 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel");
 
         assertSame(
-                SpreadsheetLabelNameSet.EMPTY,
-                SpreadsheetLabelNameSet.with(
-                        SortedSets.of(label)
-                ).delete(label)
+            SpreadsheetLabelNameSet.EMPTY,
+            SpreadsheetLabelNameSet.with(
+                SortedSets.of(label)
+            ).delete(label)
         );
     }
 
@@ -61,20 +61,20 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
         final SpreadsheetLabelNameSet set = SpreadsheetLabelNameSet.parse(text);
 
         assertSame(
-                set,
-                SpreadsheetLabelNameSet.parse(text)
-                        .setElements(set)
+            set,
+            SpreadsheetLabelNameSet.parse(text)
+                .setElements(set)
         );
     }
 
     @Override
     public SpreadsheetLabelNameSet createSet() {
         return SpreadsheetLabelNameSet.with(
-                SortedSets.of(
-                        SpreadsheetSelection.labelName("Label1"),
-                        SpreadsheetSelection.labelName("Label2"),
-                        SpreadsheetSelection.labelName("Label3")
-                )
+            SortedSets.of(
+                SpreadsheetSelection.labelName("Label1"),
+                SpreadsheetSelection.labelName("Label2"),
+                SpreadsheetSelection.labelName("Label3")
+            )
         );
     }
 
@@ -88,62 +88,62 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
     @Test
     public void testParseInvalidCharacterFails() {
         this.parseStringInvalidCharacterFails(
-                "Label?1, Label2",
-                '?'
+            "Label?1, Label2",
+            '?'
         );
     }
 
     @Test
     public void testParseInvalidCharacterFails2() {
         this.parseStringInvalidCharacterFails(
-                "Label?1, Label2",
-                '?'
+            "Label?1, Label2",
+            '?'
         );
     }
 
     @Test
     public void testParseInvalidCharacterSecondSpreadsheetLabelNameFails() {
         this.parseStringInvalidCharacterFails(
-                "Label1, Label?2",
-                '?'
+            "Label1, Label?2",
+            '?'
         );
     }
 
     @Test
     public void testParseEmpty() {
         assertSame(
-                SpreadsheetLabelNameSet.EMPTY,
-                this.parseStringAndCheck(
-                        "",
-                        SpreadsheetLabelNameSet.EMPTY
-                )
+            SpreadsheetLabelNameSet.EMPTY,
+            this.parseStringAndCheck(
+                "",
+                SpreadsheetLabelNameSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParseOnlySpaces() {
         assertSame(
-                SpreadsheetLabelNameSet.EMPTY,
-                this.parseStringAndCheck(
-                        "   ",
-                        SpreadsheetLabelNameSet.EMPTY
-                )
+            SpreadsheetLabelNameSet.EMPTY,
+            this.parseStringAndCheck(
+                "   ",
+                SpreadsheetLabelNameSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "Label1,Label2,Label3",
-                this.createSet()
+            "Label1,Label2,Label3",
+            this.createSet()
         );
     }
 
     @Test
     public void testParseWithExtraSpaces() {
         this.parseStringAndCheck(
-                " Label1 , Label2 , Label3",
-                this.createSet()
+            " Label1 , Label2 , Label3",
+            this.createSet()
         );
     }
 
@@ -167,8 +167,8 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
     @Test
     public void testText() {
         this.textAndCheck(
-                this.createSet(),
-                "Label1,Label2,Label3"
+            this.createSet(),
+            "Label1,Label2,Label3"
         );
     }
 
@@ -177,10 +177,10 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createSet(),
-                "Label1\n" +
-                        "Label2\n" +
-                        "Label3\n"
+            this.createSet(),
+            "Label1\n" +
+                "Label2\n" +
+                "Label3\n"
         );
     }
 
@@ -189,8 +189,8 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"Label1,Label2,Label3\""
+            this.createJsonNodeMarshallingValue(),
+            "\"Label1,Label2,Label3\""
         );
     }
 
@@ -198,8 +198,8 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
     public SpreadsheetLabelNameSet unmarshall(final JsonNode jsonNode,
                                               final JsonNodeUnmarshallContext context) {
         return SpreadsheetLabelNameSet.unmarshall(
-                jsonNode,
-                context
+            jsonNode,
+            context
         );
     }
 

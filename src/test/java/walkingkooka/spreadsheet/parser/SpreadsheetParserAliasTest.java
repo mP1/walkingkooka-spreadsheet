@@ -32,11 +32,11 @@ public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<
     private final static SpreadsheetParserName NAME = SpreadsheetParserName.with("Hello");
 
     private final static Optional<SpreadsheetParserSelector> SELECTOR = Optional.of(
-            SpreadsheetParserSelector.parse("parser123")
+        SpreadsheetParserSelector.parse("parser123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-            Url.parseAbsolute("https://example.com/parser123")
+        Url.parseAbsolute("https://example.com/parser123")
     );
 
     // with.............................................................................................................
@@ -44,36 +44,36 @@ public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserAlias.with(
-                        null,
-                        SELECTOR,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetParserAlias.with(
+                null,
+                SELECTOR,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserAlias.with(
-                        NAME,
-                        null,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetParserAlias.with(
+                NAME,
+                null,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetParserAlias.with(
-                        NAME,
-                        SELECTOR,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetParserAlias.with(
+                NAME,
+                SELECTOR,
+                null
+            )
         );
     }
 
@@ -82,9 +82,9 @@ public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<
     @Override
     public SpreadsheetParserAlias createComparable() {
         return SpreadsheetParserAlias.with(
-                NAME,
-                SELECTOR,
-                URL
+            NAME,
+            SELECTOR,
+            URL
         );
     }
 
@@ -93,16 +93,16 @@ public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "alias1 name1 https://example.com",
-                SpreadsheetParserAlias.with(
-                        SpreadsheetParserName.with("alias1"),
-                        Optional.of(
-                                SpreadsheetParserSelector.parse("name1")
-                        ),
-                        Optional.of(
-                                Url.parseAbsolute("https://example.com")
-                        )
+            "alias1 name1 https://example.com",
+            SpreadsheetParserAlias.with(
+                SpreadsheetParserName.with("alias1"),
+                Optional.of(
+                    SpreadsheetParserSelector.parse("name1")
+                ),
+                Optional.of(
+                    Url.parseAbsolute("https://example.com")
                 )
+            )
         );
     }
 

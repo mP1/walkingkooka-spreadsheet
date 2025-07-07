@@ -37,8 +37,8 @@ public final class SpreadsheetImporterProviderCollectionTest implements Spreadsh
     private final static List<?> VALUES = Lists.of("@@");
 
     private final static SpreadsheetImporterInfo INFO = SpreadsheetImporterInfo.with(
-            Url.parseAbsolute("https://example.com/Test123"),
-            NAME
+        Url.parseAbsolute("https://example.com/Test123"),
+        NAME
     );
 
     private final static SpreadsheetImporter IMPORTER = SpreadsheetImporters.fake();
@@ -48,9 +48,9 @@ public final class SpreadsheetImporterProviderCollectionTest implements Spreadsh
         public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                        final ProviderContext context) {
             return this.spreadsheetImporter(
-                    selector.name(),
-                    VALUES,
-                    context
+                selector.name(),
+                VALUES,
+                context
             );
         }
 
@@ -83,75 +83,75 @@ public final class SpreadsheetImporterProviderCollectionTest implements Spreadsh
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterProviderCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetImporterProviderCollection.with(null)
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelectorMissingValuesFails() {
         this.spreadsheetImporterFails(
-                SpreadsheetImporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                SpreadsheetImporterSelector.parse("unknown123"),
-                CONTEXT
+            SpreadsheetImporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            SpreadsheetImporterSelector.parse("unknown123"),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelector() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                SpreadsheetImporterSelector.parse(NAME + " @@"),
-                CONTEXT,
-                IMPORTER
+            SpreadsheetImporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            SpreadsheetImporterSelector.parse(NAME + " @@"),
+            CONTEXT,
+            IMPORTER
         );
     }
 
     @Test
     public void testSpreadsheetImporterNameMissingValuesFails() {
         this.spreadsheetImporterFails(
-                SpreadsheetImporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                NAME,
-                Lists.of(),
-                CONTEXT
+            SpreadsheetImporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            NAME,
+            Lists.of(),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetImporterName() {
         this.spreadsheetImporterAndCheck(
-                SpreadsheetImporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                NAME,
-                VALUES,
-                CONTEXT,
-                IMPORTER
+            SpreadsheetImporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            NAME,
+            VALUES,
+            CONTEXT,
+            IMPORTER
         );
     }
 
     @Test
     public void testInfos() {
         this.spreadsheetImporterInfosAndCheck(
-                SpreadsheetImporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                INFO
+            SpreadsheetImporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            INFO
         );
     }
 
     @Override
     public SpreadsheetImporterProviderCollection createSpreadsheetImporterProvider() {
         return SpreadsheetImporterProviderCollection.with(
-                Sets.of(
-                        PROVIDER
-                )
+            Sets.of(
+                PROVIDER
+            )
         );
     }
 

@@ -38,8 +38,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     public static SpreadsheetParser parser(final Parser<SpreadsheetParserContext> parser,
                                            final Optional<ValidationValueTypeName> valueType) {
         return ParserSpreadsheetParser.with(
-                parser,
-                valueType
+            parser,
+            valueType
         );
     }
 

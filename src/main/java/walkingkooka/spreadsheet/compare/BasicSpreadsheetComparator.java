@@ -32,10 +32,10 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
                                                   final SpreadsheetComparatorDirection direction,
                                                   final SpreadsheetComparatorName name) {
         return new BasicSpreadsheetComparator<>(
-                Objects.requireNonNull(type, "type"),
-                Objects.requireNonNull(comparator, "compare"),
-                Objects.requireNonNull(direction, "direction"),
-                Objects.requireNonNull(name, "name")
+            Objects.requireNonNull(type, "type"),
+            Objects.requireNonNull(comparator, "compare"),
+            Objects.requireNonNull(direction, "direction"),
+            Objects.requireNonNull(name, "name")
         );
     }
 
@@ -60,8 +60,8 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
     public int compare(final T left,
                        final T right) {
         return this.comparator.compare(
-                left,
-                right
+            left,
+            right
         );
     }
 
@@ -86,31 +86,31 @@ final class BasicSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.type,
-                this.comparator,
-                this.direction,
-                this.name
+            this.type,
+            this.comparator,
+            this.direction,
+            this.name
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof BasicSpreadsheetComparator && this.equals0(Cast.to(other));
+            other instanceof BasicSpreadsheetComparator && this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final BasicSpreadsheetComparator<?> other) {
         return this.type.equals(other.type) &&
-                this.comparator.equals(other.comparator) &&
-                this.direction.equals(other.direction) &&
-                this.name.equals(other.name);
+            this.comparator.equals(other.comparator) &&
+            this.direction.equals(other.direction) &&
+            this.name.equals(other.name);
     }
 
     @Override
     public String toString() {
         return this.name.value()
-                .concat(
-                        this.direction.toStringWithEmptyDefault()
-                );
+            .concat(
+                this.direction.toStringWithEmptyDefault()
+            );
     }
 }

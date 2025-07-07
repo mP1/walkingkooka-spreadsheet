@@ -72,7 +72,7 @@ public final class CurrencySpreadsheetFormatParserTokenTest extends NonSymbolSpr
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL
+            SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL
         );
     }
 

@@ -44,12 +44,12 @@ final class SpreadsheetNumberParsePatternComponentCurrency extends SpreadsheetNu
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         return this.parseToken(
-                cursor,
-                request.context.currencySymbol(),
-                SpreadsheetStrings.CASE_SENSITIVITY,
-                SpreadsheetFormulaParserToken::currencySymbol,
-                null, // dont update mode
-                request
+            cursor,
+            request.context.currencySymbol(),
+            SpreadsheetStrings.CASE_SENSITIVITY,
+            SpreadsheetFormulaParserToken::currencySymbol,
+            null, // dont update mode
+            request
         );
     }
 

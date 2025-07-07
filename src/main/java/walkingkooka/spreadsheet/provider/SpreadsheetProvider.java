@@ -34,12 +34,12 @@ import walkingkooka.validation.provider.ValidatorProvider;
  * This should make it easier to pass instances of each around, as aswell as updates when a {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} is updated.
  */
 public interface SpreadsheetProvider extends ConverterProvider,
-        ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>,
-        SpreadsheetComparatorProvider,
-        SpreadsheetExporterProvider,
-        SpreadsheetFormatterProvider,
-        FormHandlerProvider,
-        SpreadsheetParserProvider,
-        SpreadsheetImporterProvider,
-        ValidatorProvider {
+    ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>,
+    SpreadsheetComparatorProvider,
+    SpreadsheetExporterProvider,
+    SpreadsheetFormatterProvider,
+    FormHandlerProvider,
+    SpreadsheetParserProvider,
+    SpreadsheetImporterProvider,
+    ValidatorProvider {
 }

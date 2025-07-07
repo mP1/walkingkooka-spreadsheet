@@ -21,7 +21,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.TypeNameTesting;
 
 public abstract class SpreadsheetMetadataTestCase2<T> implements ClassTesting2<T>,
-        TypeNameTesting<T> {
+    TypeNameTesting<T> {
 
     SpreadsheetMetadataTestCase2() {
         super();

@@ -39,8 +39,8 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
         Objects.requireNonNull(value, "value");
 
         return value.isPresent() ?
-                new OptionalSpreadsheetParserSelector(value) :
-                EMPTY;
+            new OptionalSpreadsheetParserSelector(value) :
+            EMPTY;
     }
 
     private OptionalSpreadsheetParserSelector(final Optional<SpreadsheetParserSelector> value) {
@@ -64,8 +64,8 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof OptionalSpreadsheetParserSelector &&
-                        this.equals0(Cast.to(other));
+            other instanceof OptionalSpreadsheetParserSelector &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final OptionalSpreadsheetParserSelector other) {
@@ -82,10 +82,10 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
     static OptionalSpreadsheetParserSelector unmarshall(final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallOptional(
-                        node,
-                        SpreadsheetParserSelector.class
-                )
+            context.unmarshallOptional(
+                node,
+                SpreadsheetParserSelector.class
+            )
         );
     }
 
@@ -97,10 +97,10 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
         SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText("yyyy/mm/ddd");
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(OptionalSpreadsheetParserSelector.class),
-                OptionalSpreadsheetParserSelector::unmarshall,
-                OptionalSpreadsheetParserSelector::marshall,
-                OptionalSpreadsheetParserSelector.class
+            JsonNodeContext.computeTypeName(OptionalSpreadsheetParserSelector.class),
+            OptionalSpreadsheetParserSelector::unmarshall,
+            OptionalSpreadsheetParserSelector::marshall,
+            OptionalSpreadsheetParserSelector.class
         );
     }
 }

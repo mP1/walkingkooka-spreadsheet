@@ -27,8 +27,8 @@ public final class SpreadsheetMetadataPropertyNameLocaleTest extends Spreadsheet
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 

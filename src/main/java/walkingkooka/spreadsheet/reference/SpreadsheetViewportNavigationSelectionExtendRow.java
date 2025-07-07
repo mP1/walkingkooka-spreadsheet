@@ -44,13 +44,13 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
         final SpreadsheetRowReference newRow = this.selection;
 
         return Optional.of(
-                selection.isRow() || selection.isRowRange() ?
-                        rowToAnchored(
-                                selection,
-                                anchor,
-                                newRow
-                        ) :
-                        newRow.setDefaultAnchor()
+            selection.isRow() || selection.isRowRange() ?
+                rowToAnchored(
+                    selection,
+                    anchor,
+                    newRow
+                ) :
+                newRow.setDefaultAnchor()
         );
     }
 
@@ -58,7 +58,7 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
         return Optional.of(
-                this.selection.setColumn(home.column())
+            this.selection.setColumn(home.column())
         );
     }
 }

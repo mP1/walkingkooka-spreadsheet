@@ -43,7 +43,7 @@ import java.util.Optional;
  * </pre>
  */
 final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserContext>,
-        RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton instance
@@ -114,14 +114,14 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
         final String contentString = content.toString();
 
         return SpreadsheetFormulaParserToken.text(
-                Lists.of(
-                        DOUBLE_QUOTE_TOKEN,
-                        SpreadsheetFormulaParserToken.textLiteral(
-                                contentString, text.substring(1, text.length() - 1)
-                        ),
-                        DOUBLE_QUOTE_TOKEN
+            Lists.of(
+                DOUBLE_QUOTE_TOKEN,
+                SpreadsheetFormulaParserToken.textLiteral(
+                    contentString, text.substring(1, text.length() - 1)
                 ),
-                text
+                DOUBLE_QUOTE_TOKEN
+            ),
+            text
         );
     }
 

@@ -41,17 +41,17 @@ import java.util.function.Predicate;
 public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo> implements PluginInfoSetLike<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias, SpreadsheetFormatterAliasSet> {
 
     public final static SpreadsheetFormatterInfoSet EMPTY = new SpreadsheetFormatterInfoSet(
-            PluginInfoSet.with(
-                    Sets.<SpreadsheetFormatterInfo>empty()
-            )
+        PluginInfoSet.with(
+            Sets.<SpreadsheetFormatterInfo>empty()
+        )
     );
 
     public static SpreadsheetFormatterInfoSet parse(final String text) {
         return new SpreadsheetFormatterInfoSet(
-                PluginInfoSet.parse(
-                        text,
-                        SpreadsheetFormatterInfo::parse
-                )
+            PluginInfoSet.parse(
+                text,
+                SpreadsheetFormatterInfo::parse
+            )
         );
     }
 
@@ -96,53 +96,53 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     @Override
     public SpreadsheetFormatterInfoSet filter(final SpreadsheetFormatterInfoSet infos) {
         return this.setElements(
-                this.pluginInfoSet.filter(
-                        infos.pluginInfoSet
-                )
+            this.pluginInfoSet.filter(
+                infos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet renameIfPresent(SpreadsheetFormatterInfoSet renameInfos) {
         return this.setElements(
-                this.pluginInfoSet.renameIfPresent(
-                        renameInfos.pluginInfoSet
-                )
+            this.pluginInfoSet.renameIfPresent(
+                renameInfos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet concat(final SpreadsheetFormatterInfo info) {
         return this.setElements(
-                this.pluginInfoSet.concat(info)
+            this.pluginInfoSet.concat(info)
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet concatAll(final Collection<SpreadsheetFormatterInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.concatAll(infos)
+            this.pluginInfoSet.concatAll(infos)
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet delete(final SpreadsheetFormatterInfo info) {
         return this.setElements(
-                this.pluginInfoSet.delete(info)
+            this.pluginInfoSet.delete(info)
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet deleteAll(final Collection<SpreadsheetFormatterInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.deleteAll(infos)
+            this.pluginInfoSet.deleteAll(infos)
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet deleteIf(final Predicate<? super SpreadsheetFormatterInfo> predicate) {
         return this.setElements(
-                this.pluginInfoSet.deleteIf(predicate)
+            this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
@@ -150,19 +150,19 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     public SpreadsheetFormatterInfoSet replace(final SpreadsheetFormatterInfo oldInfo,
                                                final SpreadsheetFormatterInfo newInfo) {
         return this.setElements(
-                this.pluginInfoSet.replace(
-                        oldInfo,
-                        newInfo
-                )
+            this.pluginInfoSet.replace(
+                oldInfo,
+                newInfo
+            )
         );
     }
 
     @Override
     public ImmutableSet<SpreadsheetFormatterInfo> setElementsFailIfDifferent(final Set<SpreadsheetFormatterInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.setElementsFailIfDifferent(
-                        infos
-                )
+            this.pluginInfoSet.setElementsFailIfDifferent(
+                infos
+            )
         );
     }
 
@@ -233,10 +233,10 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     static SpreadsheetFormatterInfoSet unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallSet(
-                        node,
-                        SpreadsheetFormatterInfo.class
-                )
+            context.unmarshallSet(
+                node,
+                SpreadsheetFormatterInfo.class
+            )
         );
     }
 
@@ -244,10 +244,10 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
         SpreadsheetFormatterInfo.register(); // force registry of json marshaller
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterInfoSet.class),
-                SpreadsheetFormatterInfoSet::unmarshall,
-                SpreadsheetFormatterInfoSet::marshall,
-                SpreadsheetFormatterInfoSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterInfoSet.class),
+            SpreadsheetFormatterInfoSet::unmarshall,
+            SpreadsheetFormatterInfoSet::marshall,
+            SpreadsheetFormatterInfoSet.class
         );
     }
 }

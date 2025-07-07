@@ -52,16 +52,16 @@ abstract public class ConditionSpreadsheetFormulaParserToken extends BinarySprea
         }
 
         final List<ParserToken> conditionRightTokens = tokens.subList(
-                symbolIndex,
-                tokens.size()
+            symbolIndex,
+            tokens.size()
         );
 
         return this.toConditionRightSpreadsheetFormulaParserToken0(
-                conditionRightTokens,
-                ParserToken.text(conditionRightTokens)
+            conditionRightTokens,
+            ParserToken.text(conditionRightTokens)
         );
     }
 
     abstract ConditionRightSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken0(final List<ParserToken> tokens,
-                                                                                                 final String text);
+                                                                                                        final String text);
 }

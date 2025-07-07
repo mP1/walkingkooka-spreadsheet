@@ -86,8 +86,7 @@ public abstract class BinarySpreadsheetFormulaParserTokenTestCase<T extends Bina
 
     abstract SpreadsheetFormulaParserToken rightToken();
 
-    @Override
-    final List<ParserToken> tokens() {
+    @Override final List<ParserToken> tokens() {
         return Lists.of(this.leftToken(), this.operatorSymbol(), this.rightToken());
     }
 

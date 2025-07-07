@@ -31,24 +31,24 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetComparatorName} for a {@link SpreadsheetComparator}.
  */
 public final class SpreadsheetComparatorInfo implements PluginInfoLike<SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
-        HateosResource<SpreadsheetComparatorName> {
+    HateosResource<SpreadsheetComparatorName> {
 
     public static SpreadsheetComparatorInfo parse(final String text) {
         return new SpreadsheetComparatorInfo(
-                PluginInfo.parse(
-                        text,
-                        SpreadsheetComparatorName::with
-                )
+            PluginInfo.parse(
+                text,
+                SpreadsheetComparatorName::with
+            )
         );
     }
 
     public static SpreadsheetComparatorInfo with(final AbsoluteUrl url,
                                                  final SpreadsheetComparatorName name) {
         return new SpreadsheetComparatorInfo(
-                PluginInfo.with(
-                        url,
-                        name
-                )
+            PluginInfo.with(
+                url,
+                name
+            )
         );
     }
 
@@ -73,10 +73,10 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
     @Override
     public SpreadsheetComparatorInfo setName(final SpreadsheetComparatorName name) {
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetComparatorInfo(
-                        this.pluginInfo.setName(name)
-                );
+            this :
+            new SpreadsheetComparatorInfo(
+                this.pluginInfo.setName(name)
+            );
     }
 
     private final PluginInfo<SpreadsheetComparatorName> pluginInfo;
@@ -98,8 +98,8 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetComparatorInfo &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetComparatorInfo &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetComparatorInfo other) {
@@ -124,16 +124,16 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
     static SpreadsheetComparatorInfo unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetComparatorInfo.parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorInfo.class),
-                SpreadsheetComparatorInfo::unmarshall,
-                SpreadsheetComparatorInfo::marshall,
-                SpreadsheetComparatorInfo.class
+            JsonNodeContext.computeTypeName(SpreadsheetComparatorInfo.class),
+            SpreadsheetComparatorInfo::unmarshall,
+            SpreadsheetComparatorInfo::marshall,
+            SpreadsheetComparatorInfo.class
         );
         SpreadsheetComparatorName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }

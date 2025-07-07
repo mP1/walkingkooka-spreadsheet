@@ -44,13 +44,13 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
         final SpreadsheetColumnReference newColumn = this.selection;
 
         return Optional.of(
-                selection.isColumn() || selection.isColumnRange() ?
-                        columnToAnchored(
-                                selection,
-                                anchor,
-                                newColumn
-                        ) :
-                        newColumn.setDefaultAnchor()
+            selection.isColumn() || selection.isColumnRange() ?
+                columnToAnchored(
+                    selection,
+                    anchor,
+                    newColumn
+                ) :
+                newColumn.setDefaultAnchor()
         );
     }
 
@@ -58,7 +58,7 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
         return Optional.of(
-                this.selection.setRow(home.row())
+            this.selection.setRow(home.row())
         );
     }
 }

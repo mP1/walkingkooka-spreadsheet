@@ -36,8 +36,8 @@ public final class FunctionParametersSpreadsheetFormulaParserTokenTest extends P
     public void testWith() {
         final String text = "(" + NUMBER1 + ")";
         final FunctionParametersSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                this.number1()
+            text,
+            this.number1()
         );
         this.textAndCheck(token, text);
     }
@@ -67,12 +67,12 @@ public final class FunctionParametersSpreadsheetFormulaParserTokenTest extends P
         final ParenthesisCloseSymbolSpreadsheetFormulaParserToken right = this.closeParenthesisSymbol();
 
         final FunctionParametersSpreadsheetFormulaParserToken token = this.createToken(
-                text,
-                left,
-                whitespace1,
-                number,
-                whitespace2,
-                right
+            text,
+            left,
+            whitespace1,
+            number,
+            whitespace2,
+            right
         );
         this.textAndCheck(token, text);
         this.checkValue(token, left, whitespace1, number, whitespace2, right);
@@ -82,9 +82,9 @@ public final class FunctionParametersSpreadsheetFormulaParserTokenTest extends P
     private void checkParameters(final FunctionParametersSpreadsheetFormulaParserToken function,
                                  final SpreadsheetFormulaParserToken... parameters) {
         this.checkEquals(
-                Lists.of(parameters),
-                function.parameters(),
-                "parameters"
+            Lists.of(parameters),
+            function.parameters(),
+            "parameters"
         );
     }
 
@@ -102,21 +102,21 @@ public final class FunctionParametersSpreadsheetFormulaParserTokenTest extends P
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                this.openParenthesisSymbol(),
-                this.number1(),
-                this.closeParenthesisSymbol()
+            this.openParenthesisSymbol(),
+            this.number1(),
+            this.closeParenthesisSymbol()
         );
     }
 
     @Override
     public FunctionParametersSpreadsheetFormulaParserToken createDifferentToken() {
         return FunctionParametersSpreadsheetFormulaParserToken.with(
-                Lists.of(
-                        this.openParenthesisSymbol(),
-                        this.number("99", "99"),
-                        this.closeParenthesisSymbol()
-                ),
-                "(99)"
+            Lists.of(
+                this.openParenthesisSymbol(),
+                this.number("99", "99"),
+                this.closeParenthesisSymbol()
+            ),
+            "(99)"
         );
     }
 

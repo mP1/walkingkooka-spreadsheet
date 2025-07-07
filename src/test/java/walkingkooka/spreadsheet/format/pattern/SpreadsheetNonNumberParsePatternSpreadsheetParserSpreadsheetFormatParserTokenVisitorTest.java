@@ -23,8 +23,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 public final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitorTest
-        extends SpreadsheetNonNumberParsePatternTestCase<SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor> {
+    extends SpreadsheetNonNumberParsePatternTestCase<SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor>
+    implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor> {
 
     @Override
     public void testIfClassIsFinalIfAllConstructorsArePrivate() {
@@ -44,8 +44,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetF
         visitor.accept(token);
 
         this.toStringAndCheck(
-                visitor,
-                "[yyyymmdd]"
+            visitor,
+            "[yyyymmdd]"
         );
     }
 
@@ -53,8 +53,8 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetF
         final SpreadsheetParsePattern date = SpreadsheetPattern.parseDateParsePattern(pattern);
         final SequenceParserToken sequenceParserToken = (SequenceParserToken) date.value();
         return sequenceParserToken.value()
-                .get(0)
-                .cast(SpreadsheetFormatParserToken.class);
+            .get(0)
+            .cast(SpreadsheetFormatParserToken.class);
     }
 
     @Override

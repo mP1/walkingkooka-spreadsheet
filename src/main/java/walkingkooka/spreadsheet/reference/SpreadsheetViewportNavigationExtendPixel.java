@@ -32,9 +32,9 @@ abstract class SpreadsheetViewportNavigationExtendPixel extends SpreadsheetViewp
                                                                          final SpreadsheetViewportRectangle rectangle,
                                                                          final SpreadsheetViewportNavigationContext context) {
         return this.updateSelection(
-                anchoredSelection.selection(),
-                anchoredSelection.anchor(),
-                context
+            anchoredSelection.selection(),
+            anchoredSelection.anchor(),
+            context
         );
     }
 }

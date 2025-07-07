@@ -33,7 +33,7 @@ public final class TimeSpreadsheetFormatParserToken extends ParentSpreadsheetFor
      */
     static TimeSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new TimeSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmpty(text));
+            checkTextNotEmpty(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class TimeSpreadsheetFormatParserToken extends ParentSpreadsheetFor
     @Override
     public TimeSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                TimeSpreadsheetFormatParserToken::with
+            this,
+            children,
+            TimeSpreadsheetFormatParserToken::with
         );
     }
 

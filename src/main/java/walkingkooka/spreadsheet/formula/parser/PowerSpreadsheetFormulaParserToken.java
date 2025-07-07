@@ -39,9 +39,9 @@ public final class PowerSpreadsheetFormulaParserToken extends ArithmeticSpreadsh
     @Override
     public PowerSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                PowerSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            PowerSpreadsheetFormulaParserToken::with
         );
     }
 

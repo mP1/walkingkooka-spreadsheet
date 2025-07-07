@@ -35,8 +35,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpread
         final SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return SpreadsheetFormatParserToken.dateTime(
-                visitor.tokens,
-                token.text()
+            visitor.tokens,
+            token.text()
         );
     }
 
@@ -72,8 +72,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpread
     @Override
     protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
         return token.isParent() ?
-                Visiting.SKIP : // leave color etc alone
-                Visiting.CONTINUE;
+            Visiting.SKIP : // leave color etc alone
+            Visiting.CONTINUE;
     }
 
     @Override
@@ -101,8 +101,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpread
     protected void visit(final MonthSpreadsheetFormatParserToken token) {
         if (this.minute) {
             this.add = SpreadsheetFormatParserToken.minute(
-                    token.value(),
-                    token.text()
+                token.value(),
+                token.text()
             );
         }
     }

@@ -32,8 +32,8 @@ public final class LambdaFunctionSpreadsheetFormulaParserToken extends FunctionS
     static LambdaFunctionSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                             final String text) {
         return new LambdaFunctionSpreadsheetFormulaParserToken(
-                copyAndCheckTokens(value),
-                checkText(text)
+            copyAndCheckTokens(value),
+            checkText(text)
         );
     }
 
@@ -47,25 +47,25 @@ public final class LambdaFunctionSpreadsheetFormulaParserToken extends FunctionS
             throw new IllegalArgumentException("Expected 3 tokens but got " + count + "=" + without);
         }
         final SpreadsheetFormulaParserToken name = without.get(0)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
         if (!name.isFunctionName()) {
             throw new IllegalArgumentException("Function name missing parse " + value);
         }
 
         final SpreadsheetFormulaParserToken parameters = without.get(1)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
         if (!parameters.isFunctionParameters()) {
             throw new IllegalArgumentException("Function parameters missing parse " + value);
         }
 
         final SpreadsheetFormulaParserToken parametersValues = without.get(2)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
         if (!parametersValues.isFunctionParameters()) {
             throw new IllegalArgumentException("Function parameter values missing parse " + value);
         }
 
         this.name = name.cast(FunctionNameSpreadsheetFormulaParserToken.class)
-                .value();
+            .value();
         this.parameters = parameters.cast(FunctionParametersSpreadsheetFormulaParserToken.class);
         this.parameterValues = parametersValues.cast(FunctionParametersSpreadsheetFormulaParserToken.class);
     }
@@ -98,9 +98,9 @@ public final class LambdaFunctionSpreadsheetFormulaParserToken extends FunctionS
     @Override
     public LambdaFunctionSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                LambdaFunctionSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            LambdaFunctionSpreadsheetFormulaParserToken::with
         );
     }
 

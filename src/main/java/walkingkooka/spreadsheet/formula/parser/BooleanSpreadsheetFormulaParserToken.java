@@ -29,8 +29,8 @@ public final class BooleanSpreadsheetFormulaParserToken extends ValueSpreadsheet
     static BooleanSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                      final String text) {
         return new BooleanSpreadsheetFormulaParserToken(
-                copyAndCheckTokens(value),
-                checkText(text)
+            copyAndCheckTokens(value),
+            checkText(text)
         );
     }
 
@@ -43,7 +43,7 @@ public final class BooleanSpreadsheetFormulaParserToken extends ValueSpreadsheet
      */
     public boolean toBoolean() {
         return BooleanSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor.toBoolean(
-                this
+            this
         );
     }
 
@@ -52,9 +52,9 @@ public final class BooleanSpreadsheetFormulaParserToken extends ValueSpreadsheet
     @Override
     public BooleanSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                BooleanSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            BooleanSpreadsheetFormulaParserToken::with
         );
     }
 

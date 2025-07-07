@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
 import java.math.MathContext;
 
 public final class SpreadsheetParserProvidersTest implements ClassTesting2<SpreadsheetParserProviders>,
-        PublicStaticHelperTesting<SpreadsheetParserProviders> {
+    PublicStaticHelperTesting<SpreadsheetParserProviders> {
 
     // PublicStaticHelperTesting........................................................................................
 

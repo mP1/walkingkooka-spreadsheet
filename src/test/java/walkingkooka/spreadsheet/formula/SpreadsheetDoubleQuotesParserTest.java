@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 
 public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<SpreadsheetDoubleQuotesParser, SpreadsheetParserContext>,
-        ToStringTesting<SpreadsheetDoubleQuotesParser> {
+    ToStringTesting<SpreadsheetDoubleQuotesParser> {
 
     @Test
     public void testParseNotDoubleQuote() {
@@ -99,34 +99,34 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
         final String withQuotes = quotes + content + quotes;
 
         this.parseAndCheck(
-                withQuotes + after,
-                SpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN,
-                                SpreadsheetFormulaParserToken.textLiteral(
-                                        content.replace(quotes + quotes, quotes),
-                                        content
-                                ),
-                                SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN
-                        ),
-                        withQuotes
+            withQuotes + after,
+            SpreadsheetFormulaParserToken.text(
+                Lists.of(
+                    SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN,
+                    SpreadsheetFormulaParserToken.textLiteral(
+                        content.replace(quotes + quotes, quotes),
+                        content
+                    ),
+                    SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN
                 ),
-                withQuotes,
-                after
+                withQuotes
+            ),
+            withQuotes,
+            after
         );
     }
 
     @Test
     public void testMinCount() {
         this.minCountAndCheck(
-                1
+            1
         );
     }
 
     @Test
     public void testMaxCount() {
         this.maxCountAndCheck(
-                1
+            1
         );
     }
 

@@ -72,7 +72,7 @@ public final class BracketOpenSymbolSpreadsheetFormatParserTokenTest extends Sym
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.TEXT_LITERAL
+            SpreadsheetFormatParserTokenKind.TEXT_LITERAL
         );
     }
 

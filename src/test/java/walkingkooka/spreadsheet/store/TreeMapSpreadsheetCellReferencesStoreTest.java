@@ -36,17 +36,17 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell
+            )
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                cell,
-                0,
-                0
+            store,
+            cell,
+            0,
+            0
         );
     }
 
@@ -58,26 +58,26 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell
+            )
         );
 
         this.findCellsWithReferenceAndCheck(
-                store,
-                reference,
-                0,
-                2,
-                cell
+            store,
+            reference,
+            0,
+            2,
+            cell
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                reference,
-                0,
-                2,
-                cell
+            store,
+            reference,
+            0,
+            2,
+            cell
         );
     }
 
@@ -89,36 +89,36 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell
+            )
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("C3");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell2
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell2
+            )
         );
 
         // ignored
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        cell,
-                        reference
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                cell,
+                reference
+            )
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                reference,
-                0,
-                3,
-                cell,
-                cell2
+            store,
+            reference,
+            0,
+            3,
+            cell,
+            cell2
         );
     }
 
@@ -130,36 +130,36 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z9");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell
+            )
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("B2");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell2
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell2
+            )
         );
 
         // ignored
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        cell,
-                        reference
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                cell,
+                reference
+            )
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                reference,
-                1,
-                3,
-                // cell1 skipped by offset=1
-                cell2
+            store,
+            reference,
+            1,
+            3,
+            // cell1 skipped by offset=1
+            cell2
         );
     }
 
@@ -171,37 +171,37 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference1,
-                        cell1
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference1,
+                cell1
+            )
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
         final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference2,
-                        cell2
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference2,
+                cell2
+            )
         );
 
         // ignored
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        cell1,
-                        reference1
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                cell1,
+                reference1
+            )
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("F6:G7"),
-                0,
-                3,
-                cell1,
-                cell2
+            store,
+            SpreadsheetSelection.parseCellRange("F6:G7"),
+            0,
+            3,
+            cell1,
+            cell2
         );
     }
 
@@ -213,57 +213,57 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference1,
-                        cell1
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference1,
+                cell1
+            )
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference1,
-                        cell2
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference1,
+                cell2
+            )
         );
 
         final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
         final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference2,
-                        cell3
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference2,
+                cell3
+            )
         );
 
         final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
         final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference3,
-                        cell4
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference3,
+                cell4
+            )
         );
 
         // ignored
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        cell1,
-                        reference1
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                cell1,
+                reference1
+            )
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("F6:I9"),
-                0,
-                5,
-                cell1,
-                cell2,
-                cell3,
-                cell4
+            store,
+            SpreadsheetSelection.parseCellRange("F6:I9"),
+            0,
+            5,
+            cell1,
+            cell2,
+            cell3,
+            cell4
         );
     }
 
@@ -275,57 +275,57 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference1,
-                        cell1
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference1,
+                cell1
+            )
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference1,
-                        cell2
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference1,
+                cell2
+            )
         );
 
         final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
         final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference2,
-                        cell3
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference2,
+                cell3
+            )
         );
 
         final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
         final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        reference3,
-                        cell4
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                reference3,
+                cell4
+            )
         );
 
         // ignored
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                        cell1,
-                        reference1
-                )
+            ReferenceAndSpreadsheetCellReference.with(
+                cell1,
+                reference1
+            )
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
-                store,
-                SpreadsheetSelection.parseCellRange("F6:I9"),
-                1,
-                2,
-                //cell1, skipped by offset 1
-                cell2,
-                cell3
-                //cell4 less than count
+            store,
+            SpreadsheetSelection.parseCellRange("F6:I9"),
+            1,
+            2,
+            //cell1, skipped by offset 1
+            cell2,
+            cell3
+            //cell4 less than count
         );
     }
 
@@ -341,40 +341,40 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(b2, a1)
+            ReferenceAndSpreadsheetCellReference.with(b2, a1)
         );
 
         store.addCell(
-                ReferenceAndSpreadsheetCellReference.with(c3, a1)
+            ReferenceAndSpreadsheetCellReference.with(c3, a1)
         );
 
         this.findReferencesWithCellAndCheck(
-                store,
-                a1,
-                0, // offset
-                3, // count
-                b2, c3
+            store,
+            a1,
+            0, // offset
+            3, // count
+            b2, c3
         );
 
         store.delete(a1);
 
         this.countAndCheck(
-                store,
-                2
+            store,
+            2
         );
 
         store.removeReferencesWithCell(a1);
 
         this.findReferencesWithCellAndCheck(
-                store,
-                a1,
-                0, // offset
-                3 // count
+            store,
+            a1,
+            0, // offset
+            3 // count
         );
 
         this.countAndCheck(
-                store,
-                0
+            store,
+            0
         );
     }
 
@@ -393,9 +393,9 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     @Override
     public Set<SpreadsheetCellReference> value() {
         return Set.of(
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetSelection.parseCell("D4")
+            SpreadsheetSelection.parseCell("B2"),
+            SpreadsheetSelection.parseCell("C3"),
+            SpreadsheetSelection.parseCell("D4")
         );
     }
 

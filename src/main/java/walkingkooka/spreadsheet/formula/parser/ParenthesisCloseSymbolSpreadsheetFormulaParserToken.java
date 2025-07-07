@@ -28,8 +28,8 @@ public final class ParenthesisCloseSymbolSpreadsheetFormulaParserToken extends S
     static ParenthesisCloseSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                     final String text) {
         return new ParenthesisCloseSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

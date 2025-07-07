@@ -33,120 +33,120 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public final class SpreadsheetConverterUnformattedNumberTest extends SpreadsheetConverterTestCase<SpreadsheetConverterUnformattedNumber>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertStringToNumberFails() {
         this.convertFails(
-                "123",
-                Number.class
+            "123",
+            Number.class
         );
     }
 
     @Test
     public void testConvertBooleanTrueToString() {
         this.convertToStringAndCheck(
-                true,
-                "true"
+            true,
+            "true"
         );
     }
 
     @Test
     public void testConvertBooleanFalseToString() {
         this.convertToStringAndCheck(
-                false,
-                "false"
+            false,
+            "false"
         );
     }
 
     @Test
     public void testConvertBigDecimalToString() {
         this.convertToStringAndCheck(
-                BigDecimal.valueOf(1.25),
-                "1.25"
+            BigDecimal.valueOf(1.25),
+            "1.25"
         );
     }
 
     @Test
     public void testConvertBigIntegerToString() {
         this.convertToStringAndCheck(
-                BigInteger.valueOf(125),
-                "125"
+            BigInteger.valueOf(125),
+            "125"
         );
     }
 
     @Test
     public void testConvertDoubleToString() {
         this.convertToStringAndCheck(
-                1.25,
-                "1.25"
+            1.25,
+            "1.25"
         );
     }
 
     @Test
     public void testConvertExpressionNumberBigDecimalToString() {
         this.convertToStringAndCheck(
-                ExpressionNumberKind.BIG_DECIMAL.create(12.5),
-                "12.5"
+            ExpressionNumberKind.BIG_DECIMAL.create(12.5),
+            "12.5"
         );
     }
 
     @Test
     public void testConvertExpressionNumberDoubleToString() {
         this.convertToStringAndCheck(
-                ExpressionNumberKind.DOUBLE.create(12.5),
-                "12.5"
+            ExpressionNumberKind.DOUBLE.create(12.5),
+            "12.5"
         );
     }
 
     @Test
     public void testConvertFloatToString() {
         this.convertToStringAndCheck(
-                123.5f,
-                "123.5"
+            123.5f,
+            "123.5"
         );
     }
 
     @Test
     public void testConvertIntegerToString() {
         this.convertToStringAndCheck(
-                123,
-                "123"
+            123,
+            "123"
         );
     }
 
     @Test
     public void testConvertLocalDateToString() {
         this.convertToStringAndCheck(
-                LocalDate.of(1999, 12, 31),
-                "date: 31/12/1999"
+            LocalDate.of(1999, 12, 31),
+            "date: 31/12/1999"
         );
     }
 
     @Test
     public void testConvertLocalDateTimeToString() {
         this.convertToStringAndCheck(
-                LocalDateTime.of(
-                        LocalDate.of(1999, 12, 31),
-                        LocalTime.of(12, 58, 59)
-                ),
-                "datetime: 31/12/1999 12:58:59"
+            LocalDateTime.of(
+                LocalDate.of(1999, 12, 31),
+                LocalTime.of(12, 58, 59)
+            ),
+            "datetime: 31/12/1999 12:58:59"
         );
     }
 
     @Test
     public void testConvertLocalTimeToString() {
         this.convertToStringAndCheck(
-                LocalTime.of(12, 58, 59),
-                "time: 12:58:59"
+            LocalTime.of(12, 58, 59),
+            "time: 12:58:59"
         );
     }
 
     @Test
     public void testConvertLongToString() {
         this.convertToStringAndCheck(
-                123L,
-                "123"
+            123L,
+            "123"
         );
     }
 
@@ -158,9 +158,9 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
     private void convertToStringAndCheck(final Object value,
                                          final String expected) {
         this.convertAndCheck(
-                value,
-                String.class,
-                expected
+            value,
+            String.class,
+            expected
         );
     }
 
@@ -174,28 +174,28 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
     @Override
     public SpreadsheetConverterContext createContext() {
         final SpreadsheetMetadata metadata = METADATA_EN_AU.set(
-                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                SpreadsheetPattern.parseDateFormatPattern("\"date:\" dd/mm/yyyy").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+            SpreadsheetPattern.parseDateFormatPattern("\"date:\" dd/mm/yyyy").spreadsheetFormatterSelector()
         ).set(
-                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                SpreadsheetPattern.parseDateTimeFormatPattern("\"datetime:\" dd/mm/yyyy hh:mm:ss").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            SpreadsheetPattern.parseDateTimeFormatPattern("\"datetime:\" dd/mm/yyyy hh:mm:ss").spreadsheetFormatterSelector()
         ).set(
-                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-                SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
+            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+            SpreadsheetPattern.parseTimeFormatPattern("\"time:\" hh:mm:ss").spreadsheetFormatterSelector()
         );
 
         return metadata.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                LABEL_NAME_RESOLVER,
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                        metadata,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER
-                ),
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+            SpreadsheetMetadata.NO_CELL,
+            SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            LABEL_NAME_RESOLVER,
+            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                metadata,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER
+            ),
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
     }
 
@@ -204,8 +204,8 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createConverter(),
-                SpreadsheetConverterUnformattedNumber.class.getSimpleName()
+            this.createConverter(),
+            SpreadsheetConverterUnformattedNumber.class.getSimpleName()
         );
     }
 

@@ -29,26 +29,26 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTest exte
     @Test
     public void testExtractLocaleAwareValueUS() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                SpreadsheetDateParsePattern.parseDateParsePattern("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d")
-                        .spreadsheetParserSelector()
+            LocaleContexts.jre(Locale.ENGLISH),
+            SpreadsheetDateParsePattern.parseDateParsePattern("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d")
+                .spreadsheetParserSelector()
         );
     }
 
     @Test
     public void testExtractLocaleAwareValueAu() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.forLanguageTag("EN-AU")),
-                SpreadsheetDateParsePattern.parseDateParsePattern("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m")
-                        .spreadsheetParserSelector()
+            LocaleContexts.jre(Locale.forLanguageTag("EN-AU")),
+            SpreadsheetDateParsePattern.parseDateParsePattern("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m")
+                .spreadsheetParserSelector()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance(),
-                "dateParser"
+            SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance(),
+            "dateParser"
         );
     }
 
@@ -60,7 +60,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTest exte
     @Override
     SpreadsheetParserSelector propertyValue() {
         return SpreadsheetDateParsePattern.parseDateParsePattern("yyyy/mm/dd")
-                .spreadsheetParserSelector();
+            .spreadsheetParserSelector();
     }
 
     @Override

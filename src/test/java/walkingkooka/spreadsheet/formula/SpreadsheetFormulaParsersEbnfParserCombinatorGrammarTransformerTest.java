@@ -25,8 +25,8 @@ import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGramm
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformerTesting;
 
 public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerTest implements ClassTesting2<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer>,
-        EbnfParserCombinatorGrammarTransformerTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer, SpreadsheetParserContext>,
-        TypeNameTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer> {
+    EbnfParserCombinatorGrammarTransformerTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer, SpreadsheetParserContext>,
+    TypeNameTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer> {
 
     // Class............................................................................................................
 

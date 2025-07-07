@@ -33,23 +33,23 @@ public final class ConditionRightLessThanEqualsSpreadsheetFormulaParserTokenTest
         final SpreadsheetFormulaParserToken left = number("999");
 
         this.setConditionLeftAndCheck(
-                token,
-                left,
-                SpreadsheetFormulaParserToken.lessThanEquals(
-                        Lists.of(
-                                left,
-                                token
-                        ),
-                        left.text() + token.text()
-                )
+            token,
+            left,
+            SpreadsheetFormulaParserToken.lessThanEquals(
+                Lists.of(
+                    left,
+                    token
+                ),
+                left.text() + token.text()
+            )
         );
     }
 
     @Override
     SymbolSpreadsheetFormulaParserToken symbolParserToken() {
         return SpreadsheetFormulaParserToken.lessThanEqualsSymbol(
-                "<=",
-                "<="
+            "<=",
+            "<="
         );
     }
 
@@ -57,8 +57,8 @@ public final class ConditionRightLessThanEqualsSpreadsheetFormulaParserTokenTest
     ConditionRightLessThanEqualsSpreadsheetFormulaParserToken createToken(final String text,
                                                                           final List<ParserToken> tokens) {
         return ConditionRightLessThanEqualsSpreadsheetFormulaParserToken.with(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -66,8 +66,8 @@ public final class ConditionRightLessThanEqualsSpreadsheetFormulaParserTokenTest
     public ConditionRightLessThanEqualsSpreadsheetFormulaParserToken unmarshall(final JsonNode json,
                                                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormulaParserToken.unmarshallConditionRightLessThanEquals(
-                json,
-                context
+            json,
+            context
         );
     }
 

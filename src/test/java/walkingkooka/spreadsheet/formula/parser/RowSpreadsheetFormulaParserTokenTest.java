@@ -37,7 +37,7 @@ public final class RowSpreadsheetFormulaParserTokenTest extends NonSymbolSpreads
     @Test
     public void testToStringAbsolute() {
         this.toStringAndCheck(this.createToken(SpreadsheetReferenceKind.ABSOLUTE.row(555), "$ABC"),
-                "$ABC");
+            "$ABC");
     }
 
     @Test

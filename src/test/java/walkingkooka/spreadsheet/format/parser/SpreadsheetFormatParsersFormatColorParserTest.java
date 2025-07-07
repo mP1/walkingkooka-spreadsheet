@@ -33,42 +33,42 @@ import walkingkooka.text.cursor.parser.Parsers;
 import java.util.Optional;
 
 public final class SpreadsheetFormatParsersFormatColorParserTest implements ParserTesting2<SpreadsheetFormatParsersFormatColorParser, SpreadsheetFormatParserContext>,
-        ToStringTesting<SpreadsheetFormatParsersFormatColorParser> {
+    ToStringTesting<SpreadsheetFormatParsersFormatColorParser> {
 
     @Test
     public void testParseNotColor() {
         final String text = "123";
         final ParserToken expected = ParserTokens.sequence(
-                Lists.of(
-                        SpreadsheetFormatParserToken.number(
-                                Lists.of(
-                                        SpreadsheetFormatParserToken.digit(text, text)
-                                ),
-                                text
-                        )
-                ),
-                text
+            Lists.of(
+                SpreadsheetFormatParserToken.number(
+                    Lists.of(
+                        SpreadsheetFormatParserToken.digit(text, text)
+                    ),
+                    text
+                )
+            ),
+            text
         );
         this.parseAndCheck(
-                SpreadsheetFormatParsersFormatColorParser.with(
-                        new FakeParser<>() {
-                            @Override
-                            public Optional<ParserToken> parse(final TextCursor cursor,
-                                                               final SpreadsheetFormatParserContext context) {
-                                Parsers.string(text, CaseSensitivity.SENSITIVE)
-                                        .orFailIfCursorNotEmpty(ParserReporters.basic())
-                                        .parse(cursor, context);
+            SpreadsheetFormatParsersFormatColorParser.with(
+                new FakeParser<>() {
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final SpreadsheetFormatParserContext context) {
+                        Parsers.string(text, CaseSensitivity.SENSITIVE)
+                            .orFailIfCursorNotEmpty(ParserReporters.basic())
+                            .parse(cursor, context);
 
-                                return Optional.of(
-                                        expected
-                                );
-                            }
-                        }
-                ),
-                this.createContext(),
-                text,
-                expected,
-                text
+                        return Optional.of(
+                            expected
+                        );
+                    }
+                }
+            ),
+            this.createContext(),
+            text,
+            expected,
+            text
         );
     }
 
@@ -76,39 +76,39 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
     public void testParseNotColor2() {
         final String text = "123";
         final ParserToken expected = ParserTokens.sequence(
-                Lists.of(
-                        SpreadsheetFormatParserToken.number(
-                                Lists.of(
-                                        SpreadsheetFormatParserToken.digit(text, text)
-                                ),
-                                text
-                        )
-                ),
-                text
+            Lists.of(
+                SpreadsheetFormatParserToken.number(
+                    Lists.of(
+                        SpreadsheetFormatParserToken.digit(text, text)
+                    ),
+                    text
+                )
+            ),
+            text
         );
         this.parseAndCheck(
-                SpreadsheetFormatParsersFormatColorParser.with(
-                        new FakeParser<>() {
-                            @Override
-                            public Optional<ParserToken> parse(final TextCursor cursor,
-                                                               final SpreadsheetFormatParserContext context) {
-                                checkNotEquals(
-                                        Optional.empty(),
-                                        Parsers.string(text, CaseSensitivity.SENSITIVE)
-                                                .parse(cursor, context)
-                                );
+            SpreadsheetFormatParsersFormatColorParser.with(
+                new FakeParser<>() {
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final SpreadsheetFormatParserContext context) {
+                        checkNotEquals(
+                            Optional.empty(),
+                            Parsers.string(text, CaseSensitivity.SENSITIVE)
+                                .parse(cursor, context)
+                        );
 
-                                return Optional.of(
-                                        expected
-                                );
-                            }
-                        }
-                ),
-                this.createContext(),
-                text + "!",
-                expected,
-                text,
-                "!"
+                        return Optional.of(
+                            expected
+                        );
+                    }
+                }
+            ),
+            this.createContext(),
+            text + "!",
+            expected,
+            text,
+            "!"
         );
     }
 
@@ -117,33 +117,33 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         final String text = "[Black]";
 
         this.parseFailAndCheck(
-                SpreadsheetFormatParsersFormatColorParser.with(
-                        new FakeParser<>() {
-                            @Override
-                            public Optional<ParserToken> parse(final TextCursor cursor,
-                                                               final SpreadsheetFormatParserContext context) {
-                                Parsers.string(text, CaseSensitivity.SENSITIVE)
-                                        .orFailIfCursorNotEmpty(ParserReporters.basic())
-                                        .parse(cursor, context);
+            SpreadsheetFormatParsersFormatColorParser.with(
+                new FakeParser<>() {
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final SpreadsheetFormatParserContext context) {
+                        Parsers.string(text, CaseSensitivity.SENSITIVE)
+                            .orFailIfCursorNotEmpty(ParserReporters.basic())
+                            .parse(cursor, context);
 
-                                return Optional.of(
-                                        ParserTokens.sequence(
-                                                Lists.of(
-                                                        SpreadsheetFormatParserToken.color(
-                                                                Lists.of(
-                                                                        SpreadsheetFormatParserToken.colorName(text, text)
-                                                                ),
-                                                                text
-                                                        )
-                                                ),
-                                                text
-                                        )
-                                );
-                            }
-                        }
-                ),
-                this.createContext(),
-                text
+                        return Optional.of(
+                            ParserTokens.sequence(
+                                Lists.of(
+                                    SpreadsheetFormatParserToken.color(
+                                        Lists.of(
+                                            SpreadsheetFormatParserToken.colorName(text, text)
+                                        ),
+                                        text
+                                    )
+                                ),
+                                text
+                            )
+                        );
+                    }
+                }
+            ),
+            this.createContext(),
+            text
         );
     }
 
@@ -154,59 +154,59 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         final String text = color + textPlaceholder;
 
         final ParserToken expected = ParserTokens.sequence(
-                Lists.of(
-                        SpreadsheetFormatParserToken.text(
-                                Lists.of(
-                                        SpreadsheetFormatParserToken.color(
-                                                Lists.of(
-                                                        SpreadsheetFormatParserToken.colorName(color, color)
-                                                ),
-                                                color
-                                        ),
-                                        SpreadsheetFormatParserToken.textLiteral(
-                                                textPlaceholder,
-                                                textPlaceholder
-                                        )
-                                ),
-                                text
+            Lists.of(
+                SpreadsheetFormatParserToken.text(
+                    Lists.of(
+                        SpreadsheetFormatParserToken.color(
+                            Lists.of(
+                                SpreadsheetFormatParserToken.colorName(color, color)
+                            ),
+                            color
+                        ),
+                        SpreadsheetFormatParserToken.textLiteral(
+                            textPlaceholder,
+                            textPlaceholder
                         )
-                ),
-                text
+                    ),
+                    text
+                )
+            ),
+            text
         );
 
         this.parseAndCheck(
-                SpreadsheetFormatParsersFormatColorParser.with(
-                        new FakeParser<>() {
-                            @Override
-                            public Optional<ParserToken> parse(final TextCursor cursor,
-                                                               final SpreadsheetFormatParserContext context) {
-                                Parsers.string(text, CaseSensitivity.SENSITIVE)
-                                        .orFailIfCursorNotEmpty(ParserReporters.basic())
-                                        .parse(cursor, context);
+            SpreadsheetFormatParsersFormatColorParser.with(
+                new FakeParser<>() {
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final SpreadsheetFormatParserContext context) {
+                        Parsers.string(text, CaseSensitivity.SENSITIVE)
+                            .orFailIfCursorNotEmpty(ParserReporters.basic())
+                            .parse(cursor, context);
 
-                                return Optional.of(
-                                        expected
-                                );
-                            }
-                        }
-                ),
-                text,
-                expected,
-                text
+                        return Optional.of(
+                            expected
+                        );
+                    }
+                }
+            ),
+            text,
+            expected,
+            text
         );
     }
 
     @Test
     public void testMinCount() {
         this.minCountAndCheck(
-                111
+            111
         );
     }
 
     @Test
     public void testMaxCount() {
         this.maxCountAndCheck(
-                222
+            222
         );
     }
 
@@ -215,10 +215,10 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         final String toString = "wrapped parser toString";
 
         this.toStringAndCheck(
-                SpreadsheetFormatParsersFormatColorParser.with(
-                        Parsers.fake()
-                ).setToString(toString),
-                toString
+            SpreadsheetFormatParsersFormatColorParser.with(
+                Parsers.fake()
+            ).setToString(toString),
+            toString
         );
     }
 
@@ -227,17 +227,17 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
     @Override
     public SpreadsheetFormatParsersFormatColorParser createParser() {
         return SpreadsheetFormatParsersFormatColorParser.with(
-                new FakeParser<>() {
-                    @Override
-                    public int minCount() {
-                        return 111;
-                    }
-
-                    @Override
-                    public int maxCount() {
-                        return 222;
-                    }
+            new FakeParser<>() {
+                @Override
+                public int minCount() {
+                    return 111;
                 }
+
+                @Override
+                public int maxCount() {
+                    return 222;
+                }
+            }
         );
     }
 

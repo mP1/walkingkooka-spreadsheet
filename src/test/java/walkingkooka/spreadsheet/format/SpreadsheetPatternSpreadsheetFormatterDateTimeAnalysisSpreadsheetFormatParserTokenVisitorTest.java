@@ -26,7 +26,7 @@ import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor> {
+    SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testHHMMSS() {
@@ -74,10 +74,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreads
                                 final boolean ampm) {
         final SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor.with();
         visitor.accept(SpreadsheetFormatParsers.timeFormat().orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get());
+            .parse(
+                TextCursors.charSequence(pattern),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get());
         this.checkEquals(ampm, visitor.twelveHour, "twelveHour");
         this.checkEquals(millisecondDecimals, visitor.millisecondDecimals, "millisecondDecimals");
     }

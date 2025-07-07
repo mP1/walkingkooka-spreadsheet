@@ -45,7 +45,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
-        ConditionSpreadsheetFormatParserToken> {
+    ConditionSpreadsheetFormatParserToken> {
 
     private final static String TEXT_PATTERN = "@!condition-true";
 
@@ -59,26 +59,26 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testFormatEQWithNullValue() {
         this.formatAndCheck(
-                this.createFormatter("[=50]"),
-                Optional.empty(), // value
-                Optional.empty() // expected
+            this.createFormatter("[=50]"),
+            Optional.empty(), // value
+            Optional.empty() // expected
         ); // pass
     }
 
     @Test
     public void testFormatEQ() {
         this.formatConditionTrueAndCheck(
-                "[=50]",
-                "50",
-                "50!condition-true"
+            "[=50]",
+            "50",
+            "50!condition-true"
         ); // pass
     }
 
     @Test
     public void testFormatEQ2() {
         this.formatConditionFalseAndCheck(
-                "[=50]",
-                "99"
+            "[=50]",
+            "99"
         ); // fail
     }
 
@@ -87,25 +87,25 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testFormatGT() {
         this.formatConditionTrueAndCheck(
-                "[>9]",
-                "50",
-                "50!condition-true"
+            "[>9]",
+            "50",
+            "50!condition-true"
         ); // 50 > 9 pass
     }
 
     @Test
     public void testFormatGT2() {
         this.formatConditionFalseAndCheck(
-                "[>9]",
-                "5"
+            "[>9]",
+            "5"
         ); // 5 > 9 fail
     }
 
     @Test
     public void testFormatGT3() {
         this.formatConditionFalseAndCheck(
-                "[>9]",
-                "9"
+            "[>9]",
+            "9"
         ); // 9 > 9 fail
     }
 
@@ -114,26 +114,26 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testFormatGTE() {
         this.formatConditionTrueAndCheck(
-                "[>=9]",
-                "50",
-                "50!condition-true"
+            "[>=9]",
+            "50",
+            "50!condition-true"
         ); // 50 >= 9 pass
     }
 
     @Test
     public void testFormatGTE2() {
         this.formatConditionFalseAndCheck(
-                "[>=9]",
-                "5"
+            "[>=9]",
+            "5"
         ); // 5 >= 9 fail
     }
 
     @Test
     public void testFormatGTE3() {
         this.formatConditionTrueAndCheck(
-                "[>=9]",
-                "9",
-                "9!condition-true"
+            "[>=9]",
+            "9",
+            "9!condition-true"
         ); // 9 >= 9 pass
     }
 
@@ -142,25 +142,25 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testFormatLT() {
         this.formatConditionFalseAndCheck(
-                "[<9]",
-                "50"
+            "[<9]",
+            "50"
         ); // 50 < 9 fail
     }
 
     @Test
     public void testFormatLT2() {
         this.formatConditionTrueAndCheck(
-                "[<9]",
-                "5",
-                "5!condition-true"
+            "[<9]",
+            "5",
+            "5!condition-true"
         ); // 5 < 9 pass
     }
 
     @Test
     public void testFormatLT3() {
         this.formatConditionFalseAndCheck(
-                "[<9]",
-                "9"
+            "[<9]",
+            "9"
         ); // 9 < 9 fail
     }
 
@@ -169,26 +169,26 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testFormatLTE() {
         this.formatConditionFalseAndCheck(
-                "[<=9]",
-                "50"
+            "[<=9]",
+            "50"
         ); // 50 <= 9 fail
     }
 
     @Test
     public void testFormatLTE2() {
         this.formatConditionTrueAndCheck(
-                "[<=9]",
-                "5",
-                "5!condition-true"
+            "[<=9]",
+            "5",
+            "5!condition-true"
         ); // 5 <= 9 pass
     }
 
     @Test
     public void testFormatLTE3() {
         this.formatConditionTrueAndCheck(
-                "[<=9]",
-                "9",
-                "9!condition-true"
+            "[<=9]",
+            "9",
+            "9!condition-true"
         ); // 9 <= 9 pass
     }
 
@@ -197,26 +197,26 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testFormatNE() {
         this.formatConditionTrueAndCheck(
-                "[<>50]",
-                "99",
-                "99!condition-true"
+            "[<>50]",
+            "99",
+            "99!condition-true"
         ); // == pass
     }
 
     @Test
     public void testFormatNE2() {
         this.formatConditionFalseAndCheck(
-                "[<>50]",
-                "50"
+            "[<>50]",
+            "50"
         ); // == fail
     }
 
     private void formatConditionFalseAndCheck(final String pattern,
                                               final String text) {
         this.formatAndCheck(
-                this.createFormatter0(pattern),
-                text,
-                this.createContext()
+            this.createFormatter0(pattern),
+            text,
+            this.createContext()
         );
     }
 
@@ -224,9 +224,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                                              final String text,
                                              final String expected) {
         this.formatAndCheck(
-                this.createFormatter0(pattern),
-                text,
-                expected
+            this.createFormatter0(pattern),
+            text,
+            expected
         );
     }
 
@@ -237,22 +237,22 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Override
     SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final ConditionSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterCondition.with(
-                token,
-                SpreadsheetFormatters.text(
-                        SpreadsheetFormatParserToken.text(
-                                Lists.of(
-                                        SpreadsheetFormatParserToken.textPlaceholder(
-                                                "@",
-                                                "@"
-                                        ),
-                                        SpreadsheetFormatParserToken.textLiteral(
-                                                "!condition-true",
-                                                "!condition-true"
-                                        )
-                                ),
-                                TEXT_PATTERN
+            token,
+            SpreadsheetFormatters.text(
+                SpreadsheetFormatParserToken.text(
+                    Lists.of(
+                        SpreadsheetFormatParserToken.textPlaceholder(
+                            "@",
+                            "@"
+                        ),
+                        SpreadsheetFormatParserToken.textLiteral(
+                            "!condition-true",
+                            "!condition-true"
                         )
+                    ),
+                    TEXT_PATTERN
                 )
+            )
         );
     }
 
@@ -310,42 +310,42 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                                                  final Class<T> target) {
                 if (value instanceof String && String.class == target) {
                     return this.successfulConversion(
-                            value,
-                            target
+                        value,
+                        target
                     );
                 }
                 if (value instanceof String && BigDecimal.class == target) {
                     return this.successfulConversion(
-                            new BigDecimal((String) value),
-                            target
+                        new BigDecimal((String) value),
+                        target
                     );
                 }
 
                 return this.converter.convert(
-                        value,
-                        target,
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        DateTimeContexts.fake(),
-                                        this
-                                ),
-                                ExpressionNumberKind.DEFAULT
-                        )
+                    value,
+                    target,
+                    ExpressionNumberConverterContexts.basic(
+                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        ConverterContexts.basic(
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Converters.fake(),
+                            DateTimeContexts.fake(),
+                            this
+                        ),
+                        ExpressionNumberKind.DEFAULT
+                    )
                 );
             }
 
             private final Converter<ExpressionNumberConverterContext> converter = Converters.parser(
-                    BigDecimal.class,
-                    Parsers.bigDecimal(),
-                    (c) -> ParserContexts.basic(
-                            InvalidCharacterExceptionFactory.POSITION,
-                            c,
-                            c
-                    ),
-                    (t, c) -> t.cast(BigDecimalParserToken.class).value()
+                BigDecimal.class,
+                Parsers.bigDecimal(),
+                (c) -> ParserContexts.basic(
+                    InvalidCharacterExceptionFactory.POSITION,
+                    c,
+                    c
+                ),
+                (t, c) -> t.cast(BigDecimalParserToken.class).value()
             );
         };
     }
@@ -355,26 +355,26 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testTokensEquals() {
         this.tokensAndCheck(
-                this.createFormatter("[=0]"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "[=0]",
-                        "[=0]",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                )
+            this.createFormatter("[=0]"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "[=0]",
+                "[=0]",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            )
         );
     }
 
     @Test
     public void testTokensLessThan() {
         this.tokensAndCheck(
-                this.createFormatter("[<1]"),
-                this.createContext(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "[<1]",
-                        "[<1]",
-                        SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
-                )
+            this.createFormatter("[<1]"),
+            this.createContext(),
+            SpreadsheetFormatterSelectorToken.with(
+                "[<1]",
+                "[<1]",
+                SpreadsheetFormatterSelectorToken.NO_ALTERNATIVES
+            )
         );
     }
 
@@ -383,17 +383,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testEqualsDifferentToken() {
         final SpreadsheetPatternSpreadsheetFormatter formatter = SpreadsheetPattern.parseTextFormatPattern("@")
-                .formatter();
+            .formatter();
 
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterCondition.with(
-                        this.parsePatternOrFail("[<0]"),
-                        formatter
-                ),
-                SpreadsheetPatternSpreadsheetFormatterCondition.with(
-                        this.parsePatternOrFail("[>0]"),
-                        formatter
-                )
+            SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                this.parsePatternOrFail("[<0]"),
+                formatter
+            ),
+            SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                this.parsePatternOrFail("[>0]"),
+                formatter
+            )
         );
     }
 
@@ -402,16 +402,16 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
         final ConditionSpreadsheetFormatParserToken token = this.parsePatternOrFail("[=0]");
 
         this.checkNotEquals(
-                SpreadsheetPatternSpreadsheetFormatterCondition.with(
-                        token,
-                        SpreadsheetPattern.parseTextFormatPattern("@")
-                                .formatter()
-                ),
-                SpreadsheetPatternSpreadsheetFormatterCondition.with(
-                        token,
-                        SpreadsheetPattern.parseTextFormatPattern("@@@")
-                                .formatter()
-                )
+            SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                token,
+                SpreadsheetPattern.parseTextFormatPattern("@")
+                    .formatter()
+            ),
+            SpreadsheetPatternSpreadsheetFormatterCondition.with(
+                token,
+                SpreadsheetPattern.parseTextFormatPattern("@@@")
+                    .formatter()
+            )
         );
     }
 
@@ -420,8 +420,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createFormatter(),
-                this.pattern() + " " + TEXT_PATTERN
+            this.createFormatter(),
+            this.pattern() + " " + TEXT_PATTERN
         );
     }
 

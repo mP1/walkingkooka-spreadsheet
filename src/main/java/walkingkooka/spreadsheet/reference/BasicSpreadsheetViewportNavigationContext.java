@@ -34,11 +34,11 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
                                                           final Function<SpreadsheetRowReference, Double> rowHeights,
                                                           final SpreadsheetViewportWindowsFunction windows) {
         return new BasicSpreadsheetViewportNavigationContext(
-                Objects.requireNonNull(columnHidden, "columnHidden"),
-                Objects.requireNonNull(columnWidths, "columnWidths"),
-                Objects.requireNonNull(rowHidden, "rowHidden"),
-                Objects.requireNonNull(rowHeights, "rowHeights"),
-                Objects.requireNonNull(windows, "windows")
+            Objects.requireNonNull(columnHidden, "columnHidden"),
+            Objects.requireNonNull(columnWidths, "columnWidths"),
+            Objects.requireNonNull(rowHidden, "rowHidden"),
+            Objects.requireNonNull(rowHeights, "rowHeights"),
+            Objects.requireNonNull(windows, "windows")
         );
     }
 
@@ -77,10 +77,10 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkColumn(column);
 
         return move(
-                column,
-                SpreadsheetColumnReference::isFirst,
-                this.columnHidden,
-                -1
+            column,
+            SpreadsheetColumnReference::isFirst,
+            this.columnHidden,
+            -1
         );
     }
 
@@ -89,10 +89,10 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkColumn(column);
 
         return move(
-                column,
-                SpreadsheetColumnReference::isLast,
-                this.columnHidden,
-                +1
+            column,
+            SpreadsheetColumnReference::isLast,
+            this.columnHidden,
+            +1
         );
     }
 
@@ -101,10 +101,10 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkRow(row);
 
         return move(
-                row,
-                SpreadsheetRowReference::isFirst,
-                this.rowHidden,
-                -1
+            row,
+            SpreadsheetRowReference::isFirst,
+            this.rowHidden,
+            -1
         );
     }
 
@@ -113,10 +113,10 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkRow(row);
 
         return move(
-                row,
-                SpreadsheetRowReference::isLast,
-                this.rowHidden,
-                +1
+            row,
+            SpreadsheetRowReference::isLast,
+            this.rowHidden,
+            +1
         );
     }
 
@@ -129,8 +129,8 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         do {
             if (stop.test(result)) {
                 result = hidden.test(start) ?
-                        null :
-                        start;
+                    null :
+                    start;
                 break;
             }
 
@@ -147,12 +147,12 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkColumn(column);
 
         return movePixels(
-                column,
-                SpreadsheetColumnReference::isFirst,
-                this.columnHidden,
-                -1,
-                this.columnWidths,
-                pixels
+            column,
+            SpreadsheetColumnReference::isFirst,
+            this.columnHidden,
+            -1,
+            this.columnWidths,
+            pixels
         );
     }
 
@@ -162,12 +162,12 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkColumn(column);
 
         return movePixels(
-                column,
-                SpreadsheetColumnReference::isLast,
-                this.columnHidden,
-                +1,
-                this.columnWidths,
-                pixels
+            column,
+            SpreadsheetColumnReference::isLast,
+            this.columnHidden,
+            +1,
+            this.columnWidths,
+            pixels
         );
     }
 
@@ -179,12 +179,12 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkRow(row);
 
         return movePixels(
-                row,
-                SpreadsheetRowReference::isFirst,
-                this.rowHidden,
-                -1,
-                this.rowHeights,
-                pixels
+            row,
+            SpreadsheetRowReference::isFirst,
+            this.rowHidden,
+            -1,
+            this.rowHeights,
+            pixels
         );
     }
 
@@ -194,12 +194,12 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         checkRow(row);
 
         return movePixels(
-                row,
-                SpreadsheetRowReference::isLast,
-                this.rowHidden,
-                +1,
-                this.rowHeights,
-                pixels
+            row,
+            SpreadsheetRowReference::isLast,
+            this.rowHidden,
+            +1,
+            this.rowHeights,
+            pixels
         );
     }
 
@@ -225,8 +225,8 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
             // might have reached first or last
             if (stop.test(moved)) {
                 lastNotHidden = moved.equals(start) && hidden.test(moved) ?
-                        null : // cant move and is hidden return nothing.
-                        moved; // must have already been hidden tested so return it.
+                    null : // cant move and is hidden return nothing.
+                    moved; // must have already been hidden tested so return it.
                 break;
             }
 
@@ -264,9 +264,9 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
                                               final boolean includeFrozenColumnsRows,
                                               final Optional<SpreadsheetSelection> selection) {
         return this.windows.windows(
-                viewportRectangle,
-                includeFrozenColumnsRows,
-                selection
+            viewportRectangle,
+            includeFrozenColumnsRows,
+            selection
         );
     }
 

@@ -29,7 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias, SpreadsheetImporterAliasSet>,
-        ClassTesting<SpreadsheetImporterInfoSet> {
+    ClassTesting<SpreadsheetImporterInfoSet> {
 
     // immutable set....................................................................................................
 
@@ -38,8 +38,8 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
         final SpreadsheetImporterInfoSet set = this.createSet();
 
         assertSame(
-                set,
-                Sets.immutable(set)
+            set,
+            Sets.immutable(set)
         );
     }
 
@@ -60,15 +60,15 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
     @Override
     public SpreadsheetImporterInfoSet createSet() {
         return SpreadsheetImporterInfoSet.EMPTY.concat(
-                this.info()
+            this.info()
         );
     }
 
     @Override
     public SpreadsheetImporterInfo info() {
         return SpreadsheetImporterInfo.with(
-                Url.parseAbsolute("https://example.com/SpreadsheetCellImporter1"),
-                SpreadsheetImporterName.with("test123")
+            Url.parseAbsolute("https://example.com/SpreadsheetCellImporter1"),
+            SpreadsheetImporterName.with("test123")
         );
     }
 
@@ -89,27 +89,27 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetImporterInfoSet.EMPTY,
-                JsonNode.array()
+            SpreadsheetImporterInfoSet.EMPTY,
+            JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty2() {
         final SpreadsheetImporterInfoSet set = SpreadsheetImporterInfoSet.with(
-                Sets.of(
-                        SpreadsheetImporterInfo.with(
-                                Url.parseAbsolute("https://example.com/test123"),
-                                SpreadsheetImporterName.with("test123")
-                        )
+            Sets.of(
+                SpreadsheetImporterInfo.with(
+                    Url.parseAbsolute("https://example.com/test123"),
+                    SpreadsheetImporterName.with("test123")
                 )
+            )
         );
 
         this.marshallAndCheck(
-                set,
-                "[\n" +
-                        "  \"https://example.com/test123 test123\"\n" +
-                        "]"
+            set,
+            "[\n" +
+                "  \"https://example.com/test123 test123\"\n" +
+                "]"
         );
     }
 
@@ -119,24 +119,24 @@ public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTe
     public SpreadsheetImporterInfoSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
         return SpreadsheetImporterInfoSet.unmarshall(
-                node,
-                context
+            node,
+            context
         );
     }
 
     @Override
     public SpreadsheetImporterInfoSet createJsonNodeMarshallingValue() {
         return SpreadsheetImporterInfoSet.with(
-                Sets.of(
-                        SpreadsheetImporterInfo.with(
-                                Url.parseAbsolute("https://example.com/test111"),
-                                SpreadsheetImporterName.with("test111")
-                        ),
-                        SpreadsheetImporterInfo.with(
-                                Url.parseAbsolute("https://example.com/test222"),
-                                SpreadsheetImporterName.with("test222")
-                        )
+            Sets.of(
+                SpreadsheetImporterInfo.with(
+                    Url.parseAbsolute("https://example.com/test111"),
+                    SpreadsheetImporterName.with("test111")
+                ),
+                SpreadsheetImporterInfo.with(
+                    Url.parseAbsolute("https://example.com/test222"),
+                    SpreadsheetImporterName.with("test222")
                 )
+            )
         );
     }
 

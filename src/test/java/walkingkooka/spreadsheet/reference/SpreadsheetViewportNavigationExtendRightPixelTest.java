@@ -27,90 +27,90 @@ public final class SpreadsheetViewportNavigationExtendRightPixelTest extends Spr
     @Test
     public void testUpdateHome() {
         this.updateAndCheck(
-                "C5",
-                "E5"
+            "C5",
+            "E5"
         );
     }
 
     @Test
     public void testUpdateHomeSkipsHiddenColumn() {
         this.updateAndCheck(
-                "B5", // home
-                "C", // hidden columns
-                "", // hidden rows
-                "E5" // expected
+            "B5", // home
+            "C", // hidden columns
+            "", // hidden rows
+            "E5" // expected
         );
     }
 
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("C3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseCell("C3")
-                                                .setDefaultAnchor()
-                                )
-                        ),
-                SpreadsheetSelection.parseCell("E3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseCellRange("C3:E3")
-                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                                )
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCell("C3")
+                            .setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCellRange("C3:E3")
+                            .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                    )
+                )
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("C3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseColumn("C")
-                                                .setDefaultAnchor()
-                                )
-                        ),
-                SpreadsheetSelection.parseCell("E3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseColumnRange("C:E")
-                                                .setAnchor(SpreadsheetViewportAnchor.LEFT)
-                                )
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseColumn("C")
+                            .setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseColumnRange("C:E")
+                            .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                    )
+                )
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("C3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseRow("3")
-                                                .setDefaultAnchor()
-                                )
-                        ),
-                SpreadsheetSelection.parseCell("E3")
-                        .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseRow("3")
-                                                .setDefaultAnchor()
-                                )
-                        )
+            SpreadsheetSelection.parseCell("C3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseRow("3")
+                            .setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseRow("3")
+                            .setDefaultAnchor()
+                    )
+                )
         );
     }
 

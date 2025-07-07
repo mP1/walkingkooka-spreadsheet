@@ -46,7 +46,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
 
     static SpreadsheetParsePatternSpreadsheetParserProvider with(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         return new SpreadsheetParsePatternSpreadsheetParserProvider(
-                Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider")
+            Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider")
         );
     }
 
@@ -62,8 +62,8 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         Objects.requireNonNull(context, "context");
 
         return selector.spreadsheetParsePattern()
-                .map(SpreadsheetParsePattern::parser)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
+            .map(SpreadsheetParsePattern::parser)
+            .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
     }
 
     @Override
@@ -84,7 +84,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         switch (count) {
             case 1:
                 final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern) kind.parse(
-                        (String) copy.get(0)
+                    (String) copy.get(0)
                 );
                 return pattern.parser();
             default:
@@ -102,26 +102,26 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         switch (name.value()) {
             case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
                 next = spreadsheetParserNextToken(
-                        selector,
-                        SpreadsheetFormatParserTokenKind::isDate
+                    selector,
+                    SpreadsheetFormatParserTokenKind::isDate
                 );
                 break;
             case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
                 next = spreadsheetParserNextToken(
-                        selector,
-                        SpreadsheetFormatParserTokenKind::isDateTime
+                    selector,
+                    SpreadsheetFormatParserTokenKind::isDateTime
                 );
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
                 next = spreadsheetParserNextToken(
-                        selector,
-                        SpreadsheetFormatParserTokenKind::isNumber
+                    selector,
+                    SpreadsheetFormatParserTokenKind::isNumber
                 );
                 break;
             case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
                 next = spreadsheetParserNextToken(
-                        selector,
-                        SpreadsheetFormatParserTokenKind::isTime
+                    selector,
+                    SpreadsheetFormatParserTokenKind::isTime
                 );
                 break;
             default:
@@ -136,27 +136,27 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         SpreadsheetParserSelectorToken next;
 
         final String text = selector.valueText()
-                .trim();
+            .trim();
         final SpreadsheetPatternKind kind = selector.name()
-                .patternKind;
+            .patternKind;
         if (text.isEmpty()) {
             next = SpreadsheetParserSelectorToken.with(
-                    "", // label
-                    "", // text
-                    Arrays.stream(SpreadsheetFormatParserTokenKind.values())
-                            .filter(filter)
-                            .flatMap(k -> k.alternatives().stream())
-                            .distinct()
-                            .sorted()
-                            .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
-                            .collect(Collectors.toList())
+                "", // label
+                "", // text
+                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                    .filter(filter)
+                    .flatMap(k -> k.alternatives().stream())
+                    .distinct()
+                    .sorted()
+                    .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
+                    .collect(Collectors.toList())
             );
         } else {
             final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern) kind.parse(text);
             next = SpreadsheetFormatParserTokenKind.last(
-                            pattern.value()
-                    ).map(k -> toSpreadsheetParserSelectorToken(kind, k))
-                    .orElse(null);
+                    pattern.value()
+                ).map(k -> toSpreadsheetParserSelectorToken(kind, k))
+                .orElse(null);
         }
 
         return next;
@@ -165,17 +165,17 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     private static SpreadsheetParserSelectorToken toSpreadsheetParserSelectorToken(final SpreadsheetPatternKind kind,
                                                                                    final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
         return SpreadsheetParserSelectorToken.with(
-                "", // label
-                "", // text
-                kind.spreadsheetFormatParserTokenKinds()
-                        .stream()
-                        .filter(k -> false == k.isNextTokenIgnored())
-                        .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
-                        .flatMap(k -> k.alternatives().stream())
-                        .distinct()
-                        .sorted()
-                        .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
-                        .collect(Collectors.toList())
+            "", // label
+            "", // text
+            kind.spreadsheetFormatParserTokenKinds()
+                .stream()
+                .filter(k -> false == k.isNextTokenIgnored())
+                .filter(k -> null == k || false == spreadsheetFormatParserTokenKind.isDuplicate(k))
+                .flatMap(k -> k.alternatives().stream())
+                .distinct()
+                .sorted()
+                .map(t -> SpreadsheetParserSelectorTokenAlternative.with(t, t))
+                .collect(Collectors.toList())
         );
     }
 
@@ -189,26 +189,26 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         switch (name.value()) {
             case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-                        selector.valueText()
+                    SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+                    selector.valueText()
                 );
                 break;
             case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
-                        selector.valueText()
+                    SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+                    selector.valueText()
                 );
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
-                        selector.valueText()
+                    SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
+                    selector.valueText()
                 );
                 break;
             case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
-                        selector.valueText()
+                    SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+                    selector.valueText()
                 );
                 break;
             default:
@@ -222,11 +222,11 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     private Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetFormatterName name,
                                                                                 final String text) {
         return FORMAT_PATTERN_SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
-                .stream()
-                .filter(i -> i.name().equals(name))
-                .map(i -> this.SpreadsheetFormatterSelector(i.url(), text))
-                .filter(Objects::nonNull)
-                .findFirst();
+            .stream()
+            .filter(i -> i.name().equals(name))
+            .map(i -> this.SpreadsheetFormatterSelector(i.url(), text))
+            .filter(Objects::nonNull)
+            .findFirst();
     }
 
     private final static SpreadsheetFormatterProvider FORMAT_PATTERN_SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatters();
@@ -234,11 +234,11 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     private SpreadsheetFormatterSelector SpreadsheetFormatterSelector(final AbsoluteUrl url,
                                                                       final String text) {
         return this.spreadsheetFormatterProvider.spreadsheetFormatterInfos()
-                .stream()
-                .filter(sfi -> sfi.url().equals(url))
-                .map(sfi -> sfi.name().setValueText(text))
-                .findFirst()
-                .orElse(null);
+            .stream()
+            .filter(sfi -> sfi.url().equals(url))
+            .map(sfi -> sfi.name().setValueText(text))
+            .findFirst()
+            .orElse(null);
     }
 
     private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
@@ -249,18 +249,18 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     private final static SpreadsheetParserInfoSet INFOS = SpreadsheetParserInfoSet.with(
-            Sets.of(
-                    spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
-                    spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
-                    spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
-                    spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
-            )
+        Sets.of(
+            spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
+        )
     );
 
     private static SpreadsheetParserInfo spreadsheetParserInfo(final SpreadsheetParserName name) {
         return SpreadsheetParserInfo.with(
-                SpreadsheetParserProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
-                name
+            SpreadsheetParserProviders.BASE_URL.appendPath(UrlPath.parse(name.value())),
+            name
         );
     }
 

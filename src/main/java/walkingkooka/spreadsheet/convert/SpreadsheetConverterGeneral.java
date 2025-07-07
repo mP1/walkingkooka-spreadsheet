@@ -65,15 +65,15 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
         Objects.requireNonNull(timeParser, "timeParser");
 
         return new SpreadsheetConverterGeneral(
-                dateFormatter,
-                dateParser,
-                dateTimeFormatter,
-                dateTimeParser,
-                numberFormatter,
-                numberParser,
-                textFormatter,
-                timeFormatter,
-                timeParser
+            dateFormatter,
+            dateParser,
+            dateTimeFormatter,
+            dateTimeParser,
+            numberFormatter,
+            numberParser,
+            textFormatter,
+            timeFormatter,
+            timeParser
         );
     }
 
@@ -92,156 +92,156 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
 
         // boolean ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> booleanTo = mapping(
-                Converters.simple(), // boolean -> boolean
-                Converters.booleanToNumber()
-                        .to(Integer.class, Converters.numberToLocalDate())
-                        .cast(SpreadsheetConverterContext.class),
-                Converters.booleanToNumber()
-                        .to(Integer.class, Converters.numberToLocalDateTime())
-                        .cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber()),
-                SpreadsheetConverterGeneralBooleanString.with(
-                        booleanTo(
-                                String.class,
-                                TRUE_TO_STRING,
-                                FALSE_TO_STRING
-                        ),
-                        textFormatter.converter()
-                                .cast(SpreadsheetConverterContext.class)
-                ), // boolean -> String
-                booleanTo(LocalTime.class, TRUE_TO_TIME, FALSE_TO_TIME)
+            Converters.simple(), // boolean -> boolean
+            Converters.booleanToNumber()
+                .to(Integer.class, Converters.numberToLocalDate())
+                .cast(SpreadsheetConverterContext.class),
+            Converters.booleanToNumber()
+                .to(Integer.class, Converters.numberToLocalDateTime())
+                .cast(SpreadsheetConverterContext.class),
+            ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber()),
+            SpreadsheetConverterGeneralBooleanString.with(
+                booleanTo(
+                    String.class,
+                    TRUE_TO_STRING,
+                    FALSE_TO_STRING
+                ),
+                textFormatter.converter()
+                    .cast(SpreadsheetConverterContext.class)
+            ), // boolean -> String
+            booleanTo(LocalTime.class, TRUE_TO_TIME, FALSE_TO_TIME)
         ); // Time
 
         // LocalDate ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> dateTo = mapping(
+            Converters.localDateToNumber()
+                .to(
+                    Integer.class,
+                    Converters.numberToBoolean()
+                ).cast(SpreadsheetConverterContext.class),
+            Converters.simple(), // date -> date
+            Converters.localDateToLocalDateTime(),
+            ExpressionNumberConverters.toNumberOrExpressionNumber(
                 Converters.localDateToNumber()
-                        .to(
-                                Integer.class,
-                                Converters.numberToBoolean()
-                        ).cast(SpreadsheetConverterContext.class),
-                Converters.simple(), // date -> date
-                Converters.localDateToLocalDateTime(),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(
-                        Converters.localDateToNumber()
-                ),
-                dateFormatter.converter()
-                        .cast(SpreadsheetConverterContext.class),
-                null // date -> time INVALID
+            ),
+            dateFormatter.converter()
+                .cast(SpreadsheetConverterContext.class),
+            null // date -> time INVALID
         );
 
         // LocalDateTime ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> dateTimeTo = mapping(
+            Converters.localDateTimeToNumber()
+                .to(
+                    Integer.class,
+                    Converters.numberToBoolean()
+                ).cast(SpreadsheetConverterContext.class),
+            Converters.localDateTimeToLocalDate(),
+            Converters.simple(), // dateTime -> dateTime
+            ExpressionNumberConverters.toNumberOrExpressionNumber(
                 Converters.localDateTimeToNumber()
-                        .to(
-                                Integer.class,
-                                Converters.numberToBoolean()
-                        ).cast(SpreadsheetConverterContext.class),
-                Converters.localDateTimeToLocalDate(),
-                Converters.simple(), // dateTime -> dateTime
-                ExpressionNumberConverters.toNumberOrExpressionNumber(
-                        Converters.localDateTimeToNumber()
-                ),
-                dateTimeFormatter.converter()
-                        .cast(SpreadsheetConverterContext.class),
-                Converters.localDateTimeToLocalTime()
+            ),
+            dateTimeFormatter.converter()
+                .cast(SpreadsheetConverterContext.class),
+            Converters.localDateTimeToLocalTime()
         );
 
         // Number ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> numberTo = mapping(
+            ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                .to(
+                    Number.class,
+                    Converters.numberToBoolean()
+                ).cast(SpreadsheetConverterContext.class),
+            ExpressionNumberConverters.numberOrExpressionNumberToNumber().to(
+                Number.class,
+                Converters.numberToLocalDate()
+            ).cast(SpreadsheetConverterContext.class),
+            ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                .to(
+                    Number.class,
+                    Converters.numberToLocalDateTime()
+                ).cast(SpreadsheetConverterContext.class),
+            ExpressionNumberConverters.toNumberOrExpressionNumber(
                 ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                        .to(
-                                Number.class,
-                                Converters.numberToBoolean()
-                        ).cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.numberOrExpressionNumberToNumber().to(
+                    .to(
                         Number.class,
-                        Converters.numberToLocalDate()
-                ).cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                        .to(
-                                Number.class,
-                                Converters.numberToLocalDateTime()
-                        ).cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(
-                        ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                                .to(
-                                        Number.class,
-                                        Converters.numberToNumber()
-                                )
-                ).cast(SpreadsheetConverterContext.class),
-                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                        .cast(SpreadsheetConverterContext.class)
-                        .to(
-                                Number.class,
-                                numberFormatter.converter()
-                        ),
-                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                        .to(
-                                Number.class,
-                                Converters.numberToLocalTime()
-                        ).cast(SpreadsheetConverterContext.class)
+                        Converters.numberToNumber()
+                    )
+            ).cast(SpreadsheetConverterContext.class),
+            ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                .cast(SpreadsheetConverterContext.class)
+                .to(
+                    Number.class,
+                    numberFormatter.converter()
+                ),
+            ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                .to(
+                    Number.class,
+                    Converters.numberToLocalTime()
+                ).cast(SpreadsheetConverterContext.class)
         );
 
         // most attempts to support conversions such as Date -> Character are pointless but keep for the error failures.
         // String|Character ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> stringTo = SpreadsheetConverterGeneralMapping.with(
-                characterOrStringTo(
-                        toBoolean(
-                                String.class,
-                                TRUE_TO_STRING
-                        )
-                ), // string -> boolean
-                characterOrStringTo(
-                        SpreadsheetConverters.textToDate(dateParser)
-                ),
-                characterOrStringTo(
-                        SpreadsheetConverters.textToDateTime(dateTimeParser)
-                ),
-                characterOrStringTo(
-                        ExpressionNumberConverters.toExpressionNumberThen(
-                                SpreadsheetConverters.textToNumber(
-                                        numberParser
-                                ),
-                                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                                        .to(
-                                                Number.class,
-                                                Converters.numberToNumber()
-                                        ).cast(SpreadsheetConverterContext.class)
-                        )
-                ),
-                characterOrStringTo(
-                        toCharacterOrString(
-                                Converters.simple() // String -> String
-                        )
-                ),
-                characterOrStringTo(
-                        SpreadsheetConverters.textToTime(timeParser)
+            characterOrStringTo(
+                toBoolean(
+                    String.class,
+                    TRUE_TO_STRING
                 )
+            ), // string -> boolean
+            characterOrStringTo(
+                SpreadsheetConverters.textToDate(dateParser)
+            ),
+            characterOrStringTo(
+                SpreadsheetConverters.textToDateTime(dateTimeParser)
+            ),
+            characterOrStringTo(
+                ExpressionNumberConverters.toExpressionNumberThen(
+                    SpreadsheetConverters.textToNumber(
+                        numberParser
+                    ),
+                    ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                        .to(
+                            Number.class,
+                            Converters.numberToNumber()
+                        ).cast(SpreadsheetConverterContext.class)
+                )
+            ),
+            characterOrStringTo(
+                toCharacterOrString(
+                    Converters.simple() // String -> String
+                )
+            ),
+            characterOrStringTo(
+                SpreadsheetConverters.textToTime(timeParser)
+            )
         );
 
         // LocalTime ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> timeTo = mapping(
-                toBoolean(
-                        LocalTime.class,
-                        TRUE_TO_TIME
-                ),
-                null, // time -> date invalid
-                Converters.localTimeToLocalDateTime(),
-                ExpressionNumberConverters.toNumberOrExpressionNumber(
-                        Converters.localTimeToNumber()
-                ),
-                timeFormatter.converter()
-                        .cast(SpreadsheetConverterContext.class),
-                Converters.simple()
+            toBoolean(
+                LocalTime.class,
+                TRUE_TO_TIME
+            ),
+            null, // time -> date invalid
+            Converters.localTimeToLocalDateTime(),
+            ExpressionNumberConverters.toNumberOrExpressionNumber(
+                Converters.localTimeToNumber()
+            ),
+            timeFormatter.converter()
+                .cast(SpreadsheetConverterContext.class),
+            Converters.simple()
         ); // time -> time
 
         this.mapping = SpreadsheetConverterGeneralMapping.with(
-                booleanTo,
-                dateTo,
-                dateTimeTo,
-                numberTo,
-                stringTo,
-                timeTo
+            booleanTo,
+            dateTo,
+            dateTimeTo,
+            numberTo,
+            stringTo,
+            timeTo
         );
     }
 
@@ -260,22 +260,22 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                                                         final T trueValue,
                                                                         final T falseValue) {
         return booleanTrueFalseConverter(
-                Boolean.class,
-                targetType,
-                Boolean.TRUE,
-                trueValue,
-                falseValue
+            Boolean.class,
+            targetType,
+            Boolean.TRUE,
+            trueValue,
+            falseValue
         );
     }
 
     private static <T> Converter<SpreadsheetConverterContext> toBoolean(final Class<T> from,
                                                                         final T trueValue) {
         return booleanTrueFalseConverter(
-                from,
-                Boolean.class,
-                trueValue,
-                Boolean.TRUE,
-                Boolean.FALSE
+            from,
+            Boolean.class,
+            trueValue,
+            Boolean.TRUE,
+            Boolean.FALSE
         );
     }
 
@@ -285,11 +285,11 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                                                                         final T falseValueResult,
                                                                                         final T trueValueResult) {
         return Converters.toBoolean(
-                t -> t.getClass() == fromType,
-                Predicates.is(targetType),
-                Predicates.is(falseValueTest),
-                falseValueResult,
-                trueValueResult
+            t -> t.getClass() == fromType,
+            Predicates.is(targetType),
+            Predicates.is(falseValueTest),
+            falseValueResult,
+            trueValueResult
         );
     }
 
@@ -298,11 +298,11 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
      */
     private static Converter<SpreadsheetConverterContext> characterOrStringTo(final Converter<SpreadsheetConverterContext> converter) {
         return Converters.characterOrStringToString()
-                .cast(SpreadsheetConverterContext.class)
-                .to(
-                        String.class,
-                        converter
-                );
+            .cast(SpreadsheetConverterContext.class)
+            .to(
+                String.class,
+                converter
+            );
     }
 
     /**
@@ -310,25 +310,25 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
      */
     private static Converter<SpreadsheetConverterContext> toCharacterOrString(final Converter<SpreadsheetConverterContext> converter) {
         return converter.to(
-                String.class,
-                Converters.stringToCharacterOrString()
+            String.class,
+            Converters.stringToCharacterOrString()
         );
     }
 
     private static SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> mapping(
-            final Converter<SpreadsheetConverterContext> booleanValue,
-            final Converter<SpreadsheetConverterContext> date,
-            final Converter<SpreadsheetConverterContext> dateTime,
-            final Converter<SpreadsheetConverterContext> number,
-            final Converter<SpreadsheetConverterContext> string,
-            final Converter<SpreadsheetConverterContext> time) {
+        final Converter<SpreadsheetConverterContext> booleanValue,
+        final Converter<SpreadsheetConverterContext> date,
+        final Converter<SpreadsheetConverterContext> dateTime,
+        final Converter<SpreadsheetConverterContext> number,
+        final Converter<SpreadsheetConverterContext> string,
+        final Converter<SpreadsheetConverterContext> time) {
         return SpreadsheetConverterGeneralMapping.with(
-                booleanValue,
-                date,
-                dateTime,
-                number,
-                toCharacterOrString(string),
-                time
+            booleanValue,
+            date,
+            dateTime,
+            number,
+            toCharacterOrString(string),
+            time
         );
     }
 
@@ -342,66 +342,66 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                               final Class<?> targetType,
                               final SpreadsheetConverterContext context) {
         return isNonNullAndValueIsInstanceofType(
-                value,
-                targetType,
-                context
+            value,
+            targetType,
+            context
         ) ||
-                isSupportedValueAndType(
-                        value,
-                        targetType
-                );
+            isSupportedValueAndType(
+                value,
+                targetType
+            );
     }
 
     private static boolean isNonNullAndValueIsInstanceofType(final Object value,
                                                              final Class<?> targetType,
                                                              final SpreadsheetConverterContext context) {
         return null != value &&
-                INSTANCE_OF.canConvert(
-                        value,
-                        targetType,
-                        context
-                );
+            INSTANCE_OF.canConvert(
+                value,
+                targetType,
+                context
+            );
     }
 
     private static boolean isSupportedValueAndType(final Object value,
                                                    final Class<?> targetType) {
         return isSupportedType(targetType) &&
-                false == isDateToTime(
-                        value,
-                        targetType
-                ) &&
-                false == isTimeToDate(
-                        value,
-                        targetType
-                );
+            false == isDateToTime(
+                value,
+                targetType
+            ) &&
+            false == isTimeToDate(
+                value,
+                targetType
+            );
     }
 
     private static boolean isDateToTime(final Object value,
                                         final Class<?> targetType) {
         return value instanceof LocalTime &&
-                targetType == LocalDate.class;
+            targetType == LocalDate.class;
     }
 
     private static boolean isTimeToDate(final Object value,
                                         final Class<?> targetType) {
         return value instanceof LocalTime &&
-                targetType == LocalDate.class;
+            targetType == LocalDate.class;
     }
 
     private static boolean isDateOrDateTimeOrTimeOrNumber(final Class<?> type) {
         return LocalDate.class == type ||
-                LocalDateTime.class == type ||
-                LocalTime.class == type ||
-                ExpressionNumber.isClass(type) ||
-                Number.class == type;
+            LocalDateTime.class == type ||
+            LocalTime.class == type ||
+            ExpressionNumber.isClass(type) ||
+            Number.class == type;
     }
 
     private static boolean isSupportedType(final Class<?> type) {
         return Object.class == type ||
-                Boolean.class == type ||
-                Character.class == type ||
-                String.class == type ||
-                isDateOrDateTimeOrTimeOrNumber(type);
+            Boolean.class == type ||
+            Character.class == type ||
+            String.class == type ||
+            isDateOrDateTimeOrTimeOrNumber(type);
     }
 
     @Override
@@ -410,30 +410,30 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                            final SpreadsheetConverterContext context) {
         // special case if targetType = Object just return value.
         return Object.class == targetType ?
-                this.successfulConversion(
-                        value,
-                        targetType
+            this.successfulConversion(
+                value,
+                targetType
+            ) :
+            null == value ?
+                this.convertNull(
+                    targetType,
+                    context
                 ) :
-                null == value ?
-                        this.convertNull(
-                                targetType,
-                                context
-                        ) :
-                        this.convertNonNull(
-                                value,
-                                targetType,
-                                context
-                        );
+                this.convertNonNull(
+                    value,
+                    targetType,
+                    context
+                );
     }
 
     private <T> Either<T, String> convertNull(final Class<T> targetType,
                                               final SpreadsheetConverterContext context) {
         return this.successfulConversion(
-                SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor.convertNull(
-                        targetType,
-                        context
-                ),
-                targetType
+            SpreadsheetConverterGeneralNullSpreadsheetValueTypeVisitor.convertNull(
+                targetType,
+                context
+            ),
+            targetType
         );
     }
 
@@ -441,31 +441,31 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                                  final Class<T> targetType,
                                                  final SpreadsheetConverterContext context) {
         return INSTANCE_OF.canConvert(
-                value,
-                targetType,
-                context
+            value,
+            targetType,
+            context
         ) ?
-                this.successfulConversion(
-                        value,
-                        targetType
-                ) :
-                TRUE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
-                     this.convertNonNull0(
-                             true,
-                             targetType,
-                             context
-                     ) :
-                     FALSE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
-                        this.convertNonNull0(
-                                false,
-                                targetType,
-                                context
-                        ) :
+            this.successfulConversion(
+                value,
+                targetType
+            ) :
+            TRUE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
                 this.convertNonNull0(
+                    true,
+                    targetType,
+                    context
+                ) :
+                FALSE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
+                    this.convertNonNull0(
+                        false,
+                        targetType,
+                        context
+                    ) :
+                    this.convertNonNull0(
                         value,
                         targetType,
                         context
-                );
+                    );
     }
 
     /**
@@ -477,20 +477,20 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                                                   final Class<T> targetType,
                                                   final SpreadsheetConverterContext context) {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverterGeneralSpreadsheetValueVisitor.converter(
-                value,
-                targetType,
-                this.mapping
+            value,
+            targetType,
+            this.mapping
         );
         return null != converter ?
-                converter.convert(
-                        value,
-                        targetType,
-                        context
-                ) :
-                this.failConversion(
-                        value,
-                        targetType
-                );
+            converter.convert(
+                value,
+                targetType,
+                context
+            ) :
+            this.failConversion(
+                value,
+                targetType
+            );
     }
 
     private final SpreadsheetConverterGeneralMapping<SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>>> mapping;

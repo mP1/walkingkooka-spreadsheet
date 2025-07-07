@@ -40,8 +40,8 @@ public final class EqualsSpreadsheetFormulaParserToken extends ConditionSpreadsh
                                                                                                      final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightEquals(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -50,9 +50,9 @@ public final class EqualsSpreadsheetFormulaParserToken extends ConditionSpreadsh
     @Override
     public EqualsSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                EqualsSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            EqualsSpreadsheetFormulaParserToken::with
         );
     }
 

@@ -32,8 +32,8 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
     public void testApplyUp() {
         final SpreadsheetComparator<Void> comparator = SpreadsheetComparators.fake();
         assertSame(
-                comparator,
-                SpreadsheetComparatorDirection.UP.apply(comparator)
+            comparator,
+            SpreadsheetComparatorDirection.UP.apply(comparator)
         );
     }
 
@@ -42,8 +42,8 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
         final SpreadsheetComparator<String> comparator = SpreadsheetComparators.text();
 
         this.checkEquals(
-                SpreadsheetComparators.reverse(comparator),
-                SpreadsheetComparatorDirection.DOWN.apply(comparator)
+            SpreadsheetComparators.reverse(comparator),
+            SpreadsheetComparatorDirection.DOWN.apply(comparator)
         );
     }
 
@@ -51,10 +51,10 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
     public void testApplyDownTwice() {
         final SpreadsheetComparator<Void> comparator = SpreadsheetComparators.fake();
         assertSame(
-                comparator,
-                SpreadsheetComparatorDirection.DOWN.apply(
-                        SpreadsheetComparatorDirection.DOWN.apply(comparator)
-                )
+            comparator,
+            SpreadsheetComparatorDirection.DOWN.apply(
+                SpreadsheetComparatorDirection.DOWN.apply(comparator)
+            )
         );
     }
 
@@ -63,32 +63,32 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
     @Test
     public void testFlipUp() {
         this.flipAndCheck(
-                SpreadsheetComparatorDirection.UP,
-                SpreadsheetComparatorDirection.DOWN
+            SpreadsheetComparatorDirection.UP,
+            SpreadsheetComparatorDirection.DOWN
         );
     }
 
     @Test
     public void testFlipDown() {
         this.flipAndCheck(
-                SpreadsheetComparatorDirection.DOWN,
-                SpreadsheetComparatorDirection.UP
+            SpreadsheetComparatorDirection.DOWN,
+            SpreadsheetComparatorDirection.UP
         );
     }
 
     @Test
     public void testFlipTwice() {
         this.flipAndCheck(
-                SpreadsheetComparatorDirection.DOWN.flip(),
-                SpreadsheetComparatorDirection.DOWN
+            SpreadsheetComparatorDirection.DOWN.flip(),
+            SpreadsheetComparatorDirection.DOWN
         );
     }
 
     private void flipAndCheck(final SpreadsheetComparatorDirection in,
                               final SpreadsheetComparatorDirection expected) {
         assertSame(
-                expected,
-                in.flip()
+            expected,
+            in.flip()
         );
     }
 
@@ -97,54 +97,54 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
     @Test
     public void testFixCompareResultUpEquals() {
         this.fixCompareResultAndCheck(
-                SpreadsheetComparatorDirection.UP,
-                Comparators.EQUAL,
-                Comparators.EQUAL
+            SpreadsheetComparatorDirection.UP,
+            Comparators.EQUAL,
+            Comparators.EQUAL
         );
     }
 
     @Test
     public void testFixCompareResultUpLess() {
         this.fixCompareResultAndCheck(
-                SpreadsheetComparatorDirection.UP,
-                Comparators.LESS,
-                Comparators.LESS
+            SpreadsheetComparatorDirection.UP,
+            Comparators.LESS,
+            Comparators.LESS
         );
     }
 
     @Test
     public void testFixCompareResultUpMore() {
         this.fixCompareResultAndCheck(
-                SpreadsheetComparatorDirection.UP,
-                Comparators.MORE,
-                Comparators.MORE
+            SpreadsheetComparatorDirection.UP,
+            Comparators.MORE,
+            Comparators.MORE
         );
     }
 
     @Test
     public void testFixCompareResultDownEquals() {
         this.fixCompareResultAndCheck(
-                SpreadsheetComparatorDirection.DOWN,
-                Comparators.EQUAL,
-                Comparators.EQUAL
+            SpreadsheetComparatorDirection.DOWN,
+            Comparators.EQUAL,
+            Comparators.EQUAL
         );
     }
 
     @Test
     public void testFixCompareResultDownLess() {
         this.fixCompareResultAndCheck(
-                SpreadsheetComparatorDirection.DOWN,
-                -2,
-                Comparators.MORE
+            SpreadsheetComparatorDirection.DOWN,
+            -2,
+            Comparators.MORE
         );
     }
 
     @Test
     public void testFixCompareResultDownMore() {
         this.fixCompareResultAndCheck(
-                SpreadsheetComparatorDirection.DOWN,
-                +2,
-                Comparators.LESS
+            SpreadsheetComparatorDirection.DOWN,
+            +2,
+            Comparators.LESS
         );
     }
 
@@ -152,9 +152,9 @@ public final class SpreadsheetComparatorDirectionTest implements ClassTesting2<S
                                           final int value,
                                           final int expected) {
         this.checkEquals(
-                expected,
-                direction.fixCompareResult(value),
-                () -> direction + " " + value
+            expected,
+            direction.fixCompareResult(value),
+            () -> direction + " " + value
         );
     }
 

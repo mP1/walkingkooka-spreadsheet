@@ -75,8 +75,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     public Set<SpreadsheetCellRangeReference> ids(final int offset,
                                                   final int count) {
         return store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -84,8 +84,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     public List<List<V>> values(final int offset,
                                 final int count) {
         return store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -93,8 +93,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     public List<List<V>> between(final SpreadsheetCellRangeReference from,
                                  final SpreadsheetCellRangeReference to) {
         return store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

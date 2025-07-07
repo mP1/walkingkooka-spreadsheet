@@ -37,8 +37,8 @@ import java.util.Optional;
  * Holds a {@link SpreadsheetLabelName label} to {@link ExpressionReference} mapping.
  */
 public final class SpreadsheetLabelMapping implements HateosResource<SpreadsheetLabelName>,
-        Comparable<SpreadsheetLabelMapping>,
-        TreePrintable {
+    Comparable<SpreadsheetLabelMapping>,
+    TreePrintable {
 
     /**
      * Creates a new {@link SpreadsheetLabelMapping}
@@ -49,8 +49,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         checkReference(reference, label);
 
         return new SpreadsheetLabelMapping(
-                label,
-                reference
+            label,
+            reference
         );
     }
 
@@ -73,20 +73,20 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         final SpreadsheetExpressionReference reference = this.reference;
         if (label.equals(reference)) {
             throw new IllegalArgumentException(
-                    "Label " +
-                            CharSequences.quote(
-                                    label.toString()
-                            ) +
-                            " and reference " +
-                            CharSequences.quote(reference.toString()) +
-                            " must be different"
+                "Label " +
+                    CharSequences.quote(
+                        label.toString()
+                    ) +
+                    " and reference " +
+                    CharSequences.quote(reference.toString()) +
+                    " must be different"
             );
         }
 
 
         return this.label.equals(label) ?
-                this :
-                this.replace(label, reference);
+            this :
+            this.replace(label, reference);
     }
 
     private static void checkLabel(final SpreadsheetLabelName label) {
@@ -103,8 +103,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         checkReference(reference, this.label);
 
         return this.reference.equals(reference) ?
-                this :
-                this.replace(this.label, reference);
+            this :
+            this.replace(this.label, reference);
     }
 
     private final SpreadsheetExpressionReference reference;
@@ -115,14 +115,14 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
         if (target.equals(label)) {
             throw new IllegalArgumentException(
-                    "Reference " +
-                            CharSequences.quote(
-                                    target.toString()
-                            ) +
-                            " must be different to label " +
-                            CharSequences.quote(
-                                    label.toString()
-                            )
+                "Reference " +
+                    CharSequences.quote(
+                        target.toString()
+                    ) +
+                    " must be different to label " +
+                    CharSequences.quote(
+                        label.toString()
+                    )
             );
         }
     }
@@ -161,14 +161,14 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
             switch (name.value()) {
                 case LABEL_PROPERTY_STRING:
                     labelName = context.unmarshall(
-                            child,
-                            SpreadsheetLabelName.class
+                        child,
+                        SpreadsheetLabelName.class
                     );
                     break;
                 case REFERENCE_PROPERTY_STRING:
                     reference = context.unmarshall(
-                            child,
-                            SpreadsheetExpressionReference.class
+                        child,
+                        SpreadsheetExpressionReference.class
                     );
                     break;
                 default:
@@ -189,8 +189,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(LABEL_PROPERTY, context.marshall(this.label))
-                .set(REFERENCE_PROPERTY, context.marshall(this.reference));
+            .set(LABEL_PROPERTY, context.marshall(this.label))
+            .set(REFERENCE_PROPERTY, context.marshall(this.reference));
     }
 
     private final static String LABEL_PROPERTY_STRING = "label";
@@ -201,10 +201,10 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetLabelMapping.class),
-                SpreadsheetLabelMapping::unmarshall,
-                SpreadsheetLabelMapping::marshall,
-                SpreadsheetLabelMapping.class
+            JsonNodeContext.computeTypeName(SpreadsheetLabelMapping.class),
+            SpreadsheetLabelMapping::unmarshall,
+            SpreadsheetLabelMapping::marshall,
+            SpreadsheetLabelMapping.class
         );
     }
 
@@ -222,13 +222,13 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetLabelMapping &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetLabelMapping &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetLabelMapping other) {
         return this.label.equals(other.label) &
-                this.reference.equals(other.reference);
+            this.reference.equals(other.reference);
     }
 
     @Override
@@ -247,8 +247,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
         if (Comparators.EQUAL == compareTo) {
             compareTo = SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR.compare(
-                    this.reference,
-                    other.reference
+                this.reference,
+                other.reference
             );
         }
 

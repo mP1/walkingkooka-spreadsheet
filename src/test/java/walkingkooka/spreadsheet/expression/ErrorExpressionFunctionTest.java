@@ -32,27 +32,27 @@ import walkingkooka.tree.expression.function.ExpressionFunctionTesting;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ErrorExpressionFunctionTest implements ExpressionFunctionTesting<ErrorExpressionFunction, SpreadsheetError, ExpressionEvaluationContext>,
-        ClassTesting2<ErrorExpressionFunction>,
-        TypeNameTesting<ErrorExpressionFunction> {
+    ClassTesting2<ErrorExpressionFunction>,
+    TypeNameTesting<ErrorExpressionFunction> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     @Test
     public void testMissingParameterFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                this::apply2
+            IllegalArgumentException.class,
+            this::apply2
         );
     }
 
     @Test
     public void test1() {
         this.applyAndCheck(
-                Lists.of(
-                        EXPRESSION_NUMBER_KIND.one()
-                ),
-                SpreadsheetErrorKind.withValue(1)
-                        .toError()
+            Lists.of(
+                EXPRESSION_NUMBER_KIND.one()
+            ),
+            SpreadsheetErrorKind.withValue(1)
+                .toError()
         );
     }
 

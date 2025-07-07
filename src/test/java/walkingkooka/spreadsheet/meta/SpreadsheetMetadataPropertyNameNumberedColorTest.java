@@ -33,29 +33,29 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     @Test
     public void testWithNumberLessThanMinFails() {
         this.withFails(
-                SpreadsheetColors.MIN - 1,
-                "color number 0 < 1 or > 56"
+            SpreadsheetColors.MIN - 1,
+            "color number 0 < 1 or > 56"
         );
     }
 
     @Test
     public void testWithNumberGreaterThanMaxFails() {
         this.withFails(
-                SpreadsheetColors.MAX + 1,
-                "color number 57 < 1 or > 56"
+            SpreadsheetColors.MAX + 1,
+            "color number 57 < 1 or > 56"
         );
     }
 
     private void withFails(final int value,
                            final String message) {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetMetadataPropertyName.numberedColor(value)
+            IllegalArgumentException.class,
+            () -> SpreadsheetMetadataPropertyName.numberedColor(value)
         );
         this.checkEquals(
-                message,
-                thrown.getMessage(),
-                "message"
+            message,
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -74,30 +74,30 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
         final Color color = Color.fromRgb(0);
 
         IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
-                .forEach(i -> {
-                    final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(i);
-                    final String value = "color" + i;
-                    assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
+            .forEach(i -> {
+                final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(i);
+                final String value = "color" + i;
+                assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
 
-                    this.checkEquals(value, propertyName.value(), "value");
+                this.checkEquals(value, propertyName.value(), "value");
 
-                    propertyName.checkValue(color);
-                });
+                propertyName.checkValue(color);
+            });
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12),
-                "color12"
+            SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12),
+            "color12"
         );
     }
 

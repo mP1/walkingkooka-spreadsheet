@@ -29,10 +29,10 @@ public final class SpreadsheetNumberParsePatternComponentDigitZeroTest extends S
     @Test
     public void testToString2() {
         this.toStringAndCheck(
-                SpreadsheetNumberParsePatternComponentDigitZero.with(
-                        SpreadsheetNumberParsePatternComponentDigitMode.INTEGER,
-                        1),
-                "0");
+            SpreadsheetNumberParsePatternComponentDigitZero.with(
+                SpreadsheetNumberParsePatternComponentDigitMode.INTEGER,
+                1),
+            "0");
     }
 
     @Override

@@ -50,8 +50,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken transformColorParserToken(final ParserToken token,
                                                          final SpreadsheetFormatParserContext context) {
         return SpreadsheetFormatParserToken.color(
-                flat(token),
-                token.text()
+            flat(token),
+            token.text()
         );
     }
 
@@ -60,16 +60,16 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken transformCondition(final ParserToken token,
                                                   final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor::condition
+            token,
+            SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor::condition
         );
     }
 
     private static ParserToken transformDate(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::date
+            token,
+            SpreadsheetFormatParserToken::date
         );
     }
 
@@ -92,8 +92,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken transformFraction(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::fraction
+            token,
+            SpreadsheetFormatParserToken::fraction
         );
     }
 
@@ -102,16 +102,16 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken transformGeneral(final ParserToken token,
                                                 final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::general
+            token,
+            SpreadsheetFormatParserToken::general
         );
     }
 
     private static ParserToken transformText(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::text
+            token,
+            SpreadsheetFormatParserToken::text
         );
     }
 
@@ -124,24 +124,24 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
         final String text = token.text();
 
         return SpreadsheetFormatParserToken.textLiteral(
-                text,
-                text
+            text,
+            text
         );
     }
 
     private static ParserToken transformTime(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::time
+            token,
+            SpreadsheetFormatParserToken::time
         );
     }
 
     private static ParserToken transformNumber(final ParserToken token,
                                                final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::number
+            token,
+            SpreadsheetFormatParserToken::number
         );
     }
 
@@ -154,8 +154,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken transformBigDecimalExponent(final ParserToken token,
                                                            final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::exponent
+            token,
+            SpreadsheetFormatParserToken::exponent
         );
     }
 
@@ -167,8 +167,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken flatAndCreate(final ParserToken token,
                                              final BiFunction<List<ParserToken>, String, ParserToken> factory) {
         return factory.apply(
-                flat(token),
-                token.text()
+            flat(token),
+            token.text()
         );
     }
 
@@ -188,8 +188,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
         final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform = Maps.sorted();
 
         identifierToTransform.put(
-                SpreadsheetFormatParsers.COLOR_IDENTIFIER,
-                SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformColorParserToken
+            SpreadsheetFormatParsers.COLOR_IDENTIFIER,
+            SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformColorParserToken
         );
 
         identifierToTransform.put(CONDITION_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformCondition);
@@ -218,7 +218,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
         identifierToTransform.put(DATETIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformDateTime);
         identifierToTransform.put(DATETIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformDateTime);
 
-  //      identifierToTransform.put(SpreadsheetFormatParsers.TIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
+        //      identifierToTransform.put(SpreadsheetFormatParsers.TIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
         identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
         identifierToTransform.put(TIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformTime);
@@ -237,13 +237,13 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private static ParserToken flat(final ParserToken token,
                                     final SpreadsheetFormatParserContext context) {
         return token.cast(RepeatedOrSequenceParserToken.class)
-                .flat();
+            .flat();
     }
 
     private static List<ParserToken> flat(final ParserToken token) {
         return token.cast(RepeatedOrSequenceParserToken.class)
-                .flat()
-                .value();
+            .flat()
+            .value();
     }
 
     @Override
@@ -274,8 +274,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     public Parser<SpreadsheetFormatParserContext> identifier(final IdentifierEbnfParserToken token,
                                                              final Parser<SpreadsheetFormatParserContext> parser) {
         return this.transformIfNecessary(
-                token.value(),
-                parser
+            token.value(),
+            parser
         );
     }
 
@@ -302,9 +302,9 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     public Parser<SpreadsheetFormatParserContext> rule(final RuleEbnfParserToken token,
                                                        final Parser<SpreadsheetFormatParserContext> parser) {
         return this.transformIfNecessary(
-                token.identifier()
-                        .value(),
-                parser
+            token.identifier()
+                .value(),
+            parser
         );
     }
 
@@ -325,25 +325,25 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
         Parser<SpreadsheetFormatParserContext> result = parser;
 
         final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transformer = this.identifierToTransform.remove(name);
-        if(null != transformer) {
+        if (null != transformer) {
             result = parser.transform(transformer);
 
             // replace grammar definition with COLOR
-            if(SpreadsheetFormatParsers.COLOR_IDENTIFIER.equals(name)) {
+            if (SpreadsheetFormatParsers.COLOR_IDENTIFIER.equals(name)) {
                 result = result.setToString(
-                        name.toString()
+                    name.toString()
                 );
             }
         }
 
         result = colorCheck(
-                name,
-                result
+            name,
+            result
         );
 
         return name.value().endsWith("REQUIRED") ?
-                result.orReport(ParserReporters.basic()) :
-                result;
+            result.orReport(ParserReporters.basic()) :
+            result;
     }
 
     private final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform;
@@ -351,11 +351,11 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     private Parser<SpreadsheetFormatParserContext> colorCheck(final EbnfIdentifierName name,
                                                               final Parser<SpreadsheetFormatParserContext> parser) {
         return name.equals(DATE_COLOR_IDENTIFIER) ||
-                name.equals(DATETIME_COLOR_IDENTIFIER) ||
-                name.equals(SpreadsheetFormatParsers.GENERAL_IDENTIFIER) ||
-                name.equals(NUMBER_COLOR_IDENTIFIER) ||
-                name.equals(TIME_COLOR_IDENTIFIER) ?
-                SpreadsheetFormatParsersFormatColorParser.with(parser) :
-                parser;
+            name.equals(DATETIME_COLOR_IDENTIFIER) ||
+            name.equals(SpreadsheetFormatParsers.GENERAL_IDENTIFIER) ||
+            name.equals(NUMBER_COLOR_IDENTIFIER) ||
+            name.equals(TIME_COLOR_IDENTIFIER) ?
+            SpreadsheetFormatParsersFormatColorParser.with(parser) :
+            parser;
     }
 }

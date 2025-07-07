@@ -21,12 +21,12 @@ import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetFormatterPluginHelperTest implements PluginHelperTesting<SpreadsheetFormatterPluginHelper,
-        SpreadsheetFormatterName,
-        SpreadsheetFormatterInfo,
-        SpreadsheetFormatterInfoSet,
-        SpreadsheetFormatterSelector,
-        SpreadsheetFormatterAlias,
-        SpreadsheetFormatterAliasSet> {
+    SpreadsheetFormatterName,
+    SpreadsheetFormatterInfo,
+    SpreadsheetFormatterInfoSet,
+    SpreadsheetFormatterSelector,
+    SpreadsheetFormatterAlias,
+    SpreadsheetFormatterAliasSet> {
 
     @Override
     public SpreadsheetFormatterPluginHelper createPluginHelper() {

@@ -24,8 +24,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrency
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrencySymbol.INSTANCE,
-                "$"
+            SpreadsheetPatternSpreadsheetFormatterNumberComponentCurrencySymbol.INSTANCE,
+            "$"
         );
     }
 

@@ -33,7 +33,7 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
      * exporter will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetExporter.class.getSimpleName()
+        "https://github.com/mP1/walkingkooka-spreadsheet/" + SpreadsheetExporter.class.getSimpleName()
     );
 
     /**
@@ -42,8 +42,8 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     public static SpreadsheetExporterProvider aliases(final SpreadsheetExporterAliasSet aliases,
                                                       final SpreadsheetExporterProvider provider) {
         return AliasesSpreadsheetExporterProvider.with(
-                aliases,
-                provider
+            aliases,
+            provider
         );
     }
 
@@ -74,8 +74,8 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     public static SpreadsheetExporterProvider filtered(final SpreadsheetExporterProvider provider,
                                                        final SpreadsheetExporterInfoSet infos) {
         return FilteredSpreadsheetExporterProvider.with(
-                provider,
-                infos
+            provider,
+            infos
         );
     }
 
@@ -85,8 +85,8 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     public static SpreadsheetExporterProvider filteredMapped(final SpreadsheetExporterInfoSet infos,
                                                              final SpreadsheetExporterProvider provider) {
         return FilteredMappedSpreadsheetExporterProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -96,8 +96,8 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     public static SpreadsheetExporterProvider mergedMapped(final SpreadsheetExporterInfoSet infos,
                                                            final SpreadsheetExporterProvider provider) {
         return MergedMappedSpreadsheetExporterProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 

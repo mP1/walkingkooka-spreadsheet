@@ -51,12 +51,12 @@ final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor extends Spr
     protected void visitNamedColor(final SpreadsheetColorName name,
                                    final int colorNumber) {
         final Optional<Color> color = this.metadata.get(
-                SpreadsheetMetadataPropertyName.numberedColor(colorNumber)
+            SpreadsheetMetadataPropertyName.numberedColor(colorNumber)
         );
         if (null != color && color.isPresent()) {
             this.colors.put(
-                    name,
-                    color.get()
+                name,
+                color.get()
             );
         }
     }

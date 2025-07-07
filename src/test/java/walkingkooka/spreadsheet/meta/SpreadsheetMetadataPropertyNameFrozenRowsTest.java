@@ -31,16 +31,16 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
     @Test
     public void testCheckValueWithInvalidSpreadsheetRowRangeReferenceFails() {
         this.checkValueFails(
-                SpreadsheetSelection.parseRowRange("2:3"),
-                "Metadata frozenRows=2:3, Row range must begin at '1'"
+            SpreadsheetSelection.parseRowRange("2:3"),
+            "Metadata frozenRows=2:3, Row range must begin at '1'"
         );
     }
 
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
@@ -49,17 +49,17 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
     @Test
     public void testParseUrlFragmentSaveValueFrozenRows() {
         this.checkEquals(
-                SpreadsheetSelection.parseRowRange("1:2"),
-                SpreadsheetMetadataPropertyName.FROZEN_ROWS
-                        .parseUrlFragmentSaveValue("1:2")
+            SpreadsheetSelection.parseRowRange("1:2"),
+            SpreadsheetMetadataPropertyName.FROZEN_ROWS
+                .parseUrlFragmentSaveValue("1:2")
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFrozenRows.instance(),
-                "frozenRows"
+            SpreadsheetMetadataPropertyNameFrozenRows.instance(),
+            "frozenRows"
         );
     }
 

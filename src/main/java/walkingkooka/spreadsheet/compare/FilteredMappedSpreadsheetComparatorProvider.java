@@ -34,17 +34,17 @@ final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetCo
         Objects.requireNonNull(provider, "provider");
 
         return new FilteredMappedSpreadsheetComparatorProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
     private FilteredMappedSpreadsheetComparatorProvider(final SpreadsheetComparatorInfoSet infos,
                                                         final SpreadsheetComparatorProvider provider) {
         this.mapper = FilteredProviderMapper.with(
-                infos,
-                provider.spreadsheetComparatorInfos(),
-                SpreadsheetComparatorPluginHelper.INSTANCE
+            infos,
+            provider.spreadsheetComparatorInfos(),
+            SpreadsheetComparatorPluginHelper.INSTANCE
         );
         this.provider = provider;
     }
@@ -58,10 +58,10 @@ final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetCo
         final SpreadsheetComparatorName name = selector.name();
 
         return this.provider.spreadsheetComparator(
-                selector.setName(
-                        this.mapper.name(name)
-                ),
-                context
+            selector.setName(
+                this.mapper.name(name)
+            ),
+            context
         );
     }
 
@@ -74,9 +74,9 @@ final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetCo
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetComparator(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         );
     }
 

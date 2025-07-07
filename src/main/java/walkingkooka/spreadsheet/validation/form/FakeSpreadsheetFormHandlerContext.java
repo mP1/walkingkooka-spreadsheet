@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FakeFormHandlerContext;
 
 public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta>
-        implements SpreadsheetFormHandlerContext {
+    implements SpreadsheetFormHandlerContext {
 
     public FakeSpreadsheetFormHandlerContext() {
         super();

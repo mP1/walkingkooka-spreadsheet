@@ -29,7 +29,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 final public class SpreadsheetFormatterNameTest implements PluginNameTesting<SpreadsheetFormatterName>,
-        ConstantsTesting<SpreadsheetFormatterName> {
+    ConstantsTesting<SpreadsheetFormatterName> {
 
     // constants........................................................................................................
 
@@ -60,17 +60,17 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
     private void verifyConstant(final String text) {
         assertSame(
-                SpreadsheetFormatterName.with(text),
-                SpreadsheetFormatterName.with(text)
+            SpreadsheetFormatterName.with(text),
+            SpreadsheetFormatterName.with(text)
         );
 
         final SpreadsheetFormatterName instance = SpreadsheetFormatterName.with(text);
         assertSame(
-                instance,
-                this.unmarshall(
-                        this.marshallContext()
-                                .marshall(instance)
-                )
+            instance,
+            this.unmarshall(
+                this.marshallContext()
+                    .marshall(instance)
+            )
         );
     }
 
@@ -84,57 +84,57 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     @Test
     public void testIsSpreadsheetFormatPatternWithNonSpreadsheetFormatPatternName() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "abc-123",
-                false
+            "abc-123",
+            false
         );
     }
 
     @Test
     public void testIsSpreadsheetFormatPatternWithDateFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "date-format-pattern",
-                true
+            "date-format-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetFormatPatternWithDateTimeFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "date-time-format-pattern",
-                true
+            "date-time-format-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetFormatPatternWithNumberFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "number-format-pattern",
-                true
+            "number-format-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetFormatPatternWithDateTextFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "text-format-pattern",
-                true
+            "text-format-pattern",
+            true
         );
     }
 
     @Test
     public void testIsSpreadsheetFormatPatternWithTimeFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-                "time-format-pattern",
-                true
+            "time-format-pattern",
+            true
         );
     }
 
     private void isSpreadsheetFormatPatternAndCheck(final String name,
                                                     final boolean expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetFormatterName.with(name)
-                        .isSpreadsheetFormatPattern()
+            expected,
+            SpreadsheetFormatterName.with(name)
+                .isSpreadsheetFormatPattern()
         );
     }
 
@@ -164,8 +164,8 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
         final String text = "@@";
 
         this.checkEquals(
-                SpreadsheetFormatterSelector.with(name, text),
-                name.setValueText(text)
+            SpreadsheetFormatterSelector.with(name, text),
+            name.setValueText(text)
         );
     }
 }

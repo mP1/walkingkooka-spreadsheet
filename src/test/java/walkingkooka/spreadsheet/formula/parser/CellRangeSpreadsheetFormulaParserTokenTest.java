@@ -31,7 +31,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpreadsheetFormulaParserTokenTestCase<CellRangeSpreadsheetFormulaParserToken>
-        implements HasSpreadsheetReferenceTesting {
+    implements HasSpreadsheetReferenceTesting {
 
     @Test
     public void testAccept() {
@@ -113,15 +113,15 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
         }.accept(binary);
         this.checkEquals("A13A15A172BA182B62BA192BA15A172BA182B62B42B", b.toString());
         this.checkEquals(
-                Lists.of(
-                        binary,
-                        left, left,
-                        symbol,
-                        right, right,
-                        binary
-                ),
-                visited,
-                "visited"
+            Lists.of(
+                binary,
+                left, left,
+                symbol,
+                right, right,
+                binary
+            ),
+            visited,
+            "visited"
         );
     }
 
@@ -133,36 +133,36 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
     @Override
     SpreadsheetFormulaParserToken leftToken() {
         return SpreadsheetFormulaParserToken.cell(
-                Lists.of(
-                        this.column("A"),
-                        this.row("1")
-                ),
-                "A1"
+            Lists.of(
+                this.column("A"),
+                this.row("1")
+            ),
+            "A1"
         );
     }
 
     @Override
     SpreadsheetFormulaParserToken rightToken() {
         return SpreadsheetFormulaParserToken.cell(
-                Lists.of(
-                        this.column("B"),
-                        this.row("2")
-                ),
-                "B2"
+            Lists.of(
+                this.column("B"),
+                this.row("2")
+            ),
+            "B2"
         );
     }
 
     private ColumnSpreadsheetFormulaParserToken column(final String text) {
         return SpreadsheetFormulaParserToken.column(
-                SpreadsheetSelection.parseColumn(text),
-                text
+            SpreadsheetSelection.parseColumn(text),
+            text
         );
     }
 
     private RowSpreadsheetFormulaParserToken row(final String text) {
         return SpreadsheetFormulaParserToken.row(
-                SpreadsheetSelection.parseRow(text),
-                text
+            SpreadsheetSelection.parseRow(text),
+            text
         );
     }
 
@@ -189,8 +189,8 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
         final CellRangeSpreadsheetFormulaParserToken token = this.createToken();
 
         this.referenceAndCheck(
-                token,
-                token.toCellRange()
+            token,
+            token.toCellRange()
         );
     }
 }

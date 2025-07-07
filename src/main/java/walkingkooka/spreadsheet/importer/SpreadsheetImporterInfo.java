@@ -31,24 +31,24 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetImporterName} for a {@link SpreadsheetImporter}.
  */
 public final class SpreadsheetImporterInfo implements PluginInfoLike<SpreadsheetImporterInfo, SpreadsheetImporterName>,
-        HateosResource<SpreadsheetImporterName> {
+    HateosResource<SpreadsheetImporterName> {
 
     public static SpreadsheetImporterInfo parse(final String text) {
         return new SpreadsheetImporterInfo(
-                PluginInfo.parse(
-                        text,
-                        SpreadsheetImporterName::with
-                )
+            PluginInfo.parse(
+                text,
+                SpreadsheetImporterName::with
+            )
         );
     }
 
     public static SpreadsheetImporterInfo with(final AbsoluteUrl url,
                                                final SpreadsheetImporterName name) {
         return new SpreadsheetImporterInfo(
-                PluginInfo.with(
-                        url,
-                        name
-                )
+            PluginInfo.with(
+                url,
+                name
+            )
         );
     }
 
@@ -73,10 +73,10 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
     @Override
     public SpreadsheetImporterInfo setName(final SpreadsheetImporterName name) {
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetImporterInfo(
-                        this.pluginInfo.setName(name)
-                );
+            this :
+            new SpreadsheetImporterInfo(
+                this.pluginInfo.setName(name)
+            );
     }
 
     private final PluginInfo<SpreadsheetImporterName> pluginInfo;
@@ -98,8 +98,8 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetImporterInfo &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetImporterInfo &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetImporterInfo other) {
@@ -124,16 +124,16 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
     static SpreadsheetImporterInfo unmarshall(final JsonNode node,
                                               final JsonNodeUnmarshallContext context) {
         return SpreadsheetImporterInfo.parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetImporterInfo.class),
-                SpreadsheetImporterInfo::unmarshall,
-                SpreadsheetImporterInfo::marshall,
-                SpreadsheetImporterInfo.class
+            JsonNodeContext.computeTypeName(SpreadsheetImporterInfo.class),
+            SpreadsheetImporterInfo::unmarshall,
+            SpreadsheetImporterInfo::marshall,
+            SpreadsheetImporterInfo.class
         );
         SpreadsheetImporterName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }

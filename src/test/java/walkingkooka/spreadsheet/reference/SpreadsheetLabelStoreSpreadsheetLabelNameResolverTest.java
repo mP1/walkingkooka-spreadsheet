@@ -28,7 +28,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest implements SpreadsheetLabelNameResolverTesting<SpreadsheetLabelStoreSpreadsheetLabelNameResolver>,
-        ToStringTesting<SpreadsheetLabelStoreSpreadsheetLabelNameResolver> {
+    ToStringTesting<SpreadsheetLabelStoreSpreadsheetLabelNameResolver> {
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("Label111");
 
@@ -39,49 +39,49 @@ public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest impleme
     @Test
     public void testWithNullSpreadsheetLabelStoreFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetLabelStoreSpreadsheetLabelNameResolver.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetLabelStoreSpreadsheetLabelNameResolver.with(null)
         );
     }
 
     @Test
     public void testResolveLabelWithMissingLabel() {
         this.resolveLabelAndCheck(
-                SpreadsheetSelection.labelName("Unknown404")
+            SpreadsheetSelection.labelName("Unknown404")
         );
     }
 
     @Test
     public void testResolveLabel() {
         this.resolveLabelAndCheck(
-                LABEL2,
-                TARGET
+            LABEL2,
+            TARGET
         );
     }
 
     @Test
     public void testResolveLabelToLabelToCell() {
         this.resolveLabelAndCheck(
-                LABEL1,
-                TARGET
+            LABEL1,
+            TARGET
         );
     }
 
     @Override
     public SpreadsheetLabelStoreSpreadsheetLabelNameResolver createSpreadsheetLabelNameResolver() {
         return SpreadsheetLabelStoreSpreadsheetLabelNameResolver.with(
-                new FakeSpreadsheetLabelStore() {
-                    @Override
-                    public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName id) {
-                        return Optional.ofNullable(
-                                LABEL1.equals(id) ?
-                                        LABEL1.setLabelMappingReference(LABEL2) :
-                                        LABEL2.equals(id) ?
-                                                LABEL2.setLabelMappingReference(TARGET) :
-                                                null
-                        );
-                    }
+            new FakeSpreadsheetLabelStore() {
+                @Override
+                public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName id) {
+                    return Optional.ofNullable(
+                        LABEL1.equals(id) ?
+                            LABEL1.setLabelMappingReference(LABEL2) :
+                            LABEL2.equals(id) ?
+                                LABEL2.setLabelMappingReference(TARGET) :
+                                null
+                    );
                 }
+            }
         );
     }
 
@@ -92,8 +92,8 @@ public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest impleme
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.fake();
 
         this.toStringAndCheck(
-                SpreadsheetLabelStoreSpreadsheetLabelNameResolver.with(store),
-                store.toString()
+            SpreadsheetLabelStoreSpreadsheetLabelNameResolver.with(store),
+            store.toString()
         );
     }
 

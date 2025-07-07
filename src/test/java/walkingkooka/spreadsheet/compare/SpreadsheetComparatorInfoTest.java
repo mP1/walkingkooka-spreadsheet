@@ -32,15 +32,15 @@ public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTestin
         final SpreadsheetComparatorName different = SpreadsheetComparatorName.with("different");
 
         this.setNameAndCheck(
-                SpreadsheetComparatorInfo.with(
-                        url,
-                        SpreadsheetComparatorName.with("original-comparator-name")
-                ),
-                different,
-                SpreadsheetComparatorInfo.with(
-                        url,
-                        different
-                )
+            SpreadsheetComparatorInfo.with(
+                url,
+                SpreadsheetComparatorName.with("original-comparator-name")
+            ),
+            different,
+            SpreadsheetComparatorInfo.with(
+                url,
+                different
+            )
         );
     }
 
@@ -62,8 +62,8 @@ public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTestin
     public SpreadsheetComparatorInfo createPluginInfoLike(final AbsoluteUrl url,
                                                           final SpreadsheetComparatorName name) {
         return SpreadsheetComparatorInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -73,8 +73,8 @@ public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTestin
     public SpreadsheetComparatorInfo unmarshall(final JsonNode json,
                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetComparatorInfo.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

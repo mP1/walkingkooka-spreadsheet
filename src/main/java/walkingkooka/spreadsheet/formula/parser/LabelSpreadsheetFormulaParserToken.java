@@ -23,13 +23,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
  * Represents a {@link SpreadsheetLabelName} within an expression.
  */
 public final class LabelSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken,
-        HasSpreadsheetReference<SpreadsheetLabelName> {
+    HasSpreadsheetReference<SpreadsheetLabelName> {
 
     static LabelSpreadsheetFormulaParserToken with(final SpreadsheetLabelName value,
                                                    final String text) {
         return new LabelSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

@@ -50,11 +50,11 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
         final String text = "$123";
 
         this.parseThrows(
+            text,
+            new InvalidCharacterException(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        1
-                ).getMessage()
+                1
+            ).getMessage()
         );
     }
 
@@ -116,25 +116,25 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     @Test
     public void testParseMax() {
         this.parseAndCheck(
-                "XFD",
-                ColumnSpreadsheetFormulaParserToken.column(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
-                "XFD"
+            "XFD",
+            ColumnSpreadsheetFormulaParserToken.column(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
+            "XFD"
         );
     }
 
     @Test
     public void testParseRelativeReferenceInvalid() {
         this.parseThrows(
-                "" + INVALID,
-                "Invalid column \"XFE\" not between \"A\" and \"XFE\""
+            "" + INVALID,
+            "Invalid column \"XFE\" not between \"A\" and \"XFE\""
         );
     }
 
     @Test
     public void testParseAbsoluteReferenceInvalid() {
         this.parseThrows(
-                "$" + INVALID,
-                "Invalid column \"$XFE\" not between \"A\" and \"XFE\""
+            "$" + INVALID,
+            "Invalid column \"$XFE\" not between \"A\" and \"XFE\""
         );
     }
 

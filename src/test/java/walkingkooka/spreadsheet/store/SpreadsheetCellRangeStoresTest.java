@@ -24,7 +24,7 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 import java.lang.reflect.Method;
 
 public final class SpreadsheetCellRangeStoresTest implements ClassTesting2<SpreadsheetCellRangeStores>,
-        PublicStaticHelperTesting<SpreadsheetCellRangeStores> {
+    PublicStaticHelperTesting<SpreadsheetCellRangeStores> {
 
     @Override
     public Class<SpreadsheetCellRangeStores> type() {

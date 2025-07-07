@@ -44,7 +44,7 @@ final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor exten
     static void treePrint(final ParserToken token,
                           final IndentingPrinter printer) {
         new SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor(printer)
-                .accept(token);
+            .accept(token);
         printer.lineStart();
     }
 
@@ -131,9 +131,9 @@ final class SpreadsheetPatternPrintTreeSpreadsheetFormatParserTokenVisitor exten
     private Visiting treePrint0(final SpreadsheetFormatParserToken token) {
         this.printer.lineStart();
         this.printer.print(
-                CharSequences.quoteAndEscape(
-                        token.text()
-                )
+            CharSequences.quoteAndEscape(
+                token.text()
+            )
         );
 
         return Visiting.SKIP;

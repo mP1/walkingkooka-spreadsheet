@@ -55,8 +55,8 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
 
     private static SpreadsheetColumnReferenceSet withCopy(final SortedSet<SpreadsheetColumnReference> columns) {
         return columns.isEmpty() ?
-                EMPTY :
-                new SpreadsheetColumnReferenceSet(columns);
+            EMPTY :
+            new SpreadsheetColumnReferenceSet(columns);
     }
 
     /**
@@ -64,12 +64,12 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
      */
     public static SpreadsheetColumnReferenceSet parse(final String text) {
         return withCopy(
-                SpreadsheetSelectionCsvParser.parse(
-                        text,
-                        SpreadsheetFormulaParsers.column(),
-                        (SpreadsheetFormulaParserToken token) -> token.cast(ColumnSpreadsheetFormulaParserToken.class)
-                                .reference()
-                )
+            SpreadsheetSelectionCsvParser.parse(
+                text,
+                SpreadsheetFormulaParsers.column(),
+                (SpreadsheetFormulaParserToken token) -> token.cast(ColumnSpreadsheetFormulaParserToken.class)
+                    .reference()
+            )
         );
     }
 
@@ -83,15 +83,15 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
     public SpreadsheetColumnReferenceSet setElements(final SortedSet<SpreadsheetColumnReference> columns) {
         final SpreadsheetColumnReferenceSet spreadsheetColumnReferenceSet;
 
-        if(columns instanceof SpreadsheetColumnReferenceSet) {
+        if (columns instanceof SpreadsheetColumnReferenceSet) {
             spreadsheetColumnReferenceSet = (SpreadsheetColumnReferenceSet) columns;
         } else {
             final TreeSet<SpreadsheetColumnReference> copy = new TreeSet<>(
-                    Objects.requireNonNull(columns, "columns")
+                Objects.requireNonNull(columns, "columns")
             );
             spreadsheetColumnReferenceSet = this.references.equals(copy) ?
-                    this :
-                    withCopy(copy);
+                this :
+                withCopy(copy);
         }
 
         return spreadsheetColumnReferenceSet;
@@ -116,16 +116,16 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
     static SpreadsheetColumnReferenceSet unmarshall(final JsonNode node,
                                                     final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetColumnReferenceSet.class),
-                SpreadsheetColumnReferenceSet::unmarshall,
-                SpreadsheetColumnReferenceSet::marshall,
-                SpreadsheetColumnReferenceSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetColumnReferenceSet.class),
+            SpreadsheetColumnReferenceSet::unmarshall,
+            SpreadsheetColumnReferenceSet::marshall,
+            SpreadsheetColumnReferenceSet.class
         );
         SpreadsheetSelection.A1.toColumn(); // trigger static init and json marshall/unmarshall registry
     }

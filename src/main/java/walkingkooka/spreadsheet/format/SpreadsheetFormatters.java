@@ -53,11 +53,11 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
                                                  final SpreadsheetFormatter text,
                                                  final SpreadsheetFormatter time) {
         return AutomaticSpreadsheetFormatter.with(
-                date,
-                dateTime,
-                number,
-                text,
-                time
+            date,
+            dateTime,
+            number,
+            text,
+            time
         );
     }
 
@@ -104,8 +104,8 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     public static SpreadsheetPatternSpreadsheetFormatter dateTime(final DateTimeSpreadsheetFormatParserToken token,
                                                                   final Class<? extends Temporal> valueType) {
         return SpreadsheetPatternSpreadsheetFormatterDateTime.with(
-                token,
-                valueType
+            token,
+            valueType
         );
     }
 

@@ -48,10 +48,10 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
         final int space = text.lastIndexOf(SEPARATOR_CHAR);
         if (-1 != space) {
             name = SpreadsheetComparatorName.with(
-                    text.substring(0, space)
+                text.substring(0, space)
             );
             direction = SpreadsheetComparatorDirection.valueOf(
-                    text.substring(space + 1)
+                text.substring(space + 1)
             );
         } else {
             name = SpreadsheetComparatorName.with(text);
@@ -59,16 +59,16 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
         }
 
         return new SpreadsheetComparatorNameAndDirection(
-                name,
-                direction
+            name,
+            direction
         );
     }
 
     public static SpreadsheetComparatorNameAndDirection with(final SpreadsheetComparatorName name,
                                                              final SpreadsheetComparatorDirection direction) {
         return new SpreadsheetComparatorNameAndDirection(
-                Objects.requireNonNull(name, "name"),
-                Objects.requireNonNull(direction, "direction")
+            Objects.requireNonNull(name, "name"),
+            Objects.requireNonNull(direction, "direction")
         );
     }
 
@@ -98,10 +98,10 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
      */
     public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                columnOrRow,
-                Lists.of(
-                        this
-                )
+            columnOrRow,
+            Lists.of(
+                this
+            )
         );
     }
 
@@ -110,27 +110,27 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.direction
+            this.name,
+            this.direction
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetComparatorNameAndDirection &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetComparatorNameAndDirection &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetComparatorNameAndDirection other) {
         return this.name.equals(other.name) &&
-                this.direction.equals(other.direction);
+            this.direction.equals(other.direction);
     }
 
     @Override
     public String toString() {
         return this.name.value()
-                .concat(this.direction.toStringWithEmptyDefault());
+            .concat(this.direction.toStringWithEmptyDefault());
     }
 
     // Json.............................................................................................................
@@ -138,7 +138,7 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
     static SpreadsheetComparatorNameAndDirection unmarshall(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
@@ -148,10 +148,10 @@ public final class SpreadsheetComparatorNameAndDirection implements HasName<Spre
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorNameAndDirection.class),
-                SpreadsheetComparatorNameAndDirection::unmarshall,
-                SpreadsheetComparatorNameAndDirection::marshall,
-                SpreadsheetComparatorNameAndDirection.class
+            JsonNodeContext.computeTypeName(SpreadsheetComparatorNameAndDirection.class),
+            SpreadsheetComparatorNameAndDirection::unmarshall,
+            SpreadsheetComparatorNameAndDirection::marshall,
+            SpreadsheetComparatorNameAndDirection.class
         );
     }
 }

@@ -61,20 +61,20 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
                                                 final Optional<ExpressionFunctionSelector> selector,
                                                 final Optional<AbsoluteUrl> url) {
         return ExpressionFunctionAlias.with(
-                        name,
-                        selector,
-                        url
+            name,
+            selector,
+            url
         );
     }
-    
+
     /**
      * {@link ExpressionFunctionInfo#with(AbsoluteUrl, ExpressionFunctionName)}
      */
     public static ExpressionFunctionInfo info(final AbsoluteUrl url,
                                               final ExpressionFunctionName name) {
         return ExpressionFunctionInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -90,7 +90,7 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      */
     public static ExpressionFunctionName name(final String name) {
         return ExpressionFunctionName.with(name)
-                .setCaseSensitivity(NAME_CASE_SENSITIVITY);
+            .setCaseSensitivity(NAME_CASE_SENSITIVITY);
     }
 
     /**
@@ -98,38 +98,38 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      */
     public static ExpressionFunctionAlias parseAlias(final String text) {
         return ExpressionFunctionAlias.parse(
-                text,
-                NAME_CASE_SENSITIVITY
+            text,
+            NAME_CASE_SENSITIVITY
         );
     }
 
     /**
-     * {@link ExpressionFunctionAliasSet#parse(String,CaseSensitivity)}
+     * {@link ExpressionFunctionAliasSet#parse(String, CaseSensitivity)}
      */
     public static ExpressionFunctionAliasSet parseAliasSet(final String text) {
         return ExpressionFunctionAliasSet.parse(
-                text,
-                NAME_CASE_SENSITIVITY
+            text,
+            NAME_CASE_SENSITIVITY
         );
     }
 
     /**
-     * {@link ExpressionFunctionInfo#parse(String,CaseSensitivity)
+     * {@link ExpressionFunctionInfo#parse(String, CaseSensitivity)
      */
     public static ExpressionFunctionInfo parseInfo(final String text) {
         return ExpressionFunctionInfo.parse(
-                text,
-                NAME_CASE_SENSITIVITY
+            text,
+            NAME_CASE_SENSITIVITY
         );
     }
 
     /**
-     * {@link ExpressionFunctionInfoSet#parse(String,CaseSensitivity)
+     * {@link ExpressionFunctionInfoSet#parse(String, CaseSensitivity)
      */
     public static ExpressionFunctionInfoSet parseInfoSet(final String text) {
         return ExpressionFunctionInfoSet.parse(
-                text,
-                NAME_CASE_SENSITIVITY
+            text,
+            NAME_CASE_SENSITIVITY
         );
     }
 
@@ -138,8 +138,8 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      */
     public static ExpressionFunctionSelector parseSelector(final String selector) {
         return ExpressionFunctionSelector.parse(
-                selector,
-                NAME_CASE_SENSITIVITY
+            selector,
+            NAME_CASE_SENSITIVITY
         );
     }
 

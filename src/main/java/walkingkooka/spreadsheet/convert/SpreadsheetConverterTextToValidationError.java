@@ -48,7 +48,7 @@ final class SpreadsheetConverterTextToValidationError extends SpreadsheetConvert
                             final Class<?> type,
                             final SpreadsheetConverterContext context) {
         return SpreadsheetError.parse(value)
-                .toValidationError(context.validationReference());
+            .toValidationError(context.validationReference());
     }
 
     @Override

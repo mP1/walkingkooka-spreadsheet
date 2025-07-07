@@ -56,11 +56,11 @@ public final class SpreadsheetFormatterSelectorToken implements PluginSelectorTo
                                                          final String text,
                                                          final List<SpreadsheetFormatterSelectorTokenAlternative> alternatives) {
         return new SpreadsheetFormatterSelectorToken(
-                PluginSelectorToken.with(
-                        label,
-                        text,
-                        alternatives
-                )
+            PluginSelectorToken.with(
+                label,
+                text,
+                alternatives
+            )
         );
     }
 
@@ -95,8 +95,8 @@ public final class SpreadsheetFormatterSelectorToken implements PluginSelectorTo
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterSelectorToken &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFormatterSelectorToken &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormatterSelectorToken other) {
@@ -113,19 +113,19 @@ public final class SpreadsheetFormatterSelectorToken implements PluginSelectorTo
     static SpreadsheetFormatterSelectorToken unmarshall(final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         return PluginSelectorTokenLike.unmarshall(
-                node,
-                context,
-                SpreadsheetFormatterSelectorToken::with,
-                SpreadsheetFormatterSelectorTokenAlternative.class
+            node,
+            context,
+            SpreadsheetFormatterSelectorToken::with,
+            SpreadsheetFormatterSelectorTokenAlternative.class
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorToken.class),
-                SpreadsheetFormatterSelectorToken::unmarshall,
-                SpreadsheetFormatterSelectorToken::marshall,
-                SpreadsheetFormatterSelectorToken.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterSelectorToken.class),
+            SpreadsheetFormatterSelectorToken::unmarshall,
+            SpreadsheetFormatterSelectorToken::marshall,
+            SpreadsheetFormatterSelectorToken.class
         );
     }
 }

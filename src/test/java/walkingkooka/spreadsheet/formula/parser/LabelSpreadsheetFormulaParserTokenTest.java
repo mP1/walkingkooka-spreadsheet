@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class LabelSpreadsheetFormulaParserTokenTest extends NonSymbolSpreadsheetFormulaParserTokenTestCase<LabelSpreadsheetFormulaParserToken, SpreadsheetLabelName>
-        implements HasSpreadsheetReferenceTesting {
+    implements HasSpreadsheetReferenceTesting {
 
     @Test
     public void testWithEmptyTextFails() {
@@ -95,8 +95,8 @@ public final class LabelSpreadsheetFormulaParserTokenTest extends NonSymbolSprea
     @Override
     public LabelSpreadsheetFormulaParserToken createDifferentToken() {
         return LabelSpreadsheetFormulaParserToken.with(
-                SpreadsheetSelection.labelName("different"),
-                "different"
+            SpreadsheetSelection.labelName("different"),
+            "different"
         );
     }
 
@@ -116,8 +116,8 @@ public final class LabelSpreadsheetFormulaParserTokenTest extends NonSymbolSprea
     @Test
     public void testReference() {
         this.referenceAndCheck(
-                this.createToken(),
-                this.value()
+            this.createToken(),
+            this.value()
         );
     }
 }

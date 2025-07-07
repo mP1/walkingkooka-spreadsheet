@@ -31,18 +31,16 @@ public abstract class SpreadsheetMetadataPropertyNameIntegerTestCase<N extends S
     @Test
     public final void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                null
+            LocaleContexts.jre(Locale.ENGLISH),
+            null
         );
     }
 
-    @Override
-    final Integer propertyValue() {
+    @Override final Integer propertyValue() {
         return 1;
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return "int";
     }
 }

@@ -109,13 +109,13 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
                 final SimpleDateFormat dateFormat = (SimpleDateFormat) localeToFormatPattern.apply(locale);
                 pattern = dateFormat.toPattern();
                 this.checkNotEquals("",
-                        SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
-                                pattern,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
-                                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                                false // include Ampm
-                        ),
-                        () -> "" + locale);
+                    SpreadsheetPatternSimpleDateFormatPatternVisitor.pattern(
+                        pattern,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorYear.INCLUDE,
+                        SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+                        false // include Ampm
+                    ),
+                    () -> "" + locale);
             } catch (final UnsupportedOperationException cause) {
                 throw new UnsupportedOperationException(pattern + " " + locale.toLanguageTag() + " " + cause.getMessage(), cause);
             }
@@ -125,9 +125,9 @@ public final class SpreadsheetPatternSimpleDateFormatPatternVisitorTest implemen
     @Override
     public SpreadsheetPatternSimpleDateFormatPatternVisitor createVisitor() {
         return new SpreadsheetPatternSimpleDateFormatPatternVisitor(
-                SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
-                SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
-                false
+            SpreadsheetPatternSimpleDateFormatPatternVisitorYear.EXCLUDE,
+            SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds.INCLUDE,
+            false
         );
     }
 

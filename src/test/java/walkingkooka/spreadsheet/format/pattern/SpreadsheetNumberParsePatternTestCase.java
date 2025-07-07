@@ -28,8 +28,8 @@ import walkingkooka.text.cursor.parser.ParserTesting;
 import java.math.MathContext;
 
 public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassTesting2<T>,
-        ParserTesting,
-        TypeNameTesting<T> {
+    ParserTesting,
+    TypeNameTesting<T> {
 
     SpreadsheetNumberParsePatternTestCase() {
         super();
@@ -100,16 +100,16 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
             @Override
             public String toString() {
                 return ToStringBuilder.empty()
-                        .label("currencySymbol").value(this.currencySymbol())
-                        .label("decimalSeparator").value(this.decimalSeparator())
-                        .label("exponentSymbol").value(this.exponentSymbol())
-                        .label("groupSeparator").value(this.groupSeparator())
-                        .label("negativeSign").value(this.negativeSign())
-                        .label("percentSymbol").value(this.percentSymbol())
-                        .label("positiveSign").value(this.positiveSign())
-                        .label("zeroDigit").value(this.zeroDigit())
-                        .label("mathContext").value(this.mathContext())
-                        .build();
+                    .label("currencySymbol").value(this.currencySymbol())
+                    .label("decimalSeparator").value(this.decimalSeparator())
+                    .label("exponentSymbol").value(this.exponentSymbol())
+                    .label("groupSeparator").value(this.groupSeparator())
+                    .label("negativeSign").value(this.negativeSign())
+                    .label("percentSymbol").value(this.percentSymbol())
+                    .label("positiveSign").value(this.positiveSign())
+                    .label("zeroDigit").value(this.zeroDigit())
+                    .label("mathContext").value(this.mathContext())
+                    .build();
             }
         };
     }

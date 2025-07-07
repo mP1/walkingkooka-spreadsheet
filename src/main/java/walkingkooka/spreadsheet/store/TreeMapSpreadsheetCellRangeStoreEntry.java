@@ -62,8 +62,8 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
 
         final Set<V> values = this.secondaryCellReferenceToValues.get(range.end());
         return null != values ?
-                this.copyToSet(values) :
-                Optional.empty();
+            this.copyToSet(values) :
+            Optional.empty();
     }
 
     private Optional<List<V>> copyToSet(final Set<V> values) {
@@ -169,9 +169,9 @@ abstract class TreeMapSpreadsheetCellRangeStoreEntry<V> implements Comparable<Tr
      */
     final int count() {
         return this.secondaryCellReferenceToValues.values()
-                .stream()
-                .mapToInt(Set::size)
-                .sum();
+            .stream()
+            .mapToInt(Set::size)
+            .sum();
     }
 
     // Comparable....................................................................................................

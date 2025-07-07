@@ -72,7 +72,7 @@ public final class DigitZeroSpreadsheetFormatParserTokenTest extends NonSymbolSp
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.DIGIT_ZERO
+            SpreadsheetFormatParserTokenKind.DIGIT_ZERO
         );
     }
 

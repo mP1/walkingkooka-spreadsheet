@@ -21,7 +21,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<V> {
+    implements SpreadsheetFormatParserTokenVisitorTesting<V> {
 
     SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase() {
         super();

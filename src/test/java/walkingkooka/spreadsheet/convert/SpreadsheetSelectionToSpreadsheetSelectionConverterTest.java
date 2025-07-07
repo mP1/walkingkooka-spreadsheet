@@ -24,53 +24,53 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext>,
-        ToStringTesting<SpreadsheetSelectionToSpreadsheetSelectionConverter> {
+    ToStringTesting<SpreadsheetSelectionToSpreadsheetSelectionConverter> {
 
     @Test
     public void testConvertCellToSpreadsheetSelection() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99"),
-                SpreadsheetSelection.class
+            SpreadsheetSelection.parseCell("Z99"),
+            SpreadsheetSelection.class
         );
     }
 
     @Test
     public void testConvertCellToCellRange() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99"),
-                SpreadsheetSelection.parseCellRange("Z99")
+            SpreadsheetSelection.parseCell("Z99"),
+            SpreadsheetSelection.parseCellRange("Z99")
         );
     }
 
     @Test
     public void testConvertCellRangeToCell() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                SpreadsheetSelection.parseCell("B2")
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
     public void testConvertCellRangeToSpreadsheetSelection() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                SpreadsheetSelection.class
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            SpreadsheetSelection.class
         );
     }
 
     @Test
     public void testConvertCellToExpressionReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCell("Z99"),
-                SpreadsheetExpressionReference.class
+            SpreadsheetSelection.parseCell("Z99"),
+            SpreadsheetExpressionReference.class
         );
     }
 
     @Test
     public void testConvertCellRangeToExpressionReference() {
         this.convertAndCheck(
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                SpreadsheetExpressionReference.class
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            SpreadsheetExpressionReference.class
         );
     }
 
@@ -89,8 +89,8 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE,
-                "selection to selection"
+            SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE,
+            "selection to selection"
         );
     }
 

@@ -35,22 +35,22 @@ public final class BooleanSpreadsheetFormulaParserTokenTest extends ValueSpreads
     @Test
     public void testToExpressionDayWithTrue() {
         this.toExpressionAndCheck(
-                booleanValue(
-                        true,
-                        "true"
-                ),
-                Expression.value(true)
+            booleanValue(
+                true,
+                "true"
+            ),
+            Expression.value(true)
         );
     }
 
     @Test
     public void testToExpressionDayWithFalse() {
         this.toExpressionAndCheck(
-                booleanValue(
-                        false,
-                        "false"
-                ),
-                Expression.value(false)
+            booleanValue(
+                false,
+                "false"
+            ),
+            Expression.value(false)
         );
     }
 
@@ -59,29 +59,29 @@ public final class BooleanSpreadsheetFormulaParserTokenTest extends ValueSpreads
     BooleanSpreadsheetFormulaParserToken createToken(final String text,
                                                      final List<ParserToken> tokens) {
         return BooleanSpreadsheetFormulaParserToken.with(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
     @Override
     List<ParserToken> tokens() {
         return List.of(
-                booleanLiteralTrue()
+            booleanLiteralTrue()
         );
     }
 
     @Override
     public String text() {
         return booleanLiteralTrue()
-                .toString();
+            .toString();
     }
 
     @Override
     public BooleanSpreadsheetFormulaParserToken createDifferentToken() {
         return this.createToken(
-                booleanLiteralFalse().text(),
-                booleanLiteralFalse()
+            booleanLiteralFalse().text(),
+            booleanLiteralFalse()
         );
     }
 
@@ -91,8 +91,8 @@ public final class BooleanSpreadsheetFormulaParserTokenTest extends ValueSpreads
     public BooleanSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
                                                            final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormulaParserToken.unmarshallBoolean(
-                from,
-                context
+            from,
+            context
         );
     }
 

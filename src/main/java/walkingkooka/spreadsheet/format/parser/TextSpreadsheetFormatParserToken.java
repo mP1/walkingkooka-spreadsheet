@@ -51,9 +51,9 @@ public final class TextSpreadsheetFormatParserToken extends ParentSpreadsheetFor
     @Override
     public TextSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                TextSpreadsheetFormatParserToken::with
+            this,
+            children,
+            TextSpreadsheetFormatParserToken::with
         );
     }
 

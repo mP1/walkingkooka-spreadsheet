@@ -25,8 +25,8 @@ public final class TextLiteralSpreadsheetFormatParserToken extends NonSymbolSpre
 
     static TextLiteralSpreadsheetFormatParserToken with(final String value, final String text) {
         return new TextLiteralSpreadsheetFormatParserToken(
-                checkValue(value),
-                checkTextNotEmpty(text)
+            checkValue(value),
+            checkTextNotEmpty(text)
         );
     }
 

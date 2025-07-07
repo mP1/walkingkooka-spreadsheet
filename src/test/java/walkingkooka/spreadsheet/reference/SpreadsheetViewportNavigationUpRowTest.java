@@ -24,23 +24,23 @@ public final class SpreadsheetViewportNavigationUpRowTest extends SpreadsheetVie
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseCell("C3"),
-                SpreadsheetSelection.parseCell("C2")
+            SpreadsheetSelection.parseCell("C3"),
+            SpreadsheetSelection.parseCell("C2")
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseColumn("C")
+            SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-                SpreadsheetSelection.parseRow("3"),
-                SpreadsheetSelection.parseRow("2")
+            SpreadsheetSelection.parseRow("3"),
+            SpreadsheetSelection.parseRow("2")
         );
     }
 

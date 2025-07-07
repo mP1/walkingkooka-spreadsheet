@@ -38,7 +38,7 @@ final class SpreadsheetMetadataMissingComponents {
 
     <T> T getOrNull(final SpreadsheetMetadataPropertyName<T> propertyName) {
         return this.metadata.getOrGetDefaults(propertyName)
-                .orElseGet(() -> this.addMissing(propertyName));
+            .orElseGet(() -> this.addMissing(propertyName));
     }
 
     final SpreadsheetMetadata metadata;

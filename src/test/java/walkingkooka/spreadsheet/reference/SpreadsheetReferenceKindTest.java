@@ -25,7 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetReferenceKindTest implements ClassTesting2<SpreadsheetReferenceKind>,
-        ToStringTesting<SpreadsheetReferenceKind> {
+    ToStringTesting<SpreadsheetReferenceKind> {
 
     @Test
     public void testColumnAbsolute() {

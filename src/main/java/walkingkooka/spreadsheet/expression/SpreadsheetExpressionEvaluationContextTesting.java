@@ -44,26 +44,26 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
-        SpreadsheetLabelNameResolverTesting<C>,
-        ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
+    SpreadsheetLabelNameResolverTesting<C>,
+    ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
 
     // parseExpression......................................................................................................
 
     @Test
     default void testParseFormulaNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .parseFormula(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .parseFormula(null)
         );
     }
 
     default void parseFormulaAndCheck(final String formula,
                                       final SpreadsheetFormulaParserToken expected) {
         this.parseFormulaAndCheck(
-                this.createContext(),
-                formula,
-                expected
+            this.createContext(),
+            formula,
+            expected
         );
     }
 
@@ -71,19 +71,19 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                       final String formula,
                                       final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
-                expected,
-                context.parseFormula(
-                        TextCursors.charSequence(formula)
-                ),
-                () -> "parseFormula " + formula + " with context " + context);
+            expected,
+            context.parseFormula(
+                TextCursors.charSequence(formula)
+            ),
+            () -> "parseFormula " + formula + " with context " + context);
     }
 
     default void parseFormulaAndFail(final String formula,
                                      final String expected) {
         this.parseFormulaAndFail(
-                this.createContext(),
-                formula,
-                expected
+            this.createContext(),
+            formula,
+            expected
         );
     }
 
@@ -91,15 +91,15 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                      final String formula,
                                      final String expected) {
         final RuntimeException thrown = assertThrows(
-                RuntimeException.class,
-                () -> context.parseFormula(
-                        TextCursors.charSequence(formula)
-                )
+            RuntimeException.class,
+            () -> context.parseFormula(
+                TextCursors.charSequence(formula)
+            )
         );
         this.checkEquals(
-                expected,
-                thrown.getMessage(),
-                "message"
+            expected,
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -107,24 +107,24 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
 
     default void cellAndCheck(final C context) {
         this.cellAndCheck(
-                context,
-                SpreadsheetExpressionEvaluationContext.NO_CELL
+            context,
+            SpreadsheetExpressionEvaluationContext.NO_CELL
         );
     }
 
     default void cellAndCheck(final C context,
                               final SpreadsheetCell expected) {
         this.cellAndCheck(
-                context,
-                Optional.of(expected)
+            context,
+            Optional.of(expected)
         );
     }
 
     default void cellAndCheck(final C context,
                               final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
-                expected,
-                context.cell()
+            expected,
+            context.cell()
         );
     }
 
@@ -133,17 +133,17 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Test
     default void testLoadCellWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext().loadCell(null)
+            NullPointerException.class,
+            () -> this.createContext().loadCell(null)
         );
     }
 
     default void loadCellAndCheck(final C context,
                                   final SpreadsheetCellReference cellReference) {
         this.loadCellAndCheck(
-                context,
-                cellReference,
-                SpreadsheetExpressionEvaluationContext.NO_CELL
+            context,
+            cellReference,
+            SpreadsheetExpressionEvaluationContext.NO_CELL
         );
     }
 
@@ -151,9 +151,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                   final SpreadsheetCellReference cellReference,
                                   final SpreadsheetCell expected) {
         this.loadCellAndCheck(
-                context,
-                cellReference,
-                Optional.of(expected)
+            context,
+            cellReference,
+            Optional.of(expected)
         );
     }
 
@@ -161,9 +161,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                   final SpreadsheetCellReference cellReference,
                                   final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
-                expected,
-                context.loadCell(cellReference),
-                () -> "loadCell " + cellReference
+            expected,
+            context.loadCell(cellReference),
+            () -> "loadCell " + cellReference
         );
     }
 
@@ -172,9 +172,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Test
     default void testLoadCellRangeWithNullRangeFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .loadCellRange(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .loadCellRange(null)
         );
     }
 
@@ -182,9 +182,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                        final SpreadsheetCellRangeReference range,
                                        final SpreadsheetCell... expected) {
         this.loadCellRangeAndCheck(
-                context,
-                range,
-                Sets.of(expected)
+            context,
+            range,
+            Sets.of(expected)
         );
     }
 
@@ -192,9 +192,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                        final SpreadsheetCellRangeReference range,
                                        final Set<SpreadsheetCell> expected) {
         this.checkEquals(
-                expected,
-                context.loadCellRange(range),
-                () -> "loadCellRange " + range
+            expected,
+            context.loadCellRange(range),
+            () -> "loadCellRange " + range
         );
     }
 
@@ -203,17 +203,17 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Test
     default void testLoadLabelWithNullLabelFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext().loadLabel(null)
+            NullPointerException.class,
+            () -> this.createContext().loadLabel(null)
         );
     }
 
     default void loadLabelAndCheck(final C context,
                                    final SpreadsheetLabelName labelName) {
         this.loadLabelAndCheck(
-                context,
-                labelName,
-                Optional.empty()
+            context,
+            labelName,
+            Optional.empty()
         );
     }
 
@@ -221,9 +221,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                    final SpreadsheetLabelName labelName,
                                    final SpreadsheetLabelMapping expected) {
         this.loadLabelAndCheck(
-                context,
-                labelName,
-                Optional.of(expected)
+            context,
+            labelName,
+            Optional.of(expected)
         );
     }
 
@@ -231,9 +231,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                    final SpreadsheetLabelName labelName,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
-                expected,
-                context.loadLabel(labelName),
-                () -> "loadLabel " + labelName
+            expected,
+            context.loadLabel(labelName),
+            () -> "loadLabel " + labelName
         );
     }
 
@@ -242,9 +242,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Test
     default void testSetCellWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .setCell(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .setCell(null)
         );
     }
 
@@ -253,10 +253,10 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         final C context = this.createContext();
 
         assertSame(
-                context,
-                context.setCell(
-                        context.cell()
-                )
+            context,
+            context.setCell(
+                context.cell()
+            )
         );
     }
 
@@ -264,8 +264,8 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                  final Optional<SpreadsheetCell> cell,
                                  final SpreadsheetExpressionEvaluationContext expected) {
         this.checkEquals(
-                expected,
-                context.setCell(cell)
+            expected,
+            context.setCell(cell)
         );
     }
 
@@ -274,9 +274,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Test
     default void testSetSpreadsheetMetadataWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .setSpreadsheetMetadata(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .setSpreadsheetMetadata(null)
         );
     }
 
@@ -285,17 +285,17 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         final C context = this.createContext();
         final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
         final SpreadsheetMetadata set = metadata.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SpreadsheetId.with(
-                        1L +
-                                metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
-                                        .value()
-                )
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SpreadsheetId.with(
+                1L +
+                    metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                        .value()
+            )
         );
 
         assertThrows(
-                IllegalArgumentException.class,
-                () -> context.setSpreadsheetMetadata(set)
+            IllegalArgumentException.class,
+            () -> context.setSpreadsheetMetadata(set)
         );
     }
 
@@ -304,9 +304,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     default void nextEmptyColumnAndCheck(final SpreadsheetExpressionEvaluationContext context,
                                          final SpreadsheetRowReference row) {
         this.nextEmptyColumnAndCheck(
-                context,
-                row,
-                Optional.empty()
+            context,
+            row,
+            Optional.empty()
         );
     }
 
@@ -314,9 +314,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                          final SpreadsheetRowReference row,
                                          final SpreadsheetColumnReference expected) {
         this.nextEmptyColumnAndCheck(
-                context,
-                row,
-                Optional.of(expected)
+            context,
+            row,
+            Optional.of(expected)
         );
     }
 
@@ -324,8 +324,8 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                          final SpreadsheetRowReference row,
                                          final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
-                expected,
-                context.nextEmptyColumn(row)
+            expected,
+            context.nextEmptyColumn(row)
         );
     }
 
@@ -334,9 +334,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     default void nextEmptyRowAndCheck(final SpreadsheetExpressionEvaluationContext context,
                                       final SpreadsheetColumnReference column) {
         this.nextEmptyRowAndCheck(
-                context,
-                column,
-                Optional.empty()
+            context,
+            column,
+            Optional.empty()
         );
     }
 
@@ -344,9 +344,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                       final SpreadsheetColumnReference column,
                                       final SpreadsheetRowReference expected) {
         this.nextEmptyRowAndCheck(
-                context,
-                column,
-                Optional.of(expected)
+            context,
+            column,
+            Optional.of(expected)
         );
     }
 
@@ -354,8 +354,8 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                                       final SpreadsheetColumnReference column,
                                       final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
-                expected,
-                context.nextEmptyRow(column)
+            expected,
+            context.nextEmptyRow(column)
         );
     }
 
@@ -364,9 +364,9 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Test
     default void testSpreadsheetFormatterContextWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .spreadsheetFormatterContext(null)
+            NullPointerException.class,
+            () -> this.createContext()
+                .spreadsheetFormatterContext(null)
         );
     }
 

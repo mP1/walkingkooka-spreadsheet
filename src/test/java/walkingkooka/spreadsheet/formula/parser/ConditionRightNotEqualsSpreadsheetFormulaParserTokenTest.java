@@ -33,23 +33,23 @@ public final class ConditionRightNotEqualsSpreadsheetFormulaParserTokenTest exte
         final SpreadsheetFormulaParserToken left = number("999");
 
         this.setConditionLeftAndCheck(
-                token,
-                left,
-                SpreadsheetFormulaParserToken.notEquals(
-                        Lists.of(
-                                left,
-                                token
-                        ),
-                        left.text() + token.text()
-                )
+            token,
+            left,
+            SpreadsheetFormulaParserToken.notEquals(
+                Lists.of(
+                    left,
+                    token
+                ),
+                left.text() + token.text()
+            )
         );
     }
 
     @Override
     SymbolSpreadsheetFormulaParserToken symbolParserToken() {
         return SpreadsheetFormulaParserToken.notEqualsSymbol(
-                "<>",
-                "<>"
+            "<>",
+            "<>"
         );
     }
 
@@ -57,8 +57,8 @@ public final class ConditionRightNotEqualsSpreadsheetFormulaParserTokenTest exte
     ConditionRightNotEqualsSpreadsheetFormulaParserToken createToken(final String text,
                                                                      final List<ParserToken> tokens) {
         return ConditionRightNotEqualsSpreadsheetFormulaParserToken.with(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -66,8 +66,8 @@ public final class ConditionRightNotEqualsSpreadsheetFormulaParserTokenTest exte
     public ConditionRightNotEqualsSpreadsheetFormulaParserToken unmarshall(final JsonNode json,
                                                                            final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormulaParserToken.unmarshallConditionRightNotEquals(
-                json,
-                context
+            json,
+            context
         );
     }
 

@@ -36,9 +36,9 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testWithDate() {
         final ParserToken token = this.dmyy();
         this.checkEquals(
-                token,
-                SpreadsheetPattern.dateFormatPattern(token)
-                        .value()
+            token,
+            SpreadsheetPattern.dateFormatPattern(token)
+                .value()
         );
     }
 
@@ -46,9 +46,9 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testWithDateTime() {
         final ParserToken token = this.hhmmyyyy();
         this.checkEquals(
-                token,
-                SpreadsheetPattern.dateTimeFormatPattern(token)
-                        .value()
+            token,
+            SpreadsheetPattern.dateTimeFormatPattern(token)
+                .value()
         );
     }
 
@@ -57,9 +57,9 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
         final ParserToken token = this.number();
 
         this.checkEquals(
-                token,
-                SpreadsheetPattern.numberFormatPattern(token)
-                        .value()
+            token,
+            SpreadsheetPattern.numberFormatPattern(token)
+                .value()
         );
     }
 
@@ -68,46 +68,46 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
         final ParserToken token = this.hhmm();
 
         this.checkEquals(
-                token,
-                SpreadsheetPattern.timeFormatPattern(token)
-                        .value()
+            token,
+            SpreadsheetPattern.timeFormatPattern(token)
+                .value()
         );
     }
 
     private ParserToken dmyy() {
         return SpreadsheetFormatParsers.dateFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence("dmyy"),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence("dmyy"),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     private ParserToken hhmmyyyy() {
         return SpreadsheetFormatParsers.dateTimeFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence("hhmmyyyy"),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence("hhmmyyyy"),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     private ParserToken number() {
         return SpreadsheetFormatParsers.numberParse()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence("#0.0"),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence("#0.0"),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     private ParserToken hhmm() {
         return SpreadsheetFormatParsers.timeFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence("hhmm"),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence("hhmm"),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     // spreadsheetFormatterSelector.....................................................................................
@@ -115,41 +115,41 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     @Test
     public void testSpreadsheetFormatterSelectorWhenDate() {
         this.spreadsheetFormatterSelectorAndCheck(
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
-                SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " dd/mm/yyyy"
+            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " dd/mm/yyyy"
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelectorWhenDateTime() {
         this.spreadsheetFormatterSelectorAndCheck(
-                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN + " dd/mm/yyyy hh:mm"
+            SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
+            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN + " dd/mm/yyyy hh:mm"
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelectorWhenText() {
         this.spreadsheetFormatterSelectorAndCheck(
-                SpreadsheetPattern.parseTextFormatPattern("@@"),
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN + " @@"
+            SpreadsheetPattern.parseTextFormatPattern("@@"),
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN + " @@"
         );
     }
 
     private void spreadsheetFormatterSelectorAndCheck(final SpreadsheetFormatPattern pattern,
                                                       final String expected) {
         this.spreadsheetFormatterSelectorAndCheck(
-                pattern,
-                SpreadsheetFormatterSelector.parse(expected)
+            pattern,
+            SpreadsheetFormatterSelector.parse(expected)
         );
     }
 
     private void spreadsheetFormatterSelectorAndCheck(final SpreadsheetFormatPattern pattern,
                                                       final SpreadsheetFormatterSelector expected) {
         this.checkEquals(
-                expected,
-                pattern.spreadsheetFormatterSelector(),
-                pattern::toString
+            expected,
+            pattern.spreadsheetFormatterSelector(),
+            pattern::toString
         );
     }
 

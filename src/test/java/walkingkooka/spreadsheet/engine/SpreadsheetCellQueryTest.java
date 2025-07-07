@@ -66,36 +66,36 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
-        HasTextTesting,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCellQuery>,
-        ToStringTesting<SpreadsheetCellQuery>,
-        ParseStringTesting<SpreadsheetCellQuery>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<SpreadsheetCellQuery> {
+    HasTextTesting,
+    HashCodeEqualsDefinedTesting2<SpreadsheetCellQuery>,
+    ToStringTesting<SpreadsheetCellQuery>,
+    ParseStringTesting<SpreadsheetCellQuery>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<SpreadsheetCellQuery> {
 
     // with.............................................................................................................
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellQuery.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellQuery.with(null)
         );
     }
 
     @Test
     public void testWith() {
         final SpreadsheetFormulaParserToken parserToken = SpreadsheetFormulaParserToken.text(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.textLiteral("Hello", "\"Hello\"")
-                ),
-                "\"Hello\""
+            Lists.of(
+                SpreadsheetFormulaParserToken.textLiteral("Hello", "\"Hello\"")
+            ),
+            "\"Hello\""
         );
 
         final SpreadsheetCellQuery query = SpreadsheetCellQuery.with(parserToken);
         this.checkEquals(
-                parserToken,
-                query.parserToken()
+            parserToken,
+            query.parserToken()
         );
     }
 
@@ -104,9 +104,9 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Test
     public void testSetParserTokenNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> new SpreadsheetCellQuery(textLiteral("Hello"))
-                        .setParserToken(null)
+            NullPointerException.class,
+            () -> new SpreadsheetCellQuery(textLiteral("Hello"))
+                .setParserToken(null)
         );
     }
 
@@ -114,8 +114,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     public void testSetParserTokenSame() {
         final SpreadsheetCellQuery query = new SpreadsheetCellQuery(textLiteral("Hello"));
         assertSame(
-                query,
-                query.setParserToken(query.parserToken())
+            query,
+            query.setParserToken(query.parserToken())
         );
     }
 
@@ -125,8 +125,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final SpreadsheetFormulaParserToken different = textLiteral("Different");
 
         this.checkEquals(
-                new SpreadsheetCellQuery(different),
-                query.setParserToken(different)
+            new SpreadsheetCellQuery(different),
+            query.setParserToken(different)
         );
     }
 
@@ -137,8 +137,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String text = "1+2";
 
         this.textAndCheck(
-                SpreadsheetCellQuery.parse(text),
-                text
+            SpreadsheetCellQuery.parse(text),
+            text
         );
     }
 
@@ -152,8 +152,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Test
     public void testParseInvalidExpressionFails() {
         this.parseStringFails(
-                "1+",
-                new EndOfTextException("End of text at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
+            "1+",
+            new EndOfTextException("End of text at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
 
@@ -162,19 +162,19 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String text = "111";
 
         this.parseStringAndCheck(
-                text,
-                new SpreadsheetCellQuery(
-                        numberLiteral(text)
-                )
+            text,
+            new SpreadsheetCellQuery(
+                numberLiteral(text)
+            )
         );
     }
 
     @Test
     public void testParseStringLiteralFails() {
         this.parseStringFails(
-                "'Hello",
-                new InvalidCharacterException("'Hello", 0)
-                        .appendToMessage("expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
+            "'Hello",
+            new InvalidCharacterException("'Hello", 0)
+                .appendToMessage("expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
 
@@ -183,17 +183,17 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String text = "11+22";
 
         this.parseStringAndCheck(
-                text,
-                new SpreadsheetCellQuery(
-                        SpreadsheetFormulaParserToken.addition(
-                                Lists.of(
-                                        numberLiteral("11"),
-                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                                        numberLiteral("22")
-                                ),
-                                text
-                        )
+            text,
+            new SpreadsheetCellQuery(
+                SpreadsheetFormulaParserToken.addition(
+                    Lists.of(
+                        numberLiteral("11"),
+                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                        numberLiteral("22")
+                    ),
+                    text
                 )
+            )
         );
     }
 
@@ -202,26 +202,26 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String text = "abc(111)";
 
         this.parseStringAndCheck(
-                text,
-                new SpreadsheetCellQuery(
-                        SpreadsheetFormulaParserToken.namedFunction(
-                                Lists.of(
-                                        SpreadsheetFormulaParserToken.functionName(
-                                                SpreadsheetFunctionName.with("abc"),
-                                                "abc"
-                                        ),
-                                        SpreadsheetFormulaParserToken.functionParameters(
-                                                Lists.of(
-                                                        SpreadsheetFormulaParserToken.parenthesisOpenSymbol("(", "("),
-                                                        numberLiteral("111"),
-                                                        SpreadsheetFormulaParserToken.parenthesisCloseSymbol(")", ")")
-                                                ),
-                                                "(111)"
-                                        )
-                                ),
-                                text
+            text,
+            new SpreadsheetCellQuery(
+                SpreadsheetFormulaParserToken.namedFunction(
+                    Lists.of(
+                        SpreadsheetFormulaParserToken.functionName(
+                            SpreadsheetFunctionName.with("abc"),
+                            "abc"
+                        ),
+                        SpreadsheetFormulaParserToken.functionParameters(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.parenthesisOpenSymbol("(", "("),
+                                numberLiteral("111"),
+                                SpreadsheetFormulaParserToken.parenthesisCloseSymbol(")", ")")
+                            ),
+                            "(111)"
                         )
+                    ),
+                    text
                 )
+            )
         );
     }
 
@@ -245,37 +245,37 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Test
     public void testExtractWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellQuery.extract(null)
+            NullPointerException.class,
+            () -> SpreadsheetCellQuery.extract(null)
         );
     }
 
     @Test
     public void testExtractParameterMissing() {
         this.extractAndCheck(
-                "different=1",
-                Optional.empty()
+            "different=1",
+            Optional.empty()
         );
     }
 
     @Test
     public void testExtract() {
         this.extractAndCheck(
-                "query=1*2",
-                Optional.of(
-                        SpreadsheetCellQuery.parse("1*2")
-                )
+            "query=1*2",
+            Optional.of(
+                SpreadsheetCellQuery.parse("1*2")
+            )
         );
     }
 
     private void extractAndCheck(final String text,
                                  final Optional<SpreadsheetCellQuery> expected) {
         this.extractAndCheck0(
-                Cast.to(
-                        UrlQueryString.parse(text)
-                                .parameters()
-                ),
-                expected
+            Cast.to(
+                UrlQueryString.parse(text)
+                    .parameters()
+            ),
+            expected
         );
     }
 
@@ -284,31 +284,31 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String queryString = "1*2";
 
         this.extractAndCheck0(
-                HttpRequests.get(
-                        HttpTransport.SECURED,
-                        Url.parseRelative("/path123?query=" + queryString),
-                        HttpProtocolVersion.VERSION_1_0,
-                        HttpEntity.EMPTY
-                ).routerParameters(),
-                SpreadsheetCellQuery.parse(queryString)
+            HttpRequests.get(
+                HttpTransport.SECURED,
+                Url.parseRelative("/path123?query=" + queryString),
+                HttpProtocolVersion.VERSION_1_0,
+                HttpEntity.EMPTY
+            ).routerParameters(),
+            SpreadsheetCellQuery.parse(queryString)
         );
     }
 
     private void extractAndCheck0(final Map<HttpRequestAttribute<?>, ?> parameters,
                                   final SpreadsheetCellQuery expected) {
         this.extractAndCheck0(
-                parameters,
-                Optional.of(expected)
+            parameters,
+            Optional.of(expected)
         );
     }
 
     private void extractAndCheck0(final Map<HttpRequestAttribute<?>, ?> parameters,
                                   final Optional<SpreadsheetCellQuery> expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetCellQuery.extract(
-                        parameters
-                )
+            expected,
+            SpreadsheetCellQuery.extract(
+                parameters
+            )
         );
     }
 
@@ -317,16 +317,16 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Test
     public void testEqualsDifferentParserTOken() {
         this.checkNotEquals(
-                new SpreadsheetCellQuery(
-                        textLiteral("different")
-                )
+            new SpreadsheetCellQuery(
+                textLiteral("different")
+            )
         );
     }
 
     @Override
     public SpreadsheetCellQuery createObject() {
         return new SpreadsheetCellQuery(
-                textLiteral("value123")
+            textLiteral("value123")
         );
     }
 
@@ -337,8 +337,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String text = "1+2";
 
         this.urlFragmentAndCheck(
-                SpreadsheetCellQuery.parse(text),
-                UrlFragment.parse(text)
+            SpreadsheetCellQuery.parse(text),
+            UrlFragment.parse(text)
         );
     }
 
@@ -349,8 +349,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String text = "1+2";
 
         this.toStringAndCheck(
-                SpreadsheetCellQuery.parse(text),
-                text
+            SpreadsheetCellQuery.parse(text),
+            text
         );
     }
 
@@ -360,8 +360,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     public SpreadsheetCellQuery unmarshall(final JsonNode json,
                                            final JsonNodeUnmarshallContext context) {
         return SpreadsheetCellQuery.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
@@ -381,13 +381,13 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
 
     private static SpreadsheetFormulaParserToken numberLiteral(final String number) {
         return SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.digits(
-                                number,
-                                number
-                        )
-                ),
-                number
+            Lists.of(
+                SpreadsheetFormulaParserToken.digits(
+                    number,
+                    number
+                )
+            ),
+            number
         );
     }
 
@@ -395,15 +395,15 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         final String quoted = '"' + text + '"'; // not perfect but good enuff for here
 
         return SpreadsheetFormulaParserToken.text(
-                Lists.of(
-                        SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\""),
-                        SpreadsheetFormulaParserToken.textLiteral(
-                                text,
-                                text
-                        ),
-                        SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"")
+            Lists.of(
+                SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\""),
+                SpreadsheetFormulaParserToken.textLiteral(
+                    text,
+                    text
                 ),
-                quoted
+                SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"")
+            ),
+            quoted
         );
     }
 }

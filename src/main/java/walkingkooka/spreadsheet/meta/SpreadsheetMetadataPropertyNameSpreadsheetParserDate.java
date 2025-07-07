@@ -42,8 +42,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserDate extends Spreads
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParserDate() {
         super(
-                "dateParser",
-                SpreadsheetPatternKind.DATE_PARSE_PATTERN
+            "dateParser",
+            SpreadsheetPatternKind.DATE_PARSE_PATTERN
         );
     }
 
@@ -56,7 +56,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserDate extends Spreads
     @Override
     Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale) {
         return Optional.of(
-                SpreadsheetPattern.dateParsePatternLocale(locale)
+            SpreadsheetPattern.dateParsePatternLocale(locale)
         );
     }
 }

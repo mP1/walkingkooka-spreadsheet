@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetParserContextTesting<SpreadsheetParserContextDelegatorTest.TestSpreadsheetParserContextDelegator>,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
     @Override
     public TestSpreadsheetParserContextDelegator createContext() {
@@ -45,8 +45,8 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
     }
 
     private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            DecimalNumberContexts.american(MathContext.DECIMAL32)
+        ExpressionNumberKind.BIG_DECIMAL,
+        DecimalNumberContexts.american(MathContext.DECIMAL32)
     );
 
     // DecimalNumberContextDelegator....................................................................................
@@ -68,18 +68,18 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
             final Locale locale = Locale.ENGLISH;
 
             return SpreadsheetParserContexts.basic(
-                    InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                    DateTimeContexts.basic(
-                            DateTimeSymbols.fromDateFormatSymbols(
-                                    new DateFormatSymbols(locale)
-                            ),
-                            locale,
-                            1950, // defaultYear
-                            50, // twoDigitYear
-                            LocalDateTime::now
+                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+                DateTimeContexts.basic(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
                     ),
-                    EXPRESSION_NUMBER_CONTEXT,
-                    ',' // valueSeparator
+                    locale,
+                    1950, // defaultYear
+                    50, // twoDigitYear
+                    LocalDateTime::now
+                ),
+                EXPRESSION_NUMBER_CONTEXT,
+                ',' // valueSeparator
             );
         }
 

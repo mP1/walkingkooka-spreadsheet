@@ -27,8 +27,8 @@ public final class SpreadsheetViewportNavigationSelectionSelectRowTest extends S
     @Test
     public void testHasText() {
         this.textAndCheck(
-                SpreadsheetViewportNavigationSelectionSelectRow.with(SpreadsheetSelection.parseRow("456")),
-                "select row 456"
+            SpreadsheetViewportNavigationSelectionSelectRow.with(SpreadsheetSelection.parseRow("456")),
+            "select row 456"
         );
     }
 
@@ -39,9 +39,9 @@ public final class SpreadsheetViewportNavigationSelectionSelectRowTest extends S
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("3");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(row),
-                SpreadsheetSelection.A1.setDefaultAnchor(),
-                row.setDefaultAnchor()
+            this.createSpreadsheetViewportNavigation(row),
+            SpreadsheetSelection.A1.setDefaultAnchor(),
+            row.setDefaultAnchor()
         );
     }
 
@@ -50,11 +50,11 @@ public final class SpreadsheetViewportNavigationSelectionSelectRowTest extends S
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         this.updateAndCheck(
-                this.createSpreadsheetViewportNavigation(cell.toRow()),
-                viewportRectangle(HOME)
-                        .viewport(),
-                viewportRectangle(cell.setColumn(HOME.column()))
-                        .viewport()
+            this.createSpreadsheetViewportNavigation(cell.toRow()),
+            viewportRectangle(HOME)
+                .viewport(),
+            viewportRectangle(cell.setColumn(HOME.column()))
+                .viewport()
         );
     }
 

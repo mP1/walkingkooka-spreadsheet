@@ -47,15 +47,15 @@ import java.util.Optional;
  * methods using an existing
  */
 final class BasicSpreadsheetEngineSpreadsheetEngineContext implements SpreadsheetEngineContext,
-        SpreadsheetProviderDelegator,
-        ProviderContextDelegator,
-        LocaleContextDelegator {
+    SpreadsheetProviderDelegator,
+    ProviderContextDelegator,
+    LocaleContextDelegator {
 
     static BasicSpreadsheetEngineSpreadsheetEngineContext with(final SpreadsheetEngineContext spreadsheetEngineContext,
                                                                final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext) {
         return new BasicSpreadsheetEngineSpreadsheetEngineContext(
-                spreadsheetEngineContext,
-                spreadsheetExpressionEvaluationContext
+            spreadsheetEngineContext,
+            spreadsheetExpressionEvaluationContext
         );
     }
 
@@ -75,8 +75,8 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
         return with(
-                this.spreadsheetEngineContext.spreadsheetEngineContext(functionAliases),
-                this.spreadsheetExpressionEvaluationContext
+            this.spreadsheetEngineContext.spreadsheetEngineContext(functionAliases),
+            this.spreadsheetExpressionEvaluationContext
         );
     }
 
@@ -86,8 +86,8 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                       final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetEngineContext.parseFormula(
-                formula,
-                cell
+            formula,
+            cell
         );
     }
 
@@ -100,8 +100,8 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                          final SpreadsheetExpressionReferenceLoader loader) {
         return this.spreadsheetEngineContext.spreadsheetExpressionEvaluationContext(
-                cell,
-                loader
+            cell,
+            loader
         );
     }
 
@@ -110,9 +110,9 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
                                           final Optional<Object> value,
                                           final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.spreadsheetEngineContext.formatValue(
-                cell,
-                value,
-                formatter
+            cell,
+            value,
+            formatter
         );
     }
 
@@ -120,8 +120,8 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                final Optional<SpreadsheetFormatterSelector> formatter) {
         return this.spreadsheetEngineContext.formatValueAndStyle(
-                cell,
-                formatter
+            cell,
+            formatter
         );
     }
 

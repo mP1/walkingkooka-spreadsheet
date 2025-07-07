@@ -33,7 +33,7 @@ public final class ExponentSpreadsheetFormatParserToken extends ParentSpreadshee
      */
     static ExponentSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new ExponentSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class ExponentSpreadsheetFormatParserToken extends ParentSpreadshee
     @Override
     public ExponentSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ExponentSpreadsheetFormatParserToken::with
+            this,
+            children,
+            ExponentSpreadsheetFormatParserToken::with
         );
     }
 

@@ -31,8 +31,8 @@ public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetForma
     default Optional<TextNode> format(final Optional<Object> value,
                                       final SpreadsheetFormatterContext context) {
         return this.formatSpreadsheetText(
-                value,
-                context
+            value,
+            context
         ).map(SpreadsheetText::toTextNode);
     }
 

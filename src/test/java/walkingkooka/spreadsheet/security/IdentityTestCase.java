@@ -22,7 +22,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 public abstract class IdentityTestCase<V extends Identity<I>, I extends IdentityId> implements IdentityTesting<V, I>,
-        JsonNodeMarshallingTesting<V> {
+    JsonNodeMarshallingTesting<V> {
 
     IdentityTestCase() {
         super();

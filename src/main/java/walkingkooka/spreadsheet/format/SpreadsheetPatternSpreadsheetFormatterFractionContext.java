@@ -125,14 +125,14 @@ final class SpreadsheetPatternSpreadsheetFormatterFractionContext implements Con
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .disable(ToStringBuilderOption.QUOTE)
-                .separator("")
-                .labelSeparator(this.sign.symbol())
-                .value(this.numerator)
-                .label("/")
-                .value(this.demonimator)
-                .label(" ")
-                .value(this.text)
-                .build();
+            .disable(ToStringBuilderOption.QUOTE)
+            .separator("")
+            .labelSeparator(this.sign.symbol())
+            .value(this.numerator)
+            .label("/")
+            .value(this.demonimator)
+            .label(" ")
+            .value(this.text)
+            .build();
     }
 }

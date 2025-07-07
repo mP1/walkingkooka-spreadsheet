@@ -30,84 +30,84 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
     @Test
     default void testResolveIfLabelWithNullExpressionReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetLabelNameResolver()
-                        .resolveIfLabel((ExpressionReference) null)
+            NullPointerException.class,
+            () -> this.createSpreadsheetLabelNameResolver()
+                .resolveIfLabel((ExpressionReference) null)
         );
     }
 
     @Test
     default void testResolveIfLabelWithNullSpreadsheetSelectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetLabelNameResolver()
-                        .resolveIfLabel((SpreadsheetSelection) null)
+            NullPointerException.class,
+            () -> this.createSpreadsheetLabelNameResolver()
+                .resolveIfLabel((SpreadsheetSelection) null)
         );
     }
 
     @Test
     default void testResolveIfLabelWithCell() {
         this.resolveIfLabelAndCheckSame(
-                SpreadsheetSelection.parseCell("B2")
+            SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
     default void testResolveIfLabelWithCellRange() {
         this.resolveIfLabelAndCheckSame(
-                SpreadsheetSelection.parseCellRange("C3:D4")
+            SpreadsheetSelection.parseCellRange("C3:D4")
         );
     }
 
     @Test
     default void testResolveIfLabelWithColumn() {
         this.resolveIfLabelAndCheckSame(
-                SpreadsheetSelection.parseColumn("Z")
+            SpreadsheetSelection.parseColumn("Z")
         );
     }
 
     @Test
     default void testResolveIfLabelWithColumnRange() {
         this.resolveIfLabelAndCheckSame(
-                SpreadsheetSelection.parseColumnRange("X:Y")
+            SpreadsheetSelection.parseColumnRange("X:Y")
         );
     }
 
     @Test
     default void testResolveIfLabelWithRow() {
         this.resolveIfLabelAndCheckSame(
-                SpreadsheetSelection.parseRow("2")
+            SpreadsheetSelection.parseRow("2")
         );
     }
 
     @Test
     default void testResolveIfLabelWithRowRange() {
         this.resolveIfLabelAndCheckSame(
-                SpreadsheetSelection.parseRowRange("3:4")
+            SpreadsheetSelection.parseRowRange("3:4")
         );
     }
 
     default void resolveIfLabelAndCheckSame(final SpreadsheetSelection selection) {
         this.resolveIfLabelAndCheck(
-                selection,
-                selection
+            selection,
+            selection
         );
     }
 
     default void resolveIfLabelAndCheck(final SpreadsheetSelection selection) {
         this.resolveIfLabelAndCheck(
-                this.createSpreadsheetLabelNameResolver(),
-                selection,
-                Optional.empty()
+            this.createSpreadsheetLabelNameResolver(),
+            selection,
+            Optional.empty()
         );
     }
 
     default void resolveIfLabelAndCheck(final SpreadsheetSelection selection,
                                         final SpreadsheetSelection expected) {
         this.resolveIfLabelAndCheck(
-                this.createSpreadsheetLabelNameResolver(),
-                selection,
-                expected
+            this.createSpreadsheetLabelNameResolver(),
+            selection,
+            expected
         );
     }
 
@@ -115,9 +115,9 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
                                         final SpreadsheetSelection selection,
                                         final SpreadsheetSelection expected) {
         this.resolveIfLabelAndCheck(
-                resolver,
-                selection,
-                Optional.of(expected)
+            resolver,
+            selection,
+            Optional.of(expected)
         );
     }
 
@@ -125,18 +125,18 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
                                         final SpreadsheetSelection selection,
                                         final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                resolver.resolveIfLabel(selection),
-                () -> "resolveIfLabel " + selection
+            expected,
+            resolver.resolveIfLabel(selection),
+            () -> "resolveIfLabel " + selection
         );
     }
 
     default void resolveIfLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
                                         final SpreadsheetSelection selection) {
         this.resolveIfLabelAndCheck(
-                resolver,
-                selection,
-                Optional.empty()
+            resolver,
+            selection,
+            Optional.empty()
         );
     }
 
@@ -145,33 +145,33 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
     @Test
     default void testResolveLabelWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetLabelNameResolver()
-                        .resolveLabel(null)
+            NullPointerException.class,
+            () -> this.createSpreadsheetLabelNameResolver()
+                .resolveLabel(null)
         );
     }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelName labelName) {
         this.resolveLabelAndCheck(
-                labelName,
-                Optional.empty()
+            labelName,
+            Optional.empty()
         );
     }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
                                       final SpreadsheetSelection expected) {
         this.resolveLabelAndCheck(
-                labelName,
-                Optional.of(expected)
+            labelName,
+            Optional.of(expected)
         );
     }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
                                       final Optional<SpreadsheetSelection> expected) {
         this.resolveLabelAndCheck(
-                this.createSpreadsheetLabelNameResolver(),
-                labelName,
-                expected
+            this.createSpreadsheetLabelNameResolver(),
+            labelName,
+            expected
         );
     }
 
@@ -179,18 +179,18 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
                                       final String labelName,
                                       final SpreadsheetSelection expected) {
         this.resolveLabelAndCheck(
-                resolver,
-                SpreadsheetSelection.labelName(labelName),
-                expected
+            resolver,
+            SpreadsheetSelection.labelName(labelName),
+            expected
         );
     }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
                                       final SpreadsheetLabelName labelName) {
         this.resolveLabelAndCheck(
-                resolver,
-                labelName,
-                Optional.empty()
+            resolver,
+            labelName,
+            Optional.empty()
         );
     }
 
@@ -198,9 +198,9 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
                                       final SpreadsheetLabelName labelName,
                                       final SpreadsheetSelection expected) {
         this.resolveLabelAndCheck(
-                resolver,
-                labelName,
-                Optional.of(expected)
+            resolver,
+            labelName,
+            Optional.of(expected)
         );
     }
 
@@ -208,9 +208,9 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
                                       final SpreadsheetLabelName labelName,
                                       final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                resolver.resolveLabel(labelName),
-                () -> "resolveLabel " + labelName
+            expected,
+            resolver.resolveLabel(labelName),
+            () -> "resolveLabel " + labelName
         );
     }
 

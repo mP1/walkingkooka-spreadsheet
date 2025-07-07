@@ -44,10 +44,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetReferenceTesting,
-        HashCodeEqualsDefinedTesting2<SpreadsheetImporterCellValue>,
-        ToStringTesting<SpreadsheetImporterCellValue>,
-        TreePrintableTesting,
-        ClassTesting2<SpreadsheetImporterCellValue> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetImporterCellValue>,
+    ToStringTesting<SpreadsheetImporterCellValue>,
+    TreePrintableTesting,
+    ClassTesting2<SpreadsheetImporterCellValue> {
 
     private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.A1;
 
@@ -56,8 +56,8 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testCellWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.cell(null)
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.cell(null)
         );
     }
 
@@ -66,9 +66,9 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
 
         this.check(
-                SpreadsheetImporterCellValue.cell(cell),
-                cell.reference(),
-                cell
+            SpreadsheetImporterCellValue.cell(cell),
+            cell.reference(),
+            cell
         );
     }
 
@@ -77,22 +77,22 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testFormulaWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.formula(
-                        null,
-                        SpreadsheetFormula.EMPTY
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formula(
+                null,
+                SpreadsheetFormula.EMPTY
+            )
         );
     }
 
     @Test
     public void testFormulaWithNullFormulaFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.formula(
-                        SpreadsheetSelection.A1,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formula(
+                SpreadsheetSelection.A1,
+                null
+            )
         );
     }
 
@@ -101,11 +101,11 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
         this.check(
-                SpreadsheetImporterCellValue.formula(
-                        CELL_REFERENCE,
-                        formula
-                ),
+            SpreadsheetImporterCellValue.formula(
+                CELL_REFERENCE,
                 formula
+            ),
+            formula
         );
     }
 
@@ -114,39 +114,39 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testFormatterWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.formatter(
-                        null,
-                        OptionalSpreadsheetFormatterSelector.EMPTY
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formatter(
+                null,
+                OptionalSpreadsheetFormatterSelector.EMPTY
+            )
         );
     }
 
     @Test
     public void testFormatterWithNullFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.formatter(
-                        SpreadsheetSelection.A1,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formatter(
+                SpreadsheetSelection.A1,
+                null
+            )
         );
     }
 
     @Test
     public void testFormatter() {
         final OptionalSpreadsheetFormatterSelector formatter = OptionalSpreadsheetFormatterSelector.with(
-                Optional.of(
-                        SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
-                )
+            Optional.of(
+                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+            )
         );
 
         this.check(
-                SpreadsheetImporterCellValue.formatter(
-                        CELL_REFERENCE,
-                        formatter
-                ),
+            SpreadsheetImporterCellValue.formatter(
+                CELL_REFERENCE,
                 formatter
+            ),
+            formatter
         );
     }
 
@@ -155,39 +155,39 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testParserWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.parser(
-                        null,
-                        OptionalSpreadsheetParserSelector.EMPTY
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.parser(
+                null,
+                OptionalSpreadsheetParserSelector.EMPTY
+            )
         );
     }
 
     @Test
     public void testParserWithNullParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.parser(
-                        SpreadsheetSelection.A1,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.parser(
+                SpreadsheetSelection.A1,
+                null
+            )
         );
     }
 
     @Test
     public void testParser() {
         final OptionalSpreadsheetParserSelector parser = OptionalSpreadsheetParserSelector.with(
-                Optional.of(
-                        SpreadsheetParserSelector.parse("test-parser")
-                )
+            Optional.of(
+                SpreadsheetParserSelector.parse("test-parser")
+            )
         );
 
         this.check(
-                SpreadsheetImporterCellValue.parser(
-                        CELL_REFERENCE,
-                        parser
-                ),
+            SpreadsheetImporterCellValue.parser(
+                CELL_REFERENCE,
                 parser
+            ),
+            parser
         );
     }
 
@@ -196,41 +196,41 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testTextStyleWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.textStyle(
-                        null,
-                        TextStyle.EMPTY.set(
-                                TextStylePropertyName.COLOR,
-                                Color.BLACK
-                        )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.textStyle(
+                null,
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.COLOR,
+                    Color.BLACK
                 )
+            )
         );
     }
 
     @Test
     public void testTextStyleWithNullStyleFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.textStyle(
-                        SpreadsheetSelection.A1,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.textStyle(
+                SpreadsheetSelection.A1,
+                null
+            )
         );
     }
 
     @Test
     public void testTextStyle() {
         final TextStyle textStyle = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
         this.check(
-                SpreadsheetImporterCellValue.textStyle(
-                        CELL_REFERENCE,
-                        textStyle
-                ),
+            SpreadsheetImporterCellValue.textStyle(
+                CELL_REFERENCE,
                 textStyle
+            ),
+            textStyle
         );
     }
 
@@ -239,39 +239,39 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testValueWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.value(
-                        null,
-                        OptionalSpreadsheetValue.EMPTY
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.value(
+                null,
+                OptionalSpreadsheetValue.EMPTY
+            )
         );
     }
 
     @Test
     public void testValueWithNullValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.value(
-                        SpreadsheetSelection.A1,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.value(
+                SpreadsheetSelection.A1,
+                null
+            )
         );
     }
 
     @Test
     public void testValue() {
         final OptionalSpreadsheetValue<?> value = OptionalSpreadsheetValue.with(
-                Optional.of(
-                        "Hello"
-                )
+            Optional.of(
+                "Hello"
+            )
         );
 
         this.check(
-                SpreadsheetImporterCellValue.value(
-                        CELL_REFERENCE,
-                        value
-                ),
+            SpreadsheetImporterCellValue.value(
+                CELL_REFERENCE,
                 value
+            ),
+            value
         );
     }
 
@@ -280,48 +280,48 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testFormattedValueWithNullCellFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.formattedValue(
-                        null,
-                        OptionalTextNode.EMPTY
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formattedValue(
+                null,
+                OptionalTextNode.EMPTY
+            )
         );
     }
 
     @Test
     public void testFormattedValueWithNullFormattedValueFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetImporterCellValue.formattedValue(
-                        SpreadsheetSelection.A1,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formattedValue(
+                SpreadsheetSelection.A1,
+                null
+            )
         );
     }
 
     @Test
     public void testFormattedValue() {
         final OptionalTextNode formattedValue = OptionalTextNode.with(
-                Optional.of(
-                        TextNode.text("Hello")
-                )
+            Optional.of(
+                TextNode.text("Hello")
+            )
         );
 
         this.check(
-                SpreadsheetImporterCellValue.formattedValue(
-                        CELL_REFERENCE,
-                        formattedValue
-                ),
+            SpreadsheetImporterCellValue.formattedValue(
+                CELL_REFERENCE,
                 formattedValue
+            ),
+            formattedValue
         );
     }
 
     private void check(final SpreadsheetImporterCellValue importCellValue,
                        final Object value) {
         this.check(
-                importCellValue,
-                CELL_REFERENCE,
-                value
+            importCellValue,
+            CELL_REFERENCE,
+            value
         );
     }
 
@@ -329,13 +329,13 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
                        final SpreadsheetCellReference reference,
                        final Object value) {
         this.referenceAndCheck(
-                importCellValue,
-                reference
+            importCellValue,
+            reference
         );
         this.checkEquals(
-                value,
-                importCellValue.value(),
-                "value"
+            value,
+            importCellValue.value(),
+            "value"
         );
     }
 
@@ -344,19 +344,19 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testEqualsDifferentValue() {
         this.checkNotEquals(
-                SpreadsheetImporterCellValue.formula(
-                        CELL_REFERENCE,
-                        SpreadsheetFormula.EMPTY.setText("=123+456")
-                )
+            SpreadsheetImporterCellValue.formula(
+                CELL_REFERENCE,
+                SpreadsheetFormula.EMPTY.setText("=123+456")
+            )
         );
     }
 
     @Override
     public SpreadsheetImporterCellValue createObject() {
         return SpreadsheetImporterCellValue.cell(
-                CELL_REFERENCE.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=123+456")
-                )
+            CELL_REFERENCE.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=123+456")
+            )
         );
     }
 
@@ -365,12 +365,12 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetImporterCellValue.cell(
-                        CELL_REFERENCE.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=123+456")
-                        )
-                ),
-                "A1=A1 =123+456"
+            SpreadsheetImporterCellValue.cell(
+                CELL_REFERENCE.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=123+456")
+                )
+            ),
+            "A1=A1 =123+456"
         );
     }
 
@@ -379,30 +379,30 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testTreePrintableCell() {
         this.treePrintAndCheck(
-                SpreadsheetImporterCellValue.cell(
-                        CELL_REFERENCE.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=123+456")
-                        )
-                ),
-                "A1\n" +
-                        "  Cell A1\n" +
-                        "    Formula\n" +
-                        "      text:\n" +
-                        "        \"=123+456\"\n"
+            SpreadsheetImporterCellValue.cell(
+                CELL_REFERENCE.setFormula(
+                    SpreadsheetFormula.EMPTY.setText("=123+456")
+                )
+            ),
+            "A1\n" +
+                "  Cell A1\n" +
+                "    Formula\n" +
+                "      text:\n" +
+                "        \"=123+456\"\n"
         );
     }
 
     @Test
     public void testTreePrintableFormula() {
         this.treePrintAndCheck(
-                SpreadsheetImporterCellValue.formula(
-                        CELL_REFERENCE,
-                        SpreadsheetFormula.EMPTY.setText("=123+456")
-                ),
-                "A1\n" +
-                        "  Formula\n" +
-                        "    text:\n" +
-                        "      \"=123+456\"\n"
+            SpreadsheetImporterCellValue.formula(
+                CELL_REFERENCE,
+                SpreadsheetFormula.EMPTY.setText("=123+456")
+            ),
+            "A1\n" +
+                "  Formula\n" +
+                "    text:\n" +
+                "      \"=123+456\"\n"
         );
     }
 

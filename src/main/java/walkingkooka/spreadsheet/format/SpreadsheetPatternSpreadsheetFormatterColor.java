@@ -40,16 +40,16 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
         Objects.requireNonNull(formatter, "formatter");
 
         return new SpreadsheetPatternSpreadsheetFormatterColor(token,
-                formatter instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
-                        unwrap(Cast.to(formatter)) :
-                        formatter);
+            formatter instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
+                unwrap(Cast.to(formatter)) :
+                formatter);
     }
 
     private static SpreadsheetPatternSpreadsheetFormatter unwrap(final SpreadsheetPatternSpreadsheetFormatterColor formatter) {
         final SpreadsheetPatternSpreadsheetFormatter wrapped = formatter.formatter;
         return wrapped instanceof SpreadsheetPatternSpreadsheetFormatterColor ?
-                unwrap(Cast.to(wrapped)) :
-                wrapped;
+            unwrap(Cast.to(wrapped)) :
+            wrapped;
     }
 
     /**
@@ -71,8 +71,8 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         return this.formatter.formatSpreadsheetText(
-                value,
-                context
+            value,
+            context
         ).map(t -> t.setColor(this.color(context)));
     }
 
@@ -115,12 +115,12 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterColor && this.equals0((SpreadsheetPatternSpreadsheetFormatterColor) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterColor && this.equals0((SpreadsheetPatternSpreadsheetFormatterColor) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterColor other) {
         return this.sourceValue.equals(other.sourceValue) &&
-                this.formatter.equals(other.formatter);
+            this.formatter.equals(other.formatter);
     }
 
     @Override

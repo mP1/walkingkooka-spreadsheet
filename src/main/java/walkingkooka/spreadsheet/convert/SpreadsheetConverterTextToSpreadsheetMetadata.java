@@ -43,10 +43,10 @@ final class SpreadsheetConverterTextToSpreadsheetMetadata extends SpreadsheetCon
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
         return SpreadsheetMetadata.class == type || type.getSuperclass() == SpreadsheetMetadata.class &&
-                context.canConvert(
-                        value,
-                        JsonNode.class
-                );
+            context.canConvert(
+                value,
+                JsonNode.class
+            );
     }
 
     @Override
@@ -54,11 +54,11 @@ final class SpreadsheetConverterTextToSpreadsheetMetadata extends SpreadsheetCon
                             final Class<?> type,
                             final SpreadsheetConverterContext context) {
         return context.convertOrFail(
-                context.convertOrFail(
-                        value,
-                        JsonNode.class
-                ),
-                SpreadsheetMetadata.class
+            context.convertOrFail(
+                value,
+                JsonNode.class
+            ),
+            SpreadsheetMetadata.class
         );
     }
 

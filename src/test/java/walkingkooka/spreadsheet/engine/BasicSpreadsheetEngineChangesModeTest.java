@@ -22,7 +22,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
 public final class BasicSpreadsheetEngineChangesModeTest implements ClassTesting<BasicSpreadsheetEngineChangesMode>,
-        TypeNameTesting<BasicSpreadsheetEngineChangesMode> {
+    TypeNameTesting<BasicSpreadsheetEngineChangesMode> {
 
     @Override
     public Class<BasicSpreadsheetEngineChangesMode> type() {

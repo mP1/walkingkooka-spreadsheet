@@ -37,8 +37,8 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                Optional.empty(),
-                ""
+            Optional.empty(),
+            ""
         );
     }
 
@@ -46,24 +46,24 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     public void testFormatText() {
         final String text = "abc123";
         this.formatAndCheck(
-                text,
-                text
+            text,
+            text
         );
     }
 
     @Test
     public void testFormatBigDecimal() {
         this.formatAndCheck(
-                BIG_DECIMAL,
-                BIGDECIMAL_STRING
+            BIG_DECIMAL,
+            BIGDECIMAL_STRING
         );
     }
 
     @Test
     public void testFormatLocalDateTime() {
         this.formatAndCheck(
-                LOCAL_DATE_TIME,
-                LOCAL_DATE_TIME_STRING
+            LOCAL_DATE_TIME,
+            LOCAL_DATE_TIME_STRING
         );
     }
 
@@ -124,7 +124,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
             @Override
             public boolean canConvert(final Object value, final Class<?> target) {
                 return (value instanceof BigDecimal && BigDecimal.class == target) ||
-                        (value instanceof LocalDateTime && LocalDateTime.class == target);
+                    (value instanceof LocalDateTime && LocalDateTime.class == target);
             }
 
             @Override
@@ -133,14 +133,14 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
                 if (BigDecimal.class == target) {
                     if (value instanceof BigDecimal) {
                         return this.successfulConversion(
-                                target.cast(value),
-                                target
+                            target.cast(value),
+                            target
                         );
                     }
                     if (value instanceof LocalDateTime) {
                         return this.successfulConversion(
-                                target.cast(LOCAL_DATE_TIME_BIGDECIMAL),
-                                target
+                            target.cast(LOCAL_DATE_TIME_BIGDECIMAL),
+                            target
                         );
                     }
                 }
@@ -161,17 +161,17 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
                     return this.formattedText(LOCAL_DATE_TIME_STRING);
                 }
                 return this.formattedText(
-                        (String)valueOrNull
+                    (String) valueOrNull
                 );
             }
 
             private Optional<TextNode> formattedText(final String text) {
                 return Optional.of(
-                        SpreadsheetText.with(
-                                null == text ?
-                                        "" :
-                                        text
-                        ).toTextNode()
+                    SpreadsheetText.with(
+                        null == text ?
+                            "" :
+                            text
+                    ).toTextNode()
                 );
             }
         };
@@ -182,8 +182,8 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createFormatter(),
-                "format"
+            this.createFormatter(),
+            "format"
         );
     }
 

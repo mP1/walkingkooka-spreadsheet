@@ -29,7 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias, SpreadsheetFormatterAliasSet>,
-        ClassTesting<SpreadsheetFormatterInfoSet> {
+    ClassTesting<SpreadsheetFormatterInfoSet> {
 
     // immutable set....................................................................................................
 
@@ -38,8 +38,8 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
         final SpreadsheetFormatterInfoSet set = this.createSet();
 
         assertSame(
-                set,
-                Sets.immutable(set)
+            set,
+            Sets.immutable(set)
         );
     }
 
@@ -60,14 +60,14 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     @Override
     public SpreadsheetFormatterInfoSet createSet() {
         return SpreadsheetFormatterProviders.spreadsheetFormatters()
-                .spreadsheetFormatterInfos();
+            .spreadsheetFormatterInfos();
     }
 
     @Override
     public SpreadsheetFormatterInfo info() {
         return SpreadsheetFormatterInfo.with(
-                Url.parseAbsolute("https://example.com/test1"),
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
+            Url.parseAbsolute("https://example.com/test1"),
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
         );
     }
 
@@ -88,27 +88,27 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                SpreadsheetFormatterInfoSet.EMPTY,
-                JsonNode.array()
+            SpreadsheetFormatterInfoSet.EMPTY,
+            JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty2() {
         final SpreadsheetFormatterInfoSet set = SpreadsheetFormatterInfoSet.with(
-                Sets.of(
-                        SpreadsheetFormatterInfo.with(
-                                Url.parseAbsolute("https://example.com/test123"),
-                                SpreadsheetFormatterName.with("test123")
-                        )
+            Sets.of(
+                SpreadsheetFormatterInfo.with(
+                    Url.parseAbsolute("https://example.com/test123"),
+                    SpreadsheetFormatterName.with("test123")
                 )
+            )
         );
 
         this.marshallAndCheck(
-                set,
-                "[\n" +
-                        "  \"https://example.com/test123 test123\"\n" +
-                        "]"
+            set,
+            "[\n" +
+                "  \"https://example.com/test123 test123\"\n" +
+                "]"
         );
     }
 
@@ -118,24 +118,24 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     public SpreadsheetFormatterInfoSet unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatterInfoSet.unmarshall(
-                node,
-                context
+            node,
+            context
         );
     }
 
     @Override
     public SpreadsheetFormatterInfoSet createJsonNodeMarshallingValue() {
         return SpreadsheetFormatterInfoSet.with(
-                Sets.of(
-                        SpreadsheetFormatterInfo.with(
-                                Url.parseAbsolute("https://example.com/test111"),
-                                SpreadsheetFormatterName.with("test111")
-                        ),
-                        SpreadsheetFormatterInfo.with(
-                                Url.parseAbsolute("https://example.com/test222"),
-                                SpreadsheetFormatterName.with("test222")
-                        )
+            Sets.of(
+                SpreadsheetFormatterInfo.with(
+                    Url.parseAbsolute("https://example.com/test111"),
+                    SpreadsheetFormatterName.with("test111")
+                ),
+                SpreadsheetFormatterInfo.with(
+                    Url.parseAbsolute("https://example.com/test222"),
+                    SpreadsheetFormatterName.with("test222")
                 )
+            )
         );
     }
 

@@ -32,80 +32,80 @@ import walkingkooka.validation.form.FormHandlerContexts;
 import java.util.Optional;
 
 public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToExpression>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertEmptyString() {
         this.convertFails(
-                SpreadsheetConverterTextToExpression.INSTANCE,
-                "",
-                Expression.class,
-                this.createContext(),
-                "Empty \"text\""
+            SpreadsheetConverterTextToExpression.INSTANCE,
+            "",
+            Expression.class,
+            this.createContext(),
+            "Empty \"text\""
         );
     }
 
     @Test
     public void testConvertInvalidExpression() {
         this.convertFails(
-                SpreadsheetConverterTextToExpression.INSTANCE,
-                "1+xyz(",
-                Expression.class,
-                this.createContext(),
-                "Invalid character \'(\' at 5"
+            SpreadsheetConverterTextToExpression.INSTANCE,
+            "1+xyz(",
+            Expression.class,
+            this.createContext(),
+            "Invalid character \'(\' at 5"
         );
     }
 
     @Test
     public void testConvertAddExpression() {
         this.convertStringAndEvaluateExpression(
-                "1+2.5",
-                EXPRESSION_NUMBER_KIND.create(1 + 2.5)
+            "1+2.5",
+            EXPRESSION_NUMBER_KIND.create(1 + 2.5)
         );
     }
 
     @Test
     public void testConvertAddExpressionWithStringBuilder() {
         this.convertStringAndEvaluateExpression(
-                new StringBuilder("1+2.5"),
-                EXPRESSION_NUMBER_KIND.create(1 + 2.5)
+            new StringBuilder("1+2.5"),
+            EXPRESSION_NUMBER_KIND.create(1 + 2.5)
         );
     }
 
     @Test
     public void testConvertComplexExpression() {
         this.convertStringAndEvaluateExpression(
-                "1+2*3",
-                EXPRESSION_NUMBER_KIND.create(1 + 2 * 3)
+            "1+2*3",
+            EXPRESSION_NUMBER_KIND.create(1 + 2 * 3)
         );
     }
 
     private void convertStringAndEvaluateExpression(final CharSequence string,
                                                     final Object expected) {
         final Expression expression = this.convert(
-                string,
-                Expression.class
+            string,
+            Expression.class
         ).leftValue();
 
         this.checkEquals(
-                expected,
-                expression.toValue(
-                        SpreadsheetExpressionEvaluationContexts.basic(
-                                Optional.empty(), // cell
-                                SpreadsheetExpressionReferenceLoaders.fake(),
-                                Url.parseAbsolute("https://example.com"), // serverUrl
-                                METADATA_EN_AU,
-                                SpreadsheetStoreRepositories.fake(),
-                                SPREADSHEET_FORMATTER_CONTEXT,
-                                (Optional<SpreadsheetCell> c) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                FormHandlerContexts.fake(),
-                                ExpressionFunctionProviders.fake(),
-                                LOCALE_CONTEXT,
-                                ProviderContexts.fake()
-                        )
+            expected,
+            expression.toValue(
+                SpreadsheetExpressionEvaluationContexts.basic(
+                    Optional.empty(), // cell
+                    SpreadsheetExpressionReferenceLoaders.fake(),
+                    Url.parseAbsolute("https://example.com"), // serverUrl
+                    METADATA_EN_AU,
+                    SpreadsheetStoreRepositories.fake(),
+                    SPREADSHEET_FORMATTER_CONTEXT,
+                    (Optional<SpreadsheetCell> c) -> {
+                        throw new UnsupportedOperationException();
+                    },
+                    FormHandlerContexts.fake(),
+                    ExpressionFunctionProviders.fake(),
+                    LOCALE_CONTEXT,
+                    ProviderContexts.fake()
                 )
+            )
         );
     }
 
@@ -124,8 +124,8 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterTextToExpression.INSTANCE,
-                "String to Expression"
+            SpreadsheetConverterTextToExpression.INSTANCE,
+            "String to Expression"
         );
     }
 

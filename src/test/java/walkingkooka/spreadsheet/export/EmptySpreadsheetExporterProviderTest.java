@@ -30,17 +30,17 @@ public final class EmptySpreadsheetExporterProviderTest implements SpreadsheetEx
     @Test
     public void testSpreadsheetExporterSelectorFails() {
         this.spreadsheetExporterFails(
-                SpreadsheetExporterSelector.parse("Test123"),
-                CONTEXT
+            SpreadsheetExporterSelector.parse("Test123"),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameFails() {
         this.spreadsheetExporterFails(
-                SpreadsheetExporterName.with("Test123"),
-                Lists.empty(),
-                CONTEXT
+            SpreadsheetExporterName.with("Test123"),
+            Lists.empty(),
+            CONTEXT
         );
     }
 

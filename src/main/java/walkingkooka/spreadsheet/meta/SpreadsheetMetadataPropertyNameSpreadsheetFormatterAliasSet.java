@@ -34,21 +34,18 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet exten
         super(name);
     }
 
-    @Override
-    final SpreadsheetFormatterAliasSet checkValueNonNull(final Object value) {
+    @Override final SpreadsheetFormatterAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof SpreadsheetFormatterAliasSet
+            value,
+            v -> v instanceof SpreadsheetFormatterAliasSet
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return SpreadsheetFormatterAliasSet.class.getSimpleName();
     }
 
-    @Override
-    final Optional<SpreadsheetFormatterAliasSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<SpreadsheetFormatterAliasSet> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 
@@ -59,8 +56,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet exten
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final SpreadsheetFormatterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final SpreadsheetFormatterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetFormatterAliasSet.parse(value);
     }
 }

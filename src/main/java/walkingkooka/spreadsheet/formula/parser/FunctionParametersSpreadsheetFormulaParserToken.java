@@ -31,8 +31,8 @@ public final class FunctionParametersSpreadsheetFormulaParserToken extends Paren
     static FunctionParametersSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                                 final String text) {
         return new FunctionParametersSpreadsheetFormulaParserToken(
-                copyAndCheckTokens(value),
-                checkText(text)
+            copyAndCheckTokens(value),
+            checkText(text)
         );
     }
 
@@ -54,9 +54,9 @@ public final class FunctionParametersSpreadsheetFormulaParserToken extends Paren
     @Override
     public FunctionParametersSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                FunctionParametersSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            FunctionParametersSpreadsheetFormulaParserToken::with
         );
     }
 

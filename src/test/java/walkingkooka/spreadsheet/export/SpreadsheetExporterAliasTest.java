@@ -32,11 +32,11 @@ public final class SpreadsheetExporterAliasTest implements PluginAliasLikeTestin
     private final static SpreadsheetExporterName NAME = SpreadsheetExporterName.with("Hello");
 
     private final static Optional<SpreadsheetExporterSelector> SELECTOR = Optional.of(
-            SpreadsheetExporterSelector.parse("exporter123")
+        SpreadsheetExporterSelector.parse("exporter123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-            Url.parseAbsolute("https://example.com/exporter123")
+        Url.parseAbsolute("https://example.com/exporter123")
     );
 
     // with.............................................................................................................
@@ -44,36 +44,36 @@ public final class SpreadsheetExporterAliasTest implements PluginAliasLikeTestin
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetExporterAlias.with(
-                        null,
-                        SELECTOR,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetExporterAlias.with(
+                null,
+                SELECTOR,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetExporterAlias.with(
-                        NAME,
-                        null,
-                        URL
-                )
+            NullPointerException.class,
+            () -> SpreadsheetExporterAlias.with(
+                NAME,
+                null,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetExporterAlias.with(
-                        NAME,
-                        SELECTOR,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetExporterAlias.with(
+                NAME,
+                SELECTOR,
+                null
+            )
         );
     }
 
@@ -82,9 +82,9 @@ public final class SpreadsheetExporterAliasTest implements PluginAliasLikeTestin
     @Override
     public SpreadsheetExporterAlias createComparable() {
         return SpreadsheetExporterAlias.with(
-                NAME,
-                SELECTOR,
-                URL
+            NAME,
+            SELECTOR,
+            URL
         );
     }
 
@@ -93,16 +93,16 @@ public final class SpreadsheetExporterAliasTest implements PluginAliasLikeTestin
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "alias1 name1 https://example.com",
-                SpreadsheetExporterAlias.with(
-                        SpreadsheetExporterName.with("alias1"),
-                        Optional.of(
-                                SpreadsheetExporterSelector.parse("name1")
-                        ),
-                        Optional.of(
-                                Url.parseAbsolute("https://example.com")
-                        )
+            "alias1 name1 https://example.com",
+            SpreadsheetExporterAlias.with(
+                SpreadsheetExporterName.with("alias1"),
+                Optional.of(
+                    SpreadsheetExporterSelector.parse("name1")
+                ),
+                Optional.of(
+                    Url.parseAbsolute("https://example.com")
                 )
+            )
         );
     }
 

@@ -32,8 +32,8 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
     static AliasesSpreadsheetImporterProvider with(final SpreadsheetImporterAliasSet aliases,
                                                    final SpreadsheetImporterProvider provider) {
         return new AliasesSpreadsheetImporterProvider(
-                Objects.requireNonNull(aliases, "aliases"),
-                Objects.requireNonNull(provider, "provider")
+            Objects.requireNonNull(aliases, "aliases"),
+            Objects.requireNonNull(provider, "provider")
         );
     }
 
@@ -49,8 +49,8 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {
         return this.provider.spreadsheetImporter(
-                this.aliases.selector(selector),
-                context
+            this.aliases.selector(selector),
+            context
         );
     }
 
@@ -74,15 +74,15 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
             }
             // assumes that $provider caches selectors to function
             importer = provider.spreadsheetImporter(
-                    selector.get(),
-                    context
+                selector.get(),
+                context
             );
         } else {
             importer = provider.spreadsheetImporter(
-                    aliases.aliasOrName(name)
-                            .orElseThrow(() -> new IllegalArgumentException("Unknown importer " + name)),
-                    values,
-                    context
+                aliases.aliasOrName(name)
+                    .orElseThrow(() -> new IllegalArgumentException("Unknown importer " + name)),
+                values,
+                context
             );
         }
 

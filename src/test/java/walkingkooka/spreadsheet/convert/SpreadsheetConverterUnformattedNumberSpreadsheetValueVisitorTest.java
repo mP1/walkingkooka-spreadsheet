@@ -39,98 +39,98 @@ public final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitorT
     @Test
     public void testNull() {
         this.convertToStringAndCheck(
-                null
+            null
         );
     }
 
     @Test
     public void testBigDecimal() {
         this.convertToStringAndCheck(
-                BigDecimal.valueOf(12.5),
-                "12.5"
+            BigDecimal.valueOf(12.5),
+            "12.5"
         );
     }
 
     @Test
     public void testBigInteger() {
         this.convertToStringAndCheck(
-                BigInteger.valueOf(125),
-                "125"
+            BigInteger.valueOf(125),
+            "125"
         );
     }
 
     @Test
     public void testByte() {
         this.convertToStringAndCheck(
-                Byte.MAX_VALUE,
-                "127"
+            Byte.MAX_VALUE,
+            "127"
         );
     }
 
     @Test
     public void testCell() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseCell("$A$1")
+            SpreadsheetSelection.parseCell("$A$1")
         );
     }
 
     @Test
     public void testCellRange() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseCellRange("$A$1:B2")
+            SpreadsheetSelection.parseCellRange("$A$1:B2")
         );
     }
 
     @Test
     public void testCharacter() {
         this.convertToStringAndCheck(
-                'A'
+            'A'
         );
     }
 
     @Test
     public void testColumn() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseColumn("$A")
+            SpreadsheetSelection.parseColumn("$A")
         );
     }
 
     @Test
     public void testColumnRange() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseColumnRange("$B:C")
+            SpreadsheetSelection.parseColumnRange("$B:C")
         );
     }
 
     @Test
     public void testDouble() {
         this.convertToStringAndCheck(
-                12.5,
-                "12.5"
+            12.5,
+            "12.5"
         );
     }
 
     @Test
     public void testExpressionNumber() {
         this.convertToStringAndCheck(
-                ExpressionNumberKind.BIG_DECIMAL.create(34.5),
-                "34.5"
+            ExpressionNumberKind.BIG_DECIMAL.create(34.5),
+            "34.5"
         );
     }
 
     @Test
     public void testFloat() {
         this.convertToStringAndCheck(
-                12.5f,
-                "12.5"
+            12.5f,
+            "12.5"
         );
     }
 
     @Test
     public void testInt() {
         this.convertToStringAndCheck(
-                12,
-                "12"
+            12,
+            "12"
         );
     }
 
@@ -140,19 +140,19 @@ public final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitorT
         final String expected = "1999/12/31";
 
         this.convertToStringAndCheck(
-                value,
-                new FakeExpressionEvaluationContext() {
-                    @Override
-                    public <T> Either<T, String> convert(final Object v,
-                                                         final Class<T> target) {
-                        checkEquals(value, v);
-                        return this.successfulConversion(
-                                expected,
-                                target
-                        );
-                    }
-                },
-                expected
+            value,
+            new FakeExpressionEvaluationContext() {
+                @Override
+                public <T> Either<T, String> convert(final Object v,
+                                                     final Class<T> target) {
+                    checkEquals(value, v);
+                    return this.successfulConversion(
+                        expected,
+                        target
+                    );
+                }
+            },
+            expected
         );
     }
 
@@ -163,19 +163,19 @@ public final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitorT
         final String expected = "1999/12/31 12/58/59";
 
         this.convertToStringAndCheck(
-                value,
-                new FakeExpressionEvaluationContext() {
-                    @Override
-                    public <T> Either<T, String> convert(final Object v,
-                                                         final Class<T> target) {
-                        checkEquals(value, v);
-                        return this.successfulConversion(
-                                expected,
-                                target
-                        );
-                    }
-                },
-                expected
+            value,
+            new FakeExpressionEvaluationContext() {
+                @Override
+                public <T> Either<T, String> convert(final Object v,
+                                                     final Class<T> target) {
+                    checkEquals(value, v);
+                    return this.successfulConversion(
+                        expected,
+                        target
+                    );
+                }
+            },
+            expected
         );
     }
 
@@ -185,63 +185,63 @@ public final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitorT
         final String expected = "12/58/59";
 
         this.convertToStringAndCheck(
-                value,
-                new FakeExpressionEvaluationContext() {
-                    @Override
-                    public <T> Either<T, String> convert(final Object v,
-                                                         final Class<T> target) {
-                        checkEquals(value, v);
-                        return this.successfulConversion(
-                                expected,
-                                target
-                        );
-                    }
-                },
-                expected
+            value,
+            new FakeExpressionEvaluationContext() {
+                @Override
+                public <T> Either<T, String> convert(final Object v,
+                                                     final Class<T> target) {
+                    checkEquals(value, v);
+                    return this.successfulConversion(
+                        expected,
+                        target
+                    );
+                }
+            },
+            expected
         );
     }
 
     @Test
     public void testLong() {
         this.convertToStringAndCheck(
-                12L,
-                "12"
+            12L,
+            "12"
         );
     }
 
     @Test
     public void testRow() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseRow("1")
+            SpreadsheetSelection.parseRow("1")
         );
     }
 
     @Test
     public void testRowRange() {
         this.convertToStringAndCheck(
-                SpreadsheetSelection.parseRowRange("$2:3")
+            SpreadsheetSelection.parseRowRange("$2:3")
         );
     }
 
     @Test
     public void testShort() {
         this.convertToStringAndCheck(
-                Short.MAX_VALUE,
-                "32767"
+            Short.MAX_VALUE,
+            "32767"
         );
     }
 
     @Test
     public void testString() {
         this.convertToStringAndCheck(
-                "123abc"
+            "123abc"
         );
     }
 
     private void convertToStringAndCheck(final Object value) {
         this.convertToStringAndCheck(
-                value,
-                null != value ? value.toString() : (String) value
+            value,
+            null != value ? value.toString() : (String) value
         );
     }
 
@@ -249,9 +249,9 @@ public final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitorT
     private void convertToStringAndCheck(final Object value,
                                          final String expected) {
         this.convertToStringAndCheck(
-                value,
-                ExpressionNumberConverterContexts.fake(),
-                expected
+            value,
+            ExpressionNumberConverterContexts.fake(),
+            expected
         );
     }
 
@@ -259,12 +259,12 @@ public final class SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitorT
                                          final ExpressionNumberConverterContext context,
                                          final String expected) {
         this.checkEquals(
-                expected,
-                SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor.convertToString(
-                        value,
-                        context
-                ),
-                () -> "convertToString " + CharSequences.quoteIfChars(value)
+            expected,
+            SpreadsheetConverterUnformattedNumberSpreadsheetValueVisitor.convertToString(
+                value,
+                context
+            ),
+            () -> "convertToString " + CharSequences.quoteIfChars(value)
         );
     }
 

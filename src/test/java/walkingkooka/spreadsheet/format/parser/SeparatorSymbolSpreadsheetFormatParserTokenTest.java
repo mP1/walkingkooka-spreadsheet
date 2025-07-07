@@ -72,7 +72,7 @@ public final class SeparatorSymbolSpreadsheetFormatParserTokenTest extends Symbo
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.SEPARATOR
+            SpreadsheetFormatParserTokenKind.SEPARATOR
         );
     }
 

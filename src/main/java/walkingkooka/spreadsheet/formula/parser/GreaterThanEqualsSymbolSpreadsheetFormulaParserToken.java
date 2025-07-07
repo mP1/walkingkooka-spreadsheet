@@ -28,8 +28,8 @@ public final class GreaterThanEqualsSymbolSpreadsheetFormulaParserToken extends 
     static GreaterThanEqualsSymbolSpreadsheetFormulaParserToken with(final String value,
                                                                      final String text) {
         return new GreaterThanEqualsSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

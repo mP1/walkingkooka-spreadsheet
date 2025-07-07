@@ -30,9 +30,9 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTesting2<SpreadsheetComparatorNameAndDirection>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetComparatorNameAndDirection>,
-        JsonNodeMarshallingTesting<SpreadsheetComparatorNameAndDirection>,
-        ParseStringTesting<SpreadsheetComparatorNameAndDirection> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetComparatorNameAndDirection>,
+    JsonNodeMarshallingTesting<SpreadsheetComparatorNameAndDirection>,
+    ParseStringTesting<SpreadsheetComparatorNameAndDirection> {
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("name-1");
 
@@ -41,40 +41,40 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorNameAndDirection.with(
-                        null,
-                        DIRECTION
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparatorNameAndDirection.with(
+                null,
+                DIRECTION
+            )
         );
     }
 
     @Test
     public void testWithNullDirectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetComparatorNameAndDirection.with(
-                        NAME,
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetComparatorNameAndDirection.with(
+                NAME,
+                null
+            )
         );
     }
 
     @Test
     public void testWith() {
         final SpreadsheetComparatorNameAndDirection nameAndDirection = SpreadsheetComparatorNameAndDirection.with(
-                NAME,
-                DIRECTION
+            NAME,
+            DIRECTION
         );
         this.checkEquals(
-                NAME,
-                nameAndDirection.name(),
-                "name"
+            NAME,
+            nameAndDirection.name(),
+            "name"
         );
         this.checkEquals(
-                DIRECTION,
-                nameAndDirection.direction(),
-                "direction"
+            DIRECTION,
+            nameAndDirection.direction(),
+            "direction"
         );
     }
 
@@ -83,8 +83,8 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Test
     public void testSetDirectionUp() {
         this.checkEquals(
-                SpreadsheetComparatorNameAndDirection.with(NAME, DIRECTION),
-                NAME.setDirection(DIRECTION)
+            SpreadsheetComparatorNameAndDirection.with(NAME, DIRECTION),
+            NAME.setDirection(DIRECTION)
         );
     }
 
@@ -93,8 +93,8 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
         final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DOWN;
 
         this.checkEquals(
-                SpreadsheetComparatorNameAndDirection.with(NAME, direction),
-                NAME.setDirection(direction)
+            SpreadsheetComparatorNameAndDirection.with(NAME, direction),
+            NAME.setDirection(direction)
         );
     }
 
@@ -103,44 +103,44 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Test
     public void testParseMissingDirectionDefaults() {
         this.parseStringAndCheck(
-                "name-1",
-                SpreadsheetComparatorNameAndDirection.with(
-                        NAME,
-                        SpreadsheetComparatorDirection.DEFAULT
-                )
+            "name-1",
+            SpreadsheetComparatorNameAndDirection.with(
+                NAME,
+                SpreadsheetComparatorDirection.DEFAULT
+            )
         );
     }
 
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "name-1",
-                SpreadsheetComparatorNameAndDirection.with(
-                        NAME,
-                        SpreadsheetComparatorDirection.DEFAULT
-                )
+            "name-1",
+            SpreadsheetComparatorNameAndDirection.with(
+                NAME,
+                SpreadsheetComparatorDirection.DEFAULT
+            )
         );
     }
 
     @Test
     public void testParseUp() {
         this.parseStringAndCheck(
-                "name-1 UP",
-                SpreadsheetComparatorNameAndDirection.with(
-                        NAME,
-                        SpreadsheetComparatorDirection.UP
-                )
+            "name-1 UP",
+            SpreadsheetComparatorNameAndDirection.with(
+                NAME,
+                SpreadsheetComparatorDirection.UP
+            )
         );
     }
 
     @Test
     public void testParseDown() {
         this.parseStringAndCheck(
-                "name-1 DOWN",
-                SpreadsheetComparatorNameAndDirection.with(
-                        NAME,
-                        SpreadsheetComparatorDirection.DOWN
-                )
+            "name-1 DOWN",
+            SpreadsheetComparatorNameAndDirection.with(
+                NAME,
+                SpreadsheetComparatorDirection.DOWN
+            )
         );
     }
 
@@ -164,10 +164,10 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Test
     public void testSetColumnOrRow() {
         this.checkEquals(
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text123 DOWN"),
-                SpreadsheetComparatorName.with("text123")
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                        .setColumnOrRow(SpreadsheetSelection.parseColumn("A"))
+            SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text123 DOWN"),
+            SpreadsheetComparatorName.with("text123")
+                .setDirection(SpreadsheetComparatorDirection.DOWN)
+                .setColumnOrRow(SpreadsheetSelection.parseColumn("A"))
         );
     }
 
@@ -176,28 +176,28 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Test
     public void testEqualsDifferentName() {
         this.checkNotEquals(
-                SpreadsheetComparatorNameAndDirection.with(
-                        SpreadsheetComparatorName.with("different-name-2"),
-                        DIRECTION
-                )
+            SpreadsheetComparatorNameAndDirection.with(
+                SpreadsheetComparatorName.with("different-name-2"),
+                DIRECTION
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentDifferent() {
         this.checkNotEquals(
-                SpreadsheetComparatorNameAndDirection.with(
-                        NAME,
-                        DIRECTION.flip()
-                )
+            SpreadsheetComparatorNameAndDirection.with(
+                NAME,
+                DIRECTION.flip()
+            )
         );
     }
 
     @Override
     public SpreadsheetComparatorNameAndDirection createObject() {
         return SpreadsheetComparatorNameAndDirection.with(
-                NAME,
-                DIRECTION
+            NAME,
+            DIRECTION
         );
     }
 
@@ -206,8 +206,8 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                JsonNode.string("name-1 UP"),
-                this.createJsonNodeMarshallingValue()
+            JsonNode.string("name-1 UP"),
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -215,8 +215,8 @@ public final class SpreadsheetComparatorNameAndDirectionTest implements ClassTes
     public SpreadsheetComparatorNameAndDirection unmarshall(final JsonNode json,
                                                             final JsonNodeUnmarshallContext context) {
         return SpreadsheetComparatorNameAndDirection.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

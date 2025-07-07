@@ -40,34 +40,34 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                cellReference,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
+            cellReference,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
         );
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
         cache.loading(cell);
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
         );
 
         cache.loaded(cell);
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.LOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.LOADED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.LOADED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.LOADED_REFERENCES_REFRESHED
         );
     }
 
@@ -76,33 +76,33 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                cell,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
+            cell,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
         );
 
         cache.deleted();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.DELETED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.DELETED_REFERENCES_REFRESHED
         );
     }
 
@@ -111,34 +111,34 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                cell,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
+            cell,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
         );
 
         cache.saved(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
         );
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.SAVED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.SAVED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.SAVED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.SAVED_REFERENCES_REFRESHED
         );
     }
 
@@ -147,35 +147,35 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                cellReference,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
+            cellReference,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
         );
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
         cache.loading(cell);
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADING
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADING
         );
 
         cache.loaded(cell);
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED_REFERENCES_REFRESHED
         );
     }
 
@@ -184,33 +184,33 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                cell,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
+            cell,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
         );
 
         cache.deleted();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_DELETED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_DELETED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_DELETED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_DELETED_REFERENCES_REFRESHED
         );
     }
 
@@ -219,67 +219,67 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                cell,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVING
+            cell,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVING
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVING
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVING
         );
 
         cache.saved(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
         );
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVED_REFERENCES_REFRESHED
         );
     }
 
     // label............................................................................................................
-    
+
     @Test
     public void testLabelLoadedThenRefreshReferences() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DifferentLabel111");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                label,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
+            label,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
         );
 
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(SpreadsheetSelection.A1);
 
         cache.loaded(mapping);
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.LOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.LOADED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.LOADED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.LOADED_REFERENCES_REFRESHED
         );
     }
 
@@ -288,33 +288,33 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DifferentLabel111");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                label,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
+            label,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
         );
 
         cache.deleted();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.DELETED_REFERENCES_REFRESHED
         );
     }
 
@@ -323,34 +323,34 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DifferentLabel111");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                label,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
+            label,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
         );
 
         cache.saved(
-                label.setLabelMappingReference(SpreadsheetSelection.A1)
+            label.setLabelMappingReference(SpreadsheetSelection.A1)
         );
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED_REFERENCES_REFRESHED
         );
     }
 
@@ -359,34 +359,34 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DifferentLabel111");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                label,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
+            label,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
         );
 
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(SpreadsheetSelection.A1);
 
         cache.loaded(mapping);
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED_REFERENCES_REFRESHED
         );
     }
 
@@ -395,33 +395,33 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DifferentLabel111");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                label,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
+            label,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
         );
 
         cache.deleted();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_DELETED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_DELETED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_DELETED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_DELETED_REFERENCES_REFRESHED
         );
     }
 
@@ -430,51 +430,51 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("DifferentLabel111");
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
-                label,
-                Maps.sorted(),
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
+            label,
+            Maps.sorted(),
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
         );
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
         );
 
         cache.saved(
-                label.setLabelMappingReference(SpreadsheetSelection.A1)
+            label.setLabelMappingReference(SpreadsheetSelection.A1)
         );
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
         );
 
         this.isRefreshableAndCheck(
-                cache,
-                true
+            cache,
+            true
         );
 
         cache.referencesRefreshed();
 
         this.statusAndCheck(
-                cache,
-                BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED_REFERENCES_REFRESHED
+            cache,
+            BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED_REFERENCES_REFRESHED
         );
     }
 
     private void isRefreshableAndCheck(final BasicSpreadsheetEngineChangesCache<?, ?> cache,
                                        final boolean expected) {
         this.checkEquals(
-                expected,
-                cache.status().isRefreshable(),
-                cache::toString
+            expected,
+            cache.status().isRefreshable(),
+            cache::toString
         );
     }
 
     private <S extends SpreadsheetSelection> void statusAndCheck(final BasicSpreadsheetEngineChangesCache<S, ?> cache,
                                                                  final BasicSpreadsheetEngineChangesCacheStatus<S> expected) {
         assertSame(
-                expected,
-                cache.status()
+            expected,
+            cache.status()
         );
     }
 

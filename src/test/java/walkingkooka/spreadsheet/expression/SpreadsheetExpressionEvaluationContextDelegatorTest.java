@@ -47,8 +47,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContextDelegatorTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator>,
-        SpreadsheetMetadataTesting,
-        DecimalNumberContextDelegator{
+    SpreadsheetMetadataTesting,
+    DecimalNumberContextDelegator {
 
     @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
@@ -105,7 +105,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     @Override
     public MathContext mathContext() {
         return new TestSpreadsheetExpressionEvaluationContextDelegator()
-                .mathContext();
+            .mathContext();
     }
 
     // DecimalNumberContextDelegator....................................................................................
@@ -159,49 +159,49 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         @Override
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             return SpreadsheetExpressionEvaluationContexts.basic(
-                    Optional.empty(), // cell
-                    SpreadsheetExpressionReferenceLoaders.fake(),
-                    Url.parseAbsolute("https://example.com"),
-                    METADATA_EN_AU,
-                    SpreadsheetStoreRepositories.fake(),
-                    SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                    ((Optional<SpreadsheetCell> c) -> {
+                Optional.empty(), // cell
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                Url.parseAbsolute("https://example.com"),
+                METADATA_EN_AU,
+                SpreadsheetStoreRepositories.fake(),
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ((Optional<SpreadsheetCell> c) -> {
+                    throw new UnsupportedOperationException();
+                }),
+                new FakeFormHandlerContext<>() {
+                    @Override
+                    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+                        Objects.requireNonNull(reference, "reference");
                         throw new UnsupportedOperationException();
-                    }),
-                    new FakeFormHandlerContext<>() {
-                        @Override
-                        public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
-                            Objects.requireNonNull(reference, "reference");
-                            throw new UnsupportedOperationException();
-                        }
+                    }
 
-                        @Override
-                        public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-                            Objects.requireNonNull(fields, "fields");
-                            throw new UnsupportedOperationException();
-                        }
+                    @Override
+                    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+                        Objects.requireNonNull(fields, "fields");
+                        throw new UnsupportedOperationException();
+                    }
 
-                        @Override
-                        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                            Objects.requireNonNull(name, "name");
-                            throw new UnsupportedOperationException();
-                        }
+                    @Override
+                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                        Objects.requireNonNull(name, "name");
+                        throw new UnsupportedOperationException();
+                    }
 
-                        @Override
-                        public Optional<EmailAddress> user() {
-                            return Optional.empty();
-                        }
+                    @Override
+                    public Optional<EmailAddress> user() {
+                        return Optional.empty();
+                    }
 
-                        @Override
-                        public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-                            Objects.requireNonNull(reference, "reference");
+                    @Override
+                    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+                        Objects.requireNonNull(reference, "reference");
 
-                            throw new UnsupportedOperationException();
-                        }
-                    },
-                    EXPRESSION_FUNCTION_PROVIDER,
-                    LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT
+                        throw new UnsupportedOperationException();
+                    }
+                },
+                EXPRESSION_FUNCTION_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
             );
         }
 

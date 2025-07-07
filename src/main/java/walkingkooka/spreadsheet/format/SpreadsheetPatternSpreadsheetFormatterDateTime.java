@@ -71,30 +71,30 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
         final Object valueOrNull = value.orElse(null);
 
         final Either<LocalDateTime, String> valueAsDateTime = null != valueOrNull &&
-                valueOrNull.getClass() == this.valueType ?
-                context.convert(
-                        valueOrNull,
-                        LocalDateTime.class
-                ) :
-                null;
+            valueOrNull.getClass() == this.valueType ?
+            context.convert(
+                valueOrNull,
+                LocalDateTime.class
+            ) :
+            null;
 
         return Optional.ofNullable(
-                null != valueAsDateTime && valueAsDateTime.isLeft() ?
-                        this.formatLocalDateTime(
-                                valueAsDateTime.leftValue(),
-                                context
-                        ) :
-                        null
+            null != valueAsDateTime && valueAsDateTime.isLeft() ?
+                this.formatLocalDateTime(
+                    valueAsDateTime.leftValue(),
+                    context
+                ) :
+                null
         );
     }
 
     private SpreadsheetText formatLocalDateTime(final LocalDateTime dateTime,
                                                 final SpreadsheetFormatterContext context) {
         return SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
-                dateTime,
-                context,
-                this.twelveHour,
-                this.millisecondDecimals);
+            dateTime,
+            context,
+            this.twelveHour,
+            this.millisecondDecimals);
     }
 
     @Override
@@ -112,20 +112,20 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.valueType,
-                this.token
+            this.valueType,
+            this.token
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterDateTime && this.equals0((SpreadsheetPatternSpreadsheetFormatterDateTime) other);
+            other instanceof SpreadsheetPatternSpreadsheetFormatterDateTime && this.equals0((SpreadsheetPatternSpreadsheetFormatterDateTime) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterDateTime other) {
         return this.valueType == other.valueType &&
-                this.token.equals(other.token);
+            this.token.equals(other.token);
     }
 
     @Override

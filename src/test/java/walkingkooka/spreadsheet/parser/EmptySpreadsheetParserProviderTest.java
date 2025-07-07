@@ -30,31 +30,31 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
     @Test
     public void testSpreadsheetParserSelectorFails() {
         this.spreadsheetParserFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText(""),
-                PROVIDER_CONTEXT
+            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText(""),
+            PROVIDER_CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetParserNameFails() {
         this.spreadsheetParserFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
-                Lists.empty(),
-                PROVIDER_CONTEXT
+            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
+            Lists.empty(),
+            PROVIDER_CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetParserNextTokenFails() {
         this.spreadsheetParserNextTokenFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
+            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelector() {
         this.spreadsheetFormatterSelectorFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
+            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
         );
     }
 

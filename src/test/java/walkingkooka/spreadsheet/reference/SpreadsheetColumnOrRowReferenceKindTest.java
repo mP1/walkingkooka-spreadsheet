@@ -29,31 +29,31 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesting2<SpreadsheetColumnOrRowReferenceKind>,
-        ParseStringTesting<SpreadsheetSelection> {
+    ParseStringTesting<SpreadsheetSelection> {
 
     // firstAbsolute....................................................................................................
 
     @Test
     public void testFirstAbsoluteColumn() {
         this.firstAbsoluteAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseColumn("$A")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseColumn("$A")
         );
     }
 
     @Test
     public void testFirstAbsoluteRow() {
         this.firstAbsoluteAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("$1")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("$1")
         );
     }
 
     private void firstAbsoluteAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                        final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.firstAbsolute()
+            expected,
+            kind.firstAbsolute()
         );
     }
 
@@ -62,24 +62,24 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testFirstRelativeColumn() {
         this.firstRelativeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseColumn("A")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseColumn("A")
         );
     }
 
     @Test
     public void testFirstRelativeRow() {
         this.firstRelativeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("1")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("1")
         );
     }
 
     private void firstRelativeAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                        final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.firstRelative()
+            expected,
+            kind.firstRelative()
         );
     }
 
@@ -88,24 +88,24 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testLastAbsoluteColumn() {
         this.lastAbsoluteAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseColumn("$XFD")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseColumn("$XFD")
         );
     }
 
     @Test
     public void testLastAbsoluteRow() {
         this.lastAbsoluteAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("$1048576")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("$1048576")
         );
     }
 
     private void lastAbsoluteAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                       final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.lastAbsolute()
+            expected,
+            kind.lastAbsolute()
         );
     }
 
@@ -114,24 +114,24 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testLastRelativeColumn() {
         this.lastRelativeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseColumn("XFD")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseColumn("XFD")
         );
     }
 
     @Test
     public void testLastRelativeRow() {
         this.lastRelativeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("1048576")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("1048576")
         );
     }
 
     private void lastRelativeAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                       final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.lastRelative()
+            expected,
+            kind.lastRelative()
         );
     }
 
@@ -140,27 +140,27 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testValueColumnRelative() {
         this.valueAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseColumn("B"),
-                1
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseColumn("B"),
+            1
         );
     }
 
     @Test
     public void testValueRowRelative() {
         this.valueAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("3"),
-                2
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("3"),
+            2
         );
     }
 
     @Test
     public void testValueRowAbsolute() {
         this.valueAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("$4"),
-                3
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("$4"),
+            3
         );
     }
 
@@ -168,41 +168,41 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                final SpreadsheetColumnOrRowReferenceOrRange reference,
                                final int expected) {
         this.checkEquals(
-                expected,
-                kind.value(reference),
-                () -> kind + " value " + reference
+            expected,
+            kind.value(reference),
+            () -> kind + " value " + reference
         );
     }
-    
+
     // setValue.........................................................................................................
 
     @Test
     public void testSetValueColumnRelative() {
         this.setValueAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetReferenceKind.RELATIVE,
-                2,
-                SpreadsheetSelection.parseColumn("C")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetReferenceKind.RELATIVE,
+            2,
+            SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
     public void testSetValueRowRelative() {
         this.setValueAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetReferenceKind.RELATIVE,
-                2,
-                SpreadsheetSelection.parseRow("3")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetReferenceKind.RELATIVE,
+            2,
+            SpreadsheetSelection.parseRow("3")
         );
     }
 
     @Test
     public void testSetValueRowAbsolute() {
         this.setValueAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetReferenceKind.ABSOLUTE,
-                3,
-                SpreadsheetSelection.parseRow("$4")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            3,
+            SpreadsheetSelection.parseRow("$4")
         );
     }
 
@@ -211,12 +211,12 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                   final int value,
                                   final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.setValue(
-                        referenceKind,
-                        value
-                ),
-                () -> kind + " setValue " + referenceKind + ", " + value
+            expected,
+            kind.setValue(
+                referenceKind,
+                value
+            ),
+            () -> kind + " setValue " + referenceKind + ", " + value
         );
     }
 
@@ -225,56 +225,56 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testParseColumnOrRowCellFails() {
         this.parseStringFails(
-                "A1",
-                IllegalArgumentException.class
+            "A1",
+            IllegalArgumentException.class
         );
     }
 
     @Test
     public void testParseColumnOrRowCellRangeFails() {
         this.parseStringFails(
-                "B2:C3",
-                IllegalArgumentException.class
+            "B2:C3",
+            IllegalArgumentException.class
         );
     }
 
     @Test
     public void testParseColumnOrRowColumn() {
         this.parseStringAndCheck(
-                "C",
-                SpreadsheetSelection.parseColumn("C")
+            "C",
+            SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
     public void testParseColumnOrRowColumnRangeFails() {
         this.parseStringFails(
-                "B:C",
-                IllegalArgumentException.class
+            "B:C",
+            IllegalArgumentException.class
         );
     }
 
     @Test
     public void testParseColumnOrRowLabelFails() {
         this.parseStringFails(
-                "Label123",
-                IllegalArgumentException.class
+            "Label123",
+            IllegalArgumentException.class
         );
     }
 
     @Test
     public void testParseColumnOrRowRow() {
         this.parseStringAndCheck(
-                "4",
-                SpreadsheetSelection.parseRow("4")
+            "4",
+            SpreadsheetSelection.parseRow("4")
         );
     }
 
     @Test
     public void testParseColumnOrRowRowRangeFails() {
         this.parseStringFails(
-                "2:3",
-                IllegalArgumentException.class
+            "2:3",
+            IllegalArgumentException.class
         );
     }
 
@@ -283,90 +283,90 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testParseColumnWithCellFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                "A1",
-                "Invalid character '1' at 1"
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            "A1",
+            "Invalid character '1' at 1"
         );
     }
 
     @Test
     public void testParseColumnWithColumn() {
         this.parseAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                "A",
-                SpreadsheetSelection.parseColumn("A")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            "A",
+            SpreadsheetSelection.parseColumn("A")
         );
     }
 
     @Test
     public void testParseRowWithColumnRangeFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                "B:C",
-                "Invalid character ':' at 1"
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            "B:C",
+            "Invalid character ':' at 1"
         );
     }
 
     @Test
     public void testParseColumnWithLabelFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                "Label123",
-                "Invalid column \"Label\" not between \"A\" and \"XFE\""
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            "Label123",
+            "Invalid column \"Label\" not between \"A\" and \"XFE\""
         );
     }
 
     @Test
     public void testParseColumnWithRowFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                "321",
-                "Invalid character '3' at 0"
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            "321",
+            "Invalid character '3' at 0"
         );
     }
 
     @Test
     public void testParseRowWithCellFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                "A1",
-                "Invalid character 'A' at 0"
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            "A1",
+            "Invalid character 'A' at 0"
         );
     }
 
     @Test
     public void testParseRowWithColumnFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                "A",
-                "Invalid character 'A'"
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            "A",
+            "Invalid character 'A'"
         );
     }
 
     @Test
     public void testParseRowWithLabelFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                "Label123",
-                "Invalid character 'L' at 0"
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            "Label123",
+            "Invalid character 'L' at 0"
         );
     }
 
     @Test
     public void testParseRowWithRow() {
         this.parseAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                "12",
-                SpreadsheetSelection.parseRow("12")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            "12",
+            SpreadsheetSelection.parseRow("12")
         );
     }
 
     @Test
     public void testParseRowWithRowRangeFails() {
         this.parseFails(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                "1:2",
-                "Invalid character ':' at 1"
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            "1:2",
+            "Invalid character ':' at 1"
         );
     }
 
@@ -374,12 +374,12 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                             final String text,
                             final String expected) {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> kind.parse(text)
+            IllegalArgumentException.class,
+            () -> kind.parse(text)
         );
         this.checkEquals(
-                expected,
-                thrown.getMessage()
+            expected,
+            thrown.getMessage()
         );
     }
 
@@ -388,9 +388,9 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                final String text,
                                final SpreadsheetSelection expected) {
         this.checkEquals(
-                expected,
-                kind.parse(text),
-                () -> kind + ".parse " + CharSequences.quoteAndEscape(text)
+            expected,
+            kind.parse(text),
+            () -> kind + ".parse " + CharSequences.quoteAndEscape(text)
         );
     }
 
@@ -399,25 +399,25 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testFlipColumn() {
         this.flipAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetColumnOrRowReferenceKind.ROW
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetColumnOrRowReferenceKind.ROW
         );
     }
 
     @Test
     public void testFlipRow() {
         this.flipAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetColumnOrRowReferenceKind.COLUMN
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetColumnOrRowReferenceKind.COLUMN
         );
     }
 
     private void flipAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                               final SpreadsheetColumnOrRowReferenceKind expected) {
         this.checkEquals(
-                expected,
-                kind.flip(),
-                () -> kind + " flip"
+            expected,
+            kind.flip(),
+            () -> kind + " flip"
         );
     }
 
@@ -426,34 +426,34 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testColumnOrRowWithColumnAndNullSelectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnOrRowReferenceKind.COLUMN.columnOrRow(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowReferenceKind.COLUMN.columnOrRow(null)
         );
     }
 
     @Test
     public void testColumnOrRowWithRowAndNullSelectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRow(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRow(null)
         );
     }
 
     @Test
     public void testColumnOrRowWithColumn() {
         this.columnOrRowAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.A1,
-                SpreadsheetSelection.A1.column()
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.A1,
+            SpreadsheetSelection.A1.column()
         );
     }
 
     @Test
     public void testColumnOrRowWithRow() {
         this.columnOrRowAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.A1,
-                SpreadsheetSelection.A1.row()
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.A1,
+            SpreadsheetSelection.A1.row()
         );
     }
 
@@ -462,9 +462,9 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
 
         this.columnOrRowAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                cell,
-                cell.row()
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            cell,
+            cell.row()
         );
     }
 
@@ -472,9 +472,9 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                      final SpreadsheetSelection selection,
                                      final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.columnOrRow(selection),
-                () -> kind + " columnOrRow from " + selection
+            expected,
+            kind.columnOrRow(selection),
+            () -> kind + " columnOrRow from " + selection
         );
     }
 
@@ -483,43 +483,43 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testColumnOrRowRangeWithColumnAndNullSelectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnOrRowReferenceKind.COLUMN.columnOrRowRange(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowReferenceKind.COLUMN.columnOrRowRange(null)
         );
     }
 
     @Test
     public void testColumnOrRowRangeWithRowAndNullSelectionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRowRange(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowReferenceKind.ROW.columnOrRowRange(null)
         );
     }
 
     @Test
     public void testColumnOrRowRangeWithColumn() {
         this.columnOrRowRangeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseColumnRange("A:B")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseColumnRange("A:B")
         );
     }
 
     @Test
     public void testColumnOrRowRangeWithRow() {
         this.columnOrRowRangeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                SpreadsheetSelection.parseRowRange("2:3")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            SpreadsheetSelection.parseRowRange("2:3")
         );
     }
 
     @Test
     public void testColumnOrRowRangeWithRow2() {
         this.columnOrRowRangeAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseCellRange("D4:D5"),
-                SpreadsheetSelection.parseRowRange("4:5")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseCellRange("D4:D5"),
+            SpreadsheetSelection.parseRowRange("4:5")
         );
     }
 
@@ -527,29 +527,29 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                           final SpreadsheetSelection selection,
                                           final SpreadsheetColumnOrRowReferenceOrRange expected) {
         this.checkEquals(
-                expected,
-                kind.columnOrRowRange(selection),
-                () -> kind + " columnOrRowRange from " + selection
+            expected,
+            kind.columnOrRowRange(selection),
+            () -> kind + " columnOrRowRange from " + selection
         );
     }
 
     @Test
     public void testColumnOrRowRangeColumnIteration() {
         this.columnOrRowRangeIterateAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseColumn("A"),
-                SpreadsheetSelection.parseColumn("B")
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetSelection.parseColumn("B")
         );
     }
 
     @Test
     public void testColumnOrRowRangeRowIteration() {
         this.columnOrRowRangeIterateAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseCellRange("A1:B2"),
-                SpreadsheetSelection.parseRow("1"),
-                SpreadsheetSelection.parseRow("2")
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetSelection.parseRow("1"),
+            SpreadsheetSelection.parseRow("2")
         );
     }
 
@@ -557,9 +557,9 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                                  final SpreadsheetSelection selection,
                                                  final SpreadsheetColumnOrRowReferenceOrRange... expected) {
         this.columnOrRowRangeIterateAndCheck(
-                kind,
-                selection,
-                Lists.of(expected)
+            kind,
+            selection,
+            Lists.of(expected)
         );
     }
 
@@ -567,13 +567,13 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                                  final SpreadsheetSelection selection,
                                                  final List<SpreadsheetColumnOrRowReferenceOrRange> expected) {
         final List<SpreadsheetSelection> actual = Lists.array();
-        for (final SpreadsheetColumnOrRowReferenceOrRange columnOrRowReference : (Iterable<SpreadsheetColumnOrRowReferenceOrRange>)kind.columnOrRowRange(selection)) {
+        for (final SpreadsheetColumnOrRowReferenceOrRange columnOrRowReference : (Iterable<SpreadsheetColumnOrRowReferenceOrRange>) kind.columnOrRowRange(selection)) {
             actual.add(columnOrRowReference);
         }
 
         this.checkEquals(
-                expected,
-                actual
+            expected,
+            actual
         );
     }
 
@@ -582,72 +582,72 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     @Test
     public void testLengthColumnWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnOrRowReferenceKind
-                        .COLUMN.length(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowReferenceKind
+                .COLUMN.length(null)
         );
     }
 
     @Test
     public void testLengthRowWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnOrRowReferenceKind.ROW
-                        .length(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowReferenceKind.ROW
+                .length(null)
         );
     }
 
     @Test
     public void testLengthColumnWithColumn() {
         this.lengthAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseColumn("A"),
-                1
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseColumn("A"),
+            1
         );
     }
 
     @Test
     public void testLengthRowWithColumn() {
         this.lengthAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseColumn("A"),
-                1048576
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseColumn("A"),
+            1048576
         );
     }
 
     @Test
     public void testLengthColumnWithRow() {
         this.lengthAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseRow("2"),
-                16384
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseRow("2"),
+            16384
         );
     }
 
     @Test
     public void testLengthRowWithRow() {
         this.lengthAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseRow("3"),
-                1
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseRow("3"),
+            1
         );
     }
 
     @Test
     public void testLengthColumnWithCellRange() {
         this.lengthAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.COLUMN,
-                SpreadsheetSelection.parseCellRange("A1:C5"),
-                3
+            SpreadsheetColumnOrRowReferenceKind.COLUMN,
+            SpreadsheetSelection.parseCellRange("A1:C5"),
+            3
         );
     }
 
     @Test
     public void testLengthRowWithCellRange() {
         this.lengthAndCheck(
-                SpreadsheetColumnOrRowReferenceKind.ROW,
-                SpreadsheetSelection.parseCellRange("A1:C5"),
-                5
+            SpreadsheetColumnOrRowReferenceKind.ROW,
+            SpreadsheetSelection.parseCellRange("A1:C5"),
+            5
         );
     }
 
@@ -655,9 +655,9 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                 final SpreadsheetSelection selection,
                                 final int expected) {
         this.checkEquals(
-                expected,
-                kind.length(selection),
-                () -> kind + " length " + selection
+            expected,
+            kind.length(selection),
+            () -> kind + " length " + selection
         );
     }
 

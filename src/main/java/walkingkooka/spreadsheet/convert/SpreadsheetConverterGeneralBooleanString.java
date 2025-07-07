@@ -28,8 +28,8 @@ final class SpreadsheetConverterGeneralBooleanString implements Converter<Spread
     static SpreadsheetConverterGeneralBooleanString with(final Converter<SpreadsheetConverterContext> booleanString,
                                                          final Converter<SpreadsheetConverterContext> textFormatter) {
         return new SpreadsheetConverterGeneralBooleanString(
-                booleanString,
-                textFormatter
+            booleanString,
+            textFormatter
         );
     }
 
@@ -52,15 +52,15 @@ final class SpreadsheetConverterGeneralBooleanString implements Converter<Spread
                                          final Class<T> type,
                                          final SpreadsheetConverterContext context) {
         Either<T, String> result = this.booleanString.convert(
-                value,
-                type,
-                context
+            value,
+            type,
+            context
         );
         if (result.isLeft()) {
             result = this.textFormatter.convert(
-                    result.leftValue(),
-                    type,
-                    context
+                result.leftValue(),
+                type,
+                context
             );
         }
         return result;

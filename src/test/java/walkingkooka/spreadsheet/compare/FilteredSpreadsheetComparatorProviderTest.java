@@ -27,7 +27,7 @@ import walkingkooka.reflect.JavaVisibility;
 import java.util.List;
 
 public final class FilteredSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<FilteredSpreadsheetComparatorProvider>,
-        ToStringTesting<FilteredSpreadsheetComparatorProvider> {
+    ToStringTesting<FilteredSpreadsheetComparatorProvider> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
@@ -37,15 +37,15 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
         final List<?> values = Lists.empty();
 
         this.spreadsheetComparatorAndCheck(
-                name,
-                values,
-                CONTEXT,
-                SpreadsheetComparatorProviders.spreadsheetComparators()
-                        .spreadsheetComparator(
-                                name,
-                                values,
-                                CONTEXT
-                        )
+            name,
+            values,
+            CONTEXT,
+            SpreadsheetComparatorProviders.spreadsheetComparators()
+                .spreadsheetComparator(
+                    name,
+                    values,
+                    CONTEXT
+                )
         );
     }
 
@@ -54,36 +54,36 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
         final SpreadsheetComparatorName name = SpreadsheetComparatorName.YEAR;
 
         this.spreadsheetComparatorAndCheck(
-                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                name,
-                Lists.empty(),
-                CONTEXT,
-                SpreadsheetComparators.year()
+            SpreadsheetComparatorProviders.spreadsheetComparators(),
+            name,
+            Lists.empty(),
+            CONTEXT,
+            SpreadsheetComparators.year()
         );
 
         this.spreadsheetComparatorFails(
-                name,
-                Lists.empty(),
-                CONTEXT
+            name,
+            Lists.empty(),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetComparatorInfos() {
         this.spreadsheetComparatorInfosAndCheck(
-                SpreadsheetComparatorInfoSet.EMPTY.concat(
-                        SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month")
-                )
+            SpreadsheetComparatorInfoSet.EMPTY.concat(
+                SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month")
+            )
         );
     }
 
     @Override
     public FilteredSpreadsheetComparatorProvider createSpreadsheetComparatorProvider() {
         return FilteredSpreadsheetComparatorProvider.with(
-                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                SpreadsheetComparatorInfoSet.EMPTY.concat(
-                        SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month")
-                )
+            SpreadsheetComparatorProviders.spreadsheetComparators(),
+            SpreadsheetComparatorInfoSet.EMPTY.concat(
+                SpreadsheetComparatorInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/day-of-month day-of-month")
+            )
         );
     }
 
@@ -92,9 +92,9 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createSpreadsheetComparatorProvider(),
-                SpreadsheetComparatorProviders.spreadsheetComparators()
-                        .toString()
+            this.createSpreadsheetComparatorProvider(),
+            SpreadsheetComparatorProviders.spreadsheetComparators()
+                .toString()
         );
     }
 

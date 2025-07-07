@@ -32,8 +32,8 @@ public final class SpreadsheetConverterTextToLocaleTest extends SpreadsheetConve
         final Locale locale = Locale.forLanguageTag("EN-AU");
 
         this.convertAndCheck(
-                locale.toLanguageTag(),
-                locale
+            locale.toLanguageTag(),
+            locale
         );
     }
 
@@ -42,8 +42,8 @@ public final class SpreadsheetConverterTextToLocaleTest extends SpreadsheetConve
         final Locale locale = Locale.forLanguageTag("EN-AU");
 
         this.convertAndCheck(
-                new StringBuilder(locale.toLanguageTag()),
-                locale
+            new StringBuilder(locale.toLanguageTag()),
+            locale
         );
     }
 
@@ -59,9 +59,9 @@ public final class SpreadsheetConverterTextToLocaleTest extends SpreadsheetConve
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
                 return converter.canConvert(
-                        value,
-                        type,
-                        this
+                    value,
+                    type,
+                    this
                 );
             }
 
@@ -69,9 +69,9 @@ public final class SpreadsheetConverterTextToLocaleTest extends SpreadsheetConve
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 

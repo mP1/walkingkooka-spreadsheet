@@ -40,9 +40,9 @@ public final class DivisionSpreadsheetFormulaParserToken extends ArithmeticSprea
     @Override
     public DivisionSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                DivisionSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            DivisionSpreadsheetFormulaParserToken::with
         );
     }
 

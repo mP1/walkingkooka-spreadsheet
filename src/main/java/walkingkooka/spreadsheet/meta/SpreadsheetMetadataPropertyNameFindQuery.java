@@ -48,7 +48,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     @Override
     SpreadsheetCellQuery checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellQuery);
+            v -> v instanceof SpreadsheetCellQuery);
     }
 
     @Override

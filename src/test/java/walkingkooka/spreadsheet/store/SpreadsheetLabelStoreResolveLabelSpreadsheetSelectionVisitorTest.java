@@ -40,22 +40,22 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
     @Test
     public void testResolveLabelWithNullLabelFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                        null,
-                        SpreadsheetLabelStores.fake()
-                )
+            NullPointerException.class,
+            () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
+                null,
+                SpreadsheetLabelStores.fake()
+            )
         );
     }
 
     @Test
     public void testResolveLabelWithNullLabelStoreFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                        label(),
-                        null
-                )
+            NullPointerException.class,
+            () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
+                label(),
+                null
+            )
         );
     }
 
@@ -67,15 +67,15 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
             @Override
             public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName label) {
                 return Optional.ofNullable(
-                        this.mappings.get(label)
+                    this.mappings.get(label)
                 );
             }
 
             @Override
             public SpreadsheetLabelMapping save(SpreadsheetLabelMapping mapping) {
                 this.mappings.put(
-                        mapping.label(),
-                        mapping
+                    mapping.label(),
+                    mapping
                 );
                 return mapping;
             }
@@ -88,35 +88,35 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
 
         store.save(
-                label3.setLabelMappingReference(label1)
+            label3.setLabelMappingReference(label1)
         );
         store.save(
-                label2.setLabelMappingReference(label3)
+            label2.setLabelMappingReference(label3)
         );
         store.save(
-                label1.setLabelMappingReference(label2)
+            label1.setLabelMappingReference(label2)
         );
 
         final IllegalStateException thrown = assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                        label1,
-                        store
-                )
+            IllegalStateException.class,
+            () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
+                label1,
+                store
+            )
         );
         this.checkEquals(
-                "Cycle detected for \"Label111\" -> \"Label222\" -> \"Label333\" -> \"Label111\"",
-                thrown.getMessage()
+            "Cycle detected for \"Label111\" -> \"Label222\" -> \"Label333\" -> \"Label111\"",
+            thrown.getMessage()
         );
     }
-    
+
     @Test
     public void testResolveLabelUnknownLabel() {
         final SpreadsheetLabelName label = this.label();
         this.resolveLabelAndCheck(
-                label,
-                SpreadsheetLabelStores.treeMap(),
-                null
+            label,
+            SpreadsheetLabelStores.treeMap(),
+            null
         );
     }
 
@@ -129,9 +129,9 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         store.save(label.setLabelMappingReference(cell));
 
         this.resolveLabelAndCheck(
-                label,
-                store,
-                cell
+            label,
+            store,
+            cell
         );
     }
 
@@ -146,9 +146,9 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         store.save(label2.setLabelMappingReference(cell));
 
         this.resolveLabelAndCheck(
-                label,
-                store,
-                cell
+            label,
+            store,
+            cell
         );
     }
 
@@ -161,9 +161,9 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         store.save(label.setLabelMappingReference(range));
 
         this.resolveLabelAndCheck(
-                label,
-                store,
-                range
+            label,
+            store,
+            range
         );
     }
 
@@ -183,12 +183,12 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
                                       final SpreadsheetLabelStore store,
                                       final SpreadsheetCellReferenceOrRange expected) {
         this.checkEquals(
-                Optional.ofNullable(expected),
-                SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                        labelName,
-                        store
-                ),
-                () -> "resolveLabel " + labelName + " store=" + store
+            Optional.ofNullable(expected),
+            SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
+                labelName,
+                store
+            ),
+            () -> "resolveLabel " + labelName + " store=" + store
         );
     }
 

@@ -55,38 +55,38 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         Objects.requireNonNull(context, "context");
 
         final Either<ExpressionNumber, String> converted = context.convert(
-                value.orElse(null),
-                ExpressionNumber.class
+            value.orElse(null),
+            ExpressionNumber.class
         );
 
         final ExpressionNumber number = converted.isLeft() ?
-                converted.leftValue() :
-                null;
+            converted.leftValue() :
+            null;
 
         return null != number ?
-                this.formatSpreadsheetTextExpressionNumber(
-                        number,
-                        context
-                ) :
-                SpreadsheetFormatter.EMPTY;
+            this.formatSpreadsheetTextExpressionNumber(
+                number,
+                context
+            ) :
+            SpreadsheetFormatter.EMPTY;
     }
 
     private Optional<SpreadsheetText> formatSpreadsheetTextExpressionNumber(final ExpressionNumber number,
                                                                             final SpreadsheetFormatterContext context) {
         return this.isScientificFormat(
-                number,
-                context
+            number,
+            context
         ) ?
-                this.scientificFormatter(context)
-                        .formatSpreadsheetText(
-                                Optional.ofNullable(number),
-                                context
-                        ) :
-                this.nonScientificFormatter(context)
-                        .formatSpreadsheetText(
-                                Optional.ofNullable(number),
-                                context
-                        ).map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
+            this.scientificFormatter(context)
+                .formatSpreadsheetText(
+                    Optional.ofNullable(number),
+                    context
+                ) :
+            this.nonScientificFormatter(context)
+                .formatSpreadsheetText(
+                    Optional.ofNullable(number),
+                    context
+                ).map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
     }
 
     /**
@@ -98,14 +98,14 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     private boolean isScientificFormat(final ExpressionNumber number,
                                        final SpreadsheetFormatterContext context) {
         return number.isBigDecimal() ?
-                this.isScientificFormatBigDecimal(
-                        number.bigDecimal(),
-                        context
-                ) :
-                this.isScientificFormatDouble(
-                        number.doubleValue(),
-                        context
-                );
+            this.isScientificFormatBigDecimal(
+                number.bigDecimal(),
+                context
+            ) :
+            this.isScientificFormatDouble(
+                number.doubleValue(),
+                context
+            );
     }
 
     private boolean isScientificFormatBigDecimal(final BigDecimal number,
@@ -118,13 +118,13 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
             value = BigDecimal.valueOf(1, -digitCount); // eg: 1E12
 
             map.put(
-                    digitCount,
-                    value
+                digitCount,
+                value
             );
         }
 
         return number.abs()
-                .compareTo(value) >= 0;
+            .compareTo(value) >= 0;
     }
 
     private final Map<Integer, BigDecimal> generalNumberFormatDigitCountToMaxBigDouble = Maps.concurrent();
@@ -138,8 +138,8 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
             value = Double.parseDouble("1E" + digitCount); // eg: 1E12
 
             map.put(
-                    digitCount,
-                    value
+                digitCount,
+                value
             );
         }
 
@@ -159,13 +159,13 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
             formatter = SpreadsheetPattern.parseNumberFormatPattern(
-                            "0." +
-                                    CharSequences.repeating('#', digitCount) +
-                                    "E+0"
-                    ).formatter();
+                "0." +
+                    CharSequences.repeating('#', digitCount) +
+                    "E+0"
+            ).formatter();
             map.put(
-                    digitCount,
-                    formatter
+                digitCount,
+                formatter
             );
         }
 
@@ -182,12 +182,12 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
             formatter = SpreadsheetPattern.parseNumberFormatPattern(
-                            "0." +
-                                    CharSequences.repeating('#', digitCount)
-                    ).formatter();
+                "0." +
+                    CharSequences.repeating('#', digitCount)
+            ).formatter();
             map.put(
-                    digitCount,
-                    formatter
+                digitCount,
+                formatter
             );
         }
 
@@ -204,9 +204,9 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         final String text = spreadsheetText.text();
         final int last = text.length() - 1;
         return spreadsheetText.setText(
-                text.charAt(last) == context.decimalSeparator() ?
-                        text.substring(0, last) :
-                        text
+            text.charAt(last) == context.decimalSeparator() ?
+                text.substring(0, last) :
+                text
         );
     }
 
@@ -218,11 +218,11 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     }
 
     private final static List<SpreadsheetFormatterSelectorToken> TEXT_COMPONENTS = Lists.of(
-            SpreadsheetFormatterSelectorToken.with(
-                    "General",
-                    "General",
-                    Lists.empty()
-            )
+        SpreadsheetFormatterSelectorToken.with(
+            "General",
+            "General",
+            Lists.empty()
+        )
     );
 
     // Object...........................................................................................................

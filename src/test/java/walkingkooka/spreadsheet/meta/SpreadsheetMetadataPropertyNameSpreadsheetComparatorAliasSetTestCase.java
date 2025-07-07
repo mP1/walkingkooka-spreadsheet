@@ -25,8 +25,7 @@ public abstract class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasS
         super();
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return SpreadsheetComparatorAliasSet.class.getSimpleName();
     }
 }

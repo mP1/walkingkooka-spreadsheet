@@ -43,14 +43,14 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.isCell() ||
-                selection.isCellRange() ?
-                this.updateCellOrCellRange(
-                        selection,
-                        anchor
-                ) :
-                Optional.of(
-                        this.selection.setDefaultAnchor()
-                );
+            selection.isCellRange() ?
+            this.updateCellOrCellRange(
+                selection,
+                anchor
+            ) :
+            Optional.of(
+                this.selection.setDefaultAnchor()
+            );
     }
 
     private Optional<AnchoredSpreadsheetSelection> updateCellOrCellRange(final SpreadsheetSelection selection,
@@ -85,33 +85,33 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
                 columnAnchor = null;
                 rowAnchor = null;
                 NeverError.unhandledEnum(
-                        anchor,
-                        SpreadsheetViewportAnchor.NONE,
-                        SpreadsheetViewportAnchor.TOP_LEFT,
-                        SpreadsheetViewportAnchor.TOP_RIGHT,
-                        SpreadsheetViewportAnchor.BOTTOM_LEFT,
-                        SpreadsheetViewportAnchor.BOTTOM_RIGHT
+                    anchor,
+                    SpreadsheetViewportAnchor.NONE,
+                    SpreadsheetViewportAnchor.TOP_LEFT,
+                    SpreadsheetViewportAnchor.TOP_RIGHT,
+                    SpreadsheetViewportAnchor.BOTTOM_LEFT,
+                    SpreadsheetViewportAnchor.BOTTOM_RIGHT
                 );
         }
 
         final AnchoredSpreadsheetSelection anchoredColumn = columnToAnchored(
-                selection.isCell() ?
-                        selection.toColumn() :
-                        selection.isCellRange() ?
-                                selection.toColumnRange() :
-                                selection,
-                columnAnchor,
-                newCell.toColumn()
+            selection.isCell() ?
+                selection.toColumn() :
+                selection.isCellRange() ?
+                    selection.toColumnRange() :
+                    selection,
+            columnAnchor,
+            newCell.toColumn()
         );
 
         final AnchoredSpreadsheetSelection anchoredRow = rowToAnchored(
-                selection.isCell() ?
-                        selection.toRow() :
-                        selection.isCellRange() ?
-                                selection.toRowRange() :
-                                selection,
-                rowAnchor,
-                newCell.toRow()
+            selection.isCell() ?
+                selection.toRow() :
+                selection.isCellRange() ?
+                    selection.toRowRange() :
+                    selection,
+            rowAnchor,
+            newCell.toRow()
         );
 
         final AnchoredSpreadsheetSelection newAnchored;
@@ -120,9 +120,9 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
 
         if (newSelectionColumn.count() == 1 && newSelectionRow.count() == 1) {
             newAnchored = newSelectionColumn.toColumn()
-                    .setRow(
-                            newSelectionRow.toRow()
-                    ).setDefaultAnchor();
+                .setRow(
+                    newSelectionRow.toRow()
+                ).setDefaultAnchor();
         } else {
             final SpreadsheetViewportAnchor newAnchor;
 
@@ -142,10 +142,10 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
                             break;
                         default:
                             newAnchor = NeverError.unhandledEnum(
-                                    anchor,
-                                    SpreadsheetViewportAnchor.NONE,
-                                    SpreadsheetViewportAnchor.TOP,
-                                    SpreadsheetViewportAnchor.BOTTOM
+                                anchor,
+                                SpreadsheetViewportAnchor.NONE,
+                                SpreadsheetViewportAnchor.TOP,
+                                SpreadsheetViewportAnchor.BOTTOM
                             );
                             break;
                     }
@@ -161,28 +161,28 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
                             break;
                         default:
                             newAnchor = NeverError.unhandledEnum(
-                                    anchor,
-                                    SpreadsheetViewportAnchor.NONE,
-                                    SpreadsheetViewportAnchor.TOP,
-                                    SpreadsheetViewportAnchor.BOTTOM
+                                anchor,
+                                SpreadsheetViewportAnchor.NONE,
+                                SpreadsheetViewportAnchor.TOP,
+                                SpreadsheetViewportAnchor.BOTTOM
                             );
                             break;
                     }
                     break;
                 default:
                     newAnchor = NeverError.unhandledEnum(
-                            anchor,
-                            SpreadsheetViewportAnchor.NONE,
-                            SpreadsheetViewportAnchor.LEFT,
-                            SpreadsheetViewportAnchor.RIGHT
+                        anchor,
+                        SpreadsheetViewportAnchor.NONE,
+                        SpreadsheetViewportAnchor.LEFT,
+                        SpreadsheetViewportAnchor.RIGHT
                     );
                     break;
             }
 
             newAnchored = newSelectionColumn.toColumnRange()
-                    .setRowRange(
-                            newSelectionRow.toRowRange()
-                    ).setAnchor(newAnchor);
+                .setRowRange(
+                    newSelectionRow.toRowRange()
+                ).setAnchor(newAnchor);
         }
 
         return Optional.of(newAnchored);
@@ -192,7 +192,7 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
         return Optional.of(
-                this.selection.toCell()
+            this.selection.toCell()
         );
     }
 }

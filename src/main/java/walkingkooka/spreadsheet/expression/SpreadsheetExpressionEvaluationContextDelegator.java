@@ -56,10 +56,10 @@ import java.util.Set;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
-        SpreadsheetConverterContextDelegator,
-        FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
-        ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
-        StorageExpressionEvaluationContextDelegator {
+    SpreadsheetConverterContextDelegator,
+    FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
+    StorageExpressionEvaluationContextDelegator {
 
     // SpreadsheetConverterContextDelegator.............................................................................
 
@@ -104,49 +104,49 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return this.spreadsheetExpressionEvaluationContext()
-                .parseFormula(formula);
+            .parseFormula(formula);
     }
 
     @Override
     default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.spreadsheetExpressionEvaluationContext()
-                .loadCell(cell);
+            .loadCell(cell);
     }
 
     @Override
     default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         return this.spreadsheetExpressionEvaluationContext()
-                .loadCellRange(range);
+            .loadCellRange(range);
     }
 
     @Override
     default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetExpressionEvaluationContext()
-                .loadLabel(labelName);
+            .loadLabel(labelName);
     }
 
     @Override
     default SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetExpressionEvaluationContext()
-                .setCell(cell);
+            .setCell(cell);
     }
 
     @Override
     default Optional<SpreadsheetCell> cell() {
         return this.spreadsheetExpressionEvaluationContext()
-                .cell();
+            .cell();
     }
 
     @Override
     default AbsoluteUrl serverUrl() {
         return this.spreadsheetExpressionEvaluationContext()
-                .serverUrl();
+            .serverUrl();
     }
 
     @Override
     default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         this.spreadsheetExpressionEvaluationContext()
-                .setSpreadsheetMetadata(metadata);
+            .setSpreadsheetMetadata(metadata);
     }
 
     // FormHandlerExpressionEvaluationContextDelegator..................................................................
@@ -154,36 +154,36 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default Form<SpreadsheetExpressionReference> form() {
         return this.spreadsheetExpressionEvaluationContext()
-                .form();
+            .form();
     }
 
     @Override
     default Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
         return this.spreadsheetExpressionEvaluationContext()
-                .nextEmptyColumn(row);
+            .nextEmptyColumn(row);
     }
 
     @Override
     default Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
         return this.spreadsheetExpressionEvaluationContext()
-                .nextEmptyRow(column);
+            .nextEmptyRow(column);
     }
 
     @Override
     default Optional<Optional<Object>> reference(final ExpressionReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
-                .reference(reference);
+            .reference(reference);
     }
 
     @Override
     default SpreadsheetExpressionReference validationReference() {
         return this.spreadsheetExpressionEvaluationContext()
-                .validationReference();
+            .validationReference();
     }
 
     @Override
     default SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
-                .validatorContext(reference);
+            .validatorContext(reference);
     }
 }

@@ -33,7 +33,7 @@ public final class ColorSpreadsheetFormatParserToken extends ParentSpreadsheetFo
      */
     static ColorSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new ColorSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class ColorSpreadsheetFormatParserToken extends ParentSpreadsheetFo
             throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
         }
         final Optional<SpreadsheetFormatParserToken> nameOrNumber = without.stream()
-                .map(t -> t.cast(SpreadsheetFormatParserToken.class))
-                .filter(t -> t.isColorName() || t.isColorNumber())
-                .findFirst();
+            .map(t -> t.cast(SpreadsheetFormatParserToken.class))
+            .filter(t -> t.isColorName() || t.isColorNumber())
+            .findFirst();
         if (!nameOrNumber.isPresent()) {
             throw new IllegalArgumentException("Color name or number missing parse tokens " + value);
         }
@@ -68,9 +68,9 @@ public final class ColorSpreadsheetFormatParserToken extends ParentSpreadsheetFo
     @Override
     public ColorSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                ColorSpreadsheetFormatParserToken::with
+            this,
+            children,
+            ColorSpreadsheetFormatParserToken::with
         );
     }
 
@@ -89,9 +89,9 @@ public final class ColorSpreadsheetFormatParserToken extends ParentSpreadsheetFo
     @Override
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return Optional.of(
-                this.nameOrNumber().isColorName() ?
-                        SpreadsheetFormatParserTokenKind.COLOR_NAME :
-                        SpreadsheetFormatParserTokenKind.COLOR_NUMBER
+            this.nameOrNumber().isColorName() ?
+                SpreadsheetFormatParserTokenKind.COLOR_NAME :
+                SpreadsheetFormatParserTokenKind.COLOR_NUMBER
         );
     }
 }

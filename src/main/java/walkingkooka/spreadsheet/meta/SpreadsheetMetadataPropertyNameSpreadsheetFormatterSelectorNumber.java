@@ -43,8 +43,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber ex
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber() {
         super(
-                "numberFormatter",
-                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
+            "numberFormatter",
+            SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
         );
     }
 
@@ -57,11 +57,11 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber ex
     @Override
     Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final LocaleContext context) {
         return Optional.of(
-                SpreadsheetPattern.decimalFormat(
-                        (DecimalFormat) DecimalFormat.getInstance(
-                                context.locale()
-                        )
-                ).toFormat()
+            SpreadsheetPattern.decimalFormat(
+                (DecimalFormat) DecimalFormat.getInstance(
+                    context.locale()
+                )
+            ).toFormat()
         );
     }
 }

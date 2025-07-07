@@ -40,127 +40,127 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE, // formatter
-                Optional.empty(), // value
-                Optional.empty() // expected
+            SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE, // formatter
+            Optional.empty(), // value
+            Optional.empty() // expected
         );
     }
 
     @Test
     public void testFormatZeroBigDecimal() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.zero(),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "0"
+            ExpressionNumberKind.BIG_DECIMAL.zero(),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "0"
         );
     }
 
     @Test
     public void testFormatZeroDouble() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.zero(),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "0"
+            ExpressionNumberKind.DOUBLE.zero(),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "0"
         );
     }
 
     @Test
     public void testFormatSmallNumberBigDecimal() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(1),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "1"
+            ExpressionNumberKind.BIG_DECIMAL.create(1),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "1"
         );
     }
 
     @Test
     public void testFormatSmallNumberDouble() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(1),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "1"
+            ExpressionNumberKind.DOUBLE.create(1),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "1"
         );
     }
 
     @Test
     public void testFormatSmallNumberBigDecimal2() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(1.5),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "1!5"
+            ExpressionNumberKind.BIG_DECIMAL.create(1.5),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "1!5"
         );
     }
 
     @Test
     public void testFormatSmallNumberDouble2() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(1.5),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "1!5"
+            ExpressionNumberKind.DOUBLE.create(1.5),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "1!5"
         );
     }
 
     @Test
     public void testFormatSmallNumberBigDecimal3() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(-12.5),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "N12!5"
+            ExpressionNumberKind.BIG_DECIMAL.create(-12.5),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "N12!5"
         );
     }
 
     @Test
     public void testFormatSmallNumberDouble3() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-12.5),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "N12!5"
+            ExpressionNumberKind.DOUBLE.create(-12.5),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "N12!5"
         );
     }
 
     @Test
     public void testFormatSmallNumberBigDecimalAlmostScientific() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(1.123456789),
-                5,
-                "1!12346"
+            ExpressionNumberKind.BIG_DECIMAL.create(1.123456789),
+            5,
+            "1!12346"
         );
     }
 
     @Test
     public void testFormatSmallNumberBigDecimalAlmostScientific2() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(99.12345678901234567),
-                13,
-                "99!1234567890124"
+            ExpressionNumberKind.BIG_DECIMAL.create(99.12345678901234567),
+            13,
+            "99!1234567890124"
         );
     }
 
     @Test
     public void testFormatSmallNumberDoubleAlmostScientific() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(1.23456789),
-                5,
-                "1!23457"
+            ExpressionNumberKind.DOUBLE.create(1.23456789),
+            5,
+            "1!23457"
         );
     }
 
     @Test
     public void testFormatSmallNumberDoubleAlmostScientific2() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(12.345678),
-                6,
-                "12!345678"
+            ExpressionNumberKind.DOUBLE.create(12.345678),
+            6,
+            "12!345678"
         );
     }
 
     @Test
     public void testFormatNonScientificWithNonArabicDigits() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(1.5),
-                6,
-                '\u0660',
-                "\u0661!\u0665"
+            ExpressionNumberKind.DOUBLE.create(1.5),
+            6,
+            '\u0660',
+            "\u0661!\u0665"
         );
     }
 
@@ -169,127 +169,127 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     @Test
     public void testFormatScientificNumberBigDecimal() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(1E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "1!X12"
+            ExpressionNumberKind.BIG_DECIMAL.create(1E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "1!X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDouble() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(1E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "1!X12"
+            ExpressionNumberKind.DOUBLE.create(1E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "1!X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberBigDecimal2() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(2.3E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "2!3X12"
+            ExpressionNumberKind.BIG_DECIMAL.create(2.3E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "2!3X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDouble2() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(2.3E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "2!3X12"
+            ExpressionNumberKind.DOUBLE.create(2.3E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "2!3X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberBigDecimal3() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(-1.2E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "N1!2X12"
+            ExpressionNumberKind.BIG_DECIMAL.create(-1.2E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "N1!2X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDouble3() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-1.2E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "N1!2X12"
+            ExpressionNumberKind.DOUBLE.create(-1.2E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "N1!2X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberBigDecimal4() {
         this.formatAndCheck2(
-                ExpressionNumberKind.BIG_DECIMAL.create(-1.2345678901E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "N1!23456789X12"
+            ExpressionNumberKind.BIG_DECIMAL.create(-1.2345678901E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "N1!23456789X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDouble4() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
-                "N1!23456789X12"
+            ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
+            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            "N1!23456789X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDoubleDigitCount5() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
-                5, // generalFormatNumberDigitCount
-                "N1!23457X12"
+            ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
+            5, // generalFormatNumberDigitCount
+            "N1!23457X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDoubleDigitCount10() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
-                10, // generalFormatNumberDigitCount
-                "N1!2345678901X12"
+            ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
+            10, // generalFormatNumberDigitCount
+            "N1!2345678901X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDoubleDigitCount11() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
-                11, // generalFormatNumberDigitCount
-                "N1!2345678901X12"
+            ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
+            11, // generalFormatNumberDigitCount
+            "N1!2345678901X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberDoubleDigitCount12() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(-1.23456789012E12),
-                12, // generalFormatNumberDigitCount
-                "N1!23456789012X12"
+            ExpressionNumberKind.DOUBLE.create(-1.23456789012E12),
+            12, // generalFormatNumberDigitCount
+            "N1!23456789012X12"
         );
     }
 
     @Test
     public void testFormatScientificNumberWithNonHinduArabicDigits() {
         this.formatAndCheck2(
-                ExpressionNumberKind.DOUBLE.create(1.2345678901E12),
-                5, // generalFormatNumberDigitCount
-                ARABIC_ZERO_DIGIT, // zeroDigit
+            ExpressionNumberKind.DOUBLE.create(1.2345678901E12),
+            5, // generalFormatNumberDigitCount
+            ARABIC_ZERO_DIGIT, // zeroDigit
+            arabicDigit(1) +
+                "!" +
+                arabicDigit(2) +
+                arabicDigit(3) +
+                arabicDigit(4) +
+                arabicDigit(5) +
+                arabicDigit(7) +
+                'X' +
                 arabicDigit(1) +
-                        "!" +
-                        arabicDigit(2) +
-                        arabicDigit(3) +
-                        arabicDigit(4) +
-                        arabicDigit(5) +
-                        arabicDigit(7) +
-                        'X' +
-                        arabicDigit(1) +
-                        arabicDigit(2)
+                arabicDigit(2)
         );
     }
 
@@ -297,10 +297,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                                  final int generalFormatNumberDigitCount,
                                  final String text) {
         this.formatAndCheck2(
-                number,
-                generalFormatNumberDigitCount,
-                '0', // zeroDigit
-                text
+            number,
+            generalFormatNumberDigitCount,
+            '0', // zeroDigit
+            text
         );
     }
 
@@ -309,13 +309,13 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                                  final char zeroDigit,
                                  final String text) {
         this.formatAndCheck(
-                this.createFormatter(),
-                number,
-                this.createContext(
-                        generalFormatNumberDigitCount,
-                        zeroDigit
-                ),
-                text
+            this.createFormatter(),
+            number,
+            this.createContext(
+                generalFormatNumberDigitCount,
+                zeroDigit
+            ),
+            text
         );
     }
 
@@ -344,8 +344,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     @Override
     public SpreadsheetFormatterContext createContext() {
         return this.createContext(
-                8, // generalFormatNumberDigitCount
-                '0'
+            8, // generalFormatNumberDigitCount
+            '0'
         );
     }
 
@@ -369,14 +369,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
                                                  final Class<T> target) {
                 final ExpressionNumber expressionNumber = ExpressionNumber.class.cast(value);
                 return this.successfulConversion(
-                        ExpressionNumber.class == target ?
-                                expressionNumber :
-                                target.cast(
-                                        target == BigDecimal.class ?
-                                                expressionNumber.bigDecimal() :
-                                                expressionNumber.doubleValue()
-                                ),
-                        target
+                    ExpressionNumber.class == target ?
+                        expressionNumber :
+                        target.cast(
+                            target == BigDecimal.class ?
+                                expressionNumber.bigDecimal() :
+                                expressionNumber.doubleValue()
+                        ),
+                    target
                 );
             }
 
@@ -437,12 +437,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     @Test
     public void testTokens() {
         this.tokensAndCheck(
-                SpreadsheetFormatterContexts.fake(),
-                SpreadsheetFormatterSelectorToken.with(
-                        "General",
-                        "General",
-                        Lists.empty()
-                )
+            SpreadsheetFormatterContexts.fake(),
+            SpreadsheetFormatterSelectorToken.with(
+                "General",
+                "General",
+                Lists.empty()
+            )
         );
     }
 
@@ -451,8 +451,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE,
-                "General"
+            SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE,
+            "General"
         );
     }
 

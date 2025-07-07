@@ -32,7 +32,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
         visitor.accept(selection);
 
         final SpreadsheetCellRangeReference cellRange = visitor.cellRange;
-        if(null == cellRange) {
+        if (null == cellRange) {
             throw new IllegalStateException("Missing cell range for " + CharSequences.quoteAndEscape(selection.toString()));
         }
         return cellRange;

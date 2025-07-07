@@ -37,22 +37,22 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetFormatterAlias>
-        implements PluginAliasSetLike<SpreadsheetFormatterName,
-        SpreadsheetFormatterInfo,
-        SpreadsheetFormatterInfoSet,
-        SpreadsheetFormatterSelector,
-        SpreadsheetFormatterAlias,
-        SpreadsheetFormatterAliasSet>,
-        ImmutableSortedSetDefaults<SpreadsheetFormatterAliasSet, SpreadsheetFormatterAlias> {
+    implements PluginAliasSetLike<SpreadsheetFormatterName,
+    SpreadsheetFormatterInfo,
+    SpreadsheetFormatterInfoSet,
+    SpreadsheetFormatterSelector,
+    SpreadsheetFormatterAlias,
+    SpreadsheetFormatterAliasSet>,
+    ImmutableSortedSetDefaults<SpreadsheetFormatterAliasSet, SpreadsheetFormatterAlias> {
 
     /**
      * An empty {@link SpreadsheetFormatterAliasSet}.
      */
     public final static SpreadsheetFormatterAliasSet EMPTY = new SpreadsheetFormatterAliasSet(
-            PluginAliasSet.with(
-                    SortedSets.empty(),
-                    SpreadsheetFormatterPluginHelper.INSTANCE
-            )
+        PluginAliasSet.with(
+            SortedSets.empty(),
+            SpreadsheetFormatterPluginHelper.INSTANCE
+        )
     );
 
     /**
@@ -69,10 +69,10 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
 
     public static SpreadsheetFormatterAliasSet parse(final String text) {
         return new SpreadsheetFormatterAliasSet(
-                PluginAliasSet.parse(
-                        text,
-                        SpreadsheetFormatterPluginHelper.INSTANCE
-                )
+            PluginAliasSet.parse(
+                text,
+                SpreadsheetFormatterPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -108,21 +108,21 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     @Override
     public SpreadsheetFormatterAliasSet concatOrReplace(final SpreadsheetFormatterAlias alias) {
         return new SpreadsheetFormatterAliasSet(
-                this.pluginAliasSet.concatOrReplace(alias)
+            this.pluginAliasSet.concatOrReplace(alias)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet deleteAliasOrNameAll(final Collection<SpreadsheetFormatterName> aliasOrNames) {
         return this.setElements(
-                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+            this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet keepAliasOrNameAll(final Collection<SpreadsheetFormatterName> aliasOrNames) {
         return this.setElements(
-                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+            this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
         );
     }
 
@@ -161,7 +161,7 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
 
         return after;
     }
-    
+
     @Override
     public SpreadsheetFormatterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetFormatterAlias> sortedSet) {
         return null;
@@ -176,52 +176,52 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     public SpreadsheetFormatterAliasSet subSet(final SpreadsheetFormatterAlias from,
                                                final SpreadsheetFormatterAlias to) {
         return this.setElements(
-                this.pluginAliasSet.subSet(
-                        from,
-                        to
-                )
+            this.pluginAliasSet.subSet(
+                from,
+                to
+            )
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet headSet(final SpreadsheetFormatterAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.headSet(alias)
+            this.pluginAliasSet.headSet(alias)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet tailSet(final SpreadsheetFormatterAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.tailSet(alias)
+            this.pluginAliasSet.tailSet(alias)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet concat(final SpreadsheetFormatterAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.concat(alias)
+            this.pluginAliasSet.concat(alias)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet concatAll(final Collection<SpreadsheetFormatterAlias> aliases) {
         return this.setElements(
-                this.pluginAliasSet.concatAll(aliases)
+            this.pluginAliasSet.concatAll(aliases)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet delete(final SpreadsheetFormatterAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.delete(alias)
+            this.pluginAliasSet.delete(alias)
         );
     }
 
     @Override
     public SpreadsheetFormatterAliasSet deleteAll(final Collection<SpreadsheetFormatterAlias> aliases) {
         return this.setElements(
-                this.pluginAliasSet.deleteAll(aliases)
+            this.pluginAliasSet.deleteAll(aliases)
         );
     }
 
@@ -229,10 +229,10 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     public SpreadsheetFormatterAliasSet replace(final SpreadsheetFormatterAlias oldAlias,
                                                 final SpreadsheetFormatterAlias newAlias) {
         return this.setElements(
-                this.pluginAliasSet.replace(
-                        oldAlias,
-                        newAlias
-                )
+            this.pluginAliasSet.replace(
+                oldAlias,
+                newAlias
+            )
         );
     }
 
@@ -271,23 +271,23 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.pluginAliasSet.text()
+            this.pluginAliasSet.text()
         );
     }
 
     static SpreadsheetFormatterAliasSet unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterAliasSet.class),
-                SpreadsheetFormatterAliasSet::unmarshall,
-                SpreadsheetFormatterAliasSet::marshall,
-                SpreadsheetFormatterAliasSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormatterAliasSet.class),
+            SpreadsheetFormatterAliasSet::unmarshall,
+            SpreadsheetFormatterAliasSet::marshall,
+            SpreadsheetFormatterAliasSet.class
         );
         SpreadsheetFormatterInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }

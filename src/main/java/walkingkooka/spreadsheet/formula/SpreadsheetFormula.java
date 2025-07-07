@@ -70,13 +70,13 @@ import java.util.function.Function;
  * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
 public final class SpreadsheetFormula implements CanBeEmpty,
-        CanReplaceReferences<SpreadsheetFormula>,
-        HasText,
-        Value<Optional<Object>>,
-        Patchable<SpreadsheetFormula>,
-        TreePrintable,
-        UsesToStringBuilder,
-        HasUrlFragment {
+    CanReplaceReferences<SpreadsheetFormula>,
+    HasText,
+    Value<Optional<Object>>,
+    Patchable<SpreadsheetFormula>,
+    TreePrintable,
+    UsesToStringBuilder,
+    HasUrlFragment {
 
     /**
      * A constant for an absent formula text.
@@ -112,12 +112,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * A formula with no text, token, expression, value or error.
      */
     public final static SpreadsheetFormula EMPTY = new SpreadsheetFormula(
-            NO_TEXT,
-            NO_TOKEN,
-            NO_EXPRESSION,
-            NO_VALUE_TYPE,
-            NO_VALUE,
-            NO_ERROR
+        NO_TEXT,
+        NO_TOKEN,
+        NO_EXPRESSION,
+        NO_VALUE_TYPE,
+        NO_VALUE,
+        NO_ERROR
     );
 
     /**
@@ -136,27 +136,27 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         try {
             final Optional<ParserToken> token = parser.orFailIfCursorNotEmpty(
-                    ParserReporters.basic()
+                ParserReporters.basic()
             ).parse(
-                    text,
-                    context
+                text,
+                context
             );
             formula = EMPTY.setText(
-                    begin.textBetween()
-                            .toString()
+                begin.textBetween()
+                    .toString()
             ).setToken(
-                    token.map(t -> t.cast(SpreadsheetFormulaParserToken.class))
+                token.map(t -> t.cast(SpreadsheetFormulaParserToken.class))
             );
         } catch (final Exception cause) {
             text.end();
 
             formula = EMPTY.setText(
-                    begin.textBetween()
-                            .toString()
+                begin.textBetween()
+                    .toString()
             ).setValue(
-                    Optional.of(
-                            SpreadsheetErrorKind.translate(cause)
-                    )
+                Optional.of(
+                    SpreadsheetErrorKind.translate(cause)
+                )
             );
         }
 
@@ -187,8 +187,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public String text() {
         final String text = this.text;
         return null != text ?
-                text :
-                this.token.get().text();
+            text :
+            this.token.get().text();
     }
 
     /**
@@ -197,13 +197,13 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public SpreadsheetFormula setText(final String text) {
         return this.text().equals(text) ? this : checkText(text)
-                .isEmpty() ? EMPTY : new SpreadsheetFormula(
-                text,
-                NO_TOKEN,
-                NO_EXPRESSION,
-                NO_VALUE_TYPE,
-                NO_VALUE,
-                NO_ERROR
+            .isEmpty() ? EMPTY : new SpreadsheetFormula(
+            text,
+            NO_TOKEN,
+            NO_EXPRESSION,
+            NO_VALUE_TYPE,
+            NO_VALUE,
+            NO_ERROR
         );
     }
 
@@ -243,15 +243,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             return this;
         } else {// no need to keep text if token is present.
             final String text1 = Objects.requireNonNull(token, "token")
-                    .isPresent() ? null :
-                    this.text();
+                .isPresent() ? null :
+                this.text();
             return new SpreadsheetFormula(
-                    text1,
-                    token,
-                    NO_EXPRESSION,
-                    NO_VALUE_TYPE,
-                    NO_VALUE,
-                    NO_ERROR
+                text1,
+                token,
+                NO_EXPRESSION,
+                NO_VALUE_TYPE,
+                NO_VALUE,
+                NO_ERROR
             );
         }
     }
@@ -273,12 +273,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public SpreadsheetFormula setExpression(final Optional<Expression> expression) {
         return this.expression.equals(expression) ? this : new SpreadsheetFormula(
-                this.text,
-                this.token,
-                Objects.requireNonNull(expression, "expression"),
-                NO_VALUE_TYPE,
-                NO_VALUE,
-                NO_ERROR
+            this.text,
+            this.token,
+            Objects.requireNonNull(expression, "expression"),
+            NO_VALUE_TYPE,
+            NO_VALUE,
+            NO_ERROR
         );
     }
 
@@ -302,12 +302,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public SpreadsheetFormula setValueType(final Optional<ValidationValueTypeName> valueType) {
         return this.valueType.equals(valueType) ? this : new SpreadsheetFormula(
-                NO_TEXT,
-                NO_TOKEN,
-                NO_EXPRESSION,
-                Objects.requireNonNull(valueType, "valueType"),
-                NO_VALUE,
-                NO_ERROR
+            NO_TEXT,
+            NO_TOKEN,
+            NO_EXPRESSION,
+            Objects.requireNonNull(valueType, "valueType"),
+            NO_VALUE,
+            NO_ERROR
         );
     }
 
@@ -332,12 +332,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public SpreadsheetFormula setValue(final Optional<Object> value) {
         return this.value.equals(value) ? this : new SpreadsheetFormula(
-                this.text,
-                this.token,
-                this.expression,
-                this.valueType,
-                Objects.requireNonNull(value, "value"),
-                NO_ERROR
+            this.text,
+            this.token,
+            this.expression,
+            this.valueType,
+            Objects.requireNonNull(value, "value"),
+            NO_ERROR
         );
     }
 
@@ -355,8 +355,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         // GWT's Optional#or is not implemented.
         Optional<SpreadsheetError> errorOrValue = this.error;
         return errorOrValue.isPresent() ?
-                Cast.to(errorOrValue) :
-                this.value;
+            Cast.to(errorOrValue) :
+            this.value;
     }
 
     // error ...........................................................................................................
@@ -366,10 +366,10 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public Optional<SpreadsheetError> error() {
         return this.errorOrValue()
-                .map(v -> v instanceof SpreadsheetError ?
-                        (SpreadsheetError) v :
-                        null
-                );
+            .map(v -> v instanceof SpreadsheetError ?
+                (SpreadsheetError) v :
+                null
+            );
     }
 
     /**
@@ -378,12 +378,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public SpreadsheetFormula setError(final Optional<SpreadsheetError> error) {
         return this.error.equals(error) ? this : new SpreadsheetFormula(
-                this.text,
-                this.token,
-                this.expression,
-                this.valueType,
-                this.value,
-                Objects.requireNonNull(error, "error")
+            this.text,
+            this.token,
+            this.expression,
+            this.valueType,
+            this.value,
+            Objects.requireNonNull(error, "error")
         );
     }
 
@@ -401,14 +401,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         SpreadsheetFormula result = this;
         final Object value = this.errorOrValue()
-                .orElse(null);
+            .orElse(null);
         if (value instanceof SpreadsheetError) {
             final SpreadsheetError error = (SpreadsheetError) value;
             final Optional<Object> errorValue = error.replaceWithValueIfPossible(context);
 
             result = null != errorValue && errorValue.isPresent() ?
-                    this.setValue(errorValue) :
-                    this;
+                this.setValue(errorValue) :
+                this;
         }
 
         return result;
@@ -424,16 +424,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         // text will be cleared when token is present
         return (null == text || false == text.isEmpty()) &&
-                (this.expression().isPresent() || this.value().isPresent()) ?
-                new SpreadsheetFormula(
-                        text,
-                        this.token,
-                        NO_EXPRESSION,
-                        NO_VALUE_TYPE,
-                        NO_VALUE,
-                        NO_ERROR
-                ) :
-                this.setError(NO_ERROR); // when value then clear error
+            (this.expression().isPresent() || this.value().isPresent()) ?
+            new SpreadsheetFormula(
+                text,
+                this.token,
+                NO_EXPRESSION,
+                NO_VALUE_TYPE,
+                NO_VALUE,
+                NO_ERROR
+            ) :
+            this.setError(NO_ERROR); // when value then clear error
     }
 
     // replaceReferences................................................................................................
@@ -449,19 +449,19 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Objects.requireNonNull(mapper, "mapper");
 
         return this.setToken(
-                this.token.map(
-                        t -> t.replaceIf(
-                                (tt) -> tt instanceof CellSpreadsheetFormulaParserToken,
-                                SpreadsheetFormulaReplaceReferencesFunction.parserToken(mapper)
-                        ).cast(SpreadsheetFormulaParserToken.class)
-                )
+            this.token.map(
+                t -> t.replaceIf(
+                    (tt) -> tt instanceof CellSpreadsheetFormulaParserToken,
+                    SpreadsheetFormulaReplaceReferencesFunction.parserToken(mapper)
+                ).cast(SpreadsheetFormulaParserToken.class)
+            )
         ).setExpression(
-                this.expression.map(
-                        (e) -> e.replaceIf(
-                                ee -> ee.isReference() && ((ReferenceExpression) ee).value() instanceof SpreadsheetCellReferenceOrRange, // predicate
-                                SpreadsheetFormulaReplaceReferencesFunction.expression(mapper)
-                        )
+            this.expression.map(
+                (e) -> e.replaceIf(
+                    ee -> ee.isReference() && ((ReferenceExpression) ee).value() instanceof SpreadsheetCellReferenceOrRange, // predicate
+                    SpreadsheetFormulaReplaceReferencesFunction.expression(mapper)
                 )
+            )
         );
     }
 
@@ -474,11 +474,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Objects.requireNonNull(text, "text");
 
         return JsonNode.object()
-                .set(
-                        TEXT_PROPERTY,
-                        JsonNodeMarshallContexts.basic()
-                                .marshall(text)
-                );
+            .set(
+                TEXT_PROPERTY,
+                JsonNodeMarshallContexts.basic()
+                    .marshall(text)
+            );
     }
 
     /**
@@ -490,10 +490,10 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return JsonNode.object()
-                .set(
-                        VALUE_PROPERTY,
-                        context.marshallOptionalWithType(value)
-                );
+            .set(
+                VALUE_PROPERTY,
+                context.marshallOptionalWithType(value)
+            );
     }
 
     /**
@@ -505,10 +505,10 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
 
         return JsonNode.object()
-                .set(
-                        VALUE_TYPE_PROPERTY,
-                        context.marshallOptional(valueType)
-                );
+            .set(
+                VALUE_TYPE_PROPERTY,
+                context.marshallOptional(valueType)
+            );
     }
 
     // Patchable........................................................................................................
@@ -526,24 +526,24 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             switch (propertyName.value()) {
                 case TEXT_PROPERTY_STRING:
                     patched = patched.setText(
-                            propertyAndValue.stringOrFail()
+                        propertyAndValue.stringOrFail()
                     );
                     break;
                 case VALUE_TYPE_PROPERTY_STRING:
                     patched = patched.setValueType(
-                            Optional.ofNullable(
-                                    context.unmarshall(
-                                            propertyAndValue,
-                                            ValidationValueTypeName.class
-                                    )
+                        Optional.ofNullable(
+                            context.unmarshall(
+                                propertyAndValue,
+                                ValidationValueTypeName.class
                             )
+                        )
                     );
                     break;
                 case VALUE_PROPERTY_STRING:
                     patched = patched.setValue(
-                            Optional.ofNullable(
-                                    context.unmarshallWithType(propertyAndValue)
-                            )
+                        Optional.ofNullable(
+                            context.unmarshallWithType(propertyAndValue)
+                        )
                     );
                     break;
                 case TOKEN_PROPERTY_STRING:
@@ -570,40 +570,40 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         final String text = this.text;
         if (false == CharSequences.isNullOrEmpty(text)) {
             this.printTreeLabelAndValue(
-                    "text",
-                    this.text(),
-                    printer
+                "text",
+                this.text(),
+                printer
             );
         } else {
             this.printTreeLabelAndValue(
-                    "token",
-                    this.token(),
-                    printer
+                "token",
+                this.token(),
+                printer
             );
 
             this.printTreeLabelAndValue(
-                    "expression",
-                    this.expression(),
-                    printer
+                "expression",
+                this.expression(),
+                printer
             );
         }
 
         this.printTreeLabelAndValue(
-                "valueType",
-                this.valueType(),
-                printer
+            "valueType",
+            this.valueType(),
+            printer
         );
 
         this.printTreeLabelAndValue(
-                "value",
-                this.value(),
-                printer
+            "value",
+            this.value(),
+            printer
         );
 
         this.printTreeLabelAndValue(
-                "error",
-                this.error,
-                printer
+            "error",
+            this.error,
+            printer
         );
 
         printer.outdent();
@@ -612,13 +612,13 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private void printTreeLabelAndValue(final String label,
                                         final Object value,
                                         final IndentingPrinter printer) {
-        if(null != value) {
+        if (null != value) {
             printer.println(label + ":");
             printer.indent();
             {
                 TreePrintable.printTreeOrToString(
-                        value,
-                        printer
+                    value,
+                    printer
                 );
             }
             printer.outdent();
@@ -629,9 +629,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                                         final Optional<?> printable,
                                         final IndentingPrinter printer) {
         this.printTreeLabelAndValue(
-                label,
-                printable.orElse(null),
-                printer
+            label,
+            printable.orElse(null),
+            printer
         );
     }
 
@@ -645,20 +645,20 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Objects.requireNonNull(consumer, "consumer");
 
         this.token()
-                .ifPresent(
-                        t -> t.findIf(
-                                tt -> tt instanceof SpreadsheetFormulaParserToken && tt instanceof HasSpreadsheetReference,
-                                ttt -> {
-                                    final HasSpreadsheetReference<?> has = (HasSpreadsheetReference<?>) ttt;
-                                    final Object reference = has.reference();
-                                    if (reference instanceof SpreadsheetExpressionReference) {
-                                        consumer.accept(
-                                                (SpreadsheetExpressionReference) reference
-                                        );
-                                    }
-                                }
-                        )
-                );
+            .ifPresent(
+                t -> t.findIf(
+                    tt -> tt instanceof SpreadsheetFormulaParserToken && tt instanceof HasSpreadsheetReference,
+                    ttt -> {
+                        final HasSpreadsheetReference<?> has = (HasSpreadsheetReference<?>) ttt;
+                        final Object reference = has.reference();
+                        if (reference instanceof SpreadsheetExpressionReference) {
+                            consumer.accept(
+                                (SpreadsheetExpressionReference) reference
+                            );
+                        }
+                    }
+                )
+            );
     }
 
     // json.............................................................................................................
@@ -694,8 +694,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     break;
                 case VALUE_TYPE_PROPERTY_STRING:
                     valueType = context.unmarshallOptional(
-                            child,
-                            ValidationValueTypeName.class
+                        child,
+                        ValidationValueTypeName.class
                     );
                     break;
                 case VALUE_PROPERTY_STRING:
@@ -703,8 +703,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     break;
                 case ERROR_PROPERTY_STRING:
                     error = context.unmarshallOptional(
-                            child,
-                            SpreadsheetError.class
+                        child,
+                        SpreadsheetError.class
                     );
                     break;
                 default:
@@ -714,11 +714,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         }
 
         return EMPTY.setText(text)
-                .setToken(Optional.ofNullable(token))
-                .setExpression(Optional.ofNullable(expression))
-                .setValueType(valueType)
-                .setValue(Optional.ofNullable(value))
-                .setError(error);
+            .setToken(Optional.ofNullable(token))
+            .setExpression(Optional.ofNullable(expression))
+            .setValueType(valueType)
+            .setValue(Optional.ofNullable(value))
+            .setError(error);
     }
 
     /**
@@ -733,8 +733,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         final String text = this.text();
         if (false == text.isEmpty()) {
             object = object.set(
-                    TEXT_PROPERTY,
-                    JsonNode.string(text)
+                TEXT_PROPERTY,
+                JsonNode.string(text)
             );
         }
 
@@ -750,26 +750,26 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         if (value.isPresent()) {
             object = object.set(
-                    VALUE_PROPERTY,
-                    context.marshallWithType(
-                            value.get()
-                    )
+                VALUE_PROPERTY,
+                context.marshallWithType(
+                    value.get()
+                )
             );
         }
 
         final Optional<ValidationValueTypeName> valueType = this.valueType;
         if (valueType.isPresent()) {
             object = object.set(
-                    VALUE_TYPE_PROPERTY,
-                    context.marshallOptional(valueType)
+                VALUE_TYPE_PROPERTY,
+                context.marshallOptional(valueType)
             );
         }
 
         final Optional<SpreadsheetError> error = this.error;
         if (error.isPresent()) {
             object = object.set(
-                    ERROR_PROPERTY,
-                    context.marshallOptional(error)
+                ERROR_PROPERTY,
+                context.marshallOptional(error)
             );
         }
 
@@ -797,10 +797,10 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormula.class),
-                SpreadsheetFormula::unmarshall,
-                SpreadsheetFormula::marshall,
-                SpreadsheetFormula.class
+            JsonNodeContext.computeTypeName(SpreadsheetFormula.class),
+            SpreadsheetFormula::unmarshall,
+            SpreadsheetFormula::marshall,
+            SpreadsheetFormula.class
         );
     }
 
@@ -816,29 +816,29 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.text,
-                this.token,
-                this.expression,
-                this.valueType,
-                this.value,
-                this.error
+            this.text,
+            this.token,
+            this.expression,
+            this.valueType,
+            this.value,
+            this.error
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormula &&
-                        this.equals0(Cast.to(other));
+            other instanceof SpreadsheetFormula &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormula other) {
         return Objects.equals(this.text, other.text) && // text could be null when token is present
-                this.token.equals(other.token) &&
-                this.expression.equals(other.expression) &&
-                this.valueType.equals(other.valueType) &&
-                this.value.equals(other.value) &&
-                this.error.equals(other.error);
+            this.token.equals(other.token) &&
+            this.expression.equals(other.expression) &&
+            this.valueType.equals(other.valueType) &&
+            this.value.equals(other.value) &&
+            this.error.equals(other.error);
     }
 
     @Override
@@ -878,7 +878,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         final Expression expression = this.expression.orElse(null);
         return this.value.isPresent() ||
-                (null != expression && expression.isPure(context));
+            (null != expression && expression.isPure(context));
     }
 }
 

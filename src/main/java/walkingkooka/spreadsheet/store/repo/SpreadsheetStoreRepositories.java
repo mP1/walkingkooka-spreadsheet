@@ -66,19 +66,19 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final StorageStore storage,
                                                    final SpreadsheetUserStore users) {
         return BasicSpreadsheetStoreRepository.with(
-                cells,
-                cellReferences,
-                columns,
-                forms,
-                groups,
-                labels,
-                labelReferences,
-                metadatas,
-                rangeToCells,
-                rangeToConditionalFormattingRules,
-                rows,
-                storage,
-                users
+            cells,
+            cellReferences,
+            columns,
+            forms,
+            groups,
+            labels,
+            labelReferences,
+            metadatas,
+            rangeToCells,
+            rangeToConditionalFormattingRules,
+            rows,
+            storage,
+            users
         );
     }
 
@@ -91,11 +91,11 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                                                           final LocaleContext localeContext,
                                                                                           final ProviderContext providerContext) {
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                id,
-                repository,
-                spreadsheetParserProvider,
-                localeContext,
-                providerContext
+            id,
+            repository,
+            spreadsheetParserProvider,
+            localeContext,
+            providerContext
         );
     }
 

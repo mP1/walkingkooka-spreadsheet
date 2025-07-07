@@ -130,7 +130,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTesting<SpreadsheetFormulaParsers>,
-        ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
+    ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
 
     private final static int TWO_DIGIT_YEAR = 20;
     private ExpressionNumberKind expressionNumberKind;
@@ -143,10 +143,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void setupExpressionNumberKind(final TestInfo testInfo) {
         final String testName = testInfo.getDisplayName();
         this.expressionNumberKind = testName.endsWith("BigDecimal()") ?
-                ExpressionNumberKind.BIG_DECIMAL :
-                testName.endsWith("Double()") ?
-                        ExpressionNumberKind.DOUBLE :
-                        null;
+            ExpressionNumberKind.BIG_DECIMAL :
+            testName.endsWith("Double()") ?
+                ExpressionNumberKind.DOUBLE :
+                null;
     }
 
     // conditionRight...................................................................................................
@@ -154,255 +154,255 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testConditionRightParserParseEmpty() {
         this.conditionRightParserParseFails(
-                ""
+            ""
         );
     }
 
     @Test
     public void testConditionRightParserParseNonConditionSymbol() {
         this.conditionRightParserParseFails(
-                "123"
+            "123"
         );
     }
 
     private void conditionRightParserParseFails(final String text) {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.conditionRight(
-                        valueOrExpressionParser()
-                ),
-                text
+            SpreadsheetFormulaParsers.conditionRight(
+                valueOrExpressionParser()
+            ),
+            text
         );
     }
 
     @Test
     public void testConditionRightParserParseEqualsSignMissingValueOrExpressionFails() {
         this.conditionRightParserParseThrows(
-                "<",
-                "End of text at (2,1) expected VALUE | EXPRESSION"
+            "<",
+            "End of text at (2,1) expected VALUE | EXPRESSION"
         );
     }
 
     private void conditionRightParserParseThrows(final String text,
                                                  final String message) {
         this.parseThrows(
-                SpreadsheetFormulaParsers.conditionRight(
-                        valueOrExpressionParser()
-                ),
-                text,
-                message
+            SpreadsheetFormulaParsers.conditionRight(
+                valueOrExpressionParser()
+            ),
+            text,
+            message
         );
     }
 
     @Test
     public void testConditionRightParserParseEqualsNumber() {
         this.conditionRightParserParseAndCheck(
-                "=123",
-                conditionRightEquals(
-                        equalsSymbol(),
-                        number(123)
-                )
+            "=123",
+            conditionRightEquals(
+                equalsSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseNotEqualsNumber() {
         this.conditionRightParserParseAndCheck(
-                "<>123",
-                conditionRightNotEquals(
-                        notEqualsSymbol(),
-                        number(123)
-                )
+            "<>123",
+            conditionRightNotEquals(
+                notEqualsSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseLessThanNumber() {
         this.conditionRightParserParseAndCheck(
-                "<123",
-                conditionRightLessThan(
-                        lessThanSymbol(),
-                        number(123)
-                )
+            "<123",
+            conditionRightLessThan(
+                lessThanSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseLessThanEqualsNumber() {
         this.conditionRightParserParseAndCheck(
-                "<=123",
-                conditionRightLessThanEquals(
-                        lessThanEqualsSymbol(),
-                        number(123)
-                )
+            "<=123",
+            conditionRightLessThanEquals(
+                lessThanEqualsSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseGreaterThanNumber() {
         this.conditionRightParserParseAndCheck(
-                ">123",
-                conditionRightGreaterThan(
-                        greaterThanSymbol(),
-                        number(123)
-                )
+            ">123",
+            conditionRightGreaterThan(
+                greaterThanSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseGreaterThanEquals() {
         this.conditionRightParserParseAndCheck(
-                ">=123",
-                conditionRightGreaterThanEquals(
-                        greaterThanEqualsSymbol(),
-                        number(123)
-                )
+            ">=123",
+            conditionRightGreaterThanEquals(
+                greaterThanEqualsSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseGreaterThanEqualsNumber() {
         this.conditionRightParserParseAndCheck(
-                ">=123",
-                conditionRightGreaterThanEquals(
-                        greaterThanEqualsSymbol(),
-                        number(123)
-                )
+            ">=123",
+            conditionRightGreaterThanEquals(
+                greaterThanEqualsSymbol(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseGreaterThanEqualsNumberWithExtraSpaces() {
         this.conditionRightParserParseAndCheck(
-                ">= 123",
-                conditionRightGreaterThanEquals(
-                        greaterThanEqualsSymbol(),
-                        whitespace1(),
-                        number(123)
-                )
+            ">= 123",
+            conditionRightGreaterThanEquals(
+                greaterThanEqualsSymbol(),
+                whitespace1(),
+                number(123)
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseEqualsString() {
         this.conditionRightParserParseAndCheck(
-                "=\"Hello\"",
-                conditionRightEquals(
-                        equalsSymbol(),
-                        SpreadsheetFormulaParserToken.text(
-                                Lists.of(
-                                        doubleQuotesSymbol(),
-                                        textLiteral("Hello"),
-                                        doubleQuotesSymbol()
-                                ),
-                                "\"Hello\""
-                        )
+            "=\"Hello\"",
+            conditionRightEquals(
+                equalsSymbol(),
+                SpreadsheetFormulaParserToken.text(
+                    Lists.of(
+                        doubleQuotesSymbol(),
+                        textLiteral("Hello"),
+                        doubleQuotesSymbol()
+                    ),
+                    "\"Hello\""
                 )
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseEqualsFunction() {
         this.conditionRightParserParseAndCheck(
-                "=xyz()",
-                conditionRightEquals(
-                        equalsSymbol(),
-                        namedFunction(
-                                functionName("xyz"),
-                                functionParameters(
-                                        parenthesisOpen(),
-                                        parenthesisClose()
-                                )
-                        )
+            "=xyz()",
+            conditionRightEquals(
+                equalsSymbol(),
+                namedFunction(
+                    functionName("xyz"),
+                    functionParameters(
+                        parenthesisOpen(),
+                        parenthesisClose()
+                    )
                 )
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseEqualsFunctionWithArguments() {
         this.conditionRightParserParseAndCheck(
-                "=def(123)",
-                conditionRightEquals(
-                        equalsSymbol(),
-                        namedFunction(
-                                functionName("def"),
-                                functionParameters(
-                                        parenthesisOpen(),
-                                        number(123),
-                                        parenthesisClose()
-                                )
-                        )
+            "=def(123)",
+            conditionRightEquals(
+                equalsSymbol(),
+                namedFunction(
+                    functionName("def"),
+                    functionParameters(
+                        parenthesisOpen(),
+                        number(123),
+                        parenthesisClose()
+                    )
                 )
+            )
         );
     }
 
     @Test
     public void testConditionRightParserParseEqualsFunctionTrailingSpace() {
         this.conditionRightParserParseAndCheck(
-                "=abc() ",
-                conditionRightEquals(
-                        equalsSymbol(),
-                        expression(
-                                namedFunction(
-                                        functionName("abc"),
-                                        functionParameters(
-                                                parenthesisOpen(),
-                                                parenthesisClose()
-                                        )
-                                ),
-                                whitespace1()
+            "=abc() ",
+            conditionRightEquals(
+                equalsSymbol(),
+                expression(
+                    namedFunction(
+                        functionName("abc"),
+                        functionParameters(
+                            parenthesisOpen(),
+                            parenthesisClose()
                         )
+                    ),
+                    whitespace1()
                 )
+            )
         );
     }
 
     private ConditionRightSpreadsheetFormulaParserToken conditionRightEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::conditionRightEquals,
-                tokens
+            SpreadsheetFormulaParserToken::conditionRightEquals,
+            tokens
         );
     }
 
     private ConditionRightSpreadsheetFormulaParserToken conditionRightGreaterThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::conditionRightGreaterThan,
-                tokens
+            SpreadsheetFormulaParserToken::conditionRightGreaterThan,
+            tokens
         );
     }
 
     private ConditionRightSpreadsheetFormulaParserToken conditionRightGreaterThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::conditionRightGreaterThanEquals,
-                tokens
+            SpreadsheetFormulaParserToken::conditionRightGreaterThanEquals,
+            tokens
         );
     }
 
     private ConditionRightSpreadsheetFormulaParserToken conditionRightLessThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::conditionRightLessThan,
-                tokens
+            SpreadsheetFormulaParserToken::conditionRightLessThan,
+            tokens
         );
     }
 
     private ConditionRightSpreadsheetFormulaParserToken conditionRightLessThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::conditionRightLessThanEquals,
-                tokens
+            SpreadsheetFormulaParserToken::conditionRightLessThanEquals,
+            tokens
         );
     }
 
     private ConditionRightSpreadsheetFormulaParserToken conditionRightNotEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::conditionRightNotEquals,
-                tokens
+            SpreadsheetFormulaParserToken::conditionRightNotEquals,
+            tokens
         );
     }
 
     private void conditionRightParserParseAndCheck(final String text,
                                                    final SpreadsheetFormulaParserToken expected) {
         this.conditionRightParserParseAndCheck(
-                text,
-                expected,
-                text
+            text,
+            expected,
+            text
         );
     }
 
@@ -410,10 +410,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final SpreadsheetFormulaParserToken expected,
                                                    final String consumed) {
         this.conditionRightParserParseAndCheck(
-                text,
-                expected,
-                consumed,
-                ""
+            text,
+            expected,
+            consumed,
+            ""
         );
     }
 
@@ -422,13 +422,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final String textConsumed,
                                                    final String textAfter) {
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.conditionRight(
-                        valueOrExpressionParser()
-                ),
-                text,
-                expected,
-                textConsumed,
-                textAfter
+            SpreadsheetFormulaParsers.conditionRight(
+                valueOrExpressionParser()
+            ),
+            text,
+            expected,
+            textConsumed,
+            textAfter
         );
     }
 
@@ -437,8 +437,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testExpressionWithApostropheStringFails() {
         this.expressionParserParseFails(
-                "'Apostrophe String",
-                "Invalid character '\\'' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "'Apostrophe String",
+            "Invalid character '\\'' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -447,15 +447,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "z(123)";
 
         this.expressionParserParseStringAndCheck(
-                text,
-                namedFunction(
-                        functionName("z"),
-                        functionParameters(
-                                parenthesisOpen(),
-                                number(123),
-                                parenthesisClose()
-                        )
+            text,
+            namedFunction(
+                functionName("z"),
+                functionParameters(
+                    parenthesisOpen(),
+                    number(123),
+                    parenthesisClose()
                 )
+            )
         );
     }
 
@@ -464,10 +464,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "true";
 
         this.expressionParserParseStringAndCheck(
-                text,
-                booleanValue(
-                        booleanLiteral(true)
-                )
+            text,
+            booleanValue(
+                booleanLiteral(true)
+            )
         );
     }
 
@@ -476,10 +476,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "false";
 
         this.expressionParserParseStringAndCheck(
-                text,
-                booleanValue(
-                        booleanLiteral(false)
-                )
+            text,
+            booleanValue(
+                booleanLiteral(false)
+            )
         );
     }
 
@@ -488,8 +488,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123";
 
         this.expressionParserParseStringAndCheck(
-                text,
-                number(123)
+            text,
+            number(123)
         );
     }
 
@@ -498,15 +498,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-1+2";
 
         this.expressionParserParseStringAndCheck(
-                text,
-                addition(
-                        negative(
-                                minusSymbol(),
-                                number(1)
-                        ),
-                        plusSymbol(),
-                        number(2)
-                )
+            text,
+            addition(
+                negative(
+                    minusSymbol(),
+                    number(1)
+                ),
+                plusSymbol(),
+                number(2)
+            )
         );
     }
 
@@ -515,40 +515,40 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "1+2";
 
         this.expressionParserParseStringAndCheck(
-                text,
-                addition(
-                        number(1),
-                        plusSymbol(),
-                        number(2)
-                )
+            text,
+            addition(
+                number(1),
+                plusSymbol(),
+                number(2)
+            )
         );
     }
 
     private void expressionParserParseFails(final String text,
                                             final String expected) {
         this.parseThrows(
-                SpreadsheetFormulaParsers.expression(),
-                text,
-                expected
+            SpreadsheetFormulaParsers.expression(),
+            text,
+            expected
         );
     }
 
     private void expressionParserParseStringAndCheck(final String text,
                                                      final SpreadsheetFormulaParserToken expected) {
         this.parseAndCheck(
-                expressionParser(),
-                text,
-                expected,
-                text
+            expressionParser(),
+            text,
+            expected,
+            text
         );
     }
 
     @Test
     public void testExpressionToString() {
         this.checkEquals(
-                "EXPRESSION",
-                SpreadsheetFormulaParsers.expression()
-                        .toString()
+            "EXPRESSION",
+            SpreadsheetFormulaParsers.expression()
+                .toString()
         );
     }
 
@@ -557,8 +557,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testTemplateExpressionApostropheStringFails() {
         this.templateExpressionParserParseFails(
-                "'Apostrophe String",
-                "Invalid character '\\'' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | TEMPLATE_VALUE_NAME | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "'Apostrophe String",
+            "Invalid character '\\'' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | TEMPLATE_VALUE_NAME | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -567,15 +567,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "z(123)";
 
         this.templateExpressionParserParseStringAndCheck(
-                text,
-                namedFunction(
-                        functionName("z"),
-                        functionParameters(
-                                parenthesisOpen(),
-                                number(123),
-                                parenthesisClose()
-                        )
+            text,
+            namedFunction(
+                functionName("z"),
+                functionParameters(
+                    parenthesisOpen(),
+                    number(123),
+                    parenthesisClose()
                 )
+            )
         );
     }
 
@@ -584,8 +584,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123";
 
         this.templateExpressionParserParseStringAndCheck(
-                text,
-                number(123)
+            text,
+            number(123)
         );
     }
 
@@ -594,11 +594,11 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "Template-value-name-123";
 
         this.templateExpressionParserParseStringAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.templateValueName(
-                        TemplateValueName.with(text),
-                        text
-                )
+            text,
+            SpreadsheetFormulaParserToken.templateValueName(
+                TemplateValueName.with(text),
+                text
+            )
         );
     }
 
@@ -607,15 +607,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-1+2";
 
         this.templateExpressionParserParseStringAndCheck(
-                text,
-                addition(
-                        negative(
-                                minusSymbol(),
-                                number(1)
-                        ),
-                        plusSymbol(),
-                        number(2)
-                )
+            text,
+            addition(
+                negative(
+                    minusSymbol(),
+                    number(1)
+                ),
+                plusSymbol(),
+                number(2)
+            )
         );
     }
 
@@ -624,40 +624,40 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "1+2";
 
         this.templateExpressionParserParseStringAndCheck(
-                text,
-                addition(
-                        number(1),
-                        plusSymbol(),
-                        number(2)
-                )
+            text,
+            addition(
+                number(1),
+                plusSymbol(),
+                number(2)
+            )
         );
     }
 
     private void templateExpressionParserParseFails(final String text,
-                                            final String expected) {
+                                                    final String expected) {
         this.parseThrows(
-                SpreadsheetFormulaParsers.templateExpression(),
-                text,
-                expected
+            SpreadsheetFormulaParsers.templateExpression(),
+            text,
+            expected
         );
     }
 
     private void templateExpressionParserParseStringAndCheck(final String text,
                                                              final SpreadsheetFormulaParserToken expected) {
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.templateExpression(),
-                text,
-                expected,
-                text
+            SpreadsheetFormulaParsers.templateExpression(),
+            text,
+            expected,
+            text
         );
     }
 
     @Test
     public void testTemplateExpressionToString() {
         this.checkEquals(
-                "EXPRESSION",
-                SpreadsheetFormulaParsers.expression()
-                        .toString()
+            "EXPRESSION",
+            SpreadsheetFormulaParsers.expression()
+                .toString()
         );
     }
 
@@ -688,18 +688,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String apostropheText = '\'' + text;
 
         this.parseAndCheck(
-                valueOrExpressionParser(),
-                apostropheText,
-                TextSpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                        SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
-                                        SpreadsheetFormulaParserToken.textLiteral(text, text)
-                                ).stream()
-                                .filter(t -> !t.text().isEmpty())
-                                .collect(Collectors.toList()),
-                        apostropheText),
-                apostropheText,
-                ""
+            valueOrExpressionParser(),
+            apostropheText,
+            TextSpreadsheetFormulaParserToken.text(
+                Lists.of(
+                        SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                        SpreadsheetFormulaParserToken.textLiteral(text, text)
+                    ).stream()
+                    .filter(t -> !t.text().isEmpty())
+                    .collect(Collectors.toList()),
+                apostropheText),
+            apostropheText,
+            ""
         );
     }
 
@@ -710,14 +710,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "true";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.booleanValue(
-                        Lists.of(
-                                booleanLiteral(true)
-                        ),
-                        text
+            text,
+            SpreadsheetFormulaParserToken.booleanValue(
+                Lists.of(
+                    booleanLiteral(true)
                 ),
                 text
+            ),
+            text
         );
     }
 
@@ -726,14 +726,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "false";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.booleanValue(
-                        Lists.of(
-                                booleanLiteral(false)
-                        ),
-                        text
+            text,
+            SpreadsheetFormulaParserToken.booleanValue(
+                Lists.of(
+                    booleanLiteral(false)
                 ),
                 text
+            ),
+            text
         );
     }
 
@@ -742,47 +742,47 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testValueOrExpressionParserWithDateParsePatternParserWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser()),
-                "2000/12/31 Extra"
+            SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser()),
+            "2000/12/31 Extra"
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithDateParsePatternParserWithDayMonthYear2000() {
         this.dateParserPatternPatternParseParseAndCheck(
-                "31/12/2000",
-                "dd/mm/yyyy",
-                day31(),
-                slash(),
-                month12(),
-                slash(),
-                year2000()
+            "31/12/2000",
+            "dd/mm/yyyy",
+            day31(),
+            slash(),
+            month12(),
+            slash(),
+            year2000()
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithDateParsePatternParserWithDayMonthYear99() {
         this.dateParserPatternPatternParseParseAndCheck(
-                "31/12/99",
-                "dd/mm/yy",
-                day31(),
-                slash(),
-                month12(),
-                slash(),
-                year99()
+            "31/12/99",
+            "dd/mm/yy",
+            day31(),
+            slash(),
+            month12(),
+            slash(),
+            year99()
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithDateParsePatternParserWithYear2000MonthDay() {
         this.dateParserPatternPatternParseParseAndCheck(
-                "2000/12/31",
-                "yyyy/mm/dd",
-                year2000(),
-                slash(),
-                month12(),
-                slash(),
-                day31()
+            "2000/12/31",
+            "yyyy/mm/dd",
+            year2000(),
+            slash(),
+            month12(),
+            slash(),
+            day31()
         );
     }
 
@@ -790,10 +790,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                             final String pattern,
                                                             final SpreadsheetFormulaParserToken... tokens) {
         this.parseValueAndCheck(
-                text,
-                SpreadsheetPattern.parseDateParsePattern(pattern).parser(),
-                SpreadsheetFormulaParserToken::date,
-                tokens
+            text,
+            SpreadsheetPattern.parseDateParsePattern(pattern).parser(),
+            SpreadsheetFormulaParserToken::date,
+            tokens
         );
     }
 
@@ -802,31 +802,31 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testValueOrExpressionParserWithDateTimeParsePatternParserWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:m").parser()),
-                "2000/12/31 12:58 Extra"
+            SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:m").parser()),
+            "2000/12/31 12:58 Extra"
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithDateTimeParsePatternParserWithDayMonthYearHourMinutes() {
         this.parseDateTimeAndCheck(
-                "31/12/2000 11:58:59.123 pm",
-                "dd/mm/yyyy hh:mm:ss.000 a/p",
-                day31(),
-                slash(),
-                month12(),
-                slash(),
-                year2000(),
-                whitespace(" "),
-                hour11(),
-                colon(),
-                minute58(),
-                colon(),
-                seconds59(),
-                decimal(),
-                millis123(),
-                whitespace(" "),
-                pm()
+            "31/12/2000 11:58:59.123 pm",
+            "dd/mm/yyyy hh:mm:ss.000 a/p",
+            day31(),
+            slash(),
+            month12(),
+            slash(),
+            year2000(),
+            whitespace(" "),
+            hour11(),
+            colon(),
+            minute58(),
+            colon(),
+            seconds59(),
+            decimal(),
+            millis123(),
+            whitespace(" "),
+            pm()
         );
     }
 
@@ -834,10 +834,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                        final String pattern,
                                        final SpreadsheetFormulaParserToken... tokens) {
         this.parseValueAndCheck(
-                text,
-                SpreadsheetPattern.parseDateTimeParsePattern(pattern).parser(),
-                SpreadsheetFormulaParserToken::dateTime,
-                tokens
+            text,
+            SpreadsheetPattern.parseDateTimeParsePattern(pattern).parser(),
+            SpreadsheetFormulaParserToken::dateTime,
+            tokens
         );
     }
 
@@ -846,47 +846,47 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testValueOrExpressionParserWithTimeParsePatternParserWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()),
-                "12:58 Extra"
+            SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()),
+            "12:58 Extra"
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithTimeParsePatternParserWithHourMinutes() {
         this.parseTimeAndCheck(
-                "11:58",
-                "hh:mm",
-                hour11(),
-                colon(),
-                minute58()
+            "11:58",
+            "hh:mm",
+            hour11(),
+            colon(),
+            minute58()
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithTimeParsePatternParserWithHourMinutesSeconds() {
         this.parseTimeAndCheck(
-                "11:58:59",
-                "hh:mm:ss",
-                hour11(),
-                colon(),
-                minute58(),
-                colon(),
-                seconds59()
+            "11:58:59",
+            "hh:mm:ss",
+            hour11(),
+            colon(),
+            minute58(),
+            colon(),
+            seconds59()
         );
     }
 
     @Test
     public void testValueOrExpressionParserWithTimeParsePatternParserWithHourMinutesSecondsMillis() {
         this.parseTimeAndCheck(
-                "11:58:59.123",
-                "hh:mm:ss.000",
-                hour11(),
-                colon(),
-                minute58(),
-                colon(),
-                seconds59(),
-                decimal(),
-                millis123()
+            "11:58:59.123",
+            "hh:mm:ss.000",
+            hour11(),
+            colon(),
+            minute58(),
+            colon(),
+            seconds59(),
+            decimal(),
+            millis123()
         );
     }
 
@@ -894,10 +894,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                    final String pattern,
                                    final SpreadsheetFormulaParserToken... tokens) {
         this.parseValueAndCheck(
-                text,
-                SpreadsheetPattern.parseTimeParsePattern(pattern).parser(),
-                SpreadsheetFormulaParserToken::time,
-                tokens
+            text,
+            SpreadsheetPattern.parseTimeParsePattern(pattern).parser(),
+            SpreadsheetFormulaParserToken::time,
+            tokens
         );
     }
 
@@ -907,14 +907,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                     final SpreadsheetFormulaParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.valueOrExpression(parser),
-                text,
-                factory.apply(
-                        list,
-                        ParserToken.text(list)
-                ),
-                text,
-                ""
+            SpreadsheetFormulaParsers.valueOrExpression(parser),
+            text,
+            factory.apply(
+                list,
+                ParserToken.text(list)
+            ),
+            text,
+            ""
         );
     }
 
@@ -925,15 +925,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "\"abc-123\"";
 
         this.valueOrExpressionParserParseAndCheck(text,
-                SpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                doubleQuotesSymbol(),
-                                textLiteral("abc-123"),
-                                doubleQuotesSymbol()
-                        ),
-                        text
+            SpreadsheetFormulaParserToken.text(
+                Lists.of(
+                    doubleQuotesSymbol(),
+                    textLiteral("abc-123"),
+                    doubleQuotesSymbol()
                 ),
                 text
+            ),
+            text
         );
     }
 
@@ -942,17 +942,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "\"abc-\"\"-123\"";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                doubleQuotesSymbol(),
-                                SpreadsheetFormulaParserToken.textLiteral("abc-\"-123", "abc-\"\"-123"),
-                                doubleQuotesSymbol()
-                        ),
-                        text
+            text,
+            SpreadsheetFormulaParserToken.text(
+                Lists.of(
+                    doubleQuotesSymbol(),
+                    SpreadsheetFormulaParserToken.textLiteral("abc-\"-123", "abc-\"\"-123"),
+                    doubleQuotesSymbol()
                 ),
-                text,
-                "\"abc-\\\"-123\""
+                text
+            ),
+            text,
+            "\"abc-\\\"-123\""
         );
     }
 
@@ -961,8 +961,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testValueOrExpressionParserParseNumberWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePattern("#").parser().andEmptyTextCursor()),
-                "12 Extra"
+            SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePattern("#").parser().andEmptyTextCursor()),
+            "12 Extra"
         );
     }
 
@@ -971,8 +971,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "1";
 
         this.valueOrExpressionParserParseAndCheck(text,
-                number(1),
-                text);
+            number(1),
+            text);
     }
 
     @Test
@@ -980,13 +980,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "100%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(100),
-                        percentSymbol()
-                ),
-                text,
-                "1"
+            text,
+            number(
+                digits(100),
+                percentSymbol()
+            ),
+            text,
+            "1"
         );
     }
 
@@ -995,13 +995,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(123),
-                        percentSymbol()
-                ),
-                text,
-                "1.23"
+            text,
+            number(
+                digits(123),
+                percentSymbol()
+            ),
+            text,
+            "1.23"
         );
     }
 
@@ -1010,14 +1010,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "100.%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(100),
-                        decimal(),
-                        percentSymbol()
-                ),
-                text,
-                "1"
+            text,
+            number(
+                digits(100),
+                decimal(),
+                percentSymbol()
+            ),
+            text,
+            "1"
         );
     }
 
@@ -1026,14 +1026,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123.%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(123),
-                        decimal(),
-                        percentSymbol()
-                ),
-                text,
-                "1.23"
+            text,
+            number(
+                digits(123),
+                decimal(),
+                percentSymbol()
+            ),
+            text,
+            "1.23"
         );
     }
 
@@ -1042,15 +1042,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "100.0%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(100),
-                        decimal(),
-                        digits(0),
-                        percentSymbol()
-                ),
-                text,
-                "1"
+            text,
+            number(
+                digits(100),
+                decimal(),
+                digits(0),
+                percentSymbol()
+            ),
+            text,
+            "1"
         );
     }
 
@@ -1059,15 +1059,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123.5%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(123),
-                        decimal(),
-                        digits(5),
-                        percentSymbol()
-                ),
-                text,
-                "1.235"
+            text,
+            number(
+                digits(123),
+                decimal(),
+                digits(5),
+                percentSymbol()
+            ),
+            text,
+            "1.235"
         );
     }
 
@@ -1076,17 +1076,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellParserParseColumnFails() {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.cell(),
-                "A"
+            SpreadsheetFormulaParsers.cell(),
+            "A"
         );
     }
 
     @Test
     public void testCellParserParseLabelFails() {
         this.parseThrows(
-                SpreadsheetFormulaParsers.cell(),
-                "LABEL123",
-                "Invalid column \"LABEL\" not between \"A\" and \"XFE\""
+            SpreadsheetFormulaParsers.cell(),
+            "LABEL123",
+            "Invalid column \"LABEL\" not between \"A\" and \"XFE\""
         );
     }
 
@@ -1114,25 +1114,25 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                          final SpreadsheetFormulaParserToken expected,
                                          final String text) {
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
-                from,
-                expected,
-                text
+            SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
+            from,
+            expected,
+            text
         );
 
         this.cellOrCellRangeOrLabelParseAndCheck(
-                from,
-                expected,
-                text
+            from,
+            expected,
+            text
         );
     }
 
     @Test
     public void testCellParserToString() {
         this.checkEquals(
-                "CELL",
-                SpreadsheetFormulaParsers.cell()
-                        .toString()
+            "CELL",
+            SpreadsheetFormulaParsers.cell()
+                .toString()
         );
     }
 
@@ -1141,8 +1141,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellOrCellRangeOrLabelParserWithExpressionFails() {
         this.parseFailAndCheck(
-                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
-                "1+2"
+            SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
+            "1+2"
         );
     }
 
@@ -1167,18 +1167,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "A1:B2";
 
         final CellRangeSpreadsheetFormulaParserToken range = SpreadsheetFormulaParserToken.cellRange(
-                Lists.of(
-                        this.cell(0, "A", 0),
-                        betweenSymbol(),
-                        this.cell(1, "B", 1)
-                ),
-                text
+            Lists.of(
+                this.cell(0, "A", 0),
+                betweenSymbol(),
+                this.cell(1, "B", 1)
+            ),
+            text
         );
 
         this.cellOrCellRangeOrLabelParseAndCheck(
-                text,
-                range,
-                text
+            text,
+            range,
+            text
         );
     }
 
@@ -1187,8 +1187,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "Hello";
 
         this.cellOrCellRangeOrLabelParseAndCheck(text,
-                SpreadsheetFormulaParserToken.label(SpreadsheetSelection.labelName(text), text),
-                text);
+            SpreadsheetFormulaParserToken.label(SpreadsheetSelection.labelName(text), text),
+            text);
     }
 
     /**
@@ -1199,10 +1199,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                      final SpreadsheetFormulaParserToken expected,
                                                      final String text) {
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
-                from,
-                expected,
-                text
+            SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
+            from,
+            expected,
+            text
         );
         this.valueOrExpressionParserParseAndCheck(from, expected, text);
     }
@@ -1210,9 +1210,9 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellOrCellRangeOrLabelParserToString() {
         this.checkEquals(
-                "LABEL | CELL_RANGE | CELL",
-                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel()
-                        .toString()
+            "LABEL | CELL_RANGE | CELL",
+            SpreadsheetFormulaParsers.cellOrCellRangeOrLabel()
+                .toString()
         );
     }
 
@@ -1277,21 +1277,21 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         final String text = from.text() + "  " + betweenSymbol() + "  " + to.text();
         final CellRangeSpreadsheetFormulaParserToken range = SpreadsheetFormulaParserToken.cellRange(
-                Lists.of(
-                        from,
-                        whitespace2(),
-                        betweenSymbol(),
-                        whitespace2(),
-                        to
-                ),
-                text
+            Lists.of(
+                from,
+                whitespace2(),
+                betweenSymbol(),
+                whitespace2(),
+                to
+            ),
+            text
         );
 
         this.cellRangeParserParseAndCheck(
-                text,
-                range,
-                text,
-                text.replace(" ", "")
+            text,
+            range,
+            text,
+            text.replace(" ", "")
         );
     }
 
@@ -1302,10 +1302,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                               final CellRangeSpreadsheetFormulaParserToken expected,
                                               final String text) {
         this.cellRangeParserParseAndCheck(
-                from,
-                expected,
-                text,
-                text
+            from,
+            expected,
+            text,
+            text
         );
     }
 
@@ -1314,25 +1314,25 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                               final String text,
                                               final String expressionToString) {
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.cellRange(),
-                from,
-                expected,
-                text
+            SpreadsheetFormulaParsers.cellRange(),
+            from,
+            expected,
+            text
         );
         this.valueOrExpressionParserParseAndCheck(
-                from,
-                expected,
-                text,
-                expressionToString
+            from,
+            expected,
+            text,
+            expressionToString
         );
     }
 
     @Test
     public void testCellRangeParserToString() {
         this.checkEquals(
-                "CELL_RANGE",
-                SpreadsheetFormulaParsers.cellRange()
-                        .toString()
+            "CELL_RANGE",
+            SpreadsheetFormulaParsers.cellRange()
+                .toString()
         );
     }
 
@@ -1355,21 +1355,21 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void errorParserParseAndCheck(final SpreadsheetErrorKind kind) {
         this.errorParserParseAndCheck(
-                kind.text(),
-                SpreadsheetFormulaParserToken.error(
-                        kind.toError(),
-                        kind.text()
-                )
+            kind.text(),
+            SpreadsheetFormulaParserToken.error(
+                kind.toError(),
+                kind.text()
+            )
         );
     }
 
     private void errorParserParseAndCheck(final String from,
                                           final ErrorSpreadsheetFormulaParserToken expected) {
         this.parseAndCheck(
-                SpreadsheetFormulaParsers.error(),
-                from,
-                expected,
-                from
+            SpreadsheetFormulaParsers.error(),
+            from,
+            expected,
+            from
         );
     }
 
@@ -1378,8 +1378,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testValueOrExpressionParserParseStarFails() {
         this.valueOrExpressionParserParseFails(
-                "1+*",
-                "Invalid character '*' at 2 expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "1+*",
+            "Invalid character '*' at 2 expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -1388,12 +1388,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "A1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                cell(
-                        columnReference("A"),
-                        rowReference("1")
-                ),
-                text
+            text,
+            cell(
+                columnReference("A"),
+                rowReference("1")
+            ),
+            text
         );
     }
 
@@ -1402,12 +1402,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "$A$1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                cell(
-                        columnReference("$A"),
-                        rowReference("$1")
-                ),
-                text
+            text,
+            cell(
+                columnReference("$A"),
+                rowReference("$1")
+            ),
+            text
         );
     }
 
@@ -1416,12 +1416,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "$A1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                cell(
-                        columnReference("$A"),
-                        rowReference("1")
-                ),
-                text
+            text,
+            cell(
+                columnReference("$A"),
+                rowReference("1")
+            ),
+            text
         );
     }
 
@@ -1430,12 +1430,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "A$1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                cell(
-                        columnReference("A"),
-                        rowReference("$1")
-                ),
-                text
+            text,
+            cell(
+                columnReference("A"),
+                rowReference("$1")
+            ),
+            text
         );
     }
 
@@ -1446,40 +1446,40 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "A1:B2";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.cellRange(
+            text,
+            SpreadsheetFormulaParserToken.cellRange(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.cell(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.cell(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.column(
-                                                        SpreadsheetSelection.parseColumn("A"),
-                                                        "A"
-                                                ),
-                                                SpreadsheetFormulaParserToken.row(
-                                                        SpreadsheetSelection.parseRow("1"),
-                                                        "1"
-                                                )
-                                        ),
-                                        "A1"
-                                ),
-                                betweenSymbol(),
-                                SpreadsheetFormulaParserToken.cell(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.column(
-                                                        SpreadsheetSelection.parseColumn("B"),
-                                                        "B"
-                                                ),
-                                                SpreadsheetFormulaParserToken.row(
-                                                        SpreadsheetSelection.parseRow("2"),
-                                                        "2"
-                                                )
-                                        ),
-                                        "B2"
-                                )
+                            SpreadsheetFormulaParserToken.column(
+                                SpreadsheetSelection.parseColumn("A"),
+                                "A"
+                            ),
+                            SpreadsheetFormulaParserToken.row(
+                                SpreadsheetSelection.parseRow("1"),
+                                "1"
+                            )
                         ),
-                        text
+                        "A1"
+                    ),
+                    betweenSymbol(),
+                    SpreadsheetFormulaParserToken.cell(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.column(
+                                SpreadsheetSelection.parseColumn("B"),
+                                "B"
+                            ),
+                            SpreadsheetFormulaParserToken.row(
+                                SpreadsheetSelection.parseRow("2"),
+                                "2"
+                            )
+                        ),
+                        "B2"
+                    )
                 ),
                 text
+            ),
+            text
         );
     }
 
@@ -1488,34 +1488,34 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "$A$1:$B$2";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.cellRange(
+            text,
+            SpreadsheetFormulaParserToken.cellRange(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.cell(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.cell(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.column(
-                                                        SpreadsheetSelection.parseColumn("$A"),
-                                                        "$A"
-                                                ),
-                                                SpreadsheetFormulaParserToken.row(
-                                                        SpreadsheetSelection.parseRow("$1"),
-                                                        "$1"
-                                                )
-                                        ),
-                                        "$A$1"
-                                ),
-                                betweenSymbol(),
-                                SpreadsheetFormulaParserToken.cell(
-                                        Lists.of(
-                                                columnReference("$B"),
-                                                rowReference("$2")
-                                        ),
-                                        "$B$2"
-                                )
+                            SpreadsheetFormulaParserToken.column(
+                                SpreadsheetSelection.parseColumn("$A"),
+                                "$A"
+                            ),
+                            SpreadsheetFormulaParserToken.row(
+                                SpreadsheetSelection.parseRow("$1"),
+                                "$1"
+                            )
                         ),
-                        text
+                        "$A$1"
+                    ),
+                    betweenSymbol(),
+                    SpreadsheetFormulaParserToken.cell(
+                        Lists.of(
+                            columnReference("$B"),
+                            rowReference("$2")
+                        ),
+                        "$B$2"
+                    )
                 ),
                 text
+            ),
+            text
         );
     }
 
@@ -1526,12 +1526,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "#DIV/0!";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.error(
-                        SpreadsheetErrorKind.DIV0.toError(),
-                        text
-                ),
+            text,
+            SpreadsheetFormulaParserToken.error(
+                SpreadsheetErrorKind.DIV0.toError(),
                 text
+            ),
+            text
         );
     }
 
@@ -1540,12 +1540,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "#REF!";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                SpreadsheetFormulaParserToken.error(
-                        SpreadsheetErrorKind.REF.toError(),
-                        text
-                ),
+            text,
+            SpreadsheetFormulaParserToken.error(
+                SpreadsheetErrorKind.REF.toError(),
                 text
+            ),
+            text
         );
     }
 
@@ -1554,16 +1554,16 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "#REF!+456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                addition(
-                        SpreadsheetFormulaParserToken.error(
-                                SpreadsheetErrorKind.REF.toError(),
-                                "#REF!"
-                        ),
-                        plusSymbol(),
-                        number(456)
+            text,
+            addition(
+                SpreadsheetFormulaParserToken.error(
+                    SpreadsheetErrorKind.REF.toError(),
+                    "#REF!"
                 ),
-                text
+                plusSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -1574,12 +1574,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        number(1)
-                ),
-                text
+            text,
+            negative(
+                minusSymbol(),
+                number(1)
+            ),
+            text
         );
     }
 
@@ -1588,14 +1588,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-  1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        whitespace2(),
-                        number(1)
-                ),
-                text,
-                "-1"
+            text,
+            negative(
+                minusSymbol(),
+                whitespace2(),
+                number(1)
+            ),
+            text,
+            "-1"
         );
     }
 
@@ -1613,12 +1613,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        number(1)
-                ),
-                text
+            text,
+            negative(
+                minusSymbol(),
+                number(1)
+            ),
+            text
         );
     }
 
@@ -1636,12 +1636,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-A1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        cell(0, "A", 0)
-                ),
-                text
+            text,
+            negative(
+                minusSymbol(),
+                cell(0, "A", 0)
+            ),
+            text
         );
     }
 
@@ -1650,12 +1650,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-LabelABC";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        label("LabelABC")
-                ),
-                text
+            text,
+            negative(
+                minusSymbol(),
+                label("LabelABC")
+            ),
+            text
         );
     }
 
@@ -1673,12 +1673,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "1";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(1)
-                ),
-                text,
-                text
+            text,
+            number(
+                digits(1)
+            ),
+            text,
+            text
         );
     }
 
@@ -1696,14 +1696,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "1.75";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(1),
-                        decimalSymbols(),
-                        digits(75)
-                ),
-                text,
-                text
+            text,
+            number(
+                digits(1),
+                decimalSymbols(),
+                digits(75)
+            ),
+            text,
+            text
         );
     }
 
@@ -1721,13 +1721,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "1%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                number(
-                        digits(1),
-                        percentSymbol()
-                ),
-                "1%",
-                "0.01" // expression without percent
+            text,
+            number(
+                digits(1),
+                percentSymbol()
+            ),
+            "1%",
+            "0.01" // expression without percent
         );
     }
 
@@ -1745,16 +1745,16 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-1%";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        number(
-                                digits(1),
-                                percentSymbol()
-                        )
-                ),
-                text,
-                "-0.01"
+            text,
+            negative(
+                minusSymbol(),
+                number(
+                    digits(1),
+                    percentSymbol()
+                )
+            ),
+            text,
+            "-0.01"
         );
     }
 
@@ -1765,14 +1765,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String groupText = "(" + labelText + ")";
 
         this.valueOrExpressionParserParseAndCheck(
-                groupText,
-                group(
-                        parenthesisOpen(),
-                        label(labelText),
-                        parenthesisClose()
-                ),
-                groupText,
-                labelText
+            groupText,
+            group(
+                parenthesisOpen(),
+                label(labelText),
+                parenthesisClose()
+            ),
+            groupText,
+            labelText
         );
     }
 
@@ -1782,18 +1782,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String groupText = "(  " + labelText + "  )";
 
         final GroupSpreadsheetFormulaParserToken group = group(
-                parenthesisOpen(),
-                whitespace2(),
-                label(labelText),
-                whitespace2(),
-                parenthesisClose()
+            parenthesisOpen(),
+            whitespace2(),
+            label(labelText),
+            whitespace2(),
+            parenthesisClose()
         );
 
         this.valueOrExpressionParserParseAndCheck(
-                groupText,
-                group,
-                groupText,
-                labelText
+            groupText,
+            group,
+            groupText,
+            labelText
         );
     }
 
@@ -1811,19 +1811,19 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String groupText = "(-123)";
 
         this.valueOrExpressionParserParseAndCheck(
-                groupText,
-                group(
-                        parenthesisOpen(),
-                        negative(
-                                minusSymbol(),
-                                number(123)
-                        ),
-                        parenthesisClose()
+            groupText,
+            group(
+                parenthesisOpen(),
+                negative(
+                    minusSymbol(),
+                    number(123)
                 ),
-                groupText,
-                groupText.replace(
-                                "(", "")
-                        .replace(")", "")
+                parenthesisClose()
+            ),
+            groupText,
+            groupText.replace(
+                    "(", "")
+                .replace(")", "")
         );
     }
 
@@ -1839,24 +1839,24 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void valueOrExpressionParserParseNegativeGroupNumber() {
         final String text = "-" + group(
-                parenthesisOpen(),
-                number(123),
-                parenthesisClose()
+            parenthesisOpen(),
+            number(123),
+            parenthesisClose()
         ).text();
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                negative(
-                        minusSymbol(),
-                        group(
-                                parenthesisOpen(),
-                                number(123),
-                                parenthesisClose()
-                        )
-                ),
-                text,
-                text.replace("(", "")
-                        .replace(")", "")
+            text,
+            negative(
+                minusSymbol(),
+                group(
+                    parenthesisOpen(),
+                    number(123),
+                    parenthesisClose()
+                )
+            ),
+            text,
+            text.replace("(", "")
+                .replace(")", "")
         );
     }
 
@@ -1874,13 +1874,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123+456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                addition(
-                        number(123),
-                        plusSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            addition(
+                number(123),
+                plusSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -1898,17 +1898,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123+456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
+            text,
+            addition(
                 addition(
-                        addition(
-                                number(123),
-                                plusSymbol(),
-                                number(456)
-                        ),
-                        plusSymbol(),
-                        number(789)
+                    number(123),
+                    plusSymbol(),
+                    number(456)
                 ),
-                text
+                plusSymbol(),
+                number(789)
+            ),
+            text
         );
     }
 
@@ -1927,20 +1927,20 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123+-456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
+            text,
+            addition(
                 addition(
-                        addition(
-                                number(123),
-                                plusSymbol(),
-                                negative(
-                                        minusSymbol(),
-                                        number(456)
-                                )
-                        ),
-                        plusSymbol(),
-                        number(789)
+                    number(123),
+                    plusSymbol(),
+                    negative(
+                        minusSymbol(),
+                        number(456)
+                    )
                 ),
-                text
+                plusSymbol(),
+                number(789)
+            ),
+            text
         );
     }
 
@@ -1958,13 +1958,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123-456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                subtraction(
-                        number(123),
-                        minusSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            subtraction(
+                number(123),
+                minusSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -1982,17 +1982,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123-456" + "-789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
+            text,
+            subtraction(
                 subtraction(
-                        subtraction(
-                                number(123),
-                                minusSymbol(),
-                                number(456)
-                        ),
-                        minusSymbol(),
-                        number(789)
+                    number(123),
+                    minusSymbol(),
+                    number(456)
                 ),
-                text
+                minusSymbol(),
+                number(789)
+            ),
+            text
         );
     }
 
@@ -2010,16 +2010,16 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123--456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                subtraction(
-                        number(123),
-                        minusSymbol(),
-                        negative(
-                                minusSymbol(),
-                                number(456)
-                        )
-                ),
-                text
+            text,
+            subtraction(
+                number(123),
+                minusSymbol(),
+                negative(
+                    minusSymbol(),
+                    number(456)
+                )
+            ),
+            text
         );
     }
 
@@ -2037,17 +2037,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123-456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                addition(
-                        subtraction(
-                                number(123),
-                                minusSymbol(),
-                                number(456)
-                        ),
-                        plusSymbol(),
-                        number(789)
+            text,
+            addition(
+                subtraction(
+                    number(123),
+                    minusSymbol(),
+                    number(456)
                 ),
-                text
+                plusSymbol(),
+                number(789)
+            ),
+            text
         );
     }
 
@@ -2065,20 +2065,20 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123  -  456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                addition(
-                        subtraction(
-                                number(123),
-                                whitespace2(),
-                                minusSymbol(),
-                                whitespace2(),
-                                number(456)
-                        ),
-                        plusSymbol(),
-                        number(789)
+            text,
+            addition(
+                subtraction(
+                    number(123),
+                    whitespace2(),
+                    minusSymbol(),
+                    whitespace2(),
+                    number(456)
                 ),
-                text,
-                "123-456+789"
+                plusSymbol(),
+                number(789)
+            ),
+            text,
+            "123-456+789"
         );
     }
 
@@ -2096,13 +2096,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123*456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                multiplication(
-                        number(123),
-                        multiplySymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            multiplication(
+                number(123),
+                multiplySymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2120,17 +2120,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "111+222*333";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                addition(
-                        number(111),
-                        plusSymbol(),
-                        multiplication(
-                                number(222),
-                                multiplySymbol(),
-                                number(333)
-                        )
-                ),
-                text
+            text,
+            addition(
+                number(111),
+                plusSymbol(),
+                multiplication(
+                    number(222),
+                    multiplySymbol(),
+                    number(333)
+                )
+            ),
+            text
         );
     }
 
@@ -2148,19 +2148,19 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-123*-456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                multiplication(
-                        negative(
-                                minusSymbol(),
-                                number(123)
-                        ),
-                        multiplySymbol(),
-                        negative(
-                                minusSymbol(),
-                                number(456)
-                        )
+            text,
+            multiplication(
+                negative(
+                    minusSymbol(),
+                    number(123)
                 ),
-                text
+                multiplySymbol(),
+                negative(
+                    minusSymbol(),
+                    number(456)
+                )
+            ),
+            text
         );
     }
 
@@ -2178,13 +2178,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123/456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                division(
-                        number(123),
-                        divideSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            division(
+                number(123),
+                divideSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2202,17 +2202,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "111+222/333";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                addition(
-                        number(111),
-                        plusSymbol(),
-                        division(
-                                number(222),
-                                divideSymbol(),
-                                number(333)
-                        )
-                ),
-                text
+            text,
+            addition(
+                number(111),
+                plusSymbol(),
+                division(
+                    number(222),
+                    divideSymbol(),
+                    number(333)
+                )
+            ),
+            text
         );
     }
 
@@ -2230,19 +2230,19 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "-123/-456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                division(
-                        negative(
-                                minusSymbol(),
-                                number(123)
-                        ),
-                        divideSymbol(),
-                        negative(
-                                minusSymbol(),
-                                number(456)
-                        )
+            text,
+            division(
+                negative(
+                    minusSymbol(),
+                    number(123)
                 ),
-                text
+                divideSymbol(),
+                negative(
+                    minusSymbol(),
+                    number(456)
+                )
+            ),
+            text
         );
     }
 
@@ -2260,14 +2260,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123^456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                power(
-                        number(123),
-                        powerSymbol(),
-                        number(456)
-                ),
-                text,
-                text.replace("^", "^^")
+            text,
+            power(
+                number(123),
+                powerSymbol(),
+                number(456)
+            ),
+            text,
+            text.replace("^", "^^")
         );
     }
 
@@ -2285,18 +2285,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "111*222^333";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                multiplication(
-                        number(111),
-                        multiplySymbol(),
-                        power(
-                                (SpreadsheetFormulaParserToken) number(222),
-                                powerSymbol(),
-                                (SpreadsheetFormulaParserToken) number(333)
-                        )
-                ),
-                text,
-                text.replace("^", "^^")
+            text,
+            multiplication(
+                number(111),
+                multiplySymbol(),
+                power(
+                    (SpreadsheetFormulaParserToken) number(222),
+                    powerSymbol(),
+                    (SpreadsheetFormulaParserToken) number(333)
+                )
+            ),
+            text,
+            text.replace("^", "^^")
         );
     }
 
@@ -2314,13 +2314,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123=456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                equals(
-                        number(123),
-                        equalsSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            equals(
+                number(123),
+                equalsSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2338,17 +2338,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123=456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                equals(
-                        number(123),
-                        equalsSymbol(),
-                        addition(
-                                number(456),
-                                plusSymbol(),
-                                number(789)
-                        )
-                ),
-                text
+            text,
+            equals(
+                number(123),
+                equalsSymbol(),
+                addition(
+                    number(456),
+                    plusSymbol(),
+                    number(789)
+                )
+            ),
+            text
         );
     }
 
@@ -2366,14 +2366,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123<>456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                notEquals(
-                        number(123),
-                        notEqualsSymbol(),
-                        number(456)
-                ),
-                text,
-                text.replace("<>", "!=")
+            text,
+            notEquals(
+                number(123),
+                notEqualsSymbol(),
+                number(456)
+            ),
+            text,
+            text.replace("<>", "!=")
         );
     }
 
@@ -2390,23 +2390,23 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void valueOrExpressionParserParseNotEqualsAdd() {
         final String addText = "456+789";
         final AdditionSpreadsheetFormulaParserToken add = addition(
-                number(456),
-                plusSymbol(),
-                number(789)
+            number(456),
+            plusSymbol(),
+            number(789)
         );
 
         final String text = "123<>" + addText;
         final NotEqualsSpreadsheetFormulaParserToken ne = notEquals(
-                number(123),
-                notEqualsSymbol(),
-                add
+            number(123),
+            notEqualsSymbol(),
+            add
         );
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                ne,
-                text,
-                text.replace("<>", "!=")
+            text,
+            ne,
+            text,
+            text.replace("<>", "!=")
         );
     }
 
@@ -2424,13 +2424,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123>456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                greaterThan(
-                        number(123),
-                        greaterThanSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            greaterThan(
+                number(123),
+                greaterThanSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2448,17 +2448,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123>456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                greaterThan(
-                        number(123),
-                        greaterThanSymbol(),
-                        addition(
-                                number(456),
-                                plusSymbol(),
-                                number(789)
-                        )
-                ),
-                text
+            text,
+            greaterThan(
+                number(123),
+                greaterThanSymbol(),
+                addition(
+                    number(456),
+                    plusSymbol(),
+                    number(789)
+                )
+            ),
+            text
         );
     }
 
@@ -2476,13 +2476,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123>=456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                greaterThanEquals(
-                        number(123),
-                        greaterThanEqualsSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            greaterThanEquals(
+                number(123),
+                greaterThanEqualsSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2500,17 +2500,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123>=456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                greaterThanEquals(
-                        number(123),
-                        greaterThanEqualsSymbol(),
-                        addition(
-                                number(456),
-                                plusSymbol(),
-                                number(789)
-                        )
-                ),
-                text
+            text,
+            greaterThanEquals(
+                number(123),
+                greaterThanEqualsSymbol(),
+                addition(
+                    number(456),
+                    plusSymbol(),
+                    number(789)
+                )
+            ),
+            text
         );
     }
 
@@ -2528,13 +2528,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123<456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                lessThan(
-                        number(123),
-                        lessThanSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            lessThan(
+                number(123),
+                lessThanSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2552,17 +2552,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123<456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                lessThan(
-                        number(123),
-                        lessThanSymbol(),
-                        addition(
-                                number(456),
-                                plusSymbol(),
-                                number(789)
-                        )
-                ),
-                text
+            text,
+            lessThan(
+                number(123),
+                lessThanSymbol(),
+                addition(
+                    number(456),
+                    plusSymbol(),
+                    number(789)
+                )
+            ),
+            text
         );
     }
 
@@ -2580,13 +2580,13 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123<=456";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                lessThanEquals(
-                        number(123),
-                        lessThanEqualsSymbol(),
-                        number(456)
-                ),
-                text
+            text,
+            lessThanEquals(
+                number(123),
+                lessThanEqualsSymbol(),
+                number(456)
+            ),
+            text
         );
     }
 
@@ -2604,17 +2604,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "123<=456+789";
 
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                lessThanEquals(
-                        number(123),
-                        lessThanEqualsSymbol(),
-                        addition(
-                                number(456),
-                                plusSymbol(),
-                                number(789)
-                        )
-                ),
-                text
+            text,
+            lessThanEquals(
+                number(123),
+                lessThanEqualsSymbol(),
+                addition(
+                    number(456),
+                    plusSymbol(),
+                    number(789)
+                )
+            ),
+            text
         );
     }
 
@@ -2632,46 +2632,46 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         //111+222+(-333)-444*555
         final String addText = "111+222";
         final AdditionSpreadsheetFormulaParserToken add = addition(
-                number(111),
-                plusSymbol(),
-                number(222)
+            number(111),
+            plusSymbol(),
+            number(222)
         );
 
         final GroupSpreadsheetFormulaParserToken group = group(
-                parenthesisOpen(),
-                negative(
-                        minusSymbol(),
-                        number(333)
-                ),
-                parenthesisClose()
+            parenthesisOpen(),
+            negative(
+                minusSymbol(),
+                number(333)
+            ),
+            parenthesisClose()
         );
 
         final String addText2 = add + "+" + group.text();
         final AdditionSpreadsheetFormulaParserToken add2 = addition(
-                add,
-                plusSymbol(),
-                group
+            add,
+            plusSymbol(),
+            group
         );
 
         final String multiplyText = "444*555";
         final MultiplicationSpreadsheetFormulaParserToken multiply = multiplication(
-                number(444),
-                multiplySymbol(),
-                number(555)
+            number(444),
+            multiplySymbol(),
+            number(555)
         );
 
         final String subText = addText2 + "-" + multiplyText;
         final SubtractionSpreadsheetFormulaParserToken sub = subtraction(
-                add2,
-                minusSymbol(),
-                multiply
+            add2,
+            minusSymbol(),
+            multiply
         );
 
         this.valueOrExpressionParserParseAndCheck(
-                subText,
-                sub,
-                subText,
-                subText.replace("(", "").replace(")", "")
+            subText,
+            sub,
+            subText,
+            subText.replace("(", "").replace(")", "")
         );
     }
 
@@ -2680,90 +2680,90 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testFunctionParametersParserParseFunctionParametersEmpty() {
         this.functionParametersParserParseAndCheck(
-                "()",
-                functionParameters(
-                        parenthesisOpen(),
-                        parenthesisClose()
-                )
+            "()",
+            functionParameters(
+                parenthesisOpen(),
+                parenthesisClose()
+            )
         );
     }
 
     @Test
     public void testFunctionParametersParserParseFunctionParametersEmptyOnlySpaces() {
         this.functionParametersParserParseAndCheck(
-                "(  )",
-                functionParameters(
-                        parenthesisOpen(),
-                        whitespace2(),
-                        parenthesisClose()
-                )
+            "(  )",
+            functionParameters(
+                parenthesisOpen(),
+                whitespace2(),
+                parenthesisClose()
+            )
         );
     }
 
     @Test
     public void testFunctionParametersParserParseFunctionParametersOneNumberParameter() {
         this.functionParametersParserParseAndCheck(
-                "(1)",
-                functionParameters(
-                        parenthesisOpen(),
-                        number(1),
-                        parenthesisClose()
-                )
+            "(1)",
+            functionParameters(
+                parenthesisOpen(),
+                number(1),
+                parenthesisClose()
+            )
         );
     }
 
     @Test
     public void testFunctionParametersParserParseFunctionParametersOneStringParameter() {
         this.functionParametersParserParseAndCheck(
-                "(\"abc\")",
-                functionParameters(
-                        parenthesisOpen(),
-                        text(
-                                doubleQuotesSymbol(),
-                                textLiteral("abc"),
-                                doubleQuotesSymbol()
-                        ),
-                        parenthesisClose()
-                )
+            "(\"abc\")",
+            functionParameters(
+                parenthesisOpen(),
+                text(
+                    doubleQuotesSymbol(),
+                    textLiteral("abc"),
+                    doubleQuotesSymbol()
+                ),
+                parenthesisClose()
+            )
         );
     }
 
     @Test
     public void testFunctionParametersParserParseFunctionParametersTwoNumberParameters() {
         this.functionParametersParserParseAndCheck(
-                "(1;2)",
-                functionParameters(
-                        parenthesisOpen(),
-                        number(1),
-                        valueSeparatorSymbol(),
-                        number(2),
-                        parenthesisClose()
-                )
+            "(1;2)",
+            functionParameters(
+                parenthesisOpen(),
+                number(1),
+                valueSeparatorSymbol(),
+                number(2),
+                parenthesisClose()
+            )
         );
     }
 
     @Test
     public void testFunctionParametersParserParseFunctionParametersThreeNumberParameters() {
         this.functionParametersParserParseAndCheck(
-                "(1;2;345)",
-                functionParameters(
-                        parenthesisOpen(),
-                        number(1),
-                        valueSeparatorSymbol(),
-                        number(2),
-                        valueSeparatorSymbol(),
-                        number(345),
-                        parenthesisClose()
-                )
+            "(1;2;345)",
+            functionParameters(
+                parenthesisOpen(),
+                number(1),
+                valueSeparatorSymbol(),
+                number(2),
+                valueSeparatorSymbol(),
+                number(345),
+                parenthesisClose()
+            )
         );
     }
 
     private void functionParametersParserParseAndCheck(final String text,
                                                        final ParserToken token) {
         this.functionParametersParserParseAndCheck(
-                text,
-                token,
-                ""
+            text,
+            token,
+            ""
         );
     }
 
@@ -2771,20 +2771,20 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                        final ParserToken token,
                                                        final String textAfter) {
         this.parseAndCheck(
-                functionParametersParser(),
-                text,
-                token,
-                text,
-                textAfter
+            functionParametersParser(),
+            text,
+            token,
+            text,
+            textAfter
         );
     }
 
     @Test
     public void testFunctionParametersParserToString() {
         this.checkEquals(
-                "FUNCTION_PARAMETERS",
-                SpreadsheetFormulaParsers.functionParameters()
-                        .toString()
+            "FUNCTION_PARAMETERS",
+            SpreadsheetFormulaParsers.functionParameters()
+                .toString()
         );
     }
 
@@ -2793,8 +2793,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testLambdaFunctionOtherExpressionFails() {
         this.parseFailAndCheck(
-                this.lambdaFunctionParser(),
-                "1+2"
+            this.lambdaFunctionParser(),
+            "1+2"
         );
     }
 
@@ -2804,29 +2804,29 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final LabelSpreadsheetFormulaParserToken x = this.label("x");
 
         final LambdaFunctionSpreadsheetFormulaParserToken lambda = lambdaFunction(
-                functionName("lambda"),
-                functionParameters(
-                        parenthesisOpen(),
-                        x,
-                        valueSeparatorSymbol(),
-                        addition(
-                                x,
-                                plusSymbol(),
-                                x
-                        ),
-                        parenthesisClose()
+            functionName("lambda"),
+            functionParameters(
+                parenthesisOpen(),
+                x,
+                valueSeparatorSymbol(),
+                addition(
+                    x,
+                    plusSymbol(),
+                    x
                 ),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(1),
-                        parenthesisClose()
-                )
+                parenthesisClose()
+            ),
+            functionParameters(
+                parenthesisOpen(),
+                number(1),
+                parenthesisClose()
+            )
         );
 
         this.lambdaFunctionParserParseAndCheck(
-                text,
-                lambda,
-                text
+            text,
+            lambda,
+            text
         );
     }
 
@@ -2836,33 +2836,33 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final LabelSpreadsheetFormulaParserToken x = this.label("x");
 
         final LambdaFunctionSpreadsheetFormulaParserToken lambda = lambdaFunction(
-                functionName("lambda"),
-                functionParameters(
-                        parenthesisOpen(),
-                        x,
-                        valueSeparatorSymbol(),
-                        addition(
-                                x,
-                                plusSymbol(),
-                                x
-                        ),
-                        parenthesisClose()
+            functionName("lambda"),
+            functionParameters(
+                parenthesisOpen(),
+                x,
+                valueSeparatorSymbol(),
+                addition(
+                    x,
+                    plusSymbol(),
+                    x
                 ),
-                functionParameters(
-                        parenthesisOpen(),
-                        text(
-                                doubleQuotesSymbol(),
-                                textLiteral("Hello"),
-                                doubleQuotesSymbol()
-                        ),
-                        parenthesisClose()
-                )
+                parenthesisClose()
+            ),
+            functionParameters(
+                parenthesisOpen(),
+                text(
+                    doubleQuotesSymbol(),
+                    textLiteral("Hello"),
+                    doubleQuotesSymbol()
+                ),
+                parenthesisClose()
+            )
         );
 
         this.lambdaFunctionParserParseAndCheck(
-                text,
-                lambda,
-                text
+            text,
+            lambda,
+            text
         );
     }
 
@@ -2874,10 +2874,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final LambdaFunctionSpreadsheetFormulaParserToken expected,
                                                    final String text) {
         this.lambdaFunctionParserParseAndCheck(
-                from,
-                expected,
-                text,
-                text
+            from,
+            expected,
+            text,
+            text
         );
     }
 
@@ -2886,25 +2886,25 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final String text,
                                                    final String expressionToString) {
         this.parseAndCheck(
-                lambdaFunctionParser(),
-                from,
-                expected,
-                text
+            lambdaFunctionParser(),
+            from,
+            expected,
+            text
         );
         this.valueOrExpressionParserParseAndCheck(
-                from,
-                expected,
-                text,
-                expressionToString
+            from,
+            expected,
+            text,
+            expressionToString
         );
     }
 
     @Test
     public void testLambdaFunctionParserToString() {
         this.checkEquals(
-                "LAMBDA_FUNCTION",
-                lambdaFunctionParser()
-                        .toString()
+            "LAMBDA_FUNCTION",
+            lambdaFunctionParser()
+                .toString()
         );
     }
 
@@ -2917,8 +2917,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testNamedFunctionParserParseNumberExpressionFails() {
         this.parseFailAndCheck(
-                this.namedFunctionParser(),
-                "1+2"
+            this.namedFunctionParser(),
+            "1+2"
         );
     }
 
@@ -2926,17 +2926,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testNamedFunctionParserParseWithoutArguments() {
         final String text = "xyz()";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text
+            text,
+            f,
+            text
         );
     }
 
@@ -2944,17 +2944,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testNamedFunctionNameWithDotWithoutArguments() {
         final String text = "Error.Type()";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("Error.Type"),
-                functionParameters(
-                        parenthesisOpen(),
-                        parenthesisClose()
-                )
+            functionName("Error.Type"),
+            functionParameters(
+                parenthesisOpen(),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text
+            text,
+            f,
+            text
         );
     }
 
@@ -2962,19 +2962,19 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testNamedFunctionParserParseWithoutArgumentsWhitespace() {
         final String text = "xyz(  )";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        whitespace2(),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                whitespace2(),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text,
-                "xyz()"
+            text,
+            f,
+            text,
+            "xyz()"
         );
     }
 
@@ -2991,18 +2991,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseWithOneArgument() {
         final String text = "xyz(123)";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(123),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                number(123),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text
+            text,
+            f,
+            text
         );
     }
 
@@ -3019,20 +3019,20 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseWithOneArgument2() {
         final String text = "xyz(  123)";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        whitespace2(),
-                        number(123),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                whitespace2(),
+                number(123),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text,
-                "xyz(123)"
+            text,
+            f,
+            text,
+            "xyz(123)"
         );
     }
 
@@ -3049,20 +3049,20 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseWithOneArgument3() {
         final String text = "xyz(123  )";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(123),
-                        whitespace2(),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                number(123),
+                whitespace2(),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text,
-                "xyz(123)"
+            text,
+            f,
+            text,
+            "xyz(123)"
         );
     }
 
@@ -3079,21 +3079,21 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseWithOneArgument4() {
         final String text = "xyz(  123  )";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        whitespace2(),
-                        number(123),
-                        whitespace2(),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                whitespace2(),
+                number(123),
+                whitespace2(),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text,
-                "xyz(123)"
+            text,
+            f,
+            text,
+            "xyz(123)"
         );
     }
 
@@ -3110,21 +3110,21 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseTwoArguments() {
         final String text = "xyz(123;456)";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(123),
-                        valueSeparatorSymbol(),
-                        number(456),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                number(123),
+                valueSeparatorSymbol(),
+                number(456),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text,
-                text.replace(";", ",")
+            text,
+            f,
+            text,
+            text.replace(";", ",")
         );
     }
 
@@ -3141,25 +3141,25 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseFourArguments() {
         final String text = "xyz(1;2;3;4)";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(1),
-                        valueSeparatorSymbol(),
-                        number(2),
-                        valueSeparatorSymbol(),
-                        number(3),
-                        valueSeparatorSymbol(),
-                        number(4),
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                number(1),
+                valueSeparatorSymbol(),
+                number(2),
+                valueSeparatorSymbol(),
+                number(3),
+                valueSeparatorSymbol(),
+                number(4),
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                text,
-                f,
-                text,
-                "xyz(1,2,3,4)"
+            text,
+            f,
+            text,
+            "xyz(1,2,3,4)"
         );
     }
 
@@ -3176,28 +3176,28 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseFunction() {
         final String yText = "y(123)";
         final NamedFunctionSpreadsheetFormulaParserToken y = namedFunction(
-                functionName("y"),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(123),
-                        parenthesisClose()
-                )
+            functionName("y"),
+            functionParameters(
+                parenthesisOpen(),
+                number(123),
+                parenthesisClose()
+            )
         );
 
         final String xText = "x(" + yText + ")";
         final NamedFunctionSpreadsheetFormulaParserToken x = namedFunction(
-                functionName("x"),
-                functionParameters(
-                        parenthesisOpen(),
-                        y,
-                        parenthesisClose()
-                )
+            functionName("x"),
+            functionParameters(
+                parenthesisOpen(),
+                y,
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                xText,
-                x,
-                xText
+            xText,
+            x,
+            xText
         );
     }
 
@@ -3214,40 +3214,40 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void namedFunctionParserParseFunctionWithFunction() {
         final String zText = "z(123)";
         final NamedFunctionSpreadsheetFormulaParserToken z = namedFunction(
-                functionName("z"),
-                functionParameters(
-                        parenthesisOpen(),
-                        number(123),
-                        parenthesisClose()
-                )
+            functionName("z"),
+            functionParameters(
+                parenthesisOpen(),
+                number(123),
+                parenthesisClose()
+            )
         );
 
         final String yText = "y(" + zText + ")";
         final NamedFunctionSpreadsheetFormulaParserToken y = namedFunction(
 
-                functionName("y"),
-                functionParameters(
-                        parenthesisOpen(),
-                        z,
-                        parenthesisClose()
-                )
+            functionName("y"),
+            functionParameters(
+                parenthesisOpen(),
+                z,
+                parenthesisClose()
+            )
         );
 
         final String xText = "x(" + yText + ")";
         final NamedFunctionSpreadsheetFormulaParserToken x = namedFunction(
 
-                functionName("x"),
-                functionParameters(
-                        parenthesisOpen(),
-                        y,
-                        parenthesisClose()
-                )
+            functionName("x"),
+            functionParameters(
+                parenthesisOpen(),
+                y,
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(
-                xText,
-                x,
-                xText
+            xText,
+            x,
+            xText
         );
     }
 
@@ -3270,12 +3270,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         final String text = "xyz(" + rangeText + ")";
         final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
-                functionName("xyz"),
-                functionParameters(
-                        parenthesisOpen(),
-                        range,
-                        parenthesisClose()
-                )
+            functionName("xyz"),
+            functionParameters(
+                parenthesisOpen(),
+                range,
+                parenthesisClose()
+            )
         );
 
         this.namedFunctionParseAndCheck(text, f, text);
@@ -3289,10 +3289,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                             final NamedFunctionSpreadsheetFormulaParserToken expected,
                                             final String text) {
         this.namedFunctionParseAndCheck(
-                from,
-                expected,
-                text,
-                text
+            from,
+            expected,
+            text,
+            text
         );
     }
 
@@ -3301,25 +3301,25 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                             final String text,
                                             final String expressionToString) {
         this.parseAndCheck(
-                namedFunctionParser(),
-                from,
-                expected,
-                text
+            namedFunctionParser(),
+            from,
+            expected,
+            text
         );
         this.valueOrExpressionParserParseAndCheck(
-                from,
-                expected,
-                text,
-                expressionToString
+            from,
+            expected,
+            text,
+            expressionToString
         );
     }
 
     @Test
     public void testNamedFunctionParserToString() {
         this.checkEquals(
-                "NAMED_FUNCTION",
-                namedFunctionParser()
-                        .toString()
+            "NAMED_FUNCTION",
+            namedFunctionParser()
+                .toString()
         );
     }
 
@@ -3343,28 +3343,28 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final SpreadsheetFormulaParserToken left = number(1);
         final SpreadsheetFormulaParserToken right = number(2);
         final AdditionSpreadsheetFormulaParserToken add = addition(
-                left,
-                plusSymbol(),
-                right
+            left,
+            plusSymbol(),
+            right
         );
         final GroupSpreadsheetFormulaParserToken group = group(
-                this.parenthesisOpen(),
-                add,
-                this.parenthesisClose()
+            this.parenthesisOpen(),
+            add,
+            this.parenthesisClose()
         );
 
         final SpreadsheetFormulaParserToken last = number(3);
         final MultiplicationSpreadsheetFormulaParserToken mul = multiplication(
-                group,
-                multiplySymbol(),
-                last
+            group,
+            multiplySymbol(),
+            last
         );
 
         this.valueOrExpressionParserParseAndCheck(
-                mul.text(),
-                mul,
-                mul.text(),
-                "1+2*3"
+            mul.text(),
+            mul,
+            mul.text(),
+            "1+2*3"
         );
     }
 
@@ -3382,57 +3382,57 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final SpreadsheetFormulaParserToken left1 = number(1);
         final SpreadsheetFormulaParserToken right1 = number(2);
         final AdditionSpreadsheetFormulaParserToken add1 = addition(
-                left1,
-                plusSymbol(),
-                right1
+            left1,
+            plusSymbol(),
+            right1
         );
         final GroupSpreadsheetFormulaParserToken group1 = group(
-                this.parenthesisOpen(),
-                add1,
-                this.parenthesisClose()
+            this.parenthesisOpen(),
+            add1,
+            this.parenthesisClose()
         );
 
         final SpreadsheetFormulaParserToken left2 = number(3);
         final SpreadsheetFormulaParserToken right2 = number(4);
         final AdditionSpreadsheetFormulaParserToken add2 = addition(
-                left2,
-                plusSymbol(),
-                right2
+            left2,
+            plusSymbol(),
+            right2
         );
         final GroupSpreadsheetFormulaParserToken group2 = group(
-                this.parenthesisOpen(),
-                add2,
-                this.parenthesisClose()
+            this.parenthesisOpen(),
+            add2,
+            this.parenthesisClose()
         );
 
         final MultiplicationSpreadsheetFormulaParserToken mul = multiplication(
-                group1,
-                multiplySymbol(),
-                group2
+            group1,
+            multiplySymbol(),
+            group2
         );
 
         final String text = mul.text();
         this.valueOrExpressionParserParseAndCheck(
-                text,
-                mul,
-                text,
-                text.replace("(", "").replace(")", "")
+            text,
+            mul,
+            text,
+            text.replace("(", "").replace(")", "")
         );
     }
 
     @Test
     public void testValueOrExpressionParserParseInvalidTokenFails() {
         this.valueOrExpressionParserParseFails(
-                "!!!",
-                "Invalid character '!' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "!!!",
+            "Invalid character '!' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
     @Test
     public void testValueOrExpressionParserParseInvalidTokenFails2() {
         this.valueOrExpressionParserParseFails(
-                "  !",
-                "Invalid character '!' at 2 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "  !",
+            "Invalid character '!' at 2 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3448,16 +3448,16 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void valueOrExpressionParserParseFails() {
         this.valueOrExpressionParserParseFails(
-                "1+!",
-                "Invalid character '!' at 2 expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "1+!",
+            "Invalid character '!' at 2 expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
     @Test
     public void testParseInvalidGroupTokenFails() {
         this.valueOrExpressionParserParseFails(
-                "( !",
-                "Invalid character '!' at 2 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "( !",
+            "Invalid character '!' at 2 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3473,8 +3473,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseAddition() {
         this.parseEvaluateAndCheck(
-                "1+2",
-                1 + 2
+            "1+2",
+            1 + 2
         );
     }
 
@@ -3490,8 +3490,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseAdditionLeadingWhitespace() {
         this.parseEvaluateAndCheck(
-                " 1+2",
-                1 + 2
+            " 1+2",
+            1 + 2
         );
     }
 
@@ -3507,8 +3507,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseAdditionLeadingWhitespace2() {
         this.parseEvaluateAndCheck(
-                "  1+2",
-                1 + 2
+            "  1+2",
+            1 + 2
         );
     }
 
@@ -3524,8 +3524,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseAdditionTrailingWhitespace() {
         this.parseEvaluateAndCheck(
-                "1+2 ",
-                1 + 2
+            "1+2 ",
+            1 + 2
         );
     }
 
@@ -3541,8 +3541,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseAdditionTrailingWhitespace2() {
         this.parseEvaluateAndCheck(
-                "1+2  ",
-                1 + 2
+            "1+2  ",
+            1 + 2
         );
     }
 
@@ -3558,8 +3558,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseAdditionSurroundedByWhitespace() {
         this.parseEvaluateAndCheck(
-                " 1+2 ",
-                1 + 2
+            " 1+2 ",
+            1 + 2
         );
     }
 
@@ -3575,8 +3575,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseMultiplication() {
         this.parseEvaluateAndCheck(
-                "3*4.5",
-                3 * 4.5
+            "3*4.5",
+            3 * 4.5
         );
     }
 
@@ -3592,8 +3592,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseMathOperatorPriority() {
         this.parseEvaluateAndCheck(
-                "1+2*3+4.5",
-                1 + 2 * 3 + 4.5
+            "1+2*3+4.5",
+            1 + 2 * 3 + 4.5
         );
     }
 
@@ -3609,8 +3609,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseParenthesis() {
         this.parseEvaluateAndCheck(
-                "((1+2))",
-                ((1 + 2))
+            "((1+2))",
+            ((1 + 2))
         );
     }
 
@@ -3626,8 +3626,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseParenthesis2() {
         this.parseEvaluateAndCheck(
-                "(1+2)*3.5",
-                (1 + 2) * 3.5
+            "(1+2)*3.5",
+            (1 + 2) * 3.5
         );
     }
 
@@ -3643,8 +3643,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseParenthesis3() {
         this.parseEvaluateAndCheck(
-                "((1+2)*3.5)",
-                ((1 + 2) * 3.5)
+            "((1+2)*3.5)",
+            ((1 + 2) * 3.5)
         );
     }
 
@@ -3675,8 +3675,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void testParseParenthesis5() {
         assertEquals(-42.0, (1 + 2) + (3 + 4.5) * -6, 0.5);
         this.parseEvaluateAndCheck(
-                "(1+2)+(3+4.5)*-6",
-                -42
+            "(1+2)+(3+4.5)*-6",
+            -42
         );
     }
 
@@ -3692,8 +3692,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseParenthesis6() {
         this.parseEvaluateAndCheck(
-                "(1+2*(3+4*(5+6)*-7))",
-                (1 + 2 * (3 + 4 * (5 + 6) * -7))
+            "(1+2*(3+4*(5+6)*-7))",
+            (1 + 2 * (3 + 4 * (5 + 6) * -7))
         );
     }
 
@@ -3724,8 +3724,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @SuppressWarnings("PointlessArithmeticExpression")
     private void testParseParenthesis8() {
         this.parseEvaluateAndCheck(
-                "-(1+2*(3+4*(5+6)*-(7*8+(9+0))))",
-                -(1 + 2 * (3 + 4 * (5 + 6) * -(7 * 8 + (9 + 0))))
+            "-(1+2*(3+4*(5+6)*-(7*8+(9+0))))",
+            -(1 + 2 * (3 + 4 * (5 + 6) * -(7 * 8 + (9 + 0))))
         );
     }
 
@@ -3742,8 +3742,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @SuppressWarnings("PointlessArithmeticExpression")
     private void testParseParenthesis9() {
         this.parseEvaluateAndCheck(
-                "((((1+2))))",
-                ((((1 + 2))))
+            "((((1+2))))",
+            ((((1 + 2))))
         );
     }
 
@@ -3760,8 +3760,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @SuppressWarnings("PointlessArithmeticExpression")
     private void testParseParenthesis10() {
         this.parseEvaluateAndCheck(
-                "-(-(-(-(1+2))))",
-                -(-(-(-(1 + 2))))
+            "-(-(-(-(1+2))))",
+            -(-(-(-(1 + 2))))
         );
     }
 
@@ -3778,8 +3778,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @SuppressWarnings("PointlessArithmeticExpression")
     private void testParseLongFormulaWithoutParens() {
         this.parseEvaluateAndCheck(
-                "1+2-3+4-5*6+7-8*9",
-                1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9
+            "1+2-3+4-5*6+7-8*9",
+            1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9
         );
     }
 
@@ -3796,8 +3796,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @SuppressWarnings("PointlessArithmeticExpression")
     private void testParseLongFormulaWithoutParens2() {
         this.parseEvaluateAndCheck(
-                "-1+2-3+4-5*6+7-8*9",
-                -1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9
+            "-1+2-3+4-5*6+7-8*9",
+            -1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9
         );
     }
 
@@ -3813,8 +3813,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseLocalDateSubtraction() {
         this.parseEvaluateAndCheck(
-                "test.toDate(\"2000-01-03\")-test.toDate(\"1999-12-31\")",
-                3
+            "test.toDate(\"2000-01-03\")-test.toDate(\"1999-12-31\")",
+            3
         );// days!
     }
 
@@ -3844,16 +3844,16 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private void testParseLocalTimeSubtraction() {
         this.parseEvaluateAndCheck(
-                "test.toTime(test.toTime(\"18:00:00\")-test.toTime(\"06:00:00\"))",
-                "12:00"
+            "test.toTime(test.toTime(\"18:00:00\")-test.toTime(\"06:00:00\"))",
+            "12:00"
         ); //1/2 a day or 12noon
     }
 
     @Test
     public void testParseErrorDotType() {
         this.parseEvaluateAndCheck(
-                "Error.Type()",
-                "Hello"
+            "Error.Type()",
+            "Hello"
         );
     }
 
@@ -3862,27 +3862,27 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void valueOrExpressionParserParseFails(final String text,
                                                    final String message) {
         this.parseThrows(
-                SpreadsheetFormulaParsers.expression(),
-                text,
-                message
+            SpreadsheetFormulaParsers.expression(),
+            text,
+            message
         );
 
         final int at = message.indexOf("at ") + 3;
         final int spaceAfter = message.indexOf(" expected");
 
         final int position = Integer.parseInt(
-                message.substring(at, spaceAfter)
+            message.substring(at, spaceAfter)
         ) + 1;
 
         //+1 to the column number in the message
         this.parseThrows(
-                valueOrExpressionParser(),
-                "=" + text,
-                message.substring(
-                        0,
-                        at
-                ) + position +
-                        message.substring(spaceAfter)
+            valueOrExpressionParser(),
+            "=" + text,
+            message.substring(
+                0,
+                at
+            ) + position +
+                message.substring(spaceAfter)
         );
     }
 
@@ -3890,10 +3890,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                       final ParserToken token,
                                                       final String text) {
         this.valueOrExpressionParserParseAndCheck(
-                formula,
-                token,
-                text,
-                text
+            formula,
+            token,
+            text,
+            text
         );
     }
 
@@ -3902,50 +3902,50 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                       final String text,
                                                       final String expressionToString) {
         this.parseAndCheck(
-                expressionParser(),
-                formula,
-                token,
-                text,
-                ""
+            expressionParser(),
+            formula,
+            token,
+            text,
+            ""
         );
 
         final String equalsFormula = "=" + formula;
         this.parseAndCheck(
-                valueOrExpressionParser(),
-                equalsFormula,
-                expression(
-                        equalsSymbol(),
-                        token
-                ),
-                equalsFormula,
-                ""
+            valueOrExpressionParser(),
+            equalsFormula,
+            expression(
+                equalsSymbol(),
+                token
+            ),
+            equalsFormula,
+            ""
         );
 
         final SpreadsheetFormulaParserToken spreadsheetFormulaParserToken = token.cast(SpreadsheetFormulaParserToken.class);
 
         this.checkEquals(
-                expressionToString.replace(';', ','),
-                spreadsheetFormulaParserToken.toExpression(
-                                ExpressionEvaluationContexts.basic(
-                                        ExpressionNumberKind.DEFAULT,
-                                        (n) -> {
-                                            throw new UnsupportedOperationException();
-                                        },
-                                        (n) -> {
-                                            throw new UnsupportedOperationException();
-                                        },
-                                        (r) -> {
-                                            throw new UnsupportedOperationException();
-                                        },
-                                        (r) -> {
-                                            throw new UnsupportedOperationException();
-                                        },
-                                        CaseSensitivity.SENSITIVE,
-                                        ConverterContexts.fake(),
-                                        LocaleContexts.fake()
-                                )
-                        ).map(Object::toString)
-                        .orElse("")
+            expressionToString.replace(';', ','),
+            spreadsheetFormulaParserToken.toExpression(
+                    ExpressionEvaluationContexts.basic(
+                        ExpressionNumberKind.DEFAULT,
+                        (n) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        (n) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        CaseSensitivity.SENSITIVE,
+                        ConverterContexts.fake(),
+                        LocaleContexts.fake()
+                    )
+                ).map(Object::toString)
+                .orElse("")
         );
     }
 
@@ -3961,21 +3961,21 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void parseEvaluateAndCheck(final String formulaText,
                                        final String expectedText) {
         this.parseEvaluateAndCheck0(
-                expressionParser(),
-                formulaText,
-                expectedText
+            expressionParser(),
+            formulaText,
+            expectedText
         );
 
         this.parseEvaluateAndCheck0(
-                valueOrExpressionParser(),
-                "=" + formulaText,
-                expectedText
+            valueOrExpressionParser(),
+            "=" + formulaText,
+            expectedText
         );
 
         this.parseEvaluateAndCheck0(
-                valueOrExpressionParser(),
-                "= " + formulaText,
-                expectedText
+            valueOrExpressionParser(),
+            "= " + formulaText,
+            expectedText
         );
     }
 
@@ -3983,18 +3983,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                         final String formulaText,
                                         final String expectedText) {
         this.parseExpressionEvaluateAndCheck1(
-                parser,
-                formulaText,
-                ExpressionNumberKind.BIG_DECIMAL,
-                TWO_DIGIT_YEAR,
-                expectedText
+            parser,
+            formulaText,
+            ExpressionNumberKind.BIG_DECIMAL,
+            TWO_DIGIT_YEAR,
+            expectedText
         );
         this.parseExpressionEvaluateAndCheck1(
-                parser,
-                formulaText,
-                ExpressionNumberKind.DOUBLE,
-                TWO_DIGIT_YEAR,
-                expectedText
+            parser,
+            formulaText,
+            ExpressionNumberKind.DOUBLE,
+            TWO_DIGIT_YEAR,
+            expectedText
         );
     }
 
@@ -4005,18 +4005,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                   final String expectedText) {
         final SpreadsheetFormulaParserToken formula = this.parse(parser, formulaText);
         final Optional<Expression> maybeExpression = formula.toExpression(
-                new FakeExpressionEvaluationContext() {
+            new FakeExpressionEvaluationContext() {
 
-                    @Override
-                    public ExpressionNumberKind expressionNumberKind() {
-                        return expressionNumberKind;
-                    }
-
-                    @Override
-                    public int twoDigitYear() {
-                        return twoDigitYear;
-                    }
+                @Override
+                public ExpressionNumberKind expressionNumberKind() {
+                    return expressionNumberKind;
                 }
+
+                @Override
+                public int twoDigitYear() {
+                    return twoDigitYear;
+                }
+            }
         );
         if (!maybeExpression.isPresent()) {
             fail("Failed to convert spreadsheet formula to expression " + CharSequences.quoteAndEscape(formulaText));
@@ -4036,14 +4036,14 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private static Parser<SpreadsheetParserContext> valueOrExpressionParser() {
         return SpreadsheetFormulaParsers.valueOrExpression(
-                Parsers.alternatives(
-                        Lists.of(
-                                SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
-                                SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
-                                SpreadsheetPattern.parseNumberParsePattern("#;#.#").parser(),
-                                SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()
-                        )
+            Parsers.alternatives(
+                Lists.of(
+                    SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
+                    SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
+                    SpreadsheetPattern.parseNumberParsePattern("#;#.#").parser(),
+                    SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()
                 )
+            )
         );
     }
 
@@ -4062,63 +4062,63 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             fail("Parser left " + CharSequences.quoteAndEscape(leftOver) + " parse " + CharSequences.quoteAndEscape(parse));
         }
         return spreadsheetFormula.get()
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(
-                InvalidCharacterExceptionFactory.POSITION,
-                c,
-                c
+            InvalidCharacterExceptionFactory.POSITION,
+            c,
+            c
         );
 
         final Converter<ExpressionNumberConverterContext> stringDouble = Converters.parser(
-                Double.class,
-                Parsers.doubleParser(),
-                parserContext,
-                (t, c) -> t.cast(DoubleParserToken.class).value()
+            Double.class,
+            Parsers.doubleParser(),
+            parserContext,
+            (t, c) -> t.cast(DoubleParserToken.class).value()
         ).cast(ExpressionNumberConverterContext.class);
 
         final Converter<ExpressionNumberConverterContext> stringLocalDate = Converters.parser(
-                LocalDate.class,
-                Parsers.localDate((c) -> DateTimeFormatter.ISO_LOCAL_DATE),
-                parserContext,
-                (t, c) -> t.cast(LocalDateParserToken.class).value()
+            LocalDate.class,
+            Parsers.localDate((c) -> DateTimeFormatter.ISO_LOCAL_DATE),
+            parserContext,
+            (t, c) -> t.cast(LocalDateParserToken.class).value()
         ).cast(ExpressionNumberConverterContext.class);
 
         final Converter<ExpressionNumberConverterContext> stringLocalDateTime = Converters.parser(
-                LocalDateTime.class,
-                Parsers.localDateTime((c) -> DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                parserContext,
-                (t, c) -> t.cast(LocalDateTimeParserToken.class).value()
+            LocalDateTime.class,
+            Parsers.localDateTime((c) -> DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+            parserContext,
+            (t, c) -> t.cast(LocalDateTimeParserToken.class).value()
         ).cast(ExpressionNumberConverterContext.class);
 
         final Converter<ExpressionNumberConverterContext> stringLocalTime = Converters.parser(
-                LocalTime.class,
-                Parsers.localTime((c) -> DateTimeFormatter.ISO_LOCAL_TIME),
-                parserContext,
-                (t, c) -> t.cast(LocalTimeParserToken.class).value()
+            LocalTime.class,
+            Parsers.localTime((c) -> DateTimeFormatter.ISO_LOCAL_TIME),
+            parserContext,
+            (t, c) -> t.cast(LocalTimeParserToken.class).value()
         ).cast(ExpressionNumberConverterContext.class);
 
         final Converter<ExpressionNumberConverterContext> converter = Converters.collection(
-                Lists.of(
-                        Converters.object(),
-                        Converters.simple(),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber()),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber()),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localTimeToNumber()),
-                        ExpressionNumberConverters.numberOrExpressionNumberToNumber()
-                                .to(
-                                        Number.class,
-                                        Converters.numberToLocalTime()
-                                ),
-                        ExpressionNumberConverters.toNumberOrExpressionNumber(stringDouble),
-                        stringLocalDate,
-                        stringLocalDateTime,
-                        stringLocalTime,
-                        Converters.objectToString()
-                )
+            Lists.of(
+                Converters.object(),
+                Converters.simple(),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.numberToNumber()),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateToNumber()),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localDateTimeToNumber()),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.localTimeToNumber()),
+                ExpressionNumberConverters.numberOrExpressionNumberToNumber()
+                    .to(
+                        Number.class,
+                        Converters.numberToLocalTime()
+                    ),
+                ExpressionNumberConverters.toNumberOrExpressionNumber(stringDouble),
+                stringLocalDate,
+                stringLocalDateTime,
+                stringLocalTime,
+                Converters.objectToString()
+            )
         );
 
         return new FakeExpressionEvaluationContext() {
@@ -4139,19 +4139,19 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 switch (name.value()) {
                     case "Error.Type":
                         return function(
-                                (p, c) -> "Hello"
+                            (p, c) -> "Hello"
                         );
                     case "test.toDate":
                         return function(
-                                (p, c) -> convertStringParameter(p, LocalDate.class)
+                            (p, c) -> convertStringParameter(p, LocalDate.class)
                         );
                     case "test.toDateTime":
                         return function(
-                                (p, c) -> convertStringParameter(p, LocalDateTime.class)
+                            (p, c) -> convertStringParameter(p, LocalDateTime.class)
                         );
                     case "test.toTime":
                         return function(
-                                (p, c) -> convertStringParameter(p, LocalTime.class)
+                            (p, c) -> convertStringParameter(p, LocalTime.class)
                         );
                     default:
                         throw new UnknownExpressionFunctionException(name);
@@ -4169,9 +4169,9 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     @Override
                     public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                         return Lists.of(
-                                ExpressionFunctionParameterName.with("values")
-                                        .variable(Object.class)
-                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                            ExpressionFunctionParameterName.with("values")
+                                .variable(Object.class)
+                                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
                         );
                     }
                 };
@@ -4193,18 +4193,18 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return converter.convert(
-                        value,
-                        target,
-                        ExpressionNumberConverterContexts.basic(
-                                Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-                                ConverterContexts.basic(
-                                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                        Converters.fake(),
-                                        dateTimeContext(),
-                                        decimalNumberContext()
-                                ),
-                                this.expressionNumberKind()
-                        )
+                    value,
+                    target,
+                    ExpressionNumberConverterContexts.basic(
+                        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        ConverterContexts.basic(
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Converters.fake(),
+                            dateTimeContext(),
+                            decimalNumberContext()
+                        ),
+                        this.expressionNumberKind()
+                    )
                 );
             }
 
@@ -4234,8 +4234,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                        final TextCursor cursor) {
                 return InvalidCharacterExceptionFactory.POSITION_EXPECTED.apply(
-                        parser,
-                        cursor
+                    parser,
+                    cursor
                 );
             }
 
@@ -4338,8 +4338,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private AdditionSpreadsheetFormulaParserToken addition(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::addition,
-                tokens
+            SpreadsheetFormulaParserToken::addition,
+            tokens
         );
     }
 
@@ -4347,26 +4347,26 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         return SpreadsheetFormulaParserToken.betweenSymbol(":", ":");
     }
 
-    private BooleanSpreadsheetFormulaParserToken booleanValue(final ParserToken...tokens) {
+    private BooleanSpreadsheetFormulaParserToken booleanValue(final ParserToken... tokens) {
         return SpreadsheetFormulaParserToken.booleanValue(
-                Lists.of(tokens),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+            Lists.of(tokens),
+            ParserToken.text(
+                Lists.of(tokens)
+            )
         );
     }
 
     private BooleanLiteralSpreadsheetFormulaParserToken booleanLiteral(final boolean value) {
         return SpreadsheetFormulaParserToken.booleanLiteral(
-                value,
-                String.valueOf(value)
+            value,
+            String.valueOf(value)
         );
     }
 
     private CellSpreadsheetFormulaParserToken cell(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::cell,
-                tokens
+            SpreadsheetFormulaParserToken::cell,
+            tokens
         );
     }
 
@@ -4374,21 +4374,21 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final String columnText,
                                                    final int row) {
         return cell(
-                SpreadsheetFormulaParserToken.column(
-                        SpreadsheetReferenceKind.RELATIVE.column(column),
-                        columnText
-                ),
-                SpreadsheetFormulaParserToken.row(
-                        SpreadsheetReferenceKind.RELATIVE.row(row),
-                        String.valueOf(1 + row)
-                )
+            SpreadsheetFormulaParserToken.column(
+                SpreadsheetReferenceKind.RELATIVE.column(column),
+                columnText
+            ),
+            SpreadsheetFormulaParserToken.row(
+                SpreadsheetReferenceKind.RELATIVE.row(row),
+                String.valueOf(1 + row)
+            )
         );
     }
 
     private ColumnSpreadsheetFormulaParserToken columnReference(final String text) {
         return SpreadsheetFormulaParserToken.column(
-                SpreadsheetSelection.parseColumn(text),
-                text
+            SpreadsheetSelection.parseColumn(text),
+            text
         );
     }
 
@@ -4410,36 +4410,36 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private SpreadsheetFormulaParserToken digits(final Number number) {
         return SpreadsheetFormulaParserToken.digits(
-                "" + number,
-                "" + number
+            "" + number,
+            "" + number
         );
     }
 
     private DivisionSpreadsheetFormulaParserToken division(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::division,
-                tokens
+            SpreadsheetFormulaParserToken::division,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken divideSymbol() {
         return SpreadsheetFormulaParserToken.divideSymbol(
-                "/",
-                "/"
+            "/",
+            "/"
         );
     }
 
     private SpreadsheetFormulaParserToken doubleQuotesSymbol() {
         return SpreadsheetFormulaParserToken.doubleQuoteSymbol(
-                "\"",
-                "\""
+            "\"",
+            "\""
         );
     }
 
     private EqualsSpreadsheetFormulaParserToken equals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::equalsSpreadsheetFormulaParserToken,
-                tokens
+            SpreadsheetFormulaParserToken::equalsSpreadsheetFormulaParserToken,
+            tokens
         );
     }
 
@@ -4449,57 +4449,57 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private ExpressionSpreadsheetFormulaParserToken expression(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::expression,
-                tokens
+            SpreadsheetFormulaParserToken::expression,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken functionName(final String name) {
         return SpreadsheetFormulaParserToken.functionName(
-                SpreadsheetFunctionName.with(name),
-                name
+            SpreadsheetFunctionName.with(name),
+            name
         );
     }
 
     private FunctionParametersSpreadsheetFormulaParserToken functionParameters(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::functionParameters,
-                tokens
+            SpreadsheetFormulaParserToken::functionParameters,
+            tokens
         );
     }
 
     private GreaterThanSpreadsheetFormulaParserToken greaterThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::greaterThan,
-                tokens
+            SpreadsheetFormulaParserToken::greaterThan,
+            tokens
         );
     }
 
     private GreaterThanEqualsSpreadsheetFormulaParserToken greaterThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::greaterThanEquals,
-                tokens
+            SpreadsheetFormulaParserToken::greaterThanEquals,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken greaterThanSymbol() {
         return SpreadsheetFormulaParserToken.greaterThanSymbol(
-                ">",
-                ">"
+            ">",
+            ">"
         );
     }
 
     private SpreadsheetFormulaParserToken greaterThanEqualsSymbol() {
         return SpreadsheetFormulaParserToken.greaterThanEqualsSymbol(
-                ">=",
-                ">="
+            ">=",
+            ">="
         );
     }
 
     private GroupSpreadsheetFormulaParserToken group(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::group,
-                tokens
+            SpreadsheetFormulaParserToken::group,
+            tokens
         );
     }
 
@@ -4521,58 +4521,58 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private LambdaFunctionSpreadsheetFormulaParserToken lambdaFunction(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::lambdaFunction,
-                tokens
+            SpreadsheetFormulaParserToken::lambdaFunction,
+            tokens
         );
     }
 
     private LessThanSpreadsheetFormulaParserToken lessThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::lessThan,
-                tokens
+            SpreadsheetFormulaParserToken::lessThan,
+            tokens
         );
     }
 
     private LessThanEqualsSpreadsheetFormulaParserToken lessThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::lessThanEquals,
-                tokens
+            SpreadsheetFormulaParserToken::lessThanEquals,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken lessThanSymbol() {
         return SpreadsheetFormulaParserToken.lessThanSymbol(
-                "<",
-                "<"
+            "<",
+            "<"
         );
     }
 
     private SpreadsheetFormulaParserToken lessThanEqualsSymbol() {
         return SpreadsheetFormulaParserToken.lessThanEqualsSymbol(
-                "<=",
-                "<="
+            "<=",
+            "<="
         );
     }
 
 
     private SpreadsheetFormulaParserToken multiplySymbol() {
         return SpreadsheetFormulaParserToken.multiplySymbol(
-                "*",
-                "*"
+            "*",
+            "*"
         );
     }
 
     private MultiplicationSpreadsheetFormulaParserToken multiplication(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::multiplication,
-                tokens
+            SpreadsheetFormulaParserToken::multiplication,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken minusSymbol() {
         return SpreadsheetFormulaParserToken.minusSymbol(
-                "-",
-                "-"
+            "-",
+            "-"
         );
     }
 
@@ -4582,42 +4582,42 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private NamedFunctionSpreadsheetFormulaParserToken namedFunction(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::namedFunction,
-                tokens
+            SpreadsheetFormulaParserToken::namedFunction,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken negative(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::negative,
-                tokens
+            SpreadsheetFormulaParserToken::negative,
+            tokens
         );
     }
 
     private NotEqualsSpreadsheetFormulaParserToken notEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::notEquals,
-                tokens
+            SpreadsheetFormulaParserToken::notEquals,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken notEqualsSymbol() {
         return SpreadsheetFormulaParserToken.notEqualsSymbol(
-                "<>",
-                "<>"
+            "<>",
+            "<>"
         );
     }
 
     private NumberSpreadsheetFormulaParserToken number(final Number number) {
         return number(
-                digits(number)
+            digits(number)
         );
     }
 
     private NumberSpreadsheetFormulaParserToken number(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::number,
-                tokens
+            SpreadsheetFormulaParserToken::number,
+            tokens
         );
     }
 
@@ -4631,15 +4631,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private SpreadsheetFormulaParserToken percentSymbol() {
         return SpreadsheetFormulaParserToken.percentSymbol(
-                "%",
-                "%"
+            "%",
+            "%"
         );
     }
 
     private SpreadsheetFormulaParserToken plusSymbol() {
         return SpreadsheetFormulaParserToken.plusSymbol(
-                "+",
-                "+"
+            "+",
+            "+"
         );
     }
 
@@ -4649,32 +4649,32 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private PowerSpreadsheetFormulaParserToken power(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::power,
-                tokens
+            SpreadsheetFormulaParserToken::power,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken powerSymbol() {
         return SpreadsheetFormulaParserToken.powerSymbol(
-                "^",
-                "^"
+            "^",
+            "^"
         );
     }
 
     private CellRangeSpreadsheetFormulaParserToken range(final SpreadsheetFormulaParserToken from,
                                                          final SpreadsheetFormulaParserToken to) {
         return parentToken(
-                SpreadsheetFormulaParserToken::cellRange,
-                from,
-                betweenSymbol(),
-                to
+            SpreadsheetFormulaParserToken::cellRange,
+            from,
+            betweenSymbol(),
+            to
         );
     }
 
     private RowSpreadsheetFormulaParserToken rowReference(final String text) {
         return SpreadsheetFormulaParserToken.row(
-                SpreadsheetSelection.parseRow(text),
-                text
+            SpreadsheetSelection.parseRow(text),
+            text
         );
     }
 
@@ -4688,15 +4688,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private SubtractionSpreadsheetFormulaParserToken subtraction(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::subtraction,
-                tokens
+            SpreadsheetFormulaParserToken::subtraction,
+            tokens
         );
     }
 
     private SpreadsheetFormulaParserToken text(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::text,
-                tokens
+            SpreadsheetFormulaParserToken::text,
+            tokens
         );
     }
 
@@ -4706,8 +4706,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private SpreadsheetFormulaParserToken valueSeparatorSymbol() {
         return SpreadsheetFormulaParserToken.valueSeparatorSymbol(
-                "" + VALUE_SEPARATOR,
-                "" + VALUE_SEPARATOR
+            "" + VALUE_SEPARATOR,
+            "" + VALUE_SEPARATOR
         );
     }
 
@@ -4721,8 +4721,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private SpreadsheetFormulaParserToken whitespace(final String text) {
         return SpreadsheetFormulaParserToken.whitespace(
-                text,
-                text
+            text,
+            text
         );
     }
 
@@ -4737,10 +4737,10 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private <T extends SpreadsheetFormulaParserToken> T parentToken(final BiFunction<List<ParserToken>, String, T> factory,
                                                                     final ParserToken... tokens) {
         return factory.apply(
-                Lists.of(tokens),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+            Lists.of(tokens),
+            ParserToken.text(
+                Lists.of(tokens)
+            )
         );
     }
 

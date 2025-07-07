@@ -32,8 +32,8 @@ final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<S
         Objects.requireNonNull(cells, "cells");
 
         return new SpreadsheetCellRangeReferencePathCellsIterator(
-                cells,
-                path
+            cells,
+            path
         );
     }
 
@@ -44,13 +44,13 @@ final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<S
 
         final SpreadsheetCellRangeReferencePathComparator comparator = this.path.comparator;
         this.origin = (comparator.reverseX == 1 ?
+            cells.begin() :
+            cells.end()
+        ).column().setRow(
+            (comparator.reverseY == 1 ?
                 cells.begin() :
                 cells.end()
-        ).column().setRow(
-                (comparator.reverseY == 1 ?
-                        cells.begin() :
-                        cells.end()
-                ).row()
+            ).row()
         );
 
         this.x = 0;
@@ -62,8 +62,8 @@ final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<S
         final SpreadsheetCellRangeReference cells = this.cells;
 
         return this.path.comparator.xFirst ?
-                this.x < cells.width() :
-                this.y < cells.height();
+            this.x < cells.width() :
+            this.y < cells.height();
     }
 
     @Override
@@ -95,8 +95,8 @@ final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<S
         }
 
         return this.origin.add(
-                x * comparator.reverseX,
-                y * comparator.reverseY
+            x * comparator.reverseX,
+            y * comparator.reverseY
         );
     }
 

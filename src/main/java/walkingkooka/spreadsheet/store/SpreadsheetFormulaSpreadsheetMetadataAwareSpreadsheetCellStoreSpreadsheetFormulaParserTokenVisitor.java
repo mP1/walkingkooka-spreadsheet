@@ -126,10 +126,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
                                                 final HasNow now,
                                                 final LocaleContext localeContext) {
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor visitor = new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor(
-                cell,
-                metadata,
-                now,
-                localeContext
+            cell,
+            metadata,
+            now,
+            localeContext
         );
         visitor.accept(token);
         return visitor.children.get(0).cast(SpreadsheetFormulaParserToken.class);
@@ -165,8 +165,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void endVisit(final BooleanSpreadsheetFormulaParserToken token) {
         this.exit(
-                token,
-                SpreadsheetFormulaParserToken::booleanValue
+            token,
+            SpreadsheetFormulaParserToken::booleanValue
         );
     }
 
@@ -457,11 +457,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetFormulaParserToken.amPm(
-                        value,
-                        this.dateTimeContext()
-                                .ampm(value)
-                )
+            SpreadsheetFormulaParserToken.amPm(
+                value,
+                this.dateTimeContext()
+                    .ampm(value)
+            )
         );
     }
 
@@ -488,8 +488,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final CurrencySymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::currencySymbol,
-                SpreadsheetFormulaParserToken::currencySymbol
+            DecimalNumberSymbols::currencySymbol,
+            SpreadsheetFormulaParserToken::currencySymbol
         );
     }
 
@@ -498,11 +498,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetFormulaParserToken.dayName(
-                        value,
-                        this.dateTimeContext()
-                                .weekDayName(value)
-                )
+            SpreadsheetFormulaParserToken.dayName(
+                value,
+                this.dateTimeContext()
+                    .weekDayName(value)
+            )
         );
     }
 
@@ -511,11 +511,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetFormulaParserToken.dayNameAbbreviation(
-                        value,
-                        this.dateTimeContext()
-                                .weekDayNameAbbreviation(value)
-                )
+            SpreadsheetFormulaParserToken.dayNameAbbreviation(
+                value,
+                this.dateTimeContext()
+                    .weekDayNameAbbreviation(value)
+            )
         );
     }
 
@@ -527,8 +527,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final DecimalSeparatorSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::decimalSeparator,
-                SpreadsheetFormulaParserToken::decimalSeparatorSymbol
+            DecimalNumberSymbols::decimalSeparator,
+            SpreadsheetFormulaParserToken::decimalSeparatorSymbol
         );
     }
 
@@ -560,8 +560,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final ExponentSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::exponentSymbol,
-                SpreadsheetFormulaParserToken::exponentSymbol
+            DecimalNumberSymbols::exponentSymbol,
+            SpreadsheetFormulaParserToken::exponentSymbol
         );
     }
 
@@ -583,8 +583,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final GroupSeparatorSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::groupSeparator,
-                SpreadsheetFormulaParserToken::groupSeparatorSymbol
+            DecimalNumberSymbols::groupSeparator,
+            SpreadsheetFormulaParserToken::groupSeparatorSymbol
         );
     }
 
@@ -616,8 +616,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final MinusSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::negativeSign,
-                SpreadsheetFormulaParserToken::minusSymbol
+            DecimalNumberSymbols::negativeSign,
+            SpreadsheetFormulaParserToken::minusSymbol
         );
     }
 
@@ -631,11 +631,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetFormulaParserToken.monthName(
-                        value,
-                        this.dateTimeContext()
-                                .monthName(value)
-                )
+            SpreadsheetFormulaParserToken.monthName(
+                value,
+                this.dateTimeContext()
+                    .monthName(value)
+            )
         );
     }
 
@@ -644,11 +644,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetFormulaParserToken.monthNameAbbreviation(
-                        value,
-                        this.dateTimeContext()
-                                .monthNameAbbreviation(value)
-                )
+            SpreadsheetFormulaParserToken.monthNameAbbreviation(
+                value,
+                this.dateTimeContext()
+                    .monthNameAbbreviation(value)
+            )
         );
     }
 
@@ -657,11 +657,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         final int value = token.value();
 
         this.leaf(
-                SpreadsheetFormulaParserToken.monthNameInitial(
-                        value,
-                        this.dateTimeContext()
-                                .monthName(value).substring(0, 1)
-                )
+            SpreadsheetFormulaParserToken.monthNameInitial(
+                value,
+                this.dateTimeContext()
+                    .monthName(value).substring(0, 1)
+            )
         );
     }
 
@@ -693,16 +693,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final PercentSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::percentSymbol,
-                SpreadsheetFormulaParserToken::percentSymbol
+            DecimalNumberSymbols::percentSymbol,
+            SpreadsheetFormulaParserToken::percentSymbol
         );
     }
 
     @Override
     protected void visit(final PlusSymbolSpreadsheetFormulaParserToken token) {
         this.decimalNumberSymbols(
-                DecimalNumberSymbols::positiveSign,
-                SpreadsheetFormulaParserToken::plusSymbol
+            DecimalNumberSymbols::positiveSign,
+            SpreadsheetFormulaParserToken::plusSymbol
         );
     }
 
@@ -734,13 +734,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final ValueSeparatorSymbolSpreadsheetFormulaParserToken token) {
         final String text = Character.toString(
-                this.metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
+            this.metadata.getOrFail(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR)
         );
         this.leaf(
-                SpreadsheetFormulaParserToken.valueSeparatorSymbol(
-                        text,
-                        text
-                )
+            SpreadsheetFormulaParserToken.valueSeparatorSymbol(
+                text,
+                text
+            )
         );
     }
 
@@ -774,17 +774,17 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     private void decimalNumberSymbols(final Function<DecimalNumberSymbols, ?> decimalNumberSymbolsGetter,
                                       final BiFunction<String, String, SpreadsheetFormulaParserToken> parserTokenFactory) {
-        if(null == this.decimalNumberSymbols) {
+        if (null == this.decimalNumberSymbols) {
             this.decimalNumberSymbols = this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS);
         }
 
         final String text = decimalNumberSymbolsGetter.apply(this.decimalNumberSymbols)
-                .toString();
+            .toString();
 
         this.leaf(
             parserTokenFactory.apply(
-                    text,
-                    text
+                text,
+                text
             )
         );
     }
@@ -809,13 +809,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     private DateTimeContext dateTimeContext() {
         if (null == this.dateTimeContext) {
             this.dateTimeContext = this.metadata.dateTimeContext(
-                    Optional.of(this.cell),
-                    this.now,
-                    this.localeContext
+                Optional.of(this.cell),
+                this.now,
+                this.localeContext
             );
         }
         return this.dateTimeContext;
     }
+
     private DateTimeContext dateTimeContext;
 
     private final SpreadsheetCell cell;

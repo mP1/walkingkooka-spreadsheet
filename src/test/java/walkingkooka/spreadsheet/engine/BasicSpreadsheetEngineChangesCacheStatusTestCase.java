@@ -27,7 +27,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS extends Enum<STATUS> & BasicSpreadsheetEngineChangesCacheStatus<S>,
-        S extends SpreadsheetSelection> implements ClassTesting<STATUS> {
+    S extends SpreadsheetSelection> implements ClassTesting<STATUS> {
 
     BasicSpreadsheetEngineChangesCacheStatusTestCase() {
         super();
@@ -39,9 +39,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     public void testIsDeletedAll() {
         for (STATUS status : this.values()) {
             this.isDeletedAndCheck(
-                    status,
-                    status.name()
-                            .contains("DEL")
+                status,
+                status.name()
+                    .contains("DEL")
             );
         }
     }
@@ -49,9 +49,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isDeletedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                  final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isDeleted(),
-                status::toString
+            expected,
+            status.isDeleted(),
+            status::toString
         );
     }
 
@@ -60,9 +60,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isMissingValueAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                       final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isMissingValue(),
-                status::toString
+            expected,
+            status.isMissingValue(),
+            status::toString
         );
     }
 
@@ -71,9 +71,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isReferenceAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                    final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isReference(),
-                status::toString
+            expected,
+            status.isReference(),
+            status::toString
         );
     }
 
@@ -82,9 +82,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isReferencesRefreshedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                              final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isReferencesRefreshed(),
-                status::toString
+            expected,
+            status.isReferencesRefreshed(),
+            status::toString
         );
     }
 
@@ -93,9 +93,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isRefreshableAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                      final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isRefreshable(),
-                status::toString
+            expected,
+            status.isRefreshable(),
+            status::toString
         );
     }
 
@@ -104,20 +104,20 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isReferenceRefreshableAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                               final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isReferenceRefreshable(),
-                status::toString
+            expected,
+            status.isReferenceRefreshable(),
+            status::toString
         );
     }
 
     // isUnloaded.......................................................................................................
 
     final void isUnloadedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
-                                 final boolean expected) {
+                                  final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isUnloaded(),
-                status::toString
+            expected,
+            status.isUnloaded(),
+            status::toString
         );
     }
 
@@ -126,9 +126,9 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     final void isLoadingAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                  final boolean expected) {
         this.checkEquals(
-                expected,
-                status.isLoading(),
-                status::toString
+            expected,
+            status.isLoading(),
+            status::toString
         );
     }
 
@@ -137,21 +137,21 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
     @Test
     public final void testDeletedAll() {
         Arrays.stream(this.values())
-                .forEach(BasicSpreadsheetEngineChangesCacheStatus::deleted);
+            .forEach(BasicSpreadsheetEngineChangesCacheStatus::deleted);
     }
 
     final void deletedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status) {
         this.deletedAndCheck(
-                status,
-                status
+            status,
+            status
         );
     }
 
     final void deletedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                final BasicSpreadsheetEngineChangesCacheStatus<S> expected) {
         assertSame(
-                expected,
-                status.deleted()
+            expected,
+            status.deleted()
         );
     }
 
@@ -159,16 +159,16 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
 
     final void loadedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status) {
         this.loadedAndCheck(
-                status,
-                status
+            status,
+            status
         );
     }
 
     final void loadedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                               final BasicSpreadsheetEngineChangesCacheStatus<S> expected) {
         assertSame(
-                expected,
-                status.loaded()
+            expected,
+            status.loaded()
         );
     }
 
@@ -176,17 +176,17 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
 
     final void savedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status) {
         this.savedAndCheck(
-                status,
-                status
+            status,
+            status
         );
     }
 
     final void savedAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                              final BasicSpreadsheetEngineChangesCacheStatus<S> expected) {
         assertSame(
-                expected,
-                status.saved(),
-                status::toString
+            expected,
+            status.saved(),
+            status::toString
         );
     }
 
@@ -194,16 +194,16 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
 
     final void forceReferencesRefreshAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status) {
         this.forceReferencesRefreshAndCheck(
-                status,
-                status
+            status,
+            status
         );
     }
 
     final void forceReferencesRefreshAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                               final BasicSpreadsheetEngineChangesCacheStatus<S> expected) {
         assertSame(
-                expected,
-                status.forceReferencesRefresh()
+            expected,
+            status.forceReferencesRefresh()
         );
     }
 
@@ -211,16 +211,16 @@ public abstract class BasicSpreadsheetEngineChangesCacheStatusTestCase<STATUS ex
 
     final void toNonReferenceAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status) {
         this.toNonReferenceAndCheck(
-                status,
-                status
+            status,
+            status
         );
     }
 
     final void toNonReferenceAndCheck(final BasicSpreadsheetEngineChangesCacheStatus<S> status,
                                       final BasicSpreadsheetEngineChangesCacheStatus<S> expected) {
         assertSame(
-                expected,
-                status.toNonReference()
+            expected,
+            status.toNonReference()
         );
     }
 

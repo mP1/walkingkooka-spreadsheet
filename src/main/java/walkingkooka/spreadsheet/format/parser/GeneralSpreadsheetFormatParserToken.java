@@ -33,7 +33,7 @@ public final class GeneralSpreadsheetFormatParserToken extends ParentSpreadsheet
      */
     static GeneralSpreadsheetFormatParserToken with(final List<ParserToken> value, final String text) {
         return new GeneralSpreadsheetFormatParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text));
+            checkTextNotEmptyOrWhitespace(text));
     }
 
     /**
@@ -48,9 +48,9 @@ public final class GeneralSpreadsheetFormatParserToken extends ParentSpreadsheet
     @Override
     public GeneralSpreadsheetFormatParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                GeneralSpreadsheetFormatParserToken::with
+            this,
+            children,
+            GeneralSpreadsheetFormatParserToken::with
         );
     }
 

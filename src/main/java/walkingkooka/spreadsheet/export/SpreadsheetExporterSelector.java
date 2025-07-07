@@ -41,18 +41,18 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
      * A parser that returns a {@link SpreadsheetExporterName}.
      */
     private final static Parser<ParserContext> NAME_PARSER = Parsers.initialAndPartCharPredicateString(
-            (c) -> SpreadsheetExporterName.isChar(0, c),
-            (c) -> SpreadsheetExporterName.isChar(1, c),
-            1,
-            SpreadsheetExporterName.MAX_LENGTH
+        (c) -> SpreadsheetExporterName.isChar(0, c),
+        (c) -> SpreadsheetExporterName.isChar(1, c),
+        1,
+        SpreadsheetExporterName.MAX_LENGTH
     );
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetExporterSelector.class),
-                SpreadsheetExporterSelector::unmarshall,
-                SpreadsheetExporterSelector::marshall,
-                SpreadsheetExporterSelector.class
+            JsonNodeContext.computeTypeName(SpreadsheetExporterSelector.class),
+            SpreadsheetExporterSelector::unmarshall,
+            SpreadsheetExporterSelector::marshall,
+            SpreadsheetExporterSelector.class
         );
     }
 
@@ -69,10 +69,10 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
      */
     public static SpreadsheetExporterSelector parse(final String text) {
         return new SpreadsheetExporterSelector(
-                PluginSelector.parse(
-                        text,
-                        SpreadsheetExporterName::with
-                )
+            PluginSelector.parse(
+                text,
+                SpreadsheetExporterName::with
+            )
         );
     }
 
@@ -84,10 +84,10 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
     public static SpreadsheetExporterSelector with(final SpreadsheetExporterName name,
                                                    final String text) {
         return new SpreadsheetExporterSelector(
-                PluginSelector.with(
-                        name,
-                        text
-                )
+            PluginSelector.with(
+                name,
+                text
+            )
         );
     }
 
@@ -115,13 +115,13 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetExporterSelector(
-                        PluginSelector.with(
-                                name,
-                                this.valueText()
-                        )
-                );
+            this :
+            new SpreadsheetExporterSelector(
+                PluginSelector.with(
+                    name,
+                    this.valueText()
+                )
+            );
     }
 
     /**
@@ -136,16 +136,16 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
     public SpreadsheetExporterSelector setValueText(final String text) {
         final PluginSelector<SpreadsheetExporterName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetExporterSelector(different);
+            this :
+            new SpreadsheetExporterSelector(different);
     }
 
     @Override
     public SpreadsheetExporterSelector setValues(final List<?> values) {
         final PluginSelector<SpreadsheetExporterName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetExporterSelector(different);
+            this :
+            new SpreadsheetExporterSelector(different);
     }
 
     /**
@@ -157,9 +157,9 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                SpreadsheetExporterPluginHelper.INSTANCE::parseName,
-                provider::spreadsheetExporter,
-                context
+            SpreadsheetExporterPluginHelper.INSTANCE::parseName,
+            provider::spreadsheetExporter,
+            context
         );
     }
 
@@ -171,7 +171,7 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetExporterSelector && this.equals0((SpreadsheetExporterSelector) other);
+            other instanceof SpreadsheetExporterSelector && this.equals0((SpreadsheetExporterSelector) other);
     }
 
     // JsonNodeContext..................................................................................................

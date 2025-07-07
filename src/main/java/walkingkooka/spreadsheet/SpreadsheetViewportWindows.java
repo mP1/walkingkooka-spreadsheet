@@ -46,8 +46,8 @@ import java.util.function.Predicate;
  * Captures one or more windows that define the cells within a viewport.
  */
 public final class SpreadsheetViewportWindows implements CanBeEmpty,
-        Predicate<SpreadsheetSelection>,
-        TreePrintable {
+    Predicate<SpreadsheetSelection>,
+    TreePrintable {
 
     /**
      * A window query parameter and other string representations are {@link SpreadsheetCellReference} separated by a
@@ -73,15 +73,15 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         Objects.requireNonNull(windows, "windows");
 
         return windows.isEmpty() ?
-                EMPTY :
-                new SpreadsheetViewportWindows(
-                        copy(
-                                SEPARATOR.parse(
-                                        windows,
-                                        SpreadsheetSelection::parseCellRange
-                                )
-                        )
-                );
+            EMPTY :
+            new SpreadsheetViewportWindows(
+                copy(
+                    SEPARATOR.parse(
+                        windows,
+                        SpreadsheetSelection::parseCellRange
+                    )
+                )
+            );
     }
 
     public static SpreadsheetViewportWindows with(final Set<SpreadsheetCellRangeReference> cellRanges) {
@@ -89,8 +89,8 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
         final Set<SpreadsheetCellRangeReference> copy = copy(cellRanges);
         return copy.isEmpty() ?
-                EMPTY :
-                new SpreadsheetViewportWindows(copy);
+            EMPTY :
+            new SpreadsheetViewportWindows(copy);
     }
 
     /**
@@ -98,11 +98,11 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
      */
     private static Set<SpreadsheetCellRangeReference> copy(final Collection<SpreadsheetCellRangeReference> cellRanges) {
         return overlapCheckAndCreate(
-                cellRanges.toArray(
-                        new SpreadsheetCellRangeReference[
-                                cellRanges.size()
-                                ]
-                )
+            cellRanges.toArray(
+                new SpreadsheetCellRangeReference[
+                    cellRanges.size()
+                    ]
+            )
         );
     }
 
@@ -172,7 +172,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
      */
     public Optional<SpreadsheetCellReference> home() {
         return this.last()
-                .map(SpreadsheetCellRangeReference::begin);
+            .map(SpreadsheetCellRangeReference::begin);
     }
 
     // bounds...........................................................................................................
@@ -183,8 +183,8 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     public Optional<SpreadsheetCellRangeReference> bounds() {
         if (null == this.bounds) {
             this.bounds = this.isEmpty() ?
-                    Optional.empty() :
-                    this.boundsNotEmpty();
+                Optional.empty() :
+                this.boundsNotEmpty();
         }
 
         return this.bounds;
@@ -210,9 +210,9 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         }
 
         return Optional.of(left.setRow(top)
-                .cellRange(
-                        right.setRow(bottom)
-                )
+            .cellRange(
+                right.setRow(bottom)
+            )
         );
     }
 
@@ -267,7 +267,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
         for (final SpreadsheetCellRangeReference range : this.cellRanges()) {
             for (final SpreadsheetCellReference cell : range) {
                 selections.add(
-                        mapper.apply(cell)
+                    mapper.apply(cell)
                 );
             }
         }
@@ -284,14 +284,14 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     @Override
     public boolean test(final SpreadsheetSelection selection) {
         return null != selection &&
-                this.testNonNull(selection);
+            this.testNonNull(selection);
     }
 
     private boolean testNonNull(final SpreadsheetSelection selection) {
         final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
         return cellRanges.isEmpty() ||
-                cellRanges.stream()
-                        .anyMatch(r -> r.test(selection));
+            cellRanges.stream()
+                .anyMatch(r -> r.test(selection));
 
     }
 
@@ -305,8 +305,8 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
         final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
         return cellRanges.isEmpty() ||
-                cellRanges.stream()
-                        .anyMatch(r -> r.containsAll(cells));
+            cellRanges.stream()
+                .anyMatch(r -> r.containsAll(cells));
     }
 
     // count............................................................................................................
@@ -316,10 +316,10 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
      */
     public long count() {
         return this.isEmpty() ?
-                SpreadsheetSelection.ALL_CELLS.count() :
-                this.cellRanges().stream()
-                        .mapToLong(SpreadsheetSelection::count)
-                        .sum();
+            SpreadsheetSelection.ALL_CELLS.count() :
+            this.cellRanges().stream()
+                .mapToLong(SpreadsheetSelection::count)
+                .sum();
     }
 
     // TreePrintable....................................................................................................
@@ -348,8 +348,8 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     @Override
     public String toString() {
         return SEPARATOR.toSeparatedString(
-                this.cellRanges,
-                SpreadsheetCellRangeReference::toStringMaybeStar
+            this.cellRanges,
+            SpreadsheetCellRangeReference::toStringMaybeStar
         );
     }
 
@@ -366,10 +366,10 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetViewportWindows.class),
-                SpreadsheetViewportWindows::unmarshall,
-                SpreadsheetViewportWindows::marshall,
-                SpreadsheetViewportWindows.class
+            JsonNodeContext.computeTypeName(SpreadsheetViewportWindows.class),
+            SpreadsheetViewportWindows::unmarshall,
+            SpreadsheetViewportWindows::marshall,
+            SpreadsheetViewportWindows.class
         );
     }
 }

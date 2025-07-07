@@ -37,7 +37,7 @@ public final class SpreadsheetUrlFragments implements PublicStaticHelper {
     public static final UrlFragment PARSER = UrlFragment.with("parser");
 
     public static final UrlFragment PLUGIN = UrlFragment.with(
-            Plugin.HATEOS_RESOURCE_NAME.value()
+        Plugin.HATEOS_RESOURCE_NAME.value()
     );
 
     /**

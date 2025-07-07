@@ -72,24 +72,24 @@ public final class HourSpreadsheetFormatParserTokenTest extends NonSymbolSpreads
     @Test
     public void testKind1() {
         this.kindAndCheck(
-                "h",
-                SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO
+            "h",
+            SpreadsheetFormatParserTokenKind.HOUR_WITHOUT_LEADING_ZERO
         );
     }
 
     @Test
     public void testKind2() {
         this.kindAndCheck(
-                "hh",
-                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO
+            "hh",
+            SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO
         );
     }
 
     @Test
     public void testKind3() {
         this.kindAndCheck(
-                "hhh",
-                SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO
+            "hhh",
+            SpreadsheetFormatParserTokenKind.HOUR_WITH_LEADING_ZERO
         );
     }
 

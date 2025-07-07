@@ -24,9 +24,9 @@ public interface SpreadsheetColumnOrRowStoreTesting<S extends SpreadsheetColumnO
 
     default void isHiddenAndCheck(final S store, final R reference, final boolean expected) {
         this.checkEquals(
-                expected,
-                store.isHidden(reference),
-                () -> reference + " isHidden"
+            expected,
+            store.isHidden(reference),
+            () -> reference + " isHidden"
         );
     }
 }

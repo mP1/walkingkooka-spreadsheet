@@ -117,12 +117,12 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(c);
 
         this.valuesAndCheck(
-                store,
-                0,
-                3,
-                a,
-                b,
-                c
+            store,
+            0,
+            3,
+            a,
+            b,
+            c
         );
     }
 
@@ -141,17 +141,17 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(d);
 
         this.valuesAndCheck(
-                store,
-                1,
-                2,
-                b,
-                c
+            store,
+            1,
+            2,
+            b,
+            c
         );
     }
 
     final SpreadsheetCellReference cell(final int column, final int row) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column)
-                .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
+            .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
 
     final SpreadsheetLabelMapping mapping(final String label, final int column, final int row) {

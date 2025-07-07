@@ -47,7 +47,7 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
         final SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(store);
         visitor.accept(labelName);
         return Optional.ofNullable(
-                visitor.cellOrRange
+            visitor.cellOrRange
         );
     }
 
@@ -61,14 +61,14 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
         final Set<SpreadsheetSelection> visited = this.visited;
         if (false == visited.add(selection)) {
             throw new IllegalStateException(
-                    "Cycle detected for " + visited.stream()
-                            .map(SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor::quote)
-                            .collect(Collectors.joining(
-                                            " -> ",
-                                            "",
-                                            " -> " + quote(selection)
-                                    )
-                            )
+                "Cycle detected for " + visited.stream()
+                    .map(SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor::quote)
+                    .collect(Collectors.joining(
+                            " -> ",
+                            "",
+                            " -> " + quote(selection)
+                        )
+                    )
             );
         }
 
@@ -77,7 +77,7 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
 
     private static CharSequence quote(final SpreadsheetSelection selection) {
         return CharSequences.quoteAndEscape(
-                selection.toString()
+            selection.toString()
         );
     }
 

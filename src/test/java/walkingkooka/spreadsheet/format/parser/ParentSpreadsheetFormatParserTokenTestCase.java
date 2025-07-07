@@ -63,13 +63,11 @@ public abstract class ParentSpreadsheetFormatParserTokenTestCase<T extends Paren
 
     abstract T createToken(final String text, final List<ParserToken> tokens);
 
-    @Override
-    final public T createToken(final String text) {
+    @Override final public T createToken(final String text) {
         return this.createToken(text, this.tokens());
     }
 
-    @SuppressWarnings("UnusedReturnValue")
-    final T createToken(final String text, final ParserToken... tokens) {
+    @SuppressWarnings("UnusedReturnValue") final T createToken(final String text, final ParserToken... tokens) {
         return this.createToken(text, Lists.of(tokens));
     }
 

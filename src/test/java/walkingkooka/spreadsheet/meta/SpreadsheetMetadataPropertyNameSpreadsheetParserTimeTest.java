@@ -29,17 +29,17 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserTimeTest exte
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck(
-                LocaleContexts.jre(Locale.ENGLISH),
-                SpreadsheetTimeParsePattern.parseTimeParsePattern("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
-                        .spreadsheetParserSelector()
+            LocaleContexts.jre(Locale.ENGLISH),
+            SpreadsheetTimeParsePattern.parseTimeParsePattern("h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm")
+                .spreadsheetParserSelector()
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameSpreadsheetParserTime.instance(),
-                "timeParser"
+            SpreadsheetMetadataPropertyNameSpreadsheetParserTime.instance(),
+            "timeParser"
         );
     }
 
@@ -51,7 +51,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserTimeTest exte
     @Override
     SpreadsheetParserSelector propertyValue() {
         return SpreadsheetTimeParsePattern.parseTimeParsePattern("hhmmss \"pattern-1\";hhmmss \"pattern-2\"")
-                .spreadsheetParserSelector();
+            .spreadsheetParserSelector();
     }
 
     // ClassTesting.....................................................................................................

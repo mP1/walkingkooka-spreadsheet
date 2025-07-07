@@ -39,9 +39,9 @@ public final class MultiplicationSpreadsheetFormulaParserToken extends Arithmeti
     @Override
     public MultiplicationSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                MultiplicationSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            MultiplicationSpreadsheetFormulaParserToken::with
         );
     }
 

@@ -59,16 +59,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelection> implements ClassTesting2<S>,
-        HashCodeEqualsDefinedTesting2<S>,
-        HasUrlFragmentTesting,
-        HasTextTesting,
-        HasNotFoundTextTesting,
-        JsonNodeMarshallingTesting<S>,
-        IsMethodTesting<S>,
-        ParseStringTesting<S>,
-        PredicateTesting2<S, SpreadsheetSelection>,
-        ToStringTesting<S>,
-        TreePrintableTesting {
+    HashCodeEqualsDefinedTesting2<S>,
+    HasUrlFragmentTesting,
+    HasTextTesting,
+    HasNotFoundTextTesting,
+    JsonNodeMarshallingTesting<S>,
+    IsMethodTesting<S>,
+    ParseStringTesting<S>,
+    PredicateTesting2<S, SpreadsheetSelection>,
+    ToStringTesting<S>,
+    TreePrintableTesting {
 
     private final static SpreadsheetViewportWindowsFunction WINDOWS_FUNCTION = SpreadsheetViewportWindowsFunctions.fake();
 
@@ -80,8 +80,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void textAndCheck(final String text) {
         this.textAndCheck(
-                this.parseString(text),
-                text
+            this.parseString(text),
+            text
         );
     }
 
@@ -91,9 +91,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                            final int delta,
                            final SpreadsheetSelection expected) {
         this.checkEquals(
-                expected,
-                selection.add(delta),
-                () -> selection + " add " + delta
+            expected,
+            selection.add(delta),
+            () -> selection + " add " + delta
         );
     }
 
@@ -103,9 +103,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                     final int delta,
                                     final SpreadsheetSelection expected) {
         this.checkEquals(
-                expected,
-                selection.addSaturated(delta),
-                () -> selection + " addSaturated " + delta
+            expected,
+            selection.addSaturated(delta),
+            () -> selection + " addSaturated " + delta
         );
     }
 
@@ -116,8 +116,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final SpreadsheetSelection selection = this.createSelection();
         if (false == selection.isLabelName()) {
             assertSame(
-                    selection,
-                    selection.add(0, 0)
+                selection,
+                selection.add(0, 0)
             );
         }
     }
@@ -127,12 +127,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                     final int row,
                                     final S expected) {
         this.checkEquals(
-                expected,
-                selection.add(
-                        column,
-                        row
-                ),
-                () -> selection + "add " + column + " " + row
+            expected,
+            selection.add(
+                column,
+                row
+            ),
+            () -> selection + "add " + column + " " + row
         );
     }
 
@@ -141,8 +141,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final SpreadsheetSelection selection = this.createSelection();
         if (false == selection.isLabelName()) {
             assertSame(
-                    selection,
-                    selection.addSaturated(0, 0)
+                selection,
+                selection.addSaturated(0, 0)
             );
         }
     }
@@ -152,12 +152,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                              final int row,
                                              final S expected) {
         this.checkEquals(
-                expected,
-                selection.addSaturated(
-                        column,
-                        row
-                ),
-                () -> selection + "addSaturated " + column + " " + row
+            expected,
+            selection.addSaturated(
+                column,
+                row
+            ),
+            () -> selection + "addSaturated " + column + " " + row
         );
     }
 
@@ -166,8 +166,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void addIfRelativeAndCheck(final S selection,
                                      final int delta) {
         assertSame(
-                selection,
-                selection.addIfRelative(delta)
+            selection,
+            selection.addIfRelative(delta)
         );
     }
 
@@ -175,9 +175,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final int delta,
                                      final S expected) {
         this.checkEquals(
-                expected,
-                selection.addIfRelative(delta),
-                () -> selection + " addIfRelative " + delta
+            expected,
+            selection.addIfRelative(delta),
+            () -> selection + " addIfRelative " + delta
         );
     }
 
@@ -186,17 +186,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void countAndCheck(final String selection,
                              final int expected) {
         this.countAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
     final void countAndCheck(final S selection,
                              final long expected) {
         this.checkEquals(
-                expected,
-                selection.count(),
-                () -> selection + " count"
+            expected,
+            selection.count(),
+            () -> selection + " count"
         );
     }
 
@@ -205,17 +205,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void isAllAndCheck(final String selection,
                              final boolean expected) {
         this.isAllAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
     final void isAllAndCheck(final S selection,
                              final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.isAll(),
-                () -> selection + ".isAll"
+            expected,
+            selection.isAll(),
+            () -> selection + ".isAll"
         );
     }
 
@@ -224,17 +224,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void isFirstAndCheck(final String selection,
                                final boolean expected) {
         this.isFirstAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
     final void isFirstAndCheck(final S selection,
                                final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.isFirst(),
-                () -> selection + ".isFirst"
+            expected,
+            selection.isFirst(),
+            () -> selection + ".isFirst"
         );
     }
 
@@ -243,17 +243,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void isLastAndCheck(final String selection,
                               final boolean expected) {
         this.isLastAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
     final void isLastAndCheck(final S selection,
                               final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.isLast(),
-                () -> selection + ".isLast"
+            expected,
+            selection.isLast(),
+            () -> selection + ".isLast"
         );
     }
 
@@ -262,25 +262,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void toCellAndCheck(final String selection,
                               final String expected) {
         this.toCellAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
     final void toCellAndCheck(final SpreadsheetSelection selection,
                               final String expected) {
         this.toCellAndCheck(
-                selection,
-                SpreadsheetSelection.parseCell(expected)
+            selection,
+            SpreadsheetSelection.parseCell(expected)
         );
     }
 
     final void toCellAndCheck(final SpreadsheetSelection selection,
                               final SpreadsheetCellReference expected) {
         this.checkEquals(
-                expected,
-                selection.toCell(),
-                () -> selection + " toCell"
+            expected,
+            selection.toCell(),
+            () -> selection + " toCell"
         );
     }
 
@@ -288,9 +288,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toCellOrCellRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .toCellOrCellRange()
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toCellOrCellRange()
         );
     }
 
@@ -299,17 +299,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void toCellRangeAndCheck(final String selection,
                                    final String expected) {
         this.toCellRangeAndCheck(
-                this.parseString(selection),
-                SpreadsheetSelection.parseCellRange(expected)
+            this.parseString(selection),
+            SpreadsheetSelection.parseCellRange(expected)
         );
     }
 
     final void toCellRangeAndCheck(final SpreadsheetSelection selection,
                                    final SpreadsheetCellRangeReference expected) {
         this.checkEquals(
-                expected,
-                selection.toCellRange(),
-                selection::toString
+            expected,
+            selection.toCellRange(),
+            selection::toString
         );
     }
 
@@ -317,17 +317,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toColumnFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().toColumn()
+            UnsupportedOperationException.class,
+            () -> this.createSelection().toColumn()
         );
     }
 
     final void toColumnAndCheck(final SpreadsheetSelection selection,
                                 final SpreadsheetColumnReference expected) {
         this.checkEquals(
-                expected,
-                selection.toColumn(),
-                () -> selection + " toColumn"
+            expected,
+            selection.toColumn(),
+            () -> selection + " toColumn"
         );
     }
 
@@ -335,17 +335,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toColumnRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().toColumnRange()
+            UnsupportedOperationException.class,
+            () -> this.createSelection().toColumnRange()
         );
     }
 
     final void toColumnRangeAndCheck(final SpreadsheetSelection selection,
                                      final SpreadsheetColumnRangeReference expected) {
         this.checkEquals(
-                expected,
-                selection.toColumnRange(),
-                () -> selection + " toColumnRange"
+            expected,
+            selection.toColumnRange(),
+            () -> selection + " toColumnRange"
         );
     }
 
@@ -354,16 +354,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void toColumnOrColumnRangeAndCheck(final S selection,
                                              final SpreadsheetSelection expected) {
         this.checkEquals(
-                expected,
-                selection.toColumnOrColumnRange()
+            expected,
+            selection.toColumnOrColumnRange()
         );
     }
 
     final void toColumnOrColumnRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .toColumnOrColumnRange()
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toColumnOrColumnRange()
         );
     }
 
@@ -372,16 +372,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void toExpressionReferenceAndCheck() {
         final S selection = this.createSelection();
         assertSame(
-                selection,
-                selection.toExpressionReference()
+            selection,
+            selection.toExpressionReference()
         );
     }
 
     final void toExpressionReferenceFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .toExpressionReference()
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toExpressionReference()
         );
     }
 
@@ -389,17 +389,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toRowFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().toRow()
+            UnsupportedOperationException.class,
+            () -> this.createSelection().toRow()
         );
     }
 
     final void toRowAndCheck(final SpreadsheetSelection selection,
                              final SpreadsheetRowReference expected) {
         this.checkEquals(
-                expected,
-                selection.toRow(),
-                () -> selection + " toRow"
+            expected,
+            selection.toRow(),
+            () -> selection + " toRow"
         );
     }
 
@@ -407,17 +407,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toRowRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().toRowRange()
+            UnsupportedOperationException.class,
+            () -> this.createSelection().toRowRange()
         );
     }
 
     final void toRowRangeAndCheck(final SpreadsheetSelection selection,
                                   final SpreadsheetRowRangeReference expected) {
         this.checkEquals(
-                expected,
-                selection.toRowRange(),
-                () -> selection + " toRowRange"
+            expected,
+            selection.toRowRange(),
+            () -> selection + " toRowRange"
         );
     }
 
@@ -426,16 +426,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void toRowOrRowRangeAndCheck(final S selection,
                                        final SpreadsheetSelection expected) {
         this.checkEquals(
-                expected,
-                selection.toRowOrRowRange()
+            expected,
+            selection.toRowOrRowRange()
         );
     }
 
     final void toRowOrRowRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection()
-                        .toRowOrRowRange()
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toRowOrRowRange()
         );
     }
 
@@ -444,31 +444,31 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public final void testReplaceReferencesMapperNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.replaceReferencesMapper(null)
+            NullPointerException.class,
+            () -> SpreadsheetSelection.A1.replaceReferencesMapper(null)
         );
     }
 
     @Test
     public final void testReplaceReferencesMapperLabelFails() {
         this.replaceReferencesMapperFails(
-                SpreadsheetSelection.labelName("Label123"),
-                "Expected non label but got Label123"
+            SpreadsheetSelection.labelName("Label123"),
+            "Expected non label but got Label123"
         );
     }
 
     final void replaceReferencesMapperFails(final SpreadsheetSelection moveTo,
                                             final String message) {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSelection()
-                        .replaceReferencesMapper(moveTo)
+            IllegalArgumentException.class,
+            () -> this.createSelection()
+                .replaceReferencesMapper(moveTo)
         );
 
         this.checkEquals(
-                message,
-                thrown.getMessage(),
-                "message"
+            message,
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -477,10 +477,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                final int deltaX,
                                                final int deltaY) {
         this.replaceReferencesMapperAndCheck(
-                this.parseString(selection),
-                moveTo,
-                deltaX,
-                deltaY
+            this.parseString(selection),
+            moveTo,
+            deltaX,
+            deltaY
         );
     }
 
@@ -489,25 +489,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                final int deltaX,
                                                final int deltaY) {
         final Optional<SpreadsheetSelectionReplaceReferencesMapperFunction> maybeMapper = Cast.to(
-                selection.replaceReferencesMapper(moveTo)
+            selection.replaceReferencesMapper(moveTo)
         );
 
         if (0 != deltaX || 0 != deltaY) {
             final SpreadsheetSelectionReplaceReferencesMapperFunction mapper = maybeMapper.get();
             this.checkEquals(
-                    deltaX,
-                    mapper.deltaX,
-                    "deltaX"
+                deltaX,
+                mapper.deltaX,
+                "deltaX"
             );
             this.checkEquals(
-                    deltaY,
-                    mapper.deltaY,
-                    "deltaY"
+                deltaY,
+                mapper.deltaY,
+                "deltaY"
             );
         } else {
             this.checkEquals(
-                    Optional.empty(),
-                    maybeMapper
+                Optional.empty(),
+                maybeMapper
             );
         }
     }
@@ -517,17 +517,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public final void testComparatorNamesBoundsCheckWithNullComparatorsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection()
-                        .comparatorNamesBoundsCheck(null)
+            NullPointerException.class,
+            () -> this.createSelection()
+                .comparatorNamesBoundsCheck(null)
         );
     }
 
     void comparatorNamesBoundsCheckAndCheck(final String selection,
                                             final String comparatorsNameList) {
         this.comparatorNamesBoundsCheckAndCheck(
-                this.parseString(selection),
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(comparatorsNameList)
+            this.parseString(selection),
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(comparatorsNameList)
         );
     }
 
@@ -540,9 +540,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                  final String comparatorsNameList,
                                                  final String expected) {
         this.comparatorNamesBoundsCheckAndCheckFails(
-                this.parseString(selection),
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(comparatorsNameList),
-                expected
+            this.parseString(selection),
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(comparatorsNameList),
+            expected
         );
     }
 
@@ -550,14 +550,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                  final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparatorsNameList,
                                                  final String expected) {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> selection.comparatorNamesBoundsCheck(comparatorsNameList)
+            IllegalArgumentException.class,
+            () -> selection.comparatorNamesBoundsCheck(comparatorsNameList)
         );
 
         this.checkEquals(
-                expected,
-                thrown.getMessage(),
-                () -> selection + " comparatorNamesBoundsCheck " + comparatorsNameList
+            expected,
+            thrown.getMessage(),
+            () -> selection + " comparatorNamesBoundsCheck " + comparatorsNameList
         );
     }
 
@@ -566,9 +566,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public final void testContainsAllWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection()
-                        .containsAll(null)
+            NullPointerException.class,
+            () -> this.createSelection()
+                .containsAll(null)
         );
     }
 
@@ -576,9 +576,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final SpreadsheetViewportWindows windows,
                                    final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.containsAll(windows),
-                () -> selection + " containsAll " + windows
+            expected,
+            selection.containsAll(windows),
+            () -> selection + " containsAll " + windows
         );
     }
 
@@ -592,32 +592,31 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public final void testTestWithColumnRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().test(SpreadsheetSelection.parseColumnRange("B:C"))
+            UnsupportedOperationException.class,
+            () -> this.createSelection().test(SpreadsheetSelection.parseColumnRange("B:C"))
         );
     }
 
     @Test
     public final void testTestWithLabelFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().test(SpreadsheetSelection.labelName("Label123"))
+            UnsupportedOperationException.class,
+            () -> this.createSelection().test(SpreadsheetSelection.labelName("Label123"))
         );
     }
 
     @Test
     public final void testTestWithRowRangeFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createSelection().test(SpreadsheetSelection.parseRowRange("4:5"))
+            UnsupportedOperationException.class,
+            () -> this.createSelection().test(SpreadsheetSelection.parseRowRange("4:5"))
         );
     }
 
-    @Test
-    final void testTestCellWithNullFails() {
+    @Test final void testTestCellWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().testCell(null)
+            NullPointerException.class,
+            () -> this.createSelection().testCell(null)
         );
     }
 
@@ -625,9 +624,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final String cell,
                                 final boolean expected) {
         this.testCellAndCheck(
-                this.parseString(selection),
-                SpreadsheetSelection.parseCell(cell),
-                expected
+            this.parseString(selection),
+            SpreadsheetSelection.parseCell(cell),
+            expected
         );
     }
 
@@ -635,17 +634,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final SpreadsheetCellReference cell,
                                 final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.testCell(cell),
-                () -> selection + " testCell " + cell
+            expected,
+            selection.testCell(cell),
+            () -> selection + " testCell " + cell
         );
     }
 
-    @Test
-    final void testTestCellRangeWithNullFails() {
+    @Test final void testTestCellRangeWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().testCellRange(null)
+            NullPointerException.class,
+            () -> this.createSelection().testCellRange(null)
         );
     }
 
@@ -653,9 +651,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final String range,
                                      final boolean expected) {
         this.testCellRangeAndCheck(
-                this.parseString(selection),
-                SpreadsheetSelection.parseCellRange(range),
-                expected
+            this.parseString(selection),
+            SpreadsheetSelection.parseCellRange(range),
+            expected
         );
     }
 
@@ -663,23 +661,22 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final SpreadsheetCellRangeReference range,
                                      final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.testCellRange(range),
-                () -> selection + " testCellRange " + range
+            expected,
+            selection.testCellRange(range),
+            () -> selection + " testCellRange " + range
         );
 
         this.testAndCheck(
-                selection,
-                range,
-                expected
+            selection,
+            range,
+            expected
         );
     }
 
-    @Test
-    final void testTestColumnWithNullFails() {
+    @Test final void testTestColumnWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().testColumn(null)
+            NullPointerException.class,
+            () -> this.createSelection().testColumn(null)
         );
     }
 
@@ -687,9 +684,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final String column,
                                   final boolean expected) {
         this.testColumnAndCheck(
-                this.parseString(selection),
-                column,
-                expected
+            this.parseString(selection),
+            column,
+            expected
         );
     }
 
@@ -697,17 +694,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final String column,
                                   final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.testColumn(SpreadsheetSelection.parseColumn(column)),
-                selection + ".testColumn(" + column + ")"
+            expected,
+            selection.testColumn(SpreadsheetSelection.parseColumn(column)),
+            selection + ".testColumn(" + column + ")"
         );
     }
 
-    @Test
-    final void testTestRowWithNullFails() {
+    @Test final void testTestRowWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().testRow(null)
+            NullPointerException.class,
+            () -> this.createSelection().testRow(null)
         );
     }
 
@@ -715,9 +711,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final String row,
                                final boolean expected) {
         this.testRowAndCheck(
-                this.parseString(selection),
-                row,
-                expected
+            this.parseString(selection),
+            row,
+            expected
         );
     }
 
@@ -725,9 +721,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final String row,
                                final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.testRow(SpreadsheetSelection.parseRow(row)),
-                selection + ".testRow(" + row + ")"
+            expected,
+            selection.testRow(SpreadsheetSelection.parseRow(row)),
+            selection + ".testRow(" + row + ")"
         );
     }
 
@@ -741,30 +737,28 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final S expected) {
         if (expected.equals(selection)) {
             assertSame(
-                    expected,
-                    selection.toRelative(),
-                    selection::toString
+                expected,
+                selection.toRelative(),
+                selection::toString
             );
         } else {
             this.checkEquals(
-                    expected,
-                    selection.toRelative(),
-                    selection::toString
+                expected,
+                selection.toRelative(),
+                selection::toString
             );
         }
     }
 
     // defaultAnchor....................................................................................................
 
-    @Test
-    final public void testDefaultAnchor() {
+    @Test final public void testDefaultAnchor() {
         final S selection = this.createSelection();
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
     }
 
-    @Test
-    final public void testDefaultAnchorThenSetAnchor() {
+    @Test final public void testDefaultAnchorThenSetAnchor() {
         final S selection = this.createSelection();
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
@@ -781,8 +775,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final S selection = this.createSelection();
 
         assertThrows(
-                NullPointerException.class,
-                () -> selection.setAnchor(null)
+            NullPointerException.class,
+            () -> selection.setAnchor(null)
         );
     }
 
@@ -796,20 +790,20 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                     continue;
                 }
                 final IllegalArgumentException thrown = assertThrows(
-                        IllegalArgumentException.class,
-                        () -> selection.setAnchor(anchor)
+                    IllegalArgumentException.class,
+                    () -> selection.setAnchor(anchor)
                 );
                 this.checkEquals(
-                        "Invalid anchor " +
-                                anchor +
-                                " for " +
-                                selection +
-                                ", valid anchors: " +
-                                selection.anchors()
-                                        .stream()
-                                        .map(Enum::toString)
-                                        .collect(Collectors.joining(", ")),
-                        thrown.getMessage()
+                    "Invalid anchor " +
+                        anchor +
+                        " for " +
+                        selection +
+                        ", valid anchors: " +
+                        selection.anchors()
+                            .stream()
+                            .map(Enum::toString)
+                            .collect(Collectors.joining(", ")),
+                    thrown.getMessage()
                 );
             }
         }
@@ -823,8 +817,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
 
         this.checkEquals(
-                selection.setAnchor(anchor),
-                selection.setDefaultAnchor()
+            selection.setAnchor(anchor),
+            selection.setDefaultAnchor()
         );
     }
 
@@ -832,17 +826,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void cellColumnOrRowTextAndCheck(final String text) {
         this.cellColumnOrRowTextAndCheck(
-                this.createSelection(),
-                text
+            this.createSelection(),
+            text
         );
     }
 
     final void cellColumnOrRowTextAndCheck(final SpreadsheetSelection selection,
                                            final String text) {
         this.checkEquals(
-                text,
-                selection.cellColumnOrRowText(),
-                selection + " cellColumnOrRowText"
+            text,
+            selection.cellColumnOrRowText(),
+            selection + " cellColumnOrRowText"
         );
     }
 
@@ -853,10 +847,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final Predicate<SpreadsheetRowReference> hiddenRowTester,
                                 final boolean expected) {
         this.isHiddenAndCheck(
-                this.parseString(selection),
-                hiddenColumnTester,
-                hiddenRowTester,
-                expected
+            this.parseString(selection),
+            hiddenColumnTester,
+            hiddenRowTester,
+            expected
         );
     }
 
@@ -865,9 +859,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final Predicate<SpreadsheetRowReference> hiddenRowTester,
                                 final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.isHidden(hiddenColumnTester, hiddenRowTester),
-                () -> "isHidden " + selection
+            expected,
+            selection.isHidden(hiddenColumnTester, hiddenRowTester),
+            () -> "isHidden " + selection
         );
     }
 
@@ -879,11 +873,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final String hiddenRows,
                                   final String expected) {
         this.leftColumnAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -893,18 +887,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Predicate<SpreadsheetRowReference> hiddenRows,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.leftColumn(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate leftColumn"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.leftColumn(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate leftColumn"
         );
     }
 
@@ -919,14 +913,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Map<String, Double> rowHeights,
                                   final String expected) {
         this.leftPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -939,19 +933,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.leftPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnWidths,
-                                hiddenRows,
-                                rowHeight,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate " + count + " leftPixels"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.leftPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnWidths,
+                    hiddenRows,
+                    rowHeight,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate " + count + " leftPixels"
         );
     }
 
@@ -963,11 +957,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final String hiddenRows,
                              final String expected) {
         this.upRowAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -977,18 +971,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                              final Predicate<SpreadsheetRowReference> hiddenRows,
                              final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.upRow(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate upRow"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.upRow(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate upRow"
         );
     }
 
@@ -1003,14 +997,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final Map<String, Double> rowHeights,
                                 final String expected) {
         this.upPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -1023,19 +1017,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final Function<SpreadsheetRowReference, Double> rowHeight,
                                 final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.upPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnWidths,
-                                hiddenRows,
-                                rowHeight,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate " + count + " upPixels"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.upPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnWidths,
+                    hiddenRows,
+                    rowHeight,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate " + count + " upPixels"
         );
     }
 
@@ -1047,11 +1041,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final String hiddenRows,
                                    final String expected) {
         this.rightColumnAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -1061,18 +1055,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.rightColumn(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate rightColumn"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.rightColumn(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate rightColumn"
         );
     }
 
@@ -1087,14 +1081,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Map<String, Double> rowHeights,
                                    final String expected) {
         this.rightPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -1107,19 +1101,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Function<SpreadsheetRowReference, Double> rowHeight,
                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.rightPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnWidths,
-                                hiddenRows,
-                                rowHeight,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate " + count + " rightPixels"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.rightPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnWidths,
+                    hiddenRows,
+                    rowHeight,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate " + count + " rightPixels"
         );
     }
 
@@ -1131,11 +1125,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final String hiddenRows,
                                final String expected) {
         this.downRowAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -1145,18 +1139,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final Predicate<SpreadsheetRowReference> hiddenRows,
                                final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.downRow(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate downRow"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.downRow(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate downRow"
         );
     }
 
@@ -1171,14 +1165,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Map<String, Double> rowHeights,
                                   final String expected) {
         this.downPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expected)
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expected)
         );
     }
 
@@ -1191,19 +1185,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                   final Function<SpreadsheetRowReference, Double> rowHeight,
                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.downPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnWidths,
-                                hiddenRows,
-                                rowHeight,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate " + count + " downPixels"
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.downPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnWidths,
+                    hiddenRows,
+                    rowHeight,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate " + count + " downPixels"
         );
     }
 
@@ -1212,9 +1206,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void extendRangeAndCheck(final String selection,
                                    final String moved) {
         this.extendRangeAndCheck(
-                selection,
-                moved,
-                SpreadsheetViewportAnchor.NONE
+            selection,
+            moved,
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
@@ -1224,11 +1218,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final S parsed = this.parseString(selection);
 
         this.extendRangeAndCheck(
-                parsed,
-                this.parseString(moved)
-                        .toScalarIfUnit(),
-                anchor,
-                parsed
+            parsed,
+            this.parseString(moved)
+                .toScalarIfUnit(),
+            anchor,
+            parsed
         );
     }
 
@@ -1236,10 +1230,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final String moved,
                                    final String expected) {
         this.extendRangeAndCheck(
-                selection,
-                moved,
-                SpreadsheetViewportAnchor.NONE,
-                expected
+            selection,
+            moved,
+            SpreadsheetViewportAnchor.NONE,
+            expected
         );
     }
 
@@ -1248,11 +1242,11 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final SpreadsheetViewportAnchor anchor,
                                    final String expected) {
         this.extendRangeAndCheck(
-                this.parseString(selection),
-                this.parseString(moved)
-                        .toScalarIfUnit(),
-                anchor,
-                this.parseRange(expected)
+            this.parseString(selection),
+            this.parseString(moved)
+                .toScalarIfUnit(),
+            anchor,
+            this.parseRange(expected)
         );
     }
 
@@ -1261,10 +1255,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final SpreadsheetViewportAnchor anchor,
                                    final SpreadsheetSelection expected) {
         this.extendRangeAndCheck(
-                selection,
-                Optional.of(moved),
-                anchor,
-                Optional.of(expected)
+            selection,
+            Optional.of(moved),
+            anchor,
+            Optional.of(expected)
         );
     }
 
@@ -1274,15 +1268,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Optional<SpreadsheetSelection> expected) {
         if (moved.isPresent()) {
             this.checkEquals(
-                    true,
-                    moved.map(m -> m instanceof SpreadsheetCellReference || m instanceof SpreadsheetColumnReference || m instanceof SpreadsheetRowReference).get(),
-                    () -> moved + " must be either cell/column/row"
+                true,
+                moved.map(m -> m instanceof SpreadsheetCellReference || m instanceof SpreadsheetColumnReference || m instanceof SpreadsheetRowReference).get(),
+                () -> moved + " must be either cell/column/row"
             );
         }
         this.checkEquals(
-                expected.map(SpreadsheetSelection::toScalarIfUnit),
-                selection.extendRange(Cast.to(moved), anchor),
-                () -> selection + " extendRange " + moved + " " + anchor
+            expected.map(SpreadsheetSelection::toScalarIfUnit),
+            selection.extendRange(Cast.to(moved), anchor),
+            () -> selection + " extendRange " + moved + " " + anchor
         );
     }
 
@@ -1297,13 +1291,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final String expectedSelection,
                                         final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendLeftColumnAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1313,18 +1307,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final Predicate<SpreadsheetRowReference> hiddenRows,
                                         final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendLeftColumn(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendLeftColumn"
+            expected,
+            selection.extendLeftColumn(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendLeftColumn"
         );
     }
 
@@ -1340,16 +1334,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final String expectedSelection,
                                         final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendLeftPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1362,19 +1356,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final Function<SpreadsheetRowReference, Double> rowToHeights,
                                         final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendLeftPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnToWidths,
-                                hiddenRows,
-                                rowToHeights,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendLeftPixels"
+            expected,
+            selection.extendLeftPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnToWidths,
+                    hiddenRows,
+                    rowToHeights,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendLeftPixels"
         );
     }
 
@@ -1387,14 +1381,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final String expectedSelection,
                                    final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendUpRowAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.toScalarIfUnit()
-                                .setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.toScalarIfUnit()
+                    .setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1404,18 +1398,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                    final Predicate<SpreadsheetRowReference> hiddenRows,
                                    final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendUpRow(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendUpRow"
+            expected,
+            selection.extendUpRow(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendUpRow"
         );
     }
 
@@ -1431,16 +1425,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                       final String expectedSelection,
                                       final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendUpPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1453,19 +1447,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                       final Function<SpreadsheetRowReference, Double> rowToHeights,
                                       final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendUpPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnToWidths,
-                                hiddenRows,
-                                rowToHeights,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendUpPixels"
+            expected,
+            selection.extendUpPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnToWidths,
+                    hiddenRows,
+                    rowToHeights,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendUpPixels"
         );
     }
 
@@ -1478,13 +1472,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final String expectedSelection,
                                          final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendRightColumnAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1494,18 +1488,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final Predicate<SpreadsheetRowReference> hiddenRows,
                                          final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendRightColumn(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendRightColumn"
+            expected,
+            selection.extendRightColumn(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendRightColumn"
         );
     }
 
@@ -1521,16 +1515,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final String expectedSelection,
                                          final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendRightPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1543,19 +1537,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                          final Function<SpreadsheetRowReference, Double> rowToHeights,
                                          final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendRightPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnToWidths,
-                                hiddenRows,
-                                rowToHeights,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendRightPixels"
+            expected,
+            selection.extendRightPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnToWidths,
+                    hiddenRows,
+                    rowToHeights,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendRightPixels"
         );
     }
 
@@ -1568,13 +1562,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final String expectedSelection,
                                      final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendDownRowAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.hiddenColumns(hiddenColumns),
-                this.hiddenRows(hiddenRows),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            this.hiddenColumns(hiddenColumns),
+            this.hiddenRows(hiddenRows),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1584,18 +1578,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final Predicate<SpreadsheetRowReference> hiddenRows,
                                      final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendDownRow(
-                        anchor,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                COLUMN_TO_WIDTH,
-                                hiddenRows,
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendDownRow"
+            expected,
+            selection.extendDownRow(
+                anchor,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    COLUMN_TO_WIDTH,
+                    hiddenRows,
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendDownRow"
         );
     }
 
@@ -1611,16 +1605,16 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final String expectedSelection,
                                         final SpreadsheetViewportAnchor expectedAnchor) {
         this.extendDownPixelsAndCheck(
-                this.parseString(selection),
-                anchor,
-                count,
-                this.hiddenColumns(hiddenColumns),
-                this.columnToWidth(columnWidths),
-                this.hiddenRows(hiddenRows),
-                this.rowToHeight(rowHeights),
-                this.parseStringOrEmpty(expectedSelection).map(
-                        s -> s.setAnchor(expectedAnchor)
-                )
+            this.parseString(selection),
+            anchor,
+            count,
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnWidths),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowHeights),
+            this.parseStringOrEmpty(expectedSelection).map(
+                s -> s.setAnchor(expectedAnchor)
+            )
         );
     }
 
@@ -1633,19 +1627,19 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                         final Function<SpreadsheetRowReference, Double> rowToHeights,
                                         final Optional<AnchoredSpreadsheetSelection> expected) {
         this.checkEquals(
-                expected,
-                selection.extendDownPixels(
-                        anchor,
-                        count,
-                        SpreadsheetViewportNavigationContexts.basic(
-                                hiddenColumns,
-                                columnToWidths,
-                                hiddenRows,
-                                rowToHeights,
-                                WINDOWS_FUNCTION
-                        )
-                ),
-                () -> selection + " anchor=" + anchor + " navigate extendDownPixels"
+            expected,
+            selection.extendDownPixels(
+                anchor,
+                count,
+                SpreadsheetViewportNavigationContexts.basic(
+                    hiddenColumns,
+                    columnToWidths,
+                    hiddenRows,
+                    rowToHeights,
+                    WINDOWS_FUNCTION
+                )
+            ),
+            () -> selection + " anchor=" + anchor + " navigate extendDownPixels"
         );
     }
 
@@ -1669,65 +1663,65 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     private Optional<SpreadsheetSelection> parseStringOrEmpty(final String text) {
         return Optional.ofNullable(
-                CharSequences.isNullOrEmpty(text) ?
-                        null :
-                        this.parseRange(text)
-                                .toScalarIfUnit()
+            CharSequences.isNullOrEmpty(text) ?
+                null :
+                this.parseRange(text)
+                    .toScalarIfUnit()
         );
     }
 
     private Predicate<SpreadsheetColumnReference> hiddenColumns(final String columns) {
         return hiddenPredicate(
-                columns,
-                SpreadsheetSelection::parseColumn
+            columns,
+            SpreadsheetSelection::parseColumn
         );
     }
 
     private Predicate<SpreadsheetRowReference> hiddenRows(final String rows) {
         return hiddenPredicate(
-                rows,
-                SpreadsheetSelection::parseRow
+            rows,
+            SpreadsheetSelection::parseRow
         );
     }
 
     private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
                                                                                  final Function<String, T> parser) {
         return (columnOrRow) -> CharacterConstant.COMMA.parse(
-                columnOrRows,
-                parser
+            columnOrRows,
+            parser
         ).contains(columnOrRow);
     }
 
     private Function<SpreadsheetColumnReference, Double> columnToWidth(final Map<String, Double> columnToWidths) {
         return columnOrRowToWidthOrHeight(
-                columnToWidths,
-                SpreadsheetSelection::parseColumn
+            columnToWidths,
+            SpreadsheetSelection::parseColumn
         );
     }
 
     private Function<SpreadsheetRowReference, Double> rowToHeight(final Map<String, Double> rowToHeights) {
         return columnOrRowToWidthOrHeight(
-                rowToHeights,
-                SpreadsheetSelection::parseRow
+            rowToHeights,
+            SpreadsheetSelection::parseRow
         );
     }
 
     private <T extends SpreadsheetSelection> Function<T, Double> columnOrRowToWidthOrHeight(final Map<String, Double> columnOrRowToWidthOrHeight,
                                                                                             final Function<String, T> parser) {
         final Map<T, Double> map = columnOrRowToWidthOrHeight.entrySet()
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                e -> parser.apply(e.getKey()),
-                                Map.Entry::getValue
-                        )
-                );
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    e -> parser.apply(e.getKey()),
+                    Map.Entry::getValue
+                )
+            );
         return (columnOrRow) -> {
             final Double length = map.get(columnOrRow);
             this.checkNotEquals(
-                    null,
-                    length,
-                    () -> "Missing " + columnOrRow + " parse " + columnOrRowToWidthOrHeight
+                null,
+                length,
+                () -> "Missing " + columnOrRow + " parse " + columnOrRowToWidthOrHeight
             );
             return length;
         };
@@ -1738,8 +1732,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public final void testFocusedNullAnchorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().focused(null)
+            NullPointerException.class,
+            () -> this.createSelection().focused(null)
         );
     }
 
@@ -1747,10 +1741,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final SpreadsheetViewportAnchor anchor,
                                final String expected) {
         this.focusedAndCheck(
-                this.parseString(selection),
-                anchor,
-                this.parseString(expected)
-                        .toScalarIfUnit()
+            this.parseString(selection),
+            anchor,
+            this.parseString(expected)
+                .toScalarIfUnit()
         );
     }
 
@@ -1758,15 +1752,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final SpreadsheetViewportAnchor anchor,
                                final SpreadsheetSelection expected) {
         this.checkEquals(
-                1L, // count is long
-                expected.count(),
-                () -> "Expected " + expected + " count must be one"
+            1L, // count is long
+            expected.count(),
+            () -> "Expected " + expected + " count must be one"
         );
 
         this.checkEquals(
-                expected,
-                selection.focused(anchor),
-                () -> selection + " anchor " + anchor + " focused"
+            expected,
+            selection.focused(anchor),
+            () -> selection + " anchor " + anchor + " focused"
         );
     }
 
@@ -1774,22 +1768,22 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toScalarAndCheck(final String selection) {
         this.toScalarAndCheck(
-                this.parseString(selection)
+            this.parseString(selection)
         );
     }
 
     final void toScalarAndCheck(final S selection) {
         this.toScalarAndCheck(
-                selection,
-                selection
+            selection,
+            selection
         );
     }
 
     final void toScalarAndCheck(final String selection,
                                 final SpreadsheetSelection expected) {
         this.toScalarAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
@@ -1802,9 +1796,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         }
 
         this.checkEquals(
-                expected,
-                scalar,
-                () -> "toScalar " + selection
+            expected,
+            scalar,
+            () -> "toScalar " + selection
         );
     }
 
@@ -1812,22 +1806,22 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toRangeAndCheck(final String selection) {
         this.toRangeAndCheck(
-                this.parseString(selection)
+            this.parseString(selection)
         );
     }
 
     final void toRangeAndCheck(final S selection) {
         this.toRangeAndCheck(
-                selection,
-                selection
+            selection,
+            selection
         );
     }
 
     final void toRangeAndCheck(final String selection,
                                final SpreadsheetSelection expected) {
         this.toRangeAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
@@ -1840,9 +1834,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         }
 
         this.checkEquals(
-                expected,
-                range,
-                () -> "toRange " + selection
+            expected,
+            range,
+            () -> "toRange " + selection
         );
     }
 
@@ -1857,13 +1851,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                               final SpreadsheetColumnOrRowReferenceOrRange other,
                                               final String expected) {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> columnOrRow.ifDifferentColumnOrRowTypeFail(other)
+            IllegalArgumentException.class,
+            () -> columnOrRow.ifDifferentColumnOrRowTypeFail(other)
         );
         this.checkEquals(
-                expected,
-                thrown.getMessage(),
-                () -> columnOrRow + " ifDifferentColumnOrRowTypeFail " + other
+            expected,
+            thrown.getMessage(),
+            () -> columnOrRow + " ifDifferentColumnOrRowTypeFail " + other
         );
     }
 
@@ -1874,10 +1868,10 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final S selection = this.createSelection();
 
         this.urlFragmentAndCheck(
-                selection,
-                UrlFragment.with(
-                        selection.toStringMaybeStar()
-                )
+            selection,
+            UrlFragment.with(
+                selection.toStringMaybeStar()
+            )
         );
     }
 
@@ -1886,9 +1880,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void toParserTokenAndCheck(final SpreadsheetSelection selection,
                                      final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
-                expected,
-                selection.toParserToken(),
-                selection::toString
+            expected,
+            selection.toParserToken(),
+            selection::toString
         );
     }
 
@@ -1896,22 +1890,22 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                      final SpreadsheetFormulaParserToken expected,
                                      final Parser<SpreadsheetParserContext> parser) {
         this.toParserTokenAndCheck(
-                selection,
-                expected
+            selection,
+            expected
         );
 
         this.checkEquals(
-                Optional.of(
-                        expected
+            Optional.of(
+                expected
+            ),
+            parser.orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(
+                    TextCursors.charSequence(
+                        expected.text()
+                    ),
+                    SpreadsheetParserContexts.fake()
                 ),
-                parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(
-                                TextCursors.charSequence(
-                                        expected.text()
-                                ),
-                                SpreadsheetParserContexts.fake()
-                        ),
-                () -> "parse " + expected.text()
+            () -> "parse " + expected.text()
         );
     }
 
@@ -1919,17 +1913,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void toStringMaybeStarAndCheck(final SpreadsheetSelection selection) {
         this.toStringMaybeStarAndCheck(
-                selection,
-                selection.toString()
+            selection,
+            selection.toString()
         );
     }
 
     final void toStringMaybeStarAndCheck(final SpreadsheetSelection selection,
                                          final String expected) {
         this.checkEquals(
-                selection.toStringMaybeStar(),
-                expected,
-                selection::toString
+            selection.toStringMaybeStar(),
+            expected,
+            selection::toString
         );
     }
 
@@ -1940,9 +1934,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         final S selection = this.createSelection();
 
         this.equalsIgnoreReferenceKindAndCheck(
-                selection,
-                selection,
-                true
+            selection,
+            selection,
+            true
         );
     }
 
@@ -1950,9 +1944,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                  final String right,
                                                  final boolean expected) {
         this.equalsIgnoreReferenceKindAndCheck(
-                this.parseString(left),
-                this.parseString(right),
-                expected
+            this.parseString(left),
+            this.parseString(right),
+            expected
         );
     }
 
@@ -1960,9 +1954,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                                  final S right,
                                                  final boolean expected) {
         this.checkEquals(
-                expected,
-                left.equalsIgnoreReferenceKind(right),
-                () -> left + " equalsIgnoreReferenceKind " + right
+            expected,
+            left.equalsIgnoreReferenceKind(right),
+            () -> left + " equalsIgnoreReferenceKind " + right
         );
     }
 
@@ -1995,30 +1989,30 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Test
     public void testIsCellOrCellRange() {
         this.checkEquals(
-                this instanceof SpreadsheetCellReferenceTest ||
-                        this instanceof SpreadsheetCellRangeReferenceTest,
-                this.createSelection()
-                        .isCellOrCellRange()
+            this instanceof SpreadsheetCellReferenceTest ||
+                this instanceof SpreadsheetCellRangeReferenceTest,
+            this.createSelection()
+                .isCellOrCellRange()
         );
     }
 
     @Test
     public void testIsColumnOrColumnRange() {
         this.checkEquals(
-                this instanceof SpreadsheetColumnReferenceTest ||
-                        this instanceof SpreadsheetColumnRangeReferenceTest,
-                this.createSelection()
-                        .isColumnOrColumnRange()
+            this instanceof SpreadsheetColumnReferenceTest ||
+                this instanceof SpreadsheetColumnRangeReferenceTest,
+            this.createSelection()
+                .isColumnOrColumnRange()
         );
     }
 
     @Test
     public void testIsRowOrRowRange() {
         this.checkEquals(
-                this instanceof SpreadsheetRowReferenceTest ||
-                        this instanceof SpreadsheetRowRangeReferenceTest,
-                this.createSelection()
-                        .isRowOrRowRange()
+            this instanceof SpreadsheetRowReferenceTest ||
+                this instanceof SpreadsheetRowRangeReferenceTest,
+            this.createSelection()
+                .isRowOrRowRange()
         );
     }
 
@@ -2030,33 +2024,33 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.setContains(
-                Sets.of(
-                        "isAll",
-                        "isFirst",
-                        "isLast",
-                        "isHidden",
-                        "isScalar",
-                        "isCellOrCellRange",
-                        "isColumnOrColumnRange",
-                        "isExternalReference",
-                        "isRowOrRowRange",
-                        "isUnit"
-                )
+            Sets.of(
+                "isAll",
+                "isFirst",
+                "isLast",
+                "isHidden",
+                "isScalar",
+                "isCellOrCellRange",
+                "isColumnOrColumnRange",
+                "isExternalReference",
+                "isRowOrRowRange",
+                "isUnit"
+            )
         );
     }
 
     @Override
     public final String toIsMethodName(final String typeName) {
         final String clean = typeName.replace("Spreadsheet", "")
-                .replace("Reference", "");
+            .replace("Reference", "");
         return "is" +
-                clean.subSequence(0, 1)
-                        .toString()
-                        .toUpperCase() +
-                clean.subSequence(
-                        1,
-                        clean.length()
-                );
+            clean.subSequence(0, 1)
+                .toString()
+                .toUpperCase() +
+            clean.subSequence(
+                1,
+                clean.length()
+            );
     }
 
     // isUnit...........................................................................................................
@@ -2064,17 +2058,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     final void isUnitAndCheck(final String selection,
                               final boolean expected) {
         this.isUnitAndCheck(
-                this.parseString(selection),
-                expected
+            this.parseString(selection),
+            expected
         );
     }
 
     final void isUnitAndCheck(final S selection,
                               final boolean expected) {
         this.checkEquals(
-                expected,
-                selection.isUnit(),
-                () -> selection + "  isUnit"
+            expected,
+            selection.isUnit(),
+            () -> selection + "  isUnit"
         );
     }
 
@@ -2107,8 +2101,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
         assertTrue(
-                IllegalArgumentException.class.isAssignableFrom(expected),
-                expected.getName() + " not a subclass of " + IllegalArgumentException.class
+            IllegalArgumentException.class.isAssignableFrom(expected),
+            expected.getName() + " not a subclass of " + IllegalArgumentException.class
         );
         return expected;
     }
@@ -2116,8 +2110,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     @Override
     public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         assertTrue(
-                expected instanceof IllegalArgumentException,
-                expected.getClass().getName() + "=" + expected + " not a subclass of " + IllegalArgumentException.class
+            expected instanceof IllegalArgumentException,
+            expected.getClass().getName() + "=" + expected + " not a subclass of " + IllegalArgumentException.class
         );
         return expected;
     }

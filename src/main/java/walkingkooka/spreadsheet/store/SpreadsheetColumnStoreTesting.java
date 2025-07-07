@@ -33,8 +33,8 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
     @Test
     default void testLoadColumnsWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().loadColumns(null)
+            NullPointerException.class,
+            () -> this.createStore().loadColumns(null)
         );
     }
 
@@ -42,9 +42,9 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
                                      final SpreadsheetColumnRangeReference range,
                                      final SpreadsheetColumn... expected) {
         this.loadColumnsAndCheck(
-                store,
-                range,
-                Sets.of(expected)
+            store,
+            range,
+            Sets.of(expected)
         );
     }
 
@@ -52,17 +52,17 @@ public interface SpreadsheetColumnStoreTesting<S extends SpreadsheetColumnStore>
                                      final SpreadsheetColumnRangeReference range,
                                      final Set<SpreadsheetColumn> expected) {
         this.checkEquals(
-                expected,
-                store.loadColumns(range),
-                () -> "loadColumns " + range
+            expected,
+            store.loadColumns(range),
+            () -> "loadColumns " + range
         );
     }
 
     @Test
     default void testSaveColumnsWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore().saveColumns(null)
+            NullPointerException.class,
+            () -> this.createStore().saveColumns(null)
         );
     }
 }

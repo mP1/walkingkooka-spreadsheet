@@ -28,18 +28,18 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImporterContextTesting<BasicSpreadsheetImporterContext>,
-        ToStringTesting<BasicSpreadsheetImporterContext> {
+    ToStringTesting<BasicSpreadsheetImporterContext> {
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            MathContext.DECIMAL64
+        ExpressionNumberKind.BIG_DECIMAL,
+        MathContext.DECIMAL64
     );
 
     @Test
     public void testWithNullJsonNodeUnmarshallContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetImporterContext.with(null)
+            NullPointerException.class,
+            () -> BasicSpreadsheetImporterContext.with(null)
         );
     }
 
@@ -53,8 +53,8 @@ public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImp
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createContext(),
-                UNMARSHALL_CONTEXT.toString()
+            this.createContext(),
+            UNMARSHALL_CONTEXT.toString()
         );
     }
 

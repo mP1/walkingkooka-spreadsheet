@@ -25,8 +25,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLite
     public void testToString() {
         final String text = "abc123";
         this.toStringAndCheck(
-                SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral.with(text),
-                text
+            SpreadsheetPatternSpreadsheetFormatterNumberComponentTextLiteral.with(text),
+            text
         );
     }
 

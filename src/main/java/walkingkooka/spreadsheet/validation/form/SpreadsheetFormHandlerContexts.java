@@ -42,10 +42,10 @@ public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper 
                                                       final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                       final SpreadsheetEngineContext context) {
         return BasicSpreadsheetFormHandlerContext.with(
-                form,
-                loader,
-                cellsSaver,
-                context
+            form,
+            loader,
+            cellsSaver,
+            context
         );
     }
 

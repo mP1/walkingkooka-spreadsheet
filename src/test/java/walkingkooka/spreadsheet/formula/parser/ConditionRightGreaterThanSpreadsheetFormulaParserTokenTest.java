@@ -33,23 +33,23 @@ public final class ConditionRightGreaterThanSpreadsheetFormulaParserTokenTest ex
         final SpreadsheetFormulaParserToken left = number("999");
 
         this.setConditionLeftAndCheck(
-                token,
-                left,
-                SpreadsheetFormulaParserToken.greaterThan(
-                        Lists.of(
-                                left,
-                                token
-                        ),
-                        left.text() + token.text()
-                )
+            token,
+            left,
+            SpreadsheetFormulaParserToken.greaterThan(
+                Lists.of(
+                    left,
+                    token
+                ),
+                left.text() + token.text()
+            )
         );
     }
 
     @Override
     SymbolSpreadsheetFormulaParserToken symbolParserToken() {
         return SpreadsheetFormulaParserToken.greaterThanSymbol(
-                ">",
-                ">"
+            ">",
+            ">"
         );
     }
 
@@ -57,8 +57,8 @@ public final class ConditionRightGreaterThanSpreadsheetFormulaParserTokenTest ex
     ConditionRightGreaterThanSpreadsheetFormulaParserToken createToken(final String text,
                                                                        final List<ParserToken> tokens) {
         return ConditionRightGreaterThanSpreadsheetFormulaParserToken.with(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -66,8 +66,8 @@ public final class ConditionRightGreaterThanSpreadsheetFormulaParserTokenTest ex
     public ConditionRightGreaterThanSpreadsheetFormulaParserToken unmarshall(final JsonNode json,
                                                                              final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormulaParserToken.unmarshallConditionRightGreaterThan(
-                json,
-                context
+            json,
+            context
         );
     }
 

@@ -42,10 +42,10 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                                              final BasicSpreadsheetEngine engine,
                                              final SpreadsheetEngineContext context) {
         final BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(
-                range,
-                viewportRectangle,
-                engine,
-                context
+            range,
+            viewportRectangle,
+            engine,
+            context
         );
         visitor.accept(selection);
         return visitor.range;
@@ -98,13 +98,13 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
 
             // set new left...
             this.range = cellRange.setColumnRange(
-                    this.engine.columnRange(
-                            left,
-                            0,
-                            this.viewportRectangle.width(),
-                            Optional.of(columnRange),
-                            this.context
-                    )
+                this.engine.columnRange(
+                    left,
+                    0,
+                    this.viewportRectangle.width(),
+                    Optional.of(columnRange),
+                    this.context
+                )
             );
         } else {
             final SpreadsheetColumnReference viewportRight = cellRange.end().column();
@@ -115,19 +115,19 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                 final SpreadsheetEngineContext context = this.context;
 
                 final double rightOffset = engine.sumColumnWidths(
-                        viewportRight.addSaturated(1),
-                        right,
-                        context
+                    viewportRight.addSaturated(1),
+                    right,
+                    context
                 );
 
                 this.range = cellRange.setColumnRange(
-                        engine.columnRange(
-                                beginColumn,
-                                rightOffset,
-                                this.viewportRectangle.width(),
-                                Optional.of(columnRange),
-                                context
-                        )
+                    engine.columnRange(
+                        beginColumn,
+                        rightOffset,
+                        this.viewportRectangle.width(),
+                        Optional.of(columnRange),
+                        context
+                    )
                 );
             }
         }
@@ -136,7 +136,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.accept(
-                this.context.resolveLabelOrFail(label)
+            this.context.resolveLabelOrFail(label)
         );
     }
 
@@ -161,13 +161,13 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
 
             // set new top...
             this.range = celRange.setRowRange(
-                    this.engine.rowRange(
-                            top,
-                            0,
-                            this.viewportRectangle.height(),
-                            Optional.of(rowRange),
-                            this.context
-                    )
+                this.engine.rowRange(
+                    top,
+                    0,
+                    this.viewportRectangle.height(),
+                    Optional.of(rowRange),
+                    this.context
+                )
             );
         } else {
             final SpreadsheetRowReference viewportBottom = celRange.end().row();
@@ -178,19 +178,19 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
                 final SpreadsheetEngineContext context = this.context;
 
                 final double bottomOffset = engine.sumRowHeights(
-                        viewportBottom.addSaturated(1),
-                        bottom,
-                        context
+                    viewportBottom.addSaturated(1),
+                    bottom,
+                    context
                 );
 
                 this.range = celRange.setRowRange(
-                        engine.rowRange(
-                                beginRow,
-                                bottomOffset,
-                                this.viewportRectangle.height(),
-                                Optional.of(rowRange),
-                                context
-                        )
+                    engine.rowRange(
+                        beginRow,
+                        bottomOffset,
+                        this.viewportRectangle.height(),
+                        Optional.of(rowRange),
+                        context
+                    )
                 );
             }
         }

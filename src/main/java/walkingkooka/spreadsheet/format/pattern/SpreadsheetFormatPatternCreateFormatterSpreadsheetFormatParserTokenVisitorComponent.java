@@ -45,27 +45,27 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         SpreadsheetPatternSpreadsheetFormatter formatter = this.formatter;
         if (null == formatter) {
             throw new IllegalArgumentException(
-                    "Missing formatter for pattern " +
-                            CharSequences.quoteAndEscape(
-                                    formatPattern.value.text()
-                            )
+                "Missing formatter for pattern " +
+                    CharSequences.quoteAndEscape(
+                        formatPattern.value.text()
+                    )
             );
         }
 
         final ConditionSpreadsheetFormatParserToken condition = this.condition;
         if (null != condition) {
             formatters.accept(
-                    SpreadsheetFormatters.conditional(
-                            condition,
-                            formatter
-                    )
+                SpreadsheetFormatters.conditional(
+                    condition,
+                    formatter
+                )
             );
         } else {
             formatPattern.missingCondition(
-                    index,
-                    total,
-                    formatter,
-                    formatters
+                index,
+                total,
+                formatter,
+                formatters
             );
         }
     }

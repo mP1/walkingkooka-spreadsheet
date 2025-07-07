@@ -33,8 +33,8 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
     static AliasesSpreadsheetParserProvider with(final SpreadsheetParserAliasSet aliases,
                                                  final SpreadsheetParserProvider provider) {
         return new AliasesSpreadsheetParserProvider(
-                Objects.requireNonNull(aliases, "aliases"),
-                Objects.requireNonNull(provider, "provider")
+            Objects.requireNonNull(aliases, "aliases"),
+            Objects.requireNonNull(provider, "provider")
         );
     }
 
@@ -50,8 +50,8 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                final ProviderContext context) {
         return this.provider.spreadsheetParser(
-                this.aliases.selector(selector),
-                context
+            this.aliases.selector(selector),
+            context
         );
     }
 
@@ -75,15 +75,15 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
             }
             // assumes that $provider caches selectors to function
             parser = provider.spreadsheetParser(
-                    selector.get(),
-                    context
+                selector.get(),
+                context
             );
         } else {
             parser = provider.spreadsheetParser(
-                    aliases.aliasOrName(name)
-                            .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + name)),
-                    values,
-                    context
+                aliases.aliasOrName(name)
+                    .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + name)),
+                values,
+                context
             );
         }
 
@@ -97,18 +97,18 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
         final SpreadsheetParserName name = selector.name();
 
         return this.aliases.aliasOrName(name)
-                .flatMap(n -> this.provider.spreadsheetParserNextToken(selector.setName(n)));
+            .flatMap(n -> this.provider.spreadsheetParserNextToken(selector.setName(n)));
     }
 
     @Override
     public Optional<SpreadsheetFormatterSelector> spreadsheetFormatterSelector(final SpreadsheetParserSelector selector) {
         return this.aliases.aliasOrName(selector.name())
-                .flatMap(
-                        n ->
-                                this.provider.spreadsheetFormatterSelector(
-                                        selector.setName(n)
-                                )
-                );
+            .flatMap(
+                n ->
+                    this.provider.spreadsheetFormatterSelector(
+                        selector.setName(n)
+                    )
+            );
     }
 
     private final SpreadsheetParserAliasSet aliases;

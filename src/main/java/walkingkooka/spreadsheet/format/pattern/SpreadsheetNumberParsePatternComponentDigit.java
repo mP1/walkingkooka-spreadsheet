@@ -36,14 +36,12 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
         this.max = max;
     }
 
-    @Override
-    final boolean isExpressionCompatible() {
+    @Override final boolean isExpressionCompatible() {
         return true;
     }
 
-    @Override
-    final boolean parse(final TextCursor cursor,
-                        final SpreadsheetNumberParsePatternRequest request) {
+    @Override final boolean parse(final TextCursor cursor,
+                                  final SpreadsheetNumberParsePatternRequest request) {
         if (cursor.isNotEmpty()) {
             final SpreadsheetNumberParsePatternComponentDigitMode digitMode = request.digitMode;
             digitMode.tryParseSign(cursor, request);
@@ -52,7 +50,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
             if (request.addNumberIfNecessary()) {
                 request.setDigitMode(
-                        digitMode.next()
+                    digitMode.next()
                 );
             }
         }
@@ -92,10 +90,10 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
                 final String groupingText = Character.toString(c);
                 request.add(
-                        SpreadsheetFormulaParserToken.groupSeparatorSymbol(
-                                groupingText,
-                                groupingText
-                        )
+                    SpreadsheetFormulaParserToken.groupSeparatorSymbol(
+                        groupingText,
+                        groupingText
+                    )
                 );
 
                 cursor.next();
@@ -107,10 +105,10 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
                 final String whitespaceText = Character.toString(c);
                 request.add(
-                        SpreadsheetFormulaParserToken.whitespace(
-                                whitespaceText,
-                                whitespaceText
-                        )
+                    SpreadsheetFormulaParserToken.whitespace(
+                        whitespaceText,
+                        whitespaceText
+                    )
                 );
 
                 cursor.next();

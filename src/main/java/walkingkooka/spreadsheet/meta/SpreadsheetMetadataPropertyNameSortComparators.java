@@ -45,8 +45,8 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
     @Override
     SpreadsheetComparatorNameList checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof SpreadsheetComparatorNameList
+            value,
+            v -> v instanceof SpreadsheetComparatorNameList
         );
     }
 

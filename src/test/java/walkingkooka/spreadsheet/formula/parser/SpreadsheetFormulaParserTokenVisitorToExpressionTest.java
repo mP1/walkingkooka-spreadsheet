@@ -45,75 +45,75 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
     @Test
     public void testNullExpressionNumberKindFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaParserTokenVisitorToExpression.toExpression(
-                        SpreadsheetFormulaParserToken.number(
-                                Lists.of(
-                                        SpreadsheetFormulaParserToken.digits("1", "1")
-                                ),
-                                "1"),
-                        null));
+            NullPointerException.class,
+            () -> SpreadsheetFormulaParserTokenVisitorToExpression.toExpression(
+                SpreadsheetFormulaParserToken.number(
+                    Lists.of(
+                        SpreadsheetFormulaParserToken.digits("1", "1")
+                    ),
+                    "1"),
+                null));
     }
 
     @Test
     public void testCell() {
         this.toExpressionAndCheck(
-                SpreadsheetFormulaParserToken.cell(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.column(
-                                        SpreadsheetSelection.parseColumn("A"),
-                                        "A"
-                                ),
-                                SpreadsheetFormulaParserToken.row(
-                                        SpreadsheetSelection.parseRow("1"),
-                                        "1"
-                                )
-                        ),
-                        "A1"
+            SpreadsheetFormulaParserToken.cell(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.column(
+                        SpreadsheetSelection.parseColumn("A"),
+                        "A"
+                    ),
+                    SpreadsheetFormulaParserToken.row(
+                        SpreadsheetSelection.parseRow("1"),
+                        "1"
+                    )
                 ),
-                Expression.reference(
-                        SpreadsheetSelection.A1
-                )
+                "A1"
+            ),
+            Expression.reference(
+                SpreadsheetSelection.A1
+            )
         );
     }
 
     @Test
     public void testCellRange() {
         this.toExpressionAndCheck(
-                SpreadsheetFormulaParserToken.cellRange(
+            SpreadsheetFormulaParserToken.cellRange(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.cell(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.cell(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.column(
-                                                        SpreadsheetSelection.parseColumn("A"),
-                                                        "A"
-                                                ),
-                                                SpreadsheetFormulaParserToken.row(
-                                                        SpreadsheetSelection.parseRow("1"),
-                                                        "1"
-                                                )
-                                        ),
-                                        "A1"
-                                ),
-                                SpreadsheetFormulaParserToken.cell(
-                                        Lists.of(
-                                                SpreadsheetFormulaParserToken.column(
-                                                        SpreadsheetSelection.parseColumn("B"),
-                                                        "B"
-                                                ),
-                                                SpreadsheetFormulaParserToken.row(
-                                                        SpreadsheetSelection.parseRow("2"),
-                                                        "2"
-                                                )
-                                        ),
-                                        "A1"
-                                )
+                            SpreadsheetFormulaParserToken.column(
+                                SpreadsheetSelection.parseColumn("A"),
+                                "A"
+                            ),
+                            SpreadsheetFormulaParserToken.row(
+                                SpreadsheetSelection.parseRow("1"),
+                                "1"
+                            )
                         ),
-                        "A1:B2"
+                        "A1"
+                    ),
+                    SpreadsheetFormulaParserToken.cell(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.column(
+                                SpreadsheetSelection.parseColumn("B"),
+                                "B"
+                            ),
+                            SpreadsheetFormulaParserToken.row(
+                                SpreadsheetSelection.parseRow("2"),
+                                "2"
+                            )
+                        ),
+                        "A1"
+                    )
                 ),
-                Expression.reference(
-                        SpreadsheetSelection.parseCellRange("A1:B2")
-                )
+                "A1:B2"
+            ),
+            Expression.reference(
+                SpreadsheetSelection.parseCellRange("A1:B2")
+            )
         );
     }
 
@@ -122,11 +122,11 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
         final SpreadsheetError error = SpreadsheetErrorKind.NAME.toError();
 
         this.toExpressionAndCheck(
-                SpreadsheetFormulaParserToken.error(
-                        error,
-                        error.kind().text()
-                ),
-                Expression.value(error)
+            SpreadsheetFormulaParserToken.error(
+                error,
+                error.kind().text()
+            ),
+            Expression.value(error)
         );
     }
 
@@ -134,36 +134,36 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
     public void testErrorAndToValue() {
         final SpreadsheetError error = SpreadsheetErrorKind.NAME.toError();
         final Optional<Expression> maybeExpression = toExpression(
-                SpreadsheetFormulaParserToken.error(
-                        error,
-                        error.kind().text()
-                )
+            SpreadsheetFormulaParserToken.error(
+                error,
+                error.kind().text()
+            )
         );
 
         this.checkNotEquals(
-                Optional.empty(),
-                maybeExpression
+            Optional.empty(),
+            maybeExpression
         );
 
         final Expression expression = maybeExpression.get();
 
         this.checkEquals(
-                error,
-                expression.toValue(
-                        new FakeSpreadsheetExpressionEvaluationContext() {
+            error,
+            expression.toValue(
+                new FakeSpreadsheetExpressionEvaluationContext() {
 
-                            @Override
-                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
-                                Objects.requireNonNull(
-                                        SpreadsheetExpressionFunctions.name("error"),
-                                        "name"
-                                );
-                                return Cast.to(
-                                        SpreadsheetExpressionFunctions.error()
-                                );
-                            }
-                        }),
-                "expression.toValue"
+                    @Override
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+                        Objects.requireNonNull(
+                            SpreadsheetExpressionFunctions.name("error"),
+                            "name"
+                        );
+                        return Cast.to(
+                            SpreadsheetExpressionFunctions.error()
+                        );
+                    }
+                }),
+            "expression.toValue"
         );
     }
 
@@ -173,33 +173,33 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
         final TemplateValueName template = TemplateValueName.with(text);
 
         this.toExpressionAndCheck(
-                SpreadsheetFormulaParserToken.templateValueName(
-                        template,
-                        text
-                ),
-                Expression.reference(template)
+            SpreadsheetFormulaParserToken.templateValueName(
+                template,
+                text
+            ),
+            Expression.reference(template)
         );
     }
 
     private void toExpressionAndCheck(final SpreadsheetFormulaParserToken token,
                                       final Expression expression) {
         this.checkEquals(
-                Optional.of(
-                        expression
-                ),
-                toExpression(token)
+            Optional.of(
+                expression
+            ),
+            toExpression(token)
         );
     }
 
     private static Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         return SpreadsheetFormulaParserTokenVisitorToExpression.toExpression(
-                token,
-                new FakeExpressionEvaluationContext() {
-                    @Override
-                    public ExpressionNumberKind expressionNumberKind() {
-                        return EXPRESSION_NUMBER_KIND;
-                    }
+            token,
+            new FakeExpressionEvaluationContext() {
+                @Override
+                public ExpressionNumberKind expressionNumberKind() {
+                    return EXPRESSION_NUMBER_KIND;
                 }
+            }
         );
     }
 

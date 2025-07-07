@@ -38,10 +38,10 @@ enum BasicSpreadsheetEngineChangesMode {
     final BasicSpreadsheetEngineChanges changes(final BasicSpreadsheetEngine engine,
                                                 final SpreadsheetEngineContext context) {
         return this.changes(
-                engine,
-                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                SpreadsheetDeltaProperties.ALL,
-                context
+            engine,
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+            SpreadsheetDeltaProperties.ALL,
+            context
         );
     }
 
@@ -53,11 +53,11 @@ enum BasicSpreadsheetEngineChangesMode {
                                                 final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                 final SpreadsheetEngineContext context) {
         return BasicSpreadsheetEngineChanges.with(
-                engine,
-                evaluation,
-                deltaProperties,
-                this,
-                context
+            engine,
+            evaluation,
+            deltaProperties,
+            this,
+            context
         );
     }
 }

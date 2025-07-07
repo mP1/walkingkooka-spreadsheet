@@ -30,29 +30,29 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
     @Test
     public void testWithOverlapFails() {
         this.withFails(
-                "Window contains overlapping ranges A1:B2 and A1",
-                a1b2(),
-                c1e2(),
-                SpreadsheetSelection.parseCellRange("a1")
+            "Window contains overlapping ranges A1:B2 and A1",
+            a1b2(),
+            c1e2(),
+            SpreadsheetSelection.parseCellRange("a1")
         );
     }
 
     @Test
     public void testWithOverlapFails2() {
         this.withFails(
-                "Window contains overlapping ranges A3:B5 and A4",
-                a1b2(),
-                c1e2(),
-                a3b5(),
-                SpreadsheetSelection.parseCellRange("a4")
+            "Window contains overlapping ranges A3:B5 and A4",
+            a1b2(),
+            c1e2(),
+            a3b5(),
+            SpreadsheetSelection.parseCellRange("a4")
         );
     }
 
     private void withFails(final String message,
                            final SpreadsheetCellRangeReference... ranges) {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetDeltaWindowSet.with(Sets.of(ranges))
+            IllegalArgumentException.class,
+            () -> SpreadsheetDeltaWindowSet.with(Sets.of(ranges))
         );
         this.checkEquals(message, thrown.getMessage());
     }
@@ -62,7 +62,7 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference a1b2 = this.a1b2();
 
         SpreadsheetDeltaWindowSet.with(
-                Sets.of(a1b2)
+            Sets.of(a1b2)
         );
     }
 
@@ -72,7 +72,7 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference c1e2 = this.c1e2();
 
         SpreadsheetDeltaWindowSet.with(
-                Sets.of(a1b2, c1e2)
+            Sets.of(a1b2, c1e2)
         );
     }
 
@@ -86,7 +86,7 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference a3b5 = this.a3b5();
 
         SpreadsheetDeltaWindowSet.with(
-                Sets.of(a1b2, a3b5)
+            Sets.of(a1b2, a3b5)
         );
     }
 
@@ -101,7 +101,7 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference a3b5 = this.a3b5();
 
         SpreadsheetDeltaWindowSet.with(
-                Sets.of(a1b2, c1e2, a3b5)
+            Sets.of(a1b2, c1e2, a3b5)
         );
     }
 
@@ -113,7 +113,7 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         SpreadsheetDeltaWindowSet.with(
-                Sets.of(a1b2, c1e2, a3b5, c3e5)
+            Sets.of(a1b2, c1e2, a3b5, c3e5)
         );
     }
 
@@ -125,10 +125,10 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         this.containsAndCheck(
-                SpreadsheetDeltaWindowSet.with(
-                        Sets.of(a1b2, c1e2, a3b5, c3e5)
-                ),
-                a1b2
+            SpreadsheetDeltaWindowSet.with(
+                Sets.of(a1b2, c1e2, a3b5, c3e5)
+            ),
+            a1b2
         );
     }
 
@@ -140,17 +140,17 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         this.containsAndCheck(
-                SpreadsheetDeltaWindowSet.with(
-                        Sets.of(a1b2, c1e2, a3b5, c3e5)
-                ),
-                c1e2
+            SpreadsheetDeltaWindowSet.with(
+                Sets.of(a1b2, c1e2, a3b5, c3e5)
+            ),
+            c1e2
         );
     }
 
     @Override
     public SpreadsheetDeltaWindowSet createSet() {
         return SpreadsheetDeltaWindowSet.with(
-                Sets.of(this.a1b2())
+            Sets.of(this.a1b2())
         );
     }
 
@@ -162,72 +162,72 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
         final SpreadsheetCellRangeReference c3e5 = this.c3e5();
 
         final SpreadsheetDeltaWindowSet set = SpreadsheetDeltaWindowSet.with(
-                Sets.of(a1b2, c1e2, a3b5, c3e5)
+            Sets.of(a1b2, c1e2, a3b5, c3e5)
         );
 
         this.deleteAndCheck(
-                set,
-                a1b2,
-                SpreadsheetDeltaWindowSet.with(
-                        Sets.of(c1e2, a3b5, c3e5)
-                )
+            set,
+            a1b2,
+            SpreadsheetDeltaWindowSet.with(
+                Sets.of(c1e2, a3b5, c3e5)
+            )
         );
     }
 
     @Test
     public void testSetElementsIncludesNullFails() {
         final NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDeltaWindowSet.with(
-                        Sets.of(
-                                this.a1b2(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> SpreadsheetDeltaWindowSet.with(
+                Sets.of(
+                    this.a1b2(),
+                    null
                 )
+            )
         );
 
         this.checkEquals(
-                "Window includes null cell-range",
-                thrown.getMessage()
+            "Window includes null cell-range",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testSetElementsIncludesNullFails2() {
         final NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDeltaWindowSet.with(
-                        Sets.of(
-                                this.a1b2(),
-                                this.a3b5(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> SpreadsheetDeltaWindowSet.with(
+                Sets.of(
+                    this.a1b2(),
+                    this.a3b5(),
+                    null
                 )
+            )
         );
 
         this.checkEquals(
-                "Window includes null cell-range",
-                thrown.getMessage()
+            "Window includes null cell-range",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testSetElementsIncludesNullFails3() {
         final NullPointerException thrown = assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetDeltaWindowSet.with(
-                        Sets.of(
-                                this.a1b2(),
-                                this.a3b5(),
-                                this.c1e2(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> SpreadsheetDeltaWindowSet.with(
+                Sets.of(
+                    this.a1b2(),
+                    this.a3b5(),
+                    this.c1e2(),
+                    null
                 )
+            )
         );
 
         this.checkEquals(
-                "Window includes null cell-range",
-                thrown.getMessage()
+            "Window includes null cell-range",
+            thrown.getMessage()
         );
     }
 

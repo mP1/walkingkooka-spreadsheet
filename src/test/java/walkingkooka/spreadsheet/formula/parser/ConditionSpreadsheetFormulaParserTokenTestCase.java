@@ -25,11 +25,11 @@ public abstract class ConditionSpreadsheetFormulaParserTokenTestCase<T extends C
     }
 
     final void toConditionRightSpreadsheetFormulaParserTokenAndCheck(final T token,
-                                                              final ConditionRightSpreadsheetFormulaParserToken expected) {
+                                                                     final ConditionRightSpreadsheetFormulaParserToken expected) {
         this.checkEquals(
-                expected,
-                token.toConditionRightSpreadsheetFormulaParserToken(),
-                token::toString
+            expected,
+            token.toConditionRightSpreadsheetFormulaParserToken(),
+            token::toString
         );
     }
 }

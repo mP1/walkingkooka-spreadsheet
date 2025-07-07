@@ -49,44 +49,44 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
             switch (leftPriority) {
                 case COLUMN:
                     compare = left.toColumn().value -
-                            right.toColumn().value;
+                        right.toColumn().value;
                     break;
                 case ROW:
                     compare = left.toRow().value -
-                            right.toRow().value;
+                        right.toRow().value;
                     break;
                 case COLUMN_RANGE:
                     compare = compareColumnRanges(
-                            left.toColumnRange(),
-                            right.toColumnRange()
+                        left.toColumnRange(),
+                        right.toColumnRange()
                     );
                     break;
                 case ROW_RANGE:
                     compare = compareRowRanges(
-                            left.toRowRange(),
-                            right.toRowRange()
+                        left.toRowRange(),
+                        right.toRowRange()
                     );
                     break;
                 case CELL:
                     compare = compareCells(
-                            left.toCell(),
-                            right.toCell()
+                        left.toCell(),
+                        right.toCell()
                     );
                     break;
                 case CELL_RANGE:
                     compare = compareCellRanges(
-                            left.toCellRange(),
-                            right.toCellRange()
+                        left.toCellRange(),
+                        right.toCellRange()
                     );
                     break;
                 case LABEL:
                     compare = SpreadsheetSelection.CASE_SENSITIVITY.comparator()
-                            .compare(
-                                    left.toLabelName()
-                                            .value(),
-                                    right.toLabelName()
-                                            .value()
-                            );
+                        .compare(
+                            left.toLabelName()
+                                .value(),
+                            right.toLabelName()
+                                .value()
+                        );
                     break;
             }
         }
@@ -138,14 +138,14 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
     private static int compareCellRanges(final SpreadsheetCellRangeReference left,
                                          final SpreadsheetCellRangeReference right) {
         int compare = compareCells(
-                left.begin(),
-                right.begin()
+            left.begin(),
+            right.begin()
         );
 
         if (Comparators.EQUAL == compare) {
             compare = compareCells(
-                    left.end(),
-                    right.end()
+                left.end(),
+                right.end()
             );
         }
 
@@ -165,10 +165,10 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
     @Override
     public String toString() {
         return Comparator.class.getSimpleName() +
-                "(" +
-                SpreadsheetSelection.class.getSimpleName() +
-                " ignoring " +
-                SpreadsheetReferenceKind.class.getSimpleName() +
-                ")";
+            "(" +
+            SpreadsheetSelection.class.getSimpleName() +
+            " ignoring " +
+            SpreadsheetReferenceKind.class.getSimpleName() +
+            ")";
     }
 }

@@ -45,9 +45,9 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
         return this.convert(
-                value,
-                type,
-                context
+            value,
+            type,
+            context
         ).isLeft();
     }
 
@@ -56,15 +56,15 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
                                          final Class<T> type,
                                          final SpreadsheetConverterContext context) {
         return this.formatter.format(
-                        Optional.ofNullable(value),
-                        SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
-                .map(
-                        t -> this.successfulConversion(
-                                t.text(),
-                                type
-                        )
+                Optional.ofNullable(value),
+                SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
+            .map(
+                t -> this.successfulConversion(
+                    t.text(),
+                    type
                 )
-                .orElse(Either.<T, String>right("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + type.getName()));
+            )
+            .orElse(Either.<T, String>right("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + type.getName()));
     }
 
     private final SpreadsheetFormatter formatter;

@@ -49,10 +49,10 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
      */
     public static SpreadsheetParserSelector parse(final String text) {
         return new SpreadsheetParserSelector(
-                PluginSelector.parse(
-                        text,
-                        SpreadsheetParserName::with
-                )
+            PluginSelector.parse(
+                text,
+                SpreadsheetParserName::with
+            )
         );
     }
 
@@ -62,10 +62,10 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     public static SpreadsheetParserSelector with(final SpreadsheetParserName name,
                                                  final String text) {
         return new SpreadsheetParserSelector(
-                PluginSelector.with(
-                        name,
-                        text
-                )
+            PluginSelector.with(
+                name,
+                text
+            )
         );
     }
 
@@ -89,13 +89,13 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetParserSelector(
-                        PluginSelector.with(
-                                name,
-                                this.valueText()
-                        )
-                );
+            this :
+            new SpreadsheetParserSelector(
+                PluginSelector.with(
+                    name,
+                    this.valueText()
+                )
+            );
     }
 
     // HasText..........................................................................................................
@@ -113,8 +113,8 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     public SpreadsheetParserSelector setValueText(final String text) {
         final PluginSelector<SpreadsheetParserName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetParserSelector(different);
+            this :
+            new SpreadsheetParserSelector(different);
     }
 
     private final PluginSelector<SpreadsheetParserName> selector;
@@ -123,8 +123,8 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     public SpreadsheetParserSelector setValues(final List<?> values) {
         final PluginSelector<SpreadsheetParserName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetParserSelector(different);
+            this :
+            new SpreadsheetParserSelector(different);
     }
 
     /**
@@ -136,9 +136,9 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                SpreadsheetParserPluginHelper.INSTANCE::parseName,
-                provider::spreadsheetParser,
-                context
+            SpreadsheetParserPluginHelper.INSTANCE::parseName,
+            provider::spreadsheetParser,
+            context
         );
     }
 
@@ -150,12 +150,12 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     public Optional<SpreadsheetParsePattern> spreadsheetParsePattern() {
         if (null == this.spreadsheetParsePattern) {
             final SpreadsheetPatternKind patternKind = this.name()
-                    .patternKind;
+                .patternKind;
 
             this.spreadsheetParsePattern = Optional.ofNullable(
-                    null == patternKind ?
-                            null :
-                            tryParse(patternKind)
+                null == patternKind ?
+                    null :
+                    tryParse(patternKind)
             );
         }
 
@@ -169,11 +169,11 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
             return (SpreadsheetParsePattern) kind.parse(text);
         } catch (final InvalidCharacterException cause) {
             throw cause.setTextAndPosition(
-                    this.toString(),
-                    this.name()
-                            .value().length() +
-                            (text.isEmpty() ? 0 : 1) +
-                            cause.position()
+                this.toString(),
+                this.name()
+                    .value().length() +
+                    (text.isEmpty() ? 0 : 1) +
+                    cause.position()
             );
         }
     }
@@ -190,7 +190,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetParserSelector && this.equals0((SpreadsheetParserSelector) other);
+            other instanceof SpreadsheetParserSelector && this.equals0((SpreadsheetParserSelector) other);
     }
 
     private boolean equals0(final SpreadsheetParserSelector other) {
@@ -222,10 +222,10 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserSelector.class),
-                SpreadsheetParserSelector::unmarshall,
-                SpreadsheetParserSelector::marshall,
-                SpreadsheetParserSelector.class
+            JsonNodeContext.computeTypeName(SpreadsheetParserSelector.class),
+            SpreadsheetParserSelector::unmarshall,
+            SpreadsheetParserSelector::marshall,
+            SpreadsheetParserSelector.class
         );
     }
 

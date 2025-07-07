@@ -72,7 +72,7 @@ public final class NotEqualsSymbolSpreadsheetFormatParserTokenTest extends Symbo
     @Test
     public void testKind() {
         this.kindAndCheck(
-                SpreadsheetFormatParserTokenKind.CONDITION
+            SpreadsheetFormatParserTokenKind.CONDITION
         );
     }
 

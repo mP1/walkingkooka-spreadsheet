@@ -447,16 +447,16 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     @Test
     public void testExpressionNumberBigDecimal() {
         this.acceptExpressionNumber(
-                ExpressionNumberKind.BIG_DECIMAL.zero()
-                        .getClass()
+            ExpressionNumberKind.BIG_DECIMAL.zero()
+                .getClass()
         );
     }
 
     @Test
     public void testExpressionNumberDouble() {
         this.acceptExpressionNumber(
-                ExpressionNumberKind.DOUBLE.zero()
-                        .getClass()
+            ExpressionNumberKind.DOUBLE.zero()
+                .getClass()
         );
     }
 
@@ -950,13 +950,13 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected void visitUnknown(final String typeName) {
                 b.append("3")
-                        .append(typeName);
+                    .append(typeName);
             }
         }.accept(type);
 
         this.checkEquals(
-                "13" + type.getName() + "2",
-                b.toString()
+            "13" + type.getName() + "2",
+            b.toString()
         );
     }
 

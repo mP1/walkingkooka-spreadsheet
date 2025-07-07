@@ -33,9 +33,8 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         super(selection);
     }
 
-    @Override
-    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                      final SpreadsheetViewportNavigationContext context) {
+    @Override final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                                final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
 
         final T selection = this.selection;
@@ -47,24 +46,24 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
                 // selection present try and move it.
                 final AnchoredSpreadsheetSelection anchoredSelection = maybeAnchored.get();
                 final Optional<AnchoredSpreadsheetSelection> maybeMovedSelection = this.updateSelection(
-                        anchoredSelection.selection(),
-                        anchoredSelection.anchor(),
-                        context
+                    anchoredSelection.selection(),
+                    anchoredSelection.anchor(),
+                    context
                 );
 
                 if (maybeMovedSelection.isPresent()) {
                     final AnchoredSpreadsheetSelection movedSelection = maybeMovedSelection.get();
                     result = updateViewport(
-                            movedSelection,
-                            viewport,
-                            context
+                        movedSelection,
+                        viewport,
+                        context
                     );
                 }
             } else {
                 result = this.updateViewport(
-                        selection.setDefaultAnchor(),
-                        viewport,
-                        context
+                    selection.setDefaultAnchor(),
+                    viewport,
+                    context
                 );
             }
         }
@@ -72,8 +71,7 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         return result;
     }
 
-    @Override
-    final String textPrefix() {
+    @Override final String textPrefix() {
         return EXTEND_SPACE;
     }
 
@@ -90,13 +88,13 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
             } else {
                 if (compare < 0) {
                     anchored = columnRange(
-                            newColumn,
-                            column
+                        newColumn,
+                        column
                     ).setAnchor(SpreadsheetViewportAnchor.RIGHT);
                 } else {
                     anchored = columnRange(
-                            column,
-                            newColumn
+                        column,
+                        newColumn
                     ).setAnchor(SpreadsheetViewportAnchor.LEFT);
                 }
             }
@@ -108,8 +106,8 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
             switch (leftCompare) {
                 case -1:
                     anchored = columnRange(
-                            newColumn,
-                            other
+                        newColumn,
+                        other
                     ).setAnchor(SpreadsheetViewportAnchor.RIGHT);
                     break;
                 case 0:
@@ -117,17 +115,17 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
                     break;
                 case +1:
                     anchored = columnRange(
-                            other,
-                            newColumn
+                        other,
+                        newColumn
                     ).setAnchor(SpreadsheetViewportAnchor.LEFT);
                     break;
                 default:
                     anchored = null;
                     NeverError.unhandledCase(
-                            leftCompare,
-                            -1,
-                            0,
-                            +1
+                        leftCompare,
+                        -1,
+                        0,
+                        +1
                     );
             }
         }
@@ -147,13 +145,13 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
             } else {
                 if (compare < 0) {
                     anchored = rowRange(
-                            newRow,
-                            row
+                        newRow,
+                        row
                     ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
                 } else {
                     anchored = rowRange(
-                            row,
-                            newRow
+                        row,
+                        newRow
                     ).setAnchor(SpreadsheetViewportAnchor.TOP);
                 }
             }
@@ -165,8 +163,8 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
             switch (topCompare) {
                 case -1:
                     anchored = rowRange(
-                            newRow,
-                            other
+                        newRow,
+                        other
                     ).setAnchor(SpreadsheetViewportAnchor.BOTTOM);
                     break;
                 case 0:
@@ -174,17 +172,17 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
                     break;
                 case +1:
                     anchored = rowRange(
-                            other,
-                            newRow
+                        other,
+                        newRow
                     ).setAnchor(SpreadsheetViewportAnchor.TOP);
                     break;
                 default:
                     anchored = null;
                     NeverError.unhandledCase(
-                            topCompare,
-                            -1,
-                            0,
-                            +1
+                        topCompare,
+                        -1,
+                        0,
+                        +1
                     );
             }
         }
@@ -194,28 +192,28 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
     private static SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference left,
                                                                final SpreadsheetColumnReference right) {
         return SpreadsheetSelection.columnRange(
-                range(
-                        left,
-                        right
-                )
+            range(
+                left,
+                right
+            )
         );
     }
 
     private static SpreadsheetRowRangeReference rowRange(final SpreadsheetRowReference left,
                                                          final SpreadsheetRowReference right) {
         return SpreadsheetSelection.rowRange(
-                range(
-                        left,
-                        right
-                )
+            range(
+                left,
+                right
+            )
         );
     }
 
     private static <TT extends SpreadsheetSelection & Comparable<TT>> Range<TT> range(final TT left,
                                                                                       final TT right) {
         return Range.greaterThanEquals(left)
-                .and(
-                        Range.lessThanEquals(right)
-                );
+            .and(
+                Range.lessThanEquals(right)
+            );
     }
 }

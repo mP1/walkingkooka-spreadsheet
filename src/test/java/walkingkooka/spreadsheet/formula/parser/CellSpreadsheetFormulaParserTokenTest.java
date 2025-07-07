@@ -32,7 +32,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadsheetFormulaParserTokenTestCase<CellSpreadsheetFormulaParserToken>
-        implements HasSpreadsheetReferenceTesting {
+    implements HasSpreadsheetReferenceTesting {
 
     private final static String ROW_TEXT = "B";
     private final static int ROW_VALUE = 2;
@@ -81,8 +81,8 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
 
     private ColumnSpreadsheetFormulaParserToken column(final int value) {
         return SpreadsheetFormulaParserToken.column(
-                SpreadsheetReferenceKind.RELATIVE.column(value),
-                String.valueOf(value)
+            SpreadsheetReferenceKind.RELATIVE.column(value),
+            String.valueOf(value)
         );
     }
 
@@ -92,8 +92,8 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
 
     private RowSpreadsheetFormulaParserToken row(final int value, final String text) {
         return SpreadsheetFormulaParserToken.row(
-                SpreadsheetReferenceKind.RELATIVE.row(value),
-                text
+            SpreadsheetReferenceKind.RELATIVE.row(value),
+            text
         );
     }
 
@@ -101,12 +101,12 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
                            final RowSpreadsheetFormulaParserToken row,
                            final ColumnSpreadsheetFormulaParserToken column) {
         this.checkEquals(
-                SpreadsheetSelection.cell(
-                        column.value(),
-                        row.value()
-                ),
-                cell.cell(),
-                "cell"
+            SpreadsheetSelection.cell(
+                column.value(),
+                row.value()
+            ),
+            cell.cell(),
+            "cell"
         );
     }
 
@@ -143,8 +143,8 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
         final CellSpreadsheetFormulaParserToken token = this.createToken();
 
         this.referenceAndCheck(
-                token,
-                token.cell()
+            token,
+            token.cell()
         );
     }
 }

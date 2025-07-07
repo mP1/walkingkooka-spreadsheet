@@ -64,7 +64,7 @@ import java.util.stream.Collectors;
  * A container for cells within a {@link SpreadsheetCellRangeReference}.
  */
 public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
-        TreePrintable {
+    TreePrintable {
 
     public static SpreadsheetCellRange with(final SpreadsheetCellRangeReference range,
                                             final Set<SpreadsheetCell> value) {
@@ -76,8 +76,8 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         checkValues(range, copy);
 
         return new SpreadsheetCellRange(
-                range,
-                copy
+            range,
+            copy
         );
     }
 
@@ -95,8 +95,8 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         checkRange(range);
 
         return this.range.equals(range) ?
-                this :
-                this.setRange0(range);
+            this :
+            this.setRange0(range);
     }
 
     private SpreadsheetCellRange setRange0(final SpreadsheetCellRangeReference range) {
@@ -104,14 +104,14 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         if (false == range.containsAll(this.range)) {
             checkValues(
-                    range,
-                    value
+                range,
+                value
             );
         }
 
         return new SpreadsheetCellRange(
-                range,
-                value
+            range,
+            value
         );
     }
 
@@ -136,11 +136,11 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         checkValues(this.range, copy);
 
         return this.value.equals(copy) ?
-                this :
-                new SpreadsheetCellRange(
-                        range,
-                        value
-                );
+            this :
+            new SpreadsheetCellRange(
+                range,
+                value
+            );
     }
 
     private final Set<SpreadsheetCell> value;
@@ -148,20 +148,20 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     private static void checkValues(final SpreadsheetCellRangeReference range,
                                     final Set<SpreadsheetCell> value) {
         final Set<SpreadsheetCellReference> outOfBounds = value.stream()
-                .map(SpreadsheetCell::reference)
-                .filter(c -> false == range.testCell(c))
-                .collect(Collectors.toCollection(SortedSets::tree));
+            .map(SpreadsheetCell::reference)
+            .filter(c -> false == range.testCell(c))
+            .collect(Collectors.toCollection(SortedSets::tree));
 
         if (false == outOfBounds.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Found " +
-                            outOfBounds.size() +
-                            " cells out of range " +
-                            range +
-                            " got " +
-                            outOfBounds.stream()
-                                    .map(Object::toString)
-                                    .collect(Collectors.joining(", "))
+                "Found " +
+                    outOfBounds.size() +
+                    " cells out of range " +
+                    range +
+                    " got " +
+                    outOfBounds.stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining(", "))
             );
         }
     }
@@ -177,12 +177,12 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         checkRange(range);
 
         return this.range.equalsIgnoreReferenceKind(range) ?
-                this.setRange(range) :
-                this.move0(
-                        range,
-                        this.range.replaceReferencesMapper(range)
-                                .orElse(CanReplaceReferences.NULL_REPLACE_REFERENCE_MAPPER)
-                );
+            this.setRange(range) :
+            this.move0(
+                range,
+                this.range.replaceReferencesMapper(range)
+                    .orElse(CanReplaceReferences.NULL_REPLACE_REFERENCE_MAPPER)
+            );
     }
 
     private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to,
@@ -199,15 +199,15 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 // destination range could be smaller, ignore values outside
                 if (to.testCell(moved)) {
                     movedCells.add(
-                            cell.replaceReferences(mapper)
+                        cell.replaceReferences(mapper)
                     );
                 }
             }
         }
 
         return new SpreadsheetCellRange(
-                to,
-                movedCells
+            to,
+            movedCells
         );
     }
 
@@ -226,9 +226,9 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         Objects.requireNonNull(context, "context");
 
         return sort0(
-                SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
-                movedCells,
-                context
+            SpreadsheetColumnOrRowSpreadsheetComparators.list(comparators),
+            movedCells,
+            context
         );
     }
 
@@ -236,16 +236,16 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                                       final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCellsConsumer,
                                       final SpreadsheetComparatorContext context) {
         final SpreadsheetColumnOrRowReferenceKind widthKind = comparators.get(0)
-                .columnOrRow()
-                .columnOrRowReferenceKind();
+            .columnOrRow()
+            .columnOrRowReferenceKind();
 
         final SpreadsheetCellRangeReference cellRange = this.range();
         cellRange.comparatorNamesBoundsCheck(
-                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
-                        comparators.stream()
-                                .map(SpreadsheetColumnOrRowSpreadsheetComparators::toSpreadsheetColumnOrRowSpreadsheetComparatorNames)
-                                .collect(Collectors.toList())
-                )
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                comparators.stream()
+                    .map(SpreadsheetColumnOrRowSpreadsheetComparators::toSpreadsheetColumnOrRowSpreadsheetComparatorNames)
+                    .collect(Collectors.toList())
+            )
         );
 
         final SpreadsheetCellReference home = cellRange.toCell();
@@ -264,37 +264,37 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
         for (final SpreadsheetCell cell : this.value) {
             final SpreadsheetColumnOrRowReferenceOrRange y = heightKind.columnOrRow(
-                    cell.reference()
+                cell.reference()
             );
             SpreadsheetCellRangeSortList cells = yToCells.get(y);
             if (null == cells) {
                 cells = SpreadsheetCellRangeSortList.with(
-                        y,
-                        width
+                    y,
+                    width
                 );
                 yToCells.put(
-                        y,
-                        cells
+                    y,
+                    cells
                 );
                 allCells.add(cells);
             }
 
             final SpreadsheetSelection x = widthKind.columnOrRow(
-                    cell.reference()
+                cell.reference()
             );
 
             cells.set(
-                    widthKind.value(x) - base,
-                    cell
+                widthKind.value(x) - base,
+                cell
             );
         }
 
         // sort $rows
         allCells.sort(
-                SpreadsheetCellRangeComparator.with(
-                        comparators,
-                        context
-                )
+            SpreadsheetCellRangeComparator.with(
+                comparators,
+                context
+            )
         );
 
         final Set<SpreadsheetCell> newCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
@@ -309,13 +309,13 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 for (final SpreadsheetCell cell : yCells) {
                     if (null != cell) {
                         final SpreadsheetCell movedCell = cell.replaceReferences(
-                                referenceMapper.get()
+                            referenceMapper.get()
                         );
                         // did cell move ?
                         if (false == cell.equals(movedCell)) {
                             movedCellsConsumer.accept(
-                                    cell,
-                                    movedCell
+                                cell,
+                                movedCell
                             );
                         }
                         // always copy movedCell
@@ -357,20 +357,20 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.range,
-                this.value
+            this.range,
+            this.value
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellRange && this.equals0((SpreadsheetCellRange) other);
+            other instanceof SpreadsheetCellRange && this.equals0((SpreadsheetCellRange) other);
     }
 
     private boolean equals0(final SpreadsheetCellRange other) {
         return this.range.equals(other.range) &&
-                this.value.equals(other.value);
+            this.value.equals(other.value);
     }
 
     @Override

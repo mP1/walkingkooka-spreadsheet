@@ -31,16 +31,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedSetTesting<SpreadsheetColumnReferenceSet, SpreadsheetColumnReference>,
-        HasTextTesting,
-        ParseStringTesting<SpreadsheetColumnReferenceSet>,
-        TreePrintableTesting,
-        JsonNodeMarshallingTesting<SpreadsheetColumnReferenceSet> {
+    HasTextTesting,
+    ParseStringTesting<SpreadsheetColumnReferenceSet>,
+    TreePrintableTesting,
+    JsonNodeMarshallingTesting<SpreadsheetColumnReferenceSet> {
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetColumnReferenceSet.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetColumnReferenceSet.with(null)
         );
     }
 
@@ -49,10 +49,10 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
         final SpreadsheetColumnReference reference = SpreadsheetSelection.A1.column();
 
         assertSame(
-                SpreadsheetColumnReferenceSet.EMPTY,
-                SpreadsheetColumnReferenceSet.with(
-                        SortedSets.of(reference)
-                ).delete(reference)
+            SpreadsheetColumnReferenceSet.EMPTY,
+            SpreadsheetColumnReferenceSet.with(
+                SortedSets.of(reference)
+            ).delete(reference)
         );
     }
 
@@ -61,19 +61,19 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
         final SpreadsheetColumnReferenceSet set = SpreadsheetColumnReferenceSet.parse("A,B,C");
 
         assertSame(
-                set,
-                SpreadsheetColumnReferenceSet.parse("D")
-                        .setElements(set)
+            set,
+            SpreadsheetColumnReferenceSet.parse("D")
+                .setElements(set)
         );
     }
 
     @Override
     public SpreadsheetColumnReferenceSet createSet() {
         return SpreadsheetColumnReferenceSet.with(
-                SortedSets.of(
-                        SpreadsheetSelection.parseColumn("A"),
-                        SpreadsheetSelection.parseColumn("$B")
-                )
+            SortedSets.of(
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("$B")
+            )
         );
     }
 
@@ -87,62 +87,62 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
     @Test
     public void testParseInvalidCharacterFails() {
         this.parseStringInvalidCharacterFails(
-                "AB?C, B",
-                '?'
+            "AB?C, B",
+            '?'
         );
     }
 
     @Test
     public void testParseInvalidCharacterFails2() {
         this.parseStringInvalidCharacterFails(
-                "AB?C, B",
-                '?'
+            "AB?C, B",
+            '?'
         );
     }
 
     @Test
     public void testParseInvalidCharacterSecondSpreadsheetColumnReferenceFails() {
         this.parseStringInvalidCharacterFails(
-                "AB, C?D",
-                '?'
+            "AB, C?D",
+            '?'
         );
     }
 
     @Test
     public void testParseEmpty() {
         assertSame(
-                SpreadsheetColumnReferenceSet.EMPTY,
-                this.parseStringAndCheck(
-                        "",
-                        SpreadsheetColumnReferenceSet.EMPTY
-                )
+            SpreadsheetColumnReferenceSet.EMPTY,
+            this.parseStringAndCheck(
+                "",
+                SpreadsheetColumnReferenceSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParseOnlySpaces() {
         assertSame(
-                SpreadsheetColumnReferenceSet.EMPTY,
-                this.parseStringAndCheck(
-                        "   ",
-                        SpreadsheetColumnReferenceSet.EMPTY
-                )
+            SpreadsheetColumnReferenceSet.EMPTY,
+            this.parseStringAndCheck(
+                "   ",
+                SpreadsheetColumnReferenceSet.EMPTY
+            )
         );
     }
 
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "A,$B",
-                this.createSet()
+            "A,$B",
+            this.createSet()
         );
     }
 
     @Test
     public void testParseWithExtraSpaces() {
         this.parseStringAndCheck(
-                " A , $B ",
-                this.createSet()
+            " A , $B ",
+            this.createSet()
         );
     }
 
@@ -166,8 +166,8 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
     @Test
     public void testText() {
         this.textAndCheck(
-                this.createSet(),
-                "A,$B"
+            this.createSet(),
+            "A,$B"
         );
     }
 
@@ -176,9 +176,9 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createSet(),
-                "A\n" +
-                        "$B\n"
+            this.createSet(),
+            "A\n" +
+                "$B\n"
         );
     }
 
@@ -187,8 +187,8 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"A,$B\""
+            this.createJsonNodeMarshallingValue(),
+            "\"A,$B\""
         );
     }
 
@@ -196,8 +196,8 @@ public final class SpreadsheetColumnReferenceSetTest implements ImmutableSortedS
     public SpreadsheetColumnReferenceSet unmarshall(final JsonNode jsonNode,
                                                     final JsonNodeUnmarshallContext context) {
         return SpreadsheetColumnReferenceSet.unmarshall(
-                jsonNode,
-                context
+            jsonNode,
+            context
         );
     }
 

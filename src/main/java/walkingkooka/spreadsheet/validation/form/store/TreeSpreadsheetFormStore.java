@@ -72,8 +72,8 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     public Set<FormName> ids(final int offset,
                              final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -86,8 +86,8 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     public List<Form<SpreadsheetExpressionReference>> values(final int offset,
                                                              final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -100,8 +100,8 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     public List<Form<SpreadsheetExpressionReference>> between(final FormName from,
                                                               final FormName to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

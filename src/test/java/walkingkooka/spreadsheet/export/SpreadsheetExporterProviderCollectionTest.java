@@ -37,8 +37,8 @@ public final class SpreadsheetExporterProviderCollectionTest implements Spreadsh
     private final static List<?> VALUES = Lists.of("@@");
 
     private final static SpreadsheetExporterInfo INFO = SpreadsheetExporterInfo.with(
-            Url.parseAbsolute("https://example.com/Test123"),
-            NAME
+        Url.parseAbsolute("https://example.com/Test123"),
+        NAME
     );
 
     private final static SpreadsheetExporter EXPORTER = SpreadsheetExporters.fake();
@@ -48,9 +48,9 @@ public final class SpreadsheetExporterProviderCollectionTest implements Spreadsh
         public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                        final ProviderContext context) {
             return this.spreadsheetExporter(
-                    selector.name(),
-                    VALUES,
-                    context
+                selector.name(),
+                VALUES,
+                context
             );
         }
 
@@ -83,75 +83,75 @@ public final class SpreadsheetExporterProviderCollectionTest implements Spreadsh
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetExporterProviderCollection.with(null)
+            NullPointerException.class,
+            () -> SpreadsheetExporterProviderCollection.with(null)
         );
     }
 
     @Test
     public void testSpreadsheetExporterSelectorMissingValuesFails() {
         this.spreadsheetExporterFails(
-                SpreadsheetExporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                SpreadsheetExporterSelector.parse("unknown123"),
-                CONTEXT
+            SpreadsheetExporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            SpreadsheetExporterSelector.parse("unknown123"),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetExporterSelector() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                SpreadsheetExporterSelector.parse(NAME + " @@"),
-                CONTEXT,
-                EXPORTER
+            SpreadsheetExporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            SpreadsheetExporterSelector.parse(NAME + " @@"),
+            CONTEXT,
+            EXPORTER
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameMissingValuesFails() {
         this.spreadsheetExporterFails(
-                SpreadsheetExporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                NAME,
-                Lists.of(),
-                CONTEXT
+            SpreadsheetExporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            NAME,
+            Lists.of(),
+            CONTEXT
         );
     }
 
     @Test
     public void testSpreadsheetExporterName() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                NAME,
-                VALUES,
-                CONTEXT,
-                EXPORTER
+            SpreadsheetExporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            NAME,
+            VALUES,
+            CONTEXT,
+            EXPORTER
         );
     }
 
     @Test
     public void testInfos() {
         this.spreadsheetExporterInfosAndCheck(
-                SpreadsheetExporterProviderCollection.with(
-                        Sets.of(PROVIDER)
-                ),
-                INFO
+            SpreadsheetExporterProviderCollection.with(
+                Sets.of(PROVIDER)
+            ),
+            INFO
         );
     }
 
     @Override
     public SpreadsheetExporterProviderCollection createSpreadsheetExporterProvider() {
         return SpreadsheetExporterProviderCollection.with(
-                Sets.of(
-                        PROVIDER
-                )
+            Sets.of(
+                PROVIDER
+            )
         );
     }
 

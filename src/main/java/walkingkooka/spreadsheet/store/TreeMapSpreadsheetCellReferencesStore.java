@@ -52,7 +52,7 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public void saveCells(final SpreadsheetCellReference reference, 
+    public void saveCells(final SpreadsheetCellReference reference,
                           final Set<SpreadsheetCellReference> cells) {
         this.store.saveCells(reference, cells);
     }
@@ -73,13 +73,13 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findCellsWithReference(final SpreadsheetCellReference reference, 
+    public Set<SpreadsheetCellReference> findCellsWithReference(final SpreadsheetCellReference reference,
                                                                 final int offset,
                                                                 final int count) {
         return this.store.findCellsWithReference(
-                reference,
-                offset,
-                count
+            reference,
+            offset,
+            count
         );
     }
 
@@ -89,17 +89,17 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
                                                                       final int count) {
         Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
         Store.checkOffsetAndCount(
-                offset,
-                count
+            offset,
+            count
         );
 
         return 0 == count ?
-                Sets.empty() :
-                this.findCellsWithCellOrCellRangeNonZeroCount(
-                        cellOrCellRange,
-                        offset,
-                        count
-                );
+            Sets.empty() :
+            this.findCellsWithCellOrCellRangeNonZeroCount(
+                cellOrCellRange,
+                offset,
+                count
+            );
     }
 
     private Set<SpreadsheetCellReference> findCellsWithCellOrCellRangeNonZeroCount(final SpreadsheetCellReferenceOrRange cellOrCellRange,
@@ -110,21 +110,21 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
         // potentially slow for large ranges with gaps.
         for (final SpreadsheetCellReference cell : cellOrCellRange.toCellRange()) {
             references.addAll(
-                    this.findCellsWithReference(
-                            cell,
-                            0,
-                            Integer.MAX_VALUE
-                    )
+                this.findCellsWithReference(
+                    cell,
+                    0,
+                    Integer.MAX_VALUE
+                )
             );
         }
 
         return Sets.readOnly(
-                references.stream()
-                        .skip(offset)
-                        .limit(count)
-                        .collect(
-                                ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
-                        )
+            references.stream()
+                .skip(offset)
+                .limit(count)
+                .collect(
+                    ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
+                )
         );
     }
 
@@ -143,9 +143,9 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
                                                                 final int offset,
                                                                 final int count) {
         return this.store.findReferencesWithCell(
-                cell,
-                offset,
-                count
+            cell,
+            offset,
+            count
         );
     }
 
@@ -180,8 +180,8 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     public Set<SpreadsheetCellReference> ids(final int offset,
                                              final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -194,8 +194,8 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     public List<Set<SpreadsheetCellReference>> values(final int offset,
                                                       final int count) {
         return this.store.values(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -210,11 +210,11 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public List<Set<SpreadsheetCellReference>> between(final SpreadsheetCellReference from, 
+    public List<Set<SpreadsheetCellReference>> between(final SpreadsheetCellReference from,
                                                        final SpreadsheetCellReference to) {
         return this.store.between(
-                from,
-                to
+            from,
+            to
         );
     }
 

@@ -39,15 +39,15 @@ import java.util.Objects;
  * It will also be used to validate active comparators for sorting operations.
  */
 public final class SpreadsheetComparatorNameList extends AbstractList<SpreadsheetComparatorName>
-        implements ImmutableListDefaults<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
-        HasText,
-        HasUrlFragment {
+    implements ImmutableListDefaults<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
+    HasText,
+    HasUrlFragment {
 
     /**
      * An empty {@link SpreadsheetComparatorNameList}.
      */
     public final static SpreadsheetComparatorNameList EMPTY = new SpreadsheetComparatorNameList(
-            Lists.empty()
+        Lists.empty()
     );
 
     /**
@@ -55,9 +55,9 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
      */
     public static SpreadsheetComparatorNameList parse(final String text) {
         return PluginNameLike.parse(
-                text,
-                SpreadsheetComparatorName::with,
-                SpreadsheetComparatorNameList::with
+            text,
+            SpreadsheetComparatorName::with,
+            SpreadsheetComparatorNameList::with
         );
     }
 
@@ -69,13 +69,13 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
 
         SpreadsheetComparatorNameList spreadsheetComparatorNameList;
 
-        if(names instanceof SpreadsheetComparatorNameList) {
+        if (names instanceof SpreadsheetComparatorNameList) {
             spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) names;
         } else {
             final List<SpreadsheetComparatorName> copy = Lists.array();
-            for(final SpreadsheetComparatorName name : names) {
+            for (final SpreadsheetComparatorName name : names) {
                 copy.add(
-                        Objects.requireNonNull(name, "includes null name")
+                    Objects.requireNonNull(name, "includes null name")
                 );
             }
 
@@ -117,8 +117,8 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     public SpreadsheetComparatorNameList setElements(final List<SpreadsheetComparatorName> names) {
         final SpreadsheetComparatorNameList copy = with(names);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     // HasUrlFragment...................................................................................................
@@ -126,7 +126,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     @Override
     public UrlFragment urlFragment() {
         return UrlFragment.with(
-                this.text()
+            this.text()
         );
     }
 
@@ -135,8 +135,8 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     @Override
     public String text() {
         return CharacterConstant.COMMA.toSeparatedString(
-                this,
-                SpreadsheetComparatorName::value
+            this,
+            SpreadsheetComparatorName::value
         );
     }
 
@@ -149,7 +149,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.text()
+            this.text()
         );
     }
 
@@ -157,10 +157,10 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
         SpreadsheetComparatorName.DATE.toString();
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorNameList.class),
-                SpreadsheetComparatorNameList::unmarshall,
-                SpreadsheetComparatorNameList::marshall,
-                SpreadsheetComparatorNameList.class
+            JsonNodeContext.computeTypeName(SpreadsheetComparatorNameList.class),
+            SpreadsheetComparatorNameList::unmarshall,
+            SpreadsheetComparatorNameList::marshall,
+            SpreadsheetComparatorNameList.class
         );
     }
 }

@@ -35,52 +35,52 @@ public final class SpreadsheetConverterGeneralBooleanStringTest implements Conve
     @Test
     public void testTrue() {
         this.convertAndCheck(
-                true,
-                "truetrue"
+            true,
+            "truetrue"
         );
     }
 
     @Test
     public void testFalse() {
         this.convertAndCheck(
-                false,
-                "falsefalse"
+            false,
+            "falsefalse"
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createConverter(),
-                "Boolean to class java.lang.String to @@"
+            this.createConverter(),
+            "Boolean to class java.lang.String to @@"
         );
     }
 
     @Override
     public SpreadsheetConverterGeneralBooleanString createConverter() {
         return SpreadsheetConverterGeneralBooleanString.with(
-                Converters.toBoolean(
-                        Predicates.customToString((v) -> v instanceof Boolean, "Boolean"),
-                        Predicates.is(String.class),
-                        Predicates.is(Boolean.TRUE),
-                        "true",
-                        "false"
-                ),
-                SpreadsheetTextFormatPattern.parseTextFormatPattern("@@")
-                        .formatter()
-                        .converter()
-                        .cast(SpreadsheetConverterContext.class)
+            Converters.toBoolean(
+                Predicates.customToString((v) -> v instanceof Boolean, "Boolean"),
+                Predicates.is(String.class),
+                Predicates.is(Boolean.TRUE),
+                "true",
+                "false"
+            ),
+            SpreadsheetTextFormatPattern.parseTextFormatPattern("@@")
+                .formatter()
+                .converter()
+                .cast(SpreadsheetConverterContext.class)
         );
     }
 
     @Override
     public SpreadsheetConverterContext createContext() {
         return SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                SpreadsheetConverters.basic(),
-                SpreadsheetLabelNameResolvers.fake(),
-                JsonNodeConverterContexts.fake()
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            SpreadsheetConverters.basic(),
+            SpreadsheetLabelNameResolvers.fake(),
+            JsonNodeConverterContexts.fake()
         );
     }
 

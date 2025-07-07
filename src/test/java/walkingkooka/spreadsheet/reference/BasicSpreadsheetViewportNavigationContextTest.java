@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetViewportNavigationContextTest implements ClassTesting<BasicSpreadsheetViewportNavigationContext>,
-        SpreadsheetViewportNavigationContextTesting<BasicSpreadsheetViewportNavigationContext>,
-        ToStringTesting<BasicSpreadsheetViewportNavigationContext> {
+    SpreadsheetViewportNavigationContextTesting<BasicSpreadsheetViewportNavigationContext>,
+    ToStringTesting<BasicSpreadsheetViewportNavigationContext> {
 
     private final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
         throw new UnsupportedOperationException();
@@ -53,74 +53,74 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testWithNullColumnHiddenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetViewportNavigationContext
-                        .with(
-                                null,
-                                COLUMN_TO_WIDTH,
-                                Predicates.fake(),
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
+            NullPointerException.class,
+            () -> BasicSpreadsheetViewportNavigationContext
+                .with(
+                    null,
+                    COLUMN_TO_WIDTH,
+                    Predicates.fake(),
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
         );
     }
 
     @Test
     public void testWithNullColumnWidthFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetViewportNavigationContext
-                        .with(
-                                Predicates.fake(),
-                                null,
-                                Predicates.fake(),
-                                ROW_TO_HEIGHT,
-                                WINDOWS_FUNCTION
-                        )
+            NullPointerException.class,
+            () -> BasicSpreadsheetViewportNavigationContext
+                .with(
+                    Predicates.fake(),
+                    null,
+                    Predicates.fake(),
+                    ROW_TO_HEIGHT,
+                    WINDOWS_FUNCTION
+                )
         );
     }
 
     @Test
     public void testWithNullRowHiddenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(),
-                        COLUMN_TO_WIDTH,
-                        null,
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                )
+            NullPointerException.class,
+            () -> BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                null,
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            )
         );
     }
 
     @Test
     public void testWithNullRowHeightsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetViewportNavigationContext
-                        .with(
-                                Predicates.fake(),
-                                COLUMN_TO_WIDTH,
-                                Predicates.fake(),
-                                null,
-                                WINDOWS_FUNCTION
-                        )
+            NullPointerException.class,
+            () -> BasicSpreadsheetViewportNavigationContext
+                .with(
+                    Predicates.fake(),
+                    COLUMN_TO_WIDTH,
+                    Predicates.fake(),
+                    null,
+                    WINDOWS_FUNCTION
+                )
         );
     }
 
     @Test
     public void testWithNullWindowsFunctionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetViewportNavigationContext
-                        .with(
-                                Predicates.fake(),
-                                COLUMN_TO_WIDTH,
-                                Predicates.fake(),
-                                ROW_TO_HEIGHT,
-                                null
-                        )
+            NullPointerException.class,
+            () -> BasicSpreadsheetViewportNavigationContext
+                .with(
+                    Predicates.fake(),
+                    COLUMN_TO_WIDTH,
+                    Predicates.fake(),
+                    ROW_TO_HEIGHT,
+                    null
+                )
         );
     }
 
@@ -129,22 +129,22 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
 
         final BasicSpreadsheetViewportNavigationContext context = BasicSpreadsheetViewportNavigationContext.with(
-                Predicates.is(column),
-                COLUMN_TO_WIDTH,
-                Predicates.fake(),
-                ROW_TO_HEIGHT,
-                WINDOWS_FUNCTION
+            Predicates.is(column),
+            COLUMN_TO_WIDTH,
+            Predicates.fake(),
+            ROW_TO_HEIGHT,
+            WINDOWS_FUNCTION
         );
         this.isColumnHiddenAndCheck(
-                context,
-                column,
-                true
+            context,
+            column,
+            true
         );
 
         this.isColumnHiddenAndCheck(
-                context,
-                column.add(1),
-                false
+            context,
+            column.add(1),
+            false
         );
     }
 
@@ -153,23 +153,23 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
 
         final BasicSpreadsheetViewportNavigationContext context = BasicSpreadsheetViewportNavigationContext.with(
-                Predicates.fake(),
-                COLUMN_TO_WIDTH,
-                Predicates.is(row),
-                ROW_TO_HEIGHT,
-                WINDOWS_FUNCTION
+            Predicates.fake(),
+            COLUMN_TO_WIDTH,
+            Predicates.is(row),
+            ROW_TO_HEIGHT,
+            WINDOWS_FUNCTION
         );
 
         this.isRowHiddenAndCheck(
-                context,
-                row,
-                true
+            context,
+            row,
+            true
         );
 
         this.isRowHiddenAndCheck(
-                context,
-                row.add(1),
-                false
+            context,
+            row.add(1),
+            false
         );
     }
 
@@ -178,93 +178,93 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testLeftFirstColumnNotHidden() {
         this.leftColumnAndCheck(
-                "",
-                "A",
-                "A"
+            "",
+            "A",
+            "A"
         );
     }
 
     @Test
     public void testLeftFirstColumnHidden() {
         this.leftColumnAndCheck(
-                "A",
-                "A"
+            "A",
+            "A"
         );
     }
 
     @Test
     public void testLeftAllColumnsHiddenIncludingGiven() {
         this.leftColumnAndCheck(
-                "A,B,C",
-                "C"
+            "A,B,C",
+            "C"
         );
     }
 
     @Test
     public void testLeftColumn() {
         this.leftColumnAndCheck(
-                "",
-                "B",
-                "A"
+            "",
+            "B",
+            "A"
         );
     }
 
     @Test
     public void testLeftColumn2() {
         this.leftColumnAndCheck(
-                "",
-                "D",
-                "C"
+            "",
+            "D",
+            "C"
         );
     }
 
     @Test
     public void testLeftColumnFirstColumn() {
         this.leftColumnAndCheck(
-                "",
-                "A",
-                "A"
+            "",
+            "A",
+            "A"
         );
     }
 
     @Test
     public void testLeftColumnSkips() {
         this.leftColumnAndCheck(
-                "C,D",
-                "E",
-                "B"
+            "C,D",
+            "E",
+            "B"
         );
     }
 
     @Test
     public void testLeftColumnSkipsFirstColumn() {
         this.leftColumnAndCheck(
-                "B,C",
-                "D",
-                "A"
+            "B,C",
+            "D",
+            "A"
         );
     }
 
     @Test
     public void testLeftColumnAllLeftHidden() {
         this.leftColumnAndCheck(
-                "A,B",
-                "C",
-                "C"
+            "A,B",
+            "C",
+            "C"
         );
     }
 
     private void leftColumnAndCheck(final String columnHidden,
                                     final String column) {
         this.leftColumnAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        hiddenColumns(columnHidden),
-                        COLUMN_TO_WIDTH,
-                        Predicates.fake(),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                column
+            BasicSpreadsheetViewportNavigationContext.with(
+                hiddenColumns(columnHidden),
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            column
         );
     }
 
@@ -272,15 +272,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final String column,
                                     final String expected) {
         this.leftColumnAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        hiddenColumns(columnHidden),
-                        COLUMN_TO_WIDTH,
-                        Predicates.fake(),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                column,
-                expected
+            BasicSpreadsheetViewportNavigationContext.with(
+                hiddenColumns(columnHidden),
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            column,
+            expected
         );
     }
 
@@ -291,8 +291,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightColumnAndCheck(
-                last.toString(),
-                last.toString()
+            last.toString(),
+            last.toString()
         );
     }
 
@@ -301,35 +301,35 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightColumnAndCheck(
-                last.add(-2) + "," + last.add(-1) + "," + last,
-                last.add(-2).toString()
+            last.add(-2) + "," + last.add(-1) + "," + last,
+            last.add(-2).toString()
         );
     }
 
     @Test
     public void testRightColumn() {
         this.rightColumnAndCheck(
-                "B",
-                "B",
-                "C"
+            "B",
+            "B",
+            "C"
         );
     }
 
     @Test
     public void testRightColumn2() {
         this.rightColumnAndCheck(
-                "C",
-                "B",
-                "D"
+            "C",
+            "B",
+            "D"
         );
     }
 
     @Test
     public void testRightColumnSkips() {
         this.rightColumnAndCheck(
-                "B,C",
-                "B",
-                "D"
+            "B,C",
+            "B",
+            "D"
         );
     }
 
@@ -338,9 +338,9 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightColumnAndCheck(
-                last.add(-2) + "," + last.add(-1),
-                last.add(-3).toString(),
-                last.toString()
+            last.add(-2) + "," + last.add(-1),
+            last.add(-3).toString(),
+            last.toString()
         );
     }
 
@@ -349,23 +349,23 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.rightColumnAndCheck(
-                last.add(-1) + "," + last,
-                last.add(-2).toString(),
-                last.add(-2).toString()
+            last.add(-1) + "," + last,
+            last.add(-2).toString(),
+            last.add(-2).toString()
         );
     }
 
     private void rightColumnAndCheck(final String columnHidden,
                                      final String column) {
         this.rightColumnAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        hiddenColumns(columnHidden),
-                        COLUMN_TO_WIDTH,
-                        Predicates.fake(),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                column
+            BasicSpreadsheetViewportNavigationContext.with(
+                hiddenColumns(columnHidden),
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            column
         );
     }
 
@@ -373,15 +373,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                      final String column,
                                      final String expected) {
         this.rightColumnAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        hiddenColumns(columnHidden),
-                        COLUMN_TO_WIDTH,
-                        Predicates.fake(),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                column,
-                expected
+            BasicSpreadsheetViewportNavigationContext.with(
+                hiddenColumns(columnHidden),
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            column,
+            expected
         );
     }
 
@@ -390,93 +390,93 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testUpFirstRowNotHidden() {
         this.upRowAndCheck(
-                "",
-                "1",
-                "1"
+            "",
+            "1",
+            "1"
         );
     }
 
     @Test
     public void testUpFirstRowHidden() {
         this.upRowAndCheck(
-                "1",
-                "1"
+            "1",
+            "1"
         );
     }
 
     @Test
     public void testUpAllRowsHiddenIncludingGiven() {
         this.upRowAndCheck(
-                "1,2,3",
-                "3"
+            "1,2,3",
+            "3"
         );
     }
 
     @Test
     public void testUpRow() {
         this.upRowAndCheck(
-                "",
-                "2",
-                "1"
+            "",
+            "2",
+            "1"
         );
     }
 
     @Test
     public void testUpRow2() {
         this.upRowAndCheck(
-                "",
-                "4",
-                "3"
+            "",
+            "4",
+            "3"
         );
     }
 
     @Test
     public void testUpRowFirstRow() {
         this.upRowAndCheck(
-                "",
-                "1",
-                "1"
+            "",
+            "1",
+            "1"
         );
     }
 
     @Test
     public void testUpRowSkips() {
         this.upRowAndCheck(
-                "3,4",
-                "5",
-                "2"
+            "3,4",
+            "5",
+            "2"
         );
     }
 
     @Test
     public void testUpRowSkipsFirstRow() {
         this.upRowAndCheck(
-                "2,3",
-                "4",
-                "1"
+            "2,3",
+            "4",
+            "1"
         );
     }
 
     @Test
     public void testUpRowAllUpHidden() {
         this.upRowAndCheck(
-                "1,2",
-                "3",
-                "3"
+            "1,2",
+            "3",
+            "3"
         );
     }
 
     private void upRowAndCheck(final String rowHidden,
                                final String row) {
         this.upRowAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(),
-                        COLUMN_TO_WIDTH,
-                        this.hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                row
+            BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                this.hiddenRows(rowHidden),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            row
         );
     }
 
@@ -484,15 +484,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                final String row,
                                final String expected) {
         this.upRowAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(),
-                        COLUMN_TO_WIDTH,
-                        this.hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                row,
-                expected
+            BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                this.hiddenRows(rowHidden),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            row,
+            expected
         );
     }
 
@@ -503,8 +503,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
-                last.toString(),
-                last.toString()
+            last.toString(),
+            last.toString()
         );
     }
 
@@ -513,35 +513,35 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
-                last.add(-2) + "," + last.add(-1) + "," + last,
-                last.add(-2).toString()
+            last.add(-2) + "," + last.add(-1) + "," + last,
+            last.add(-2).toString()
         );
     }
 
     @Test
     public void testDownRow() {
         this.downRowAndCheck(
-                "2",
-                "2",
-                "3"
+            "2",
+            "2",
+            "3"
         );
     }
 
     @Test
     public void testDownRow2() {
         this.downRowAndCheck(
-                "3",
-                "2",
-                "4"
+            "3",
+            "2",
+            "4"
         );
     }
 
     @Test
     public void testDownRowSkips() {
         this.downRowAndCheck(
-                "2,3",
-                "2",
-                "4"
+            "2,3",
+            "2",
+            "4"
         );
     }
 
@@ -550,9 +550,9 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
-                last.add(-2) + "," + last.add(-1),
-                last.add(-3).toString(),
-                last.toString()
+            last.add(-2) + "," + last.add(-1),
+            last.add(-3).toString(),
+            last.toString()
         );
     }
 
@@ -561,23 +561,23 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
         this.downRowAndCheck(
-                last.add(-1) + "," + last,
-                last.add(-2).toString(),
-                last.add(-2).toString()
+            last.add(-1) + "," + last,
+            last.add(-2).toString(),
+            last.add(-2).toString()
         );
     }
 
     private void downRowAndCheck(final String rowHidden,
                                  final String row) {
         this.downRowAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(),
-                        COLUMN_TO_WIDTH,
-                        hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                row
+            BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                hiddenRows(rowHidden),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            row
         );
     }
 
@@ -586,21 +586,21 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testLeftPixelsFirst() {
         this.leftPixelsAndCheck(
-                "A",
-                1,
-                "",
-                Maps.empty(),
-                "A"
+            "A",
+            1,
+            "",
+            Maps.empty(),
+            "A"
         );
     }
 
     @Test
     public void testLeftPixelsHiddenFirst() {
         this.leftPixelsAndCheck(
-                "A",
-                1,
-                "A",
-                Maps.empty()
+            "A",
+            1,
+            "A",
+            Maps.empty()
 
         );
     }
@@ -608,55 +608,55 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testLeftPixelsHiddenFirst2() {
         this.leftPixelsAndCheck(
-                "B",
-                100,
-                "A",
-                Maps.of("B", 50.0),
-                "B"
+            "B",
+            100,
+            "A",
+            Maps.of("B", 50.0),
+            "B"
         );
     }
 
     @Test
     public void testLeftPixelsNotFirst() {
         this.leftPixelsAndCheck(
-                "B",
-                10,
-                "",
-                Maps.of("A", 50.0, "B", 50.0),
-                "A"
+            "B",
+            10,
+            "",
+            Maps.of("A", 50.0, "B", 50.0),
+            "A"
         );
     }
 
     @Test
     public void testLeftPixelsNotFirst2() {
         this.leftPixelsAndCheck(
-                "D",
-                99,
-                "",
-                Maps.of("B", 40.0, "C", 60.0, "D", 100.0),
-                "B"
+            "D",
+            99,
+            "",
+            Maps.of("B", 40.0, "C", 60.0, "D", 100.0),
+            "B"
         );
     }
 
     @Test
     public void testLeftPixelsNotFirst3() {
         this.leftPixelsAndCheck(
-                "D",
-                101,
-                "",
-                Maps.of("A", 50.0, "B", 40.0, "C", 60.0),
-                "A"
+            "D",
+            101,
+            "",
+            Maps.of("A", 50.0, "B", 40.0, "C", 60.0),
+            "A"
         );
     }
 
     @Test
     public void testLeftPixelsNotFirstSkipHidden() {
         this.leftPixelsAndCheck(
-                "D",
-                101,
-                "C",
-                Maps.of("A", 50.0, "B", 40.0, "C", 50.0, "D", 60.0),
-                "A"
+            "D",
+            101,
+            "C",
+            Maps.of("A", 50.0, "B", 40.0, "C", 50.0, "D", 60.0),
+            "A"
         );
     }
 
@@ -665,11 +665,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final String columnsHidden,
                                     final Map<String, Double> columnWidths) {
         this.leftPixelsAndCheck(
-                start,
-                pixels,
-                columnsHidden,
-                columnWidths,
-                Optional.empty()
+            start,
+            pixels,
+            columnsHidden,
+            columnWidths,
+            Optional.empty()
         );
     }
 
@@ -679,11 +679,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Map<String, Double> columnWidths,
                                     final String expected) {
         this.leftPixelsAndCheck(
-                start,
-                pixels,
-                columnsHidden,
-                columnWidths,
-                Optional.of(expected)
+            start,
+            pixels,
+            columnsHidden,
+            columnWidths,
+            Optional.of(expected)
         );
     }
 
@@ -693,11 +693,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Map<String, Double> columnWidths,
                                     final Optional<String> expected) {
         this.leftPixelsAndCheck(
-                SpreadsheetSelection.parseColumn(start),
-                pixels,
-                this.hiddenColumns(columnsHidden),
-                this.columnToWidth(columnWidths),
-                expected.map(SpreadsheetSelection::parseColumn)
+            SpreadsheetSelection.parseColumn(start),
+            pixels,
+            this.hiddenColumns(columnsHidden),
+            this.columnToWidth(columnWidths),
+            expected.map(SpreadsheetSelection::parseColumn)
         );
     }
 
@@ -707,16 +707,16 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Function<SpreadsheetColumnReference, Double> columnWidths,
                                     final Optional<SpreadsheetColumnReference> expected) {
         this.leftPixelsAndCheck(
-                start,
-                pixels,
-                BasicSpreadsheetViewportNavigationContext.with(
-                        columnsHidden,
-                        columnWidths::apply,
-                        Predicates.fake(), // rows hidden
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                expected
+            start,
+            pixels,
+            BasicSpreadsheetViewportNavigationContext.with(
+                columnsHidden,
+                columnWidths::apply,
+                Predicates.fake(), // rows hidden
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            expected
         );
     }
 
@@ -733,21 +733,21 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testRightPixelsLast() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN,
-                1,
-                "",
-                Maps.empty(),
-                LAST_COLUMN
+            LAST_COLUMN,
+            1,
+            "",
+            Maps.empty(),
+            LAST_COLUMN
         );
     }
 
     @Test
     public void testRightPixelsHiddenLast() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN,
-                1,
-                LAST_COLUMN,
-                Maps.empty()
+            LAST_COLUMN,
+            1,
+            LAST_COLUMN,
+            Maps.empty()
 
         );
     }
@@ -755,55 +755,55 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testRightPixelsHiddenLast2() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN_2,
-                100,
-                LAST_COLUMN,
-                Maps.of(LAST_COLUMN_2, 50.0),
-                LAST_COLUMN_2
+            LAST_COLUMN_2,
+            100,
+            LAST_COLUMN,
+            Maps.of(LAST_COLUMN_2, 50.0),
+            LAST_COLUMN_2
         );
     }
 
     @Test
     public void testRightPixelsNotLast() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN_2,
-                10,
-                "",
-                Maps.of(LAST_COLUMN, 50.0, LAST_COLUMN_2, 50.0),
-                LAST_COLUMN
+            LAST_COLUMN_2,
+            10,
+            "",
+            Maps.of(LAST_COLUMN, 50.0, LAST_COLUMN_2, 50.0),
+            LAST_COLUMN
         );
     }
 
     @Test
     public void testRightPixelsNotLast2() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN_4,
-                99,
-                "",
-                Maps.of(LAST_COLUMN_2, 40.0, LAST_COLUMN_3, 60.0, LAST_COLUMN_4, 100.0),
-                LAST_COLUMN_2
+            LAST_COLUMN_4,
+            99,
+            "",
+            Maps.of(LAST_COLUMN_2, 40.0, LAST_COLUMN_3, 60.0, LAST_COLUMN_4, 100.0),
+            LAST_COLUMN_2
         );
     }
 
     @Test
     public void testRightPixelsNotLast3() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN_4,
-                101,
-                "",
-                Maps.of(LAST_COLUMN, 50.0, LAST_COLUMN_2, 40.0, LAST_COLUMN_3, 60.0),
-                LAST_COLUMN
+            LAST_COLUMN_4,
+            101,
+            "",
+            Maps.of(LAST_COLUMN, 50.0, LAST_COLUMN_2, 40.0, LAST_COLUMN_3, 60.0),
+            LAST_COLUMN
         );
     }
 
     @Test
     public void testRightPixelsNotLastSkipHidden() {
         this.rightPixelsAndCheck(
-                LAST_COLUMN_4,
-                101,
-                LAST_COLUMN_3,
-                Maps.of(LAST_COLUMN, 50.0, LAST_COLUMN_2, 40.0, LAST_COLUMN_3, 50.0, LAST_COLUMN_4, 60.0),
-                LAST_COLUMN
+            LAST_COLUMN_4,
+            101,
+            LAST_COLUMN_3,
+            Maps.of(LAST_COLUMN, 50.0, LAST_COLUMN_2, 40.0, LAST_COLUMN_3, 50.0, LAST_COLUMN_4, 60.0),
+            LAST_COLUMN
         );
     }
 
@@ -812,11 +812,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                      final String columnsHidden,
                                      final Map<String, Double> columnWidths) {
         this.rightPixelsAndCheck(
-                start,
-                pixels,
-                columnsHidden,
-                columnWidths,
-                Optional.empty()
+            start,
+            pixels,
+            columnsHidden,
+            columnWidths,
+            Optional.empty()
         );
     }
 
@@ -826,11 +826,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                      final Map<String, Double> columnWidths,
                                      final String expected) {
         this.rightPixelsAndCheck(
-                start,
-                pixels,
-                columnsHidden,
-                columnWidths,
-                Optional.of(expected)
+            start,
+            pixels,
+            columnsHidden,
+            columnWidths,
+            Optional.of(expected)
         );
     }
 
@@ -840,11 +840,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                      final Map<String, Double> columnWidths,
                                      final Optional<String> expected) {
         this.rightPixelsAndCheck(
-                SpreadsheetSelection.parseColumn(start),
-                pixels,
-                this.hiddenColumns(columnsHidden),
-                this.columnToWidth(columnWidths),
-                expected.map(SpreadsheetSelection::parseColumn)
+            SpreadsheetSelection.parseColumn(start),
+            pixels,
+            this.hiddenColumns(columnsHidden),
+            this.columnToWidth(columnWidths),
+            expected.map(SpreadsheetSelection::parseColumn)
         );
     }
 
@@ -854,16 +854,16 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                      final Function<SpreadsheetColumnReference, Double> columnWidths,
                                      final Optional<SpreadsheetColumnReference> expected) {
         this.rightPixelsAndCheck(
-                start,
-                pixels,
-                BasicSpreadsheetViewportNavigationContext.with(
-                        columnsHidden,
-                        columnWidths::apply,
-                        Predicates.fake(), // rows hidden
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                expected
+            start,
+            pixels,
+            BasicSpreadsheetViewportNavigationContext.with(
+                columnsHidden,
+                columnWidths::apply,
+                Predicates.fake(), // rows hidden
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            expected
         );
     }
 
@@ -872,21 +872,21 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testUpPixelsFirst() {
         this.upPixelsAndCheck(
-                "1",
-                1,
-                "",
-                Maps.empty(),
-                "1"
+            "1",
+            1,
+            "",
+            Maps.empty(),
+            "1"
         );
     }
 
     @Test
     public void testUpPixelsHiddenFirst() {
         this.upPixelsAndCheck(
-                "1",
-                1,
-                "1",
-                Maps.empty()
+            "1",
+            1,
+            "1",
+            Maps.empty()
 
         );
     }
@@ -894,55 +894,55 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testUpPixelsHiddenFirst2() {
         this.upPixelsAndCheck(
-                "2",
-                100,
-                "1",
-                Maps.of("2", 50.0),
-                "2"
+            "2",
+            100,
+            "1",
+            Maps.of("2", 50.0),
+            "2"
         );
     }
 
     @Test
     public void testUpPixelsNotFirst() {
         this.upPixelsAndCheck(
-                "2",
-                10,
-                "",
-                Maps.of("1", 50.0, "2", 50.0),
-                "1"
+            "2",
+            10,
+            "",
+            Maps.of("1", 50.0, "2", 50.0),
+            "1"
         );
     }
 
     @Test
     public void testUpPixelsNotFirst2() {
         this.upPixelsAndCheck(
-                "4",
-                99,
-                "",
-                Maps.of("2", 40.0, "3", 60.0, "4", 100.0),
-                "2"
+            "4",
+            99,
+            "",
+            Maps.of("2", 40.0, "3", 60.0, "4", 100.0),
+            "2"
         );
     }
 
     @Test
     public void testUpPixelsNotFirst3() {
         this.upPixelsAndCheck(
-                "4",
-                101,
-                "",
-                Maps.of("1", 50.0, "2", 40.0, "3", 60.0),
-                "1"
+            "4",
+            101,
+            "",
+            Maps.of("1", 50.0, "2", 40.0, "3", 60.0),
+            "1"
         );
     }
 
     @Test
     public void testUpPixelsNotFirstSkipHidden() {
         this.upPixelsAndCheck(
-                "4",
-                101,
-                "3",
-                Maps.of("1", 50.0, "2", 40.0, "3", 50.0, "4", 60.0),
-                "1"
+            "4",
+            101,
+            "3",
+            Maps.of("1", 50.0, "2", 40.0, "3", 50.0, "4", 60.0),
+            "1"
         );
     }
 
@@ -951,11 +951,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final String rowsHidden,
                                   final Map<String, Double> rowHeights) {
         this.upPixelsAndCheck(
-                start,
-                pixels,
-                rowsHidden,
-                rowHeights,
-                Optional.empty()
+            start,
+            pixels,
+            rowsHidden,
+            rowHeights,
+            Optional.empty()
         );
     }
 
@@ -965,11 +965,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final Map<String, Double> rowHeights,
                                   final String expected) {
         this.upPixelsAndCheck(
-                start,
-                pixels,
-                rowsHidden,
-                rowHeights,
-                Optional.of(expected)
+            start,
+            pixels,
+            rowsHidden,
+            rowHeights,
+            Optional.of(expected)
         );
     }
 
@@ -979,11 +979,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final Map<String, Double> rowHeights,
                                   final Optional<String> expected) {
         this.upPixelsAndCheck(
-                SpreadsheetSelection.parseRow(start),
-                pixels,
-                this.hiddenRows(rowsHidden),
-                this.rowToHeight(rowHeights),
-                expected.map(SpreadsheetSelection::parseRow)
+            SpreadsheetSelection.parseRow(start),
+            pixels,
+            this.hiddenRows(rowsHidden),
+            this.rowToHeight(rowHeights),
+            expected.map(SpreadsheetSelection::parseRow)
         );
     }
 
@@ -993,16 +993,16 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final Function<SpreadsheetRowReference, Double> rowHeights,
                                   final Optional<SpreadsheetRowReference> expected) {
         this.upPixelsAndCheck(
-                start,
-                pixels,
-                BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(), // columns hidden
-                        COLUMN_TO_WIDTH,
-                        rowsHidden,
-                        rowHeights::apply,
-                        WINDOWS_FUNCTION
-                ),
-                expected
+            start,
+            pixels,
+            BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(), // columns hidden
+                COLUMN_TO_WIDTH,
+                rowsHidden,
+                rowHeights::apply,
+                WINDOWS_FUNCTION
+            ),
+            expected
         );
     }
 
@@ -1019,21 +1019,21 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testDownPixelsLast() {
         this.downPixelsAndCheck(
-                LAST_ROW,
-                1,
-                "",
-                Maps.empty(),
-                LAST_ROW
+            LAST_ROW,
+            1,
+            "",
+            Maps.empty(),
+            LAST_ROW
         );
     }
 
     @Test
     public void testDownPixelsHiddenLast() {
         this.downPixelsAndCheck(
-                LAST_ROW,
-                1,
-                LAST_ROW,
-                Maps.empty()
+            LAST_ROW,
+            1,
+            LAST_ROW,
+            Maps.empty()
 
         );
     }
@@ -1041,55 +1041,55 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     @Test
     public void testDownPixelsHiddenLast2() {
         this.downPixelsAndCheck(
-                LAST_ROW_2,
-                100,
-                LAST_ROW,
-                Maps.of(LAST_ROW_2, 50.0),
-                LAST_ROW_2
+            LAST_ROW_2,
+            100,
+            LAST_ROW,
+            Maps.of(LAST_ROW_2, 50.0),
+            LAST_ROW_2
         );
     }
 
     @Test
     public void testDownPixelsNotLast() {
         this.downPixelsAndCheck(
-                LAST_ROW_2,
-                10,
-                "",
-                Maps.of(LAST_ROW, 50.0, LAST_ROW_2, 50.0),
-                LAST_ROW
+            LAST_ROW_2,
+            10,
+            "",
+            Maps.of(LAST_ROW, 50.0, LAST_ROW_2, 50.0),
+            LAST_ROW
         );
     }
 
     @Test
     public void testDownPixelsNotLast2() {
         this.downPixelsAndCheck(
-                LAST_ROW_4,
-                99,
-                "",
-                Maps.of(LAST_ROW_2, 40.0, LAST_ROW_3, 60.0, LAST_ROW_4, 100.0),
-                LAST_ROW_2
+            LAST_ROW_4,
+            99,
+            "",
+            Maps.of(LAST_ROW_2, 40.0, LAST_ROW_3, 60.0, LAST_ROW_4, 100.0),
+            LAST_ROW_2
         );
     }
 
     @Test
     public void testDownPixelsNotLast3() {
         this.downPixelsAndCheck(
-                LAST_ROW_4,
-                101,
-                "",
-                Maps.of(LAST_ROW, 50.0, LAST_ROW_2, 40.0, LAST_ROW_3, 60.0),
-                LAST_ROW
+            LAST_ROW_4,
+            101,
+            "",
+            Maps.of(LAST_ROW, 50.0, LAST_ROW_2, 40.0, LAST_ROW_3, 60.0),
+            LAST_ROW
         );
     }
 
     @Test
     public void testDownPixelsNotLastSkipHidden() {
         this.downPixelsAndCheck(
-                LAST_ROW_4,
-                101,
-                LAST_ROW_3,
-                Maps.of(LAST_ROW, 50.0, LAST_ROW_2, 40.0, LAST_ROW_3, 50.0, LAST_ROW_4, 60.0),
-                LAST_ROW
+            LAST_ROW_4,
+            101,
+            LAST_ROW_3,
+            Maps.of(LAST_ROW, 50.0, LAST_ROW_2, 40.0, LAST_ROW_3, 50.0, LAST_ROW_4, 60.0),
+            LAST_ROW
         );
     }
 
@@ -1097,15 +1097,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                  final String row,
                                  final String expected) {
         this.downRowAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(),
-                        COLUMN_TO_WIDTH,
-                        hiddenRows(rowHidden),
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                row,
-                expected
+            BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                hiddenRows(rowHidden),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            row,
+            expected
         );
     }
 
@@ -1114,11 +1114,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final String rowsHidden,
                                     final Map<String, Double> rowWidths) {
         this.downPixelsAndCheck(
-                start,
-                pixels,
-                rowsHidden,
-                rowWidths,
-                Optional.empty()
+            start,
+            pixels,
+            rowsHidden,
+            rowWidths,
+            Optional.empty()
         );
     }
 
@@ -1128,11 +1128,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Map<String, Double> rowWidths,
                                     final String expected) {
         this.downPixelsAndCheck(
-                start,
-                pixels,
-                rowsHidden,
-                rowWidths,
-                Optional.of(expected)
+            start,
+            pixels,
+            rowsHidden,
+            rowWidths,
+            Optional.of(expected)
         );
     }
 
@@ -1142,11 +1142,11 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Map<String, Double> rowHeights,
                                     final Optional<String> expected) {
         this.downPixelsAndCheck(
-                SpreadsheetSelection.parseRow(start),
-                pixels,
-                this.hiddenRows(rowsHidden),
-                this.rowToHeight(rowHeights),
-                expected.map(SpreadsheetSelection::parseRow)
+            SpreadsheetSelection.parseRow(start),
+            pixels,
+            this.hiddenRows(rowsHidden),
+            this.rowToHeight(rowHeights),
+            expected.map(SpreadsheetSelection::parseRow)
         );
     }
 
@@ -1156,16 +1156,16 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Function<SpreadsheetRowReference, Double> rowHeights,
                                     final Optional<SpreadsheetRowReference> expected) {
         this.downPixelsAndCheck(
-                start,
-                pixels,
-                BasicSpreadsheetViewportNavigationContext.with(
-                        Predicates.fake(), // hidden columns
-                        COLUMN_TO_WIDTH,
-                        rowsHidden,
-                        rowHeights::apply,
-                        WINDOWS_FUNCTION
-                ),
-                expected
+            start,
+            pixels,
+            BasicSpreadsheetViewportNavigationContext.with(
+                Predicates.fake(), // hidden columns
+                COLUMN_TO_WIDTH,
+                rowsHidden,
+                rowHeights::apply,
+                WINDOWS_FUNCTION
+            ),
+            expected
         );
     }
 
@@ -1173,56 +1173,56 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private Predicate<SpreadsheetColumnReference> hiddenColumns(final String columns) {
         return hiddenPredicate(
-                columns,
-                SpreadsheetSelection::parseColumn
+            columns,
+            SpreadsheetSelection::parseColumn
         );
     }
 
     private Predicate<SpreadsheetRowReference> hiddenRows(final String rows) {
         return hiddenPredicate(
-                rows,
-                SpreadsheetSelection::parseRow
+            rows,
+            SpreadsheetSelection::parseRow
         );
     }
 
     private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
                                                                                  final Function<String, T> parser) {
         return (columnOrRow) -> CharacterConstant.COMMA.parse(
-                columnOrRows,
-                parser
+            columnOrRows,
+            parser
         ).contains(columnOrRow);
     }
 
     private Function<SpreadsheetColumnReference, Double> columnToWidth(final Map<String, Double> columnToWidths) {
         return columnOrRowToWidthOrHeight(
-                columnToWidths,
-                SpreadsheetSelection::parseColumn
+            columnToWidths,
+            SpreadsheetSelection::parseColumn
         );
     }
 
     private Function<SpreadsheetRowReference, Double> rowToHeight(final Map<String, Double> rowToHeights) {
         return columnOrRowToWidthOrHeight(
-                rowToHeights,
-                SpreadsheetSelection::parseRow
+            rowToHeights,
+            SpreadsheetSelection::parseRow
         );
     }
 
     private <T extends SpreadsheetSelection> Function<T, Double> columnOrRowToWidthOrHeight(final Map<String, Double> columnOrRowToWidthOrHeight,
                                                                                             final Function<String, T> parser) {
         final Map<T, Double> map = columnOrRowToWidthOrHeight.entrySet()
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                e -> parser.apply(e.getKey()),
-                                Map.Entry::getValue
-                        )
-                );
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    e -> parser.apply(e.getKey()),
+                    Map.Entry::getValue
+                )
+            );
         return (columnOrRow) -> {
             final Double length = map.get(columnOrRow);
             this.checkNotEquals(
-                    null,
-                    length,
-                    () -> "Missing " + columnOrRow + " parse " + columnOrRowToWidthOrHeight
+                null,
+                length,
+                () -> "Missing " + columnOrRow + " parse " + columnOrRowToWidthOrHeight
             );
             return length;
         };
@@ -1236,25 +1236,25 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final Predicate<SpreadsheetRowReference> row = Predicates.fake();
 
         this.toStringAndCheck(
-                BasicSpreadsheetViewportNavigationContext.with(
-                        column,
-                        COLUMN_TO_WIDTH,
-                        row,
-                        ROW_TO_HEIGHT,
-                        WINDOWS_FUNCTION
-                ),
-                column + " " + COLUMN_TO_WIDTH + " " + row + " " + ROW_TO_HEIGHT + " " + WINDOWS_FUNCTION
+            BasicSpreadsheetViewportNavigationContext.with(
+                column,
+                COLUMN_TO_WIDTH,
+                row,
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            ),
+            column + " " + COLUMN_TO_WIDTH + " " + row + " " + ROW_TO_HEIGHT + " " + WINDOWS_FUNCTION
         );
     }
 
     @Override
     public BasicSpreadsheetViewportNavigationContext createContext() {
         return BasicSpreadsheetViewportNavigationContext.with(
-                Predicates.fake(),
-                COLUMN_TO_WIDTH,
-                Predicates.fake(),
-                ROW_TO_HEIGHT,
-                WINDOWS_FUNCTION
+            Predicates.fake(),
+            COLUMN_TO_WIDTH,
+            Predicates.fake(),
+            ROW_TO_HEIGHT,
+            WINDOWS_FUNCTION
         );
     }
 

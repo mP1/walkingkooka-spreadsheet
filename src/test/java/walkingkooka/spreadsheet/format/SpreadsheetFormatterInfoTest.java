@@ -32,15 +32,15 @@ public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting
         final SpreadsheetFormatterName different = SpreadsheetFormatterName.with("different");
 
         this.setNameAndCheck(
-                SpreadsheetFormatterInfo.with(
-                        url,
-                        SpreadsheetFormatterName.with("original-formatter-name")
-                ),
-                different,
-                SpreadsheetFormatterInfo.with(
-                        url,
-                        different
-                )
+            SpreadsheetFormatterInfo.with(
+                url,
+                SpreadsheetFormatterName.with("original-formatter-name")
+            ),
+            different,
+            SpreadsheetFormatterInfo.with(
+                url,
+                different
+            )
         );
     }
 
@@ -62,8 +62,8 @@ public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting
     public SpreadsheetFormatterInfo createPluginInfoLike(final AbsoluteUrl url,
                                                          final SpreadsheetFormatterName name) {
         return SpreadsheetFormatterInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -73,8 +73,8 @@ public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting
     public SpreadsheetFormatterInfo unmarshall(final JsonNode json,
                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetFormatterInfo.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

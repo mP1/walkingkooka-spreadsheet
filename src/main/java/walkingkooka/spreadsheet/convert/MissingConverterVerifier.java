@@ -90,15 +90,15 @@ import java.util.TreeSet;
 final class MissingConverterVerifier {
 
     private final static List<Class<?>> NUMBER_TYPES = Lists.of(
-            ExpressionNumber.class,
-            Byte.class,
-            Short.class,
-            Integer.class,
-            Long.class,
-            Float.class,
-            Double.class,
-            BigInteger.class,
-            BigDecimal.class
+        ExpressionNumber.class,
+        Byte.class,
+        Short.class,
+        Integer.class,
+        Long.class,
+        Float.class,
+        Double.class,
+        BigInteger.class,
+        BigDecimal.class
     );
 
     static Set<MissingConverter> verify(final Converter<SpreadsheetConverterContext> converter,
@@ -116,8 +116,8 @@ final class MissingConverterVerifier {
         final boolean terminal = false; // TODO later
 
         final MissingConverterVerifier finder = new MissingConverterVerifier(
-                converter,
-                context
+            converter,
+            context
         );
 
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
@@ -130,24 +130,24 @@ final class MissingConverterVerifier {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final ExpressionNumberKind kind = context.expressionNumberKind();
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
-                SpreadsheetErrorKind.NAME.setMessage("Value");
+        SpreadsheetErrorKind.NAME.setMessage("Value");
 
         // error-to-number..............................................................................................
-        if(formula) {
+        if (formula) {
             finder.addIfConversionFail(
-                    error,
-                    ExpressionNumber.class,
-                    SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER
+                error,
+                ExpressionNumber.class,
+                SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER
             );
         }
 
         // error-throwing...............................................................................................
-        if(formula) {
+        if (formula) {
             finder.addIfConversionFail(
-                    error,
-                    ExpressionNumber.class,
-                    SpreadsheetConvertersConverterProvider.ERROR_THROWING,
-                    true
+                error,
+                ExpressionNumber.class,
+                SpreadsheetConvertersConverterProvider.ERROR_THROWING,
+                true
             );
         }
 
@@ -156,311 +156,311 @@ final class MissingConverterVerifier {
         // general......................................................................................................
         {
             finder.addIfConversionFail(
-                    Lists.of(
-                            "true",
-                            "false"
-                    ),
-                    ExpressionNumber.class,
-                    SpreadsheetConvertersConverterProvider.GENERAL
+                Lists.of(
+                    "true",
+                    "false"
+                ),
+                ExpressionNumber.class,
+                SpreadsheetConvertersConverterProvider.GENERAL
             );
             finder.addIfConversionFail(
-                    Lists.of(
-                            "true",
-                            "false"
-                    ),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.GENERAL
+                Lists.of(
+                    "true",
+                    "false"
+                ),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
             );
 
             finder.addIfConversionFail(
-                    Lists.of(
-                            "true",
-                            "false"
-                    ),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.GENERAL
+                Lists.of(
+                    "true",
+                    "false"
+                ),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
             );
 
             // general numbers
             finder.addIfConversionFail(
-                    kind.one(),
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.GENERAL
+                kind.one(),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
             );
 
             // SpreadsheetSelection
             finder.addIfConversionFail(
-                    Lists.of(
-                            cell,
-                            cellRange,
-                            column,
-                            columnRange,
-                            row,
-                            rowRange,
-                            label
-                    ),
-                    String.class,
-                    SpreadsheetConvertersConverterProvider.GENERAL
+                Lists.of(
+                    cell,
+                    cellRange,
+                    column,
+                    columnRange,
+                    row,
+                    rowRange,
+                    label
+                ),
+                String.class,
+                SpreadsheetConvertersConverterProvider.GENERAL
             );
         }
 
         // has-style-style..............................................................................................
         final TextStyle style = TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
+            TextStylePropertyName.COLOR,
+            Color.BLACK
         );
 
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    Lists.of(
-                            style,
-                            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                                    .setStyle(style)
-                    ),
-                    TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE
+                Lists.of(
+                    style,
+                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                        .setStyle(style)
+                ),
+                TextStyle.class,
+                SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE
             );
         }
 
         // null-to-number...............................................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    (Object)null, // dont want List overload
-                    NUMBER_TYPES,
-                    SpreadsheetConvertersConverterProvider.NULL_TO_NUMBER
+                (Object) null, // dont want List overload
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.NULL_TO_NUMBER
             );
         }
 
         // number-to-number.............................................................................................
         finder.addIfConversionFail(
-                1,
-                NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.NULL_TO_NUMBER
+            1,
+            NUMBER_TYPES,
+            SpreadsheetConvertersConverterProvider.NULL_TO_NUMBER
         );
 
         // selection-to-selection.......................................................................................
-        if(formula) {
+        if (formula) {
             finder.addIfConversionFail(
-                    Lists.of(
-                            cell,
-                            cellRange,
-                            column,
-                            columnRange,
-                            row,
-                            rowRange
-                    ),
-                    SpreadsheetCellReference.class,
-                    SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
+                Lists.of(
+                    cell,
+                    cellRange,
                     column,
-                    SpreadsheetColumnReference.class,
-                    SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                    columnRange,
+                    row,
+                    rowRange
+                ),
+                SpreadsheetCellReference.class,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    row,
-                    SpreadsheetRowReference.class,
-                    SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                column,
+                SpreadsheetColumnReference.class,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                row,
+                SpreadsheetRowReference.class,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
             );
         }
 
         // simple.......................................................................................................
         finder.addIfConversionFail(
-                "Hello",
-                String.class,
-                SpreadsheetConvertersConverterProvider.SIMPLE
+            "Hello",
+            String.class,
+            SpreadsheetConvertersConverterProvider.SIMPLE
         );
 
         // spreadsheet-cell-to..........................................................................................
-        if(formatting){
+        if (formatting) {
             final Locale locale = context.locale();
 
             final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setDateTimeSymbols(
-                            Optional.of(
-                                    DateTimeSymbols.fromDateFormatSymbols(
-                                            new DateFormatSymbols(locale)
-                                    )
-                            )
-                    ).setDecimalNumberSymbols(
-                            Optional.of(
-                                    DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                            '+',
-                                            new DecimalFormatSymbols(locale)
-                                    )
-                            )
-                    ).setLocale(
-                            Optional.of(locale)
-                    ).setFormatter(
-                            Optional.of(
-                                    SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
-                            )
-                    ).setParser(
-                            Optional.of(
-                                    SpreadsheetParserSelector.parse("test-parser")
-                            )
-                    ).setStyle(style)
-                    .setValidator(
-                            Optional.of(
-                                    ValidatorSelector.parse("test-validator")
-                            )
-                    );
+                    SpreadsheetFormula.EMPTY.setText("=1+2")
+                ).setDateTimeSymbols(
+                    Optional.of(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                            new DateFormatSymbols(locale)
+                        )
+                    )
+                ).setDecimalNumberSymbols(
+                    Optional.of(
+                        DecimalNumberSymbols.fromDecimalFormatSymbols(
+                            '+',
+                            new DecimalFormatSymbols(locale)
+                        )
+                    )
+                ).setLocale(
+                    Optional.of(locale)
+                ).setFormatter(
+                    Optional.of(
+                        SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+                    )
+                ).setParser(
+                    Optional.of(
+                        SpreadsheetParserSelector.parse("test-parser")
+                    )
+                ).setStyle(style)
+                .setValidator(
+                    Optional.of(
+                        ValidatorSelector.parse("test-validator")
+                    )
+                );
 
             finder.addIfConversionFail(
-                    spreadsheetCell,
-                    Lists.of(
-                            String.class,
-                            DateTimeSymbols.class,
-                            DecimalNumberSymbols.class,
-                            Locale.class,
-                            SpreadsheetFormatterSelector.class,
-                            SpreadsheetParserSelector.class,
-                            TextStyle.class,
-                            ValidatorSelector.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_CELL_TO
+                spreadsheetCell,
+                Lists.of(
+                    String.class,
+                    DateTimeSymbols.class,
+                    DecimalNumberSymbols.class,
+                    Locale.class,
+                    SpreadsheetFormatterSelector.class,
+                    SpreadsheetParserSelector.class,
+                    TextStyle.class,
+                    ValidatorSelector.class
+                ),
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_CELL_TO
             );
         }
 
         // text-to-color................................................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    "#123456",
-                    Color.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR
+                "#123456",
+                Color.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR
             );
         }
 
         // text-to-error................................................................................................
         finder.addIfConversionFail(
-                error,
-                SpreadsheetError.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR
+            error,
+            SpreadsheetError.class,
+            SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR
         );
 
         // text-to-expression...........................................................................................
         finder.addIfConversionFail(
-                "1+sum(2)",
-                Expression.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION
+            "1+sum(2)",
+            Expression.class,
+            SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION
         );
 
         // text-to-form-name............................................................................................
-        if(validation) {
+        if (validation) {
             finder.addIfConversionFail(
-                    "Form123",
-                    FormName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME
+                "Form123",
+                FormName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME
             );
         }
 
         // text-to-locale...............................................................................................
-        if(formula || find) {
+        if (formula || find) {
             finder.addIfConversionFail(
-                    "en-AU",
-                    Locale.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_LOCALE
+                "en-AU",
+                Locale.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_LOCALE
             );
         }
 
         // text-to-selection...........................................................................................
-        if(formula || validation) {
-            for(final SpreadsheetSelection selection : Lists.of(
-                    cell,
-                    cellRange,
-                    column,
-                    columnRange,
-                    label
+        if (formula || validation) {
+            for (final SpreadsheetSelection selection : Lists.of(
+                cell,
+                cellRange,
+                column,
+                columnRange,
+                label
             )) {
                 finder.addIfConversionFail(
-                        selection.toString(),
-                        selection.getClass(),
-                        SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                    selection.toString(),
+                    selection.getClass(),
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
                 );
             }
 
             finder.addIfConversionFail(
-                    cell.toString(),
-                    Lists.of(
-                            SpreadsheetCellReference.class,
-                            SpreadsheetCellRangeReference.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                cell.toString(),
+                Lists.of(
+                    SpreadsheetCellReference.class,
+                    SpreadsheetCellRangeReference.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    cellRange.toString(),
-                    SpreadsheetCellRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                cellRange.toString(),
+                SpreadsheetCellRangeReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    label.toString(),
-                    SpreadsheetLabelName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                label.toString(),
+                SpreadsheetLabelName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    column.toString(),
-                    Lists.of(
-                            SpreadsheetColumnReference.class,
-                            SpreadsheetColumnRangeReference.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                    column.toString(),
+                column.toString(),
+                Lists.of(
                     SpreadsheetColumnReference.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                    SpreadsheetColumnRangeReference.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    columnRange.toString(),
-                    SpreadsheetColumnRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                column.toString(),
+                SpreadsheetColumnReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    row.toString(),
-                    Lists.of(
-                            SpreadsheetRowReference.class,
-                            SpreadsheetRowRangeReference.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                columnRange.toString(),
+                SpreadsheetColumnRangeReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    row.toString(),
+                row.toString(),
+                Lists.of(
                     SpreadsheetRowReference.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                    SpreadsheetRowRangeReference.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
 
             finder.addIfConversionFail(
-                    rowRange.toString(),
-                    SpreadsheetRowRangeReference.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+                row.toString(),
+                SpreadsheetRowReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                rowRange.toString(),
+                SpreadsheetRowRangeReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
             );
         }
 
         // text-to-spreadsheet-color-name...............................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    SpreadsheetColorName.BLACK.value(),
-                    SpreadsheetColorName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
+                SpreadsheetColorName.BLACK.value(),
+                SpreadsheetColorName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
             );
         }
 
         // text-to-spreadsheet-formatter-selection......................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
-                    SpreadsheetFormatterSelector.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR
+                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
+                SpreadsheetFormatterSelector.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR
             );
         }
 
@@ -468,214 +468,214 @@ final class MissingConverterVerifier {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 
         // will be enabled by terminal
-        if(terminal) {
+        if (terminal) {
             finder.addIfConversionFail(
-                    spreadsheetId.toString(),
-                    SpreadsheetId.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_ID
+                spreadsheetId.toString(),
+                SpreadsheetId.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_ID
             );
         }
 
         // text-to-spreadsheet-metadata.................................................................................
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                spreadsheetId
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            spreadsheetId
         );
 
-        if(terminal) {
+        if (terminal) {
             finder.addIfConversionFail(
-                    context.marshall(metadata)
-                            .toString(),
-                    SpreadsheetMetadata.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA
+                context.marshall(metadata)
+                    .toString(),
+                SpreadsheetMetadata.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA
             );
         }
 
         // text-to-spreadsheet-color....................................................................................
-        if(formatting) {
+        if (formatting) {
             final SpreadsheetColorName spreadsheetColorName = SpreadsheetColorName.BLACK;
 
             finder.addIfConversionFail(
-                    spreadsheetColorName.toString(),
-                    SpreadsheetColorName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
+                spreadsheetColorName.toString(),
+                SpreadsheetColorName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
             );
         }
 
         // text-to-spreadsheet-property-name............................................................................
         final SpreadsheetMetadataPropertyName spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
 
-        if(terminal) {
+        if (terminal) {
             finder.addIfConversionFail(
-                    spreadsheetMetadataPropertyName.value(),
-                    SpreadsheetMetadataPropertyName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
+                spreadsheetMetadataPropertyName.value(),
+                SpreadsheetMetadataPropertyName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
             );
         }
 
         // text-to-error................................................................................................
-        if(validation) {
+        if (validation) {
             finder.addIfConversionFail(
-                    error.text(),
-                    SpreadsheetError.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR
+                error.text(),
+                SpreadsheetError.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR
             );
         }
 
         // text-to-spreadsheet-name.....................................................................................
         final SpreadsheetName spreadsheetName = SpreadsheetName.with("SpreadsheetName123");
 
-        if(terminal) {
+        if (terminal) {
             finder.addIfConversionFail(
-                    spreadsheetName.text(),
-                    SpreadsheetName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_NAME
+                spreadsheetName.text(),
+                SpreadsheetName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_NAME
             );
         }
 
         // text-to-spreadsheet-text.....................................................................................
         final SpreadsheetText spreadsheetText = SpreadsheetText.with("Text123");
 
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    spreadsheetText.text(),
-                    SpreadsheetText.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_TEXT
+                spreadsheetText.text(),
+                SpreadsheetText.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_TEXT
             );
         }
 
         // text-to-template-value-name..................................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    TemplateValueName.with("TemplateValue123"),
-                    TemplateValueName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_TEMPLATE_VALUE_NAME
+                TemplateValueName.with("TemplateValue123"),
+                TemplateValueName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TEMPLATE_VALUE_NAME
             );
         }
 
         // text-to-text.................................................................................................
         finder.addIfConversionFail(
-                Lists.of(
-                    new StringBuilder("CharacterSequence"),
-                        "Text"
-                ),
-                String.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT
+            Lists.of(
+                new StringBuilder("CharacterSequence"),
+                "Text"
+            ),
+            String.class,
+            SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT
         );
 
         // text-to-textNode.............................................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    Lists.of(
-                            new StringBuilder("CharacterSequence"),
-                            "Text"
-                    ),
-                    TextNode.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_NODE
+                Lists.of(
+                    new StringBuilder("CharacterSequence"),
+                    "Text"
+                ),
+                TextNode.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_NODE
             );
 
             // text-to-textStyle............................................................................................
             finder.addIfConversionFail(
-                    style.text(),
-                    TextStyle.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE
+                style.text(),
+                TextStyle.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE
             );
 
             // text-to-text-style-property-name.............................................................................
             finder.addIfConversionFail(
-                    TextStylePropertyName.BACKGROUND_COLOR.text(),
-                    TextStylePropertyName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME
+                TextStylePropertyName.BACKGROUND_COLOR.text(),
+                TextStylePropertyName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME
             );
         }
 
         // text-to-url..................................................................................................
         Url url = Url.parse("https://example.com/123");
 
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    url.text(),
-                    String.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_URL
+                url.text(),
+                String.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_URL
             );
         }
 
         // text-to-validation-error.....................................................................................
-        if(validation) {
+        if (validation) {
             finder.addIfConversionFail(
-                    ValidationError.with(
-                            cell,
-                            "Error message 123"
-                    ).text(),
-                    ValidationError.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR
+                ValidationError.with(
+                    cell,
+                    "Error message 123"
+                ).text(),
+                ValidationError.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR
             );
 
             // text-to-validation-selector..............................................................................
             finder.addIfConversionFail(
-                    ValidatorSelector.parse("test-validator").text(),
-                    ValidatorSelector.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATOR_SELECTOR
+                ValidatorSelector.parse("test-validator").text(),
+                ValidatorSelector.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATOR_SELECTOR
             );
         }
 
         // text-to-value-type...........................................................................................
-        if(validation) {
+        if (validation) {
             finder.addIfConversionFail(
-                    SpreadsheetValueType.TEXT.value(),
-                    ValidationValueTypeName.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_VALUE_TYPE
+                SpreadsheetValueType.TEXT.value(),
+                ValidationValueTypeName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_VALUE_TYPE
             );
         }
 
         // to-json......................................................................................................
         // TODO add to-json converter later
-        if(false) {
+        if (false) {
             finder.addIfConversionFail(
-                    "Hello",
-                    Lists.of(
-                            JsonNode.class,
-                            JsonArray.class,
-                            JsonBoolean.class,
-                            JsonNumber.class,
-                            JsonString.class,
-                            JsonObject.class
-                    ),
-                    SpreadsheetConvertersConverterProvider.TO_JSON
+                "Hello",
+                Lists.of(
+                    JsonNode.class,
+                    JsonArray.class,
+                    JsonBoolean.class,
+                    JsonNumber.class,
+                    JsonString.class,
+                    JsonObject.class
+                ),
+                SpreadsheetConvertersConverterProvider.TO_JSON
             );
         }
 
         // to-text-node.................................................................................................
-        if(formatting) {
+        if (formatting) {
             finder.addIfConversionFail(
-                    Lists.of(
-                            new StringBuilder("Text123"),
-                            "Text123",
-                            TextNode.text("Text123")
-                    ),
-                    TextNode.class,
-                    SpreadsheetConvertersConverterProvider.TO_TEXT_NODE
+                Lists.of(
+                    new StringBuilder("Text123"),
+                    "Text123",
+                    TextNode.text("Text123")
+                ),
+                TextNode.class,
+                SpreadsheetConvertersConverterProvider.TO_TEXT_NODE
             );
 
             // url-to-hyperlink.........................................................................................
             finder.addIfConversionFail(
-                    url.text(),
-                    Hyperlink.class,
-                    SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK
+                url.text(),
+                Hyperlink.class,
+                SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK
             );
 
             // url-to-image.............................................................................................
             finder.addIfConversionFail(
-                    url.text(),
-                    Image.class,
-                    SpreadsheetConvertersConverterProvider.URL_TO_IMAGE
+                url.text(),
+                Image.class,
+                SpreadsheetConvertersConverterProvider.URL_TO_IMAGE
             );
         }
 
         return MissingConverterSet.with(
-                new TreeSet<>(
-                        finder.missing.values()
-                )
+            new TreeSet<>(
+                finder.missing.values()
+            )
         );
     }
 
@@ -691,11 +691,11 @@ final class MissingConverterVerifier {
                                      final List<Class<?>> types,
                                      final ConverterName name) {
         for (final Object value : values) {
-            for(final Class<?> type : types) {
+            for (final Class<?> type : types) {
                 this.addIfConversionFail(
-                        value,
-                        type,
-                        name
+                    value,
+                    type,
+                    name
                 );
             }
         }
@@ -706,9 +706,9 @@ final class MissingConverterVerifier {
                                      final ConverterName name) {
         for (final Object value : values) {
             this.addIfConversionFail(
-                    value,
-                    type,
-                    name
+                value,
+                type,
+                name
             );
         }
     }
@@ -718,9 +718,9 @@ final class MissingConverterVerifier {
                                      final ConverterName name) {
         for (final Class<?> type : types) {
             this.addIfConversionFail(
-                    value,
-                    type,
-                    name
+                value,
+                type,
+                name
             );
         }
         ;
@@ -730,10 +730,10 @@ final class MissingConverterVerifier {
                                      final Class<?> type,
                                      final ConverterName name) {
         this.addIfConversionFail(
-                value,
-                type,
-                name,
-                false // expectedSpreadsheetErrorException
+            value,
+            type,
+            name,
+            false // expectedSpreadsheetErrorException
         );
     }
 
@@ -744,9 +744,9 @@ final class MissingConverterVerifier {
         boolean failed = false;
         try {
             failed = this.converter.convert(
-                    value,
-                    type,
-                    this.context
+                value,
+                type,
+                this.context
             ).isRight();
         } catch (final UnsupportedOperationException rethrow) {
             throw rethrow;
@@ -759,9 +759,9 @@ final class MissingConverterVerifier {
 
         if (failed) {
             this.add(
-                    value,
-                    type,
-                    name
+                value,
+                type,
+                name
             );
         }
     }
@@ -770,20 +770,20 @@ final class MissingConverterVerifier {
                      final Class<?> type,
                      final ConverterName name) {
         final MissingConverterValue missingConverterValue = MissingConverterValue.with(
-                value,
-                type.getName()
+            value,
+            type.getName()
         );
 
         final MissingConverter missingConverter = this.missing.get(name);
 
         this.missing.put(
-                name,
-                null == missingConverter ?
-                        MissingConverter.with(
-                                name,
-                                Sets.of(missingConverterValue)
-                        ) :
-                        missingConverter.add(missingConverterValue)
+            name,
+            null == missingConverter ?
+                MissingConverter.with(
+                    name,
+                    Sets.of(missingConverterValue)
+                ) :
+                missingConverter.add(missingConverterValue)
         );
     }
 

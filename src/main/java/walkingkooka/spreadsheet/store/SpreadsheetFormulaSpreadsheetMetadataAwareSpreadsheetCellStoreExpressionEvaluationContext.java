@@ -48,19 +48,19 @@ import java.util.function.Function;
  * convert {@link SpreadsheetFormulaParserToken} to an {@link Expression}.
  */
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext,
-        DateTimeContextDelegator,
-        DecimalNumberContextDelegator,
-        LocaleContextDelegator {
+    DateTimeContextDelegator,
+    DecimalNumberContextDelegator,
+    LocaleContextDelegator {
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetCell cell,
                                                                                                           final SpreadsheetMetadata metadata,
                                                                                                           final HasNow now,
                                                                                                           final LocaleContext localeContext) {
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(
-                cell,
-                metadata,
-                now,
-                localeContext
+            cell,
+            metadata,
+            now,
+            localeContext
         );
     }
 
@@ -138,11 +138,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     @Override
     public DateTimeContext dateTimeContext() {
-        if(null == this.dateTimeContext) {
+        if (null == this.dateTimeContext) {
             this.dateTimeContext = this.metadata.dateTimeContext(
-                    Optional.of(this.cell),
-                    this.now,
-                    this.localeContext
+                Optional.of(this.cell),
+                this.now,
+                this.localeContext
             );
         }
         return this.dateTimeContext;
@@ -158,10 +158,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        if(null == this.decimalNumberContext) {
+        if (null == this.decimalNumberContext) {
             this.decimalNumberContext = this.metadata.decimalNumberContext(
-                    Optional.of(this.cell),
-                    this.localeContext
+                Optional.of(this.cell),
+                this.localeContext
             );
         }
         return this.decimalNumberContext;

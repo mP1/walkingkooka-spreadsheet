@@ -50,8 +50,8 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -76,44 +76,44 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     @Override
     public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
         return SpreadsheetComparatorInfoSet.with(
-                NAME_TO_COMPARATOR.keySet()
-                        .stream()
-                        .map(n -> SpreadsheetComparatorInfo.with(
-                                        SpreadsheetComparatorProviders.BASE_URL.appendPath(
-                                                UrlPath.parse(
-                                                        n.value()
-                                                )
-                                        ),
-                                        n
-                                )
-                        ).collect(Collectors.toCollection(SortedSets::tree))
+            NAME_TO_COMPARATOR.keySet()
+                .stream()
+                .map(n -> SpreadsheetComparatorInfo.with(
+                        SpreadsheetComparatorProviders.BASE_URL.appendPath(
+                            UrlPath.parse(
+                                n.value()
+                            )
+                        ),
+                        n
+                    )
+                ).collect(Collectors.toCollection(SortedSets::tree))
         );
     }
 
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(
-            Lists.of(
-                            SpreadsheetComparators.date(),
-                            SpreadsheetComparators.dateTime(),
-                            SpreadsheetComparators.dayOfMonth(),
-                            SpreadsheetComparators.dayOfWeek(),
-                            SpreadsheetComparators.hourOfAmPm(),
-                            SpreadsheetComparators.hourOfDay(),
-                            SpreadsheetComparators.minuteOfHour(),
-                            SpreadsheetComparators.monthOfYear(),
-                            SpreadsheetComparators.nanoOfSecond(),
-                            SpreadsheetComparators.number(),
-                            SpreadsheetComparators.secondsOfMinute(),
-                            SpreadsheetComparators.text(),
-                            SpreadsheetComparators.textCaseInsensitive(),
-                            SpreadsheetComparators.time(),
-                            SpreadsheetComparators.year()
-                    ).stream()
-                    .collect(
-                            Collectors.toMap(
-                                    HasName::name,
-                                    n -> n
-                            )
-                    )
+        Lists.of(
+                SpreadsheetComparators.date(),
+                SpreadsheetComparators.dateTime(),
+                SpreadsheetComparators.dayOfMonth(),
+                SpreadsheetComparators.dayOfWeek(),
+                SpreadsheetComparators.hourOfAmPm(),
+                SpreadsheetComparators.hourOfDay(),
+                SpreadsheetComparators.minuteOfHour(),
+                SpreadsheetComparators.monthOfYear(),
+                SpreadsheetComparators.nanoOfSecond(),
+                SpreadsheetComparators.number(),
+                SpreadsheetComparators.secondsOfMinute(),
+                SpreadsheetComparators.text(),
+                SpreadsheetComparators.textCaseInsensitive(),
+                SpreadsheetComparators.time(),
+                SpreadsheetComparators.year()
+            ).stream()
+            .collect(
+                Collectors.toMap(
+                    HasName::name,
+                    n -> n
+                )
+            )
     );
 
     @Override

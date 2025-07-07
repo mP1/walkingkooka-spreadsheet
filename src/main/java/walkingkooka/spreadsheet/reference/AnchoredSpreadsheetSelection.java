@@ -34,7 +34,7 @@ import java.util.Objects;
  * Holds a {@link SpreadsheetSelection} and {@link SpreadsheetViewportAnchor}.
  */
 public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
-        TreePrintable {
+    TreePrintable {
 
     public static AnchoredSpreadsheetSelection with(final SpreadsheetSelection selection,
                                                     final SpreadsheetViewportAnchor anchor) {
@@ -42,8 +42,8 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
         selection.checkAnchor(anchor);
 
         return new AnchoredSpreadsheetSelection(
-                selection,
-                anchor
+            selection,
+            anchor
         );
     }
 
@@ -66,13 +66,13 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
 
         final SpreadsheetSelection old = this.selection;
         return old.equals(selection) ?
-                this :
-                new AnchoredSpreadsheetSelection(
-                        selection,
-                        selection.getClass() == old.getClass() ?
-                                this.anchor :
-                                selection.defaultAnchor()
-                );
+            this :
+            new AnchoredSpreadsheetSelection(
+                selection,
+                selection.getClass() == old.getClass() ?
+                    this.anchor :
+                    selection.defaultAnchor()
+            );
     }
 
     private final SpreadsheetSelection selection;
@@ -103,13 +103,13 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
     @Override
     public UrlFragment urlFragment() {
         final UrlFragment selection = this.selection()
-                .urlFragment();
+            .urlFragment();
         final SpreadsheetViewportAnchor anchor = this.anchor();
 
         return SpreadsheetViewportAnchor.NONE != anchor ?
-                selection.append(UrlFragment.SLASH)
-                        .append(anchor.urlFragment()) :
-                selection;
+            selection.append(UrlFragment.SLASH)
+                .append(anchor.urlFragment()) :
+            selection;
     }
 
     // Object..........................................................................................................
@@ -117,19 +117,19 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.selection,
-                this.anchor
+            this.selection,
+            this.anchor
         );
     }
 
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof AnchoredSpreadsheetSelection && this.equals0((AnchoredSpreadsheetSelection) other);
+            other instanceof AnchoredSpreadsheetSelection && this.equals0((AnchoredSpreadsheetSelection) other);
     }
 
     private boolean equals0(final AnchoredSpreadsheetSelection other) {
         return this.selection.equals(other.selection) &&
-                this.anchor == other.anchor;
+            this.anchor == other.anchor;
     }
 
     @Override
@@ -138,18 +138,18 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
         final SpreadsheetViewportAnchor anchor = this.anchor;
 
         return SpreadsheetViewportAnchor.NONE == anchor ?
-                selection.toStringMaybeStar() :
-                selection.toStringMaybeStar() + " " + anchor;
+            selection.toStringMaybeStar() :
+            selection.toStringMaybeStar() + " " + anchor;
     }
 
     // Json.............................................................................................................
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(AnchoredSpreadsheetSelection.class),
-                AnchoredSpreadsheetSelection::unmarshall,
-                AnchoredSpreadsheetSelection::marshall,
-                AnchoredSpreadsheetSelection.class
+            JsonNodeContext.computeTypeName(AnchoredSpreadsheetSelection.class),
+            AnchoredSpreadsheetSelection::unmarshall,
+            AnchoredSpreadsheetSelection::marshall,
+            AnchoredSpreadsheetSelection.class
         );
     }
 
@@ -169,7 +169,7 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
                     break;
                 case ANCHOR_PROPERTY_STRING:
                     anchor = SpreadsheetViewportAnchor.valueOf(
-                            child.stringOrFail()
+                        child.stringOrFail()
                     );
                     break;
                 default:
@@ -179,8 +179,8 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
         }
 
         return new AnchoredSpreadsheetSelection(
-                selection,
-                anchor
+            selection,
+            anchor
         );
     }
 
@@ -189,13 +189,13 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object()
-                .set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
+            .set(SELECTION_PROPERTY, context.marshallWithType(this.selection));
 
         final SpreadsheetViewportAnchor anchor = this.anchor();
         if (SpreadsheetViewportAnchor.NONE != anchor) {
             object = object.set(
-                    ANCHOR_PROPERTY,
-                    JsonNode.string(anchor.toString())
+                ANCHOR_PROPERTY,
+                JsonNode.string(anchor.toString())
             );
         }
 

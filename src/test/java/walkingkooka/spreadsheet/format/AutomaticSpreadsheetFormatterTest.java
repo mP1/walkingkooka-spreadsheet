@@ -33,12 +33,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<AutomaticSpreadsheetFormatter>,
-        ToStringTesting<AutomaticSpreadsheetFormatter> {
+    ToStringTesting<AutomaticSpreadsheetFormatter> {
 
     private final static LocalDate DATE = LocalDate.of(1999, 12, 31);
 
     private final static Optional<TextNode> DATE_FORMATTED = Optional.of(
-            TextNode.text("date-formatted " + DATE)
+        TextNode.text("date-formatted " + DATE)
     );
 
     private final SpreadsheetFormatter DATE_FORMATTER = new FakeSpreadsheetFormatter() {
@@ -46,9 +46,9 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             checkEquals(
-                    DATE,
-                    value.orElse(null),
-                    "value"
+                DATE,
+                value.orElse(null),
+                "value"
             );
             return DATE_FORMATTED;
         }
@@ -57,7 +57,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     private final static LocalDateTime DATE_TIME = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
     private final static Optional<TextNode> DATE_TIME_FORMATTED = Optional.of(
-            TextNode.text("date-time-formatted " + DATE_TIME)
+        TextNode.text("date-time-formatted " + DATE_TIME)
     );
 
     private final SpreadsheetFormatter DATE_TIME_FORMATTER = new FakeSpreadsheetFormatter() {
@@ -65,9 +65,9 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             checkEquals(
-                    DATE_TIME,
-                    value.orElse(null),
-                    "value"
+                DATE_TIME,
+                value.orElse(null),
+                "value"
             );
             return DATE_TIME_FORMATTED;
         }
@@ -78,10 +78,10 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             return Optional.of(
-                    TextNode.text(
-                            "number-formatted " +
-                                    value.orElse("")
-                    )
+                TextNode.text(
+                    "number-formatted " +
+                        value.orElse("")
+                )
             );
         }
     };
@@ -89,7 +89,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     private final static String TEXT = "*text*";
 
     private final static Optional<TextNode> TEXT_FORMATTED = Optional.of(
-            TextNode.text("string-formatted " + TEXT)
+        TextNode.text("string-formatted " + TEXT)
     );
 
     private final SpreadsheetFormatter TEXT_FORMATTER = new FakeSpreadsheetFormatter() {
@@ -103,7 +103,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     private final static LocalTime TIME = LocalTime.of(12, 58, 59);
 
     private final static Optional<TextNode> TIME_FORMATTED = Optional.of(
-            TextNode.text("time-formatted " + TIME)
+        TextNode.text("time-formatted " + TIME)
     );
 
     private final SpreadsheetFormatter TIME_FORMATTER = new FakeSpreadsheetFormatter() {
@@ -111,9 +111,9 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             checkEquals(
-                    TIME,
-                    value.orElse(null),
-                    "value"
+                TIME,
+                value.orElse(null),
+                "value"
             );
             return TIME_FORMATTED;
         }
@@ -122,25 +122,25 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     @Override
     public AutomaticSpreadsheetFormatter createFormatter() {
         return AutomaticSpreadsheetFormatter.with(
-                DATE_FORMATTER,
-                DATE_TIME_FORMATTER,
-                NUMBER_FORMATTER,
-                TEXT_FORMATTER,
-                TIME_FORMATTER
+            DATE_FORMATTER,
+            DATE_TIME_FORMATTER,
+            NUMBER_FORMATTER,
+            TEXT_FORMATTER,
+            TIME_FORMATTER
         );
     }
 
     @Test
     public void testWithNullDateFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> AutomaticSpreadsheetFormatter.with(
-                        null,
-                        DATE_TIME_FORMATTER,
-                        NUMBER_FORMATTER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER
-                )
+            NullPointerException.class,
+            () -> AutomaticSpreadsheetFormatter.with(
+                null,
+                DATE_TIME_FORMATTER,
+                NUMBER_FORMATTER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER
+            )
         );
     }
 
@@ -152,56 +152,56 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     @Test
     public void testWithNullDateTimeFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> AutomaticSpreadsheetFormatter.with(
-                        DATE_FORMATTER,
-                        null,
-                        NUMBER_FORMATTER,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER
-                )
+            NullPointerException.class,
+            () -> AutomaticSpreadsheetFormatter.with(
+                DATE_FORMATTER,
+                null,
+                NUMBER_FORMATTER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER
+            )
         );
     }
 
     @Test
     public void testWithNullNumberFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> AutomaticSpreadsheetFormatter.with(
-                        DATE_FORMATTER,
-                        DATE_TIME_FORMATTER,
-                        null,
-                        TEXT_FORMATTER,
-                        TIME_FORMATTER
-                )
+            NullPointerException.class,
+            () -> AutomaticSpreadsheetFormatter.with(
+                DATE_FORMATTER,
+                DATE_TIME_FORMATTER,
+                null,
+                TEXT_FORMATTER,
+                TIME_FORMATTER
+            )
         );
     }
 
     @Test
     public void testWithNullTextFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> AutomaticSpreadsheetFormatter.with(
-                        DATE_FORMATTER,
-                        DATE_TIME_FORMATTER,
-                        NUMBER_FORMATTER,
-                        null,
-                        TIME_FORMATTER
-                )
+            NullPointerException.class,
+            () -> AutomaticSpreadsheetFormatter.with(
+                DATE_FORMATTER,
+                DATE_TIME_FORMATTER,
+                NUMBER_FORMATTER,
+                null,
+                TIME_FORMATTER
+            )
         );
     }
 
     @Test
     public void testWithNullTimeFormatterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> AutomaticSpreadsheetFormatter.with(
-                        DATE_FORMATTER,
-                        DATE_TIME_FORMATTER,
-                        NUMBER_FORMATTER,
-                        TEXT_FORMATTER,
-                        null
-                )
+            NullPointerException.class,
+            () -> AutomaticSpreadsheetFormatter.with(
+                DATE_FORMATTER,
+                DATE_TIME_FORMATTER,
+                NUMBER_FORMATTER,
+                TEXT_FORMATTER,
+                null
+            )
         );
     }
 
@@ -210,85 +210,85 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     @Test
     public void testFormatByte() {
         this.formatNumberAndCheck(
-                (byte) 1
+            (byte) 1
         );
     }
 
     @Test
     public void testFormatShort() {
         this.formatNumberAndCheck(
-                (short) 1
+            (short) 1
         );
     }
 
     @Test
     public void testFormatInteger() {
         this.formatNumberAndCheck(
-                1
+            1
         );
     }
 
     @Test
     public void testFormatLong() {
         this.formatNumberAndCheck(
-                1L
+            1L
         );
     }
 
     @Test
     public void testFormatFloat() {
         this.formatNumberAndCheck(
-                1.5f
+            1.5f
         );
     }
 
     @Test
     public void testFormatDouble() {
         this.formatNumberAndCheck(
-                1.5
+            1.5
         );
     }
 
     @Test
     public void testFormatBigInteger() {
         this.formatNumberAndCheck(
-                BigInteger.valueOf(123)
+            BigInteger.valueOf(123)
         );
     }
 
     @Test
     public void testFormatBigDecimal() {
         this.formatNumberAndCheck(
-                BigDecimal.valueOf(123.5)
+            BigDecimal.valueOf(123.5)
         );
     }
 
     @Test
     public void testFormatExpressionNumber() {
         this.formatNumberAndCheck(
-                ExpressionNumberKind.DEFAULT.create(123)
+            ExpressionNumberKind.DEFAULT.create(123)
         );
     }
 
     private void formatNumberAndCheck(final Number number) {
         this.formatAndCheck(
-                number,
-                TextNode.text("number-formatted " + number)
+            number,
+            TextNode.text("number-formatted " + number)
         );
     }
 
     @Test
     public void testFormatNull() {
         this.formatAndCheck(
-                Optional.empty(),
-                TEXT_FORMATTED
+            Optional.empty(),
+            TEXT_FORMATTED
         );
     }
 
     @Test
     public void testFormatBoolean() {
         this.formatTextAndCheck(
-                true
+            true
         );
     }
 
@@ -310,66 +310,66 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     @Test
     public void testFormatCellRange() {
         this.formatTextAndCheck(
-                SpreadsheetSelection.parseCellRange("A1:B2")
+            SpreadsheetSelection.parseCellRange("A1:B2")
         );
     }
 
     @Test
     public void testFormatColumn() {
         this.formatTextAndCheck(
-                SpreadsheetSelection.parseColumn("B")
+            SpreadsheetSelection.parseColumn("B")
         );
     }
 
     @Test
     public void testFormatColumnRange() {
         this.formatTextAndCheck(
-                SpreadsheetSelection.parseColumnRange("B:C")
+            SpreadsheetSelection.parseColumnRange("B:C")
         );
     }
 
     @Test
     public void testFormatRow() {
         this.formatTextAndCheck(
-                SpreadsheetSelection.parseRow("23")
+            SpreadsheetSelection.parseRow("23")
         );
     }
 
     @Test
     public void testFormatRowRange() {
         this.formatTextAndCheck(
-                SpreadsheetSelection.parseRowRange("23:45")
+            SpreadsheetSelection.parseRowRange("23:45")
         );
     }
 
     private void formatTextAndCheck(final Object value) {
         this.formatAndCheck(
-                value,
-                TEXT_FORMATTED
+            value,
+            TEXT_FORMATTED
         );
     }
 
     @Test
     public void testFormatDate() {
         this.formatAndCheck(
-                DATE,
-                DATE_FORMATTED
+            DATE,
+            DATE_FORMATTED
         );
     }
 
     @Test
     public void testFormatDateTime() {
         this.formatAndCheck(
-                DATE_TIME,
-                DATE_TIME_FORMATTED
+            DATE_TIME,
+            DATE_TIME_FORMATTED
         );
     }
 
     @Test
     public void testFormatTime() {
         this.formatAndCheck(
-                TIME,
-                TIME_FORMATTED
+            TIME,
+            TIME_FORMATTED
         );
     }
 

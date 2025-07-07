@@ -25,29 +25,29 @@ import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTesting<EmptySpreadsheetExporter>,
-        ToStringTesting<EmptySpreadsheetExporter> {
+    ToStringTesting<EmptySpreadsheetExporter> {
 
     @Test
     public void testCanExportFalse() {
         this.canExportAndCheck(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.ALL_CELLS,
-                        Sets.empty()
-                ),
-                SpreadsheetCellValueKind.CELL,
-                false
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.empty()
+            ),
+            SpreadsheetCellValueKind.CELL,
+            false
         );
     }
 
     @Test
     public void testExportFails() {
         this.exportFails(
-                SpreadsheetCellRange.with(
-                        SpreadsheetSelection.parseCellRange("A1:B2"),
-                        Sets.empty()
-                ),
-                SpreadsheetCellValueKind.CELL,
-                new IllegalArgumentException("Cannot export A1:B2")
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                Sets.empty()
+            ),
+            SpreadsheetCellValueKind.CELL,
+            new IllegalArgumentException("Cannot export A1:B2")
         );
     }
 
@@ -64,8 +64,8 @@ public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTe
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                EmptySpreadsheetExporter.INSTANCE,
-                "EmptySpreadsheetExporter"
+            EmptySpreadsheetExporter.INSTANCE,
+            "EmptySpreadsheetExporter"
         );
     }
 

@@ -29,8 +29,8 @@ public final class NegativeSpreadsheetFormulaParserToken extends ParentSpreadshe
     static NegativeSpreadsheetFormulaParserToken with(final List<ParserToken> value,
                                                       final String text) {
         return new NegativeSpreadsheetFormulaParserToken(
-                copyAndCheckTokens(value),
-                checkText(text)
+            copyAndCheckTokens(value),
+            checkText(text)
         );
     }
 
@@ -44,7 +44,7 @@ public final class NegativeSpreadsheetFormulaParserToken extends ParentSpreadshe
             throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
         }
         this.parameter = without.get(0)
-                .cast(SpreadsheetFormulaParserToken.class);
+            .cast(SpreadsheetFormulaParserToken.class);
     }
 
     public SpreadsheetFormulaParserToken parameter() {
@@ -58,9 +58,9 @@ public final class NegativeSpreadsheetFormulaParserToken extends ParentSpreadshe
     @Override
     public NegativeSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                NegativeSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            NegativeSpreadsheetFormulaParserToken::with
         );
     }
 

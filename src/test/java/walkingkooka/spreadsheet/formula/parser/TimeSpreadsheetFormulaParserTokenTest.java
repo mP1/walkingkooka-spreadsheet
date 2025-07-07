@@ -37,69 +37,69 @@ public final class TimeSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     @Test
     public void testToExpressionHourMinuteSecondsMilli() {
         this.toExpressionAndCheck2(
-                time(),
-                hour(),
-                colonTextLiteral(),
-                minute(),
-                colonTextLiteral(),
-                seconds(),
-                decimalSeparator(),
-                millisecond()
+            time(),
+            hour(),
+            colonTextLiteral(),
+            minute(),
+            colonTextLiteral(),
+            seconds(),
+            decimalSeparator(),
+            millisecond()
         );
     }
 
     @Test
     public void testToExpressionHourMinuteSeconds() {
         this.toExpressionAndCheck2(
-                LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, ParentSpreadsheetFormulaParserTokenTestCase.MINUTE, ParentSpreadsheetFormulaParserTokenTestCase.SECONDS),
-                hour(),
-                colonTextLiteral(),
-                minute(),
-                colonTextLiteral(),
-                seconds()
+            LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, ParentSpreadsheetFormulaParserTokenTestCase.MINUTE, ParentSpreadsheetFormulaParserTokenTestCase.SECONDS),
+            hour(),
+            colonTextLiteral(),
+            minute(),
+            colonTextLiteral(),
+            seconds()
         );
     }
 
     @Test
     public void testToExpressionHourMinute() {
         this.toExpressionAndCheck2(
-                LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, ParentSpreadsheetFormulaParserTokenTestCase.MINUTE, 0),
-                hour(),
-                colonTextLiteral(),
-                minute()
+            LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, ParentSpreadsheetFormulaParserTokenTestCase.MINUTE, 0),
+            hour(),
+            colonTextLiteral(),
+            minute()
         );
     }
 
     @Test
     public void testToExpressionHourMinutePm() {
         this.toExpressionAndCheck2(
-                LocalTime.of(23, ParentSpreadsheetFormulaParserTokenTestCase.MINUTE, 0),
-                SpreadsheetFormulaParserToken.hour(11, "11"),
-                colonTextLiteral(),
-                minute(),
-                SpreadsheetFormulaParserToken.amPm(12, "PM")
+            LocalTime.of(23, ParentSpreadsheetFormulaParserTokenTestCase.MINUTE, 0),
+            SpreadsheetFormulaParserToken.hour(11, "11"),
+            colonTextLiteral(),
+            minute(),
+            SpreadsheetFormulaParserToken.amPm(12, "PM")
         );
     }
 
     @Test
     public void testToExpressionHourSeconds() {
         this.toExpressionAndCheck2(
-                LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, 0, ParentSpreadsheetFormulaParserTokenTestCase.SECONDS),
-                hour(),
-                colonTextLiteral(),
-                seconds()
+            LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, 0, ParentSpreadsheetFormulaParserTokenTestCase.SECONDS),
+            hour(),
+            colonTextLiteral(),
+            seconds()
         );
     }
 
     @Test
     public void testToExpressionHourSecondsMillis() {
         this.toExpressionAndCheck2(
-                LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, 0, ParentSpreadsheetFormulaParserTokenTestCase.SECONDS, ParentSpreadsheetFormulaParserTokenTestCase.MILLISECOND),
-                hour(),
-                colonTextLiteral(),
-                seconds(),
-                decimalSeparator(),
-                millisecond()
+            LocalTime.of(ParentSpreadsheetFormulaParserTokenTestCase.HOUR, 0, ParentSpreadsheetFormulaParserTokenTestCase.SECONDS, ParentSpreadsheetFormulaParserTokenTestCase.MILLISECOND),
+            hour(),
+            colonTextLiteral(),
+            seconds(),
+            decimalSeparator(),
+            millisecond()
         );
     }
 
@@ -108,19 +108,19 @@ public final class TimeSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         final List<ParserToken> tokensList = Lists.of(tokens);
 
         final TimeSpreadsheetFormulaParserToken timeParserToken = TimeSpreadsheetFormulaParserToken.with(
-                tokensList,
-                ParserToken.text(tokensList)
+            tokensList,
+            ParserToken.text(tokensList)
         );
 
         this.checkEquals(
-                expected,
-                timeParserToken.toLocalTime(),
-                () -> "toLocalTime() " + timeParserToken
+            expected,
+            timeParserToken.toLocalTime(),
+            () -> "toLocalTime() " + timeParserToken
         );
 
         this.toExpressionAndCheck(
-                timeParserToken,
-                Expression.value(expected)
+            timeParserToken,
+            Expression.value(expected)
         );
     }
 
@@ -137,13 +137,13 @@ public final class TimeSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
     @Override
     List<ParserToken> tokens() {
         return Lists.of(
-                this.hour(),
-                this.colonTextLiteral(),
-                this.minute(),
-                this.colonTextLiteral(),
-                this.seconds(),
-                this.decimalSeparator(),
-                this.millisecond()
+            this.hour(),
+            this.colonTextLiteral(),
+            this.minute(),
+            this.colonTextLiteral(),
+            this.seconds(),
+            this.decimalSeparator(),
+            this.millisecond()
         );
     }
 
@@ -156,12 +156,12 @@ public final class TimeSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
         final String different = "" + ParentSpreadsheetFormulaParserTokenTestCase.SECONDS + ":" + ParentSpreadsheetFormulaParserTokenTestCase.MINUTE + ":" + ParentSpreadsheetFormulaParserTokenTestCase.HOUR;
 
         return this.createToken(
-                different,
-                seconds(),
-                colonTextLiteral(),
-                minute(),
-                colonTextLiteral(),
-                hour()
+            different,
+            seconds(),
+            colonTextLiteral(),
+            minute(),
+            colonTextLiteral(),
+            hour()
         );
     }
 

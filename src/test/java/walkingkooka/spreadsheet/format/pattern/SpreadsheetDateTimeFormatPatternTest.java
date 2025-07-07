@@ -53,7 +53,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
-        DateTimeSpreadsheetFormatParserToken> {
+    DateTimeSpreadsheetFormatParserToken> {
 
     @Test
     public void testWithCurrencyFails() {
@@ -134,11 +134,11 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Override
     ParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.dateTimeFormat()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(
-                        TextCursors.charSequence(text),
-                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
-                ).get();
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(
+                TextCursors.charSequence(text),
+                SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+            ).get();
     }
 
     // HasFormatter.....................................................................................................
@@ -146,243 +146,243 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Test
     public void testFormatterFormatYy() {
         this.formatAndCheck3(
-                "yy",
-                LocalDate.of(2000, 12, 31),
-                "00"
+            "yy",
+            LocalDate.of(2000, 12, 31),
+            "00"
         );
     }
 
     @Test
     public void testFormatterFormatYy2() {
         this.formatAndCheck3(
-                "yy",
-                LocalDate.of(1999, 12, 31),
-                "99"
+            "yy",
+            LocalDate.of(1999, 12, 31),
+            "99"
         );
     }
 
     @Test
     public void testFormatterFormatYyyy() {
         this.formatAndCheck3(
-                "yyyy",
-                LocalDate.of(2000, 12, 31),
-                "2000"
+            "yyyy",
+            LocalDate.of(2000, 12, 31),
+            "2000"
         );
     }
 
     @Test
     public void testFormatterFormatYyyy2() {
         this.formatAndCheck3(
-                "yyyy",
-                LocalDate.of(1999, 12, 31),
-                "1999"
+            "yyyy",
+            LocalDate.of(1999, 12, 31),
+            "1999"
         );
     }
 
     @Test
     public void testFormatterFormatM() {
         this.formatAndCheck3(
-                "m",
-                LocalDate.of(2000, 1, 31),
-                "1"
+            "m",
+            LocalDate.of(2000, 1, 31),
+            "1"
         );
     }
 
     @Test
     public void testFormatterFormatM2() {
         this.formatAndCheck3(
-                "m",
-                LocalDate.of(2000, 12, 31),
-                "12"
+            "m",
+            LocalDate.of(2000, 12, 31),
+            "12"
         );
     }
 
     @Test
     public void testFormatterFormatMm() {
         this.formatAndCheck3(
-                "mm",
-                LocalDate.of(2000, 1, 31),
-                "01"
+            "mm",
+            LocalDate.of(2000, 1, 31),
+            "01"
         );
     }
 
     @Test
     public void testFormatterFormatMm2() {
         this.formatAndCheck3(
-                "mm",
-                LocalDate.of(2000, 12, 31),
-                "12"
+            "mm",
+            LocalDate.of(2000, 12, 31),
+            "12"
         );
     }
 
     @Test
     public void testFormatterFormatMmm() {
         this.formatAndCheck3(
-                "mmm",
-                LocalDate.of(2000, 1, 31),
-                "Jan."
+            "mmm",
+            LocalDate.of(2000, 1, 31),
+            "Jan."
         );
     }
 
     @Test
     public void testFormatterFormatMmm2() {
         this.formatAndCheck3(
-                "mmm",
-                LocalDate.of(2000, 12, 31),
-                "Dec."
+            "mmm",
+            LocalDate.of(2000, 12, 31),
+            "Dec."
         );
     }
 
     @Test
     public void testFormatterFormatMmmm() {
         this.formatAndCheck3(
-                "mmmm",
-                LocalDate.of(2000, 1, 31),
-                "January"
+            "mmmm",
+            LocalDate.of(2000, 1, 31),
+            "January"
         );
     }
 
     @Test
     public void testFormatterFormatMmmm2() {
         this.formatAndCheck3(
-                "mmmm",
-                LocalDate.of(2000, 12, 31),
-                "December"
+            "mmmm",
+            LocalDate.of(2000, 12, 31),
+            "December"
         );
     }
 
     @Test
     public void testFormatterFormatMmmmm() {
         this.formatAndCheck3(
-                "mmmmm",
-                LocalDate.of(2000, 1, 31),
-                "J"
+            "mmmmm",
+            LocalDate.of(2000, 1, 31),
+            "J"
         );
     }
 
     @Test
     public void testFormatterFormatMmmmm2() {
         this.formatAndCheck3(
-                "mmmmm",
-                LocalDate.of(2000, 12, 31),
-                "D"
+            "mmmmm",
+            LocalDate.of(2000, 12, 31),
+            "D"
         );
     }
 
     @Test
     public void testFormatterFormatD() {
         this.formatAndCheck3(
-                "d",
-                LocalDate.of(2000, 12, 1),
-                "1"
+            "d",
+            LocalDate.of(2000, 12, 1),
+            "1"
         );
     }
 
     @Test
     public void testFormatterFormatD2() {
         this.formatAndCheck3(
-                "d",
-                LocalDate.of(2000, 12, 31),
-                "31"
+            "d",
+            LocalDate.of(2000, 12, 31),
+            "31"
         );
     }
 
     @Test
     public void testFormatterFormatDd() {
         this.formatAndCheck3(
-                "dd",
-                LocalDate.of(2000, 12, 1),
-                "01"
+            "dd",
+            LocalDate.of(2000, 12, 1),
+            "01"
         );
     }
 
     @Test
     public void testFormatterFormatDd2() {
         this.formatAndCheck3(
-                "dd",
-                LocalDate.of(2000, 12, 31),
-                "31"
+            "dd",
+            LocalDate.of(2000, 12, 31),
+            "31"
         );
     }
 
     @Test
     public void testFormatterFormatDdd() {
         this.formatAndCheck3(
-                "ddd",
-                LocalDate.of(2000, 12, 1),
-                "Fri."
+            "ddd",
+            LocalDate.of(2000, 12, 1),
+            "Fri."
         );
     }
 
     @Test
     public void testFormatterFormatDdd2() {
         this.formatAndCheck3(
-                "ddd",
-                LocalDate.of(2000, 12, 31),
-                "Sun."
+            "ddd",
+            LocalDate.of(2000, 12, 31),
+            "Sun."
         );
     }
 
     @Test
     public void testFormatterFormatDddd() {
         this.formatAndCheck3(
-                "dddd",
-                LocalDate.of(2000, 12, 1),
-                "Friday"
+            "dddd",
+            LocalDate.of(2000, 12, 1),
+            "Friday"
         );
     }
 
     @Test
     public void testFormatterFormatDddd2() {
         this.formatAndCheck3(
-                "dddd",
-                LocalDate.of(2000, 12, 31),
-                "Sunday"
+            "dddd",
+            LocalDate.of(2000, 12, 31),
+            "Sunday"
         );
     }
 
     @Test
     public void testFormatterFormatDdddd() {
         this.formatAndCheck3(
-                "ddddd",
-                LocalDate.of(2000, 12, 1),
-                "Friday"
+            "ddddd",
+            LocalDate.of(2000, 12, 1),
+            "Friday"
         );
     }
 
     @Test
     public void testFormatterFormatDdddd2() {
         this.formatAndCheck3(
-                "ddddd",
-                LocalDate.of(2000, 12, 31),
-                "Sunday"
+            "ddddd",
+            LocalDate.of(2000, 12, 31),
+            "Sunday"
         );
     }
 
     @Test
     public void testFormatterFormatYyyymmdd() {
         this.formatAndCheck3(
-                "yyyymmdd",
-                LocalDate.of(2000, 12, 31),
-                "20001231"
+            "yyyymmdd",
+            LocalDate.of(2000, 12, 31),
+            "20001231"
         );
     }
 
     @Test
     public void testFormatterFormatYyyymmdd2() {
         this.formatAndCheck3(
-                "yyyy,mm,dd",
-                LocalDate.of(2000, 12, 31),
-                "2000,12,31"
+            "yyyy,mm,dd",
+            LocalDate.of(2000, 12, 31),
+            "2000,12,31"
         );
     }
 
     @Test
     public void testFormatterFormatLiteral() {
         this.formatAndCheck3(
-                ",",
-                LocalDate.of(2000, 12, 31),
-                ","
+            ",",
+            LocalDate.of(2000, 12, 31),
+            ","
         );
     }
 
@@ -390,9 +390,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                                  final LocalDate date,
                                  final String expected) {
         this.formatAndCheck2(
-                pattern,
-                LocalDateTime.of(date, LocalTime.of(12, 58, 59)),
-                expected
+            pattern,
+            LocalDateTime.of(date, LocalTime.of(12, 58, 59)),
+            expected
         );
     }
 
@@ -400,315 +400,315 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Test
     public void testFormatterH1() {
         this.formatAndCheck4(
-                "h",
-                LocalTime.of(1, 58, 59),
-                "1"
+            "h",
+            LocalTime.of(1, 58, 59),
+            "1"
         );
     }
 
     @Test
     public void testFormatterH2() {
         this.formatAndCheck4(
-                "h",
-                LocalTime.of(12, 58, 59),
-                "12"
+            "h",
+            LocalTime.of(12, 58, 59),
+            "12"
         );
     }
 
     @Test
     public void testFormatterHh1() {
         this.formatAndCheck4(
-                "hh",
-                LocalTime.of(1, 58, 59),
-                "01"
+            "hh",
+            LocalTime.of(1, 58, 59),
+            "01"
         );
     }
 
     @Test
     public void testFormatterHh2() {
         this.formatAndCheck4(
-                "hh",
-                LocalTime.of(12, 58, 59),
-                "12"
+            "hh",
+            LocalTime.of(12, 58, 59),
+            "12"
         );
     }
 
     @Test
     public void testFormatterHhh() {
         this.formatAndCheck4(
-                "hhh",
-                LocalTime.of(12, 58, 59),
-                "12"
+            "hhh",
+            LocalTime.of(12, 58, 59),
+            "12"
         );
     }
 
     @Test
     public void testFormatterHM1() {
         this.formatAndCheck4(
-                "hm",
-                LocalTime.of(12, 1, 59),
-                "121"
+            "hm",
+            LocalTime.of(12, 1, 59),
+            "121"
         );
     }
 
     @Test
     public void testFormatterHM2() {
         this.formatAndCheck4(
-                "hm",
-                LocalTime.of(12, 58, 59),
-                "1258"
+            "hm",
+            LocalTime.of(12, 58, 59),
+            "1258"
         );
     }
 
     @Test
     public void testFormatterHMm1() {
         this.formatAndCheck4(
-                "hmm",
-                LocalTime.of(12, 1, 59),
-                "1201"
+            "hmm",
+            LocalTime.of(12, 1, 59),
+            "1201"
         );
     }
 
     @Test
     public void testFormatterHMm2() {
         this.formatAndCheck4(
-                "hmm",
-                LocalTime.of(12, 58, 59),
-                "1258"
+            "hmm",
+            LocalTime.of(12, 58, 59),
+            "1258"
         );
     }
 
     @Test
     public void testFormatterHMmm() {
         this.formatAndCheck4(
-                "hmmm",
-                LocalTime.of(12, 58, 59),
-                "1258"
+            "hmmm",
+            LocalTime.of(12, 58, 59),
+            "1258"
         );
     }
 
     @Test
     public void testFormatterHMmmap12() {
         this.formatAndCheck4(
-                "hmmma/p",
-                LocalTime.of(12, 58, 59),
-                "1258q"
+            "hmmma/p",
+            LocalTime.of(12, 58, 59),
+            "1258q"
         );
     }
 
     @Test
     public void testFormatterHMmmap23() {
         this.formatAndCheck4(
-                "hmmma/p",
-                LocalTime.of(23, 58, 59),
-                "1158r"
+            "hmmma/p",
+            LocalTime.of(23, 58, 59),
+            "1158r"
         );
     }
 
     @Test
     public void testFormatterHMmmAmpm12Lower() {
         this.formatAndCheck4(
-                "hmmmam/pm",
-                LocalTime.of(12, 58, 59),
-                "1258qam"
+            "hmmmam/pm",
+            LocalTime.of(12, 58, 59),
+            "1258qam"
         );
     }
 
     @Test
     public void testFormatterHMmmAmpm23Lower() {
         this.formatAndCheck4(
-                "hmmmam/pm",
-                LocalTime.of(23, 58, 59),
-                "1158rpm"
+            "hmmmam/pm",
+            LocalTime.of(23, 58, 59),
+            "1158rpm"
         );
     }
 
     @Test
     public void testFormatterHMmmAmpm12Upper() {
         this.formatAndCheck4(
-                "hmmmAM/PM",
-                LocalTime.of(12, 58, 59),
-                "1258QAM"
+            "hmmmAM/PM",
+            LocalTime.of(12, 58, 59),
+            "1258QAM"
         );
     }
 
     @Test
     public void testFormatterHMmmAmpm23Upper() {
         this.formatAndCheck4(
-                "hmmmAM/PM",
-                LocalTime.of(23, 58, 59),
-                "1158RPM"
+            "hmmmAM/PM",
+            LocalTime.of(23, 58, 59),
+            "1158RPM"
         );
     }
 
     @Test
     public void testFormatterS1() {
         this.formatAndCheck4(
-                "s",
-                LocalTime.of(12, 58, 1),
-                "1"
+            "s",
+            LocalTime.of(12, 58, 1),
+            "1"
         );
     }
 
     @Test
     public void testFormatterS2() {
         this.formatAndCheck4(
-                "s",
-                LocalTime.of(12, 58, 59),
-                "59"
+            "s",
+            LocalTime.of(12, 58, 59),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSs1() {
         this.formatAndCheck4(
-                "ss",
-                LocalTime.of(12, 58, 1),
-                "01"
+            "ss",
+            LocalTime.of(12, 58, 1),
+            "01"
         );
     }
 
     @Test
     public void testFormatterSs2() {
         this.formatAndCheck4(
-                "ss",
-                LocalTime.of(12, 58, 59),
-                "59"
+            "ss",
+            LocalTime.of(12, 58, 59),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSss() {
         this.formatAndCheck4(
-                "sss",
-                LocalTime.of(12, 58, 59),
-                "59"
+            "sss",
+            LocalTime.of(12, 58, 59),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSssDot() {
         this.formatAndCheck4(
-                "sss.",
-                LocalTime.of(12, 58, 59, 12345678),
-                "59"
+            "sss.",
+            LocalTime.of(12, 58, 59, 12345678),
+            "59"
         );
     }
 
     @Test
     public void testFormatterSssDotZero() {
         this.formatAndCheck4(
-                "sss.0",
-                LocalTime.of(12, 58, 59, 123456789),
-                "59d1"
+            "sss.0",
+            LocalTime.of(12, 58, 59, 123456789),
+            "59d1"
         );
     }
 
     @Test
     public void testFormatterSssDotZeroZero() {
         this.formatAndCheck4(
-                "sss.00",
-                LocalTime.of(12, 58, 59, 123456789),
-                "59d12"
+            "sss.00",
+            LocalTime.of(12, 58, 59, 123456789),
+            "59d12"
         );
     }
 
     @Test
     public void testFormatterSssDotZeroZero2() {
         this.formatAndCheck4(
-                "sss.00",
-                LocalTime.of(12, 58, 59),
-                "59d00"
+            "sss.00",
+            LocalTime.of(12, 58, 59),
+            "59d00"
         );
     }
 
     @Test
     public void testFormatterSssDotZeroZeroZero() {
         this.formatAndCheck4(
-                "sss.000",
-                LocalTime.of(12, 58, 59, 123456789),
-                "59d123"
+            "sss.000",
+            LocalTime.of(12, 58, 59, 123456789),
+            "59d123"
         );
     }
 
     @Test
     public void testFormatterFormatHhmmssDot0000() {
         this.formatAndCheck4(
-                "hhmmss.0000",
-                LocalTime.of(12, 58, 59, 123456789),
-                "125859d1235"
+            "hhmmss.0000",
+            LocalTime.of(12, 58, 59, 123456789),
+            "125859d1235"
         );
     }
 
     @Test
     public void testFormatterFormatASlashPLower() {
         this.formatAndCheck4(
-                "a/p",
-                LocalTime.of(12, 58, 59, 123456789),
-                "q"
+            "a/p",
+            LocalTime.of(12, 58, 59, 123456789),
+            "q"
         );
     }
 
     @Test
     public void testFormatterFormatASlashPLowerPM() {
         this.formatAndCheck4(
-                "a/p",
-                LocalTime.of(23, 58, 59, 123456789),
-                "r"
+            "a/p",
+            LocalTime.of(23, 58, 59, 123456789),
+            "r"
         );
     }
 
     @Test
     public void testFormatterFormatAmpmLower() {
         this.formatAndCheck4(
-                "am/pm",
-                LocalTime.of(12, 58, 59, 123456789),
-                "qam"
+            "am/pm",
+            LocalTime.of(12, 58, 59, 123456789),
+            "qam"
         );
     }
 
     @Test
     public void testFormatterFormat12AMPM() {
         this.formatAndCheck4(
-                "AM/PM",
-                LocalTime.of(12, 58, 59, 123456789),
-                "QAM"
+            "AM/PM",
+            LocalTime.of(12, 58, 59, 123456789),
+            "QAM"
         );
     }
 
     @Test
     public void testFormatterFormat23ampm() {
         this.formatAndCheck4(
-                "am/pm",
-                LocalTime.of(23, 58, 59, 123456789),
-                "rpm"
+            "am/pm",
+            LocalTime.of(23, 58, 59, 123456789),
+            "rpm"
         );
     }
 
     @Test
     public void testFormatterFormat23AMPM() {
         this.formatAndCheck4(
-                "AM/PM",
-                LocalTime.of(23, 58, 59, 123456789),
-                "RPM"
+            "AM/PM",
+            LocalTime.of(23, 58, 59, 123456789),
+            "RPM"
         );
     }
 
     @Test
     public void testFormatterFormat12hmmap() {
         this.formatAndCheck4(
-                "hhmma/p",
-                LocalTime.of(12, 58, 59, 123456789),
-                "1258q"
+            "hhmma/p",
+            LocalTime.of(12, 58, 59, 123456789),
+            "1258q"
         );
     }
 
     @Test
     public void testFormatterFormat12hhmmAP() {
         this.formatAndCheck4(
-                "hhmmA/P",
-                LocalTime.of(12, 58, 59, 123456789),
-                "1258Q"
+            "hhmmA/P",
+            LocalTime.of(12, 58, 59, 123456789),
+            "1258Q"
         );
     }
 
@@ -716,111 +716,111 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                                  final LocalTime time,
                                  final String expected) {
         this.formatAndCheck2(
-                pattern,
-                LocalDateTime.of(LocalDate.of(2000, 12, 31), time),
-                expected
+            pattern,
+            LocalDateTime.of(LocalDate.of(2000, 12, 31), time),
+            expected
         );
     }
 
     @Test
     public void testFormatterYyyymmddhhmmss() {
         this.formatAndCheck2(
-                "yyyy,mm,dd,hh,mm,ss",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                "2000,12,31,12,58,59"
+            "yyyy,mm,dd,hh,mm,ss",
+            LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+            "2000,12,31,12,58,59"
         );
     }
 
     @Test
     public void testFormatterYyyymmddhhmmss000() {
         this.formatAndCheck2(
-                "yyyy,mm,dd,hh,mm,ss.000",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
-                "2000,12,31,12,58,59d123"
+            "yyyy,mm,dd,hh,mm,ss.000",
+            LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
+            "2000,12,31,12,58,59d123"
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorName() {
         this.formatAndCheck2(
-                "[red]yyyymmddhhmmss",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with("20001231125859")
-                        .setColor(
-                                Optional.of(RED)
-                        )
+            "[red]yyyymmddhhmmss",
+            LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+            SpreadsheetText.with("20001231125859")
+                .setColor(
+                    Optional.of(RED)
+                )
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorNumber() {
         this.formatAndCheck2(
-                "[color44]yyyymmddhhmmss",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with("20001231125859")
-                        .setColor(Optional.of(RED))
+            "[color44]yyyymmddhhmmss",
+            LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+            SpreadsheetText.with("20001231125859")
+                .setColor(Optional.of(RED))
         );
     }
 
     @Test
     public void testFormatterFormatIncludesColorNumberUsingArabicZeroDigit() {
         this.formatAndCheck2(
-                "[color44]yyyymmddhhmmss.000",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
-                ARABIC_ZERO_DIGIT,
-                SpreadsheetText.with(
-                        arabicDigit(2) +
-                                arabicDigit(0) +
-                                arabicDigit(0) +
-                                arabicDigit(0) +
-                                arabicDigit(1) +
-                                arabicDigit(2) +
-                                arabicDigit(3) +
-                                arabicDigit(1) +
-                                arabicDigit(1) +
-                                arabicDigit(2) +
-                                arabicDigit(5) +
-                                arabicDigit(8) +
-                                arabicDigit(5) +
-                                arabicDigit(9) +
-                                'd' + // decimal point
-                                arabicDigit(1) +
-                                arabicDigit(2) +
-                                arabicDigit(3)
-                ).setColor(Optional.of(RED))
+            "[color44]yyyymmddhhmmss.000",
+            LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
+            ARABIC_ZERO_DIGIT,
+            SpreadsheetText.with(
+                arabicDigit(2) +
+                    arabicDigit(0) +
+                    arabicDigit(0) +
+                    arabicDigit(0) +
+                    arabicDigit(1) +
+                    arabicDigit(2) +
+                    arabicDigit(3) +
+                    arabicDigit(1) +
+                    arabicDigit(1) +
+                    arabicDigit(2) +
+                    arabicDigit(5) +
+                    arabicDigit(8) +
+                    arabicDigit(5) +
+                    arabicDigit(9) +
+                    'd' + // decimal point
+                    arabicDigit(1) +
+                    arabicDigit(2) +
+                    arabicDigit(3)
+            ).setColor(Optional.of(RED))
         );
     }
 
     @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
-                "General",
-                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                "10956d540960648"
+            "General",
+            LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+            "10956d540960648"
         );
     }
 
     @Test
     public void testFormatterGeneralUsingArabicZeroDigi() {
         this.formatAndCheck2(
-                "General",
-                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                ARABIC_ZERO_DIGIT,
-                arabicDigit(1) +
-                        arabicDigit(0) +
-                        arabicDigit(9) +
-                        arabicDigit(5) +
-                        arabicDigit(6) +
-                        'd' + // decimalpoint
-                        arabicDigit(5) +
-                        arabicDigit(4) +
-                        arabicDigit(0) +
-                        arabicDigit(9) +
-                        arabicDigit(6) +
-                        arabicDigit(0) +
-                        arabicDigit(6) +
-                        arabicDigit(4) +
-                        arabicDigit(8) //"10956d540960648"
+            "General",
+            LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+            ARABIC_ZERO_DIGIT,
+            arabicDigit(1) +
+                arabicDigit(0) +
+                arabicDigit(9) +
+                arabicDigit(5) +
+                arabicDigit(6) +
+                'd' + // decimalpoint
+                arabicDigit(5) +
+                arabicDigit(4) +
+                arabicDigit(0) +
+                arabicDigit(9) +
+                arabicDigit(6) +
+                arabicDigit(0) +
+                arabicDigit(6) +
+                arabicDigit(4) +
+                arabicDigit(8) //"10956d540960648"
         );
     }
 
@@ -832,9 +832,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             public boolean canConvert(final Object value,
                                       final Class<?> target) {
                 return this.converter.canConvert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
@@ -842,19 +842,19 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return this.converter.convert(
-                        value,
-                        target,
-                        this
+                    value,
+                    target,
+                    this
                 );
             }
 
             private final Converter<FakeSpreadsheetFormatterContext> converter = Converters.collection(
-                    Lists.of(
-                            ExpressionNumberConverters.toNumberOrExpressionNumber(
-                                    Converters.localDateTimeToNumber()
-                            ),
-                            Converters.simple()
-                    )
+                Lists.of(
+                    ExpressionNumberConverters.toNumberOrExpressionNumber(
+                        Converters.localDateTimeToNumber()
+                    ),
+                    Converters.simple()
+                )
             );
 
             @Override
@@ -929,21 +929,21 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
 
             private DateTimeContext dateTimeContext() {
                 return DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
-                        ),
-                        Locale.forLanguageTag("EN-AU"),
-                        1900,
-                        20,
-                        LocalDateTime::now
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
+                    ),
+                    Locale.forLanguageTag("EN-AU"),
+                    1900,
+                    20,
+                    LocalDateTime::now
                 );
             }
 
             @Override
             public String ampm(final int hourOfDay) {
                 return hourOfDay < 13 ?
-                        "QAM" :
-                        "RPM";
+                    "QAM" :
+                    "RPM";
             }
 
             @Override
@@ -954,24 +954,24 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             @Override
             public Optional<Color> colorName(final SpreadsheetColorName name) {
                 checkEquals(
-                        SpreadsheetColorName.with("red"),
-                        name,
-                        "colorName"
+                    SpreadsheetColorName.with("red"),
+                    name,
+                    "colorName"
                 );
                 return Optional.of(
-                        RED
+                    RED
                 );
             }
 
             @Override
             public Optional<Color> colorNumber(final int number) {
                 checkEquals(
-                        44,
-                        number,
-                        "colorNumber"
+                    44,
+                    number,
+                    "colorNumber"
                 );
                 return Optional.of(
-                        RED
+                    RED
                 );
             }
         };
@@ -982,9 +982,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createPattern(),
-                "date-time-format-pattern\n" +
-                        "  \"dd/mm/yyyy hh:mm:ss.000 A/P \\\"text-literal\\\" \\\\!\"\n"
+            this.createPattern(),
+            "date-time-format-pattern\n" +
+                "  \"dd/mm/yyyy hh:mm:ss.000 A/P \\\"text-literal\\\" \\\\!\"\n"
         );
     }
 
@@ -995,8 +995,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
 
         this.patternsAndCheck2(
-                pattern,
-                pattern
+            pattern,
+            pattern
         );
     }
 
@@ -1005,8 +1005,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[red]hh:mm:ss");
 
         this.patternsAndCheck(
-                pattern,
-                "[red]hh:mm:ss"
+            pattern,
+            "[red]hh:mm:ss"
         );
     }
 
@@ -1017,8 +1017,8 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy hh:mm:ss");
 
         this.removeColorAndCheck(
-                pattern,
-                this.createPattern("dd/mm/yyyy hh:mm:ss")
+            pattern,
+            this.createPattern("dd/mm/yyyy hh:mm:ss")
         );
     }
 
@@ -1029,9 +1029,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
 
         this.setColorNameAndCheck(
-                pattern,
-                SpreadsheetColorName.RED,
-                "[Red]dd/mm/yyyy hh:mm:ss"
+            pattern,
+            SpreadsheetColorName.RED,
+            "[Red]dd/mm/yyyy hh:mm:ss"
         );
     }
 
@@ -1040,9 +1040,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy hh:mm:ss");
 
         this.setColorNameAndCheck(
-                pattern,
-                SpreadsheetColorName.RED,
-                "[Red]dd/mm/yyyy hh:mm:ss"
+            pattern,
+            SpreadsheetColorName.RED,
+            "[Red]dd/mm/yyyy hh:mm:ss"
         );
     }
 
@@ -1053,9 +1053,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
 
         this.setColorNumberAndCheck(
-                pattern,
-                12,
-                "[color 12]dd/mm/yyyy hh:mm:ss"
+            pattern,
+            12,
+            "[color 12]dd/mm/yyyy hh:mm:ss"
         );
     }
 
@@ -1064,9 +1064,9 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[green]dd/mm/yyyy hh:mm:ss");
 
         this.setColorNumberAndCheck(
-                pattern,
-                12,
-                "[color 12]dd/mm/yyyy hh:mm:ss"
+            pattern,
+            12,
+            "[color 12]dd/mm/yyyy hh:mm:ss"
         );
     }
 
@@ -1077,7 +1077,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("dd/mm/yyyy hh:mm:ss");
 
         this.removeConditionAndCheck(
-                pattern
+            pattern
         );
     }
 

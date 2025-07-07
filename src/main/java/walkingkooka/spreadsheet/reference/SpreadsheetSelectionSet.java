@@ -38,9 +38,9 @@ import java.util.TreeSet;
  * A {@link Set} or {@link SpreadsheetCellReference}.
  */
 abstract class SpreadsheetSelectionSet<E extends SpreadsheetSelection, S extends SpreadsheetSelectionSet<E, S>> extends AbstractSet<E>
-        implements ImmutableSortedSetDefaults<S, E>,
-        HasText,
-        TreePrintable {
+    implements ImmutableSortedSetDefaults<S, E>,
+    HasText,
+    TreePrintable {
 
     /**
      * The comma which separates the CSV text representation.
@@ -68,7 +68,7 @@ abstract class SpreadsheetSelectionSet<E extends SpreadsheetSelection, S extends
     @Override
     public final Comparator<E> comparator() {
         return Cast.to(
-                SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
+            SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
         ); // no comparator
     }
 
@@ -76,24 +76,24 @@ abstract class SpreadsheetSelectionSet<E extends SpreadsheetSelection, S extends
     public final S subSet(final E from,
                           final E to) {
         return this.createWithCopy(
-                this.references.subSet(
-                        from,
-                        to
-                )
+            this.references.subSet(
+                from,
+                to
+            )
         );
     }
 
     @Override
     public final S headSet(final E reference) {
         return this.createWithCopy(
-                this.references.headSet(reference)
+            this.references.headSet(reference)
         );
     }
 
     @Override
     public final S tailSet(final E reference) {
         return this.createWithCopy(
-                this.references.tailSet(reference)
+            this.references.tailSet(reference)
         );
     }
 
@@ -119,8 +119,8 @@ abstract class SpreadsheetSelectionSet<E extends SpreadsheetSelection, S extends
     @Override
     public final String text() {
         return SEPARATOR.toSeparatedString(
-                this.references,
-                HasText::text
+            this.references,
+            HasText::text
         );
     }
 
@@ -140,7 +140,7 @@ abstract class SpreadsheetSelectionSet<E extends SpreadsheetSelection, S extends
      */
     final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.text()
+            this.text()
         );
     }
 }

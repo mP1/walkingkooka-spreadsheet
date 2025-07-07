@@ -31,31 +31,31 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeSortListTest implements ListTesting,
-        ClassTesting<SpreadsheetCellRangeSortList>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeSortList> {
+    ClassTesting<SpreadsheetCellRangeSortList>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetCellRangeSortList> {
 
     @Test
     public void testWithColumnA() {
         final SpreadsheetColumnReference a = SpreadsheetSelection.parseColumn("A");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                a,
-                3
+            a,
+            3
         );
 
         this.checkEquals(
-                a,
-                list.columnOrRow,
-                "columnOrRow"
+            a,
+            list.columnOrRow,
+            "columnOrRow"
         );
 
         this.checkEquals(
-                Lists.of(
-                        null, null, null
-                ),
-                Lists.of(
-                        list.cells
-                )
+            Lists.of(
+                null, null, null
+            ),
+            Lists.of(
+                list.cells
+            )
         );
     }
 
@@ -64,23 +64,23 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         final SpreadsheetColumnReference b = SpreadsheetSelection.parseColumn("B");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                b,
-                3
+            b,
+            3
         );
 
         this.checkEquals(
-                b,
-                list.columnOrRow,
-                "columnOrRow"
+            b,
+            list.columnOrRow,
+            "columnOrRow"
         );
 
         this.checkEquals(
-                Lists.of(
-                        null, null, null
-                ),
-                Lists.of(
-                        list.cells
-                )
+            Lists.of(
+                null, null, null
+            ),
+            Lists.of(
+                list.cells
+            )
         );
     }
 
@@ -89,23 +89,23 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         final SpreadsheetRowReference row1 = SpreadsheetSelection.parseRow("1");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                row1,
-                4
+            row1,
+            4
         );
 
         this.checkEquals(
-                row1,
-                list.columnOrRow,
-                "columnOrRow"
+            row1,
+            list.columnOrRow,
+            "columnOrRow"
         );
 
         this.checkEquals(
-                Lists.of(
-                        null, null, null, null
-                ),
-                Lists.of(
-                        list.cells
-                )
+            Lists.of(
+                null, null, null, null
+            ),
+            Lists.of(
+                list.cells
+            )
         );
     }
 
@@ -114,40 +114,40 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                row2,
-                4
+            row2,
+            4
         );
 
         this.checkEquals(
-                row2,
-                list.columnOrRow,
-                "columnOrRow"
+            row2,
+            list.columnOrRow,
+            "columnOrRow"
         );
 
         this.checkEquals(
-                Lists.of(
-                        null, null, null, null
-                ),
-                Lists.of(
-                        list.cells
-                )
+            Lists.of(
+                null, null, null, null
+            ),
+            Lists.of(
+                list.cells
+            )
         );
     }
 
     @Test
     public void testSize() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseRow("2"),
-                4
+            SpreadsheetSelection.parseRow("2"),
+            4
         );
 
         this.sizeAndCheck(
-                list,
-                4
+            list,
+            4
         );
         this.isEmptyAndCheck(
-                list,
-                false
+            list,
+            false
         );
     }
 
@@ -155,13 +155,13 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     public void testGet() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
 
         list.cells[0] = a1;
@@ -169,90 +169,90 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         list.cells[2] = a3;
 
         this.getAndCheck(
-                list,
-                0,
-                a1
+            list,
+            0,
+            a1
         );
         this.getAndCheck(
-                list,
-                1,
-                a2
+            list,
+            1,
+            a2
         );
         this.getAndCheck(
-                list,
-                2,
-                a3
+            list,
+            2,
+            a3
         );
     }
 
     @Test
     public void testSet() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
 
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         this.setAndGetCheck(
-                list,
-                2,
-                a3,
-                null // replaced nothing
+            list,
+            2,
+            a3,
+            null // replaced nothing
         );
 
         this.checkEquals(
-                Lists.of(
-                        null,
-                        null,
-                        a3
-                ),
-                list
+            Lists.of(
+                null,
+                null,
+                a3
+            ),
+            list
         );
     }
 
     @Test
     public void testSetNull() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
 
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         list.cells[2] = a3;
 
         this.setAndGetCheck(
-                list,
-                2,
-                null,
-                a3 // replaced nothing
+            list,
+            2,
+            null,
+            a3 // replaced nothing
         );
 
         this.checkEquals(
-                Lists.of(
-                        null,
-                        null,
-                        null
-                ),
-                list
+            Lists.of(
+                null,
+                null,
+                null
+            ),
+            list
         );
     }
 
     @Test
     public void testSetThatReplaced() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
 
         list.cells[0] = a1;
@@ -260,98 +260,98 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         list.cells[2] = a3;
 
         final SpreadsheetCell newA3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY.setText("'New"));
+            .setFormula(SpreadsheetFormula.EMPTY.setText("'New"));
 
         this.setAndGetCheck(
-                list,
-                2,
-                newA3,
-                a3
+            list,
+            2,
+            newA3,
+            a3
         );
 
         this.checkEquals(
-                Lists.of(
-                        a1,
-                        a2,
-                        newA3
-                ),
-                list
+            Lists.of(
+                a1,
+                a2,
+                newA3
+            ),
+            list
         );
     }
 
     @Test
     public void testAddFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> SpreadsheetCellRangeSortList.with(
-                        SpreadsheetSelection.parseColumn("A"),
-                        4
-                ).add(null)
+            UnsupportedOperationException.class,
+            () -> SpreadsheetCellRangeSortList.with(
+                SpreadsheetSelection.parseColumn("A"),
+                4
+            ).add(null)
         );
     }
 
     @Test
     public void testAddIndexFails() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> SpreadsheetCellRangeSortList.with(
-                        SpreadsheetSelection.parseColumn("A"),
-                        4
-                ).add(1, null)
+            UnsupportedOperationException.class,
+            () -> SpreadsheetCellRangeSortList.with(
+                SpreadsheetSelection.parseColumn("A"),
+                4
+            ).add(1, null)
         );
     }
 
     @Test
     public void testRemoveElementFails() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
 
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         list.cells[2] = a3;
 
         this.removeFails(
-                list,
-                a3
+            list,
+            a3
         );
 
         this.checkEquals(
-                Lists.of(
-                        null,
-                        null,
-                        a3
-                ),
-                list
+            Lists.of(
+                null,
+                null,
+                a3
+            ),
+            list
         );
     }
 
     @Test
     public void testRemoveIndexFails() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
 
         final SpreadsheetCell a3 = SpreadsheetSelection.parseCell("A3")
-                .setFormula(SpreadsheetFormula.EMPTY);
+            .setFormula(SpreadsheetFormula.EMPTY);
 
         list.cells[2] = a3;
 
         this.removeIndexFails(
-                list,
-                2
+            list,
+            2
         );
 
         this.checkEquals(
-                Lists.of(
-                        null,
-                        null,
-                        a3
-                ),
-                list
+            Lists.of(
+                null,
+                null,
+                a3
+            ),
+            list
         );
     }
 
@@ -360,40 +360,40 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testEqualsDifferentSize() {
         this.checkNotEquals(
-                SpreadsheetCellRangeSortList.with(
-                        SpreadsheetSelection.parseColumn("A"),
-                        4
-                )
+            SpreadsheetCellRangeSortList.with(
+                SpreadsheetSelection.parseColumn("A"),
+                4
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentElementsSameSize() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
         list.set(
-                0,
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("Different")
-                )
+            0,
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("Different")
+            )
         );
 
         final SpreadsheetCellRangeSortList other = SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
         other.set(
-                0,
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("Different2")
-                )
+            0,
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("Different2")
+            )
         );
 
         this.checkNotEquals(
-                list,
-                other
+            list,
+            other
         );
     }
 
@@ -401,8 +401,8 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Override
     public SpreadsheetCellRangeSortList createObject() {
         return SpreadsheetCellRangeSortList.with(
-                SpreadsheetSelection.parseColumn("A"),
-                3
+            SpreadsheetSelection.parseColumn("A"),
+            3
         );
     }
 

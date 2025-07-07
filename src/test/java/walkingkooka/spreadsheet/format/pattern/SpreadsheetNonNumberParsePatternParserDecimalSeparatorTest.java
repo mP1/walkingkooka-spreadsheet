@@ -37,9 +37,9 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
     @Test
     public void testParse() {
         this.parseAndCheck(
-                "d",
-                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("d", "d"),
-                "d"
+            "d",
+            SpreadsheetFormulaParserToken.decimalSeparatorSymbol("d", "d"),
+            "d"
         );
     }
 
@@ -47,10 +47,10 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
     public void testParseSingleCharacterOnly() {
         final String after = "123";
         this.parseAndCheck(
-                "d" + after,
-                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("d", "d"),
-                "d",
-                after
+            "d" + after,
+            SpreadsheetFormulaParserToken.decimalSeparatorSymbol("d", "d"),
+            "d",
+            after
         );
     }
 
@@ -61,11 +61,11 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
 
         final String s = "" + c;
         this.parseAndCheck(
-                this.createParser(),
-                context,
-                s,
-                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(s, s),
-                s
+            this.createParser(),
+            context,
+            s,
+            SpreadsheetFormulaParserToken.decimalSeparatorSymbol(s, s),
+            s
         );
     }
 

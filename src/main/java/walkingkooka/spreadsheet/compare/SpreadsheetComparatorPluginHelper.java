@@ -36,11 +36,11 @@ import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetComparatorPluginHelper implements PluginHelper<SpreadsheetComparatorName,
-        SpreadsheetComparatorInfo,
-        SpreadsheetComparatorInfoSet,
-        SpreadsheetComparatorSelector,
-        SpreadsheetComparatorAlias,
-        SpreadsheetComparatorAliasSet> {
+    SpreadsheetComparatorInfo,
+    SpreadsheetComparatorInfoSet,
+    SpreadsheetComparatorSelector,
+    SpreadsheetComparatorAlias,
+    SpreadsheetComparatorAliasSet> {
 
     final static SpreadsheetComparatorPluginHelper INSTANCE = new SpreadsheetComparatorPluginHelper();
 
@@ -59,24 +59,24 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
         Objects.requireNonNull(context, "context");
 
         return Parsers.initialAndPartCharPredicateString(
-                c -> SpreadsheetComparatorName.isChar(0, c),
-                c -> SpreadsheetComparatorName.isChar(1, c),
-                SpreadsheetComparatorName.MIN_LENGTH, // minLength
-                SpreadsheetComparatorName.MAX_LENGTH // maxLength
+            c -> SpreadsheetComparatorName.isChar(0, c),
+            c -> SpreadsheetComparatorName.isChar(1, c),
+            SpreadsheetComparatorName.MIN_LENGTH, // minLength
+            SpreadsheetComparatorName.MAX_LENGTH // maxLength
         ).parse(
-                cursor,
-                context
+            cursor,
+            context
         ).map(
-                (final ParserToken token) -> this.name(
-                        token.cast(StringParserToken.class).value()
-                )
+            (final ParserToken token) -> this.name(
+                token.cast(StringParserToken.class).value()
+            )
         );
     }
 
     @Override
     public Set<SpreadsheetComparatorName> names(final Set<SpreadsheetComparatorName> names) {
         return Sets.immutable(
-                Objects.requireNonNull(names, "names")
+            Objects.requireNonNull(names, "names")
         );
     }
 
@@ -116,9 +116,9 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
                                             final Optional<SpreadsheetComparatorSelector> selector,
                                             final Optional<AbsoluteUrl> url) {
         return SpreadsheetComparatorAlias.with(
-                name,
-                selector,
-                url
+            name,
+            selector,
+            url
         );
     }
 

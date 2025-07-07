@@ -40,21 +40,21 @@ public final class LessThanEqualsSpreadsheetFormulaParserTokenTest extends Condi
         final SpreadsheetFormulaParserToken right = this.number2();
 
         this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
-                SpreadsheetFormulaParserToken.lessThanEquals(
-                        Lists.of(
-                                left,
-                                symbol,
-                                right
-                        ),
-                        "1<=22"
+            SpreadsheetFormulaParserToken.lessThanEquals(
+                Lists.of(
+                    left,
+                    symbol,
+                    right
                 ),
-                SpreadsheetFormulaParserToken.conditionRightLessThanEquals(
-                        Lists.of(
-                                symbol,
-                                right
-                        ),
-                        "<=22"
-                )
+                "1<=22"
+            ),
+            SpreadsheetFormulaParserToken.conditionRightLessThanEquals(
+                Lists.of(
+                    symbol,
+                    right
+                ),
+                "<=22"
+            )
         );
     }
 
@@ -67,24 +67,24 @@ public final class LessThanEqualsSpreadsheetFormulaParserTokenTest extends Condi
         final SpreadsheetFormulaParserToken right = this.number2();
 
         this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
-                SpreadsheetFormulaParserToken.lessThanEquals(
-                        Lists.of(
-                                left,
-                                whitespace1,
-                                symbol,
-                                whitespace2,
-                                right
-                        ),
-                        "1  <=   22"
+            SpreadsheetFormulaParserToken.lessThanEquals(
+                Lists.of(
+                    left,
+                    whitespace1,
+                    symbol,
+                    whitespace2,
+                    right
                 ),
-                SpreadsheetFormulaParserToken.conditionRightLessThanEquals(
-                        Lists.of(
-                                symbol,
-                                whitespace2,
-                                right
-                        ),
-                        "<=   22"
-                )
+                "1  <=   22"
+            ),
+            SpreadsheetFormulaParserToken.conditionRightLessThanEquals(
+                Lists.of(
+                    symbol,
+                    whitespace2,
+                    right
+                ),
+                "<=   22"
+            )
         );
     }
 
@@ -165,12 +165,12 @@ public final class LessThanEqualsSpreadsheetFormulaParserTokenTest extends Condi
 
         this.checkEquals("81381562881728815628428", b.toString());
         this.checkEquals(Lists.of(binary, binary, binary,
-                        left, left, left, left, left, left,
-                        symbol, symbol, symbol, symbol, symbol,
-                        right, right, right, right, right, right,
-                        binary, binary, binary),
-                visited,
-                "visited");
+                left, left, left, left, left, left,
+                symbol, symbol, symbol, symbol, symbol,
+                right, right, right, right, right, right,
+                binary, binary, binary),
+            visited,
+            "visited");
     }
 
     @Override

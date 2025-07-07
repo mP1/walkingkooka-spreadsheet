@@ -25,24 +25,24 @@ public final class SpreadsheetNumberParsePatternComponentPercentTest extends Spr
     @Test
     public void testToken1() {
         this.parseAndCheck2(
-                PERCENT,
-                ""
+            PERCENT,
+            ""
         );
     }
 
     @Test
     public void testToken2() {
         this.parseAndCheck2(
-                PERCENT,
-                "!"
+            PERCENT,
+            "!"
         );
     }
 
     @Test
     public void testTokenTwice() {
         this.parseAndCheck2(
-                PERCENT,
-                PERCENT + "!"
+            PERCENT,
+            PERCENT + "!"
         );
     }
 
@@ -50,10 +50,10 @@ public final class SpreadsheetNumberParsePatternComponentPercentTest extends Spr
                         final String textAfter) {
         final String textString = "" + c;
         this.parseAndCheck2(
-                textString,
-                textAfter,
-                NEXT_CALLED,
-                SpreadsheetFormulaParserToken.percentSymbol(textString, textString)
+            textString,
+            textAfter,
+            NEXT_CALLED,
+            SpreadsheetFormulaParserToken.percentSymbol(textString, textString)
         );
     }
 

@@ -58,7 +58,7 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
      */
     default TextNode formatOrEmptyText(final Optional<Object> value) {
         return this.format(value)
-                .orElse(TextNode.EMPTY_TEXT);
+            .orElse(TextNode.EMPTY_TEXT);
     }
 
     /**

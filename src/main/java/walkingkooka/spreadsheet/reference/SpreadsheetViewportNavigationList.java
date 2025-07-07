@@ -64,8 +64,8 @@ import java.util.function.Supplier;
  * An {@link walkingkooka.collect.list.ImmutableList} holding zero or more {@link SpreadsheetViewportNavigation}.
  */
 public final class SpreadsheetViewportNavigationList extends AbstractList<SpreadsheetViewportNavigation>
-        implements ImmutableListDefaults<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
-        HasText {
+    implements ImmutableListDefaults<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
+    HasText {
 
     /**
      * Constant useful to separate navigations in a CSV.
@@ -76,7 +76,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      * Factory that creates a new {@link SpreadsheetViewportNavigationList} after taking a defensive copy.
      */
     public static final SpreadsheetViewportNavigationList EMPTY = new SpreadsheetViewportNavigationList(
-            new SpreadsheetViewportNavigation[0]
+        new SpreadsheetViewportNavigation[0]
     );
 
     private static SpreadsheetViewportNavigationList with(final List<SpreadsheetViewportNavigation> list) {
@@ -86,7 +86,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         final SpreadsheetViewportNavigation[] copy = new SpreadsheetViewportNavigation[list.size()];
 
         int i = 0;
-        for(final SpreadsheetViewportNavigation navigation : list) {
+        for (final SpreadsheetViewportNavigation navigation : list) {
             copy[i++] = Objects.requireNonNull(navigation, "includes null navigation");
         }
 
@@ -126,8 +126,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     public SpreadsheetViewportNavigationList setElements(final List<SpreadsheetViewportNavigation> list) {
         final SpreadsheetViewportNavigationList copy = with(list);
         return this.equals(copy) ?
-                this :
-                copy;
+            this :
+            copy;
     }
 
     private final SpreadsheetViewportNavigation[] list;
@@ -145,9 +145,9 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         final List<SpreadsheetViewportNavigation> navigations = Lists.array();
 
         final Supplier<IllegalArgumentException> ice = () -> new InvalidCharacterException(
-                text,
-                cursor.lineInfo()
-                        .textOffset()
+            text,
+            cursor.lineInfo()
+                .textOffset()
         );
 
         while (cursor.isNotEmpty()) {
@@ -155,90 +155,90 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
             if (isMatch(LEFT, cursor)) {
                 navigation = parseSpaceColorRowOrPixels(
-                        cursor,
-                        COLUMN,
-                        SpreadsheetViewportNavigation::leftColumn,
-                        SpreadsheetViewportNavigation::leftPixel
+                    cursor,
+                    COLUMN,
+                    SpreadsheetViewportNavigation::leftColumn,
+                    SpreadsheetViewportNavigation::leftPixel
                 );
             } else {
                 if (isMatch(RIGHT, cursor)) {
                     navigation = parseSpaceColorRowOrPixels(
-                            cursor,
-                            COLUMN,
-                            SpreadsheetViewportNavigation::rightColumn,
-                            SpreadsheetViewportNavigation::rightPixel
+                        cursor,
+                        COLUMN,
+                        SpreadsheetViewportNavigation::rightColumn,
+                        SpreadsheetViewportNavigation::rightPixel
                     );
                 } else {
                     if (isMatch(UP, cursor)) {
                         navigation = parseSpaceColorRowOrPixels(
-                                cursor,
-                                ROW,
-                                SpreadsheetViewportNavigation::upRow,
-                                SpreadsheetViewportNavigation::upPixel
+                            cursor,
+                            ROW,
+                            SpreadsheetViewportNavigation::upRow,
+                            SpreadsheetViewportNavigation::upPixel
                         );
                     } else {
                         if (isMatch(DOWN, cursor)) {
                             navigation = parseSpaceColorRowOrPixels(
-                                    cursor,
-                                    ROW,
-                                    SpreadsheetViewportNavigation::downRow,
-                                    SpreadsheetViewportNavigation::downPixel
+                                cursor,
+                                ROW,
+                                SpreadsheetViewportNavigation::downRow,
+                                SpreadsheetViewportNavigation::downPixel
                             );
                         } else {
                             if (isMatch(EXTEND_LEFT, cursor)) {
                                 navigation = parseSpaceColorRowOrPixels(
-                                        cursor,
-                                        COLUMN,
-                                        SpreadsheetViewportNavigation::extendLeftColumn,
-                                        SpreadsheetViewportNavigation::extendLeftPixel
+                                    cursor,
+                                    COLUMN,
+                                    SpreadsheetViewportNavigation::extendLeftColumn,
+                                    SpreadsheetViewportNavigation::extendLeftPixel
                                 );
                             } else {
                                 if (isMatch(EXTEND_RIGHT, cursor)) {
                                     navigation = parseSpaceColorRowOrPixels(
-                                            cursor,
-                                            COLUMN,
-                                            SpreadsheetViewportNavigation::extendRightColumn,
-                                            SpreadsheetViewportNavigation::extendRightPixel
+                                        cursor,
+                                        COLUMN,
+                                        SpreadsheetViewportNavigation::extendRightColumn,
+                                        SpreadsheetViewportNavigation::extendRightPixel
                                     );
                                 } else {
                                     if (isMatch(EXTEND_UP, cursor)) {
                                         navigation = parseSpaceColorRowOrPixels(
-                                                cursor,
-                                                ROW,
-                                                SpreadsheetViewportNavigation::extendUpRow,
-                                                SpreadsheetViewportNavigation::extendUpPixel
+                                            cursor,
+                                            ROW,
+                                            SpreadsheetViewportNavigation::extendUpRow,
+                                            SpreadsheetViewportNavigation::extendUpPixel
                                         );
                                     } else {
                                         if (isMatch(EXTEND_DOWN, cursor)) {
                                             navigation = parseSpaceColorRowOrPixels(
-                                                    cursor,
-                                                    ROW,
-                                                    SpreadsheetViewportNavigation::extendDownRow,
-                                                    SpreadsheetViewportNavigation::extendDownPixel
+                                                cursor,
+                                                ROW,
+                                                SpreadsheetViewportNavigation::extendDownRow,
+                                                SpreadsheetViewportNavigation::extendDownPixel
                                             );
                                         } else {
                                             if (isMatch(SELECT, cursor)) {
                                                 navigation = parseCellColumnOrRow(
-                                                        cursor,
-                                                        SpreadsheetViewportNavigation::cell,
-                                                        SpreadsheetViewportNavigation::column,
-                                                        SpreadsheetViewportNavigation::row,
-                                                        ice
+                                                    cursor,
+                                                    SpreadsheetViewportNavigation::cell,
+                                                    SpreadsheetViewportNavigation::column,
+                                                    SpreadsheetViewportNavigation::row,
+                                                    ice
                                                 );
                                             } else {
                                                 if (isMatch(EXTEND, cursor)) {
                                                     navigation = parseCellColumnOrRow(
-                                                            cursor,
-                                                            SpreadsheetViewportNavigation::extendCell,
-                                                            SpreadsheetViewportNavigation::extendColumn,
-                                                            SpreadsheetViewportNavigation::extendRow,
-                                                            ice
+                                                        cursor,
+                                                        SpreadsheetViewportNavigation::extendCell,
+                                                        SpreadsheetViewportNavigation::extendColumn,
+                                                        SpreadsheetViewportNavigation::extendRow,
+                                                        ice
                                                     );
                                                 } else {
                                                     throw new InvalidCharacterException(
-                                                            text,
-                                                            cursor.lineInfo()
-                                                                    .textOffset()
+                                                        text,
+                                                        cursor.lineInfo()
+                                                            .textOffset()
                                                     );
                                                 }
                                             }
@@ -280,7 +280,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     private final static Parser<ParserContext> EXTEND_DOWN = stringParser("extend-down");
 
     private final static Parser<ParserContext> SEPARATOR_PARSER = characterParserOrReport(
-            CharPredicates.is(SEPARATOR.character())
+        CharPredicates.is(SEPARATOR.character())
     );
 
     /**
@@ -289,8 +289,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     private static boolean isMatch(final Parser<ParserContext> parser,
                                    final TextCursor cursor) {
         return parser.parse(
-                cursor,
-                PARSER_CONTEXT).isPresent();
+            cursor,
+            PARSER_CONTEXT).isPresent();
     }
 
     /**
@@ -313,18 +313,18 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             navigation = columnOrRowNavigation.get();
         } else {
             navigation = columnOrRowPixel.apply(
-                    VALUE.parse(
-                                    cursor,
-                                    PARSER_CONTEXT
-                            ).get()
-                            .cast(LongParserToken.class)
-                            .value()
-                            .intValue()
+                VALUE.parse(
+                        cursor,
+                        PARSER_CONTEXT
+                    ).get()
+                    .cast(LongParserToken.class)
+                    .value()
+                    .intValue()
             );
 
             PX.parse(
-                    cursor,
-                    PARSER_CONTEXT
+                cursor,
+                PARSER_CONTEXT
             );
         }
 
@@ -332,7 +332,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
-            .orReport(ParserReporters.basic());
+        .orReport(ParserReporters.basic());
 
     private final static Parser<ParserContext> CELL = stringParser("cell");
 
@@ -341,7 +341,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     private final static Parser<ParserContext> ROW = stringParser("row");
 
     private final static Parser<ParserContext> PX = stringParser("px")
-            .orReport(ParserReporters.basic());
+        .orReport(ParserReporters.basic());
 
 
     // select cell A1
@@ -374,33 +374,33 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             parseSpace(cursor);
 
             navigation = cell.apply(
-                    parseSelection(
-                            CELL_PARSER,
-                            cursor,
-                            CellSpreadsheetFormulaParserToken.class
-                    ).reference()
+                parseSelection(
+                    CELL_PARSER,
+                    cursor,
+                    CellSpreadsheetFormulaParserToken.class
+                ).reference()
             );
         } else {
             if (isMatch(COLUMN, cursor)) {
                 parseSpace(cursor);
 
                 navigation = column.apply(
-                        parseSelection(
-                                COLUMN_PARSER,
-                                cursor,
-                                ColumnSpreadsheetFormulaParserToken.class
-                        ).reference()
+                    parseSelection(
+                        COLUMN_PARSER,
+                        cursor,
+                        ColumnSpreadsheetFormulaParserToken.class
+                    ).reference()
                 );
             } else {
                 if (isMatch(ROW, cursor)) {
                     parseSpace(cursor);
 
                     navigation = row.apply(
-                            parseSelection(
-                                    ROW_PARSER,
-                                    cursor,
-                                    RowSpreadsheetFormulaParserToken.class
-                            ).reference()
+                        parseSelection(
+                            ROW_PARSER,
+                            cursor,
+                            RowSpreadsheetFormulaParserToken.class
+                        ).reference()
                     );
                 } else {
                     throw invalidCharacter.get();
@@ -412,25 +412,25 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     private final static Parser<ParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
-            .orReport(ParserReporters.basic())
-            .cast();
+        .orReport(ParserReporters.basic())
+        .cast();
 
     private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
-            .orReport(ParserReporters.basic())
-            .cast();
+        .orReport(ParserReporters.basic())
+        .cast();
 
     private final static Parser<ParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
-            .orReport(ParserReporters.basic())
-            .cast();
+        .orReport(ParserReporters.basic())
+        .cast();
 
     private static <T extends SpreadsheetFormulaParserToken> T parseSelection(final Parser<ParserContext> parser,
                                                                               final TextCursor cursor,
                                                                               final Class<T> parserToken) {
         return parser.parse(
-                        cursor,
-                        PARSER_CONTEXT
-                ).get()
-                .cast(parserToken);
+                cursor,
+                PARSER_CONTEXT
+            ).get()
+            .cast(parserToken);
     }
 
     /**
@@ -441,17 +441,17 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     private final static Parser<ParserContext> SPACE = characterParserOrReport(
-            CharPredicates.is(' ')
+        CharPredicates.is(' ')
     );
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION,
-            DateTimeContexts.fake(),
-            ExpressionNumberContexts.basic(
-                    ExpressionNumberKind.BIG_DECIMAL,
-                    DecimalNumberContexts.american(MathContext.DECIMAL32)
-            ),
-            ',' // value separator char
+        InvalidCharacterExceptionFactory.POSITION,
+        DateTimeContexts.fake(),
+        ExpressionNumberContexts.basic(
+            ExpressionNumberKind.BIG_DECIMAL,
+            DecimalNumberContexts.american(MathContext.DECIMAL32)
+        ),
+        ',' // value separator char
     );
 
     /**
@@ -459,7 +459,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      */
     private static Parser<ParserContext> characterParserOrReport(final CharPredicate predicate) {
         return Parsers.character(predicate)
-                .orReport(ParserReporters.basic());
+            .orReport(ParserReporters.basic());
     }
 
     /**
@@ -467,8 +467,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      */
     private static Parser<ParserContext> stringParser(final String token) {
         return Parsers.string(
-                token,
-                CaseSensitivity.SENSITIVE
+            token,
+            CaseSensitivity.SENSITIVE
         );
     }
 
@@ -498,10 +498,10 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                     }
                     if (left.isClearPrevious()) {
                         Arrays.fill(
-                                temp,
-                                0,
-                                i,
-                                null
+                            temp,
+                            0,
+                            i,
+                            null
                         );
                     }
                 }
@@ -558,8 +558,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     @Override
     public String text() {
         return SEPARATOR.toSeparatedString(
-                this,
-                SpreadsheetViewportNavigation::text
+            this,
+            SpreadsheetViewportNavigation::text
         );
     }
 
@@ -576,10 +576,10 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetViewportNavigationList.class),
-                SpreadsheetViewportNavigationList::unmarshall,
-                SpreadsheetViewportNavigationList::marshall,
-                SpreadsheetViewportNavigationList.class
+            JsonNodeContext.computeTypeName(SpreadsheetViewportNavigationList.class),
+            SpreadsheetViewportNavigationList::unmarshall,
+            SpreadsheetViewportNavigationList::marshall,
+            SpreadsheetViewportNavigationList.class
         );
     }
 }

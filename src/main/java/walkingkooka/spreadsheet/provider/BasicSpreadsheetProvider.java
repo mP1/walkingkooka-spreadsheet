@@ -44,15 +44,15 @@ import java.util.Objects;
  * A {@link SpreadsheetProvider} that delegates all methods to the provided {@link walkingkooka.plugin.Provider}.
  */
 final class BasicSpreadsheetProvider implements SpreadsheetProvider,
-        ConverterProviderDelegator,
-        ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
-        SpreadsheetComparatorProviderDelegator,
-        SpreadsheetExporterProviderDelegator,
-        FormHandlerProviderDelegator,
-        SpreadsheetFormatterProviderDelegator,
-        SpreadsheetImporterProviderDelegator,
-        SpreadsheetParserProviderDelegator,
-        ValidatorProviderDelegator {
+    ConverterProviderDelegator,
+    ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
+    SpreadsheetComparatorProviderDelegator,
+    SpreadsheetExporterProviderDelegator,
+    FormHandlerProviderDelegator,
+    SpreadsheetFormatterProviderDelegator,
+    SpreadsheetImporterProviderDelegator,
+    SpreadsheetParserProviderDelegator,
+    ValidatorProviderDelegator {
 
     static BasicSpreadsheetProvider with(final ConverterProvider converterProvider,
                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
@@ -64,15 +64,15 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                                          final SpreadsheetParserProvider spreadsheetParserProvider,
                                          final ValidatorProvider validatorProvider) {
         return new BasicSpreadsheetProvider(
-                Objects.requireNonNull(converterProvider, "converterProvider"),
-                Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider"),
-                Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider"),
-                Objects.requireNonNull(spreadsheetExporterProvider, "spreadsheetExporterProvider"),
-                Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
-                Objects.requireNonNull(formHandlerProvider, "formHandlerProvider"),
-                Objects.requireNonNull(spreadsheetImporterProvider, "spreadsheetImporterProvider"),
-                Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider"),
-                Objects.requireNonNull(validatorProvider, "validatorProvider")
+            Objects.requireNonNull(converterProvider, "converterProvider"),
+            Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider"),
+            Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider"),
+            Objects.requireNonNull(spreadsheetExporterProvider, "spreadsheetExporterProvider"),
+            Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
+            Objects.requireNonNull(formHandlerProvider, "formHandlerProvider"),
+            Objects.requireNonNull(spreadsheetImporterProvider, "spreadsheetImporterProvider"),
+            Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider"),
+            Objects.requireNonNull(validatorProvider, "validatorProvider")
         );
     }
 
@@ -164,53 +164,53 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.converterProvider,
-                this.expressionFunctionProvider,
-                this.spreadsheetComparatorProvider,
-                this.spreadsheetExporterProvider,
-                this.spreadsheetFormatterProvider,
-                this.formHandlerProvider,
-                this.spreadsheetImporterProvider,
-                this.spreadsheetParserProvider,
-                this.validatorProvider
+            this.converterProvider,
+            this.expressionFunctionProvider,
+            this.spreadsheetComparatorProvider,
+            this.spreadsheetExporterProvider,
+            this.spreadsheetFormatterProvider,
+            this.formHandlerProvider,
+            this.spreadsheetImporterProvider,
+            this.spreadsheetParserProvider,
+            this.validatorProvider
         );
     }
 
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof BasicSpreadsheetProvider &&
-                        this.equals0(Cast.to(other));
+            other instanceof BasicSpreadsheetProvider &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final BasicSpreadsheetProvider other) {
         return this.converterProvider.equals(other.converterProvider) &&
-                this.expressionFunctionProvider.equals(other.expressionFunctionProvider) &&
-                this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
-                this.spreadsheetExporterProvider.equals(other.spreadsheetExporterProvider) &&
-                this.spreadsheetFormatterProvider.equals(other.spreadsheetFormatterProvider) &&
-                this.formHandlerProvider.equals(other.formHandlerProvider) &&
-                this.spreadsheetImporterProvider.equals(other.spreadsheetImporterProvider) &&
-                this.spreadsheetParserProvider.equals(other.spreadsheetParserProvider) &&
-                this.validatorProvider.equals(other.validatorProvider);
+            this.expressionFunctionProvider.equals(other.expressionFunctionProvider) &&
+            this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
+            this.spreadsheetExporterProvider.equals(other.spreadsheetExporterProvider) &&
+            this.spreadsheetFormatterProvider.equals(other.spreadsheetFormatterProvider) &&
+            this.formHandlerProvider.equals(other.formHandlerProvider) &&
+            this.spreadsheetImporterProvider.equals(other.spreadsheetImporterProvider) &&
+            this.spreadsheetParserProvider.equals(other.spreadsheetParserProvider) &&
+            this.validatorProvider.equals(other.validatorProvider);
     }
 
     @Override
     public String toString() {
         return this.converterProvider +
-                " " +
-                this.expressionFunctionProvider +
-                " " +
-                this.spreadsheetComparatorProvider +
-                " " +
-                this.spreadsheetFormatterProvider +
-                " " +
-                this.formHandlerProvider +
-                " " +
-                this.spreadsheetImporterProvider +
-                " " +
-                this.spreadsheetParserProvider +
-                " " +
-                this.validatorProvider;
+            " " +
+            this.expressionFunctionProvider +
+            " " +
+            this.spreadsheetComparatorProvider +
+            " " +
+            this.spreadsheetFormatterProvider +
+            " " +
+            this.formHandlerProvider +
+            " " +
+            this.spreadsheetImporterProvider +
+            " " +
+            this.spreadsheetParserProvider +
+            " " +
+            this.validatorProvider;
     }
 }

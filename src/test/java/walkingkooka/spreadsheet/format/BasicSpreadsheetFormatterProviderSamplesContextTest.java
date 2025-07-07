@@ -27,14 +27,14 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatterProviderSamplesContextTest implements SpreadsheetFormatterProviderSamplesContextTesting<BasicSpreadsheetFormatterProviderSamplesContext>,
-        SpreadsheetMetadataTesting,
-        DecimalNumberContextDelegator {
+    SpreadsheetMetadataTesting,
+    DecimalNumberContextDelegator {
 
     @Test
     public void testWithNullSpreadsheetFormatterContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetFormatterProviderSamplesContext.with(null)
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterProviderSamplesContext.with(null)
         );
     }
 

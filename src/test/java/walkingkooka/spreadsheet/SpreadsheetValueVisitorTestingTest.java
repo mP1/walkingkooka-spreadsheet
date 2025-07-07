@@ -34,13 +34,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitBigDecimal() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final BigDecimal value) {
-                                    visit = value;
-                                }
-                            },
-                BigDecimal.valueOf(123)
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final BigDecimal value) {
+                    visit = value;
+                }
+            },
+            BigDecimal.valueOf(123)
         );
     }
 
@@ -53,13 +53,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitBigInteger() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final BigInteger value) {
-                                    visit = value;
-                                }
-                            },
-                BigInteger.valueOf(123));
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final BigInteger value) {
+                    visit = value;
+                }
+            },
+            BigInteger.valueOf(123));
     }
 
     @Test
@@ -71,13 +71,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitBoolean() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Boolean value) {
-                                    visit = value;
-                                }
-                            },
-                Boolean.TRUE);
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Boolean value) {
+                    visit = value;
+                }
+            },
+            Boolean.TRUE);
     }
 
     @Test
@@ -89,13 +89,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitByte() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Byte value) {
-                                    visit = value;
-                                }
-                            },
-                Byte.MAX_VALUE);
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Byte value) {
+                    visit = value;
+                }
+            },
+            Byte.MAX_VALUE);
     }
 
     @Test
@@ -107,26 +107,26 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitCharacter() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                    @Override
-                    protected void visit(final Character value) {
-                        visit = value;
-                    }
-                },
-                'A'
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Character value) {
+                    visit = value;
+                }
+            },
+            'A'
         );
     }
 
     @Test
     public void testVisitDouble() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Double value) {
-                                    visit = value;
-                                }
-                            },
-                Double.MAX_VALUE
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Double value) {
+                    visit = value;
+                }
+            },
+            Double.MAX_VALUE
         );
     }
 
@@ -139,13 +139,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitFloat() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Float value) {
-                                    visit = value;
-                                }
-                            },
-                Float.MAX_VALUE
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Float value) {
+                    visit = value;
+                }
+            },
+            Float.MAX_VALUE
         );
     }
 
@@ -158,13 +158,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitInteger() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Integer value) {
-                                    visit = value;
-                                }
-                            },
-                Integer.MAX_VALUE
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Integer value) {
+                    visit = value;
+                }
+            },
+            Integer.MAX_VALUE
         );
     }
 
@@ -178,13 +178,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitLocalDate() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final LocalDate value) {
-                                    visit = value;
-                                }
-                            },
-                LocalDate.MAX
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final LocalDate value) {
+                    visit = value;
+                }
+            },
+            LocalDate.MAX
         );
     }
 
@@ -197,13 +197,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitLocalDateTime() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final LocalDateTime value) {
-                                    visit = value;
-                                }
-                            },
-                LocalDateTime.MAX
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final LocalDateTime value) {
+                    visit = value;
+                }
+            },
+            LocalDateTime.MAX
         );
     }
 
@@ -217,13 +217,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitLocalTime() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final LocalTime value) {
-                                    visit = value;
-                                }
-                            },
-                LocalTime.MAX
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final LocalTime value) {
+                    visit = value;
+                }
+            },
+            LocalTime.MAX
         );
     }
 
@@ -236,13 +236,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitLong() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Long value) {
-                                    visit = value;
-                                }
-                            },
-                Long.MAX_VALUE
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Long value) {
+                    visit = value;
+                }
+            },
+            Long.MAX_VALUE
         );
     }
 
@@ -255,13 +255,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitShort() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final Short value) {
-                                    visit = value;
-                                }
-                            },
-                Short.MAX_VALUE
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final Short value) {
+                    visit = value;
+                }
+            },
+            Short.MAX_VALUE
         );
     }
 
@@ -274,13 +274,13 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitString() {
         this.acceptAndCheck(
-                new TestSpreadsheetValueVisitor() {
-                                @Override
-                                protected void visit(final String value) {
-                                    visit = value;
-                                }
-                            },
-                this.getClass().getName()
+            new TestSpreadsheetValueVisitor() {
+                @Override
+                protected void visit(final String value) {
+                    visit = value;
+                }
+            },
+            this.getClass().getName()
         );
     }
 

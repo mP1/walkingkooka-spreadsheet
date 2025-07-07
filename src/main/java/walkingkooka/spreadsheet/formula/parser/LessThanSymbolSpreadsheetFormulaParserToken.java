@@ -28,8 +28,8 @@ public final class LessThanSymbolSpreadsheetFormulaParserToken extends SymbolSpr
     static LessThanSymbolSpreadsheetFormulaParserToken with(final String value,
                                                             final String text) {
         return new LessThanSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

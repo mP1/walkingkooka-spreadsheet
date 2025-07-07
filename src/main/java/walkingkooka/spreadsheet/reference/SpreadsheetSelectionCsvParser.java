@@ -53,9 +53,9 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
                                                                final Parser<SpreadsheetParserContext> selectionTokenParser,
                                                                final Function<SpreadsheetFormulaParserToken, S> parserTokenToSelection) {
         final SpreadsheetSelectionCsvParser<S> parser = new SpreadsheetSelectionCsvParser<>(
-                text,
-                selectionTokenParser,
-                parserTokenToSelection
+            text,
+            selectionTokenParser,
+            parserTokenToSelection
         );
 
         final SortedSet<S> selections = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
@@ -71,13 +71,13 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
                     final Optional<S> selection = parser.selection();
                     if (selection.isPresent()) {
                         selections.add(
-                                selection.get()
+                            selection.get()
                         );
                     }
                 } catch (final InvalidCharacterException invalid) {
                     throw invalid.setTextAndPosition(
-                            text,
-                            offset + invalid.position()
+                        text,
+                        offset + invalid.position()
                     );
                 }
 
@@ -102,7 +102,7 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
                                           final Parser<SpreadsheetParserContext> selectionTokenParser,
                                           final Function<SpreadsheetFormulaParserToken, S> parserTokenToSelection) {
         this.cursor = TextCursors.maxPosition(
-                TextCursors.charSequence(text)
+            TextCursors.charSequence(text)
         );
         this.selectionTokenParser = selectionTokenParser;
         this.parserTokenToSelection = parserTokenToSelection;
@@ -112,16 +112,16 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
 
     String spaces() {
         return SPACES.parse(
-                        this.cursor,
-                        CONTEXT
-                ).map(ParserToken::text)
-                .orElse("");
+                this.cursor,
+                CONTEXT
+            ).map(ParserToken::text)
+            .orElse("");
     }
 
     private final static Parser<ParserContext> SPACES = Parsers.charPredicateString(
-            CharPredicates.is(' '),
-            1,
-            Character.MAX_VALUE
+        CharPredicates.is(' '),
+        1,
+        Character.MAX_VALUE
     );
 
     // SpreadsheetSelection.............................................................................................
@@ -132,8 +132,8 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
     Optional<S> selection() {
         try {
             return this.selectionTokenParser.parse(
-                    this.cursor,
-                    SpreadsheetParserContexts.fake()
+                this.cursor,
+                SpreadsheetParserContexts.fake()
             ).map(t -> this.parserTokenToSelection.apply(t.cast(SpreadsheetFormulaParserToken.class)));
         } catch (final ParserException cause) {
             final Throwable wrapped = cause.getCause();
@@ -163,16 +163,16 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
 
     String comma() {
         return COMMA.parse(
-                        this.cursor,
-                        CONTEXT
-                ).map(ParserToken::text)
-                .orElse("");
+                this.cursor,
+                CONTEXT
+            ).map(ParserToken::text)
+            .orElse("");
     }
 
     private final static Parser<ParserContext> COMMA = Parsers.character(
-            CharPredicates.is(
-                    SEPARATOR.character()
-            )
+        CharPredicates.is(
+            SEPARATOR.character()
+        )
     );
 
     // CanBeEmpty.......................................................................................................
@@ -183,20 +183,20 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
     }
 
     private final static ParserContext CONTEXT = ParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION,
-            DateTimeContexts.fake(),
-            DecimalNumberContexts.fake()
+        InvalidCharacterExceptionFactory.POSITION,
+        DateTimeContexts.fake(),
+        DecimalNumberContexts.fake()
     );
 
     final TextCursor cursor;
 
     void invalidCharacterException() {
         throw CONTEXT.invalidCharacterException(
-                PARSER,
-                this.cursor
+            PARSER,
+            this.cursor
         );
     }
 
     private final static Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.fake()
-            .setToString("CELLS");
+        .setToString("CELLS");
 }

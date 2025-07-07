@@ -33,36 +33,36 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedSpreadsheetExporterProviderTest implements SpreadsheetExporterProviderTesting<MergedMappedSpreadsheetExporterProvider>,
-        SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullInfosFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedSpreadsheetExporterProvider.with(
-                        null,
-                        SpreadsheetExporterProviders.fake()
-                )
+            NullPointerException.class,
+            () -> MergedMappedSpreadsheetExporterProvider.with(
+                null,
+                SpreadsheetExporterProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedSpreadsheetExporterProvider.with(
-                        SpreadsheetExporterInfoSet.EMPTY.concat(
-                                SpreadsheetExporterInfo.with(
-                                        SpreadsheetExporterProviders.BASE_URL.appendPath(
-                                                UrlPath.parse("test-123")
-                                        ),
-                                        SpreadsheetExporterName.with("test-123")
-                                )
+            NullPointerException.class,
+            () -> MergedMappedSpreadsheetExporterProvider.with(
+                SpreadsheetExporterInfoSet.EMPTY.concat(
+                    SpreadsheetExporterInfo.with(
+                        SpreadsheetExporterProviders.BASE_URL.appendPath(
+                            UrlPath.parse("test-123")
                         ),
-                        null
-                )
+                        SpreadsheetExporterName.with("test-123")
+                    )
+                ),
+                null
+            )
         );
     }
 
@@ -93,9 +93,9 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
     @Test
     public void testSpreadsheetExporterSelector() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterSelector.parse(RENAMED_RENAME_NAME + " (11.0)"),
-                CONTEXT,
-                RENAMED_EXPORTER
+            SpreadsheetExporterSelector.parse(RENAMED_RENAME_NAME + " (11.0)"),
+            CONTEXT,
+            RENAMED_EXPORTER
         );
     }
 
@@ -104,34 +104,34 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
     @Test
     public void testSpreadsheetExporterNameWithRenamed() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterName.with(RENAMED_RENAME_NAME),
-                VALUES,
-                CONTEXT,
-                RENAMED_EXPORTER
+            SpreadsheetExporterName.with(RENAMED_RENAME_NAME),
+            VALUES,
+            CONTEXT,
+            RENAMED_EXPORTER
         );
     }
 
     @Test
     public void testSpreadsheetExporterNameWithProviderOnly() {
         this.spreadsheetExporterAndCheck(
-                SpreadsheetExporterName.with(PROVIDER_ONLY_NAME),
-                VALUES,
-                CONTEXT,
-                PROVIDER_ONLY_EXPORTER
+            SpreadsheetExporterName.with(PROVIDER_ONLY_NAME),
+            VALUES,
+            CONTEXT,
+            PROVIDER_ONLY_EXPORTER
         );
     }
 
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetExporterInfosAndCheck(
-                SpreadsheetExporterInfo.with(
-                        RENAMED_URL,
-                        SpreadsheetExporterName.with(RENAMED_RENAME_NAME)
-                ),
-                SpreadsheetExporterInfo.with(
-                        PROVIDER_ONLY_URL,
-                        SpreadsheetExporterName.with(PROVIDER_ONLY_NAME)
-                )
+            SpreadsheetExporterInfo.with(
+                RENAMED_URL,
+                SpreadsheetExporterName.with(RENAMED_RENAME_NAME)
+            ),
+            SpreadsheetExporterInfo.with(
+                PROVIDER_ONLY_URL,
+                SpreadsheetExporterName.with(PROVIDER_ONLY_NAME)
+            )
         );
     }
 
@@ -142,8 +142,8 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
             public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                            final ProviderContext context) {
                 return selector.evaluateValueText(
-                        this,
-                        context
+                    this,
+                    context
                 );
             }
 
@@ -164,28 +164,28 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
             @Override
             public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
                 return SpreadsheetExporterInfoSet.with(
-                        Sets.of(
-                                SpreadsheetExporterInfo.with(
-                                        RENAMED_URL,
-                                        SpreadsheetExporterName.with(RENAMED_PROVIDER_NAME)
-                                ),
-                                SpreadsheetExporterInfo.with(
-                                        PROVIDER_ONLY_URL,
-                                        SpreadsheetExporterName.with(PROVIDER_ONLY_NAME)
-                                )
+                    Sets.of(
+                        SpreadsheetExporterInfo.with(
+                            RENAMED_URL,
+                            SpreadsheetExporterName.with(RENAMED_PROVIDER_NAME)
+                        ),
+                        SpreadsheetExporterInfo.with(
+                            PROVIDER_ONLY_URL,
+                            SpreadsheetExporterName.with(PROVIDER_ONLY_NAME)
                         )
+                    )
                 );
             }
         };
 
         return MergedMappedSpreadsheetExporterProvider.with(
-                SpreadsheetExporterInfoSet.EMPTY.concat(
-                        SpreadsheetExporterInfo.with(
-                                RENAMED_URL,
-                                SpreadsheetExporterName.with(RENAMED_RENAME_NAME)
-                        )
-                ),
-                provider
+            SpreadsheetExporterInfoSet.EMPTY.concat(
+                SpreadsheetExporterInfo.with(
+                    RENAMED_URL,
+                    SpreadsheetExporterName.with(RENAMED_RENAME_NAME)
+                )
+            ),
+            provider
         );
     }
 

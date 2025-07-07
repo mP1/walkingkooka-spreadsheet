@@ -54,14 +54,14 @@ import java.util.Optional;
  * mentioned.
  */
 public interface SpreadsheetEngineContext extends Context,
-        ExpressionPurityContext,
-        HasSpreadsheetMetadata,
-        HasNow,
-        LocaleContext,
-        SpreadsheetProvider,
-        ProviderContext,
-        SpreadsheetLabelNameResolver,
-        HasMissingCellNumberValue {
+    ExpressionPurityContext,
+    HasSpreadsheetMetadata,
+    HasNow,
+    LocaleContext,
+    SpreadsheetProvider,
+    ProviderContext,
+    SpreadsheetLabelNameResolver,
+    HasMissingCellNumberValue {
 
     /**
      * Useful constant for some members that require a {@link SpreadsheetCell}.
@@ -130,15 +130,15 @@ public interface SpreadsheetEngineContext extends Context,
         final Optional<Object> valueReplacingError = error.replaceWithValueIfPossible(this);
 
         return this.formatValueAndStyle(
-                cell.setFormula(
-                        cell.formula()
-                                .setValue(
-                                        valueReplacingError.isPresent() ?
-                                                valueReplacingError :
-                                                Optional.of(error)
-                                )
-                ),
-                Optional.empty() // ignore cell formatter
+            cell.setFormula(
+                cell.formula()
+                    .setValue(
+                        valueReplacingError.isPresent() ?
+                            valueReplacingError :
+                            Optional.of(error)
+                    )
+            ),
+            Optional.empty() // ignore cell formatter
         );
     }
 
@@ -154,6 +154,6 @@ public interface SpreadsheetEngineContext extends Context,
     @Override
     default ExpressionNumber missingCellNumberValue() {
         return this.spreadsheetMetadata()
-                .missingCellNumberValue();
+            .missingCellNumberValue();
     }
 }

@@ -31,12 +31,12 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import java.util.Optional;
 
 public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R>,
-        R extends SpreadsheetSelection & Comparable<R>>
-        implements ClassTesting2<T>,
-        HashCodeEqualsDefinedTesting2<T>,
-        JsonNodeMarshallingTesting<T>,
-        ToStringTesting<T>,
-        TreePrintableTesting {
+    R extends SpreadsheetSelection & Comparable<R>>
+    implements ClassTesting2<T>,
+    HashCodeEqualsDefinedTesting2<T>,
+    JsonNodeMarshallingTesting<T>,
+    ToStringTesting<T>,
+    TreePrintableTesting {
 
     SpreadsheetColumnOrRowTestCase() {
         super();
@@ -71,8 +71,8 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
         final T columnOrRow = this.createObject();
 
         this.treePrintAndCheck(
-                columnOrRow,
-                columnOrRow.reference().toString() + EOL
+            columnOrRow,
+            columnOrRow.reference().toString() + EOL
         );
     }
 

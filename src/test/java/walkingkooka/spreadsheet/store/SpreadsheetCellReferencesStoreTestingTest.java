@@ -98,8 +98,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     @Override
     public Set<SpreadsheetCellReference> value() {
         return Set.of(
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCell("B2"),
+            SpreadsheetSelection.parseCell("C3")
         );
     }
 
@@ -145,8 +145,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                                                                     final int count) {
             Objects.requireNonNull(reference, "reference");
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -157,8 +157,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                                                                           final int count) {
             Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -181,8 +181,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                                                                     final int count) {
             Objects.requireNonNull(cell, "cell");
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -218,8 +218,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         public Set<SpreadsheetCellReference> ids(final int offset,
                                                  final int count) {
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return Set.of();
         }
@@ -228,8 +228,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         public List<Set<SpreadsheetCellReference>> values(final int offset,
                                                           final int count) {
             Store.checkOffsetAndCount(
-                    offset,
-                    count
+                offset,
+                count
             );
             return List.of();
         }
@@ -238,8 +238,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         public List<Set<SpreadsheetCellReference>> between(final SpreadsheetCellReference from,
                                                            final SpreadsheetCellReference to) {
             Store.checkBetween(
-                    from,
-                    to
+                from,
+                to
             );
             return List.of();
         }

@@ -28,7 +28,7 @@ public final class GreaterThanEqualsSpreadsheetFormulaParserToken extends Condit
 
     static GreaterThanEqualsSpreadsheetFormulaParserToken with(final List<ParserToken> value, final String text) {
         return new GreaterThanEqualsSpreadsheetFormulaParserToken(copyAndCheckTokens(value),
-                checkText(text));
+            checkText(text));
     }
 
     private GreaterThanEqualsSpreadsheetFormulaParserToken(final List<ParserToken> value, final String text) {
@@ -40,8 +40,8 @@ public final class GreaterThanEqualsSpreadsheetFormulaParserToken extends Condit
                                                                                                                 final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightGreaterThanEquals(
-                tokens,
-                text
+            tokens,
+            text
         );
     }
 
@@ -50,9 +50,9 @@ public final class GreaterThanEqualsSpreadsheetFormulaParserToken extends Condit
     @Override
     public GreaterThanEqualsSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                GreaterThanEqualsSpreadsheetFormulaParserToken::with
+            this,
+            children,
+            GreaterThanEqualsSpreadsheetFormulaParserToken::with
         );
     }
 

@@ -47,10 +47,10 @@ final class SpreadsheetConverterSpreadsheetErrorToNumber extends SpreadsheetConv
                                        final Class<?> type,
                                        final SpreadsheetConverterContext context) {
         return ExpressionNumber.isClass(type) &&
-                (
-                        error.isMissingCell() ||
-                                error.kind() == SpreadsheetErrorKind.NULL
-                );
+            (
+                error.isMissingCell() ||
+                    error.kind() == SpreadsheetErrorKind.NULL
+            );
     }
 
     @Override
@@ -58,15 +58,15 @@ final class SpreadsheetConverterSpreadsheetErrorToNumber extends SpreadsheetConv
                                                   final Class<T> type,
                                                   final SpreadsheetConverterContext context) {
         return Maths.isNumberClass(type) ?
-                NUMBER_TO_NUMBER.convert(
-                        0,
-                        type,
-                        context
-                ) :
-                this.successfulConversion(
-                        context.missingCellNumberValue(),
-                        type
-                );
+            NUMBER_TO_NUMBER.convert(
+                0,
+                type,
+                context
+            ) :
+            this.successfulConversion(
+                context.missingCellNumberValue(),
+                type
+            );
     }
 
     private final static Converter<SpreadsheetConverterContext> NUMBER_TO_NUMBER = Converters.numberToNumber();

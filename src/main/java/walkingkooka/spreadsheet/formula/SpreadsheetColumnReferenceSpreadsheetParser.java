@@ -66,13 +66,13 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
                        final String text) {
         try {
             return ColumnSpreadsheetFormulaParserToken.column(
-                    absoluteOrRelative.column(value),
-                    text
+                absoluteOrRelative.column(value),
+                text
             );
         } catch (final IllegalColumnArgumentException cause) {
             // Invalid column ABCDE not between \"A\" and \"$MAX\"
             throw new IllegalColumnArgumentException(
-                    "Invalid column " + CharSequences.quoteAndEscape(text) + " not between \"A\" and \"" + SpreadsheetColumnReference.MAX_VALUE_STRING + "\""
+                "Invalid column " + CharSequences.quoteAndEscape(text) + " not between \"A\" and \"" + SpreadsheetColumnReference.MAX_VALUE_STRING + "\""
             );
         }
     }
@@ -83,7 +83,7 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
     }
 
     private final static Optional<ValidationValueTypeName> COLUMN = Optional.of(
-            SpreadsheetValueType.COLUMN
+        SpreadsheetValueType.COLUMN
     );
 
     @Override
@@ -98,8 +98,8 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
 
     private SpreadsheetColumnReferenceSpreadsheetParser setRequired(final boolean required) {
         return required == this.isRequired() ?
-                this :
-                new SpreadsheetColumnReferenceSpreadsheetParser(required);
+            this :
+            new SpreadsheetColumnReferenceSpreadsheetParser(required);
     }
 
     @Override

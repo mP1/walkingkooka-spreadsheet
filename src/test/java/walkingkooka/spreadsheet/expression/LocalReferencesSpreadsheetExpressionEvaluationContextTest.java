@@ -60,13 +60,13 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<LocalReferencesSpreadsheetExpressionEvaluationContext>,
-        ToStringTesting<LocalReferencesSpreadsheetExpressionEvaluationContext> {
+    ToStringTesting<LocalReferencesSpreadsheetExpressionEvaluationContext> {
 
     private final static String NAME = "Name1234";
-    
+
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName(NAME);
     private final static String LABEL_LOCAL_VALUE = "LabelLocalValue";
-    
+
     private final static TemplateValueName TEMPLATE_VALUE_NAME = TemplateValueName.with("TemplateValue");
     private final static String TEMPLATE_LOCAL_VALUE = "TemplateLocalValue123";
 
@@ -89,46 +89,46 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         @Override
         public Optional<Optional<Object>> apply(final ExpressionReference reference) {
             return this.map.containsKey(reference) ?
-                    Optional.of(
-                            Optional.ofNullable(this.map.get(reference))
-                    ) :
-                    Optional.empty();
+                Optional.of(
+                    Optional.ofNullable(this.map.get(reference))
+                ) :
+                Optional.empty();
         }
 
         @Override
         public String toString() {
             return ToStringBuilder.empty()
-                    .value(this.map)
-                    .build();
+                .value(this.map)
+                .build();
         }
 
         private final Map<ExpressionReference, Object> map = Maps.of(
-                LABEL,
-                LABEL_LOCAL_VALUE,
-                TEMPLATE_VALUE_NAME,
-                TEMPLATE_LOCAL_VALUE
+            LABEL,
+            LABEL_LOCAL_VALUE,
+            TEMPLATE_VALUE_NAME,
+            TEMPLATE_LOCAL_VALUE
         );
     };
 
     @Test
     public void testWithNullReferenceToValuesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                        null,
-                        SpreadsheetExpressionEvaluationContexts.fake()
-                )
+            NullPointerException.class,
+            () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                null,
+                SpreadsheetExpressionEvaluationContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                        REFERENCE_TO_VALUES,
-                        null
-                )
+            NullPointerException.class,
+            () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                null
+            )
         );
     }
 
@@ -150,109 +150,109 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     @Test
     public void testEvaluateFunctionContextReferenceWithLocalLabel() {
         this.checkEquals(
-                LABEL_LOCAL_VALUE,
-                this.createContext()
-                        .evaluateFunction(
-                                new FakeExpressionFunction<>() {
+            LABEL_LOCAL_VALUE,
+            this.createContext()
+                .evaluateFunction(
+                    new FakeExpressionFunction<>() {
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.empty();
-                                    }
+                        @Override
+                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                            return Lists.empty();
+                        }
 
-                                    @Override
-                                    public Object apply(final List<Object> values,
-                                                        final ExpressionEvaluationContext context) {
-                                        return context.referenceOrFail(LABEL);
-                                    }
-                                },
-                                ExpressionFunction.NO_PARAMETER_VALUES
-                        )
+                        @Override
+                        public Object apply(final List<Object> values,
+                                            final ExpressionEvaluationContext context) {
+                            return context.referenceOrFail(LABEL);
+                        }
+                    },
+                    ExpressionFunction.NO_PARAMETER_VALUES
+                )
         );
     }
 
     @Test
     public void testEvaluateFunctionContextReferenceWithLocalTemplateValue() {
         this.checkEquals(
-                TEMPLATE_LOCAL_VALUE,
-                this.createContext()
-                        .evaluateFunction(
-                                new FakeExpressionFunction<>() {
+            TEMPLATE_LOCAL_VALUE,
+            this.createContext()
+                .evaluateFunction(
+                    new FakeExpressionFunction<>() {
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.empty();
-                                    }
+                        @Override
+                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                            return Lists.empty();
+                        }
 
-                                    @Override
-                                    public Object apply(final List<Object> values,
-                                                        final ExpressionEvaluationContext context) {
-                                        return context.referenceOrFail(TEMPLATE_VALUE_NAME);
-                                    }
-                                },
-                                ExpressionFunction.NO_PARAMETER_VALUES
-                        )
+                        @Override
+                        public Object apply(final List<Object> values,
+                                            final ExpressionEvaluationContext context) {
+                            return context.referenceOrFail(TEMPLATE_VALUE_NAME);
+                        }
+                    },
+                    ExpressionFunction.NO_PARAMETER_VALUES
+                )
         );
     }
 
     @Test
     public void testEvaluateFunctionParameterWithLocalLabel() {
         this.checkEquals(
-                LABEL_LOCAL_VALUE,
-                this.createContext()
-                        .evaluateFunction(
-                                new FakeExpressionFunction<>() {
+            LABEL_LOCAL_VALUE,
+            this.createContext()
+                .evaluateFunction(
+                    new FakeExpressionFunction<>() {
 
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.of(PARAMETER);
-                                    }
+                        @Override
+                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                            return Lists.of(PARAMETER);
+                        }
 
-                                    @Override
-                                    public Object apply(final List<Object> values,
-                                                        final ExpressionEvaluationContext context) {
-                                        return this.parameters(1)
-                                                .get(0)
-                                                .getOrFail(values, 0);
-                                    }
+                        @Override
+                        public Object apply(final List<Object> values,
+                                            final ExpressionEvaluationContext context) {
+                            return this.parameters(1)
+                                .get(0)
+                                .getOrFail(values, 0);
+                        }
 
-                                    private final ExpressionFunctionParameter<String> PARAMETER = ExpressionFunctionParameter.STRING.setKinds(
-                                            ExpressionFunctionParameterKind.EVALUATE_RESOLVE_REFERENCES
-                                    );
-                                },
-                                Lists.of(
-                                        Expression.reference(LABEL)
-                                )
-                        )
+                        private final ExpressionFunctionParameter<String> PARAMETER = ExpressionFunctionParameter.STRING.setKinds(
+                            ExpressionFunctionParameterKind.EVALUATE_RESOLVE_REFERENCES
+                        );
+                    },
+                    Lists.of(
+                        Expression.reference(LABEL)
+                    )
+                )
         );
     }
 
     @Test
     public void testFunctionWithNamedValueFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createContext()
-                        .expressionFunction(
-                                SpreadsheetExpressionFunctions.name(NAME)
-                        )
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .expressionFunction(
+                    SpreadsheetExpressionFunctions.name(NAME)
+                )
         );
         this.checkEquals(
-                "Function name Name1234 is a parameter and not an actual function",
-                thrown.getMessage()
+            "Function name Name1234 is a parameter and not an actual function",
+            thrown.getMessage()
         );
     }
 
     @Test
     public void testIsPureWithNamedValueFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createContext().isPure(
-                        SpreadsheetExpressionFunctions.name(NAME)
-                )
+            IllegalArgumentException.class,
+            () -> this.createContext().isPure(
+                SpreadsheetExpressionFunctions.name(NAME)
+            )
         );
         this.checkEquals(
-                "Function name Name1234 is a parameter and not an actual function",
-                thrown.getMessage()
+            "Function name Name1234 is a parameter and not an actual function",
+            thrown.getMessage()
         );
     }
 
@@ -261,43 +261,43 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     @Test
     public void testReferenceWithLocalLabelNonNullValue() {
         this.referenceAndCheck3(
-                REFERENCE_TO_VALUES,
-                LABEL,
-                Optional.of(LABEL_LOCAL_VALUE)
+            REFERENCE_TO_VALUES,
+            LABEL,
+            Optional.of(LABEL_LOCAL_VALUE)
         );
     }
 
     @Test
     public void testReferenceWithLocalLabelNullValue() {
         this.referenceAndCheck3(
-                (r) -> {
-                    this.checkEquals(LABEL, r);
-                    return Optional.of(Optional.empty());
-                },
-                LABEL,
-                Optional.empty()
+            (r) -> {
+                this.checkEquals(LABEL, r);
+                return Optional.of(Optional.empty());
+            },
+            LABEL,
+            Optional.empty()
         );
     }
 
     @Test
     public void testReferenceWithLocalLabelAbsent() {
         final Optional<Optional<Object>> value = Optional.of(
-                Optional.of(LABEL_LOCAL_VALUE)
+            Optional.of(LABEL_LOCAL_VALUE)
         );
 
         this.referenceAndCheck2(
-                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                        (r) -> Optional.empty(),
-                        new FakeSpreadsheetExpressionEvaluationContext() {
-                            @Override
-                            public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-                                checkEquals(LABEL, reference, "reference");
-                                return value;
-                            }
-                        }
-                ),
-                LABEL,
-                value
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                (r) -> Optional.empty(),
+                new FakeSpreadsheetExpressionEvaluationContext() {
+                    @Override
+                    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+                        checkEquals(LABEL, reference, "reference");
+                        return value;
+                    }
+                }
+            ),
+            LABEL,
+            value
         );
     }
 
@@ -305,12 +305,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                                     final ExpressionReference reference,
                                     final Optional<Object> expected) {
         this.referenceAndCheck(
-                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                        referenceToValues,
-                        SpreadsheetExpressionEvaluationContexts.fake()
-                ),
-                reference,
-                expected
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                referenceToValues,
+                SpreadsheetExpressionEvaluationContexts.fake()
+            ),
+            reference,
+            expected
         );
     }
 
@@ -321,13 +321,13 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         final LocalReferencesSpreadsheetExpressionEvaluationContext context = this.createContext();
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> context.resolveIfLabelOrFail(SpreadsheetSelection.labelName(NAME))
+            IllegalArgumentException.class,
+            () -> context.resolveIfLabelOrFail(SpreadsheetSelection.labelName(NAME))
         );
 
         this.checkEquals(
-                "Label Name1234 has a value",
-                thrown.getMessage()
+            "Label Name1234 has a value",
+            thrown.getMessage()
         );
     }
 
@@ -336,158 +336,158 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         final LocalReferencesSpreadsheetExpressionEvaluationContext context = this.createContext();
 
         this.checkEquals(
-                Optional.of(
-                        Optional.of(LABEL_LOCAL_VALUE)
-                ),
-                context.reference(SpreadsheetSelection.labelName(NAME))
+            Optional.of(
+                Optional.of(LABEL_LOCAL_VALUE)
+            ),
+            context.reference(SpreadsheetSelection.labelName(NAME))
         );
     }
 
     @Override
     public LocalReferencesSpreadsheetExpressionEvaluationContext createContext() {
         return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                REFERENCE_TO_VALUES,
-                new FakeSpreadsheetExpressionEvaluationContext() {
+            REFERENCE_TO_VALUES,
+            new FakeSpreadsheetExpressionEvaluationContext() {
 
-                    @Override
-                    public Optional<SpreadsheetCell> cell() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-                        Objects.requireNonNull(cell, "cell");
-
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-                        Objects.requireNonNull(range, "range");
-
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-                        Objects.requireNonNull(labelName, "labelName");
-
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public String currencySymbol() {
-                        return CURRENCY_SYMBOL;
-                    }
-
-                    @Override
-                    public char decimalSeparator() {
-                        return DECIMAL_SEPARATOR;
-                    }
-
-                    @Override
-                    public String exponentSymbol() {
-                        return EXPONENT_SYMBOL;
-                    }
-
-                    @Override
-                    public char groupSeparator() {
-                        return GROUP_SEPARATOR;
-                    }
-
-                    @Override
-                    public String infinitySymbol() {
-                        return INFINITY_SYMBOL;
-                    }
-
-                    @Override
-                    public MathContext mathContext() {
-                        return MATH_CONTEXT;
-                    }
-
-                    @Override
-                    public char monetaryDecimalSeparator() {
-                        return MONETARY_DECIMAL_SEPARATOR;
-                    }
-
-                    @Override
-                    public String nanSymbol() {
-                        return NAN_SYMBOL;
-                    }
-
-                    @Override
-                    public char negativeSign() {
-                        return NEGATIVE_SYMBOL;
-                    }
-
-                    @Override
-                    public char percentSymbol() {
-                        return PERCENT_SYMBOL;
-                    }
-
-                    @Override
-                    public char permillSymbol() {
-                        return PERMILL_SYMBOL;
-                    }
-
-                    @Override
-                    public char positiveSign() {
-                        return POSITIVE_SYMBOL;
-                    }
-
-                    @Override
-                    public char zeroDigit() {
-                        return ZERO;
-                    }
-
-                    @Override
-                    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
-                        Objects.requireNonNull(reference, "reference");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-                        Objects.requireNonNull(fields, "fields");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                        Objects.requireNonNull(name, "name");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public Optional<EmailAddress> user() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-                        Objects.requireNonNull(reference, "reference");
-
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
-                        return this.localeContext.dateTimeSymbolsForLocale(locale);
-                    }
-
-                    @Override
-                    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
-                        return this.localeContext.decimalNumberSymbolsForLocale(locale);
-                    }
-
-                    private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
-
-                    @Override
-                    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
-                        Objects.requireNonNull(cell, "cell");
-                        return super.spreadsheetFormatterContext(cell);
-                    }
+                @Override
+                public Optional<SpreadsheetCell> cell() {
+                    return Optional.empty();
                 }
+
+                @Override
+                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+                    Objects.requireNonNull(cell, "cell");
+
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+                    Objects.requireNonNull(range, "range");
+
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+                    Objects.requireNonNull(labelName, "labelName");
+
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public String currencySymbol() {
+                    return CURRENCY_SYMBOL;
+                }
+
+                @Override
+                public char decimalSeparator() {
+                    return DECIMAL_SEPARATOR;
+                }
+
+                @Override
+                public String exponentSymbol() {
+                    return EXPONENT_SYMBOL;
+                }
+
+                @Override
+                public char groupSeparator() {
+                    return GROUP_SEPARATOR;
+                }
+
+                @Override
+                public String infinitySymbol() {
+                    return INFINITY_SYMBOL;
+                }
+
+                @Override
+                public MathContext mathContext() {
+                    return MATH_CONTEXT;
+                }
+
+                @Override
+                public char monetaryDecimalSeparator() {
+                    return MONETARY_DECIMAL_SEPARATOR;
+                }
+
+                @Override
+                public String nanSymbol() {
+                    return NAN_SYMBOL;
+                }
+
+                @Override
+                public char negativeSign() {
+                    return NEGATIVE_SYMBOL;
+                }
+
+                @Override
+                public char percentSymbol() {
+                    return PERCENT_SYMBOL;
+                }
+
+                @Override
+                public char permillSymbol() {
+                    return PERMILL_SYMBOL;
+                }
+
+                @Override
+                public char positiveSign() {
+                    return POSITIVE_SYMBOL;
+                }
+
+                @Override
+                public char zeroDigit() {
+                    return ZERO;
+                }
+
+                @Override
+                public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+                    Objects.requireNonNull(reference, "reference");
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+                    Objects.requireNonNull(fields, "fields");
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                    Objects.requireNonNull(name, "name");
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public Optional<EmailAddress> user() {
+                    return Optional.empty();
+                }
+
+                @Override
+                public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+                    Objects.requireNonNull(reference, "reference");
+
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+                    return this.localeContext.dateTimeSymbolsForLocale(locale);
+                }
+
+                @Override
+                public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+                    return this.localeContext.decimalNumberSymbolsForLocale(locale);
+                }
+
+                private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
+
+                @Override
+                public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+                    Objects.requireNonNull(cell, "cell");
+                    return super.spreadsheetFormatterContext(cell);
+                }
+            }
         );
     }
 
@@ -560,6 +560,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     public void testSetSpreadsheetMetadataWithNullFails() {
         throw new UnsupportedOperationException();
     }
+
     @Override
     public void testSetSpreadsheetMetadataWithDifferentIdFails() {
         throw new UnsupportedOperationException();
@@ -577,11 +578,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.toStringAndCheck(
-                LocalReferencesSpreadsheetExpressionEvaluationContext.with(
-                        REFERENCE_TO_VALUES,
-                        context
-                ),
-                "Name1234=\"LabelLocalValue\", TemplateValue=\"TemplateLocalValue123\" " + context
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                context
+            ),
+            "Name1234=\"LabelLocalValue\", TemplateValue=\"TemplateLocalValue123\" " + context
         );
     }
 

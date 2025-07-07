@@ -28,8 +28,8 @@ public final class NotEqualsSymbolSpreadsheetFormulaParserToken extends SymbolSp
     static NotEqualsSymbolSpreadsheetFormulaParserToken with(final String value,
                                                              final String text) {
         return new NotEqualsSymbolSpreadsheetFormulaParserToken(
-                checkValue(value),
-                checkText(text)
+            checkValue(value),
+            checkText(text)
         );
     }
 

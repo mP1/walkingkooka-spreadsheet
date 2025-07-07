@@ -34,9 +34,9 @@ final class SpreadsheetViewportNavigationExtendLeftPixel extends SpreadsheetView
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
         return home.leftPixels(
-                SpreadsheetViewportAnchor.CELL,
-                this.value,
-                context
+            SpreadsheetViewportAnchor.CELL,
+            this.value,
+            context
         ).map(SpreadsheetSelection::toCell);
     }
 
@@ -46,9 +46,9 @@ final class SpreadsheetViewportNavigationExtendLeftPixel extends SpreadsheetView
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
         return selection.extendLeftPixels(
-                anchor,
-                this.value,
-                context
+            anchor,
+            this.value,
+            context
         );
     }
 

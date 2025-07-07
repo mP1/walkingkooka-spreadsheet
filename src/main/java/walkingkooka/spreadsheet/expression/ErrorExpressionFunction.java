@@ -52,7 +52,7 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
     }
 
     private final static Optional<ExpressionFunctionName> NAME = Optional.of(
-            SpreadsheetExpressionFunctions.name("error")
+        SpreadsheetExpressionFunctions.name("error")
     );
 
     @Override
@@ -61,8 +61,8 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
     }
 
     final static ExpressionFunctionParameter<ExpressionNumber> ERROR_VALUE = ExpressionFunctionParameterName.with("error-value")
-            .required(ExpressionNumber.class)
-            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+        .required(ExpressionNumber.class)
+        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
 
 
     private final static List<ExpressionFunctionParameter<?>> PARAMETERS = ExpressionFunctionParameter.list(ERROR_VALUE);
@@ -77,8 +77,8 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
                                   final ExpressionEvaluationContext context) {
         this.checkParameterCount(parameters);
         return SpreadsheetErrorKind.withValue(
-                ERROR_VALUE.getOrFail(parameters, 0)
-                        .intValueExact()
+            ERROR_VALUE.getOrFail(parameters, 0)
+                .intValueExact()
         ).toError();
     }
 
@@ -90,6 +90,6 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
     @Override
     public String toString() {
         return this.name().get()
-                .toString();
+            .toString();
     }
 }

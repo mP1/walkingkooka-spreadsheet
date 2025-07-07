@@ -36,10 +36,10 @@ public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidat
         final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessage(message);
 
         this.checkEquals(
-                error.toValidationError(cell),
-                this.createContext()
-                        .setValidationReference(cell)
-                        .validationError(message)
+            error.toValidationError(cell),
+            this.createContext()
+                .setValidationReference(cell)
+                .validationError(message)
         );
     }
 
@@ -51,10 +51,10 @@ public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidat
         final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessage(message);
 
         this.checkEquals(
-                error.toValidationError(label),
-                this.createContext()
-                        .setValidationReference(label)
-                        .validationError(message)
+            error.toValidationError(label),
+            this.createContext()
+                .setValidationReference(label)
+                .validationError(message)
         );
     }
 

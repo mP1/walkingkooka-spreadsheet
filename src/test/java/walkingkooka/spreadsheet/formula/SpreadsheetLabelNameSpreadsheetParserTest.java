@@ -29,8 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetLabelNameSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameSpreadsheetParser>,
-        ClassTesting2<SpreadsheetLabelNameSpreadsheetParser>,
-        ToStringTesting<SpreadsheetLabelNameSpreadsheetParser> {
+    ClassTesting2<SpreadsheetLabelNameSpreadsheetParser>,
+    ToStringTesting<SpreadsheetLabelNameSpreadsheetParser> {
 
     @Test
     public void testParseWrongFirstCharFail() {
@@ -111,27 +111,27 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     private void parseAndCheck2(final String text,
                                 final String textAfter) {
         this.parseAndCheck(
-                text + textAfter,
-                SpreadsheetFormulaParserToken.label(
-                        SpreadsheetSelection.labelName(text),
-                        text
-                ),
-                text,
-                textAfter
+            text + textAfter,
+            SpreadsheetFormulaParserToken.label(
+                SpreadsheetSelection.labelName(text),
+                text
+            ),
+            text,
+            textAfter
         );
     }
 
     @Test
     public void testMinCount() {
         this.minCountAndCheck(
-                1
+            1
         );
     }
 
     @Test
     public void testMaxCount() {
         this.maxCountAndCheck(
-                1
+            1
         );
     }
 
@@ -150,7 +150,7 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     @Test
     public void testTokens() {
         this.tokensAndCheck(
-                this.createContext()
+            this.createContext()
         );
     }
 
@@ -159,8 +159,8 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetLabelNameSpreadsheetParser.INSTANCE,
-                "LABEL"
+            SpreadsheetLabelNameSpreadsheetParser.INSTANCE,
+            "LABEL"
         );
     }
 

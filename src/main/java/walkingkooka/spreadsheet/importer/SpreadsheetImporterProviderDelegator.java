@@ -27,10 +27,10 @@ public interface SpreadsheetImporterProviderDelegator extends SpreadsheetImporte
     default SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                     final ProviderContext context) {
         return this.spreadsheetImporterProvider()
-                .spreadsheetImporter(
-                        selector,
-                        context
-                );
+            .spreadsheetImporter(
+                selector,
+                context
+            );
     }
 
     @Override
@@ -38,16 +38,16 @@ public interface SpreadsheetImporterProviderDelegator extends SpreadsheetImporte
                                                     final List<?> values,
                                                     final ProviderContext context) {
         return this.spreadsheetImporterProvider().spreadsheetImporter(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
     }
 
     @Override
     default SpreadsheetImporterInfoSet spreadsheetImporterInfos() {
         return this.spreadsheetImporterProvider()
-                .spreadsheetImporterInfos();
+            .spreadsheetImporterInfos();
     }
 
     SpreadsheetImporterProvider spreadsheetImporterProvider();

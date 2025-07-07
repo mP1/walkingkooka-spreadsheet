@@ -48,7 +48,7 @@ final class SpreadsheetCellRangeReferenceCellsConsumer implements Consumer<Sprea
         Objects.requireNonNull(absent, "absent");
 
         cells
-                .forEach(this::addCell);
+            .forEach(this::addCell);
 
         this.present = present;
         this.absent = absent;

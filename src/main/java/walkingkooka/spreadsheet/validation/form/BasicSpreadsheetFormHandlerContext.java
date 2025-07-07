@@ -54,18 +54,18 @@ import java.util.function.Function;
  * dependencies.
  */
 final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandlerContext,
-        CanConvertDelegator,
-        EnvironmentContextDelegator {
+    CanConvertDelegator,
+    EnvironmentContextDelegator {
 
     static BasicSpreadsheetFormHandlerContext with(final Form<SpreadsheetExpressionReference> form,
                                                    final SpreadsheetExpressionReferenceLoader loader,
                                                    final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                    final SpreadsheetEngineContext context) {
         return new BasicSpreadsheetFormHandlerContext(
-                Objects.requireNonNull(form, "form"),
-                Objects.requireNonNull(loader, "loader"),
-                Objects.requireNonNull(cellsSaver, "cellsSaver"),
-                Objects.requireNonNull(context, "context")
+            Objects.requireNonNull(form, "form"),
+            Objects.requireNonNull(loader, "loader"),
+            Objects.requireNonNull(cellsSaver, "cellsSaver"),
+            Objects.requireNonNull(context, "context")
         );
     }
 
@@ -98,20 +98,20 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
 
         // Dont think a ValidationContext should ever need to load another cell.
         return SpreadsheetValidatorContexts.basic(
-                ValidatorContexts.basic(
-                        reference,
-                        (final ValidatorSelector validatorSelector) -> context.validator(validatorSelector, context),
-                        (final Object validatingValue,
-                         final SpreadsheetExpressionReference r) -> context.spreadsheetExpressionEvaluationContext(
-                                cell,
-                                SpreadsheetExpressionReferenceLoaders.fake() // SpreadsheetExpressionReferenceLoader
-                        ).addLocalVariable(
-                                SpreadsheetValidatorContext.VALUE,
-                                Optional.ofNullable(validatingValue)
-                        ), //BiFunction<Object, T, ExpressionEvaluationContext > referenceToExpressionEvaluationContext,
-                        context, // CanConvert,
-                        context // EnvironmentContext
-                )
+            ValidatorContexts.basic(
+                reference,
+                (final ValidatorSelector validatorSelector) -> context.validator(validatorSelector, context),
+                (final Object validatingValue,
+                 final SpreadsheetExpressionReference r) -> context.spreadsheetExpressionEvaluationContext(
+                    cell,
+                    SpreadsheetExpressionReferenceLoaders.fake() // SpreadsheetExpressionReferenceLoader
+                ).addLocalVariable(
+                    SpreadsheetValidatorContext.VALUE,
+                    Optional.ofNullable(validatingValue)
+                ), //BiFunction<Object, T, ExpressionEvaluationContext > referenceToExpressionEvaluationContext,
+                context, // CanConvert,
+                context // EnvironmentContext
+            )
         );
     }
 
@@ -124,15 +124,15 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         }
 
         return this.loadCell(reference)
-                .flatMap((SpreadsheetCell cell) -> cell.formula().value());
+            .flatMap((SpreadsheetCell cell) -> cell.formula().value());
     }
 
     @Override
     public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
         return this.saveFormFieldValues0(
-                FormFieldList.with(
-                        Objects.requireNonNull(fields, "fields")
-                )
+            FormFieldList.with(
+                Objects.requireNonNull(fields, "fields")
+            )
         );
     }
 
@@ -150,7 +150,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
             if (cellOrLabel.isLabelName()) {
                 // attempt to save a field to an unmapped label is a FAIL.
                 cell = context.resolveLabelOrFail(
-                        cellOrLabel.toLabelName()
+                    cellOrLabel.toLabelName()
                 ).toCell();
             } else {
                 // skip CellRange.
@@ -167,17 +167,17 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
             }
 
             final SpreadsheetCellReference duplicate = cellOrLabelToCell.put(
-                    cellOrLabel,
-                    cell
+                cellOrLabel,
+                cell
             );
             if (null != duplicate) {
                 throw new IllegalArgumentException("Multiple fields with same name " + CharSequences.quoteAndEscape(cellOrLabel.text()));
             }
 
             loadedCellToSpreadsheetCell.put(
-                    cell,
-                    this.loadCell(cell)
-                            .orElse(null)
+                cell,
+                this.loadCell(cell)
+                    .orElse(null)
             );
         }
 
@@ -185,20 +185,20 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         final Set<SpreadsheetCell> saving = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         for (final FormField<SpreadsheetExpressionReference> field : fields) {
             final SpreadsheetCellReference cell = cellOrLabelToCell.get(
-                    field.reference()
+                field.reference()
             ).toCell();
 
             // cell might be missing.
             SpreadsheetCell spreadsheetCell = loadedCellToSpreadsheetCell.get(cell);
-            if(null == spreadsheetCell) {
+            if (null == spreadsheetCell) {
                 spreadsheetCell = cell.setFormula(SpreadsheetFormula.EMPTY);
             }
 
             saving.add(
-                    spreadsheetCell.setFormula(
-                            spreadsheetCell.formula()
-                                    .setValue(field.value())
-                    )
+                spreadsheetCell.setFormula(
+                    spreadsheetCell.formula()
+                        .setValue(field.value())
+                )
             );
         }
 
@@ -213,18 +213,18 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         final SpreadsheetEngineContext context = this.context;
 
         final SpreadsheetCellReference cellReference = context.resolveIfLabel((ExpressionReference) reference)
-                .map(SpreadsheetSelection::toCell)
-                .orElse(null);
+            .map(SpreadsheetSelection::toCell)
+            .orElse(null);
 
         return null == cellReference ?
-                Optional.empty() :
-                loader.loadCell(
-                        cellReference,
-                        context.spreadsheetExpressionEvaluationContext(
-                                SpreadsheetEngineContext.NO_CELL,
-                                loader
-                        )
-                );
+            Optional.empty() :
+            loader.loadCell(
+                cellReference,
+                context.spreadsheetExpressionEvaluationContext(
+                    SpreadsheetEngineContext.NO_CELL,
+                    loader
+                )
+            );
     }
 
     private final SpreadsheetExpressionReferenceLoader loader;

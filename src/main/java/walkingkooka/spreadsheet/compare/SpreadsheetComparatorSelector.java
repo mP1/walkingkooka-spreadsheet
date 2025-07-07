@@ -40,10 +40,10 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
      */
     public static SpreadsheetComparatorSelector parse(final String text) {
         return new SpreadsheetComparatorSelector(
-                PluginSelector.parse(
-                        text,
-                        SpreadsheetComparatorName::with
-                )
+            PluginSelector.parse(
+                text,
+                SpreadsheetComparatorName::with
+            )
         );
     }
 
@@ -53,10 +53,10 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
     public static SpreadsheetComparatorSelector with(final SpreadsheetComparatorName name,
                                                      final String text) {
         return new SpreadsheetComparatorSelector(
-                PluginSelector.with(
-                        name,
-                        text
-                )
+            PluginSelector.with(
+                name,
+                text
+            )
         );
     }
 
@@ -80,13 +80,13 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
-                this :
-                new SpreadsheetComparatorSelector(
-                        PluginSelector.with(
-                                name,
-                                this.valueText()
-                        )
-                );
+            this :
+            new SpreadsheetComparatorSelector(
+                PluginSelector.with(
+                    name,
+                    this.valueText()
+                )
+            );
     }
 
     // value............................................................................................................
@@ -104,8 +104,8 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
     public SpreadsheetComparatorSelector setValueText(final String text) {
         final PluginSelector<SpreadsheetComparatorName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetComparatorSelector(different);
+            this :
+            new SpreadsheetComparatorSelector(different);
     }
 
     private final PluginSelector<SpreadsheetComparatorName> selector;
@@ -114,8 +114,8 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
     public SpreadsheetComparatorSelector setValues(final List<?> values) {
         final PluginSelector<SpreadsheetComparatorName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
-                this :
-                new SpreadsheetComparatorSelector(different);
+            this :
+            new SpreadsheetComparatorSelector(different);
     }
 
     // evaluateValueText................................................................................................
@@ -140,15 +140,15 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
         Objects.requireNonNull(provider, "context");
 
         return this.selector.evaluateValueText(
-                SpreadsheetComparatorPluginHelper.INSTANCE::parseName,
-                (n, v, c) -> Cast.to(
-                        provider.spreadsheetComparator(
-                                n,
-                                v,
-                                c
-                        )
-                ),
-                context
+            SpreadsheetComparatorPluginHelper.INSTANCE::parseName,
+            (n, v, c) -> Cast.to(
+                provider.spreadsheetComparator(
+                    n,
+                    v,
+                    c
+                )
+            ),
+            context
         );
     }
 
@@ -162,7 +162,7 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetComparatorSelector && this.equals0((SpreadsheetComparatorSelector) other);
+            other instanceof SpreadsheetComparatorSelector && this.equals0((SpreadsheetComparatorSelector) other);
     }
 
     private boolean equals0(final SpreadsheetComparatorSelector other) {
@@ -194,10 +194,10 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorSelector.class),
-                SpreadsheetComparatorSelector::unmarshall,
-                SpreadsheetComparatorSelector::marshall,
-                SpreadsheetComparatorSelector.class
+            JsonNodeContext.computeTypeName(SpreadsheetComparatorSelector.class),
+            SpreadsheetComparatorSelector::unmarshall,
+            SpreadsheetComparatorSelector::marshall,
+            SpreadsheetComparatorSelector.class
         );
     }
 

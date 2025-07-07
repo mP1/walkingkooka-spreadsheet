@@ -44,8 +44,8 @@ final class SpreadsheetMetadataPropertyNameAuditInfo extends SpreadsheetMetadata
     @Override
     AuditInfo checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof AuditInfo
+            value,
+            v -> v instanceof AuditInfo
         );
     }
 

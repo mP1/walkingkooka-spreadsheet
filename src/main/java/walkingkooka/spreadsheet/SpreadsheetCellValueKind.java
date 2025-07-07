@@ -99,16 +99,16 @@ public enum SpreadsheetCellValueKind {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.formula()
-                    .valueType();
+                .valueType();
         }
     };
 
     SpreadsheetCellValueKind() {
         this.fileExtension = FileExtension.with(
-                CaseKind.SNAKE.change(
-                                this.name(),
-                        CaseKind.KEBAB
-                )
+            CaseKind.SNAKE.change(
+                this.name(),
+                CaseKind.KEBAB
+            )
         );
     }
 

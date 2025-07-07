@@ -96,9 +96,9 @@ import java.util.function.Predicate;
  * The {@link Name} of metadata property.
  */
 public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
-        Comparable<SpreadsheetMetadataPropertyName<?>>,
-        HasSpreadsheetPatternKind,
-        HasUrlFragment {
+    Comparable<SpreadsheetMetadataPropertyName<?>>,
+    HasSpreadsheetPatternKind,
+    HasUrlFragment {
 
     // constants
 
@@ -176,7 +176,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DateTimeSymbols}</code>
      */
     public static final SpreadsheetMetadataPropertyName<DateTimeSymbols> DATE_TIME_SYMBOLS = registerConstant(SpreadsheetMetadataPropertyNameDateTimeSymbols.instance());
-    
+
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DecimalNumberSymbols}</code>
      */
@@ -397,9 +397,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(SpreadsheetColorName)} and {@link SpreadsheetMetadataPropertyName#numberedColor(int)}.
      */
     public final static Set<SpreadsheetMetadataPropertyName<?>> ALL = Sets.readOnly(
-            new TreeSet<>(
-                    CONSTANTS.values()
-            )
+        new TreeSet<>(
+            CONSTANTS.values()
+        )
     );
 
     /**
@@ -460,24 +460,24 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         super();
 
         String finalName = name;
-        if(null == name) {
+        if (null == name) {
             finalName = this.getClass()
-                    .getSimpleName()
-                    .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
-                    .replace("Spreadsheet", "");
+                .getSimpleName()
+                .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
+                .replace("Spreadsheet", "");
             finalName = finalName.substring(0, 1)
-                    .toLowerCase() +
-                    finalName.substring(1);
+                .toLowerCase() +
+                finalName.substring(1);
         }
         this.name = finalName;
 
         this.jsonPropertyName = JsonPropertyName.with(finalName);
 
         this.patchRemove = JsonNode.object()
-                .set(
-                        this.jsonPropertyName,
-                        JsonNode.nullNode()
-                );
+            .set(
+                this.jsonPropertyName,
+                JsonNode.nullNode()
+            );
 
         this.urlFragment = UrlFragment.parse(finalName);
     }
@@ -522,10 +522,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     final SpreadsheetMetadataPropertyValueException spreadsheetMetadataPropertyValueException(final Object value) {
         // Metadata hide-zero-values=123, Expected XYZ
         return new SpreadsheetMetadataPropertyValueException(
-                "Expected " +
-                        this.expected(),
-                this,
-                value
+            "Expected " +
+                this.expected(),
+            this,
+            value
         );
     }
 
@@ -544,7 +544,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     final boolean isNotDefaultProperty() {
         return this instanceof SpreadsheetMetadataPropertyNameAuditInfo ||
-                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId;
+            this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId;
     }
 
     // loadFromLocale...................................................................................................
@@ -581,7 +581,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         Objects.requireNonNull(value, value);
 
         return this.checkValue(
-                this.parseUrlFragmentSaveValueNonNull(value)
+            this.parseUrlFragmentSaveValueNonNull(value)
         );
     }
 
@@ -700,8 +700,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetMetadataPropertyName &&
-                        this.equals0((SpreadsheetMetadataPropertyName<?>) other);
+            other instanceof SpreadsheetMetadataPropertyName &&
+                this.equals0((SpreadsheetMetadataPropertyName<?>) other);
     }
 
     private boolean equals0(final SpreadsheetMetadataPropertyName<?> other) {
@@ -728,11 +728,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     @Override
     public final int compareTo(final SpreadsheetMetadataPropertyName<?> other) {
         return this.caseSensitivity()
-                .comparator()
-                .compare(
-                        this.compareToValue(),
-                        other.compareToValue()
-                );
+            .comparator()
+            .compare(
+                this.compareToValue(),
+                other.compareToValue()
+            );
     }
 
     private String compareToValue() {
@@ -757,9 +757,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public final JsonNode patch(final T value) {
         return null == value ?
-                this.patchRemove :
-                SpreadsheetMetadata.EMPTY.set(this, value)
-                        .marshall(JsonNodeMarshallContexts.basic());
+            this.patchRemove :
+            SpreadsheetMetadata.EMPTY.set(this, value)
+                .marshall(JsonNodeMarshallContexts.basic());
     }
 
     /**
@@ -784,10 +784,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         final Locale locale = Locale.getDefault();
 
         AuditInfo.with(
-                emailAddress,
-                now,
-                emailAddress,
-                now
+            emailAddress,
+            now,
+            emailAddress,
+            now
         );
         Color.BLACK.alpha();
         ConverterSelector.parse("Dummy");
@@ -795,18 +795,18 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             new DateFormatSymbols(locale)
         );
         DecimalNumberSymbols.with(
-                '-',
-                '+',
-                '0',
-                "$",
-                '.',
-                "E",
-                ',',
-                "Infinity",
-                '.',
-                "Nan",
-                ';',
-                '^'
+            '-',
+            '+',
+            '0',
+            "$",
+            '.',
+            "E",
+            ',',
+            "Infinity",
+            '.',
+            "Nan",
+            ';',
+            '^'
         );
         ExpressionNumberKind.DEFAULT.name();
         SpreadsheetExpressionFunctions.parseAliasSet("hello");
@@ -818,34 +818,34 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         PluginNameSet.parse("");
 
         SpreadsheetComparatorNameList.parse(
-                SpreadsheetComparatorName.TEXT.toString()
+            SpreadsheetComparatorName.TEXT.toString()
         );
         ConverterSelector.with(
-                ConverterName.NEVER,
-                ""
+            ConverterName.NEVER,
+            ""
         );
         FormHandlerAliasSet.parse("helloFormHandler");
         FormHandlerSelector.with(
-                FormHandlerName.with("HelloFormHandler"),
-                ""
+            FormHandlerName.with("HelloFormHandler"),
+            ""
         );
         SpreadsheetExporterAliasSet.parse("json");
         SpreadsheetExporterSelector.with(
-                SpreadsheetExporterName.EMPTY,
-                ""
+            SpreadsheetExporterName.EMPTY,
+            ""
         );
         SpreadsheetFormatterSelector.with(
-                SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-                "dd/mm/yyyy"
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            "dd/mm/yyyy"
         );
         SpreadsheetImporterAliasSet.parse("json");
         SpreadsheetImporterSelector.with(
-                SpreadsheetImporterName.EMPTY,
-                ""
+            SpreadsheetImporterName.EMPTY,
+            ""
         );
         SpreadsheetParserSelector.with(
-                SpreadsheetParserName.DATE_PARSER_PATTERN,
-                "dd/mm/yyyy"
+            SpreadsheetParserName.DATE_PARSER_PATTERN,
+            "dd/mm/yyyy"
         );
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);

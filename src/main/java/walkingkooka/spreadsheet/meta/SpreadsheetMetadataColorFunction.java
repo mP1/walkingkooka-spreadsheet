@@ -38,7 +38,7 @@ final class SpreadsheetMetadataColorFunction<K, V> implements Function<K, Option
     @Override
     public Optional<V> apply(final K key) {
         return Optional.ofNullable(
-                this.values.get(key)
+            this.values.get(key)
         );
     }
 

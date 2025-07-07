@@ -55,8 +55,8 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
 
     private static SpreadsheetExpressionReferenceSet withCopy(final SortedSet<SpreadsheetExpressionReference> references) {
         return references.isEmpty() ?
-                EMPTY :
-                new SpreadsheetExpressionReferenceSet(references);
+            EMPTY :
+            new SpreadsheetExpressionReferenceSet(references);
     }
 
     /**
@@ -64,19 +64,19 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
      */
     public static SpreadsheetExpressionReferenceSet parse(final String text) {
         return withCopy(
-                SpreadsheetSelectionCsvParser.parse(
-                        text,
-                        CELL_OR_LABEL,
-                        (SpreadsheetFormulaParserToken token) -> ((SpreadsheetSelection)((HasSpreadsheetReference<?>)token).reference())
-                                .toExpressionReference()
-                )
+            SpreadsheetSelectionCsvParser.parse(
+                text,
+                CELL_OR_LABEL,
+                (SpreadsheetFormulaParserToken token) -> ((SpreadsheetSelection) ((HasSpreadsheetReference<?>) token).reference())
+                    .toExpressionReference()
+            )
         );
     }
 
     private final static Parser<SpreadsheetParserContext> CELL_OR_LABEL = SpreadsheetFormulaParsers.labelName()
-            .or(
-                    SpreadsheetFormulaParsers.cell()
-            );
+        .or(
+            SpreadsheetFormulaParsers.cell()
+        );
 
     private SpreadsheetExpressionReferenceSet(final SortedSet<SpreadsheetExpressionReference> references) {
         super(references);
@@ -88,14 +88,14 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
     public SpreadsheetExpressionReferenceSet setElements(final SortedSet<SpreadsheetExpressionReference> references) {
         final SpreadsheetExpressionReferenceSet spreadsheetExpressionReferenceSet;
 
-        if(references instanceof SpreadsheetExpressionReferenceSet) {
+        if (references instanceof SpreadsheetExpressionReferenceSet) {
             spreadsheetExpressionReferenceSet = (SpreadsheetExpressionReferenceSet) references;
         } else {
             final SortedSet<SpreadsheetExpressionReference> copy = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
             copy.addAll(references);
             spreadsheetExpressionReferenceSet = this.references.equals(copy) ?
-                    this :
-                    withCopy(copy);
+                this :
+                withCopy(copy);
         }
 
         return spreadsheetExpressionReferenceSet;
@@ -120,16 +120,16 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
     static SpreadsheetExpressionReferenceSet unmarshall(final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetExpressionReferenceSet.class),
-                SpreadsheetExpressionReferenceSet::unmarshall,
-                SpreadsheetExpressionReferenceSet::marshall,
-                SpreadsheetExpressionReferenceSet.class
+            JsonNodeContext.computeTypeName(SpreadsheetExpressionReferenceSet.class),
+            SpreadsheetExpressionReferenceSet::unmarshall,
+            SpreadsheetExpressionReferenceSet::marshall,
+            SpreadsheetExpressionReferenceSet.class
         );
         SpreadsheetSelection.A1.toCell(); // trigger static init and json marshall/unmarshall registry
         SpreadsheetSelection.labelName("Hello");

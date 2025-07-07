@@ -24,43 +24,43 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.text.HasTextStyle;
 
 public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadataPropertyName>
-        implements SpreadsheetMetadataTesting {
+    implements SpreadsheetMetadataTesting {
 
     @Test
     public void testConvertWithNull() {
         this.convertFails(
-                null,
-                SpreadsheetMetadataPropertyName.class
+            null,
+            SpreadsheetMetadataPropertyName.class
         );
     }
 
     @Test
     public void testConvertWithInterfaceType() {
         this.convertFails(
-                null,
-                HasTextStyle.class
+            null,
+            HasTextStyle.class
         );
     }
 
     @Test
     public void testConvertEmptyString() {
         this.convertFails(
-                SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
-                "",
-                SpreadsheetMetadataPropertyName.class,
-                this.createContext(),
-                "Empty \"name\""
+            SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
+            "",
+            SpreadsheetMetadataPropertyName.class,
+            this.createContext(),
+            "Empty \"name\""
         );
     }
 
     @Test
     public void testConvertInvalidSpreadsheetMetadataPropertyName() {
         this.convertFails(
-                SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
-                "!invalid",
-                SpreadsheetMetadataPropertyName.class,
-                this.createContext(),
-                "Unknown metadata property name \"!invalid\""
+            SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
+            "!invalid",
+            SpreadsheetMetadataPropertyName.class,
+            this.createContext(),
+            "Unknown metadata property name \"!invalid\""
         );
     }
 
@@ -68,36 +68,36 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest
     public void testConvertCharSequenceSpreadsheetMetadataPropertyNameNamedColor() {
         final SpreadsheetMetadataPropertyName<Integer> name = SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.RED);
         this.convertAndCheck(
-                new StringBuilder(name.value()),
-                name
+            new StringBuilder(name.value()),
+            name
         );
     }
 
     @Test
     public void testConvertStringNamedColor() {
         this.convertSpreadsheetMetadataPropertyNameAndCheck(
-                SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.RED)
+            SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.RED)
         );
     }
 
     @Test
     public void testConvertStringNumberedColor() {
         this.convertSpreadsheetMetadataPropertyNameAndCheck(
-                SpreadsheetMetadataPropertyName.numberedColor(1)
+            SpreadsheetMetadataPropertyName.numberedColor(1)
         );
     }
 
     @Test
     public void testConvertStringRoundingMode() {
         this.convertSpreadsheetMetadataPropertyNameAndCheck(
-                SpreadsheetMetadataPropertyName.ROUNDING_MODE
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE
         );
     }
 
     private void convertSpreadsheetMetadataPropertyNameAndCheck(final SpreadsheetMetadataPropertyName<?> propertyName) {
         this.convertAndCheck(
-                propertyName.value(),
-                propertyName
+            propertyName.value(),
+            propertyName
         );
     }
 
@@ -116,8 +116,8 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
-                "String to SpreadsheetMetadataPropertyName"
+            SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
+            "String to SpreadsheetMetadataPropertyName"
         );
     }
 

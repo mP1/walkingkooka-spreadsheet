@@ -35,10 +35,10 @@ final class SpreadsheetMetadataLocaleContext implements LocaleContext {
     static SpreadsheetMetadataLocaleContext with(final LocaleContext context,
                                                  final Locale locale) {
         return new SpreadsheetMetadataLocaleContext(
-                context instanceof SpreadsheetMetadataLocaleContext ?
-                        ((SpreadsheetMetadataLocaleContext) context).context :
-                        Objects.requireNonNull(context, "context"),
-                Objects.requireNonNull(locale, "locale")
+            context instanceof SpreadsheetMetadataLocaleContext ?
+                ((SpreadsheetMetadataLocaleContext) context).context :
+                Objects.requireNonNull(context, "context"),
+            Objects.requireNonNull(locale, "locale")
         );
     }
 

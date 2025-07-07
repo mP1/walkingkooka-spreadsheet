@@ -25,8 +25,8 @@ public final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValu
     @Override
     public SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor createVisitor() {
         return new SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor(
-                "",
-                null
+            "",
+            null
         );
     }
 

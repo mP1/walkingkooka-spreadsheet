@@ -24,13 +24,11 @@ public abstract class SpreadsheetMetadataPropertyNameBooleanTestCase<N extends S
         super();
     }
 
-    @Override
-    final Boolean propertyValue() {
+    @Override final Boolean propertyValue() {
         return true;
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return Boolean.class.getSimpleName();
     }
 }

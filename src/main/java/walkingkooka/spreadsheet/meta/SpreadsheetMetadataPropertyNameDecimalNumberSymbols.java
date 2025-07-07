@@ -41,7 +41,7 @@ final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends Spreadsh
     @Override
     DecimalNumberSymbols checkValueNonNull(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof DecimalNumberSymbols);
+            v -> v instanceof DecimalNumberSymbols);
     }
 
     @Override
@@ -58,7 +58,7 @@ final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends Spreadsh
     @Override
     Optional<DecimalNumberSymbols> extractLocaleAwareValue(final LocaleContext context) {
         return context.decimalNumberSymbolsForLocale(
-                context.locale()
+            context.locale()
         );
     }
 

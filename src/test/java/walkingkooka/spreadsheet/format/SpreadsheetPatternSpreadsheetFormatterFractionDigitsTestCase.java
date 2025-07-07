@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.ToStringTesting;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatterFractionDigitsTestCase<D extends SpreadsheetPatternSpreadsheetFormatterFractionDigits>
-        extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<D>
-        implements ToStringTesting<D> {
+    extends SpreadsheetPatternSpreadsheetFormatterFractionTestCase<D>
+    implements ToStringTesting<D> {
 
     SpreadsheetPatternSpreadsheetFormatterFractionDigitsTestCase() {
         super();

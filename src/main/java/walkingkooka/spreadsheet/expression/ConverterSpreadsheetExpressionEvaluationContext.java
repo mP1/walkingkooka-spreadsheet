@@ -81,11 +81,11 @@ import java.util.Set;
  * <br>
  */
 final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
-        DateTimeContextDelegator,
-        DecimalNumberContextDelegator,
-        JsonNodeMarshallContextDelegator,
-        JsonNodeUnmarshallContextDelegator,
-        LocaleContextDelegator {
+    DateTimeContextDelegator,
+    DecimalNumberContextDelegator,
+    JsonNodeMarshallContextDelegator,
+    JsonNodeUnmarshallContextDelegator,
+    LocaleContextDelegator {
 
     static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -93,21 +93,21 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         Objects.requireNonNull(context, "context");
 
         return context instanceof ConverterSpreadsheetExpressionEvaluationContext ?
-                unwrap(
-                        converter,
-                        (ConverterSpreadsheetExpressionEvaluationContext) context
-                ) :
-                new ConverterSpreadsheetExpressionEvaluationContext(
-                        converter,
-                        context
-                );
+            unwrap(
+                converter,
+                (ConverterSpreadsheetExpressionEvaluationContext) context
+            ) :
+            new ConverterSpreadsheetExpressionEvaluationContext(
+                converter,
+                context
+            );
     }
 
     private static ConverterSpreadsheetExpressionEvaluationContext unwrap(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                           final ConverterSpreadsheetExpressionEvaluationContext context) {
         return new ConverterSpreadsheetExpressionEvaluationContext(
-                converter,
-                context.context
+            converter,
+            context.context
         );
     }
 
@@ -124,44 +124,44 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.enableConverter ?
-                this.converter.canConvert(
-                        value,
-                        type,
-                        this
-                ) :
-                this.context.canConvert(value, type);
+            this.converter.canConvert(
+                value,
+                type,
+                this
+            ) :
+            this.context.canConvert(value, type);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> target) {
         return this.enableConverter ?
-                this.converter.convert(
-                        value,
-                        target,
-                        this
-                ) :
-                this.context.convert(value, target);
+            this.converter.convert(
+                value,
+                target,
+                this
+            ) :
+            this.context.convert(value, target);
     }
 
     @Override
     public <T> T convertOrFail(final Object value,
                                final Class<T> target) {
         return this.enableConverter ?
-                this.converter.convertOrFail(
-                        value,
-                        target,
-                        this
-                ) :
-                this.context.convertOrFail(value, target);
+            this.converter.convertOrFail(
+                value,
+                target,
+                this
+            ) :
+            this.context.convertOrFail(value, target);
     }
 
     @Override
     public <T> Either<T, String> failConversion(final Object value,
                                                 final Class<T> target) {
         return this.enableConverter ?
-                this.converter.failConversion(value, target) :
-                this.context.failConversion(value, target);
+            this.converter.failConversion(value, target) :
+            this.context.failConversion(value, target);
     }
 
     @Override
@@ -169,8 +169,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
                                                 final Class<T> target,
                                                 final Throwable cause) {
         return this.enableConverter ?
-                this.converter.failConversion(value, target, cause) :
-                this.context.failConversion(value, target, cause);
+            this.converter.failConversion(value, target, cause) :
+            this.context.failConversion(value, target, cause);
     }
 
     /**
@@ -199,8 +199,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
         return SpreadsheetExpressionEvaluationContexts.cell(
-                cell,
-                this
+            cell,
+            this
         );
     }
 
@@ -341,10 +341,10 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         try {
             this.enableConverter = true;
             return parameter.convertOrFail(
-                    value,
-                    0 == this.scope ?
-                            this :
-                            this.context
+                value,
+                0 == this.scope ?
+                    this :
+                    this.context
             );
         } finally {
             this.enableConverter = false;
@@ -367,8 +367,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         this.scope++;
         try {
             return this.context.evaluateFunction(
-                    function,
-                    parameters
+                function,
+                parameters
             );
         } finally {
             this.scope--;
@@ -462,11 +462,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         final SpreadsheetExpressionEvaluationContext after = this.context.setPreProcessor(processor);
 
         return before.equals(after) ?
-                this :
-                new ConverterSpreadsheetExpressionEvaluationContext(
-                        this.converter,
-                        after
-                );
+            this :
+            new ConverterSpreadsheetExpressionEvaluationContext(
+                this.converter,
+                after
+            );
     }
 
     // LocaleContextDelegator...........................................................................................

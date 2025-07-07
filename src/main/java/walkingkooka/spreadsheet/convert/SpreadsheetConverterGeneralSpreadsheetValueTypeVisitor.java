@@ -135,10 +135,10 @@ final class SpreadsheetConverterGeneralSpreadsheetValueTypeVisitor<C extends Con
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .separator(", ")
-                .valueSeparator(", ")
-                .label("mapping").value(this.mapping)
-                .label("general").value(this.converter)
-                .build();
+            .separator(", ")
+            .valueSeparator(", ")
+            .label("mapping").value(this.mapping)
+            .label("general").value(this.converter)
+            .build();
     }
 }

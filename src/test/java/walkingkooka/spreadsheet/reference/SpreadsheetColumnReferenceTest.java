@@ -38,8 +38,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testMAX_VALUE_STRING() {
         this.checkEquals(
-                "XFE",
-                SpreadsheetColumnReference.MAX_VALUE_STRING
+            "XFE",
+            SpreadsheetColumnReference.MAX_VALUE_STRING
         );
     }
 
@@ -63,8 +63,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testNotFound() {
         this.notFoundTextAndCheck(
-                SpreadsheetSelection.parseColumn("Z"),
-                "Column not found: \"Z\""
+            SpreadsheetSelection.parseColumn("Z"),
+            "Column not found: \"Z\""
         );
     }
 
@@ -80,66 +80,66 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testReplaceReferenceMapperRowFails() {
         this.replaceReferencesMapperFails(
-                SpreadsheetSelection.parseRow("2"),
-                "Expected column(s) or cell(s) but got 2"
+            SpreadsheetSelection.parseRow("2"),
+            "Expected column(s) or cell(s) but got 2"
         );
     }
 
     @Test
     public void testReplaceReferenceMapperRowRangeFails() {
         this.replaceReferencesMapperFails(
-                SpreadsheetSelection.parseRowRange("3:4"),
-                "Expected column(s) or cell(s) but got 3:4"
+            SpreadsheetSelection.parseRowRange("3:4"),
+            "Expected column(s) or cell(s) but got 3:4"
         );
     }
 
     @Test
     public void testReplaceReferencesMapperColumnSame() {
         this.replaceReferencesMapperAndCheck(
-                "A",
-                SpreadsheetSelection.parseColumn("A"),
-                0,
-                0
+            "A",
+            SpreadsheetSelection.parseColumn("A"),
+            0,
+            0
         );
     }
 
     @Test
     public void testReplaceReferencesMapperColumnSame2() {
         this.replaceReferencesMapperAndCheck(
-                "B",
-                SpreadsheetSelection.parseColumn("B"),
-                0,
-                0
+            "B",
+            SpreadsheetSelection.parseColumn("B"),
+            0,
+            0
         );
     }
 
     @Test
     public void testReplaceReferencesMapperColumn() {
         this.replaceReferencesMapperAndCheck(
-                "A",
-                SpreadsheetSelection.parseColumn("C"),
-                2,
-                0
+            "A",
+            SpreadsheetSelection.parseColumn("C"),
+            2,
+            0
         );
     }
 
     @Test
     public void testReplaceReferencesMapperColumn2() {
         this.replaceReferencesMapperAndCheck(
-                "B",
-                SpreadsheetSelection.parseColumn("E"),
-                3,
-                0
+            "B",
+            SpreadsheetSelection.parseColumn("E"),
+            3,
+            0
         );
     }
 
     @Test
     public void testReplaceReferencesMapperRangeColumn() {
         this.replaceReferencesMapperAndCheck(
-                "B",
-                SpreadsheetSelection.parseColumnRange("E:Z"),
-                3,
-                0
+            "B",
+            SpreadsheetSelection.parseColumnRange("E:Z"),
+            3,
+            0
         );
     }
 
@@ -148,17 +148,17 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testIfDifferentColumnOrRowTypeFailWithColumn() {
         this.ifDifferentColumnOrRowTypeFail(
-                SpreadsheetSelection.parseColumn("A"),
-                SpreadsheetSelection.parseColumn("B")
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetSelection.parseColumn("B")
         );
     }
 
     @Test
     public void testIfDifferentColumnOrRowTypeFailWithRowFails() {
         this.ifDifferentColumnOrRowTypeFail(
-                SpreadsheetSelection.parseColumn("A"),
-                SpreadsheetSelection.parseRow("12"),
-                "Got Row 12 expected Column"
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetSelection.parseRow("12"),
+            "Got Row 12 expected Column"
         );
     }
 
@@ -167,25 +167,25 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
-                "A",
-                "A=TEXT;B=TEXT;ZZ=TEXT",
-                "Invalid column(s) B, ZZ are not within A"
+            "A",
+            "A=TEXT;B=TEXT;ZZ=TEXT",
+            "Invalid column(s) B, ZZ are not within A"
         );
     }
 
     @Test
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
-                "A",
-                "A=text UP"
+            "A",
+            "A=text UP"
         );
     }
 
     @Test
     public void testComparatorNamesBoundsCheckWithRows() {
         this.comparatorNamesBoundsCheckAndCheck(
-                "A",
-                "1=text;2=text"
+            "A",
+            "1=text;2=text"
         );
     }
 
@@ -195,8 +195,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Override
     public void testColumnOrRowReferenceKind() {
         this.columnOrRowReferenceKindAndCheck(
-                this.createSelection(),
-                SpreadsheetColumnOrRowReferenceKind.COLUMN
+            this.createSelection(),
+            SpreadsheetColumnOrRowReferenceKind.COLUMN
         );
     }
 
@@ -224,9 +224,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testContainsAll() {
         this.containsAllAndCheck(
-                SpreadsheetSelection.parseColumn("A"),
-                SpreadsheetViewportWindows.parse("A1"),
-                false
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetViewportWindows.parse("A1"),
+            false
         );
     }
 
@@ -240,32 +240,32 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testtestEqualsDifferentColumn() {
         this.testFalse(
-                SpreadsheetSelection.parseColumn("A"),
-                SpreadsheetSelection.parseColumn("B")
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetSelection.parseColumn("B")
         );
     }
 
     @Test
     public void testTestWithCellDifferentColumn() {
         this.testFalse(
-                SpreadsheetSelection.parseColumn("A"),
-                SpreadsheetSelection.parseCell("B2")
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
     public void testTestWithCellSameColumn() {
         this.testTrue(
-                SpreadsheetSelection.parseColumn("B"),
-                SpreadsheetSelection.parseCell("B2")
+            SpreadsheetSelection.parseColumn("B"),
+            SpreadsheetSelection.parseCell("B2")
         );
     }
 
     @Test
     public void testTestWithRow() {
         this.testFalse(
-                SpreadsheetSelection.parseColumn("C"),
-                SpreadsheetSelection.parseRow("3")
+            SpreadsheetSelection.parseColumn("C"),
+            SpreadsheetSelection.parseRow("3")
         );
     }
 
@@ -275,10 +275,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testTestCellDifferentColumnFalse() {
         final SpreadsheetColumnReference selection = this.createSelection();
         this.testCellAndCheck(
-                selection,
-                selection.add(1)
-                        .setRow(this.row()),
-                false
+            selection,
+            selection.add(1)
+                .setRow(this.row()),
+            false
         );
     }
 
@@ -286,10 +286,10 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testTestCellDifferentColumnKindTrue() {
         final SpreadsheetColumnReference selection = this.createSelection();
         this.testCellAndCheck(
-                selection,
-                selection.setReferenceKind(selection.referenceKind().flip())
-                        .setRow(this.row()),
-                true
+            selection,
+            selection.setReferenceKind(selection.referenceKind().flip())
+                .setRow(this.row()),
+            true
         );
     }
 
@@ -302,90 +302,90 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testTestCellRangeBefore() {
         this.testCellRangeAndCheck(
-                "B",
-                "C3:E5",
-                false
+            "B",
+            "C3:E5",
+            false
         );
     }
 
     @Test
     public void testTestCellRangeLeftEdge() {
         this.testCellRangeAndCheck(
-                "C",
-                "C3:E5",
-                true
+            "C",
+            "C3:E5",
+            true
         );
     }
 
     @Test
     public void testTestCellRangeCenter() {
         this.testCellRangeAndCheck(
-                "D",
-                "C3:E5",
-                true
+            "D",
+            "C3:E5",
+            true
         );
     }
 
     @Test
     public void testTestCellRangeRightEdge() {
         this.testCellRangeAndCheck(
-                "E",
-                "C3:E5",
-                true
+            "E",
+            "C3:E5",
+            true
         );
     }
 
     @Test
     public void testTestCellRangeAfter() {
         this.testCellRangeAndCheck(
-                "F",
-                "C3:E5",
-                false
+            "F",
+            "C3:E5",
+            false
         );
     }
 
     @Test
     public void testTestColumn() {
         this.testColumnAndCheck(
-                "A",
-                "A",
-                true
+            "A",
+            "A",
+            true
         );
     }
 
     @Test
     public void testTestColumnDifferent() {
         this.testColumnAndCheck(
-                "Z",
-                "A",
-                false
+            "Z",
+            "A",
+            false
         );
     }
 
     @Test
     public void testTestColumnDifferentReferenceKind() {
         this.testColumnAndCheck(
-                "$B",
-                "B",
-                true
+            "$B",
+            "B",
+            true
         );
     }
 
     @Test
     public void testTestColumnDifferentReferenceKind2() {
         this.testColumnAndCheck(
-                "B",
-                "$B",
-                true
+            "B",
+            "$B",
+            true
         );
     }
 
     @Test
     public void testTestRow() {
         this.testRowAndCheck(
-                "A",
-                "1",
-                false
+            "A",
+            "1",
+            false
         );
     }
 
@@ -397,8 +397,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("D");
 
         this.checkEquals(
-                Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)),
-                lower.range(upper)
+            Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)),
+            lower.range(upper)
         );
     }
 
@@ -408,8 +408,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testToColumnOrColumnRangeFails() {
         final SpreadsheetColumnReference selection = this.createSelection();
         this.toColumnOrColumnRangeAndCheck(
-                selection,
-                selection
+            selection,
+            selection
         );
     }
 
@@ -436,19 +436,19 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testEqualReferenceKindIgnored() {
         this.compareToAndCheckEquals(SpreadsheetReferenceKind.ABSOLUTE.column(VALUE),
-                SpreadsheetReferenceKind.RELATIVE.column(VALUE));
+            SpreadsheetReferenceKind.RELATIVE.column(VALUE));
     }
 
     @Test
     public void testLess() {
         this.compareToAndCheckLess(SpreadsheetReferenceKind.ABSOLUTE.column(VALUE),
-                SpreadsheetReferenceKind.ABSOLUTE.column(VALUE + 999));
+            SpreadsheetReferenceKind.ABSOLUTE.column(VALUE + 999));
     }
 
     @Test
     public void testLess2() {
         this.compareToAndCheckLess(SpreadsheetReferenceKind.ABSOLUTE.column(VALUE),
-                SpreadsheetReferenceKind.RELATIVE.column(VALUE + 999));
+            SpreadsheetReferenceKind.RELATIVE.column(VALUE + 999));
     }
 
     @Test
@@ -459,7 +459,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference column4 = SpreadsheetSelection.parseColumn("$D");
 
         this.compareToArraySortAndCheck(column3, column1, column4, column2,
-                column1, column2, column3, column4);
+            column1, column2, column3, column4);
     }
 
     // parseColumn.......................................................................................................
@@ -467,24 +467,24 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testParseColumnStarFails() {
         this.parseStringFails(
-                "*",
-                IllegalArgumentException.class
+            "*",
+            IllegalArgumentException.class
         );
     }
 
     @Test
     public void testParseColumnInvalidCharacterFails() {
         this.parseStringInvalidCharacterFails(
-                "AB789",
-                '7'
+            "AB789",
+            '7'
         );
     }
 
     @Test
     public void testParseColumnMoreThanMaxFails() {
         this.parseStringFails(
-                "ABCDEFGHIJKL",
-                new IllegalColumnArgumentException("Invalid column \"ABCDEFGHIJKL\" not between \"A\" and \"XFE\"")
+            "ABCDEFGHIJKL",
+            new IllegalColumnArgumentException("Invalid column \"ABCDEFGHIJKL\" not between \"A\" and \"XFE\"")
         );
     }
 
@@ -538,21 +538,21 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testParseRange() {
         this.checkEquals(
-                SpreadsheetColumnRangeReference.with(
-                        Range.greaterThanEquals(SpreadsheetSelection.parseColumn("B"))
-                                .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("D")))
-                ),
-                SpreadsheetSelection.parseColumnRange("B:D"));
+            SpreadsheetColumnRangeReference.with(
+                Range.greaterThanEquals(SpreadsheetSelection.parseColumn("B"))
+                    .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("D")))
+            ),
+            SpreadsheetSelection.parseColumnRange("B:D"));
     }
 
     @Test
     public void testParseRange2() {
         this.checkEquals(
-                SpreadsheetColumnRangeReference.with(
-                        Range.greaterThanEquals(SpreadsheetSelection.parseColumn("$B"))
-                                .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("$D")))
-                ),
-                SpreadsheetSelection.parseColumnRange("$B:$D"));
+            SpreadsheetColumnRangeReference.with(
+                Range.greaterThanEquals(SpreadsheetSelection.parseColumn("$B"))
+                    .and(Range.lessThanEquals(SpreadsheetSelection.parseColumn("$D")))
+            ),
+            SpreadsheetSelection.parseColumnRange("$B:$D"));
     }
 
     // parseString.....................................................................................................
@@ -592,9 +592,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testAdd() {
         this.addAndCheck(
-                SpreadsheetSelection.parseColumn("K"),
-                2,
-                SpreadsheetSelection.parseColumn("M")
+            SpreadsheetSelection.parseColumn("K"),
+            2,
+            SpreadsheetSelection.parseColumn("M")
         );
     }
 
@@ -603,9 +603,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testAddSaturated() {
         this.addSaturatedAndCheck(
-                SpreadsheetSelection.parseColumn("K"),
-                2,
-                SpreadsheetSelection.parseColumn("M")
+            SpreadsheetSelection.parseColumn("K"),
+            2,
+            SpreadsheetSelection.parseColumn("M")
         );
     }
 
@@ -614,44 +614,44 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testAddNonZeroRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSelection()
-                        .add(
-                                1,
-                                1
-                        )
+            IllegalArgumentException.class,
+            () -> this.createSelection()
+                .add(
+                    1,
+                    1
+                )
         );
     }
 
     @Test
     public void testAddColumnAndRow() {
         this.addColumnRowAndCheck(
-                SpreadsheetSelection.parseColumn("K"),
-                2,
-                0,
-                SpreadsheetSelection.parseColumn("M")
+            SpreadsheetSelection.parseColumn("K"),
+            2,
+            0,
+            SpreadsheetSelection.parseColumn("M")
         );
     }
 
     @Test
     public void testAddSaturatedNonZeroRowFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSelection()
-                        .addSaturated(
-                                1,
-                                1
-                        )
+            IllegalArgumentException.class,
+            () -> this.createSelection()
+                .addSaturated(
+                    1,
+                    1
+                )
         );
     }
 
     @Test
     public void testAddSaturatedColumnAndRow() {
         this.addSaturatedColumnRowAndCheck(
-                SpreadsheetSelection.parseColumn("K"),
-                2,
-                0,
-                SpreadsheetSelection.parseColumn("M")
+            SpreadsheetSelection.parseColumn("K"),
+            2,
+            0,
+            SpreadsheetSelection.parseColumn("M")
         );
     }
 
@@ -662,9 +662,9 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("C");
 
         this.addIfRelativeAndCheck(
-                reference,
-                1,
-                reference.add(1)
+            reference,
+            1,
+            reference.add(1)
         );
     }
 
@@ -703,8 +703,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                SpreadsheetSelection.parseColumn("AB"),
-                "column AB" + EOL
+            SpreadsheetSelection.parseColumn("AB"),
+            "column AB" + EOL
         );
     }
 
@@ -713,16 +713,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testToCell() {
         this.toCellAndCheck(
-                "A",
-                "A1"
+            "A",
+            "A1"
         );
     }
 
     @Test
     public void testToCell2() {
         this.toCellAndCheck(
-                "B",
-                "B1"
+            "B",
+            "B1"
         );
     }
 
@@ -734,14 +734,14 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference upper = SpreadsheetSelection.parseColumn("B");
 
         this.checkEquals(
-                SpreadsheetColumnRangeReference.with(
-                        Range.greaterThanEquals(lower)
-                                .and(
-                                        Range.lessThanEquals(upper)
-                                )
-                ),
-                lower.columnRange(upper),
-                () -> lower + " columnRange " + upper
+            SpreadsheetColumnRangeReference.with(
+                Range.greaterThanEquals(lower)
+                    .and(
+                        Range.lessThanEquals(upper)
+                    )
+            ),
+            lower.columnRange(upper),
+            () -> lower + " columnRange " + upper
         );
     }
 
@@ -752,8 +752,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("A");
 
         this.toColumnAndCheck(
-                column,
-                column
+            column,
+            column
         );
     }
 
@@ -764,8 +764,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference column = this.createSelection();
 
         this.toColumnRangeAndCheck(
-                SpreadsheetColumnRangeReference.with(Range.singleton(column)),
-                column.toColumnRange()
+            SpreadsheetColumnRangeReference.with(Range.singleton(column)),
+            column.toColumnRange()
         );
     }
 
@@ -884,16 +884,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                              final String other,
                              final boolean RIGHT) {
         this.maxAndCheck(SpreadsheetSelection.parseColumn(reference),
-                SpreadsheetSelection.parseColumn(other),
-                RIGHT);
+            SpreadsheetSelection.parseColumn(other),
+            RIGHT);
     }
 
     private void maxAndCheck(final SpreadsheetColumnReference reference,
                              final SpreadsheetColumnReference other,
                              final boolean left) {
         this.checkEquals(left ? reference : other,
-                reference.max(other),
-                () -> "max of " + reference + " and " + other);
+            reference.max(other),
+            () -> "max of " + reference + " and " + other);
     }
     // min.............................................................................................................
 
@@ -966,16 +966,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                              final String other,
                              final boolean left) {
         this.minAndCheck(SpreadsheetSelection.parseColumn(reference),
-                SpreadsheetSelection.parseColumn(other),
-                left);
+            SpreadsheetSelection.parseColumn(other),
+            left);
     }
 
     private void minAndCheck(final SpreadsheetColumnReference reference,
                              final SpreadsheetColumnReference other,
                              final boolean left) {
         this.checkEquals(left ? reference : other,
-                reference.min(other),
-                () -> "min of " + reference + " and " + other);
+            reference.min(other),
+            () -> "min of " + reference + " and " + other);
     }
 
     // isHidden.........................................................................................................
@@ -983,20 +983,20 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testIsHiddenColumnHidden() {
         this.isHiddenAndCheck(
-                "A",
-                Predicates.is(SpreadsheetSelection.parseColumn("A")),
-                Predicates.fake(),
-                true
+            "A",
+            Predicates.is(SpreadsheetSelection.parseColumn("A")),
+            Predicates.fake(),
+            true
         );
     }
 
     @Test
     public void testIsHiddenNotHidden() {
         this.isHiddenAndCheck(
-                "A",
-                Predicates.never(),
-                Predicates.fake(),
-                false
+            "A",
+            Predicates.never(),
+            Predicates.fake(),
+            false
         );
     }
 
@@ -1005,22 +1005,22 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testLeftColumn() {
         this.leftColumnAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "A"
+            "B",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "A"
         );
     }
 
     @Test
     public void testLeftColumnFirst() {
         this.leftColumnAndCheck(
-                "A",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "A"
+            "A",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "A"
         );
     }
 
@@ -1029,171 +1029,171 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.leftColumnAndCheck(
-                column,
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS_PREDICATE,
-                NO_HIDDEN_ROWS_PREDICATE,
-                Optional.of(
-                        column.add(-1)
-                )
+            column,
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS_PREDICATE,
+            NO_HIDDEN_ROWS_PREDICATE,
+            Optional.of(
+                column.add(-1)
+            )
         );
     }
 
     @Test
     public void testLeftColumnSkipsHidden() {
         this.leftColumnAndCheck(
-                "D",
-                SpreadsheetViewportAnchor.NONE,
-                "C",
-                NO_HIDDEN_ROWS,
-                "B"
+            "D",
+            SpreadsheetViewportAnchor.NONE,
+            "C",
+            NO_HIDDEN_ROWS,
+            "B"
         );
     }
 
     @Test
     public void testLeftPixels() {
         this.leftPixelsAndCheck(
-                "E",
-                SpreadsheetViewportAnchor.LEFT,
-                50,
-                "C",
-                Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B"
+            "E",
+            SpreadsheetViewportAnchor.LEFT,
+            50,
+            "C",
+            Maps.of("A", 5.0, "B", 50.0, "D", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B"
         );
     }
 
     @Test
     public void testUpRowHidden() {
         this.upRowAndCheck(
-                "C",
-                SpreadsheetViewportAnchor.NONE,
-                "C",
-                NO_HIDDEN_ROWS,
-                ""
+            "C",
+            SpreadsheetViewportAnchor.NONE,
+            "C",
+            NO_HIDDEN_ROWS,
+            ""
         );
     }
 
     @Test
     public void testUpRow() {
         this.upRowAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B"
+            "B",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B"
         );
     }
 
     @Test
     public void testUpPixels() {
         this.upPixelsAndCheck(
-                "D",
-                SpreadsheetViewportAnchor.LEFT,
-                50,
-                NO_HIDDEN_COLUMNS,
-                Maps.empty(),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "D"
+            "D",
+            SpreadsheetViewportAnchor.LEFT,
+            50,
+            NO_HIDDEN_COLUMNS,
+            Maps.empty(),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "D"
         );
     }
 
     @Test
     public void testRightColumn() {
         this.rightColumnAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C"
+            "B",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C"
         );
     }
 
     @Test
     public void testRightColumnFirst() {
         this.rightColumnAndCheck(
-                "A",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B"
+            "A",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B"
         );
     }
 
     @Test
     public void testRightColumnLast() {
         final String column = SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                .toString();
+            .toString();
 
         this.rightColumnAndCheck(
-                column,
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                column
+            column,
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            column
         );
     }
 
     @Test
     public void testRightColumnSkipsHidden() {
         this.rightColumnAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.NONE,
-                "C",
-                NO_HIDDEN_ROWS,
-                "D"
+            "B",
+            SpreadsheetViewportAnchor.NONE,
+            "C",
+            NO_HIDDEN_ROWS,
+            "D"
         );
     }
 
     @Test
     public void testRightPixels() {
         this.rightPixelsAndCheck(
-                "E",
-                SpreadsheetViewportAnchor.LEFT,
-                50,
-                "F",
-                Maps.of("X", 5.0, "E", 5.0, "G", 50.0, "H", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "H"
+            "E",
+            SpreadsheetViewportAnchor.LEFT,
+            50,
+            "F",
+            Maps.of("X", 5.0, "E", 5.0, "G", 50.0, "H", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "H"
         );
     }
 
     @Test
     public void testDownRow() {
         this.downRowAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B"
+            "B",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B"
         );
     }
 
     @Test
     public void testDownRowHidden() {
         this.downRowAndCheck(
-                "C",
-                SpreadsheetViewportAnchor.NONE,
-                "C",
-                NO_HIDDEN_ROWS,
-                ""
+            "C",
+            SpreadsheetViewportAnchor.NONE,
+            "C",
+            NO_HIDDEN_ROWS,
+            ""
         );
     }
 
     @Test
     public void testDownPixels() {
         this.downPixelsAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.LEFT,
-                50,
-                "",
-                Maps.empty(),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B"
+            "B",
+            SpreadsheetViewportAnchor.LEFT,
+            50,
+            "",
+            Maps.empty(),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B"
         );
     }
 
@@ -1202,26 +1202,26 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testExtendRange() {
         this.extendRangeAndCheck(
-                "B",
-                "C",
-                "B:C"
+            "B",
+            "C",
+            "B:C"
         );
     }
 
     @Test
     public void testExtendRange2() {
         this.extendRangeAndCheck(
-                "C",
-                "B",
-                "B:C"
+            "C",
+            "B",
+            "B:C"
         );
     }
 
     @Test
     public void testExtendRangeFirstColumn() {
         this.extendRangeAndCheck(
-                "A",
-                "A"
+            "A",
+            "A"
         );
     }
 
@@ -1235,12 +1235,12 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testExtendLeftColumn() {
         this.extendLeftColumnAndCheck(
-                "C",
-                SpreadsheetViewportAnchor.COLUMN,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "B:C",
-                SpreadsheetViewportAnchor.RIGHT
+            "C",
+            SpreadsheetViewportAnchor.COLUMN,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "B:C",
+            SpreadsheetViewportAnchor.RIGHT
         );
     }
 
@@ -1249,93 +1249,93 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final String column = "A";
 
         this.extendLeftColumnAndCheck(
-                column,
-                SpreadsheetViewportAnchor.COLUMN,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                column,
-                SpreadsheetViewportAnchor.COLUMN
+            column,
+            SpreadsheetViewportAnchor.COLUMN,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            column,
+            SpreadsheetViewportAnchor.COLUMN
         );
     }
 
     @Test
     public void testExtendLeftColumnSkipsHidden() {
         this.extendLeftColumnAndCheck(
-                "D",
-                SpreadsheetViewportAnchor.COLUMN,
-                "C",
-                NO_HIDDEN_ROWS,
-                "B:D",
-                SpreadsheetViewportAnchor.RIGHT
+            "D",
+            SpreadsheetViewportAnchor.COLUMN,
+            "C",
+            NO_HIDDEN_ROWS,
+            "B:D",
+            SpreadsheetViewportAnchor.RIGHT
         );
     }
 
     @Test
     public void testExtendLeftPixels() {
         this.extendLeftPixelsAndCheck(
-                "E",
-                SpreadsheetViewportAnchor.RIGHT,
-                50,
-                "D",
-                Maps.of("C", 50.0, "B", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B:E",
-                SpreadsheetViewportAnchor.RIGHT
+            "E",
+            SpreadsheetViewportAnchor.RIGHT,
+            50,
+            "D",
+            Maps.of("C", 50.0, "B", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B:E",
+            SpreadsheetViewportAnchor.RIGHT
         );
     }
 
     @Test
     public void testExtendRightColumn() {
         this.extendRightColumnAndCheck(
-                "C",
-                SpreadsheetViewportAnchor.NONE,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                "C:D",
-                SpreadsheetViewportAnchor.LEFT
+            "C",
+            SpreadsheetViewportAnchor.NONE,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            "C:D",
+            SpreadsheetViewportAnchor.LEFT
         );
     }
 
     @Test
     public void testExtendRightColumnLast() {
         final String column = SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                .toString();
+            .toString();
 
         this.extendRightColumnAndCheck(
-                column,
-                SpreadsheetViewportAnchor.COLUMN,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                column,
-                SpreadsheetViewportAnchor.COLUMN
+            column,
+            SpreadsheetViewportAnchor.COLUMN,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            column,
+            SpreadsheetViewportAnchor.COLUMN
         );
     }
 
     @Test
     public void testExtendRightColumnSkipsHidden() {
         this.extendRightColumnAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.NONE,
-                "C",
-                NO_HIDDEN_ROWS,
-                "B:D",
-                SpreadsheetViewportAnchor.LEFT
+            "B",
+            SpreadsheetViewportAnchor.NONE,
+            "C",
+            NO_HIDDEN_ROWS,
+            "B:D",
+            SpreadsheetViewportAnchor.LEFT
         );
     }
 
     @Test
     public void testExtendRightPixels() {
         this.extendRightPixelsAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.LEFT,
-                50,
-                "C",
-                Maps.of("D", 50.0, "E", 50.0),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B:E",
-                SpreadsheetViewportAnchor.LEFT
+            "B",
+            SpreadsheetViewportAnchor.LEFT,
+            50,
+            "C",
+            Maps.of("D", 50.0, "E", 50.0),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B:E",
+            SpreadsheetViewportAnchor.LEFT
         );
     }
 
@@ -1344,39 +1344,39 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final String column = "B";
 
         this.extendUpRowAndCheck(
-                column,
-                SpreadsheetViewportAnchor.COLUMN,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                column,
-                SpreadsheetViewportAnchor.COLUMN
+            column,
+            SpreadsheetViewportAnchor.COLUMN,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            column,
+            SpreadsheetViewportAnchor.COLUMN
         );
     }
 
     @Test
     public void testExtendUpRowColumnHidden() {
         this.extendUpRowAndCheck(
-                "C",
-                SpreadsheetViewportAnchor.COLUMN,
-                "C",
-                NO_HIDDEN_ROWS,
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "C",
+            SpreadsheetViewportAnchor.COLUMN,
+            "C",
+            NO_HIDDEN_ROWS,
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendUpPixels() {
         this.extendUpPixelsAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.COLUMN,
-                50,
-                "",
-                Maps.empty(),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B",
-                SpreadsheetViewportAnchor.COLUMN
+            "B",
+            SpreadsheetViewportAnchor.COLUMN,
+            50,
+            "",
+            Maps.empty(),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B",
+            SpreadsheetViewportAnchor.COLUMN
         );
     }
 
@@ -1385,39 +1385,39 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final String column = "B";
 
         this.extendDownRowAndCheck(
-                column,
-                SpreadsheetViewportAnchor.COLUMN,
-                NO_HIDDEN_COLUMNS,
-                NO_HIDDEN_ROWS,
-                column,
-                SpreadsheetViewportAnchor.COLUMN
+            column,
+            SpreadsheetViewportAnchor.COLUMN,
+            NO_HIDDEN_COLUMNS,
+            NO_HIDDEN_ROWS,
+            column,
+            SpreadsheetViewportAnchor.COLUMN
         );
     }
 
     @Test
     public void testExtendDownRowHiddenColumn() {
         this.extendDownRowAndCheck(
-                "C",
-                SpreadsheetViewportAnchor.COLUMN,
-                "C",
-                NO_HIDDEN_ROWS,
-                "",
-                SpreadsheetViewportAnchor.NONE
+            "C",
+            SpreadsheetViewportAnchor.COLUMN,
+            "C",
+            NO_HIDDEN_ROWS,
+            "",
+            SpreadsheetViewportAnchor.NONE
         );
     }
 
     @Test
     public void testExtendDownPixels() {
         this.extendDownPixelsAndCheck(
-                "B",
-                SpreadsheetViewportAnchor.COLUMN,
-                50,
-                "",
-                Maps.empty(),
-                NO_HIDDEN_ROWS,
-                Maps.empty(),
-                "B",
-                SpreadsheetViewportAnchor.COLUMN
+            "B",
+            SpreadsheetViewportAnchor.COLUMN,
+            50,
+            "",
+            Maps.empty(),
+            NO_HIDDEN_ROWS,
+            Maps.empty(),
+            "B",
+            SpreadsheetViewportAnchor.COLUMN
         );
     }
 
@@ -1426,18 +1426,18 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testFocused() {
         this.focusedAndCheck(
-                "A",
-                SpreadsheetViewportAnchor.NONE,
-                "A"
+            "A",
+            SpreadsheetViewportAnchor.NONE,
+            "A"
         );
     }
 
     @Test
     public void testFocused2() {
         this.focusedAndCheck(
-                "$B",
-                SpreadsheetViewportAnchor.NONE,
-                "$B"
+            "$B",
+            SpreadsheetViewportAnchor.NONE,
+            "$B"
         );
     }
 
@@ -1448,12 +1448,12 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         final String text = "B";
 
         this.toParserTokenAndCheck(
+            SpreadsheetSelection.parseColumn(text),
+            SpreadsheetFormulaParserToken.column(
                 SpreadsheetSelection.parseColumn(text),
-                SpreadsheetFormulaParserToken.column(
-                        SpreadsheetSelection.parseColumn(text),
-                        text
-                ),
-                SpreadsheetFormulaParsers.column()
+                text
+            ),
+            SpreadsheetFormulaParsers.column()
         );
     }
 
@@ -1462,18 +1462,18 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testEqualsIgnoreReferenceKindDifferentKind() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "A",
-                "$A",
-                true
+            "A",
+            "$A",
+            true
         );
     }
 
     @Test
     public void testEqualsIgnoreReferenceKindDifferent() {
         this.equalsIgnoreReferenceKindAndCheck(
-                "A",
-                "B",
-                false
+            "A",
+            "B",
+            false
         );
     }
 
@@ -1526,8 +1526,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     SpreadsheetColumnReference createReference(final int value,
                                                final SpreadsheetReferenceKind kind) {
         return SpreadsheetSelection.column(
-                value,
-                kind
+            value,
+            kind
         );
     }
 

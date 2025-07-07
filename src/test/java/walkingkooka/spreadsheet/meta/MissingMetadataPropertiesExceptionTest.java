@@ -32,16 +32,16 @@ public final class MissingMetadataPropertiesExceptionTest implements ThrowableTe
     @Test
     public void testGetMessage() {
         final MissingMetadataPropertiesException thrown = new MissingMetadataPropertiesException(
-                Sets.of(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES,
-                        SpreadsheetMetadataPropertyName.ROUNDING_MODE
-                )
+            Sets.of(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES,
+                SpreadsheetMetadataPropertyName.ROUNDING_MODE
+            )
         );
 
         this.checkEquals(
-                "Metadata missing: auditInfo, hideZeroValues, roundingMode",
-                thrown.getMessage()
+            "Metadata missing: auditInfo, hideZeroValues, roundingMode",
+            thrown.getMessage()
         );
     }
 

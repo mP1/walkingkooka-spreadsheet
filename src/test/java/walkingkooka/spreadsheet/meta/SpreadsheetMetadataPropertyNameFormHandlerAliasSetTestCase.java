@@ -25,8 +25,7 @@ public abstract class SpreadsheetMetadataPropertyNameFormHandlerAliasSetTestCase
         super();
     }
 
-    @Override
-    final String propertyValueType() {
+    @Override final String propertyValueType() {
         return FormHandlerAliasSet.class.getSimpleName();
     }
 }

@@ -24,48 +24,48 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 public final class SpreadsheetImportSpreadsheetImporterProviderTest implements SpreadsheetImporterProviderTesting<SpreadsheetImportSpreadsheetImporterProvider>,
-        TreePrintableTesting {
+    TreePrintableTesting {
 
     @Test
     public void testSpreadsheetImporterSelectorCollection() {
         this.spreadsheetImporterAndCheck(
-                "collection (empty, empty)",
-                ProviderContexts.fake(),
-                SpreadsheetImporters.collection(
-                        Lists.of(
-                                SpreadsheetImporters.empty(),
-                                SpreadsheetImporters.empty()
-                        )
+            "collection (empty, empty)",
+            ProviderContexts.fake(),
+            SpreadsheetImporters.collection(
+                Lists.of(
+                    SpreadsheetImporters.empty(),
+                    SpreadsheetImporters.empty()
                 )
+            )
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelectorEmpty() {
         this.spreadsheetImporterAndCheck(
-                "empty",
-                ProviderContexts.fake(),
-                SpreadsheetImporters.empty()
+            "empty",
+            ProviderContexts.fake(),
+            SpreadsheetImporters.empty()
         );
     }
 
     @Test
     public void testSpreadsheetImporterSelectorJson() {
         this.spreadsheetImporterAndCheck(
-                "json",
-                ProviderContexts.fake(),
-                SpreadsheetImporters.json()
+            "json",
+            ProviderContexts.fake(),
+            SpreadsheetImporters.json()
         );
     }
 
     @Test
     public void testSpreadsheetImporterInfo() {
         this.treePrintAndCheck(
-                SpreadsheetImportSpreadsheetImporterProvider.INSTANCE.spreadsheetImporterInfos(),
-                "SpreadsheetImporterInfoSet\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +
-                        "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\n"
+            SpreadsheetImportSpreadsheetImporterProvider.INSTANCE.spreadsheetImporterInfos(),
+            "SpreadsheetImporterInfoSet\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\n"
         );
     }
 

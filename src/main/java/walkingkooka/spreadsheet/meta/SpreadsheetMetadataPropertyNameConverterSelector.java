@@ -34,21 +34,18 @@ abstract class SpreadsheetMetadataPropertyNameConverterSelector extends Spreadsh
         super(name);
     }
 
-    @Override
-    final ConverterSelector checkValueNonNull(final Object value) {
+    @Override final ConverterSelector checkValueNonNull(final Object value) {
         return this.checkValueType(
-                value,
-                v -> v instanceof ConverterSelector
+            value,
+            v -> v instanceof ConverterSelector
         );
     }
 
-    @Override
-    final String expected() {
+    @Override final String expected() {
         return ConverterSelector.class.getSimpleName();
     }
 
-    @Override
-    final Optional<ConverterSelector> extractLocaleAwareValue(final LocaleContext context) {
+    @Override final Optional<ConverterSelector> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 
@@ -59,8 +56,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterSelector extends Spreadsh
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    final ConverterSelector parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override final ConverterSelector parseUrlFragmentSaveValueNonNull(final String value) {
         return ConverterSelector.parse(value);
     }
 }

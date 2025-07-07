@@ -33,11 +33,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
-        ComparableTesting2<SpreadsheetLabelMapping>,
-        JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
-        HateosResourceTesting<SpreadsheetLabelMapping, SpreadsheetLabelName>,
-        TreePrintableTesting,
-        ToStringTesting<SpreadsheetLabelMapping> {
+    ComparableTesting2<SpreadsheetLabelMapping>,
+    JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
+    HateosResourceTesting<SpreadsheetLabelMapping, SpreadsheetLabelName>,
+    TreePrintableTesting,
+    ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("label123");
     private final static SpreadsheetExpressionReference REFERENCE = cell(1);
@@ -45,24 +45,24 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testWithNullLabelFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetLabelMapping.with(null, REFERENCE)
+            NullPointerException.class,
+            () -> SpreadsheetLabelMapping.with(null, REFERENCE)
         );
     }
 
     @Test
     public void testWithNullReferenceFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetLabelMapping.with(LABEL, null)
+            NullPointerException.class,
+            () -> SpreadsheetLabelMapping.with(LABEL, null)
         );
     }
 
     @Test
     public void testWithReferenceSameAsLabelFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SpreadsheetLabelMapping.with(LABEL, LABEL)
+            IllegalArgumentException.class,
+            () -> SpreadsheetLabelMapping.with(LABEL, LABEL)
         );
     }
 
@@ -86,12 +86,12 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, different);
 
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> mapping.setLabel(different)
+            IllegalArgumentException.class,
+            () -> mapping.setLabel(different)
         );
         this.checkEquals(
-                "Label \"different\" and reference \"different\" must be different",
-                thrown.getMessage()
+            "Label \"different\" and reference \"different\" must be different",
+            thrown.getMessage()
         );
     }
 
@@ -126,8 +126,8 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setReference(LABEL));
         this.checkEquals(
-                "Reference \"label123\" must be different to label \"label123\"",
-                thrown.getMessage()
+            "Reference \"label123\" must be different to label \"label123\"",
+            thrown.getMessage()
         );
     }
 
@@ -158,11 +158,11 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createObject(),
-                "{\n" +
-                        "  \"label\": \"label123\",\n" +
-                        "  \"reference\": \"$B3\"\n" +
-                        "}"
+            this.createObject(),
+            "{\n" +
+                "  \"label\": \"label123\",\n" +
+                "  \"reference\": \"$B3\"\n" +
+                "}"
         );
     }
 
@@ -183,8 +183,8 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetLabelName.with("Label234")
-                        .setLabelMappingReference(reference)
+            SpreadsheetLabelName.with("Label234")
+                .setLabelMappingReference(reference)
         );
     }
 
@@ -194,7 +194,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     public void testHateosLinkId() {
         final String text = "ABC12345678";
         this.hateosLinkIdAndCheck(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(text), SpreadsheetSelection.A1),
-                text);
+            text);
     }
 
     // TreePrintableTesting.............................................................................................
@@ -202,8 +202,8 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testTreePrint() {
         this.treePrintAndCheck(
-                this.createComparable(),
-                "label123: $B3" + EOL
+            this.createComparable(),
+            "label123: $B3" + EOL
         );
     }
 
@@ -212,20 +212,20 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testEqualsDifferentLabel() {
         this.checkNotEquals(
-                SpreadsheetLabelMapping.with(
-                        SpreadsheetSelection.labelName("different"),
-                        REFERENCE
-                )
+            SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("different"),
+                REFERENCE
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentReference() {
         this.checkNotEquals(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        cell(99)
-                )
+            SpreadsheetLabelMapping.with(
+                LABEL,
+                cell(99)
+            )
         );
     }
 
@@ -236,42 +236,42 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         this.compareToAndCheckEquals(
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.A1
-                ),
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.A1
-                )
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+            ),
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+            )
         );
     }
 
     @Test
     public void testCompareToSameLabelsDifferentCase() {
         this.compareToAndCheckEquals(
-                SpreadsheetLabelMapping.with(
-                        SpreadsheetSelection.labelName("Label123"),
-                        SpreadsheetSelection.A1
-                ),
-                SpreadsheetLabelMapping.with(
-                        SpreadsheetSelection.labelName("LABEL123"),
-                        SpreadsheetSelection.A1
-                )
+            SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("Label123"),
+                SpreadsheetSelection.A1
+            ),
+            SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("LABEL123"),
+                SpreadsheetSelection.A1
+            )
         );
     }
 
     @Test
     public void testCompareToDifferentLabels() {
         this.compareToAndCheckLess(
-                SpreadsheetLabelMapping.with(
-                        SpreadsheetSelection.labelName("Before"),
-                        SpreadsheetSelection.A1
-                ),
-                SpreadsheetLabelMapping.with(
-                        SpreadsheetSelection.labelName("ZZZ"),
-                        SpreadsheetSelection.A1
-                )
+            SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("Before"),
+                SpreadsheetSelection.A1
+            ),
+            SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("ZZZ"),
+                SpreadsheetSelection.A1
+            )
         );
     }
 
@@ -280,14 +280,14 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
 
         this.compareToAndCheckLess(
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("a1")
-                ),
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("B2")
-                )
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("a1")
+            ),
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+            )
         );
     }
 
@@ -296,14 +296,14 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
 
         this.compareToAndCheckLess(
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("A1")
-                ),
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("B2")
-                )
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("A1")
+            ),
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+            )
         );
     }
 
@@ -312,14 +312,14 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
 
         this.compareToAndCheckLess(
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("$A$1")
-                ),
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("$B$2")
-                )
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("$A$1")
+            ),
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("$B$2")
+            )
         );
     }
 
@@ -328,14 +328,14 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
 
         this.compareToAndCheckEquals(
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.parseCell("$A$1")
-                ),
-                SpreadsheetLabelMapping.with(
-                        label,
-                        SpreadsheetSelection.A1
-                )
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("$A$1")
+            ),
+            SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+            )
         );
     }
 
@@ -364,7 +364,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     private static SpreadsheetCellReference cell(final int column) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
+            .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
     }
 
     // ClassTesting...............................................................................................

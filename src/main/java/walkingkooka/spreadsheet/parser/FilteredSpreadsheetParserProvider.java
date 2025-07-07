@@ -33,16 +33,16 @@ final class FilteredSpreadsheetParserProvider implements SpreadsheetParserProvid
     static FilteredSpreadsheetParserProvider with(final SpreadsheetParserProvider provider,
                                                   final SpreadsheetParserInfoSet infos) {
         return new FilteredSpreadsheetParserProvider(
-                Objects.requireNonNull(provider, "provider"),
-                Objects.requireNonNull(infos, "infos")
+            Objects.requireNonNull(provider, "provider"),
+            Objects.requireNonNull(infos, "infos")
         );
     }
 
     private FilteredSpreadsheetParserProvider(final SpreadsheetParserProvider provider,
                                               final SpreadsheetParserInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
-                infos.names(),
-                SpreadsheetParserPluginHelper.INSTANCE
+            infos.names(),
+            SpreadsheetParserPluginHelper.INSTANCE
         );
 
         this.provider = provider;
@@ -56,8 +56,8 @@ final class FilteredSpreadsheetParserProvider implements SpreadsheetParserProvid
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
-                this.guard.selector(selector),
-                context
+            this.guard.selector(selector),
+            context
         );
     }
 
@@ -70,16 +70,16 @@ final class FilteredSpreadsheetParserProvider implements SpreadsheetParserProvid
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetParser(
-                this.guard.name(name),
-                values,
-                context
+            this.guard.name(name),
+            values,
+            context
         );
     }
 
     @Override
     public Optional<SpreadsheetParserSelectorToken> spreadsheetParserNextToken(final SpreadsheetParserSelector selector) {
         return this.provider.spreadsheetParserNextToken(
-                this.guard.selector(selector)
+            this.guard.selector(selector)
         );
     }
 

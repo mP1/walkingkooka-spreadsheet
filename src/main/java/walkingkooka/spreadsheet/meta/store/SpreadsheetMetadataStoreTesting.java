@@ -33,13 +33,13 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends StoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
-        TypeNameTesting<S> {
+    TypeNameTesting<S> {
 
     SpreadsheetMetadata CREATE_TEMPLATE = SpreadsheetMetadata.EMPTY.setDefaults(
-            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    Locale.forLanguageTag("EN-AU")
-            )
+        SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            Locale.forLanguageTag("EN-AU")
+        )
     );
 
     // create.............................................................................................................
@@ -47,24 +47,24 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
     @Test
     default void testCreateWithNullCreatorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .create(
-                                null,
-                                Optional.empty()
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .create(
+                    null,
+                    Optional.empty()
+                )
         );
     }
 
     @Test
     default void testCreateWithNullLocaleFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createStore()
-                        .create(
-                                EmailAddress.parse("creator@example.com"),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createStore()
+                .create(
+                    EmailAddress.parse("creator@example.com"),
+                    null
+                )
         );
     }
 
@@ -75,14 +75,14 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
     @Test
     default void testSaveWithoutRequiredFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createStore()
-                        .save(SpreadsheetMetadata.EMPTY)
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .save(SpreadsheetMetadata.EMPTY)
         );
 
         this.checkEquals(
-                "Metadata missing required properties: auditInfo, locale",
-                thrown.getMessage()
+            "Metadata missing required properties: auditInfo, locale",
+            thrown.getMessage()
         );
     }
 
@@ -99,18 +99,18 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         final LocalDateTime modifiedDateTime = LocalDateTime.of(2000, 1, 2, 12, 58, 59);
 
         return SpreadsheetMetadata.EMPTY
-                .set(
-                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                        this.id()
-                ).set(
-                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                        AuditInfo.with(
-                                creatorEmail,
-                                createDateTime,
-                                modifiedEmail,
-                                modifiedDateTime
-                        )
-                ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+            .set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                this.id()
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    creatorEmail,
+                    createDateTime,
+                    modifiedEmail,
+                    modifiedDateTime
+                )
+            ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
     }
 
     // TypeNameTesting..................................................................

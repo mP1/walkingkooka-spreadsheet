@@ -43,16 +43,16 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
                           final SpreadsheetPatternSimpleDateFormatPatternVisitorSeconds seconds,
                           final boolean ampm) {
         final SpreadsheetPatternSimpleDateFormatPatternVisitor visitor = new SpreadsheetPatternSimpleDateFormatPatternVisitor(
-                year,
-                seconds,
-                ampm
+            year,
+            seconds,
+            ampm
         );
         visitor.accept(pattern);
 
         // normalize spaces
         String result = visitor.pattern
-                .toString()
-                .trim();
+            .toString()
+            .trim();
         for (; ; ) {
             final String less = result.replace("  ", " ");
             if (less.equals(result)) {
@@ -352,9 +352,9 @@ final class SpreadsheetPatternSimpleDateFormatPatternVisitor extends SimpleDateF
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("year").value(this.year)
-                .label("seconds").value(this.seconds)
-                .label("ampm").value(this.ampm)
-                .build();
+            .label("year").value(this.year)
+            .label("seconds").value(this.seconds)
+            .label("ampm").value(this.ampm)
+            .build();
     }
 }

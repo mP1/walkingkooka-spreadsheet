@@ -48,66 +48,66 @@ import java.util.stream.Collectors;
  */
 public enum SpreadsheetPatternKind implements HasUrlFragment {
     DATE_FORMAT_PATTERN(
-            SpreadsheetPattern::parseDateFormatPattern,
-            SpreadsheetPattern::dateFormatPattern,
-            SpreadsheetFormatParserTokenKind::isDateFormat,
-            "date"
+        SpreadsheetPattern::parseDateFormatPattern,
+        SpreadsheetPattern::dateFormatPattern,
+        SpreadsheetFormatParserTokenKind::isDateFormat,
+        "date"
     ),
 
     DATE_PARSE_PATTERN(
-            SpreadsheetPattern::parseDateParsePattern,
-            SpreadsheetPattern::dateParsePattern,
-            SpreadsheetFormatParserTokenKind::isDateParse,
-            "date"
+        SpreadsheetPattern::parseDateParsePattern,
+        SpreadsheetPattern::dateParsePattern,
+        SpreadsheetFormatParserTokenKind::isDateParse,
+        "date"
     ),
 
     DATE_TIME_FORMAT_PATTERN(
-            SpreadsheetPattern::parseDateTimeFormatPattern,
-            SpreadsheetPattern::dateTimeFormatPattern,
-            SpreadsheetFormatParserTokenKind::isDateTimeFormat,
-            "date-time"
+        SpreadsheetPattern::parseDateTimeFormatPattern,
+        SpreadsheetPattern::dateTimeFormatPattern,
+        SpreadsheetFormatParserTokenKind::isDateTimeFormat,
+        "date-time"
     ),
 
     DATE_TIME_PARSE_PATTERN(
-            SpreadsheetPattern::parseDateTimeParsePattern,
-            SpreadsheetPattern::dateTimeParsePattern,
-            SpreadsheetFormatParserTokenKind::isDateTimeParse,
-            "date-time"
+        SpreadsheetPattern::parseDateTimeParsePattern,
+        SpreadsheetPattern::dateTimeParsePattern,
+        SpreadsheetFormatParserTokenKind::isDateTimeParse,
+        "date-time"
     ),
 
     NUMBER_FORMAT_PATTERN(
-            SpreadsheetPattern::parseNumberFormatPattern,
-            SpreadsheetPattern::numberFormatPattern,
-            SpreadsheetFormatParserTokenKind::isNumberFormat,
-            "number"
+        SpreadsheetPattern::parseNumberFormatPattern,
+        SpreadsheetPattern::numberFormatPattern,
+        SpreadsheetFormatParserTokenKind::isNumberFormat,
+        "number"
     ),
 
     NUMBER_PARSE_PATTERN(
-            SpreadsheetPattern::parseNumberParsePattern,
-            SpreadsheetPattern::numberParsePattern,
-            SpreadsheetFormatParserTokenKind::isNumberParse,
-            "number"
+        SpreadsheetPattern::parseNumberParsePattern,
+        SpreadsheetPattern::numberParsePattern,
+        SpreadsheetFormatParserTokenKind::isNumberParse,
+        "number"
     ),
 
     TEXT_FORMAT_PATTERN(
-            SpreadsheetPattern::parseTextFormatPattern,
-            SpreadsheetPattern::textFormatPattern,
-            SpreadsheetFormatParserTokenKind::isTextFormat,
-            "text"
+        SpreadsheetPattern::parseTextFormatPattern,
+        SpreadsheetPattern::textFormatPattern,
+        SpreadsheetFormatParserTokenKind::isTextFormat,
+        "text"
     ),
 
     TIME_FORMAT_PATTERN(
-            SpreadsheetPattern::parseTimeFormatPattern,
-            SpreadsheetPattern::timeFormatPattern,
-            SpreadsheetFormatParserTokenKind::isTimeFormat,
-            "time"
+        SpreadsheetPattern::parseTimeFormatPattern,
+        SpreadsheetPattern::timeFormatPattern,
+        SpreadsheetFormatParserTokenKind::isTimeFormat,
+        "time"
     ),
 
     TIME_PARSE_PATTERN(
-            SpreadsheetPattern::parseTimeParsePattern,
-            SpreadsheetPattern::timeParsePattern,
-            SpreadsheetFormatParserTokenKind::isTimeParse,
-            "time"
+        SpreadsheetPattern::parseTimeParsePattern,
+        SpreadsheetPattern::timeParsePattern,
+        SpreadsheetFormatParserTokenKind::isTimeParse,
+        "time"
     );
 
     SpreadsheetPatternKind(final Function<String, SpreadsheetPattern> parser,
@@ -117,28 +117,28 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         this.parser = parser;
         this.tokenToPattern = tokenToPattern;
         this.spreadsheetFormatParserTokenKinds = Sets.of(
-                Arrays.stream(SpreadsheetFormatParserTokenKind.values())
-                        .filter(formatParserTokenKind)
-                        .toArray(SpreadsheetFormatParserTokenKind[]::new)
+            Arrays.stream(SpreadsheetFormatParserTokenKind.values())
+                .filter(formatParserTokenKind)
+                .toArray(SpreadsheetFormatParserTokenKind[]::new)
         );
 
 
         this.typeName = "spreadsheet-" + CaseKind.SNAKE.change(
-                this.name(),
-                CaseKind.KEBAB
+            this.name(),
+            CaseKind.KEBAB
         );
 
         // eg time, text
         this.urlFragment =
-                (
-                        this.isFormatPattern() ?
-                                SpreadsheetUrlFragments.FORMATTER :
-                                SpreadsheetUrlFragments.PARSER
-                )
-                        .append(UrlFragment.SLASH)
-                        .append(
-                                UrlFragment.with(urlFragmentSuffix)
-                        );
+            (
+                this.isFormatPattern() ?
+                    SpreadsheetUrlFragments.FORMATTER :
+                    SpreadsheetUrlFragments.PARSER
+            )
+                .append(UrlFragment.SLASH)
+                .append(
+                    UrlFragment.with(urlFragmentSuffix)
+                );
     }
 
     /**
@@ -177,20 +177,20 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
             case DATE_FORMAT_PATTERN:
             case DATE_PARSE_PATTERN:
                 formatter = SpreadsheetPattern.dateFormatPatternLocale(locale)
-                        .formatter();
+                    .formatter();
                 break;
             case DATE_TIME_FORMAT_PATTERN:
             case DATE_TIME_PARSE_PATTERN:
                 formatter = SpreadsheetPattern.dateTimeFormatPatternLocale(locale)
-                        .formatter();
+                    .formatter();
                 break;
             case NUMBER_FORMAT_PATTERN:
             case NUMBER_PARSE_PATTERN:
                 formatter = SpreadsheetPattern.decimalFormat(
-                                (DecimalFormat)
-                                        DecimalFormat.getInstance(locale)
-                        ).toFormat()
-                        .formatter();
+                        (DecimalFormat)
+                            DecimalFormat.getInstance(locale)
+                    ).toFormat()
+                    .formatter();
                 break;
             case TEXT_FORMAT_PATTERN:
                 formatter = SpreadsheetFormatters.defaultText();
@@ -198,8 +198,8 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
             case TIME_FORMAT_PATTERN:
             case TIME_PARSE_PATTERN:
                 formatter = SpreadsheetPattern.timeParsePatternLocale(locale)
-                        .toFormat()
-                        .formatter();
+                    .toFormat()
+                    .formatter();
                 break;
             default:
                 NeverError.unhandledCase(this, values());
@@ -291,8 +291,8 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 break;
             default:
                 kind = NeverError.unhandledCase(
-                        this,
-                        values()
+                    this,
+                    values()
                 );
                 break;
         }
@@ -329,8 +329,8 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
                 break;
             default:
                 kind = NeverError.unhandledCase(
-                        this,
-                        values()
+                    this,
+                    values()
                 );
                 break;
         }
@@ -379,9 +379,9 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
         Objects.requireNonNull(typeName, "typeName");
 
         return Arrays.stream(values())
-                .filter(e -> e.typeName().equals(typeName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown typeName " + CharSequences.quoteAndEscape(typeName)));
+            .filter(e -> e.typeName().equals(typeName))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Unknown typeName " + CharSequences.quoteAndEscape(typeName)));
 
     }
 
@@ -390,28 +390,28 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
      */
     public static SpreadsheetPatternKind[] formatValues() {
         return FORMAT_VALUES.toArray(
-                new SpreadsheetPatternKind[
-                        FORMAT_VALUES.size()
-                        ]
+            new SpreadsheetPatternKind[
+                FORMAT_VALUES.size()
+                ]
         );
     }
 
     private final static List<SpreadsheetPatternKind> FORMAT_VALUES = Arrays.stream(values())
-            .filter(SpreadsheetPatternKind::isFormatPattern)
-            .collect(Collectors.toList());
+        .filter(SpreadsheetPatternKind::isFormatPattern)
+        .collect(Collectors.toList());
 
     /**
      * Equivalent to {@link #values()} but with only {@link SpreadsheetPatternKind#isParsePattern()}.
      */
     public static SpreadsheetPatternKind[] parseValues() {
         return PARSE_VALUES.toArray(
-                new SpreadsheetPatternKind[
-                        PARSE_VALUES.size()
-                        ]
+            new SpreadsheetPatternKind[
+                PARSE_VALUES.size()
+                ]
         );
     }
 
     private final static List<SpreadsheetPatternKind> PARSE_VALUES = Arrays.stream(values())
-            .filter(SpreadsheetPatternKind::isParsePattern)
-            .collect(Collectors.toList());
+        .filter(SpreadsheetPatternKind::isParsePattern)
+        .collect(Collectors.toList());
 }

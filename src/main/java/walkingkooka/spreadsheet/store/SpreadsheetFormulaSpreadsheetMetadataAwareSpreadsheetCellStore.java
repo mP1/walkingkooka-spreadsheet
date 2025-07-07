@@ -61,20 +61,20 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         Objects.requireNonNull(providerContext, "providerContext");
 
         return store instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore ?
-                setMetadata(
-                        (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
-                        metadata,
-                        spreadsheetParserProvider,
-                        localeContext,
-                        providerContext
-                ) :
-                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
-                        store,
-                        metadata,
-                        spreadsheetParserProvider,
-                        localeContext,
-                        providerContext
-                );
+            setMetadata(
+                (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
+                metadata,
+                spreadsheetParserProvider,
+                localeContext,
+                providerContext
+            ) :
+            new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
+                store,
+                metadata,
+                spreadsheetParserProvider,
+                localeContext,
+                providerContext
+            );
     }
 
     /**
@@ -82,21 +82,21 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
      * create with the wrapped store and new metadata.
      */
     private static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore setMetadata(
-            final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
-            final SpreadsheetMetadata metadata,
-            final SpreadsheetParserProvider spreadsheetParserProvider,
-            final LocaleContext localeContext,
-            final ProviderContext providerContext) {
+        final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
+        final SpreadsheetMetadata metadata,
+        final SpreadsheetParserProvider spreadsheetParserProvider,
+        final LocaleContext localeContext,
+        final ProviderContext providerContext) {
 
         return metadata.equals(store.metadata) ?
-                store :
-                new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
-                        store.store,
-                        metadata,
-                        spreadsheetParserProvider,
-                        localeContext,
-                        providerContext
-                );
+            store :
+            new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
+                store.store,
+                metadata,
+                spreadsheetParserProvider,
+                localeContext,
+                providerContext
+            );
     }
 
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetCellStore store,
@@ -124,9 +124,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         Objects.requireNonNull(cell, "cell");
 
         return this.fixFormulaText(
-                this.store.save(
-                        this.ensureFormulaHasToken(cell)
-                )
+            this.store.save(
+                this.ensureFormulaHasToken(cell)
+            )
         );
     }
 
@@ -142,29 +142,29 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         if (!text.isEmpty()) {
             // any value or error will be lost if token/expression is updated
             SpreadsheetFormulaParserToken token = formula.token()
-                    .orElse(null);
+                .orElse(null);
             try {
                 if (null == token) {
                     token = this.parseFormulaTextExpression(
-                            text,
-                            cell
+                        text,
+                        cell
                     );
                     formula = formula
-                            .setToken(Optional.of(token));
+                        .setToken(Optional.of(token));
                 }
                 if (null != token) {
                     formula = formula.setText(token.text());
                     formula = formula.setExpression(
-                            token.toExpression(
-                                    this.expressionEvaluationContext(cell)
-                            )
+                        token.toExpression(
+                            this.expressionEvaluationContext(cell)
+                        )
                     ); // also clears value/error
                 }
             } catch (final Exception failed) {
                 formula = formula.setValue(
-                        Optional.of(
-                                SpreadsheetErrorKind.translate(failed)
-                        )
+                    Optional.of(
+                        SpreadsheetErrorKind.translate(failed)
+                    )
                 );
             }
             result = cell.setFormula(formula);
@@ -182,16 +182,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         final ProviderContext providerContext = this.providerContext;
 
         return metadata.spreadsheetParser(
-                        this.spreadsheetParserProvider,
-                        providerContext
-                ).parseText(
-                        text,
-                        metadata.spreadsheetParserContext(
-                                Optional.of(cell),
-                                this.localeContext,
-                                providerContext
-                        )
-                ).cast(SpreadsheetFormulaParserToken.class);
+            this.spreadsheetParserProvider,
+            providerContext
+        ).parseText(
+            text,
+            metadata.spreadsheetParserContext(
+                Optional.of(cell),
+                this.localeContext,
+                providerContext
+            )
+        ).cast(SpreadsheetFormulaParserToken.class);
     }
 
     // batch............................................................................................................
@@ -202,10 +202,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                                               final int offset,
                                               final int count) {
         return this.store.loadCellRange(
-                range,
-                path,
-                offset,
-                count
+            range,
+            path,
+            offset,
+            count
         );
     }
 
@@ -240,8 +240,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     public Set<SpreadsheetCellReference> ids(final int offset,
                                              final int count) {
         return this.store.ids(
-                offset,
-                count
+            offset,
+            count
         );
     }
 
@@ -249,10 +249,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     public List<SpreadsheetCell> values(final int offset,
                                         final int count) {
         return this.fixFormulaTextList(
-                this.store.values(
-                        offset,
-                        count
-                )
+            this.store.values(
+                offset,
+                count
+            )
         );
     }
 
@@ -260,10 +260,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     public List<SpreadsheetCell> between(final SpreadsheetCellReference from,
                                          final SpreadsheetCellReference to) {
         return this.fixFormulaTextList(
-                this.store.between(
-                        from,
-                        to
-                )
+            this.store.between(
+                from,
+                to
+            )
         );
     }
 
@@ -312,11 +312,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                                                        final String valueType,
                                                        final int max) {
         return this.fixFormulaTextSet(
-                this.store.findCellsWithValueType(
-                        range,
-                        valueType,
-                        max
-                )
+            this.store.findCellsWithValueType(
+                range,
+                valueType,
+                max
+            )
         );
     }
 
@@ -324,8 +324,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                        final String valueType) {
         return this.store.countCellsWithValueType(
-                range,
-                valueType
+            range,
+            valueType
         );
     }
 
@@ -333,14 +333,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     private List<SpreadsheetCell> fixFormulaTextList(final List<SpreadsheetCell> cells) {
         return cells.stream()
-                .map(this::fixFormulaText)
-                .collect(Collectors.toCollection(Lists::array));
+            .map(this::fixFormulaText)
+            .collect(Collectors.toCollection(Lists::array));
     }
 
     private Set<SpreadsheetCell> fixFormulaTextSet(final Set<SpreadsheetCell> cells) {
         return cells.stream()
-                .map(this::fixFormulaText)
-                .collect(Collectors.toCollection(Sets::ordered));
+            .map(this::fixFormulaText)
+            .collect(Collectors.toCollection(Sets::ordered));
     }
 
     private SpreadsheetCell fixFormulaText(final SpreadsheetCell cell) {
@@ -349,26 +349,26 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         SpreadsheetFormula formula = cell.formula();
 
         SpreadsheetFormulaParserToken token = formula.token()
-                .orElse(null);
+            .orElse(null);
         if (null != token) {
             token = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor.update(
-                    cell,
-                    token,
-                    this.metadata,
-                    this.providerContext, // HasNow
-                    this.localeContext
+                cell,
+                token,
+                this.metadata,
+                this.providerContext, // HasNow
+                this.localeContext
             );
             final String text = token.text();
             if (!formula.text().equals(text)) {
                 // if the text is different update token and expression
                 fixed = fixed.setFormula(
-                        formula.setText(token.text())
-                                .setToken(Optional.of(token))
-                                .setExpression(
-                                        token.toExpression(
-                                                this.expressionEvaluationContext(cell)
-                                        )
-                                )
+                    formula.setText(token.text())
+                        .setToken(Optional.of(token))
+                        .setExpression(
+                            token.toExpression(
+                                this.expressionEvaluationContext(cell)
+                            )
+                        )
                 );
             }
         }
@@ -378,10 +378,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     private ExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetCell cell) {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(
-                cell,
-                this.metadata,
-                this.providerContext, // HasNow
-                this.localeContext
+            cell,
+            this.metadata,
+            this.providerContext, // HasNow
+            this.localeContext
         );
     }
 

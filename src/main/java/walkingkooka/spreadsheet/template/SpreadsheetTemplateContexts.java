@@ -35,9 +35,9 @@ public final class SpreadsheetTemplateContexts implements PublicStaticHelper {
                                               final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
                                               final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         return SpreadsheetTemplateContext.with(
-                spreadsheetParserContext,
-                spreadsheetExpressionEvaluationContext,
-                templateValueNameToExpression
+            spreadsheetParserContext,
+            spreadsheetExpressionEvaluationContext,
+            templateValueNameToExpression
         );
     }
 

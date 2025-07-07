@@ -196,8 +196,8 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         Objects.requireNonNull(context, "context");
 
         return this.update0(
-                viewport,
-                context
+            viewport,
+            context
         );
     }
 
@@ -221,41 +221,41 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
         // check if moved selection is within the original viewport
         final SpreadsheetViewportWindows windows = context.windows(
-                rectangle,
-                true, //includeFrozenColumnsRows
-                SpreadsheetViewportWindowsFunction.NO_SELECTION
+            rectangle,
+            true, //includeFrozenColumnsRows
+            SpreadsheetViewportWindowsFunction.NO_SELECTION
         );
 
         if (
-                windows.test(
-                        anchoredSelection.anchor()
-                                .opposite()
-                                .selection(
-                                        anchoredSelection.selection()
-                                )
-                )
+            windows.test(
+                anchoredSelection.anchor()
+                    .opposite()
+                    .selection(
+                        anchoredSelection.selection()
+                    )
+            )
         ) {
             // moved selection within windows leave home unmoved
             result = viewport.setAnchoredSelection(
-                    Optional.of(anchoredSelection)
+                Optional.of(anchoredSelection)
             );
         } else {
             // moved selection is outside viewport need to move home
             final SpreadsheetCellReference home = rectangle.home();
             final Optional<SpreadsheetCellReference> maybeMovedHome = this.updateHome(
-                    home,
-                    context
+                home,
+                context
             );
 
             if (maybeMovedHome.isPresent()) {
                 result = result.setRectangle(
-                        rectangle.setHome(
-                                maybeMovedHome.get()
-                        )
+                    rectangle.setHome(
+                        maybeMovedHome.get()
+                    )
                 );
             } else {
                 result = result.setRectangle(
-                        rectangle.setHome(home)
+                    rectangle.setHome(home)
                 ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
             }
         }
