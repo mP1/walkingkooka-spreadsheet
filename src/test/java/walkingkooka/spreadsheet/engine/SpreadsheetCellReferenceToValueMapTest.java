@@ -112,6 +112,14 @@ public final class SpreadsheetCellReferenceToValueMapTest implements MapTesting2
     }
 
     @Test
+    public void testWithEmptyMap() {
+        assertSame(
+            SpreadsheetCellReferenceToValueMap.EMPTY,
+            SpreadsheetCellReferenceToValueMap.with(Maps.empty())
+        );
+    }
+
+    @Test
     public void testGetWithNonSpreadsheetCellReferenceFails() {
         this.getAndCheckAbsent(
             KEY1.toString()
@@ -237,6 +245,14 @@ public final class SpreadsheetCellReferenceToValueMapTest implements MapTesting2
                 "  \"A3\": null\n" +
                 "}",
             this.createMap()
+        );
+    }
+
+    @Test
+    public void testUnmarshallEmptyObject() {
+        this.unmarshallAndCheck(
+            JsonNode.object(),
+            SpreadsheetCellReferenceToValueMap.EMPTY
         );
     }
 
