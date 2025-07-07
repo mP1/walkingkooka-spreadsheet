@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.ImmutableSortedSetTesting;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -28,6 +29,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Set;
 import java.util.SortedSet;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -42,6 +44,20 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetCellSet.with(null)
+        );
+    }
+
+    @Test
+    public void testWithSet() {
+        final Set<SpreadsheetCell> set = Sets.of(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+            )
+        );
+
+        this.checkEquals(
+            set,
+            SpreadsheetCellSet.with(set)
         );
     }
 
