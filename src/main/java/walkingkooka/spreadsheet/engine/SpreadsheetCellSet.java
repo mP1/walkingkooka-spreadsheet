@@ -21,6 +21,8 @@ import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -28,6 +30,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
@@ -42,6 +45,7 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> implements ImmutableSortedSetDefaults<SpreadsheetCellSet, SpreadsheetCell>,
+    HasUrlFragment,
     TreePrintable {
 
     /**
@@ -226,6 +230,20 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
             SpreadsheetCellSet::unmarshall,
             SpreadsheetCellSet::marshall,
             SpreadsheetCellSet.class
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    /**
+     * The {@link UrlFragment} will contain the cells within this set marshalled to JSON.
+     */
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(
+            this.marshall(
+                JsonNodeMarshallContexts.fake()
+            ).toString()
         );
     }
 
