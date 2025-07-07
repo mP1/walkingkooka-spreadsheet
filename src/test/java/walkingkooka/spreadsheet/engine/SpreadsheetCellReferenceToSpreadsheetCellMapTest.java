@@ -26,6 +26,9 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -34,7 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap, SpreadsheetCellReference, SpreadsheetCell>,
-        ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap> {
+        ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap>,
+        JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap> {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
@@ -182,6 +186,60 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
                 this.createMap(),
                 MAP.toString()
         );
+    }
+
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+                this.createMap(),
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1\"\n" +
+                        "    }\n" +
+                        "  },\n" +
+                        "  \"A2\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=2\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}"
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+                "{\n" +
+                        "  \"A1\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=1\"\n" +
+                        "    }\n" +
+                        "  },\n" +
+                        "  \"A2\": {\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"=2\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}",
+                this.createMap()
+        );
+    }
+
+    @Override
+    public SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode json,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToSpreadsheetCellMap.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetCellReferenceToSpreadsheetCellMap createJsonNodeMarshallingValue() {
+        return this.createMap();
     }
 
     // class............................................................................................................
