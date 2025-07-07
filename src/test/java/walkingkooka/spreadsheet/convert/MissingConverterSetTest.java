@@ -45,6 +45,16 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
     }
 
     @Test
+    public void testWithMissingConverterSetDoesntWrap() {
+        final MissingConverterSet set = this.createSet();
+
+        assertSame(
+            set,
+            MissingConverterSet.with(set)
+        );
+    }
+
+    @Test
     public void testDeleteBecomesEmpty() {
         final MissingConverter missing = MissingConverter.with(
             ConverterName.BOOLEAN_TO_NUMBER,
