@@ -101,6 +101,10 @@ final class MissingConverterVerifier {
         BigDecimal.class
     );
 
+    /**
+     * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
+     * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
+     */
     static Set<MissingConverter> verify(final Converter<SpreadsheetConverterContext> converter,
                                         final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                         final SpreadsheetConverterContext context) {
@@ -556,7 +560,6 @@ final class MissingConverterVerifier {
         // text-to-text.................................................................................................
         finder.addIfConversionFail(
             Lists.of(
-                new StringBuilder("CharacterSequence"),
                 "Text"
             ),
             String.class,
@@ -567,7 +570,6 @@ final class MissingConverterVerifier {
         if (formatting) {
             finder.addIfConversionFail(
                 Lists.of(
-                    new StringBuilder("CharacterSequence"),
                     "Text"
                 ),
                 TextNode.class,
@@ -649,7 +651,6 @@ final class MissingConverterVerifier {
         if (formatting) {
             finder.addIfConversionFail(
                 Lists.of(
-                    new StringBuilder("Text123"),
                     "Text123",
                     TextNode.text("Text123")
                 ),

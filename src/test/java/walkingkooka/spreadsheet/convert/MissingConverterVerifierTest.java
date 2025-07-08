@@ -315,6 +315,26 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
+    @Test
+    public void testVerifyAndMarshall() {
+        final Converter<SpreadsheetConverterContext> converter = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+            SpreadsheetMetadata.EMPTY,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            SPREADSHEET_PARSER_PROVIDER
+        ).converter(
+            ConverterSelector.parse("simple"),
+            PROVIDER_CONTEXT
+        );
+
+        final Set<MissingConverter> missing = MissingConverterVerifier.verify(
+            converter,
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            new TestSpreadsheetConverterContext(converter)
+        );
+
+        JSON_NODE_MARSHALL_CONTEXT.marshall(missing);
+    }
+
     // class............................................................................................................
 
     @Override
