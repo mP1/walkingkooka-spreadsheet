@@ -560,6 +560,7 @@ final class MissingConverterVerifier {
         // text-to-text.................................................................................................
         finder.addIfConversionFail(
             Lists.of(
+                'A',
                 "Text"
             ),
             String.class,
@@ -570,6 +571,7 @@ final class MissingConverterVerifier {
         if (formatting) {
             finder.addIfConversionFail(
                 Lists.of(
+                    'A',
                     "Text"
                 ),
                 TextNode.class,
@@ -651,6 +653,7 @@ final class MissingConverterVerifier {
         if (formatting) {
             finder.addIfConversionFail(
                 Lists.of(
+                    'A',
                     "Text123",
                     TextNode.text("Text123")
                 ),
