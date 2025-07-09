@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
+import walkingkooka.HasId;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
@@ -98,7 +99,8 @@ import java.util.function.Predicate;
 public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     Comparable<SpreadsheetMetadataPropertyName<?>>,
     HasSpreadsheetPatternKind,
-    HasUrlFragment {
+    HasUrlFragment,
+    HasId<String> {
 
     // constants
 
@@ -852,5 +854,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         SpreadsheetName.with("Untitled");
         ValidatorAliasSet.EMPTY.isEmpty();
         SpreadsheetViewport.NO_NAVIGATION.isEmpty();
+    }
+
+    // HasId............................................................................................................
+
+    @Override
+    public String id() {
+        return this.value();
     }
 }
