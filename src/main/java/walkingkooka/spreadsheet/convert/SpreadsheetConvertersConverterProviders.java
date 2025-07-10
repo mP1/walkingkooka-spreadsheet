@@ -64,6 +64,13 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
+    public final static ConverterAliasSet VALIDATOR = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_TEXT_NODE)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
+
     /**
      * {@see SpreadsheetConvertersConverterProvider}
      */
