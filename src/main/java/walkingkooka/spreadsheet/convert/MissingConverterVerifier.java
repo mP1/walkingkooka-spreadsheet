@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -65,6 +66,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -673,6 +675,21 @@ final class MissingConverterVerifier {
                 url.text(),
                 Image.class,
                 SpreadsheetConvertersConverterProvider.URL_TO_IMAGE
+            );
+        }
+
+        if (validation) {
+            // to-validation-error-list.................................................................................
+            finder.addIfConversionFail(
+                Lists.of(
+                    "Validation error message 1",
+                    SpreadsheetForms.error(
+                        SpreadsheetSelection.A1,
+                        "Validation error message2"
+                    )
+                ),
+                ValidationErrorList.class,
+                SpreadsheetConvertersConverterProvider.TO_VALIDATION_ERROR_LIST
             );
         }
 

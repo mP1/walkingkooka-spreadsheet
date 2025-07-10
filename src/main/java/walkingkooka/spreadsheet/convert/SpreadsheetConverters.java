@@ -442,6 +442,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ValidatorConvertConverters#toValidationErrorList}
+     */
+    public static Converter<SpreadsheetConverterContext> toValidationErrorList() {
+        return ValidatorConvertConverters.toValidationErrorList();
+    }
+
+    /**
      * {@see SpreadsheetConverterUnformattedNumber}
      */
     public static Converter<SpreadsheetConverterContext> unformattedNumber() {

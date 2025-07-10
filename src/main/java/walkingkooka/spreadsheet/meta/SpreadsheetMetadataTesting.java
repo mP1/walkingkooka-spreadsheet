@@ -359,7 +359,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 "null-to-number, simple, number-to-number, text-to-text, " +
                 "error-to-number, text-to-error, " +
                 "text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, " +
-                "text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, " +
+                "text-to-form-name, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-validation-error-list," +
                 "general)"
             )
         ).set(
