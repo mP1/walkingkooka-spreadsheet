@@ -293,6 +293,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toTextNode();
                 break;
+            case TO_VALIDATION_ERROR_LIST_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.toValidationErrorList();
+                break;
             case URL_TO_HYPERLINK_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -493,6 +498,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
 
+    private final static String TO_VALIDATION_ERROR_LIST_STRING = "to-validation-error-list";
+
+    final static ConverterName TO_VALIDATION_ERROR_LIST = ConverterName.with(TO_VALIDATION_ERROR_LIST_STRING);
+
     private final static String URL_TO_HYPERLINK_STRING = "url-to-hyperlink";
 
     final static ConverterName URL_TO_HYPERLINK = ConverterName.with(URL_TO_HYPERLINK_STRING);
@@ -549,6 +558,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_VALUE_TYPE),
             converterInfo(TO_JSON),
             converterInfo(TO_TEXT_NODE),
+            converterInfo(TO_VALIDATION_ERROR_LIST),
             converterInfo(URL_TO_HYPERLINK),
             converterInfo(URL_TO_IMAGE)
         )
