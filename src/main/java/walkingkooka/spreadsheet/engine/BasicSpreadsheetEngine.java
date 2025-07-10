@@ -73,6 +73,7 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.form.DuplicateFormFieldReferencesException;
 import walkingkooka.validation.form.Form;
@@ -406,11 +407,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final String valueType,
+                                            final ValidationValueTypeName valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
-        CharSequences.failIfNullOrEmpty(valueType, "valueType");
+        Objects.requireNonNull(valueType, "valueType");
         Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(context, "context");
 
@@ -443,7 +444,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final SpreadsheetCellRangeReferencePath path,
                                       final int offset,
                                       final int count,
-                                      final String valueType,
+                                      final ValidationValueTypeName valueType,
                                       final Expression expression,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
@@ -453,7 +454,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             offset,
             count
         );
-        CharSequences.failIfNullOrEmpty(valueType, "valueType");
+        Objects.requireNonNull(valueType, "valueType");
         Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(deltaProperties, "deltaProperties");
         Objects.requireNonNull(context, "context");

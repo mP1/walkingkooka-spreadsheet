@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
-import walkingkooka.text.CharSequences;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -131,10 +131,10 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column);
 
     static void checkFindCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                            final String valueTypeName,
+                                            final ValidationValueTypeName valueType,
                                             final int max) {
         Objects.requireNonNull(range, "range");
-        CharSequences.failIfNullOrEmpty(valueTypeName, "valueTypeName");
+        Objects.requireNonNull(valueType, "valueType");
         if (max < 0) {
             throw new IllegalArgumentException("Invalid max " + max + " < 0");
         }
@@ -145,13 +145,13 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
     Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                                final String valueTypeName,
+                                                final ValidationValueTypeName valueType,
                                                 final int max);
 
     static void checkCountCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                             final String valueTypeName) {
+                                             final ValidationValueTypeName valueTypeName) {
         Objects.requireNonNull(range, "range");
-        CharSequences.failIfNullOrEmpty(valueTypeName, "valueTypeName");
+        Objects.requireNonNull(valueTypeName, "valueTypeName");
     }
 
     /**
@@ -159,5 +159,5 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
     int countCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                final String valueTypeName);
+                                final ValidationValueTypeName valueType);
 }

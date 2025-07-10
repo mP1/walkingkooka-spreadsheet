@@ -60,6 +60,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.form.DuplicateFormFieldReferencesException;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -800,7 +801,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             () -> this.createSpreadsheetEngine()
                 .filterCells(
                     null, // cells
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true),
                     SpreadsheetEngineContexts.fake()
                 )
@@ -822,20 +823,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testFilterCellsWithEmptyValueTypeFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createSpreadsheetEngine()
-                .filterCells(
-                    Sets.empty(), // cells
-                    "", // valueType
-                    Expression.value(true),
-                    SpreadsheetEngineContexts.fake()
-                )
-        );
-    }
-
-    @Test
     default void testFilterCellsWithNullExpressionFails() {
         assertThrows(
             NullPointerException.class,
@@ -844,7 +831,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     Sets.of(
                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                     ),
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     null, // expression
                     SpreadsheetEngineContexts.fake()
                 )
@@ -860,7 +847,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     Sets.of(
                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                     ),
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true),
                     null // context
                 )
@@ -895,7 +882,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void filterCellsAndCheck(final SpreadsheetEngine engine,
                                      final Set<SpreadsheetCell> cells,
-                                     final String valueType,
+                                     final ValidationValueTypeName valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context,
                                      final SpreadsheetCell... expected) {
@@ -913,7 +900,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void filterCellsAndCheck(final SpreadsheetEngine engine,
                                      final Set<SpreadsheetCell> cells,
-                                     final String valueType,
+                                     final ValidationValueTypeName valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context,
                                      final Set<SpreadsheetCell> expected) {
@@ -941,7 +928,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     SpreadsheetCellRangeReferencePath.LRTD, // path
                     0, // offset
                     100, // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
                     SpreadsheetEngineContexts.fake() // context
@@ -959,7 +946,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     null, // path
                     0, // offset
                     100, // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
                     SpreadsheetEngineContexts.fake() // context
@@ -977,7 +964,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     SpreadsheetCellRangeReferencePath.LRTD, // path
                     -1, // offset
                     0,  // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
                     SpreadsheetEngineContexts.fake() // context
@@ -995,7 +982,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     SpreadsheetCellRangeReferencePath.LRTD, // path
                     0, // offset
                     -1, // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
                     SpreadsheetEngineContexts.fake() // context
@@ -1031,7 +1018,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     SpreadsheetCellRangeReferencePath.LRTD, // path
                     0, // offset
                     100, // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     null, // expression
                     SpreadsheetDeltaProperties.ALL,
                     SpreadsheetEngineContexts.fake() // context
@@ -1049,7 +1036,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     SpreadsheetCellRangeReferencePath.LRTD, // path
                     0, // offset
                     100, // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     null,
                     SpreadsheetEngineContexts.fake() // context
@@ -1067,7 +1054,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     SpreadsheetCellRangeReferencePath.LRTD, // path
                     0, // offset
                     100, // count
-                    SpreadsheetValueType.ANY, // valueType
+                    SpreadsheetValueType.ANY,
                     Expression.value(true), // expression
                     SpreadsheetDeltaProperties.ALL,
                     null // context
@@ -1081,7 +1068,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellRangeReferencePath path,
         final int offset,
         final int count,
-        final String valueType,
+        final ValidationValueTypeName valueType,
         final Expression expression,
         final Set<SpreadsheetDeltaProperties> deltaProperties,
         final SpreadsheetEngineContext context,

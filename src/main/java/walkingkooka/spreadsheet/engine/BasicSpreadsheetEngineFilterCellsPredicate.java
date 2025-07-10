@@ -22,21 +22,21 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
-import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * This {@link Predicate} is used by {@link BasicSpreadsheetEngine#filterCells(Set, String, Expression, SpreadsheetEngineContext)} to filter each and every {@link SpreadsheetCell}.
+ * This {@link Predicate} is used by {@link BasicSpreadsheetEngine#filterCells(Set, ValidationValueTypeName, Expression, SpreadsheetEngineContext)} to filter each and every {@link SpreadsheetCell}.
  * It is assumed the {@link Expression} returns a {@link Boolean} result otherwise an {@link IllegalStateException} will be thrown.
  * Note cells without formula text and no value are always skipped
  */
 final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<SpreadsheetCell> {
 
-    static BasicSpreadsheetEngineFilterCellsPredicate with(final String valueType,
+    static BasicSpreadsheetEngineFilterCellsPredicate with(final ValidationValueTypeName valueType,
                                                            final Expression expression,
                                                            final SpreadsheetEngineContext context,
                                                            final SpreadsheetExpressionReferenceLoader loader) {
@@ -48,20 +48,19 @@ final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<Spre
         );
     }
 
-    private BasicSpreadsheetEngineFilterCellsPredicate(final String valueType,
+    private BasicSpreadsheetEngineFilterCellsPredicate(final ValidationValueTypeName valueType,
                                                        final Expression expression,
                                                        final SpreadsheetEngineContext context,
                                                        final SpreadsheetExpressionReferenceLoader loader) {
         this.valueType = Predicates.customToString(
-            SpreadsheetValueType.ANY.equals(valueType) ?
+            valueType.isAny() ?
                 v -> Boolean.TRUE :
                 v -> null != v &&
                     valueType.equals(
                         SpreadsheetValueType.toValueType(v.getClass())
-                            .map(HasText::text)
                             .orElse(null)
                     ),
-            valueType
+            valueType.value()
         );
         this.expression = expression;
         this.context = context;

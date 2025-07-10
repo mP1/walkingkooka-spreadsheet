@@ -30,9 +30,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
-import walkingkooka.text.HasText;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -435,32 +435,32 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                                       final String valueTypeName,
+                                                       final ValidationValueTypeName valueType,
                                                        final int max) {
         SpreadsheetCellStore.checkFindCellsWithValueType(
             range,
-            valueTypeName,
+            valueType,
             max
         );
 
         return this.valueTypeStream(
                 range,
-                valueTypeName
+                valueType
             ).limit(max)
             .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
     }
 
     @Override
     public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                       final String valueTypeName) {
+                                       final ValidationValueTypeName valueType) {
         SpreadsheetCellStore.checkCountCellsWithValueType(
             range,
-            valueTypeName
+            valueType
         );
 
         return (int) valueTypeStream(
             range,
-            valueTypeName
+            valueType
         ).count();
     }
 
@@ -468,12 +468,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
      * If the valueTypeName is {@link SpreadsheetValueType#ANY} this will match all cells with a value.
      */
     private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRangeReference range,
-                                                    final String valueTypeName) {
-        final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueTypeName) ?
+                                                    final ValidationValueTypeName valueType) {
+        final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueType) ?
             v -> Boolean.TRUE :
-            v -> valueTypeName.equals(
+            v -> valueType.equals(
                 SpreadsheetValueType.toValueType(v.getClass())
-                    .map(HasText::text)
                     .orElse(null)
             );
 

@@ -55,6 +55,7 @@ import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Map;
 import java.util.Optional;
@@ -79,7 +80,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
 
     private final static OptionalInt COUNT = OptionalInt.of(456);
 
-    private final static Optional<String> VALUE_TYPE = Optional.of(SpreadsheetValueType.ANY);
+    private final static Optional<ValidationValueTypeName> VALUE_TYPE = Optional.of(ValidationValueTypeName.ANY);
 
     private final static Optional<SpreadsheetCellQuery> QUERY = Optional.of(
         SpreadsheetCellQuery.parse("789+blah()")
@@ -271,8 +272,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetValueTypeDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
-        final Optional<String> valueType = Optional.of(
-            SpreadsheetValueType.TEXT_STRING
+        final Optional<ValidationValueTypeName> valueType = Optional.of(
+            SpreadsheetValueType.TEXT
         );
 
         this.checkNotEquals(
@@ -395,7 +396,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
             SpreadsheetCellFindQuery.empty()
                 .setValueType(
                     Optional.of(
-                        SpreadsheetValueType.NUMBER_STRING)
+                        SpreadsheetValueType.NUMBER
+                    )
                 ),
             "value-type=number"
         );
@@ -686,7 +688,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                 PATH,
                 OFFSET,
                 COUNT,
-                Optional.of(SpreadsheetValueType.DATE_STRING),
+                Optional.of(SpreadsheetValueType.DATE),
                 QUERY
             )
         );
@@ -755,7 +757,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
         this.urlFragmentAndCheck(
             SpreadsheetCellFindQuery.empty()
                 .setValueType(
-                    Optional.of(SpreadsheetValueType.NUMBER_STRING)
+                    Optional.of(SpreadsheetValueType.NUMBER)
                 ),
             UrlFragment.parse("/value-type/number")
         );
@@ -799,9 +801,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                 Optional.of(SpreadsheetCellRangeReferencePath.BULR),
                 OptionalInt.of(123), // offset
                 OptionalInt.of(456), // count
-                Optional.of(
-                    SpreadsheetValueType.NUMBER_STRING
-                ),
+                Optional.of(SpreadsheetValueType.NUMBER),
                 Optional.of(
                     SpreadsheetCellQuery.parse("query789()")
                 )
