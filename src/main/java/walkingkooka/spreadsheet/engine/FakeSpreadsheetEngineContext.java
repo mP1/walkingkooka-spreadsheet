@@ -149,6 +149,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Optional<String> localeText(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
     // ProviderContext..................................................................................................
 
     @Override
