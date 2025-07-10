@@ -16,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
@@ -24,12 +24,12 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -38,22 +38,22 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap, SpreadsheetCellReference, Optional<SpreadsheetParserSelector>>,
-    ClassTesting2<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap>,
+public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest implements MapTesting2<SpreadsheetCellReferenceToValidationValueTypeNameMap, SpreadsheetCellReference, Optional<ValidationValueTypeName>>,
+    ClassTesting2<SpreadsheetCellReferenceToValidationValueTypeNameMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValidationValueTypeNameMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<SpreadsheetParserSelector> VALUE1 = Optional.of(
-        SpreadsheetParserSelector.parse("hello-parser")
+    private final static Optional<ValidationValueTypeName> VALUE1 = Optional.of(
+        ValidationValueTypeName.with("hello-type")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static Optional<SpreadsheetParserSelector> VALUE2 = Optional.empty();
+    private final static Optional<ValidationValueTypeName> VALUE2 = Optional.empty();
 
-    private final static Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -64,35 +64,35 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToSpreadsheetParserSelectorMap.with(null)
+            () -> SpreadsheetCellReferenceToValidationValueTypeNameMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToSpreadsheetParserSelectorMap.with(map)
+            () -> SpreadsheetCellReferenceToValidationValueTypeNameMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToSpreadsheetParserSelectorMapDoesntWrap() {
-        final SpreadsheetCellReferenceToSpreadsheetParserSelectorMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToValidationValueTypeNameMapDoesntWrap() {
+        final SpreadsheetCellReferenceToValidationValueTypeNameMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToSpreadsheetParserSelectorMap.with(map)
+            SpreadsheetCellReferenceToValidationValueTypeNameMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToSpreadsheetParserSelectorMap map = this.createMap();
+        final SpreadsheetCellReferenceToValidationValueTypeNameMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -171,7 +171,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<ValidationValueTypeName>>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -183,8 +183,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
     }
 
     @Override
-    public SpreadsheetCellReferenceToSpreadsheetParserSelectorMap createMap() {
-        return SpreadsheetCellReferenceToSpreadsheetParserSelectorMap.with(MAP);
+    public SpreadsheetCellReferenceToValidationValueTypeNameMap createMap() {
+        return SpreadsheetCellReferenceToValidationValueTypeNameMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -204,7 +204,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": \"hello-parser\",\n" +
+                "  \"A1\": \"hello-type\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
@@ -214,7 +214,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": \"hello-parser\",\n" +
+                "  \"A1\": \"hello-type\",\n" +
                 "  \"A2\": null\n" +
                 "}",
             this.createMap()
@@ -222,16 +222,16 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
     }
 
     @Override
-    public SpreadsheetCellReferenceToSpreadsheetParserSelectorMap unmarshall(final JsonNode json,
-                                                                             final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToSpreadsheetParserSelectorMap.unmarshall(
+    public SpreadsheetCellReferenceToValidationValueTypeNameMap unmarshall(final JsonNode json,
+                                                                           final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToValidationValueTypeNameMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToSpreadsheetParserSelectorMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToValidationValueTypeNameMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -241,15 +241,15 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMapTest im
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%22hello-parser%22,%0A%20%20%22A2%22:%20null%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22hello-type%22,%0A%20%20%22A2%22:%20null%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToSpreadsheetParserSelectorMap> type() {
-        return SpreadsheetCellReferenceToSpreadsheetParserSelectorMap.class;
+    public Class<SpreadsheetCellReferenceToValidationValueTypeNameMap> type() {
+        return SpreadsheetCellReferenceToValidationValueTypeNameMap.class;
     }
 
     @Override

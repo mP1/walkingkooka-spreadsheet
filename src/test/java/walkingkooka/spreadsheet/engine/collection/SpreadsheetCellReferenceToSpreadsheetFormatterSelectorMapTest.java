@@ -16,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
@@ -24,6 +24,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
@@ -31,29 +32,28 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting2<SpreadsheetCellReferenceToLocaleMap, SpreadsheetCellReference, Optional<Locale>>,
-    ClassTesting2<SpreadsheetCellReferenceToLocaleMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToLocaleMap>,
+public final class SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap, SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>>,
+    ClassTesting2<SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<Locale> VALUE1 = Optional.of(
-        Locale.forLanguageTag("en-AU")
+    private final static Optional<SpreadsheetFormatterSelector> VALUE1 = Optional.of(
+        SpreadsheetFormatterSelector.parse("hello-formatter")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static Optional<Locale> VALUE2 = Optional.empty();
+    private final static Optional<SpreadsheetFormatterSelector> VALUE2 = Optional.empty();
 
-    private final static Map<SpreadsheetCellReference, Optional<Locale>> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -64,35 +64,35 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToLocaleMap.with(null)
+            () -> SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<Locale>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToLocaleMap.with(map)
+            () -> SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToLocaleMapDoesntWrap() {
-        final SpreadsheetCellReferenceToLocaleMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToSpreadsheetFormatterSelectorMapDoesntWrap() {
+        final SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToLocaleMap.with(map)
+            SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToLocaleMap map = this.createMap();
+        final SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -171,7 +171,7 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<Locale>>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -183,8 +183,8 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
     }
 
     @Override
-    public SpreadsheetCellReferenceToLocaleMap createMap() {
-        return SpreadsheetCellReferenceToLocaleMap.with(MAP);
+    public SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap createMap() {
+        return SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -203,8 +203,8 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
     public void testMarshall() {
         this.marshallAndCheck(
             this.createMap(),
-            "{\n" +
-                "  \"A1\": \"en-AU\",\n" +
+                "{\n" +
+                "  \"A1\": \"hello-formatter\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
@@ -214,7 +214,7 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": \"en-AU\",\n" +
+                "  \"A1\": \"hello-formatter\",\n" +
                 "  \"A2\": null\n" +
                 "}",
             this.createMap()
@@ -222,16 +222,16 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
     }
 
     @Override
-    public SpreadsheetCellReferenceToLocaleMap unmarshall(final JsonNode json,
-                                                          final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToLocaleMap.unmarshall(
+    public SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap unmarshall(final JsonNode json,
+                                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToLocaleMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -241,15 +241,15 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%22en-AU%22,%0A%20%20%22A2%22:%20null%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22hello-formatter%22,%0A%20%20%22A2%22:%20null%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToLocaleMap> type() {
-        return SpreadsheetCellReferenceToLocaleMap.class;
+    public Class<SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap> type() {
+        return SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap.class;
     }
 
     @Override

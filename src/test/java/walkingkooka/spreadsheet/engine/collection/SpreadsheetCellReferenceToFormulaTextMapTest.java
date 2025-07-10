@@ -16,12 +16,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.color.Color;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -30,8 +29,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.text.TextStyle;
-import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -39,23 +36,20 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTesting2<SpreadsheetCellReferenceToTextStyleMap, SpreadsheetCellReference, TextStyle>,
-    ClassTesting2<SpreadsheetCellReferenceToTextStyleMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToTextStyleMap>,
+public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTesting2<SpreadsheetCellReferenceToFormulaTextMap, SpreadsheetCellReference, String>,
+    ClassTesting2<SpreadsheetCellReferenceToFormulaTextMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToFormulaTextMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static TextStyle VALUE1 = TextStyle.EMPTY.set(
-        TextStylePropertyName.COLOR,
-        Color.parse("#123456")
-    );
+    private final static String VALUE1 = "=1+2";
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static TextStyle VALUE2 = TextStyle.EMPTY;
+    private final static String VALUE2 = "";
 
-    private final static Map<SpreadsheetCellReference, TextStyle> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, String> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -66,35 +60,35 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToTextStyleMap.with(null)
+            () -> SpreadsheetCellReferenceToFormulaTextMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, TextStyle> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, String> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToTextStyleMap.with(map)
+            () -> SpreadsheetCellReferenceToFormulaTextMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToTextStyleMapDoesntWrap() {
-        final SpreadsheetCellReferenceToTextStyleMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToFormulaTextMapDoesntWrap() {
+        final SpreadsheetCellReferenceToFormulaTextMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToTextStyleMap.with(map)
+            SpreadsheetCellReferenceToFormulaTextMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToTextStyleMap map = this.createMap();
+        final SpreadsheetCellReferenceToFormulaTextMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -173,7 +167,7 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, TextStyle>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, String>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -185,8 +179,8 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     }
 
     @Override
-    public SpreadsheetCellReferenceToTextStyleMap createMap() {
-        return SpreadsheetCellReferenceToTextStyleMap.with(MAP);
+    public SpreadsheetCellReferenceToFormulaTextMap createMap() {
+        return SpreadsheetCellReferenceToFormulaTextMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -205,11 +199,9 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     public void testMarshall() {
         this.marshallAndCheck(
             this.createMap(),
-            "{\n" +
-                "  \"A1\": {\n" +
-                "    \"color\": \"#123456\"\n" +
-                "  },\n" +
-                "  \"A2\": {}\n" +
+                "{\n" +
+                "  \"A1\": \"=1+2\",\n" +
+                "  \"A2\": \"\"\n" +
                 "}"
         );
     }
@@ -218,26 +210,24 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"color\": \"#123456\"\n" +
-                "  },\n" +
-                "  \"A2\": {}\n" +
+                "  \"A1\": \"=1+2\",\n" +
+                "  \"A2\": \"\"\n" +
                 "}",
             this.createMap()
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToTextStyleMap unmarshall(final JsonNode json,
-                                                          final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToTextStyleMap.unmarshall(
+    public SpreadsheetCellReferenceToFormulaTextMap unmarshall(final JsonNode json,
+                                                               final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToFormulaTextMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToTextStyleMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToFormulaTextMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -247,15 +237,15 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22color%22:%20%22%23123456%22%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%7D%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22=1+2%22,%0A%20%20%22A2%22:%20%22%22%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToTextStyleMap> type() {
-        return SpreadsheetCellReferenceToTextStyleMap.class;
+    public Class<SpreadsheetCellReferenceToFormulaTextMap> type() {
+        return SpreadsheetCellReferenceToFormulaTextMap.class;
     }
 
     @Override
