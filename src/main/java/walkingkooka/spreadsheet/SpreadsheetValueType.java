@@ -42,7 +42,7 @@ import java.util.Set;
  */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
-    public final static String ANY = "*";
+    public static final ValidationValueTypeName ANY = ValidationValueTypeName.ANY;
 
     public static final String BOOLEAN_STRING = ValidationValueTypeName.BOOLEAN_STRING;
 

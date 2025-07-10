@@ -17081,7 +17081,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.LRTD,
             0, // offset
             10, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17192,7 +17192,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.LRTD,
             0, // offset
             3, //count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17299,7 +17299,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.LRTD,
             0, // offset
             3, // max
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17387,7 +17387,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.RLBU,
             0, // offset
             3, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17475,7 +17475,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.RLBU,
             0, // offset
             3, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17497,7 +17497,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.RLBU,
             1, // offset
             2, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17518,7 +17518,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.RLBU,
             2, // offset
             1, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17538,7 +17538,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.RLBU,
             3, // offset
             0, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.value(true), // match everything
             SpreadsheetDeltaProperties.ALL,
             context,
@@ -17639,7 +17639,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeReferencePath.RLBU,
             0, // offset
             3, // count
-            SpreadsheetValueType.NUMBER_STRING,
+            SpreadsheetValueType.NUMBER,
             Expression.call(
                 Expression.namedFunction(
                     SpreadsheetExpressionFunctions.name(functionName)

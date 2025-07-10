@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -90,7 +91,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final String valueType,
+                                            final ValidationValueTypeName valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
@@ -101,7 +102,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
                                       final SpreadsheetCellRangeReferencePath path,
                                       final int offset,
                                       final int count,
-                                      final String valueType,
+                                      final ValidationValueTypeName valueType,
                                       final Expression expression,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {

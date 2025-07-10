@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Optional;
 import java.util.Set;
@@ -279,7 +280,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
             NullPointerException.class,
             () -> this.createStore().findCellsWithValueType(
                 null,
-                SpreadsheetValueType.TEXT_STRING,
+                SpreadsheetValueType.TEXT,
                 1
             )
         );
@@ -303,7 +304,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
             IllegalArgumentException.class,
             () -> this.createStore().findCellsWithValueType(
                 SpreadsheetSelection.ALL_CELLS,
-                SpreadsheetValueType.TEXT_STRING,
+                SpreadsheetValueType.TEXT,
                 -1
             )
         );
@@ -314,14 +315,14 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         this.findCellsWithValueTypeAndCheck(
             this.createStore(),
             SpreadsheetSelection.ALL_CELLS,
-            SpreadsheetValueType.TEXT_STRING,
+            SpreadsheetValueType.TEXT,
             0
         );
     }
 
     default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
-                                                final String valueTypeName,
+                                                final ValidationValueTypeName valueTypeName,
                                                 final int max,
                                                 final SpreadsheetCell... expected) {
         this.findCellsWithValueTypeAndCheck(
@@ -335,7 +336,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
-                                                final String valueTypeName,
+                                                final ValidationValueTypeName valueTypeName,
                                                 final int max,
                                                 final Set<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -357,13 +358,13 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
             NullPointerException.class,
             () -> this.createStore().countCellsWithValueType(
                 null,
-                SpreadsheetValueType.TEXT_STRING
+                SpreadsheetValueType.TEXT
             )
         );
     }
 
     @Test
-    default void testCountCellsWithValueTypeWithNullValueTypeNameFails() {
+    default void testCountCellsWithValueTypeWithNullValueTypeFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore().countCellsWithValueType(
@@ -375,15 +376,15 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void countCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                  final SpreadsheetCellRangeReference cellRange,
-                                                 final String valueTypeName,
+                                                 final ValidationValueTypeName valueType,
                                                  final int expected) {
         this.checkEquals(
             expected,
             store.countCellsWithValueType(
                 cellRange,
-                valueTypeName
+                valueType
             ),
-            () -> "countCellsWithValueType " + cellRange + " " + valueTypeName
+            () -> "countCellsWithValueType " + cellRange + " " + valueType
         );
     }
 }
