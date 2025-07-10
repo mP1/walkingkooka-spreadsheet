@@ -16,12 +16,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -31,7 +30,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -40,25 +38,22 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest implements MapTesting2<SpreadsheetCellReferenceToDecimalNumberSymbolsMap, SpreadsheetCellReference, Optional<DecimalNumberSymbols>>,
-    ClassTesting2<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToDecimalNumberSymbolsMap>,
+public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting2<SpreadsheetCellReferenceToLocaleMap, SpreadsheetCellReference, Optional<Locale>>,
+    ClassTesting2<SpreadsheetCellReferenceToLocaleMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToLocaleMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<DecimalNumberSymbols> VALUE1 = Optional.of(
-        DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(Locale.ENGLISH)
-        )
+    private final static Optional<Locale> VALUE1 = Optional.of(
+        Locale.forLanguageTag("en-AU")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static Optional<DecimalNumberSymbols> VALUE2 = Optional.empty();
+    private final static Optional<Locale> VALUE2 = Optional.empty();
 
-    private final static Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, Optional<Locale>> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -69,35 +64,35 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToDecimalNumberSymbolsMap.with(null)
+            () -> SpreadsheetCellReferenceToLocaleMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<DecimalNumberSymbols>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<Locale>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToDecimalNumberSymbolsMap.with(map)
+            () -> SpreadsheetCellReferenceToLocaleMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToDecimalNumberSymbolsMapDoesntWrap() {
-        final SpreadsheetCellReferenceToDecimalNumberSymbolsMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToLocaleMapDoesntWrap() {
+        final SpreadsheetCellReferenceToLocaleMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToDecimalNumberSymbolsMap.with(map)
+            SpreadsheetCellReferenceToLocaleMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToDecimalNumberSymbolsMap map = this.createMap();
+        final SpreadsheetCellReferenceToLocaleMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -176,7 +171,7 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<DecimalNumberSymbols>>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<Locale>>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -188,8 +183,8 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
     }
 
     @Override
-    public SpreadsheetCellReferenceToDecimalNumberSymbolsMap createMap() {
-        return SpreadsheetCellReferenceToDecimalNumberSymbolsMap.with(MAP);
+    public SpreadsheetCellReferenceToLocaleMap createMap() {
+        return SpreadsheetCellReferenceToLocaleMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -209,20 +204,7 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"negativeSign\": \"-\",\n" +
-                "    \"positiveSign\": \"+\",\n" +
-                "    \"zeroDigit\": \"0\",\n" +
-                "    \"currencySymbol\": \"¤\",\n" +
-                "    \"decimalSeparator\": \".\",\n" +
-                "    \"exponentSymbol\": \"E\",\n" +
-                "    \"groupSeparator\": \",\",\n" +
-                "    \"infinitySymbol\": \"∞\",\n" +
-                "    \"monetaryDecimalSeparator\": \".\",\n" +
-                "    \"nanSymbol\": \"NaN\",\n" +
-                "    \"percentSymbol\": \"%\",\n" +
-                "    \"permillSymbol\": \"‰\"\n" +
-                "  },\n" +
+                "  \"A1\": \"en-AU\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
@@ -232,20 +214,7 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"negativeSign\": \"-\",\n" +
-                "    \"positiveSign\": \"+\",\n" +
-                "    \"zeroDigit\": \"0\",\n" +
-                "    \"currencySymbol\": \"¤\",\n" +
-                "    \"decimalSeparator\": \".\",\n" +
-                "    \"exponentSymbol\": \"E\",\n" +
-                "    \"groupSeparator\": \",\",\n" +
-                "    \"infinitySymbol\": \"∞\",\n" +
-                "    \"monetaryDecimalSeparator\": \".\",\n" +
-                "    \"nanSymbol\": \"NaN\",\n" +
-                "    \"percentSymbol\": \"%\",\n" +
-                "    \"permillSymbol\": \"‰\"\n" +
-                "  },\n" +
+                "  \"A1\": \"en-AU\",\n" +
                 "  \"A2\": null\n" +
                 "}",
             this.createMap()
@@ -253,16 +222,16 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
     }
 
     @Override
-    public SpreadsheetCellReferenceToDecimalNumberSymbolsMap unmarshall(final JsonNode json,
-                                                                        final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToDecimalNumberSymbolsMap.unmarshall(
+    public SpreadsheetCellReferenceToLocaleMap unmarshall(final JsonNode json,
+                                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToLocaleMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToDecimalNumberSymbolsMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToLocaleMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -272,15 +241,15 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22negativeSign%22:%20%22-%22,%0A%20%20%20%20%22positiveSign%22:%20%22+%22,%0A%20%20%20%20%22zeroDigit%22:%20%220%22,%0A%20%20%20%20%22currencySymbol%22:%20%22%C2%A4%22,%0A%20%20%20%20%22decimalSeparator%22:%20%22.%22,%0A%20%20%20%20%22exponentSymbol%22:%20%22E%22,%0A%20%20%20%20%22groupSeparator%22:%20%22,%22,%0A%20%20%20%20%22infinitySymbol%22:%20%22%E2%88%9E%22,%0A%20%20%20%20%22monetaryDecimalSeparator%22:%20%22.%22,%0A%20%20%20%20%22nanSymbol%22:%20%22NaN%22,%0A%20%20%20%20%22percentSymbol%22:%20%22%25%22,%0A%20%20%20%20%22permillSymbol%22:%20%22%E2%80%B0%22%0A%20%20%7D,%0A%20%20%22A2%22:%20null%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22en-AU%22,%0A%20%20%22A2%22:%20null%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToDecimalNumberSymbolsMap> type() {
-        return SpreadsheetCellReferenceToDecimalNumberSymbolsMap.class;
+    public Class<SpreadsheetCellReferenceToLocaleMap> type() {
+        return SpreadsheetCellReferenceToLocaleMap.class;
     }
 
     @Override

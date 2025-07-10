@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -16,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
@@ -24,6 +23,8 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
@@ -36,20 +37,24 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTesting2<SpreadsheetCellReferenceToFormulaTextMap, SpreadsheetCellReference, String>,
-    ClassTesting2<SpreadsheetCellReferenceToFormulaTextMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToFormulaTextMap>,
+public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap, SpreadsheetCellReference, SpreadsheetCell>,
+    ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static String VALUE1 = "=1+2";
+    private final static SpreadsheetCell VALUE1 = KEY1.setFormula(
+        SpreadsheetFormula.EMPTY.setText("=1")
+    );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static String VALUE2 = "";
+    private final static SpreadsheetCell VALUE2 = KEY2.setFormula(
+        SpreadsheetFormula.EMPTY.setText("=2")
+    );
 
-    private final static Map<SpreadsheetCellReference, String> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, SpreadsheetCell> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -60,35 +65,35 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToFormulaTextMap.with(null)
+            () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, String> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetCell> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToFormulaTextMap.with(map)
+            () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToFormulaTextMapDoesntWrap() {
-        final SpreadsheetCellReferenceToFormulaTextMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToSpreadsheetCellMapDoesntWrap() {
+        final SpreadsheetCellReferenceToSpreadsheetCellMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToFormulaTextMap.with(map)
+            SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToFormulaTextMap map = this.createMap();
+        final SpreadsheetCellReferenceToSpreadsheetCellMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -127,14 +132,6 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
     }
 
     @Test
-    public void testGet2() {
-        this.getAndCheck(
-            KEY2,
-            VALUE2
-        );
-    }
-
-    @Test
     public void testGetDifferentSpreadsheetCellReferenceKind() {
         final SpreadsheetCellReference reference = KEY1.toAbsolute();
         this.checkNotEquals(
@@ -167,7 +164,7 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, String>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, SpreadsheetCell>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -179,8 +176,8 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
     }
 
     @Override
-    public SpreadsheetCellReferenceToFormulaTextMap createMap() {
-        return SpreadsheetCellReferenceToFormulaTextMap.with(MAP);
+    public SpreadsheetCellReferenceToSpreadsheetCellMap createMap() {
+        return SpreadsheetCellReferenceToSpreadsheetCellMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -199,9 +196,17 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
     public void testMarshall() {
         this.marshallAndCheck(
             this.createMap(),
-                "{\n" +
-                "  \"A1\": \"=1+2\",\n" +
-                "  \"A2\": \"\"\n" +
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"A2\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=2\"\n" +
+                "    }\n" +
+                "  }\n" +
                 "}"
         );
     }
@@ -210,24 +215,32 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": \"=1+2\",\n" +
-                "  \"A2\": \"\"\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1\"\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"A2\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=2\"\n" +
+                "    }\n" +
+                "  }\n" +
                 "}",
             this.createMap()
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToFormulaTextMap unmarshall(final JsonNode json,
-                                                               final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToFormulaTextMap.unmarshall(
+    public SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode json,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToSpreadsheetCellMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToFormulaTextMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToSpreadsheetCellMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -237,15 +250,15 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%22=1+2%22,%0A%20%20%22A2%22:%20%22%22%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=1%22%0A%20%20%20%20%7D%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=2%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToFormulaTextMap> type() {
-        return SpreadsheetCellReferenceToFormulaTextMap.class;
+    public Class<SpreadsheetCellReferenceToSpreadsheetCellMap> type() {
+        return SpreadsheetCellReferenceToSpreadsheetCellMap.class;
     }
 
     @Override

@@ -16,11 +16,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -29,31 +30,32 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.provider.ValidatorSelector;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements MapTesting2<SpreadsheetCellReferenceToValidatorSelectorMap, SpreadsheetCellReference, Optional<ValidatorSelector>>,
-    ClassTesting2<SpreadsheetCellReferenceToValidatorSelectorMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValidatorSelectorMap>,
+public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTesting2<SpreadsheetCellReferenceToTextStyleMap, SpreadsheetCellReference, TextStyle>,
+    ClassTesting2<SpreadsheetCellReferenceToTextStyleMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToTextStyleMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<ValidatorSelector> VALUE1 = Optional.of(
-        ValidatorSelector.parse("hello-validator")
+    private final static TextStyle VALUE1 = TextStyle.EMPTY.set(
+        TextStylePropertyName.COLOR,
+        Color.parse("#123456")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static Optional<ValidatorSelector> VALUE2 = Optional.empty();
+    private final static TextStyle VALUE2 = TextStyle.EMPTY;
 
-    private final static Map<SpreadsheetCellReference, Optional<ValidatorSelector>> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, TextStyle> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -64,35 +66,35 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToValidatorSelectorMap.with(null)
+            () -> SpreadsheetCellReferenceToTextStyleMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, TextStyle> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToValidatorSelectorMap.with(map)
+            () -> SpreadsheetCellReferenceToTextStyleMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToValidatorSelectorMapDoesntWrap() {
-        final SpreadsheetCellReferenceToValidatorSelectorMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToTextStyleMapDoesntWrap() {
+        final SpreadsheetCellReferenceToTextStyleMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToValidatorSelectorMap.with(map)
+            SpreadsheetCellReferenceToTextStyleMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToValidatorSelectorMap map = this.createMap();
+        final SpreadsheetCellReferenceToTextStyleMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -171,7 +173,7 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<ValidatorSelector>>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, TextStyle>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -183,8 +185,8 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidatorSelectorMap createMap() {
-        return SpreadsheetCellReferenceToValidatorSelectorMap.with(MAP);
+    public SpreadsheetCellReferenceToTextStyleMap createMap() {
+        return SpreadsheetCellReferenceToTextStyleMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -204,8 +206,10 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": \"hello-validator\",\n" +
-                "  \"A2\": null\n" +
+                "  \"A1\": {\n" +
+                "    \"color\": \"#123456\"\n" +
+                "  },\n" +
+                "  \"A2\": {}\n" +
                 "}"
         );
     }
@@ -214,24 +218,26 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": \"hello-validator\",\n" +
-                "  \"A2\": null\n" +
+                "  \"A1\": {\n" +
+                "    \"color\": \"#123456\"\n" +
+                "  },\n" +
+                "  \"A2\": {}\n" +
                 "}",
             this.createMap()
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidatorSelectorMap unmarshall(final JsonNode json,
+    public SpreadsheetCellReferenceToTextStyleMap unmarshall(final JsonNode json,
                                                           final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToValidatorSelectorMap.unmarshall(
+        return SpreadsheetCellReferenceToTextStyleMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidatorSelectorMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToTextStyleMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -241,15 +247,15 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%22hello-validator%22,%0A%20%20%22A2%22:%20null%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22color%22:%20%22%23123456%22%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%7D%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToValidatorSelectorMap> type() {
-        return SpreadsheetCellReferenceToValidatorSelectorMap.class;
+    public Class<SpreadsheetCellReferenceToTextStyleMap> type() {
+        return SpreadsheetCellReferenceToTextStyleMap.class;
     }
 
     @Override

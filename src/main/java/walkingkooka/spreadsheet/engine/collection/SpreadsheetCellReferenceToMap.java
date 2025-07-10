@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;

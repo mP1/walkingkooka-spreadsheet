@@ -16,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
@@ -29,8 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.ValidationValueTypeName;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
@@ -38,65 +38,84 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest implements MapTesting2<SpreadsheetCellReferenceToValidationValueTypeNameMap, SpreadsheetCellReference, Optional<ValidationValueTypeName>>,
-    ClassTesting2<SpreadsheetCellReferenceToValidationValueTypeNameMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValidationValueTypeNameMap>,
+public final class SpreadsheetCellReferenceToValueMapTest implements MapTesting2<SpreadsheetCellReferenceToValueMap, SpreadsheetCellReference, Optional<Object>>,
+    ClassTesting2<SpreadsheetCellReferenceToValueMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValueMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<ValidationValueTypeName> VALUE1 = Optional.of(
-        ValidationValueTypeName.with("hello-type")
-    );
+    private final static Optional<Object> VALUE1 = Optional.of("String111");
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static Optional<ValidationValueTypeName> VALUE2 = Optional.empty();
+    private final static Optional<Object> VALUE2 = Optional.of(
+        LocalDate.of(
+            1999,
+            12,
+            31
+        )
+    );
 
-    private final static Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> MAP = Maps.of(
+    private final static SpreadsheetCellReference KEY3 = SpreadsheetCellReference.parseCell("A3");
+
+    private final static Optional<Object> VALUE3 = Optional.empty();
+
+    private final static Map<SpreadsheetCellReference, Optional<Object>> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
-        VALUE2
+        VALUE2,
+        KEY3,
+        VALUE3
     );
 
     @Test
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToValidationValueTypeNameMap.with(null)
+            () -> SpreadsheetCellReferenceToValueMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<Object>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
-        map.put(KEY2, null);
+        map.put(KEY2, VALUE2);
+        map.put(KEY3, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToValidationValueTypeNameMap.with(map)
+            () -> SpreadsheetCellReferenceToValueMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToValidationValueTypeNameMapDoesntWrap() {
-        final SpreadsheetCellReferenceToValidationValueTypeNameMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToValueMapDoesntWrap() {
+        final SpreadsheetCellReferenceToValueMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToValidationValueTypeNameMap.with(map)
+            SpreadsheetCellReferenceToValueMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToValidationValueTypeNameMap map = this.createMap();
+        final SpreadsheetCellReferenceToValueMap map = this.createMap();
 
         this.checkEquals(
             MAP,
             map
+        );
+    }
+
+    @Test
+    public void testWithEmptyMap() {
+        assertSame(
+            SpreadsheetCellReferenceToValueMap.EMPTY,
+            SpreadsheetCellReferenceToValueMap.with(Maps.empty())
         );
     }
 
@@ -171,7 +190,7 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<ValidationValueTypeName>>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<Object>>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -183,8 +202,8 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidationValueTypeNameMap createMap() {
-        return SpreadsheetCellReferenceToValidationValueTypeNameMap.with(MAP);
+    public SpreadsheetCellReferenceToValueMap createMap() {
+        return SpreadsheetCellReferenceToValueMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -204,8 +223,12 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": \"hello-type\",\n" +
-                "  \"A2\": null\n" +
+                "  \"A1\": \"String111\",\n" +
+                "  \"A2\": {\n" +
+                "    \"type\": \"local-date\",\n" +
+                "    \"value\": \"1999-12-31\"\n" +
+                "  },\n" +
+                "  \"A3\": null\n" +
                 "}"
         );
     }
@@ -214,24 +237,36 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": \"hello-type\",\n" +
-                "  \"A2\": null\n" +
+                "  \"A1\": \"String111\",\n" +
+                "  \"A2\": {\n" +
+                "    \"type\": \"local-date\",\n" +
+                "    \"value\": \"1999-12-31\"\n" +
+                "  },\n" +
+                "  \"A3\": null\n" +
                 "}",
             this.createMap()
         );
     }
 
+    @Test
+    public void testUnmarshallEmptyObject() {
+        this.unmarshallAndCheck(
+            JsonNode.object(),
+            SpreadsheetCellReferenceToValueMap.EMPTY
+        );
+    }
+
     @Override
-    public SpreadsheetCellReferenceToValidationValueTypeNameMap unmarshall(final JsonNode json,
-                                                                           final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToValidationValueTypeNameMap.unmarshall(
+    public SpreadsheetCellReferenceToValueMap unmarshall(final JsonNode json,
+                                                         final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToValueMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidationValueTypeNameMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToValueMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -241,15 +276,15 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%22hello-type%22,%0A%20%20%22A2%22:%20null%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22String111%22,%0A%20%20%22A2%22:%20%7B%0A%20%20%20%20%22type%22:%20%22local-date%22,%0A%20%20%20%20%22value%22:%20%221999-12-31%22%0A%20%20%7D,%0A%20%20%22A3%22:%20null%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToValidationValueTypeNameMap> type() {
-        return SpreadsheetCellReferenceToValidationValueTypeNameMap.class;
+    public Class<SpreadsheetCellReferenceToValueMap> type() {
+        return SpreadsheetCellReferenceToValueMap.class;
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -15,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.MapTesting2;
@@ -23,38 +24,36 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements MapTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap, SpreadsheetCellReference, SpreadsheetCell>,
-    ClassTesting2<SpreadsheetCellReferenceToSpreadsheetCellMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToSpreadsheetCellMap>,
+public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements MapTesting2<SpreadsheetCellReferenceToValidatorSelectorMap, SpreadsheetCellReference, Optional<ValidatorSelector>>,
+    ClassTesting2<SpreadsheetCellReferenceToValidatorSelectorMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValidatorSelectorMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static SpreadsheetCell VALUE1 = KEY1.setFormula(
-        SpreadsheetFormula.EMPTY.setText("=1")
+    private final static Optional<ValidatorSelector> VALUE1 = Optional.of(
+        ValidatorSelector.parse("hello-validator")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static SpreadsheetCell VALUE2 = KEY2.setFormula(
-        SpreadsheetFormula.EMPTY.setText("=2")
-    );
+    private final static Optional<ValidatorSelector> VALUE2 = Optional.empty();
 
-    private final static Map<SpreadsheetCellReference, SpreadsheetCell> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, Optional<ValidatorSelector>> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -65,35 +64,35 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(null)
+            () -> SpreadsheetCellReferenceToValidatorSelectorMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, SpreadsheetCell> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
+            () -> SpreadsheetCellReferenceToValidatorSelectorMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToSpreadsheetCellMapDoesntWrap() {
-        final SpreadsheetCellReferenceToSpreadsheetCellMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToValidatorSelectorMapDoesntWrap() {
+        final SpreadsheetCellReferenceToValidatorSelectorMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToSpreadsheetCellMap.with(map)
+            SpreadsheetCellReferenceToValidatorSelectorMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToSpreadsheetCellMap map = this.createMap();
+        final SpreadsheetCellReferenceToValidatorSelectorMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -132,6 +131,14 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     }
 
     @Test
+    public void testGet2() {
+        this.getAndCheck(
+            KEY2,
+            VALUE2
+        );
+    }
+
+    @Test
     public void testGetDifferentSpreadsheetCellReferenceKind() {
         final SpreadsheetCellReference reference = KEY1.toAbsolute();
         this.checkNotEquals(
@@ -164,7 +171,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, SpreadsheetCell>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<ValidatorSelector>>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -176,8 +183,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     }
 
     @Override
-    public SpreadsheetCellReferenceToSpreadsheetCellMap createMap() {
-        return SpreadsheetCellReferenceToSpreadsheetCellMap.with(MAP);
+    public SpreadsheetCellReferenceToValidatorSelectorMap createMap() {
+        return SpreadsheetCellReferenceToValidatorSelectorMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -197,16 +204,8 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
         this.marshallAndCheck(
             this.createMap(),
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"formula\": {\n" +
-                "      \"text\": \"=1\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"A2\": {\n" +
-                "    \"formula\": {\n" +
-                "      \"text\": \"=2\"\n" +
-                "    }\n" +
-                "  }\n" +
+                "  \"A1\": \"hello-validator\",\n" +
+                "  \"A2\": null\n" +
                 "}"
         );
     }
@@ -215,32 +214,24 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     public void testUnmarshall() {
         this.unmarshallAndCheck(
             "{\n" +
-                "  \"A1\": {\n" +
-                "    \"formula\": {\n" +
-                "      \"text\": \"=1\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"A2\": {\n" +
-                "    \"formula\": {\n" +
-                "      \"text\": \"=2\"\n" +
-                "    }\n" +
-                "  }\n" +
+                "  \"A1\": \"hello-validator\",\n" +
+                "  \"A2\": null\n" +
                 "}",
             this.createMap()
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode json,
-                                                                   final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToSpreadsheetCellMap.unmarshall(
+    public SpreadsheetCellReferenceToValidatorSelectorMap unmarshall(final JsonNode json,
+                                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReferenceToValidatorSelectorMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToSpreadsheetCellMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToValidatorSelectorMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -250,15 +241,15 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
             this.createMap(),
-            "%7B%0A%20%20%22A1%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=1%22%0A%20%20%20%20%7D%0A%20%20%7D,%0A%20%20%22A2%22:%20%7B%0A%20%20%20%20%22formula%22:%20%7B%0A%20%20%20%20%20%20%22text%22:%20%22=2%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+            "%7B%0A%20%20%22A1%22:%20%22hello-validator%22,%0A%20%20%22A2%22:%20null%0A%7D"
         );
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToSpreadsheetCellMap> type() {
-        return SpreadsheetCellReferenceToSpreadsheetCellMap.class;
+    public Class<SpreadsheetCellReferenceToValidatorSelectorMap> type() {
+        return SpreadsheetCellReferenceToValidatorSelectorMap.class;
     }
 
     @Override
