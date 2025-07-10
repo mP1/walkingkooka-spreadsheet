@@ -1437,6 +1437,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Override
+    public void testLocaleTextWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public BasicSpreadsheetEngineContext createContext() {
         return this.createContext(SpreadsheetLabelStores.treeMap());
     }

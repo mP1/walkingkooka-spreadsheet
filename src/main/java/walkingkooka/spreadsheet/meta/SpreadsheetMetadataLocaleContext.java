@@ -63,6 +63,11 @@ final class SpreadsheetMetadataLocaleContext implements LocaleContext {
         return this.context.decimalNumberSymbolsForLocale(locale);
     }
 
+    @Override
+    public Optional<String> localeText(final Locale locale) {
+        return this.context.localeText(locale);
+    }
+
     private final LocaleContext context;
 
     @Override

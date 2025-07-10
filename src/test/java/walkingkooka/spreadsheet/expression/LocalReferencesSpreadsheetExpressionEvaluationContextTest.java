@@ -557,6 +557,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     }
 
     @Override
+    public void testLocaleTextWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetSpreadsheetMetadataWithNullFails() {
         throw new UnsupportedOperationException();
     }
