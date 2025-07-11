@@ -125,6 +125,19 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     );
 
     /**
+     * Used to build a UI search elements.
+     */
+    public final static Set<ValidationValueTypeName> ALL_CELL_TYPES = Sets.of(
+        BOOLEAN,
+        DATE,
+        DATE_TIME,
+        ERROR,
+        NUMBER,
+        TEXT,
+        TIME
+    );
+
+    /**
      * For the given type returns the value type name, or {@link Optional#empty()} if the type is unknown.
      */
     public static Optional<ValidationValueTypeName> toValueType(final Class<?> type) {
