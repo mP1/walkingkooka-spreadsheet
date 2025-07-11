@@ -268,7 +268,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
                 "text-to-selection, selection-to-selection, selection-to-text, " +
                 "spreadsheet-cell-to, " +
-                "has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-text-node, url-to-hyperlink, url-to-image, " +
+                "has-style-to-style, text-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, " +
                 "general)"
             )
         ).set(

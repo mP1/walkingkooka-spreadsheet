@@ -62,6 +62,8 @@ import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.text.Hyperlink;
 import walkingkooka.tree.text.Image;
+import walkingkooka.tree.text.Styleable;
+import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -653,6 +655,23 @@ final class MissingConverterVerifier {
 
         // to-text-node.................................................................................................
         if (formatting) {
+            finder.addIfConversionFail(
+                Lists.of(
+                    TextNode.text("Text123").setTextStyle(
+                        TextStyle.EMPTY.set(
+                            TextStylePropertyName.COLOR,
+                            Color.BLACK
+                        )
+                    ),
+                    TextStyle.EMPTY.set(
+                        TextStylePropertyName.TEXT_ALIGN,
+                        TextAlign.CENTER
+                    )
+                ),
+                Styleable.class,
+                SpreadsheetConvertersConverterProvider.TO_STYLEABLE
+            );
+
             finder.addIfConversionFail(
                 Lists.of(
                     'A',

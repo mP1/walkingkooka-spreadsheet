@@ -431,6 +431,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToStyleable() {
+        this.converterAndCheck(
+            "to-styleable",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toStyleable()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToTextNode() {
         this.converterAndCheck(
             "to-text-node",
