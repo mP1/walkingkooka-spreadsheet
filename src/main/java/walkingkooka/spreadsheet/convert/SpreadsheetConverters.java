@@ -435,6 +435,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeTextConverters.toStyleable}
+     */
+    public static Converter<SpreadsheetConverterContext> toStyleable() {
+        return TreeTextConverters.toStyleable();
+    }
+
+    /**
      * {@see TreeTextConverters#hasTextNodeToTextNode}
      */
     public static Converter<SpreadsheetConverterContext> toTextNode() {
