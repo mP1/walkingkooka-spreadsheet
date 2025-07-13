@@ -300,6 +300,14 @@ public interface SpreadsheetEngine {
                                 final SpreadsheetEngineContext context);
 
     /**
+     * Finds labels containing the given text in the {@link SpreadsheetLabelName}.
+     */
+    SpreadsheetDelta findLabelsByName(final String text,
+                                      final int offset,
+                                      final int count,
+                                      final SpreadsheetEngineContext context);
+
+    /**
      * Finds all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
      */
     SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
