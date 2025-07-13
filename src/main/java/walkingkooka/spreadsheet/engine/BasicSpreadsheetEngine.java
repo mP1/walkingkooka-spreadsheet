@@ -1526,6 +1526,31 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // FIND LABELS BY NAME..............................................................................................
+
+    @Override
+    public SpreadsheetDelta findLabelsByName(final String text,
+                                             final int offset,
+                                             final int count,
+                                             final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(text, "text");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.EMPTY.setLabels(
+            context.storeRepository()
+                .labels()
+                .findLabelsByName(
+                    text,
+                    offset,
+                    count
+                )
+        );
+    }
+
     // FIND LABELS WITH REFERENCE.......................................................................................
 
     @Override

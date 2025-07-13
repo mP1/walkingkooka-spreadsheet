@@ -243,6 +243,14 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta findLabelsByName(final String text,
+                                             final int offset,
+                                             final int count,
+                                             final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
                                                     final int offset,
                                                     final int count,

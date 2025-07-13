@@ -375,6 +375,19 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta findLabelsByName(final String text,
+                                             final int offset,
+                                             final int count,
+                                             final SpreadsheetEngineContext context) {
+        return this.engine.findLabelsByName(
+            text,
+            offset,
+            count,
+            context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
                                                     final int offset,
                                                     final int count,

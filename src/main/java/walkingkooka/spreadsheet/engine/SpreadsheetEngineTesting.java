@@ -2333,6 +2333,114 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // findLabelsByName................................................................................................
+
+    @Test
+    default void testFindLabelsByNameWithNullReferenceFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .findLabelsByName(
+                    null,
+                    0, // offset
+                    0, // count,
+                    SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testFindLabelsByNameWithNegativeOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createSpreadsheetEngine()
+                .findLabelsByName(
+                    "",
+                    -1, // offset
+                    0, // count,
+                    SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testFindLabelsByNameWithNegativeCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createSpreadsheetEngine()
+                .findLabelsByName(
+                    "",
+                    0, // offset
+                    -1, // count,
+                    SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testFindLabelsByNameWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .findLabelsByName(
+                    "",
+                    0, // offset
+                    0, // count,
+                    null
+                )
+        );
+    }
+
+    default void findLabelsByNameAndCheck(final SpreadsheetEngine engine,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final SpreadsheetEngineContext context,
+                                          final SpreadsheetLabelMapping... expected) {
+        this.findLabelsByNameAndCheck(
+            engine,
+            text,
+            offset,
+            count,
+            context,
+            Sets.of(expected)
+        );
+    }
+
+    default void findLabelsByNameAndCheck(final SpreadsheetEngine engine,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final SpreadsheetEngineContext context,
+                                          final Set<SpreadsheetLabelMapping> expected) {
+        this.findLabelsByNameAndCheck(
+            engine,
+            text,
+            offset,
+            count,
+            context,
+            SpreadsheetDelta.EMPTY.setLabels(expected)
+        );
+    }
+
+    default void findLabelsByNameAndCheck(final SpreadsheetEngine engine,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final SpreadsheetEngineContext context,
+                                          final SpreadsheetDelta expected) {
+        this.checkEquals(
+            expected,
+            engine.findLabelsByName(
+                text,
+                offset,
+                count,
+                context
+            ),
+            () -> "findLabelsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
+        );
+    }
+    
     // findLabelsWithReference..........................................................................................
 
     @Test

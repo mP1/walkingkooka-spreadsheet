@@ -20015,6 +20015,77 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // findLabelsByName.................................................................................................
+
+    @Test
+    public void testFindLabelsByName() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        engine.saveLabel(
+            SpreadsheetSelection.labelName("Label1")
+                .setLabelMappingReference(SpreadsheetSelection.A1),
+            context
+        );
+
+        engine.saveLabel(
+            SpreadsheetSelection.labelName("Label2")
+                .setLabelMappingReference(
+                    SpreadsheetSelection.parseCell("B2")
+                ),
+            context
+        );
+
+        final SpreadsheetLabelMapping mapping3 = SpreadsheetSelection.labelName("DifferentLabel3")
+            .setLabelMappingReference(
+                SpreadsheetSelection.parseCell("C3")
+            );
+        engine.saveLabel(
+            mapping3,
+            context
+        );
+
+        final SpreadsheetLabelMapping mapping4 = SpreadsheetSelection.labelName("DifferentLabel4")
+            .setLabelMappingReference(
+                SpreadsheetSelection.parseCell("D4")
+            );
+
+        engine.saveLabel(
+            mapping4,
+            context
+        );
+
+        final SpreadsheetLabelMapping mapping5 = SpreadsheetSelection.labelName("DifferentLabel5")
+            .setLabelMappingReference(
+                SpreadsheetSelection.parseCell("E5")
+            );
+
+        engine.saveLabel(
+            mapping5,
+            context
+        );
+
+        final SpreadsheetLabelMapping mapping6 = SpreadsheetSelection.labelName("DifferentLabel6")
+            .setLabelMappingReference(
+                SpreadsheetSelection.parseCell("F6")
+            );
+
+        engine.saveLabel(
+            mapping6,
+            context
+        );
+
+        this.findLabelsByNameAndCheck(
+            engine,
+            "Different",
+            1, // offset skips DifferentLabel3
+            2, // count doesnt reach mapping6 DifferentLabel6/F6
+            context,
+            mapping4,
+            mapping5
+        );
+    }
+
     // findLabelsWithReferenceWithNullReference.........................................................................
 
     @Test
