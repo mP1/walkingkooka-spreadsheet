@@ -487,19 +487,30 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    // findSimilar......................................................................................................
+    // findLabelsByName......................................................................................................
 
     @Test
-    public void testFindSimilarNone() {
+    public void testFindLabelsByNameNone() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
+        store.save(
+            SpreadsheetLabelMapping.with(
+                this.label1(),
+                this.a1()
+            )
+        );
 
-        this.findSimilarAndCheck(store, this.label2().value(), 2);
+        this.findLabelsByNameAndCheck(
+            store,
+            this.label2()
+                .value(),
+            0,
+            2
+        );
     }
 
     @Test
-    public void testFindSimilarOnly() {
+    public void testFindLabelsByNameOnly() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = this.label1();
@@ -508,16 +519,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         store.save(mapping);
 
-        this.findSimilarAndCheck(
+        this.findLabelsByNameAndCheck(
             store,
             label.value(),
+            0,
             1,
             mapping
         );
     }
 
     @Test
-    public void testFindSimilarOnly2() {
+    public void testFindLabelsByNameOnly2() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = this.label1();
@@ -526,16 +538,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         store.save(mapping);
 
-        this.findSimilarAndCheck(
+        this.findLabelsByNameAndCheck(
             store,
             label.value(),
+            0, // offset
             2, // count
             mapping
         );
     }
 
     @Test
-    public void testFindSimilarOnly3() {
+    public void testFindLabelsByNameOnly3() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = this.label1();
@@ -545,16 +558,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         store.save(mapping);
         store.save(SpreadsheetLabelMapping.with(SpreadsheetLabelName.labelName("xyz"), this.a1()));
 
-        this.findSimilarAndCheck(
+        this.findLabelsByNameAndCheck(
             store,
             label.value(),
+            0, // offset
             2, // count
             mapping
         );
     }
 
     @Test
-    public void testFindSimilarPartial() {
+    public void testFindLabelsByNamePartial() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label123");
@@ -563,16 +577,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         store.save(mapping);
 
-        this.findSimilarAndCheck(
+        this.findLabelsByNameAndCheck(
             store,
             "123",
+            0, // offset
             2, // count
             mapping
         );
     }
 
     @Test
-    public void testFindSimilarSeveral() {
+    public void testFindLabelsByNameSeveral() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetCellReference cell = this.a1();
@@ -588,16 +603,18 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
         store.save(SpreadsheetLabelMapping.with(label3, cell));
 
-        this.findSimilarAndCheck(
+        this.findLabelsByNameAndCheck(
             store,
             "Label123",
-            2,
-            mapping1, mapping2
+            0, // offset
+            2, // count
+            mapping1,
+            mapping2
         );
     }
 
     @Test
-    public void testFindSimilarSeveral2() {
+    public void testFindLabelsByNameSeveral2() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetCellReference cell = this.a1();
@@ -613,11 +630,40 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
         store.save(SpreadsheetLabelMapping.with(label3, cell));
 
-        this.findSimilarAndCheck(
+        this.findLabelsByNameAndCheck(
             store,
             "2",
-            2,
-            mapping1, mapping2
+            0, // offset
+            2, // count
+            mapping1,
+            mapping2
+        );
+    }
+
+    @Test
+    public void testFindLabelsByNameWithOffset() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetCellReference cell = this.a1();
+
+        final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(cell);
+        store.save(mapping1);
+
+        final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(cell);
+        store.save(mapping2);
+
+        final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
+        store.save(SpreadsheetLabelMapping.with(label3, cell));
+
+        this.findLabelsByNameAndCheck(
+            store,
+            "2",
+            1, // offset
+            2, // count
+            // skipped by offset mapping1,
+            mapping2
         );
     }
 

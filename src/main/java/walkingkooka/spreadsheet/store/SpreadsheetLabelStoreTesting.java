@@ -37,76 +37,105 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
     TypeNameTesting<S> {
 
-    // findSimilar......................................................................................................
+    // findLabelsByName......................................................................................................
 
     @Test
-    default void testFindSimilarNullTextFails() {
+    default void testFindLabelsByNameNullTextFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .findSimilar(
+                .findLabelsByName(
                     null,
+                    0,
                     1
                 )
         );
     }
 
     @Test
-    default void testFindSimilarInvalidCountFails() {
+    default void testFindLabelsByNameInvalidOffsetFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createStore()
-                .findSimilar(
+                .findLabelsByName(
                     "text",
+                    -1,
+                    0
+                )
+        );
+    }
+
+    @Test
+    default void testFindLabelsByNameInvalidCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findLabelsByName(
+                    "text",
+                    0,
                     -1
                 )
         );
     }
 
     @Test
-    default void testFindSimilarEmptyText() {
-        this.findSimilarAndCheck("", 1);
+    default void testFindLabelsByNameEmptyText() {
+        this.findLabelsByNameAndCheck(
+            "",
+            0,
+            1
+        );
     }
 
     @Test
-    default void testFindSimilarZeroCount() {
-        this.findSimilarAndCheck("text", 0);
+    default void testFindLabelsByNameZeroCount() {
+        this.findLabelsByNameAndCheck(
+            "text",
+            0,
+            0
+        );
     }
 
-    default void findSimilarAndCheck(final String text,
-                                     final int count,
-                                     final SpreadsheetLabelMapping... mappings) {
-        this.findSimilarAndCheck(
+    default void findLabelsByNameAndCheck(final String text,
+                                          final int offset,
+                                          final int count,
+                                          final SpreadsheetLabelMapping... mappings) {
+        this.findLabelsByNameAndCheck(
             this.createStore(),
             text,
+            offset,
             count,
             mappings
         );
     }
 
-    default void findSimilarAndCheck(final SpreadsheetLabelStore store,
-                                     final String text,
-                                     final int count,
-                                     final SpreadsheetLabelMapping... mappings) {
-        this.findSimilarAndCheck(
+    default void findLabelsByNameAndCheck(final SpreadsheetLabelStore store,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final SpreadsheetLabelMapping... mappings) {
+        this.findLabelsByNameAndCheck(
             store,
             text,
+            offset,
             count,
             Sets.of(mappings)
         );
     }
 
-    default void findSimilarAndCheck(final SpreadsheetLabelStore store,
-                                     final String text,
-                                     final int count,
-                                     final Set<SpreadsheetLabelMapping> mappings) {
+    default void findLabelsByNameAndCheck(final SpreadsheetLabelStore store,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final Set<SpreadsheetLabelMapping> mappings) {
         this.checkEquals(
             mappings,
-            store.findSimilar(
+            store.findLabelsByName(
                 text,
+                offset,
                 count
             ),
-            () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
+            () -> "findLabelsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
         );
     }
 
