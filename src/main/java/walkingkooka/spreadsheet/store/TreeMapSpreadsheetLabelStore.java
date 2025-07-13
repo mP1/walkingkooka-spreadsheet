@@ -153,29 +153,40 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> findSimilar(final String text,
-                                                    final int count) {
+    public Set<SpreadsheetLabelMapping> findLabelsByName(final String text,
+                                                         final int offset,
+                                                         final int count) {
         Objects.requireNonNull(text, "text");
-        Store.checkCount(count);
+        Store.checkOffsetAndCount(
+            offset,
+            count
+        );
 
         final Set<SpreadsheetLabelMapping> results;
         if (text.isEmpty() || 0 == count) {
             results = Sets.empty();
         } else {
-            results = findSimilarNonEmpty(text, count);
+            results = this.findLabelsByNameNotEmpty(
+                text,
+                offset,
+                count
+            );
         }
 
         return results;
     }
 
-    private Set<SpreadsheetLabelMapping> findSimilarNonEmpty(final String text,
-                                                             final int count) {
+    private Set<SpreadsheetLabelMapping> findLabelsByNameNotEmpty(final String text,
+                                                                  final int offset,
+                                                                  final int count) {
         Set<SpreadsheetLabelMapping> results;
 
         do {
             SpreadsheetLabelMapping mapping = null;
             try {
-                mapping = this.mappings.get(SpreadsheetLabelName.labelName(text));
+                mapping = this.mappings.get(
+                    SpreadsheetLabelName.labelName(text)
+                );
                 if (null != mapping && 1 == count) {
                     results = Sets.of(mapping);
                     break;
@@ -192,6 +203,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
             this.mappings.values()
                 .stream()
                 .filter(l -> contains(text, l))
+                .skip(offset)
                 .limit(count - (null != mapping ? 1 : 0))
                 .forEach(results::add);
         } while (false);

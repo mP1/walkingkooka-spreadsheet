@@ -29,8 +29,9 @@ import java.util.Set;
 public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, SpreadsheetLabelMapping> implements SpreadsheetLabelStore, Fake {
 
     @Override
-    public Set<SpreadsheetLabelMapping> findSimilar(final String text,
-                                                    final int count) {
+    public Set<SpreadsheetLabelMapping> findLabelsByName(final String text,
+                                                         final int offset,
+                                                         final int count) {
         throw new UnsupportedOperationException();
     }
 

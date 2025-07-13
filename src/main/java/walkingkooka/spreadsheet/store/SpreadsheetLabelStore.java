@@ -36,7 +36,9 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     /**
      * Finds all {@link SpreadsheetLabelName} for the given text.
      */
-    Set<SpreadsheetLabelMapping> findSimilar(final String text, final int max);
+    Set<SpreadsheetLabelMapping> findLabelsByName(final String text,
+                                                  final int offset,
+                                                  final int count);
 
     /**
      * Resolves the given {@link SpreadsheetLabelName} to non label {@link SpreadsheetCellReferenceOrRange}.
