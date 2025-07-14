@@ -46,7 +46,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.json.InvalidPropertyJsonNodeException;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -2620,14 +2619,17 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     private void patchInvalidPropertyFails2(final JsonPropertyName key,
                                             final JsonNode value) {
-        this.patchInvalidPropertyFails(
-            JsonNode.object()
-                .set(
-                    key,
-                    value
-                ),
-            key,
-            JsonNode.nullNode()
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createPatchable()
+                    .patch(
+                        JsonNode.object()
+                            .set(
+                                key,
+                                value
+                            ),
+                        this.createPatchContext()
+                    )
         );
     }
 
@@ -3284,6 +3286,72 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
+    @Test
+    public void testPatchCellFormatterAndParser() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=1")
+                .setValueType(
+                    Optional.of(
+                        ValidationValueTypeName.with("lost-value-type")
+                    )
+                )
+        );
+        final SpreadsheetCell b2 = SpreadsheetSelection.parseCell("b2")
+            .setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("=99")
+            );
+
+        final Optional<SpreadsheetFormatterSelector> formatter = Optional.of(
+            SpreadsheetFormatterSelector.parse("patched-formatter")
+        );
+
+        final Optional<SpreadsheetParserSelector> parser = Optional.of(
+            SpreadsheetParserSelector.parse("patched-parser")
+        );
+
+
+        final JsonNode patch = SpreadsheetDelta.formatterPatch(
+                formatter,
+                MARSHALL_CONTEXT
+            ).objectOrFail()
+            .merge(
+                SpreadsheetDelta.parserPatch(
+                    parser,
+                    MARSHALL_CONTEXT
+                ).objectOrFail()
+            );
+
+        this.patchAndCheck(
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1.setFormatter(
+                            Optional.of(
+                                SpreadsheetFormatterSelector.parse("lost-formatter")
+                            )
+                        ),
+                        b2.setParser(
+                            Optional.of(
+                                SpreadsheetParserSelector.parse("lost-parser")
+                            )
+                        )
+                    )
+                ),
+            patch,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        a1.setFormatter(formatter)
+                            .setParser(parser),
+                        b2.setFormatter(formatter)
+                            .setParser(parser)
+                    )
+                )
+        );
+    }
+
     // PatchCells.......................................................................................................
 
     @Test
@@ -3467,16 +3535,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 value
             );
 
-        final InvalidPropertyJsonNodeException thrown = assertThrows(
-            InvalidPropertyJsonNodeException.class,
+        assertThrows(
+            IllegalArgumentException.class,
             () -> SpreadsheetDelta.EMPTY.patchCells(
                 SpreadsheetSelection.A1,
                 patch,
                 this.createPatchContext()
             )
         );
-        this.checkEquals(key, thrown.name(), "name");
-        this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
     }
 
     @Test
@@ -3708,7 +3774,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             )
         );
         this.checkEquals(
-            "Patch must not contain both \"cells\" and \"formatter\"",
+            "Invalid patch includes: cell, formatter",
             thrown.getMessage(),
             "message"
         );
@@ -3742,101 +3808,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             )
         );
         this.checkEquals(
-            "Patch must not contain both \"cells\" and \"parser\"",
-            thrown.getMessage(),
-            "message"
-        );
-    }
-
-    @Test
-    public void testPatchCellFormatterAndParserFails() {
-        final JsonNode patch = SpreadsheetDelta.formatterPatch(
-                Optional.of(
-                    SpreadsheetPattern.parseTextFormatPattern("@")
-                        .spreadsheetFormatterSelector()
-                ),
-                MARSHALL_CONTEXT
-            ).objectOrFail()
-            .merge(
-                SpreadsheetDelta.parserPatch(
-                    Optional.of(
-                        SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                            .spreadsheetParserSelector()
-                    ),
-                    MARSHALL_CONTEXT
-                ).objectOrFail()
-            );
-
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetDelta.EMPTY.patchCells(
-                SpreadsheetSelection.parseCellOrCellRange("Z99"),
-                patch,
-                this.createPatchContext()
-            )
-        );
-        this.checkEquals(
-            "Patch must not contain both \"formatter\" and \"parser\"",
-            thrown.getMessage(),
-            "message"
-        );
-    }
-
-    @Test
-    public void testPatchCellWithFormatterAndStyleFails() {
-        final JsonNode patch = SpreadsheetDelta.formatterPatch(
-                Optional.of(
-                    SpreadsheetPattern.parseTextFormatPattern("@")
-                        .spreadsheetFormatterSelector()
-                ),
-                MARSHALL_CONTEXT
-            ).objectOrFail()
-            .merge(
-                SpreadsheetDelta.stylePatch(
-                    JsonNode.object()
-                ).objectOrFail()
-            );
-
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetDelta.EMPTY.patchCells(
-                SpreadsheetSelection.parseCellOrCellRange("Z99"),
-                patch,
-                this.createPatchContext()
-            )
-        );
-        this.checkEquals(
-            "Patch must not contain both \"formatter\" and \"style\"",
-            thrown.getMessage(),
-            "message"
-        );
-    }
-
-    @Test
-    public void testPatchCellWithParserAndStyleFails() {
-        final JsonNode patch = SpreadsheetDelta.parserPatch(
-                Optional.of(
-                    SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                        .spreadsheetParserSelector()
-                ),
-                MARSHALL_CONTEXT
-            ).objectOrFail()
-            .merge(
-                SpreadsheetDelta.stylePatch(
-                    JsonNode.object()
-                ).objectOrFail()
-            );
-
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetDelta.EMPTY.patchCells(
-                SpreadsheetSelection.parseCellOrCellRange("Z99"),
-                patch,
-                this.createPatchContext()
-            )
-        );
-        this.checkEquals(
-            "Patch must not contain both \"parser\" and \"style\"",
+            "Invalid patch includes: cell, parser",
             thrown.getMessage(),
             "message"
         );
@@ -4392,7 +4364,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             )
         );
         this.checkEquals(
-            "Patch must not contain both \"cells\" and \"style\"",
+            "Invalid patch includes: cell, style",
             thrown.getMessage(),
             "message"
         );
@@ -4835,12 +4807,10 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 value
             );
 
-        final InvalidPropertyJsonNodeException thrown = assertThrows(
-            InvalidPropertyJsonNodeException.class,
+        assertThrows(
+            IllegalArgumentException.class,
             () -> SpreadsheetDelta.EMPTY.patchColumns(patch, this.createPatchContext())
         );
-        this.checkEquals(key, thrown.name(), "name");
-        this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
     }
 
     @Test
@@ -5161,12 +5131,13 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 value
             );
 
-        final InvalidPropertyJsonNodeException thrown = assertThrows(
-            InvalidPropertyJsonNodeException.class,
-            () -> SpreadsheetDelta.EMPTY.patchRows(patch, this.createPatchContext())
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetDelta.EMPTY.patchRows(
+                patch,
+                this.createPatchContext()
+            )
         );
-        this.checkEquals(key, thrown.name(), "name");
-        this.checkEquals(value.removeParent(), thrown.node().removeParent(), "node");
     }
 
     @Test

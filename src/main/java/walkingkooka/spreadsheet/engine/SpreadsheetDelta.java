@@ -1603,60 +1603,52 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private static void patchValidate(final SpreadsheetSelection selection,
                                       final JsonNode json,
                                       final Predicate<String> patchableProperties) {
-        boolean cellsPatched = false;
-        boolean dateTimeSymbolsPatched = false;
-        boolean decimalNumberSymbolsPatched = false;
-        boolean formulaPatched = false;
-        boolean formatterPatched = false;
-        boolean localePatched = false;
-        boolean parserPatched = false;
-        boolean stylePatched = false;
-        boolean validatorPatched = false;
+        boolean cell = false;
+        boolean column = false;
+        boolean rows = false;
 
+        boolean cellProperties = false;
+
+        List<JsonPropertyName> invalidProperties = Lists.array();
+        List<JsonPropertyName> cellPropertyNames = Lists.array();
 
         for (final JsonNode propertyAndValue : json.objectOrFail().children()) {
 
             final JsonPropertyName propertyName = propertyAndValue.name();
             final String propertyNameString = propertyName.value();
-            boolean valid = patchableProperties.test(propertyNameString);
 
             switch (propertyNameString) {
                 case VIEWPORT_SELECTION_PROPERTY_STRING:
-                    valid = true;
+                case WINDOW_PROPERTY_STRING:
                     break;
-                case CELLS_PROPERTY_STRING:
-                    if (valid) {
-                        cellsPatched = true;
+                default:
+                    if (false == patchableProperties.test(propertyNameString)) {
+                        invalidProperties.add(propertyName);
                     }
                     break;
+            }
+
+            switch (propertyNameString) {
+                case CELLS_PROPERTY_STRING:
+                    cell = true;
+                    break;
                 case COLUMNS_PROPERTY_STRING:
+                    column = true;
                     break;
                 case DATE_TIME_SYMBOLS_STRING:
-                    dateTimeSymbolsPatched = true;
-                    break;
                 case DECIMAL_NUMBER_SYMBOLS_STRING:
-                    decimalNumberSymbolsPatched = true;
-                    break;
                 case FORMATTER_PROPERTY_STRING:
-                    formatterPatched = true;
-                    break;
                 case FORMATTED_VALUE_PROPERTY_STRING:
-                    break;
                 case FORMULA_PROPERTY_STRING:
-                    formulaPatched = true;
-                    break;
                 case LOCALE_PROPERTY_STRING:
-                    localePatched = true;
-                    break;
                 case PARSER_PROPERTY_STRING:
-                    parserPatched = true;
+                case STYLE_PROPERTY_STRING:
+                case VALIDATOR_PROPERTY_STRING:
+                    cellProperties = true;
+                    cellPropertyNames.add(propertyName);
                     break;
                 case ROWS_PROPERTY_STRING:
-                    break;
-                case STYLE_PROPERTY_STRING:
-                    stylePatched = true;
-                case VALIDATOR_PROPERTY_STRING:
-                    validatorPatched = true;
+                    cellProperties = true;
                     break;
                 case LABELS_PROPERTY_STRING:
                 case DELETED_CELLS_PROPERTY_STRING:
@@ -1664,10 +1656,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case DELETED_ROWS_PROPERTY_STRING:
                 case COLUMN_WIDTHS_PROPERTY_STRING:
                 case ROW_HEIGHTS_PROPERTY_STRING:
-                    valid = false;
+                    invalidProperties.add(propertyName);
+                    break;
+                case VIEWPORT_SELECTION_PROPERTY_STRING:
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    valid = true;
                     break;
                 default:
                     Patchable.unknownPropertyPresent(
@@ -1676,57 +1669,31 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
             }
-
-            if (false == valid) {
-                Patchable.invalidPropertyPresent(
-                    propertyName,
-                    propertyAndValue
-                );
-            }
         }
 
-        if (cellsPatched && dateTimeSymbolsPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, DATE_TIME_SYMBOLS_STRING);
+        if (false == invalidProperties.isEmpty()) {
+            throw new IllegalArgumentException(
+                "Patch includes invalid properties: " +
+                    CharacterConstant.COMMA.toSeparatedString(
+                        invalidProperties,
+                        JsonPropertyName::value
+                    )
+            );
         }
 
-        if (cellsPatched && decimalNumberSymbolsPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, DECIMAL_NUMBER_SYMBOLS_STRING);
+        if (cell && cellProperties) {
+            throw new IllegalArgumentException(
+                "Invalid patch includes: cell, " +
+                    CharacterConstant.COMMA.toSeparatedString(
+                        cellPropertyNames,
+                        JsonPropertyName::value
+                    ));
         }
-
-        if (cellsPatched && formatterPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, FORMATTER_PROPERTY_STRING);
+        if (cell && column) {
+            throw new IllegalArgumentException("Invalid patch includes: cell, column");
         }
-
-        if (cellsPatched && localePatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, LOCALE_PROPERTY_STRING);
-        }
-
-        if (cellsPatched && parserPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, PARSER_PROPERTY_STRING);
-        }
-
-        if (cellsPatched && stylePatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, STYLE_PROPERTY_STRING);
-        }
-
-        if (cellsPatched && validatorPatched) {
-            patchInvalidFail(CELLS_PROPERTY_STRING, VALIDATOR_PROPERTY_STRING);
-        }
-
-        if (formatterPatched && parserPatched) {
-            patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSER_PROPERTY_STRING);
-        }
-
-        if (formatterPatched && localePatched) {
-            patchInvalidFail(FORMATTER_PROPERTY_STRING, LOCALE_PROPERTY_STRING);
-        }
-
-        if (formatterPatched && stylePatched) {
-            patchInvalidFail(FORMATTER_PROPERTY_STRING, STYLE_PROPERTY_STRING);
-        }
-
-        if (parserPatched && stylePatched) {
-            patchInvalidFail(PARSER_PROPERTY_STRING, STYLE_PROPERTY_STRING);
+        if (cell && rows) {
+            throw new IllegalArgumentException("Invalid patch includes: cell, row");
         }
     }
 
