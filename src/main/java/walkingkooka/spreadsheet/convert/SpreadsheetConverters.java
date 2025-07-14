@@ -201,10 +201,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ColorConverters#textToConverter}
+     * {@see ColorConverters#textToColor}
      */
     public static Converter<SpreadsheetConverterContext> textToColor() {
-        return ColorConverters.textToConverter();
+        return ColorConverters.textToColor();
     }
 
     /**
