@@ -1588,7 +1588,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(context, "context");
 
         patchValidate(
-            selection,
             json,
             patchableProperties
         );
@@ -1600,8 +1599,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private static void patchValidate(final SpreadsheetSelection selection,
-                                      final JsonNode json,
+    private static void patchValidate(final JsonNode json,
                                       final Predicate<String> patchableProperties) {
         boolean cell = false;
         boolean column = false;
