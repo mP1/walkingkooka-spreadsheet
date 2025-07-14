@@ -1520,6 +1520,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             SpreadsheetDelta.DATE_TIME_SYMBOLS_STRING,
             SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_STRING,
             SpreadsheetDelta.FORMATTER_PROPERTY_STRING,
+            SpreadsheetDelta.LOCALE_PROPERTY_STRING,
             SpreadsheetDelta.PARSER_PROPERTY_STRING,
             SpreadsheetDelta.STYLE_PROPERTY_STRING,
             SpreadsheetDelta.VALIDATOR_PROPERTY_STRING
