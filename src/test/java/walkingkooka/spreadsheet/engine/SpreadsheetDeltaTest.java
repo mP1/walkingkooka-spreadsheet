@@ -3858,6 +3858,64 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchCellsWithFormulaValue() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of("LostValue")
+                    )
+            ).setStyle(
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.CENTER
+                )
+            );
+
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+            .setFormula(
+                SpreadsheetFormula.EMPTY.setText("=2")
+            );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(
+                    a1,
+                    a2
+                )
+            );
+
+        final Optional<Object> value = Optional.of("PatchedValue");
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(value)
+                ),
+                a2.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(value)
+                ),
+                SpreadsheetSelection.parseCell("a3")
+                    .setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(value)
+                    )
+            )
+        );
+
+        this.patchCellsAndCheck(
+            before,
+            SpreadsheetSelection.parseCellRange("A1:A3"),
+            SpreadsheetDelta.formulaPatch(
+                SpreadsheetFormula.valuePatch(
+                    value,
+                    MARSHALL_CONTEXT
+                )
+            ),
+            after
+        );
+    }
+
+    @Test
     public void testPatchCellsWithFormulaValueType() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(
