@@ -1608,6 +1608,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         boolean decimalNumberSymbolsPatched = false;
         boolean formulaPatched = false;
         boolean formatterPatched = false;
+        boolean localePatched = false;
         boolean parserPatched = false;
         boolean stylePatched = false;
         boolean validatorPatched = false;
@@ -1643,6 +1644,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case FORMULA_PROPERTY_STRING:
                     formulaPatched = true;
+                    break;
+                case LOCALE_PROPERTY_STRING:
+                    localePatched = true;
                     break;
                 case PARSER_PROPERTY_STRING:
                     parserPatched = true;
@@ -1693,6 +1697,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             patchInvalidFail(CELLS_PROPERTY_STRING, FORMATTER_PROPERTY_STRING);
         }
 
+        if (cellsPatched && localePatched) {
+            patchInvalidFail(CELLS_PROPERTY_STRING, LOCALE_PROPERTY_STRING);
+        }
+
         if (cellsPatched && parserPatched) {
             patchInvalidFail(CELLS_PROPERTY_STRING, PARSER_PROPERTY_STRING);
         }
@@ -1707,6 +1715,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (formatterPatched && parserPatched) {
             patchInvalidFail(FORMATTER_PROPERTY_STRING, PARSER_PROPERTY_STRING);
+        }
+
+        if (formatterPatched && localePatched) {
+            patchInvalidFail(FORMATTER_PROPERTY_STRING, LOCALE_PROPERTY_STRING);
         }
 
         if (formatterPatched && stylePatched) {
@@ -1800,6 +1812,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         JsonNode.object()
                             .set(
                                 FORMULA_PROPERTY,
+                                propertyAndValue
+                            ),
+                        context
+                    );
+                    break;
+                case LOCALE_PROPERTY_STRING:
+                    cells = patchLocale(
+                        selection,
+                        cells,
+                        JsonNode.object()
+                            .set(
+                                LOCALE_PROPERTY,
                                 propertyAndValue
                             ),
                         context
@@ -2010,6 +2034,25 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             c -> c.setFormatter(formatter),
             r -> r.setFormula(SpreadsheetFormula.EMPTY)
                 .setFormatter(formatter)
+        );
+    }
+
+    private static Set<SpreadsheetCell> patchLocale(final SpreadsheetSelection selection,
+                                                    final Set<SpreadsheetCell> cells,
+                                                    final JsonNode patch,
+                                                    final JsonNodeUnmarshallContext context) {
+        final Optional<Locale> locale = context.unmarshallOptional(
+            patch.objectOrFail()
+                .getOrFail(LOCALE_PROPERTY),
+            Locale.class
+        );
+
+        return patchAllCells(
+            selection,
+            cells,
+            c -> c.setLocale(locale),
+            r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                .setLocale(locale)
         );
     }
 
