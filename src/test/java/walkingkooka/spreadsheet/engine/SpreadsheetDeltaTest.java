@@ -3035,6 +3035,43 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchWithLocale() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setLocale(
+                Optional.of(Locale.ENGLISH)
+            );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setLocale(
+                Optional.empty()
+            );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(a1, a2)
+            );
+
+        final Optional<Locale> locale = Optional.of(Locale.FRANCE);
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1.setLocale(locale),
+                a2.setLocale(locale)
+            )
+        );
+
+        this.patchAndCheck(
+            before,
+            SpreadsheetDelta.localePatch(
+                locale,
+                MARSHALL_CONTEXT
+            ),
+            after
+        );
+    }
+    
+    @Test
     public void testPatchWithParser() {
         final Optional<SpreadsheetParserSelector> parser = Optional.of(
             SpreadsheetParserSelector.parse("hello-parser")
