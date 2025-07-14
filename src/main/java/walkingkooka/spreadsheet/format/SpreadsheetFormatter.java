@@ -40,7 +40,7 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
      * Constant holding {@link SpreadsheetText} without color or text (aka empty {@link String}.
      */
     Optional<SpreadsheetText> NO_TEXT = Optional.of(
-        SpreadsheetText.with("")
+        SpreadsheetText.EMPTY
     );
 
     /**
