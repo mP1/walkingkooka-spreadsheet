@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -39,7 +40,8 @@ import java.util.function.Function;
 final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
     SpreadsheetConverterContextDelegator {
 
-    static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
+    static BasicSpreadsheetFormatterContext with(final Optional<SpreadsheetCell> cell,
+                                                 final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
                                                  final int generalFormatNumberDigitCount,
@@ -48,6 +50,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
                                                  final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                  final ProviderContext providerContext) {
+        Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (cellCharacterWidth <= 0) {
@@ -63,6 +66,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetFormatterContext(
+            cell,
             numberToColor,
             nameToColor,
             cellCharacterWidth,
@@ -75,7 +79,8 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         );
     }
 
-    private BasicSpreadsheetFormatterContext(final Function<Integer, Optional<Color>> numberToColor,
+    private BasicSpreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
+                                             final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
                                              final int generalFormatNumberDigitCount,
@@ -85,6 +90,8 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                              final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                              final ProviderContext providerContext) {
         super();
+
+        this.cell = cell;
 
         this.numberToColor = numberToColor;
         this.nameToColor = nameToColor;
@@ -101,6 +108,13 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     // BasicSpreadsheetFormatterContext................................................................................
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        return this.cell;
+    }
+
+    private final Optional<SpreadsheetCell> cell;
 
     @Override
     public int cellCharacterWidth() {
@@ -214,6 +228,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         return before.equals(after) ?
             this :
             new BasicSpreadsheetFormatterContext(
+                this.cell,
                 this.numberToColor,
                 this.nameToColor,
                 this.cellCharacterWidth,
@@ -231,6 +246,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     @Override
     public String toString() {
         return ToStringBuilder.empty()
+            .label("cell").value(this.cell)
             .label("cellCharacterWidth").value(this.cellCharacterWidth)
             .label("numberToColor").value(this.numberToColor)
             .label("nameToColor").value(this.nameToColor)

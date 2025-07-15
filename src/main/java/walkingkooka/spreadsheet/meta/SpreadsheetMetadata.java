@@ -1195,6 +1195,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetFormatterContexts.basic(
+            cell,
             this.numberToColor(),
             this.nameToColor(),
             characterWidth,

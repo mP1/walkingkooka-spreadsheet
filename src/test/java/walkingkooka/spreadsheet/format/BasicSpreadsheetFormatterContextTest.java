@@ -30,12 +30,14 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -59,6 +61,10 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<BasicSpreadsheetFormatterContext> {
+
+    private final static Optional<SpreadsheetCell> CELL = Optional.of(
+        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+    );
 
     private final static Color COLOR = Color.fromRgb(0x123456);
 
@@ -249,10 +255,30 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
+    public void testWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterContext.with(
+                null,
+                NUMBER_TO_COLOR,
+                NAME_TO_COLOR,
+                CELL_CHARACTER_WIDTH,
+                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                FORMATTER,
+                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullNumberToColorFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
                 null,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -271,6 +297,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
                 NUMBER_TO_COLOR,
                 null,
                 CELL_CHARACTER_WIDTH,
@@ -288,7 +315,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidCellCharacterWidthFails() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+            () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
+                NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 -1,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
@@ -305,7 +334,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidCellCharacterWidthFails2() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+            () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
+                NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 0,
                 GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
@@ -322,7 +353,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidGeneralFormatNumberDigitCountFails() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+            () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
+                NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 -1,
@@ -339,7 +372,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testWithInvalidGeneralFormatNumberDigitCountFails2() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(NUMBER_TO_COLOR,
+            () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
+                NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
                 0,
@@ -357,6 +392,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -375,6 +411,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -393,6 +430,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -411,6 +449,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetFormatterContext.with(
+                CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
@@ -421,6 +460,14 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 SPREADSHEET_FORMATTER_PROVIDER,
                 null
             )
+        );
+    }
+
+    @Test
+    public void testCell() {
+        this.cellAndCheck(
+            this.createContext(),
+            CELL
         );
     }
 
@@ -501,6 +548,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Override
     public BasicSpreadsheetFormatterContext createContext() {
         return BasicSpreadsheetFormatterContext.with(
+            CELL,
             NUMBER_TO_COLOR,
             NAME_TO_COLOR,
             CELL_CHARACTER_WIDTH,

@@ -24,6 +24,8 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.spreadsheet.HasSpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -65,6 +67,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
             value,
             type
         );
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        return HasSpreadsheetCell.NO_CELL;
     }
 
     @Override
