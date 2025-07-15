@@ -483,8 +483,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     @Test
-    public void testFormat() {
-        this.formatAndCheck(
+    public void testFormatValue() {
+        this.formatValueAndCheck(
             BigDecimal.valueOf(12.5),
             SpreadsheetText.with("012.500")
         );

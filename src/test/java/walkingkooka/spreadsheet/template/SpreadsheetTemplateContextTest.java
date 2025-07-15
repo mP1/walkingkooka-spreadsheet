@@ -123,12 +123,12 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     // parseTemplateAndRenderToString...................................................................................
 
     @Test
-    public void testSpreadsheetMetadataTestingSpreadsheetFormatterContextFormatNumber() {
+    public void testSpreadsheetMetadataTestingSpreadsheetFormatterContextFormatValueNumber() {
         this.checkEquals(
             Optional.of(
                 TextNode.text("111.")
             ),
-            SPREADSHEET_FORMATTER_CONTEXT.format(
+            SPREADSHEET_FORMATTER_CONTEXT.formatValue(
                 Optional.of(
                     EXPRESSION_NUMBER_KIND.create(111)
                 )

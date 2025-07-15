@@ -50,45 +50,47 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
             () -> "colorName " + name + " " + context);
     }
 
-    default void formatAndCheck(final Object value,
-                                final SpreadsheetText expected) {
-        this.formatAndCheck(
+    default void formatValueAndCheck(final Object value,
+                                     final SpreadsheetText expected) {
+        this.formatValueAndCheck(
             Optional.of(value),
             expected
         );
     }
 
-    default void formatAndCheck(final Optional<Object> value,
-                                final SpreadsheetText expected) {
-        this.formatAndCheck(
+    default void formatValueAndCheck(final Optional<Object> value,
+                                     final SpreadsheetText expected) {
+        this.formatValueAndCheck(
             value,
             expected.toTextNode()
         );
     }
 
-    default void formatAndCheck(final Optional<Object> value,
-                                final TextNode expected) {
-        this.formatAndCheck(
+    default void formatValueAndCheck(final Optional<Object> value,
+                                     final TextNode expected) {
+        this.formatValueAndCheck(
             value,
             Optional.of(expected)
         );
     }
 
-    default void formatAndCheck(final Optional<Object> value,
-                                final Optional<TextNode> expected) {
-        this.formatAndCheck(
+    default void formatValueAndCheck(final Optional<Object> value,
+                                     final Optional<TextNode> expected) {
+        this.formatValueAndCheck(
             this.createContext(),
             value,
             expected
         );
     }
 
-    default void formatAndCheck(final SpreadsheetFormatterContext context,
-                                final Optional<Object> value,
-                                final Optional<TextNode> expected) {
-        this.checkEquals(expected,
-            context.format(value),
-            () -> context + " " + CharSequences.quoteIfChars(value));
+    default void formatValueAndCheck(final SpreadsheetFormatterContext context,
+                                     final Optional<Object> value,
+                                     final Optional<TextNode> expected) {
+        this.checkEquals(
+            expected,
+            context.formatValue(value),
+            () -> context + " " + CharSequences.quoteIfChars(value)
+        );
     }
 
     @Test

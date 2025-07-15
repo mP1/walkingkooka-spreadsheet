@@ -51,13 +51,13 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     /**
      * Formats the given value using the default {@link SpreadsheetFormatter}.
      */
-    Optional<TextNode> format(final Optional<Object> value);
+    Optional<TextNode> formatValue(final Optional<Object> value);
 
     /**
      * Formats the given {@link Object value} or if formatting fails returns {@link SpreadsheetText#EMPTY}.
      */
-    default TextNode formatOrEmptyText(final Optional<Object> value) {
-        return this.format(value)
+    default TextNode formatValueOrEmptyText(final Optional<Object> value) {
+        return this.formatValue(value)
             .orElse(TextNode.EMPTY_TEXT);
     }
 
