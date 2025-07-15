@@ -569,7 +569,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         return SpreadsheetFormatterSample.with(
             "General",
             SpreadsheetFormatterName.GENERAL.setValueText(""),
-            context.formatOrEmptyText(
+            context.formatValueOrEmptyText(
                 Optional.ofNullable(value)
             )
         );

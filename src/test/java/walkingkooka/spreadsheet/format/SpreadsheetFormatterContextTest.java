@@ -28,7 +28,7 @@ import java.util.Optional;
 public final class SpreadsheetFormatterContextTest implements ClassTesting<SpreadsheetFormatterContext> {
 
     @Test
-    public void testFormatOrEmptyText() {
+    public void testFormatValueOrEmptyText() {
         final String value = "Abc123";
         final TextNode expected = SpreadsheetText.EMPTY.setText(value + value + value)
             .setColor(
@@ -41,14 +41,14 @@ public final class SpreadsheetFormatterContextTest implements ClassTesting<Sprea
             expected,
             new FakeSpreadsheetFormatterContext() {
                 @Override
-                public Optional<TextNode> format(final Optional<Object> v) {
+                public Optional<TextNode> formatValue(final Optional<Object> v) {
                     checkEquals(
                         Optional.of(value),
                         v
                     );
                     return Optional.of(expected);
                 }
-            }.formatOrEmptyText(
+            }.formatValueOrEmptyText(
                 Optional.of(value)
             )
         );

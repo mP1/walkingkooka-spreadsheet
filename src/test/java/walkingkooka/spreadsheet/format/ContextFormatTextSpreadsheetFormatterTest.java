@@ -148,7 +148,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
             }
 
             @Override
-            public Optional<TextNode> format(final Optional<Object> value) {
+            public Optional<TextNode> formatValue(final Optional<Object> value) {
                 final Object valueOrNull = value.orElse(null);
 
                 if (valueOrNull instanceof String) {
