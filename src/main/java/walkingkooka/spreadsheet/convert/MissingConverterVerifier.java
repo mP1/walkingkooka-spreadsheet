@@ -21,6 +21,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.HslColor;
+import walkingkooka.color.HsvColor;
+import walkingkooka.color.RgbColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -139,6 +142,27 @@ final class MissingConverterVerifier {
         final ExpressionNumberKind kind = context.expressionNumberKind();
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
         SpreadsheetErrorKind.NAME.setMessage("Value");
+
+        // color-to-color...............................................................................................
+        if (formatting) {
+            finder.addIfConversionFail(
+                Color.BLACK,
+                HslColor.class,
+                SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
+            );
+
+            finder.addIfConversionFail(
+                Color.BLACK,
+                HsvColor.class,
+                SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
+            );
+
+            finder.addIfConversionFail(
+                Color.BLACK,
+                RgbColor.class,
+                SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
+            );
+        }
 
         // error-to-number..............................................................................................
         if (formula) {

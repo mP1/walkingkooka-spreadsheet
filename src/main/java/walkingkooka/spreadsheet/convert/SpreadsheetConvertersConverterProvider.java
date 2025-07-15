@@ -101,6 +101,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                         .collect(Collectors.toList())
                 );
                 break;
+            case COLOR_TO_COLOR_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.colorToColor();
+                break;
             case ERROR_THROWING_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -351,6 +356,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName COLLECTION = ConverterName.COLLECTION;
 
+    private final static String COLOR_TO_COLOR_STRING = "color-to-color";
+
+    final static ConverterName COLOR_TO_COLOR = ConverterName.with(COLOR_TO_COLOR_STRING);
+
     private final static String ERROR_THROWING_STRING = "error-throwing";
 
     final static ConverterName ERROR_THROWING = ConverterName.with(ERROR_THROWING_STRING);
@@ -529,6 +538,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         Sets.of(
             converterInfo(BASIC_SPREADSHEET_CONVERTER),
             converterInfo(COLLECTION),
+            converterInfo(COLOR_TO_COLOR),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(FORMAT_PATTERN_TO_STRING),
