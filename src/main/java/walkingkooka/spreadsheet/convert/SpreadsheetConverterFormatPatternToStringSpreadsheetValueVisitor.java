@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.Color;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -223,6 +224,7 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                 .formatOrEmptyText(
                     Optional.of(value),
                     SpreadsheetFormatterContexts.basic(
+                        HasSpreadsheetCell.NO_CELL,
                         this::numberToColor,
                         this::nameToColor,
                         1,

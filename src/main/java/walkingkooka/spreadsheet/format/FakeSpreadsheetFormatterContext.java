@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -27,6 +28,11 @@ import walkingkooka.tree.text.TextNode;
 import java.util.Optional;
 
 public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterContext implements SpreadsheetFormatterContext {
+
+    @Override
+    public Optional<SpreadsheetCell> cell() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public int cellCharacterWidth() {

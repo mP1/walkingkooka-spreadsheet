@@ -27,6 +27,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -96,6 +97,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
         final Locale locale = Locale.ENGLISH;
 
         return SpreadsheetFormatterContexts.basic(
+            HasSpreadsheetCell.NO_CELL,
             (n -> {
                 throw new UnsupportedOperationException();
             }),

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -36,6 +37,12 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     @Override
     default SpreadsheetConverterContext spreadsheetConverterContext() {
         return this.spreadsheetFormatterContext();
+    }
+
+    @Override
+    default Optional<SpreadsheetCell> cell() {
+        return this.spreadsheetFormatterContext()
+            .cell();
     }
 
     @Override
