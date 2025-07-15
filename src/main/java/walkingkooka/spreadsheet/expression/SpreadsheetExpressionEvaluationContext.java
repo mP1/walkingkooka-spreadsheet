@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -70,6 +71,7 @@ import java.util.function.Function;
  */
 public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
     SpreadsheetConverterContext,
+    HasSpreadsheetCell,
     HasSpreadsheetMetadata,
     FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
@@ -175,21 +177,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
      */
     SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
-
-    /**
-     * Constant holding a no cell response
-     */
-    Optional<SpreadsheetCell> NO_CELL = Optional.empty();
-
-    /**
-     * Returns the current cell that owns the expression or formula being executed.
-     */
-    Optional<SpreadsheetCell> cell();
-
-    default SpreadsheetCell cellOrFail() {
-        return this.cell()
-            .orElseThrow(() -> new IllegalStateException("Missing cell"));
-    }
 
     /**
      * Returns the base server url, which can then be used to create links to cells and more.
