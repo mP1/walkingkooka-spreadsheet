@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -44,6 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
+    HasSpreadsheetCellTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
     ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
 
@@ -100,31 +102,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
             expected,
             thrown.getMessage(),
             "message"
-        );
-    }
-
-    // cell.............................................................................................................
-
-    default void cellAndCheck(final C context) {
-        this.cellAndCheck(
-            context,
-            SpreadsheetExpressionEvaluationContext.NO_CELL
-        );
-    }
-
-    default void cellAndCheck(final C context,
-                              final SpreadsheetCell expected) {
-        this.cellAndCheck(
-            context,
-            Optional.of(expected)
-        );
-    }
-
-    default void cellAndCheck(final C context,
-                              final Optional<SpreadsheetCell> expected) {
-        this.checkEquals(
-            expected,
-            context.cell()
         );
     }
 
