@@ -80,6 +80,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ColorConverters#colorToColor}
+     */
+    public static Converter<SpreadsheetConverterContext> colorToColor() {
+        return ColorConverters.colorToColor();
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetErrorThrowing}
      */
     public static Converter<SpreadsheetConverterContext> errorThrowing() {
