@@ -535,7 +535,7 @@ final class MissingConverterVerifier {
         }
 
         // text-to-spreadsheet-property-name............................................................................
-        final SpreadsheetMetadataPropertyName spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
+        final SpreadsheetMetadataPropertyName<SpreadsheetName> spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
 
         if (terminal) {
             finder.addIfConversionFail(

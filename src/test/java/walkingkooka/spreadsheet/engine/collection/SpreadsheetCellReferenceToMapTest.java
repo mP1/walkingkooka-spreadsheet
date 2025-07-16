@@ -17,14 +17,15 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetCellReferenceToMapTest implements ClassTesting2<SpreadsheetCellReferenceToMap> {
+public final class SpreadsheetCellReferenceToMapTest implements ClassTesting2<SpreadsheetCellReferenceToMap<Void>> {
 
     @Override
-    public Class<SpreadsheetCellReferenceToMap> type() {
-        return SpreadsheetCellReferenceToMap.class;
+    public Class<SpreadsheetCellReferenceToMap<Void>> type() {
+        return Cast.to(SpreadsheetCellReferenceToMap.class);
     }
 
     @Override
