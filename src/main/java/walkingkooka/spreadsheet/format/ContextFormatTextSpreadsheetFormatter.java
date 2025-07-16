@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#format(Optional)}.
+ * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#formatValue(Optional)}.
  */
 final class ContextFormatTextSpreadsheetFormatter implements SpreadsheetFormatter {
 
