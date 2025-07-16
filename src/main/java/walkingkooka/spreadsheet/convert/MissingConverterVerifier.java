@@ -787,7 +787,6 @@ final class MissingConverterVerifier {
                 name
             );
         }
-        ;
     }
 
     private void addIfConversionFail(final Object value,

@@ -345,8 +345,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
     }
 
-    ;
-
     // FORMAT .........................................................................................................
 
     /**
