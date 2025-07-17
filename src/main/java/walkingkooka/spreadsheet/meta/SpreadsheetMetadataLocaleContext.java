@@ -64,6 +64,17 @@ final class SpreadsheetMetadataLocaleContext implements LocaleContext {
     }
 
     @Override
+    public Set<Locale> findByLocaleText(final String text,
+                                        final int offset,
+                                        final int count) {
+        return this.context.findByLocaleText(
+            text,
+            offset,
+            count
+        );
+    }
+
+    @Override
     public Optional<String> localeText(final Locale locale) {
         return this.context.localeText(locale);
     }
