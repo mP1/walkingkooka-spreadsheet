@@ -1800,8 +1800,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext =
             (final Object v,
-             final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS)
-                .spreadsheetExpressionEvaluationContext(
+             final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
                     Optional.of(cell),
                     loader
                 ).addLocalVariable(
