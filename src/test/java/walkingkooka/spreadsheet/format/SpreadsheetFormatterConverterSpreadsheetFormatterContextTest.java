@@ -44,7 +44,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
-public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext>,
+public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterConverterSpreadsheetFormatterContext>,
     DecimalNumberContextDelegator {
 
     private final static Locale LOCALE = Locale.FRANCE;
