@@ -60,7 +60,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<BasicSpreadsheetFormatterContext> {
+public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<BasicSpreadsheetFormatterContext> {
 
     private final static Optional<SpreadsheetCell> CELL = Optional.of(
         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)

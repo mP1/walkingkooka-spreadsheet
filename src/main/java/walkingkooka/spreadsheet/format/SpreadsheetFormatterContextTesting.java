@@ -17,71 +17,32 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContextTesting;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ExpressionNumberConverterContextTesting<C>,
-    HasSpreadsheetCellTesting<C> {
-
-    @Override
-    default C createCanConvert() {
-        return this.createContext();
-    }
+public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends HasSpreadsheetCellTesting<C> {
 
     default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
                                      final int number,
                                      final Optional<Color> color) {
-        this.checkEquals(color,
+        this.checkEquals(
+            color,
             context.colorNumber(number),
-            () -> "colorNumber " + number + " " + context);
+            () -> "colorNumber " + number + " " + context
+        );
     }
 
     default void colorNameAndCheck(final SpreadsheetFormatterContext context,
                                    final SpreadsheetColorName name,
                                    final Optional<Color> color) {
-        this.checkEquals(color,
+        this.checkEquals(
+            color,
             context.colorName(name),
-            () -> "colorName " + name + " " + context);
-    }
-
-    default void formatValueAndCheck(final Object value,
-                                     final SpreadsheetText expected) {
-        this.formatValueAndCheck(
-            Optional.of(value),
-            expected
-        );
-    }
-
-    default void formatValueAndCheck(final Optional<Object> value,
-                                     final SpreadsheetText expected) {
-        this.formatValueAndCheck(
-            value,
-            expected.toTextNode()
-        );
-    }
-
-    default void formatValueAndCheck(final Optional<Object> value,
-                                     final TextNode expected) {
-        this.formatValueAndCheck(
-            value,
-            Optional.of(expected)
-        );
-    }
-
-    default void formatValueAndCheck(final Optional<Object> value,
-                                     final Optional<TextNode> expected) {
-        this.formatValueAndCheck(
-            this.createContext(),
-            value,
-            expected
+            () -> "colorName " + name + " " + context
         );
     }
 
@@ -93,19 +54,5 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
             context.formatValue(value),
             () -> context + " " + CharSequences.quoteIfChars(value)
         );
-    }
-
-    @Test
-    default void testSpreadsheetExpressionEvaluationContextWithNullValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .spreadsheetExpressionEvaluationContext(null)
-        );
-    }
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetFormatterContext.class.getSimpleName();
     }
 }
