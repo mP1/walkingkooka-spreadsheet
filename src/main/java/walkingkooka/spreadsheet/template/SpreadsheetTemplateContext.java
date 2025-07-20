@@ -35,6 +35,7 @@ import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -189,6 +190,11 @@ final class SpreadsheetTemplateContext implements TemplateContext {
         }
 
         return value;
+    }
+
+    @Override
+    public Template templateCollection(final List<Template> templates) {
+        return Templates.collection(templates);
     }
 
     @Override
