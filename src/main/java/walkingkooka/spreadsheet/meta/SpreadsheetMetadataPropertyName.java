@@ -32,6 +32,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlPathName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -482,6 +483,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             );
 
         this.urlFragment = UrlFragment.parse(finalName);
+        this.urlPathName = UrlPathName.with(finalName);
     }
 
     @Override
@@ -691,6 +693,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public final boolean isSpreadsheetParserSelector() {
         return this instanceof SpreadsheetMetadataPropertyNameSpreadsheetParser;
     }
+
+    // toUrlPathName....................................................................................................
+
+    public UrlPathName toUrlPathName() {
+        return this.urlPathName;
+    }
+
+    private final UrlPathName urlPathName;
 
     // Object...........................................................................................................
 
