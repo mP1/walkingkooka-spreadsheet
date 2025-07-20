@@ -198,6 +198,11 @@ final class SpreadsheetTemplateContext implements TemplateContext {
     }
 
     @Override
+    public Template templateText(final String text) {
+        return Templates.string(text);
+    }
+
+    @Override
     public String templateValue(final TemplateValueName name) {
         return this.spreadsheetExpressionEvaluationContext.convertOrFail(
             this.spreadsheetExpressionEvaluationContext.evaluateExpression(
