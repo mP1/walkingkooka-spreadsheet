@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -35,6 +34,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
@@ -923,13 +923,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
             spreadsheetFormatterSamplesAndCheck(
-                Optional.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                            Optional.of(date)
-                        )
-                    )
-                )
+                Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
                 "Short",
@@ -997,6 +991,49 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Full",
                 SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternWithCellValueDateTime() {
+        final LocalDateTime value = LocalDateTime.of(
+            2000,
+            1,
+            2,
+            18,
+            30
+        );
+        this.checkNotEquals(
+            value,
+            NOW,
+            "value must be different to now"
+        );
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(value)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
+                TextNode.text("2/1/00, 6:30 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
+                TextNode.text("2 Jan. 2000, 6:30:00 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                TextNode.text("2 January 2000 at 6:30:00 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                TextNode.text("Sunday, 2 January 2000 at 6:30:00 PM")
             )
         );
     }
@@ -1275,9 +1312,13 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
-    private static SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterSamplesAndCheck(final Optional<SpreadsheetCell> cell) {
+    private static SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterSamplesAndCheck(final Optional<Object> value) {
         return METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
-            cell,
+            Optional.of(
+                SpreadsheetSelection.A1.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(value)
+                )
+            ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
