@@ -147,19 +147,11 @@ final class MissingConverterVerifier {
         if (formatting) {
             finder.addIfConversionFail(
                 Color.BLACK,
-                HslColor.class,
-                SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
-            );
-
-            finder.addIfConversionFail(
-                Color.BLACK,
-                HsvColor.class,
-                SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
-            );
-
-            finder.addIfConversionFail(
-                Color.BLACK,
-                RgbColor.class,
+                Lists.of(
+                    HslColor.class,
+                    HsvColor.class,
+                    RgbColor.class
+                ),
                 SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
             );
         }
