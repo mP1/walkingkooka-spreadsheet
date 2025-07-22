@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends SpreadsheetFormatterProviderSamplesContext> extends SpreadsheetFormatterContextTesting2<C> {
+import walkingkooka.plugin.ProviderContextTesting;
+
+public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends SpreadsheetFormatterProviderSamplesContext> extends SpreadsheetFormatterContextTesting2<C>,
+    ProviderContextTesting<C> {
 
     @Override
     default String typeNameSuffix() {

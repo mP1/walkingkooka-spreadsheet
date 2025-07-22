@@ -34,13 +34,30 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     public void testWithNullSpreadsheetFormatterContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetFormatterProviderSamplesContext.with(null)
+            () -> BasicSpreadsheetFormatterProviderSamplesContext.with(
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetFormatterProviderSamplesContext.with(
+                SPREADSHEET_FORMATTER_CONTEXT,
+                null
+            )
         );
     }
 
     @Override
     public BasicSpreadsheetFormatterProviderSamplesContext createContext() {
-        return BasicSpreadsheetFormatterProviderSamplesContext.with(SPREADSHEET_FORMATTER_CONTEXT);
+        return BasicSpreadsheetFormatterProviderSamplesContext.with(
+            SPREADSHEET_FORMATTER_CONTEXT,
+            PROVIDER_CONTEXT
+        );
     }
 
     // DecimalNumberContextDelegator....................................................................................

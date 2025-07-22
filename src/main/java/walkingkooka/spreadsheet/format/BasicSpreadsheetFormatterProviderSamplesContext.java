@@ -17,24 +17,35 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
+import walkingkooka.convert.CanConvert;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 final class BasicSpreadsheetFormatterProviderSamplesContext implements SpreadsheetFormatterProviderSamplesContext,
-    SpreadsheetFormatterContextDelegator {
+    SpreadsheetFormatterContextDelegator,
+    ProviderContextDelegator {
 
-    static BasicSpreadsheetFormatterProviderSamplesContext with(final SpreadsheetFormatterContext spreadsheetFormatterContext) {
+    static BasicSpreadsheetFormatterProviderSamplesContext with(final SpreadsheetFormatterContext spreadsheetFormatterContext,
+                                                                final ProviderContext providerContext) {
         return new BasicSpreadsheetFormatterProviderSamplesContext(
             Objects.requireNonNull(
-                spreadsheetFormatterContext,
-                "spreadsheetFormatterContext"
+                spreadsheetFormatterContext, "spreadsheetFormatterContext"
+            ),
+            Objects.requireNonNull(
+                providerContext, "providerContext"
             )
         );
     }
 
-    private BasicSpreadsheetFormatterProviderSamplesContext(final SpreadsheetFormatterContext spreadsheetFormatterContext) {
+    private BasicSpreadsheetFormatterProviderSamplesContext(final SpreadsheetFormatterContext spreadsheetFormatterContext,
+                                                            final ProviderContext providerContext) {
         this.spreadsheetFormatterContext = spreadsheetFormatterContext;
+        this.providerContext = providerContext;
     }
 
     @Override
@@ -44,7 +55,38 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
 
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetFormatterProviderSamplesContext(after);
+            new BasicSpreadsheetFormatterProviderSamplesContext(
+                after,
+                this.providerContext
+            );
+    }
+
+    @Override
+    public CanConvert canConvert() {
+        return this.converterContext();
+    }
+
+    @Override
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.spreadsheetFormatterContext.canConvert(
+            value,
+            type
+        );
+    }
+
+    @Override
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        return this.spreadsheetFormatterContext.convert(
+            value,
+            type
+        );
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.spreadsheetFormatterContext.now();
     }
 
     // SpreadsheetFormatterContextDelegator.............................................................................
@@ -56,8 +98,17 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
 
     private final SpreadsheetFormatterContext spreadsheetFormatterContext;
 
+    // ProviderContext..................................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.providerContext;
+    }
+
+    private final ProviderContext providerContext;
+
     @Override
     public String toString() {
-        return this.spreadsheetFormatterContext.toString();
+        return this.spreadsheetFormatterContext + " " + this.providerContext;
     }
 }
