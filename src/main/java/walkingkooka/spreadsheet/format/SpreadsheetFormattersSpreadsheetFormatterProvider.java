@@ -610,8 +610,10 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            context.now()
-                .toLocalTime(),
+            cellValueOr(
+                context,
+                context.now()::toLocalTime
+            ),
             context
         );
     }
