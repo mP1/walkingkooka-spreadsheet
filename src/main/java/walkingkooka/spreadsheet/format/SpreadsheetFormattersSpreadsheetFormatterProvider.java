@@ -533,6 +533,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private SpreadsheetFormatterSample dateSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterContext context) {
+        // use current cell's value or now -> date
+        Object value =context.cell()
+            .flatMap(c -> c.formula().value())
+            .orElse(null);
+
+        if(null == value) {
+            value = context.now()
+                .toLocalDate();
+        }
+
         return this.sample(
             label,
             SpreadsheetPattern.dateParsePattern(
@@ -541,8 +551,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            context.now()
-                .toLocalDate(),
+            value,
             context
         );
     }

@@ -23,13 +23,19 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
     ToStringTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
@@ -874,7 +880,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //    "dddd, d mmmm yyyy"
     //  Text "Friday, 31 December 1999"
     @Test
-    public void testSpreadsheetFormatterSamplesDateFormatPattern() {
+    public void testSpreadsheetFormatterSamplesDateFormatPatternWithoutCell() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
@@ -897,6 +903,53 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Full",
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy"),
                 TextNode.text("Friday, 31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesDateFormatPatternWithCellValue() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setValue(
+                            Optional.of(date)
+                        )
+                    )
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d/m/yy"),
+                TextNode.text("2/1/00")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmm yyyy"),
+                TextNode.text("2 Jan. 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmmm yyyy"),
+                TextNode.text("2 January 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy"),
+                TextNode.text("Sunday, 2 January 2000")
             )
         );
     }
@@ -1219,6 +1272,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     this.createSpreadsheetFormatterProvider()
                         .spreadsheetFormatterInfos()
                 )
+        );
+    }
+
+    private static SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterSamplesAndCheck(final Optional<SpreadsheetCell> cell) {
+        return METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
+            cell,
+            FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            CONVERTER_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
         );
     }
 
