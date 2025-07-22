@@ -605,7 +605,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     }
 
     private SpreadsheetFormatterSample generalSample(final Object value,
-                                                     final SpreadsheetFormatterContext context) {
+                                                     final SpreadsheetFormatterProviderSamplesContext context) {
         return generalSample(
             "General",
             value,
@@ -615,16 +615,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private SpreadsheetFormatterSample generalSample(final String label,
                                                      final Object value,
-                                                     final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSample.with(
+                                                     final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
             label,
             SpreadsheetFormatterName.GENERAL.setValueText(""),
-            context.formatValueOrEmptyText(
-                Optional.ofNullable(value)
-            )
+            value,
+            context
         );
     }
-
 
     private SpreadsheetFormatterSample numberSpreadsheetFormatterSample(final String label,
                                                                         final Function<Locale, NumberFormat> decimalFormat,
