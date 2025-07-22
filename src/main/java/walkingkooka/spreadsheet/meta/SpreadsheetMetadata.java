@@ -1213,7 +1213,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
+    public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
+                                                                                                       final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final ConverterProvider converterProvider,
                                                                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
@@ -1221,7 +1222,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
             this.spreadsheetFormatterContext(
-                NO_CELL,
+                cell,
                 spreadsheetExpressionEvaluationContext,
                 labelNameResolver,
                 converterProvider,

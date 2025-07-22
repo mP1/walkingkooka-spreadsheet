@@ -441,6 +441,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
+        SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         CONVERTER_PROVIDER,
