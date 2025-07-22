@@ -42,6 +42,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -533,16 +534,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private SpreadsheetFormatterSample dateSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterContext context) {
-        // use current cell's value or now -> date
-        Object value =context.cell()
-            .flatMap(c -> c.formula().value())
-            .orElse(null);
-
-        if(null == value) {
-            value = context.now()
-                .toLocalDate();
-        }
-
         return this.sample(
             label,
             SpreadsheetPattern.dateParsePattern(
@@ -551,7 +542,11 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            value,
+            cellValueOr(
+                context,
+                () -> context.now()
+                    .toLocalDate()
+            ),
             context
         );
     }
@@ -568,7 +563,10 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            context.now(),
+            cellValueOr(
+                context,
+                context::now
+            ),
             context
         );
     }
@@ -616,6 +614,19 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 .toLocalTime(),
             context
         );
+    }
+
+    private static Object cellValueOr(final SpreadsheetFormatterContext context,
+                                      final Supplier<Object> defaultValue) {
+        Object value =context.cell()
+            .flatMap(c -> c.formula().value())
+            .orElse(null);
+
+        if(null == value) {
+            value = defaultValue.get();
+        }
+
+        return value;
     }
 
     private SpreadsheetFormatterSample sample(final String label,
