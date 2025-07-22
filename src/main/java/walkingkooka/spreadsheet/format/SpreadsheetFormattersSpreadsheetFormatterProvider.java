@@ -409,7 +409,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 samples = NO_SPREADSHEET_FORMATTER_SAMPLES;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
-                samples = Lists.of(
+                final Object value = cellValueOr(
+                    context,
+                    () -> null
+                );
+
+                samples = listFilterNulls(
                     generalSample(
                         123.5,
                         context
@@ -421,7 +426,17 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     generalSample(
                         0,
                         context
-                    )
+                    ),
+                    null != value ?
+                        generalSample(
+                            context.cell()
+                                .get()
+                                .reference()
+                                .text(),
+                            value,
+                            context
+                        ) :
+                        null
                 );
                 break;
             case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
@@ -571,10 +586,20 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
-    private SpreadsheetFormatterSample generalSample(final Number value,
+    private SpreadsheetFormatterSample generalSample(final Object value,
+                                                     final SpreadsheetFormatterContext context) {
+        return generalSample(
+            "General",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample generalSample(final String label,
+                                                     final Object value,
                                                      final SpreadsheetFormatterContext context) {
         return SpreadsheetFormatterSample.with(
-            "General",
+            label,
             SpreadsheetFormatterName.GENERAL.setValueText(""),
             context.formatValueOrEmptyText(
                 Optional.ofNullable(value)
@@ -661,6 +686,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 context
             )
         );
+    }
+
+    private List<SpreadsheetFormatterSample> listFilterNulls(final SpreadsheetFormatterSample ... samples) {
+        return Arrays.stream(samples)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     // spreadsheetFormatterInfos........................................................................................
