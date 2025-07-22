@@ -533,7 +533,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private SpreadsheetFormatterSample dateSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
-                                                                      final SpreadsheetFormatterContext context) {
+                                                                      final SpreadsheetFormatterProviderSamplesContext context) {
         return this.sample(
             label,
             SpreadsheetPattern.dateParsePattern(
@@ -553,7 +553,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private SpreadsheetFormatterSample dateTimeSpreadsheetFormatterSample(final String label,
                                                                           final int dateFormatStyle,
-                                                                          final SpreadsheetFormatterContext context) {
+                                                                          final SpreadsheetFormatterProviderSamplesContext context) {
         return this.sample(
             label,
             SpreadsheetPattern.dateTimeParsePattern(
@@ -586,7 +586,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private SpreadsheetFormatterSample numberSpreadsheetFormatterSample(final String label,
                                                                         final Function<Locale, NumberFormat> decimalFormat,
                                                                         final Number value,
-                                                                        final SpreadsheetFormatterContext context) {
+                                                                        final SpreadsheetFormatterProviderSamplesContext context) {
         return this.sample(
             label,
             SpreadsheetPattern.decimalFormat(
@@ -601,7 +601,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
-                                                                      final SpreadsheetFormatterContext context) {
+                                                                      final SpreadsheetFormatterProviderSamplesContext context) {
         return this.sample(
             label,
             SpreadsheetPattern.timeParsePattern(
@@ -634,17 +634,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private SpreadsheetFormatterSample sample(final String label,
                                               final SpreadsheetParsePattern pattern,
                                               final Object value,
-                                              final SpreadsheetFormatterContext context) {
-        final SpreadsheetFormatPattern formatPattern = pattern.toFormat();
+                                              final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            pattern.toFormat()
+                .spreadsheetFormatterSelector(),
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample sample(final String label,
+                                              final SpreadsheetFormatterSelector selector,
+                                              final Object value,
+                                              final SpreadsheetFormatterProviderSamplesContext context) {
+        final SpreadsheetFormatter formatter = this.spreadsheetFormatter(
+            selector,
+            context
+        );
 
         return SpreadsheetFormatterSample.with(
             label,
-            formatPattern.spreadsheetFormatterSelector(),
-            formatPattern.formatter()
-                .formatOrEmptyText(
-                    Optional.of(value),
-                    context
-                )
+            selector,
+            formatter.formatOrEmptyText(
+                Optional.of(value),
+                context
+            )
         );
     }
 
