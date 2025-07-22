@@ -340,7 +340,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(context, "context");
 
-        List<SpreadsheetFormatterSample> samples;
+        final List<SpreadsheetFormatterSample> samples;
 
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
