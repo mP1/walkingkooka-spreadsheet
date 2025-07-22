@@ -1081,6 +1081,38 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    @Test
+    public void testSpreadsheetFormatterSamplesGeneralAndCellWithValue() {
+        final Object value = 999;
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.GENERAL,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(value)
+            ),
+            SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("123.5")
+            ),
+            SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("-123.5")
+            ),
+            SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("0.")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("999.")
+            )
+        );
+    }
+
     // Number
     //  number-format-pattern
     //    "#,##0.###"
