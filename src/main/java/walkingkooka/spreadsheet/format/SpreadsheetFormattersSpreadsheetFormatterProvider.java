@@ -408,7 +408,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.EXPRESSION_STRING:
                 samples = NO_SPREADSHEET_FORMATTER_SAMPLES;
                 break;
-            case SpreadsheetFormatterName.GENERAL_STRING:
+            case SpreadsheetFormatterName.GENERAL_STRING: {
                 final Object value = cellValueOr(
                     context,
                     () -> null
@@ -439,6 +439,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         null
                 );
                 break;
+            }
             case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
                 samples = Lists.of(
                     this.numberSpreadsheetFormatterSample(
@@ -515,15 +516,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     )
                 );
                 break;
-            case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING:
-                samples = Lists.of(
+            case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING: {
+                final Object value = cellValueOr(
+                    context,
+                    () -> null
+                );
+
+                samples = listFilterNulls(
                     SpreadsheetFormatterSample.with(
                         "Default",
                         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
                         TextNode.text("Hello 123")
-                    )
+                    ),
+                    null != value ?
+                        sample(
+                            context.cell()
+                                .get()
+                                .reference()
+                                .text(),
+                            SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
+                            value,
+                            context
+                        ) :
+                        null
                 );
                 break;
+            }
             case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
                 samples = Lists.of(
                     this.timeSpreadsheetFormatterSample(
