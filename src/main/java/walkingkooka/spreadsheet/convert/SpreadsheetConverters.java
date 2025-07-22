@@ -87,6 +87,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ColorConverters#colorToNumber}
+     */
+    public static Converter<SpreadsheetConverterContext> colorToNumber() {
+        return ColorConverters.colorToNumber();
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetErrorThrowing}
      */
     public static Converter<SpreadsheetConverterContext> errorThrowing() {
