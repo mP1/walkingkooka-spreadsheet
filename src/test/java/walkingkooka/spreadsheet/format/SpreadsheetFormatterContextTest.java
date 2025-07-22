@@ -19,13 +19,27 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
 
 public final class SpreadsheetFormatterContextTest implements ClassTesting<SpreadsheetFormatterContext> {
+
+    @Test
+    public void testClassDoesntImplementProviderContext() {
+        this.checkEquals(
+            true,
+            SpreadsheetConverterContext.class.isAssignableFrom(SpreadsheetFormatterContext.class)
+        );
+        this.checkEquals(
+            false,
+            ProviderContext.class.isAssignableFrom(SpreadsheetFormatterContext.class)
+        );
+    }
 
     @Test
     public void testFormatValueOrEmptyText() {
