@@ -1229,7 +1229,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 spreadsheetFormatterProvider,
                 localeContext,
                 providerContext
-            )
+            ),
+            providerContext
         );
     }
 
