@@ -161,6 +161,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ColorConverters#numberToColor}
+     */
+    public static Converter<SpreadsheetConverterContext> numberToColor() {
+        return ColorConverters.numberToColor();
+    }
+
+    /**
      * {@see ExpressionNumberConverters#numberToNumber}
      */
     public static Converter<SpreadsheetConverterContext> numberToNumber() {
