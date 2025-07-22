@@ -1076,7 +1076,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "General",
                 SpreadsheetFormatterName.GENERAL.setValueText(""),
-                TextNode.text("0.")
+                TextNode.text("0")
             )
         );
     }
@@ -1103,12 +1103,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "General",
                 SpreadsheetFormatterName.GENERAL.setValueText(""),
-                TextNode.text("0.")
+                TextNode.text("0")
             ),
             SpreadsheetFormatterSample.with(
                 "A1",
                 SpreadsheetFormatterName.GENERAL.setValueText(""),
-                TextNode.text("999.")
+                TextNode.text("999")
             )
         );
     }
