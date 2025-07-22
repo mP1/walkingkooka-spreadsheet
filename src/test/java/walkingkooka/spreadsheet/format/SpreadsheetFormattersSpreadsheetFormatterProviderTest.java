@@ -35,6 +35,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
@@ -1243,6 +1244,37 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Long",
                 SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
                 TextNode.text("12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesTimeFormatPatternWithCellValue() {
+        final LocalTime value = LocalTime.of(
+            15,
+            28,
+            29
+        );
+        this.checkNotEquals(
+            value,
+            NOW.now().toLocalTime(),
+            "value must be different to now"
+        );
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(value)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
+                TextNode.text("3:28 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
+                TextNode.text("3:28:29 PM")
             )
         );
     }
