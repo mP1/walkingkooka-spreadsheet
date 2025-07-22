@@ -1253,6 +1253,26 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    @Test
+    public void testSpreadsheetFormatterSamplesTextFormatPatternWithCellValue() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of("Cell Value 123")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Default",
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                TextNode.text("Hello 123")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                TextNode.text("Cell Value 123")
+            )
+        );
+    }
+
     // Short
     //  time-format-pattern
     //    "h:mm AM/PM"
