@@ -41,6 +41,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     );
 
     public final static ConverterAliasSet FIND = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
@@ -51,12 +52,14 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR);
 
     public final static ConverterAliasSet FORMULA = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
     public final static ConverterAliasSet SORT = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
@@ -68,6 +71,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
     public final static ConverterAliasSet VALIDATOR = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)

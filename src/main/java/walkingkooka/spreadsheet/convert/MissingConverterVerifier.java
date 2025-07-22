@@ -108,6 +108,17 @@ final class MissingConverterVerifier {
         BigDecimal.class
     );
 
+    static {
+        final List<Class<?>> types = Lists.array();
+        types.addAll(NUMBER_TYPES);
+        types.remove(Byte.class);
+        types.remove(Short.class);
+
+        NUMBER_TYPES_WITHOUT_BYTE_SHORT = types;
+    }
+
+    private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
+
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
      * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
@@ -153,6 +164,28 @@ final class MissingConverterVerifier {
                     RgbColor.class
                 ),
                 SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR
+            );
+        }
+
+        // color-to-number...............................................................................................
+        if (formatting) {
+            finder.addIfConversionFail(
+                Color.BLACK,
+                NUMBER_TYPES_WITHOUT_BYTE_SHORT,
+                SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER
+            );
+
+            final RgbColor rgb = Color.parseRgb("#12345678");
+
+            finder.addIfConversionFail(
+                Lists.of(
+                    rgb.alpha(),
+                    rgb.red(),
+                    rgb.green(),
+                    rgb.blue()
+                ),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER
             );
         }
 
