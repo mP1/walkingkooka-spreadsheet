@@ -225,6 +225,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+
+    @Test
+    public void testConverterSelectorWithNumberToColor() {
+        this.converterAndCheck(
+            "number-to-color",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.numberToColor()
+        );
+    }
+
     @Test
     public void testConverterNameWithSelectionToSelection() {
         this.converterAndCheck(
