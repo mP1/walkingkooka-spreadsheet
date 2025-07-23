@@ -76,11 +76,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
-            case SpreadsheetFormatterName.EXPRESSION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
                     this,
+                    context
+                );
+                break;
+            case SpreadsheetFormatterName.EXPRESSION_STRING:
+                formatter = expressionFormatter(
+                    selector.valueText(),
                     context
                 );
                 break;
@@ -164,11 +169,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if (1 != count) {
                     throw new IllegalArgumentException("Expected 1 value(s) got " + count);
                 }
-                formatter = SpreadsheetFormatters.expression(
-                    context.convertOrFail(
-                        copy.get(0),
-                        Expression.class
-                    )
+                formatter = expressionFormatter(
+                    copy.get(0),
+                    context
                 );
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
@@ -205,6 +208,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         return this.spreadsheetFormatter(
             context.environmentValueOrFail(value),
             context
+        );
+    }
+
+    private static SpreadsheetFormatter expressionFormatter(final Object expression,
+                                                            final ProviderContext context) {
+        return SpreadsheetFormatters.expression(
+            context.convertOrFail(
+                expression,
+                Expression.class
+            )
         );
     }
 

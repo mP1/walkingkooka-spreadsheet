@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -47,11 +48,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         public <T> T convertOrFail(final Object value,
                                    final Class<T> type) {
             if (value instanceof String && type == Expression.class) {
-                return type.cast(
-                    Expression.value(
-                        String.class.cast(value)
-                    )
-                );
+                return SpreadsheetConverters.textToExpression()
+                    .convertOrFail(
+                        value,
+                        type,
+                        SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
+                    );
             }
             throw this.convertThrowable(
                 "Only support converting String to Expression but got " + value.getClass().getSimpleName() + " " + type.getSimpleName(),
@@ -474,16 +476,67 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // expression.......................................................................................................
+
     @Test
-    public void testSpreadsheetFormatterSelectorWithExpression() {
+    public void testSpreadsheetFormatterSelectorWithStringLiteralExpression() {
         this.spreadsheetFormatterAndCheck(
-            "expression (\"Hello\")",
+            "expression \"Hello\"",
             CONTEXT,
             SpreadsheetFormatters.expression(
                 Expression.value("Hello")
             )
         );
     }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithAdditionExpression() {
+        this.spreadsheetFormatterAndCheck(
+            "expression 1+2",
+            CONTEXT,
+            SpreadsheetFormatters.expression(
+                Expression.add(
+                    Expression.value(
+                        EXPRESSION_NUMBER_KIND.one()
+                    ),
+                    Expression.value(
+                        EXPRESSION_NUMBER_KIND.create(2)
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNameWithStringLiteralExpression() {
+        this.spreadsheetFormatterAndCheck(
+            "expression \"Hello\"",
+            CONTEXT,
+            SpreadsheetFormatters.expression(
+                Expression.value("Hello")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterNameWithAdditionExpression() {
+        this.spreadsheetFormatterAndCheck(
+            "expression 1+2",
+            CONTEXT,
+            SpreadsheetFormatters.expression(
+                Expression.add(
+                    Expression.value(
+                        EXPRESSION_NUMBER_KIND.one()
+                    ),
+                    Expression.value(
+                        EXPRESSION_NUMBER_KIND.create(2)
+                    )
+                )
+            )
+        );
+    }
+
+    // general..........................................................................................................
 
     @Test
     public void testSpreadsheetFormatterNameGeneral() {
