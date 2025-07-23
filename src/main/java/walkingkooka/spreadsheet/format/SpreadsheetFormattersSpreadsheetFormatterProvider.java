@@ -336,13 +336,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     // spreadsheetFormatterSamples......................................................................................
 
     @Override
-    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
-        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
         final List<SpreadsheetFormatterSample> samples;
 
+        final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:

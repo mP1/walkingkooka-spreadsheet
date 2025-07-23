@@ -102,18 +102,27 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
     }
 
     @Override
-    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
-        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(selector, "name");
         Objects.requireNonNull(context, "context");
 
         // return empty list if unknown alias/name
+        final SpreadsheetFormatterName name = selector.name();
+
         return this.aliases.aliasOrName(name)
-            .map(n -> this.provider.spreadsheetFormatterSamples(n, context))
-            .orElse(Lists.empty())
+            .map(
+                n -> this.provider.spreadsheetFormatterSamples(
+                    selector.setName(n),
+                    context
+                )
+            ).orElse(Lists.empty())
             .stream()
-            .map(s -> s.setSelector(s.selector().setName(name)))
-            .collect(Collectors.toList());
+            .map(s -> s.setSelector(
+                    s.selector()
+                        .setName(name)
+                )
+            ).collect(Collectors.toList());
     }
 
     private final SpreadsheetFormatterAliasSet aliases;

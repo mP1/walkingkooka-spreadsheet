@@ -83,13 +83,13 @@ final class FilteredSpreadsheetFormatterProvider implements SpreadsheetFormatter
     }
 
     @Override
-    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
-        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetFormatterSamples(
-            this.guard.name(name),
+            this.guard.selector(selector),
             context
         );
     }
