@@ -464,8 +464,22 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     );
                 }
                 break;
-            case SpreadsheetFormatterName.EXPRESSION_STRING:
+            case SpreadsheetFormatterName.EXPRESSION_STRING: {
+                if (includeSamples && false == selector.valueText().isEmpty()) {
+                    samples.add(
+                        this.sample(
+                            SAMPLE_LABEL,
+                            selector,
+                            cellValueOr(
+                                context,
+                                () -> null
+                            ),
+                            context
+                        )
+                    );
+                }
                 break;
+            }
             case SpreadsheetFormatterName.GENERAL_STRING: {
                 samples.add(
                     generalSample(
@@ -846,7 +860,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             );
 
             formatted = formatter.formatOrEmptyText(
-                Optional.of(value),
+                Optional.ofNullable(value),
                 context
             );
         } catch (final RuntimeException fail) {

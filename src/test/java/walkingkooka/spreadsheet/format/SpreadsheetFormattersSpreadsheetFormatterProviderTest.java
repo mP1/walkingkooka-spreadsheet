@@ -20,19 +20,28 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,7 +52,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     ToStringTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
     SpreadsheetMetadataTesting {
 
-    private final static ProviderContext CONTEXT = new FakeProviderContext() {
+    private final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {
         @Override
         public <T> T convertOrFail(final Object value,
                                    final Class<T> type) {
@@ -61,13 +70,50 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 type
             );
         }
+
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            return SpreadsheetMetadataTesting.PROVIDER_CONTEXT.environmentValue(name);
+        }
+
+        @Override
+        public LocalDateTime now() {
+            return NOW.now();
+        }
     };
+
+    private final static SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
+        METADATA_EN_AU.spreadsheetFormatterContext(
+            SpreadsheetMetadata.NO_CELL,
+            (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.basic(
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                Url.parseAbsolute("https://example.com"),
+                METADATA_EN_AU,
+                SpreadsheetStoreRepositories.fake(),
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                (Optional<SpreadsheetCell> cell) -> {
+                    throw new UnsupportedOperationException();
+                }, // spreadsheetFormatterContextFactory
+                FormHandlerContexts.fake(),
+                ExpressionFunctionProviders.fake(),
+                SpreadsheetMetadataTesting.LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            ),
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            CONVERTER_PROVIDER,
+            SPREADSHEET_FORMATTER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
+        ),
+        PROVIDER_CONTEXT
+    );
 
     @Test
     public void testSpreadsheetFormatterSelectorAutomaticFiveParameters() {
         this.spreadsheetFormatterAndCheck(
             "automatic (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yy hh:mm").formatter(),
@@ -112,7 +158,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorCollection() {
         this.spreadsheetFormatterAndCheck(
             "collection (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.collection(
                 Lists.of(
                     SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
@@ -138,7 +184,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorDateFormatPattern() {
         this.spreadsheetFormatterAndCheck(
             "date-format-pattern dd/mm/yy",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter()
         );
     }
@@ -148,7 +194,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("date-format-pattern"),
             Lists.of("dd/mm/yy"),
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter()
         );
     }
@@ -263,7 +309,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorDateTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
             "date-time-format-pattern dd/mm/yyyy hh:mm:ss",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss").formatter()
         );
     }
@@ -275,7 +321,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             Lists.of(
                 "dd/mm/yyyy hh:mm:ss"
             ),
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss").formatter()
         );
     }
@@ -471,7 +517,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorWithDefaultText() {
         this.spreadsheetFormatterAndCheck(
             "default-text",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.defaultText()
         );
     }
@@ -482,7 +528,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorWithStringLiteralExpression() {
         this.spreadsheetFormatterAndCheck(
             "expression \"Hello\"",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.expression(
                 Expression.value("Hello")
             )
@@ -493,7 +539,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorWithAdditionExpression() {
         this.spreadsheetFormatterAndCheck(
             "expression 1+2",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.expression(
                 Expression.add(
                     Expression.value(
@@ -511,7 +557,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterNameWithStringLiteralExpression() {
         this.spreadsheetFormatterAndCheck(
             "expression \"Hello\"",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.expression(
                 Expression.value("Hello")
             )
@@ -522,7 +568,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterNameWithAdditionExpression() {
         this.spreadsheetFormatterAndCheck(
             "expression 1+2",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.expression(
                 Expression.add(
                     Expression.value(
@@ -543,7 +589,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("general"),
             Lists.empty(),
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.general()
         );
     }
@@ -552,7 +598,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorGeneral() {
         this.spreadsheetFormatterAndCheck(
             "general",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.general()
         );
     }
@@ -561,7 +607,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNumberFormatPattern() {
         this.spreadsheetFormatterAndCheck(
             "number-format-pattern $0.00",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
         );
     }
@@ -571,7 +617,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("number-format-pattern"),
             Lists.of("$0.00"),
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
         );
     }
@@ -674,7 +720,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorSpreadsheetPatternCollection() {
         this.spreadsheetFormatterAndCheck(
             "spreadsheet-pattern-collection (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetFormatters.spreadsheetPatternCollection(
                 Lists.of(
                     SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
@@ -700,7 +746,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorTextFormatPattern() {
         this.spreadsheetFormatterAndCheck(
             "text-format-pattern @@\"Hello\"",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTextFormatPattern("@@\"Hello\"").formatter()
         );
     }
@@ -712,7 +758,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             Lists.of(
                 "@@\"Hello\""
             ),
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTextFormatPattern("@@\"Hello\"").formatter()
         );
     }
@@ -767,7 +813,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
             "time-format-pattern hh:mm:ss",
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
         );
     }
@@ -777,7 +823,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("time-format-pattern"),
             Lists.of("hh:mm:ss"),
-            CONTEXT,
+            PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
         );
     }
@@ -1313,14 +1359,59 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // expression.......................................................................................................
+
     @Test
-    public void testSpreadsheetFormatterSamplesExpression() {
+    public void testSpreadsheetFormatterSamplesExpressionMissingExpressionString() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.EXPRESSION,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesExpressionIncludingExpressionStringSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.EXPRESSION.setValueText("1+2"),
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesExpressionIncludingExpressionStringIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.EXPRESSION.setValueText("1+2");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Sample",
+                selector,
+                TextNode.text("3.")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesExpressionIncludingExpressionStringIncludeSamples2() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.EXPRESSION.setValueText("123");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Sample",
+                selector,
+                TextNode.text("123.")
+            )
+        );
+    }
+
+    // general..........................................................................................................
 
     // General
     //  general
