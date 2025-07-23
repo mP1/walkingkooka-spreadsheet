@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
@@ -27,7 +29,8 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that unconditionally always returns {@link Optional#empty()}.
  */
-final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter {
+final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter,
+    TreePrintable {
 
     static ExpressionSpreadsheetFormatter with(final Expression expression) {
         return new ExpressionSpreadsheetFormatter(
@@ -81,5 +84,18 @@ final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter {
     @Override
     public String toString() {
         return "expression";
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            this.expression.printTree(printer);
+        }
+        printer.outdent();
     }
 }

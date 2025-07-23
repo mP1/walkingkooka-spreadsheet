@@ -247,6 +247,24 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            ExpressionSpreadsheetFormatter.with(
+                Expression.add(
+                    Expression.value(1),
+                    Expression.value(23)
+                )
+            ),
+            "ExpressionSpreadsheetFormatter\n" +
+                "  AddExpression\n" +
+                "    ValueExpression 1 (java.lang.Integer)\n" +
+                "    ValueExpression 23 (java.lang.Integer)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
