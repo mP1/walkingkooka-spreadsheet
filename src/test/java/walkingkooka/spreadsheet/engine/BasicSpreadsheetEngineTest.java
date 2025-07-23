@@ -4829,7 +4829,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         ).setFormattedValue(
             Optional.of(
                 TextNode.text(
-                    SpreadsheetError.formatterNotFound(value)
+                    SpreadsheetError.formatterNotFound(null)
                         .text()
                 )
             )
@@ -4980,7 +4980,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         ).setFormattedValue(
             Optional.of(
                 TextNode.text(
-                    SpreadsheetError.formatterNotFound(value)
+                    SpreadsheetError.formatterNotFound(null)
                         .text()
                 )
             )

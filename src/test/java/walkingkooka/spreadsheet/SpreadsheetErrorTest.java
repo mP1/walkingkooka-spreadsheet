@@ -25,6 +25,7 @@ import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -165,23 +166,21 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     // formatterNotFound................................................................................................
 
     @Test
-    public void testFormatterNotFoundAndNullValue() {
-        final Object value = null;
-
-        final SpreadsheetError error = SpreadsheetError.formatterNotFound(value);
+    public void testFormatterNotFoundAndNullSpreadsheetFormatterName() {
+        final SpreadsheetError error = SpreadsheetError.formatterNotFound(null);
         this.checkKind(error, SpreadsheetErrorKind.ERROR);
         this.checkMessage(error, "Formatter not found");
-        this.checkValue(error, Optional.ofNullable(value));
+        this.checkValue(error, Optional.empty());
     }
 
     @Test
     public void testFormatterNotFoundAndValue() {
-        final Object value = 123;
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.DEFAULT_TEXT;
 
-        final SpreadsheetError error = SpreadsheetError.formatterNotFound(value);
+        final SpreadsheetError error = SpreadsheetError.formatterNotFound(name);
         this.checkKind(error, SpreadsheetErrorKind.ERROR);
         this.checkMessage(error, "Formatter not found");
-        this.checkValue(error, Optional.ofNullable(value));
+        this.checkValue(error, Optional.ofNullable(name));
     }
 
     // functionNotFound.................................................................................................

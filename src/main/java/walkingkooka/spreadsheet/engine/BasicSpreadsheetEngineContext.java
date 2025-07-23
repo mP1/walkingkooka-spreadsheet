@@ -375,7 +375,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         // if format was unsuccessful probably "formatter not found" and there is no error replace error
         if (false == formatted.isPresent()) {
-            error = SpreadsheetError.formatterNotFound(value);
+            error = SpreadsheetError.formatterNotFound(
+                formatter.map(SpreadsheetFormatterSelector::name)
+                    .orElse(null)
+            );
             formatted = Optional.of(
                 TextNode.text(error.text())
             );
