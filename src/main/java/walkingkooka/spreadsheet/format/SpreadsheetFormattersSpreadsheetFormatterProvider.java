@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
@@ -377,6 +378,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
+                samples.add(
+                    this.sample(
+                        "Sample",
+                        selector,
+                        this.dateValue(context),
+                        context
+                    )
+                );
                 break;
             case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
                 samples.add(
@@ -407,6 +416,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
+                samples.add(
+                    this.sample(
+                        "Sample",
+                        selector,
+                        this.dateTimeValue(context),
+                        context
+                    )
+                );
                 break;
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
                 samples.add(
@@ -414,6 +431,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         "Default",
                         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
                         TextNode.text("Hello 123")
+                    )
+                );
+                samples.add(
+                    this.sample(
+                        "Sample",
+                        selector,
+                        this.textValue(context),
+                        context
                     )
                 );
                 break;
@@ -553,6 +578,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
+                samples.add(
+                    this.sample(
+                        "Sample",
+                        selector,
+                        this.numberValue(context),
+                        context
+                    )
+                );
                 break;
             case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING: {
                 final Object value = cellValueOr(
@@ -581,6 +614,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         )
                     );
                 }
+                samples.add(
+                    this.sample(
+                        "Sample",
+                        selector,
+                        this.textValue(context),
+                        context
+                    )
+                );
                 break;
             }
             case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
@@ -595,6 +636,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     this.timeSpreadsheetFormatterSample(
                         "Long",
                         DateFormat.LONG,
+                        context
+                    )
+                );
+                samples.add(
+                    this.sample(
+                        "Sample",
+                        selector,
+                        this.timeValue(context),
                         context
                     )
                 );
@@ -617,12 +666,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            cellValueOr(
-                context,
-                () -> context.now()
-                    .toLocalDate()
-            ),
+            dateValue(context),
             context
+        );
+    }
+
+    private Object dateValue(final SpreadsheetFormatterProviderSamplesContext context) {
+        return cellValueOr(
+            context,
+            () -> context.now()
+                .toLocalDate()
         );
     }
 
@@ -638,11 +691,15 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            cellValueOr(
-                context,
-                context::now
-            ),
+            dateTimeValue(context),
             context
+        );
+    }
+
+    private Object dateTimeValue(final SpreadsheetFormatterProviderSamplesContext context) {
+        return cellValueOr(
+            context,
+            context::now
         );
     }
 
@@ -682,6 +739,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private Object numberValue(final SpreadsheetFormatterProviderSamplesContext context) {
+        return cellValueOr(
+            context,
+            () -> 1234.50
+        );
+    }
+
     private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterProviderSamplesContext context) {
@@ -693,11 +757,22 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context.locale()
                 )
             ),
-            cellValueOr(
-                context,
-                context.now()::toLocalTime
-            ),
+            timeValue(context),
             context
+        );
+    }
+
+    private Object textValue(final SpreadsheetFormatterProviderSamplesContext context) {
+        return cellValueOr(
+            context,
+            () -> "Hello World 123"
+        );
+    }
+
+    private Object timeValue(final SpreadsheetFormatterProviderSamplesContext context) {
+        return cellValueOr(
+            context,
+            context.now()::toLocalTime
         );
     }
 
@@ -731,18 +806,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                                               final SpreadsheetFormatterSelector selector,
                                               final Object value,
                                               final SpreadsheetFormatterProviderSamplesContext context) {
-        final SpreadsheetFormatter formatter = this.spreadsheetFormatter(
-            selector,
-            context
-        );
+        TextNode formatted;
+
+        // if fetching the formatter or formatting the value fails capture the exception
+        try {
+            final SpreadsheetFormatter formatter = this.spreadsheetFormatter(
+                selector,
+                context
+            );
+
+            formatted = formatter.formatOrEmptyText(
+                Optional.of(value),
+                context
+            );
+        } catch (final RuntimeException fail) {
+            final String message = fail.getMessage();
+            formatted = TextNode.text(
+                CharSequences.isNullOrEmpty(message) ?
+                    fail.getClass().getSimpleName() :
+                    message
+            ); // TODO style differently (*RED* ERROR:) fail.getMessage
+        }
 
         return SpreadsheetFormatterSample.with(
             label,
             selector,
-            formatter.formatOrEmptyText(
-                Optional.of(value),
-                context
-            )
+            formatted
         );
     }
 

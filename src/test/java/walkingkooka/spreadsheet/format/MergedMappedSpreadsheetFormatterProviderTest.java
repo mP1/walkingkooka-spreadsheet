@@ -243,6 +243,11 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
                 "Full",
                 selector.setValueText("dddd, d mmmm yyyy"),
                 TextNode.text("Friday, 31 December 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Sample",
+                selector,
+                TextNode.text("Empty \"text\"")
             )
         );
     }
