@@ -57,6 +57,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
      */
     final static SpreadsheetFormattersSpreadsheetFormatterProvider INSTANCE = new SpreadsheetFormattersSpreadsheetFormatterProvider();
 
+    final static String SAMPLE_LABEL = "Sample";
+
     private SpreadsheetFormattersSpreadsheetFormatterProvider() {
         super();
     }
@@ -382,7 +384,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if(includeSamples) {
                     samples.add(
                         this.sample(
-                            "Sample",
+                            SAMPLE_LABEL,
                             selector,
                             this.dateValue(context),
                             context
@@ -422,7 +424,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if(includeSamples) {
                     samples.add(
                         this.sample(
-                            "Sample",
+                            SAMPLE_LABEL,
                             selector,
                             this.dateTimeValue(context),
                             context
@@ -441,7 +443,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if(includeSamples) {
                     samples.add(
                         this.sample(
-                            "Sample",
+                            SAMPLE_LABEL,
                             selector,
                             this.textValue(context),
                             context
@@ -590,7 +592,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if(includeSamples) {
                     samples.add(
                         this.sample(
-                            "Sample",
+                            SAMPLE_LABEL,
                             selector,
                             this.numberValue(context),
                             context
@@ -628,7 +630,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     }
                     samples.add(
                         this.sample(
-                            "Sample",
+                            SAMPLE_LABEL,
                             selector,
                             this.textValue(context),
                             context
@@ -655,7 +657,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if(includeSamples) {
                     samples.add(
                         this.sample(
-                            "Sample",
+                            SAMPLE_LABEL,
                             selector,
                             this.timeValue(context),
                             context
