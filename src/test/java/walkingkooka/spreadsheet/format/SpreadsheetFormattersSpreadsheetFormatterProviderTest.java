@@ -1039,7 +1039,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
@@ -1128,7 +1128,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
@@ -1259,7 +1259,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
@@ -1806,7 +1806,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
@@ -1848,7 +1848,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
@@ -1927,7 +1927,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
@@ -1964,7 +1964,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
+                SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
     }
