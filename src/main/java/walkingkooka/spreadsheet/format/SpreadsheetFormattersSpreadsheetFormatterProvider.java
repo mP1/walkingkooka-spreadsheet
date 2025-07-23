@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.WebColorName;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -31,6 +32,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -864,12 +866,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 context
             );
         } catch (final RuntimeException fail) {
-            final String message = fail.getMessage();
-            formatted = TextNode.text(
-                CharSequences.isNullOrEmpty(message) ?
-                    fail.getClass().getSimpleName() :
-                    message
-            ); // TODO style differently (*RED* ERROR:) fail.getMessage
+            formatted = sampleError(fail);
         }
 
         return SpreadsheetFormatterSample.with(
@@ -878,6 +875,33 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             formatted
         );
     }
+
+    static TextNode sampleError(final RuntimeException cause) {
+        final String message = cause.getMessage();
+
+        return sampleError(
+            CharSequences.isNullOrEmpty(message) ?
+                cause.getClass().getSimpleName() :
+                message
+        );
+    }
+
+    static TextNode sampleError(final String message) {
+        return TextNode.style(
+            Lists.of(
+                RED_ERROR,
+                TextNode.text(
+                    " " + message
+                )
+            )
+        );
+    }
+
+    private final static TextNode RED_ERROR = TextNode.text("ERROR")
+        .set(
+            TextStylePropertyName.COLOR,
+            WebColorName.RED.color()
+        );
 
     // spreadsheetFormatterInfos........................................................................................
 

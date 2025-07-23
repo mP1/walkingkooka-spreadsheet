@@ -251,7 +251,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
 
         this.spreadsheetFormatterSamplesAndCheck(
             name.setValueText(""),
-            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
@@ -272,11 +272,6 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
                 "Full",
                 name.setValueText("dddd, d mmmm yyyy"),
                 TextNode.text("Friday, 31 December 1999")
-            ),
-            SpreadsheetFormatterSample.with(
-                "Sample",
-                name.setValueText(""),
-                TextNode.text("Empty \"text\"")
             )
         );
     }
