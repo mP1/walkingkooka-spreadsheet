@@ -75,6 +75,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
         this.spreadsheetFormatterSamplesAndCheck(
             SAMPLE.selector()
                 .name(),
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SAMPLE
         );
@@ -86,11 +87,13 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             new FakeSpreadsheetFormatterProvider() {
                 @Override
                 public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                                    final boolean includeSamples,
                                                                                     final SpreadsheetFormatterProviderSamplesContext context) {
                     throw new IllegalArgumentException("Unknown " + selector.name());
                 }
             },
             SAMPLE.selector(),
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
@@ -140,6 +143,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
 
         @Override
         public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                            final boolean includeSamples,
                                                                             final SpreadsheetFormatterProviderSamplesContext context) {
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");

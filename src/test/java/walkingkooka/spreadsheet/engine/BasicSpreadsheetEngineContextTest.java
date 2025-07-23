@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -895,6 +896,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             new FakeSpreadsheetFormatterProviderSamplesContext() {
                 @Override
                 public Optional<SpreadsheetCell> cell() {
