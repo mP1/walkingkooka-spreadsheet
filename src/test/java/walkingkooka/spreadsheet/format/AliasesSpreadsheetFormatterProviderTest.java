@@ -274,8 +274,10 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 SpreadsheetFormatterAliasSet.parse(NAME1_STRING),
                 new FakeSpreadsheetFormatterProvider() {
                     @Override
-                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
+                        final SpreadsheetFormatterName name = selector.name();
+
                         switch (name.toString()) {
                             case NAME1_STRING:
                                 return Lists.of(sample);
@@ -311,8 +313,10 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 SpreadsheetFormatterAliasSet.parse(ALIAS2 + " " + NAME2),
                 new FakeSpreadsheetFormatterProvider() {
                     @Override
-                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+                    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
+                        final SpreadsheetFormatterName name = selector.name();
+
                         switch (name.toString()) {
                             case NAME2_STRING:
                                 return Lists.of(

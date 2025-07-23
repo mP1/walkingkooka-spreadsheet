@@ -90,13 +90,15 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
     }
 
     @Override
-    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+    public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
-        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
+        final SpreadsheetFormatterName name = selector.name();
+
         return this.provider.spreadsheetFormatterSamples(
-                this.mapper.name(name),
+                this.mapper.name(name).setValueText(selector.valueText()),
                 context
             ).stream()
             .map(s -> s.setSelector(

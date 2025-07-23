@@ -66,7 +66,7 @@ public interface SpreadsheetFormatterProvider extends Provider {
      * Note this method is not defined on {@link SpreadsheetFormatter} because the generation of samples does not
      * actually require a {@link SpreadsheetFormatter} instance.
      */
-    List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterName name,
+    List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
                                                                  final SpreadsheetFormatterProviderSamplesContext context);
 
     /**

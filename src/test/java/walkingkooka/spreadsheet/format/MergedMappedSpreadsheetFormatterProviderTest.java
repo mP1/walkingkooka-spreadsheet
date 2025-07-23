@@ -218,29 +218,30 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
     //  Text "Friday, 31 December 1999"
     @Test
     public void testSpreadsheetFormatterSamples() {
-        final SpreadsheetFormatterName name = SpreadsheetFormatterName.with(RENAMED_DATE_FORMAT_PATTERN);
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.with(RENAMED_DATE_FORMAT_PATTERN)
+            .setValueText("");
 
         this.spreadsheetFormatterSamplesAndCheck(
-            name,
+            selector,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
-                name.setValueText("d/m/yy"),
+                selector.setValueText("d/m/yy"),
                 TextNode.text("31/12/99")
             ),
             SpreadsheetFormatterSample.with(
                 "Medium",
-                name.setValueText("d mmm yyyy"),
+                selector.setValueText("d mmm yyyy"),
                 TextNode.text("31 Dec. 1999")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                name.setValueText("d mmmm yyyy"),
+                selector.setValueText("d mmmm yyyy"),
                 TextNode.text("31 December 1999")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
-                name.setValueText("dddd, d mmmm yyyy"),
+                selector.setValueText("dddd, d mmmm yyyy"),
                 TextNode.text("Friday, 31 December 1999")
             )
         );
