@@ -341,31 +341,36 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        final List<SpreadsheetFormatterSample> samples;
+        final List<SpreadsheetFormatterSample> samples = Lists.array();
 
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
-                samples = SpreadsheetFormatterProvider.NO_SPREADSHEET_FORMATTER_SAMPLES;
                 break;
             case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
-                samples = Lists.of(
+                samples.add(
                     this.dateSpreadsheetFormatterSample(
                         "Short",
                         DateFormat.SHORT,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.dateSpreadsheetFormatterSample(
                         "Medium",
                         DateFormat.MEDIUM,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.dateSpreadsheetFormatterSample(
                         "Long",
                         DateFormat.LONG,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.dateSpreadsheetFormatterSample(
                         "Full",
                         DateFormat.FULL,
@@ -374,22 +379,28 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
-                samples = Lists.of(
+                samples.add(
                     this.dateTimeSpreadsheetFormatterSample(
                         "Short",
                         DateFormat.SHORT,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.dateTimeSpreadsheetFormatterSample(
                         "Medium",
                         DateFormat.MEDIUM,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.dateTimeSpreadsheetFormatterSample(
                         "Long",
                         DateFormat.LONG,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.dateTimeSpreadsheetFormatterSample(
                         "Full",
                         DateFormat.FULL,
@@ -398,7 +409,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
-                samples = Lists.of(
+                samples.add(
                     SpreadsheetFormatterSample.with(
                         "Default",
                         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
@@ -407,28 +418,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
-                samples = NO_SPREADSHEET_FORMATTER_SAMPLES;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING: {
+                samples.add(
+                    generalSample(
+                        123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    generalSample(
+                        -123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    generalSample(
+                        0,
+                        context
+                    )
+                );
                 final Object value = cellValueOr(
                     context,
                     () -> null
                 );
-
-                samples = listFilterNulls(
-                    generalSample(
-                        123.5,
-                        context
-                    ),
-                    generalSample(
-                        -123.5,
-                        context
-                    ),
-                    generalSample(
-                        0,
-                        context
-                    ),
-                    null != value ?
+                if (null != value) {
+                    samples.add(
                         generalSample(
                             context.cell()
                                 .get()
@@ -436,79 +451,101 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                                 .text(),
                             value,
                             context
-                        ) :
-                        null
-                );
+                        )
+                    );
+                }
                 break;
             }
             case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
-                samples = Lists.of(
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Number",
                         DecimalFormat::getInstance,
                         123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Number",
                         DecimalFormat::getInstance,
                         -123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Number",
                         DecimalFormat::getInstance,
                         0,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Integer",
                         DecimalFormat::getIntegerInstance,
                         123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Integer",
                         DecimalFormat::getIntegerInstance,
                         -123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Integer",
                         DecimalFormat::getIntegerInstance,
                         0,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Percent",
                         DecimalFormat::getPercentInstance,
                         123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Percent",
                         DecimalFormat::getPercentInstance,
                         -123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Percent",
                         DecimalFormat::getPercentInstance,
                         0,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Currency",
                         DecimalFormat::getCurrencyInstance,
                         123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Currency",
                         DecimalFormat::getCurrencyInstance,
                         -123.5,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Currency",
                         DecimalFormat::getCurrencyInstance,
@@ -523,13 +560,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     () -> null
                 );
 
-                samples = listFilterNulls(
+                samples.add(
                     SpreadsheetFormatterSample.with(
                         "Default",
                         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
                         TextNode.text("Hello 123")
-                    ),
-                    null != value ?
+                    )
+                );
+
+                if (null != value) {
+                    samples.add(
                         sample(
                             context.cell()
                                 .get()
@@ -538,18 +578,20 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                             SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
                             value,
                             context
-                        ) :
-                        null
-                );
+                        )
+                    );
+                }
                 break;
             }
             case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
-                samples = Lists.of(
+                samples.add(
                     this.timeSpreadsheetFormatterSample(
                         "Short",
                         DateFormat.SHORT,
                         context
-                    ),
+                    )
+                );
+                samples.add(
                     this.timeSpreadsheetFormatterSample(
                         "Long",
                         DateFormat.LONG,
@@ -561,8 +603,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 throw new IllegalArgumentException("Unknown formatter " + name);
         }
 
-
-        return samples;
+        return Lists.immutable(samples);
     }
 
     private SpreadsheetFormatterSample dateSpreadsheetFormatterSample(final String label,
@@ -703,12 +744,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 context
             )
         );
-    }
-
-    private List<SpreadsheetFormatterSample> listFilterNulls(final SpreadsheetFormatterSample ... samples) {
-        return Arrays.stream(samples)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
     }
 
     // spreadsheetFormatterInfos........................................................................................
