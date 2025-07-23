@@ -23,6 +23,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
 import walkingkooka.convert.HasConvertError;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.HasNotFoundText;
@@ -72,10 +73,10 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      * Creates a {@link SpreadsheetError} reporting that no {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter}
      * matched a given value during a format.
      */
-    public static SpreadsheetError formatterNotFound(final Object value) {
+    public static SpreadsheetError formatterNotFound(final SpreadsheetFormatterName name) {
         return SpreadsheetErrorKind.ERROR.setMessageAndValue(
             "Formatter not found",
-            value
+            name
         );
     }
 
