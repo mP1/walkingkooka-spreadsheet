@@ -18,9 +18,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.FakeDateTimeContext;
@@ -45,6 +49,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSample;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -886,18 +891,47 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     //  Hello 123
     @Test
     public void testSpreadsheetFormatterSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@@");
+
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            selector,
             new FakeSpreadsheetFormatterProviderSamplesContext() {
                 @Override
                 public Optional<SpreadsheetCell> cell() {
                     return Optional.empty();
                 }
+
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<ConverterContext> converter = Converters.simple();
             },
             SpreadsheetFormatterSample.with(
                 "Default",
                 SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
                 TextNode.text("Hello 123")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Sample",
+                selector,
+                TextNode.text("Hello World 123Hello World 123")
             )
         );
     }
