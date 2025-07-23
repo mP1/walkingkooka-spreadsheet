@@ -275,6 +275,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 new FakeSpreadsheetFormatterProvider() {
                     @Override
                     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                                        final boolean includeSamples,
                                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
                         final SpreadsheetFormatterName name = selector.name();
 
@@ -314,6 +315,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 new FakeSpreadsheetFormatterProvider() {
                     @Override
                     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                                        final boolean includeSamples,
                                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
                         final SpreadsheetFormatterName name = selector.name();
 

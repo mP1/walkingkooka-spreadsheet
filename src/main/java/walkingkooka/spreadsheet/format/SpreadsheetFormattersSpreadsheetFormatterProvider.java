@@ -338,6 +338,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     @Override
     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                        final boolean includeSamples,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
@@ -378,14 +379,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                samples.add(
-                    this.sample(
-                        "Sample",
-                        selector,
-                        this.dateValue(context),
-                        context
-                    )
-                );
+                if(includeSamples) {
+                    samples.add(
+                        this.sample(
+                            "Sample",
+                            selector,
+                            this.dateValue(context),
+                            context
+                        )
+                    );
+                }
                 break;
             case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
                 samples.add(
@@ -416,14 +419,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                samples.add(
-                    this.sample(
-                        "Sample",
-                        selector,
-                        this.dateTimeValue(context),
-                        context
-                    )
-                );
+                if(includeSamples) {
+                    samples.add(
+                        this.sample(
+                            "Sample",
+                            selector,
+                            this.dateTimeValue(context),
+                            context
+                        )
+                    );
+                }
                 break;
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
                 samples.add(
@@ -433,14 +438,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         TextNode.text("Hello 123")
                     )
                 );
-                samples.add(
-                    this.sample(
-                        "Sample",
-                        selector,
-                        this.textValue(context),
-                        context
-                    )
-                );
+                if(includeSamples) {
+                    samples.add(
+                        this.sample(
+                            "Sample",
+                            selector,
+                            this.textValue(context),
+                            context
+                        )
+                    );
+                }
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
                 break;
@@ -463,21 +470,23 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                final Object value = cellValueOr(
-                    context,
-                    () -> null
-                );
-                if (null != value) {
-                    samples.add(
-                        generalSample(
-                            context.cell()
-                                .get()
-                                .reference()
-                                .text(),
-                            value,
-                            context
-                        )
+                if(includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
                     );
+                    if (null != value) {
+                        samples.add(
+                            generalSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
                 }
                 break;
             }
@@ -578,14 +587,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                samples.add(
-                    this.sample(
-                        "Sample",
-                        selector,
-                        this.numberValue(context),
-                        context
-                    )
-                );
+                if(includeSamples) {
+                    samples.add(
+                        this.sample(
+                            "Sample",
+                            selector,
+                            this.numberValue(context),
+                            context
+                        )
+                    );
+                }
                 break;
             case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING: {
                 final Object value = cellValueOr(
@@ -601,27 +612,29 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     )
                 );
 
-                if (null != value) {
+                if(includeSamples) {
+                    if (null != value) {
+                        samples.add(
+                            sample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
+                                value,
+                                context
+                            )
+                        );
+                    }
                     samples.add(
-                        sample(
-                            context.cell()
-                                .get()
-                                .reference()
-                                .text(),
-                            SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
-                            value,
+                        this.sample(
+                            "Sample",
+                            selector,
+                            this.textValue(context),
                             context
                         )
                     );
                 }
-                samples.add(
-                    this.sample(
-                        "Sample",
-                        selector,
-                        this.textValue(context),
-                        context
-                    )
-                );
                 break;
             }
             case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
@@ -639,14 +652,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                samples.add(
-                    this.sample(
-                        "Sample",
-                        selector,
-                        this.timeValue(context),
-                        context
-                    )
-                );
+                if(includeSamples) {
+                    samples.add(
+                        this.sample(
+                            "Sample",
+                            selector,
+                            this.timeValue(context),
+                            context
+                        )
+                    );
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Unknown formatter " + name);

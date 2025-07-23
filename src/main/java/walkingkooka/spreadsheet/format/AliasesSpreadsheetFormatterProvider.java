@@ -103,6 +103,7 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
 
     @Override
     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                        final boolean includeSamples,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
         Objects.requireNonNull(selector, "name");
         Objects.requireNonNull(context, "context");
@@ -114,6 +115,7 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
             .map(
                 n -> this.provider.spreadsheetFormatterSamples(
                     selector.setName(n),
+                    includeSamples,
                     context
                 )
             ).orElse(Lists.empty())

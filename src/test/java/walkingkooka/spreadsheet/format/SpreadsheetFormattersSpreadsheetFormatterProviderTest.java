@@ -849,6 +849,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesAutomatic() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.AUTOMATIC,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }
@@ -857,6 +858,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesCollection() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.COLLECTION,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }
@@ -881,9 +883,39 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //    "dddd, d mmmm yyyy"
     //  Text "Friday, 31 December 1999"
     @Test
-    public void testSpreadsheetFormatterSamplesDateFormatPatternWithoutCell() {
+    public void testSpreadsheetFormatterSamplesDateFormatPatternWithoutCellSkipSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d/m/yy"),
+                TextNode.text("31/12/99")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmm yyyy"),
+                TextNode.text("31 Dec. 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmmm yyyy"),
+                TextNode.text("31 December 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy"),
+                TextNode.text("Friday, 31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesDateFormatPatternWithoutCellIncludeSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
@@ -914,7 +946,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesDateFormatPatternWithCellValue() {
+    public void testSpreadsheetFormatterSamplesDateFormatPatternWithCellValueSkipSamples() {
         final LocalDate date = LocalDate.of(
             2000,
             1,
@@ -927,7 +959,50 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
 
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d/m/yy"),
+                TextNode.text("2/1/00")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmm yyyy"),
+                TextNode.text("2 Jan. 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmmm yyyy"),
+                TextNode.text("2 January 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy"),
+                TextNode.text("Sunday, 2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesDateFormatPatternWithCellValueIncludeSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(date)
             ),
@@ -976,6 +1051,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(date)
             ),
@@ -1027,9 +1103,39 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //    "dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"
     //  Text "Friday, 31 December 1999 at 12:58:00 PM"
     @Test
-    public void testSpreadsheetFormatterSamplesDateTimeFormatPattern() {
+    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternSkipSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
+                TextNode.text("31/12/99, 12:58 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
+                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                TextNode.text("31 December 1999 at 12:58:00 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternIncludeSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
@@ -1060,7 +1166,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternWithCellValueDateTime() {
+    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternWithCellValueDateTimeSkipSamples() {
         final LocalDateTime value = LocalDateTime.of(
             2000,
             1,
@@ -1076,6 +1182,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(value)
             ),
@@ -1098,17 +1205,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Full",
                 SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("Sunday, 2 January 2000 at 6:30:00 PM")
-            ),
-            SpreadsheetFormatterSample.with(
-                "Sample",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
             )
         );
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternNotEmptyWithCellValueDateTime() {
+    public void testSpreadsheetFormatterSamplesDateTimeFormatPatternNotEmptyWithCellValueDateTimeIncludeSamples() {
         final LocalDateTime value = LocalDateTime.of(
             2000,
             1,
@@ -1126,6 +1228,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(value)
             ),
@@ -1161,6 +1264,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesExpression() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.EXPRESSION,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }
@@ -1180,6 +1284,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesGeneral() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.GENERAL,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "General",
@@ -1200,11 +1305,40 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesGeneralAndCellWithValue() {
+    public void testSpreadsheetFormatterSamplesGeneralAndCellWithValueSkipSamples() {
         final Object value = 999;
 
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.GENERAL,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(value)
+            ),
+            SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("123.5")
+            ),
+            SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("-123.5")
+            ),
+            SpreadsheetFormatterSample.with(
+                "General",
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
+                TextNode.text("0")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesGeneralAndCellWithValueIncludeSamples() {
+        final Object value = 999;
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.GENERAL,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(value)
             ),
@@ -1294,6 +1428,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesNumberFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Number",
@@ -1354,23 +1489,94 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Currency",
                 SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
                 TextNode.text("$0.00")
-            ),
-            SpreadsheetFormatterSample.with(
-                "Sample",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText(""),
-                TextNode.text("Empty \"text\"")
             )
         );
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesNumberFormatPatternNotEmpty() {
+    public void testSpreadsheetFormatterSamplesNumberFormatPatternNotEmptySkipSamples() {
         final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("\"Hello\" $000.000");
 
         final Number value = 1234.56;
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(value)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Number",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                TextNode.text("123.5")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Number",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                TextNode.text("-123.5")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Number",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                TextNode.text("0.")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Integer",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                TextNode.text("124")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Integer",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                TextNode.text("-124")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Integer",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                TextNode.text("0")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Percent",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                TextNode.text("12,350%")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Percent",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                TextNode.text("-12,350%")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Percent",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                TextNode.text("0%")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Currency",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                TextNode.text("$123.50")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Currency",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                TextNode.text("$-123.50")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Currency",
+                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                TextNode.text("$0.00")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesNumberFormatPatternNotEmptyIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("\"Hello\" $000.000");
+
+        final Number value = 1234.56;
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(value)
             ),
@@ -1446,6 +1652,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesTextFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Default",
@@ -1461,9 +1668,26 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesTextFormatPatternWithCellValue() {
+    public void testSpreadsheetFormatterSamplesTextFormatPatternWithCellValueSkipSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of("Cell Value 123")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Default",
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                TextNode.text("Hello 123")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesTextFormatPatternWithCellValueIncludeSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of("Cell Value 123")
             ),
@@ -1486,11 +1710,30 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesTextFormatPatternNotEmptyWithCellValue() {
+    public void testSpreadsheetFormatterSamplesTextFormatPatternNotEmptyWithCellValueSkipSamples() {
         final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("\"Hello\" @@");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of("Cell Value 123")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Default",
+                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                TextNode.text("Hello 123")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesTextFormatPatternNotEmptyWithCellValueIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("\"Hello\" @@");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of("Cell Value 123")
             ),
@@ -1525,6 +1768,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSamplesTimeFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
@@ -1545,7 +1789,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesTimeFormatPatternWithCellValue() {
+    public void testSpreadsheetFormatterSamplesTimeFormatPatternWithCellValueIncludeSamples() {
         final LocalTime value = LocalTime.of(
             15,
             28,
@@ -1559,6 +1803,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(value)
             ),
@@ -1581,7 +1826,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesTimeFormatPatternNotEmptyWithCellValue() {
+    public void testSpreadsheetFormatterSamplesTimeFormatPatternNotEmptyWithCellValueSkipSamples() {
         final LocalTime value = LocalTime.of(
             15,
             28,
@@ -1597,6 +1842,41 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            spreadsheetFormatterSamplesAndCheck(
+                Optional.of(value)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
+                TextNode.text("3:28 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
+                TextNode.text("3:28:29 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesTimeFormatPatternNotEmptyWithCellValueIncludeSamples() {
+        final LocalTime value = LocalTime.of(
+            15,
+            28,
+            29
+        );
+        this.checkNotEquals(
+            value,
+            NOW.now().toLocalTime(),
+            "value must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("\"Hello\" hh:mm");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             spreadsheetFormatterSamplesAndCheck(
                 Optional.of(value)
             ),

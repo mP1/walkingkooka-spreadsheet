@@ -215,11 +215,43 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
     //    "dddd, d mmmm yyyy"
     //  Text "Friday, 31 December 1999"
     @Test
-    public void testSpreadsheetFormatterSamples() {
+    public void testSpreadsheetFormatterSamplesSkipSamples() {
         final SpreadsheetFormatterName name = SpreadsheetFormatterName.with(NEW_FORMATTER_NAME);
 
         this.spreadsheetFormatterSamplesAndCheck(
             name,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Short",
+                name.setValueText("d/m/yy"),
+                TextNode.text("31/12/99")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                name.setValueText("d mmm yyyy"),
+                TextNode.text("31 Dec. 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                name.setValueText("d mmmm yyyy"),
+                TextNode.text("31 December 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                name.setValueText("dddd, d mmmm yyyy"),
+                TextNode.text("Friday, 31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesIncludeSamples() {
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.with(NEW_FORMATTER_NAME);
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            name.setValueText(""),
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",

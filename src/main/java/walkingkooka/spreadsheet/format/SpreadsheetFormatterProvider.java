@@ -61,12 +61,18 @@ public interface SpreadsheetFormatterProvider extends Provider {
      */
     List<SpreadsheetFormatterSample> NO_SPREADSHEET_FORMATTER_SAMPLES = Lists.empty();
 
+    boolean SKIP_SAMPLES = false;
+
+    boolean INCLUDE_SAMPLES = true;
+
     /**
      * Returns {@link SpreadsheetFormatterSample samples} for the given {@link SpreadsheetFormatterName}.
      * Note this method is not defined on {@link SpreadsheetFormatter} because the generation of samples does not
      * actually require a {@link SpreadsheetFormatter} instance.
+     * When generating menus, includeSamples should be false.
      */
     List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                 final boolean includeSamples,
                                                                  final SpreadsheetFormatterProviderSamplesContext context);
 
     /**

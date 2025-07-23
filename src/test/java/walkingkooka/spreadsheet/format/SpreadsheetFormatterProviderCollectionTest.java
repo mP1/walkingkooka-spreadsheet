@@ -113,6 +113,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SpreadsheetFormatterProviderSamplesContexts.fake()
         );
     }

@@ -223,6 +223,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",

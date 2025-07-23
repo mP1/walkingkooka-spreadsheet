@@ -92,6 +92,7 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
 
     @Override
     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                        final boolean includeSamples,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
@@ -103,6 +104,7 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
                     .setValueText(
                         selector.valueText()
                     ),
+                includeSamples,
                 context
             ).stream()
             .map(

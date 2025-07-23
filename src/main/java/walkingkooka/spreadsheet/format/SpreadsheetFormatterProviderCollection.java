@@ -104,6 +104,7 @@ final class SpreadsheetFormatterProviderCollection implements SpreadsheetFormatt
 
     @Override
     public List<SpreadsheetFormatterSample> spreadsheetFormatterSamples(final SpreadsheetFormatterSelector selector,
+                                                                        final boolean includeSamples,
                                                                         final SpreadsheetFormatterProviderSamplesContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
