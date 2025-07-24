@@ -23,6 +23,11 @@ public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends Spr
     ProviderContextTesting<C> {
 
     @Override
+    default C createCanConvert() {
+        return this.createCanConvert();
+    }
+
+    @Override
     default String typeNameSuffix() {
         return SpreadsheetFormatterProviderSamplesContext.class.getSimpleName();
     }
