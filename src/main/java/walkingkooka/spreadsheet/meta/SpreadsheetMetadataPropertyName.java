@@ -671,6 +671,34 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return Optional.ofNullable(kind);
     }
 
+    // converterSelector................................................................................................
+
+    /**
+     * Returns the {@link SpreadsheetMetadataPropertyName} that matches this {@link SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet}.
+     */
+    public SpreadsheetMetadataPropertyName<ConverterSelector> toConverterSelector() {
+        final Class<?> type = this.type();
+        if (ExpressionFunctionAliasSet.class != type) {
+            // Property dateTimeSymbols: invalid type DateTimeSymbols expected ExpressionFunctionAliasSet
+            throw new IllegalStateException( "Property " + this + ": invalid type " + type.getSimpleName() + " expected " +  ExpressionFunctionAliasSet.class.getSimpleName());
+        }
+
+        // findFunctions -> findConverter
+        final String propertyName = this.name.replace(
+            "Functions",
+            "Converter"
+        );
+
+        final SpreadsheetMetadataPropertyNameConverterSelector converter = Cast.to(
+            CONSTANTS.get(propertyName)
+        );
+
+        if (null == converter) {
+            throw new IllegalArgumentException("Missing " + propertyName + " with type " + ConverterAliasSet.class.getSimpleName());
+        }
+        return converter;
+    }
+
     // isXXX............................................................................................................
 
     /**

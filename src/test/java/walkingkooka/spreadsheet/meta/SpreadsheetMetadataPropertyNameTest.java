@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -128,6 +129,49 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                     propertyName.checkValue(color);
                 }
             );
+    }
+
+    // toConverterSelector..............................................................................................
+
+    @Test
+    public void testToConverterSelectorWithNotExpressionFunctionAliasSet() {
+        final IllegalStateException thrown = assertThrows(
+            IllegalStateException.class,
+            () -> SpreadsheetMetadataPropertyName.LOCALE.toConverterSelector()
+        );
+
+        this.checkEquals(
+            "Property locale: invalid type Locale expected ExpressionFunctionAliasSet",
+            thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testToConverterSelectorWithFindFunctions() {
+        this.checkEquals(
+            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.toConverterSelector()
+        );
+    }
+
+    @Test
+    public void testToConverterSelectorWithFormattingFunctions() {
+        this.checkEquals(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS.toConverterSelector()
+        );
+    }
+
+    @Test
+    public void testToConverterSelectorWithAllExpressionFunctionAliasSet() {
+        for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.ALL) {
+            if (propertyName != SpreadsheetMetadataPropertyName.FUNCTIONS && propertyName.type() == ExpressionFunctionAliasSet.class) {
+                this.checkNotEquals(
+                    null,
+                    propertyName.toConverterSelector()
+                );
+            }
+        }
     }
 
     // patch............................................................................................................
