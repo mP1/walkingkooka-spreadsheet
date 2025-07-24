@@ -430,7 +430,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 JsonNodeMarshallUnmarshallContexts.basic(
                     JSON_NODE_MARSHALL_CONTEXT,
                     JSON_NODE_UNMARSHALL_CONTEXT
-
                 )
             )
         ),
