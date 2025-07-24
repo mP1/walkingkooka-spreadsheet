@@ -22,10 +22,10 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
+
+import java.util.function.Function;
 
 /**
  * A {@link ConverterProvider} for {@link SpreadsheetConverters}.
@@ -90,14 +90,8 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     /**
      * {@see SpreadsheetConvertersConverterProvider}
      */
-    public static ConverterProvider spreadsheetConverters(final SpreadsheetMetadata metadata,
-                                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                          final SpreadsheetParserProvider spreadsheetParserProvider) {
-        return SpreadsheetConvertersConverterProvider.with(
-            metadata,
-            spreadsheetFormatterProvider,
-            spreadsheetParserProvider
-        );
+    public static ConverterProvider spreadsheetConverters(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
+        return SpreadsheetConvertersConverterProvider.with(general);
     }
 
     /**

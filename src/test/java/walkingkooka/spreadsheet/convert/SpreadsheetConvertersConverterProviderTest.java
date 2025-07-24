@@ -28,6 +28,7 @@ import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -488,9 +489,11 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
-            SpreadsheetMetadataTesting.METADATA_EN_AU,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER
+            (final ProviderContext context) -> SpreadsheetMetadataTesting.METADATA_EN_AU.generalConverter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                context
+            )
         );
     }
 

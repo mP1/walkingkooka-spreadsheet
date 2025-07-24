@@ -30,12 +30,10 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -46,23 +44,15 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     /**
      * Factory
      */
-    static SpreadsheetConvertersConverterProvider with(final SpreadsheetMetadata metadata,
-                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                       final SpreadsheetParserProvider spreadsheetParserProvider) {
+    static SpreadsheetConvertersConverterProvider with(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
         return new SpreadsheetConvertersConverterProvider(
-            Objects.requireNonNull(metadata, "metadata"),
-            Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
-            Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider")
+            Objects.requireNonNull(general, "general")
         );
     }
 
-    private SpreadsheetConvertersConverterProvider(final SpreadsheetMetadata metadata,
-                                                   final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                   final SpreadsheetParserProvider spreadsheetParserProvider) {
+    private SpreadsheetConvertersConverterProvider(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
         super();
-        this.metadata = metadata;
-        this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
-        this.spreadsheetParserProvider = spreadsheetParserProvider;
+        this.general = general;
     }
 
     @Override
@@ -131,7 +121,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case GENERAL_STRING:
                 parameterCountCheck(copy, 0);
 
-                converter = general(context);
+                converter = general.apply(context);
                 break;
             case HAS_TEXT_STYLE_TO_STYLE_STRING:
                 parameterCountCheck(copy, 0);
@@ -335,21 +325,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         return Cast.to(converter);
     }
 
-    private Converter<SpreadsheetConverterContext> general(final ProviderContext context) {
-        final SpreadsheetMetadata metadata = this.metadata;
-
-        return metadata.generalConverter(
-            this.spreadsheetFormatterProvider,
-            this.spreadsheetParserProvider,
-            context
-        );
-    }
-
-    private final SpreadsheetMetadata metadata;
-
-    private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
-
-    private final SpreadsheetParserProvider spreadsheetParserProvider;
+    /**
+     * The {@link Function} that supplies the {@link Converter} when a request comes through for {@link #GENERAL}.
+     */
+    private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general;
 
     private void parameterCountCheck(final List<?> values,
                                      final int expected) {

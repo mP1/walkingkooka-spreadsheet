@@ -3,4 +3,5 @@
 #
 **/*Testing.*
 **/*Testing2.*
+**/SpreadsheetMetadataTestingPrivate.*
 

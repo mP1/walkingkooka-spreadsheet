@@ -1603,9 +1603,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    SpreadsheetMetadata.EMPTY,
-                    SpreadsheetFormatterProviders.fake(),
-                    SpreadsheetParserProviders.fake()
+                    (final ProviderContext c) -> {
+                        throw new UnsupportedOperationException();
+                    }
                 ).converterInfos()
                 .aliasSet()
         ).set(
