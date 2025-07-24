@@ -519,10 +519,12 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         };
 
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-            METADATA,
-            SpreadsheetFormatterProviders.spreadsheetFormatters(),
-            SpreadsheetParserProviders.spreadsheetParsePattern(
-                SpreadsheetFormatterProviders.fake()
+            (ProviderContext p) -> METADATA.generalConverter(
+                SpreadsheetFormatterProviders.spreadsheetFormatters(),
+                SpreadsheetParserProviders.spreadsheetParsePattern(
+                    SpreadsheetFormatterProviders.fake()
+                ),
+                p
             )
         );
 

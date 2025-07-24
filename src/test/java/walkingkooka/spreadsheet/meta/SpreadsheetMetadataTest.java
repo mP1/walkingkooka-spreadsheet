@@ -605,16 +605,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 LocaleContexts.jre(locale)
             );
 
-        final Converter<SpreadsheetConverterContext> converter = metadata
-            .converter(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    metadata,
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.generalConverter(
                     spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider()
-                ),
-                PROVIDER_CONTEXT
-            );
+                    spreadsheetParserProvider(),
+                    p
+                )
+            ),
+            PROVIDER_CONTEXT
+        );
         this.checkNotEquals(
             null,
             converter

@@ -29,6 +29,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -140,9 +141,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         this.verifyAndCheck(
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                metadata,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER
+                (ProviderContext p) -> metadata.generalConverter(
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    p
+                )
             ).converter(
                 selector,
                 PROVIDER_CONTEXT
@@ -318,9 +321,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     @Test
     public void testVerifyAndMarshall() {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-            SpreadsheetMetadata.EMPTY,
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER
+            (ProviderContext p) -> SpreadsheetMetadata.EMPTY.generalConverter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                p
+            )
         ).converter(
             ConverterSelector.parse("simple"),
             PROVIDER_CONTEXT

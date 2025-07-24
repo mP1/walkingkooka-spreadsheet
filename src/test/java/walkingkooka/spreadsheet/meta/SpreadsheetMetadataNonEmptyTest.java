@@ -46,6 +46,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -1378,9 +1379,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             converterSelector,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                metadata,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER
+                (final ProviderContext p) -> metadata.generalConverter(
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    p
+                )
             ),
             PROVIDER_CONTEXT
         );
@@ -1471,9 +1474,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    metadata,
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER
+                    (ProviderContext p) -> metadata.generalConverter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        p
+                    )
                 ),
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -2037,9 +2042,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 },
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    metadata,
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER
+                    (ProviderContext p) -> metadata.generalConverter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        p
+                    )
                 ),
                 SPREADSHEET_FORMATTER_PROVIDER,
                 LOCALE_CONTEXT,
@@ -2069,9 +2076,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 },
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    metadata,
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER
+                    (ProviderContext p) -> metadata.generalConverter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        p
+                    )
                 ),
                 SPREADSHEET_FORMATTER_PROVIDER,
                 LOCALE_CONTEXT,

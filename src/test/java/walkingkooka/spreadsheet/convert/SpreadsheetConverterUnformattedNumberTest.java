@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -190,9 +191,11 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             LABEL_NAME_RESOLVER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                metadata,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER
+                (ProviderContext p) -> metadata.generalConverter(
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    p
+                )
             ),
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT

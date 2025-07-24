@@ -291,9 +291,11 @@ public class J2clTest {
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatters();
         final SpreadsheetParserProvider spreadsheetParserProvider = SpreadsheetParserProviders.spreadsheetParsePattern(spreadsheetFormatterProvider);
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                metadata,
+            (ProviderContext p) -> metadata.generalConverter(
                 spreadsheetFormatterProvider,
-                spreadsheetParserProvider
+                spreadsheetParserProvider,
+                p
+            )
         );
 
         return new FakeSpreadsheetEngineContext() {
