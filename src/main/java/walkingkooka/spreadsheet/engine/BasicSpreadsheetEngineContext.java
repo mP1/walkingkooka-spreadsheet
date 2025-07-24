@@ -245,7 +245,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
                             converterSelector = SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER;
                         } else {
-                            throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+                            // Missing ConverterSelector for $functionAliases
+                            throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for " + functionAliases);
                         }
                     }
                 }
