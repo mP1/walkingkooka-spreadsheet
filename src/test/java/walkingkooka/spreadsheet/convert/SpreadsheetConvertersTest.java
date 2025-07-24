@@ -50,7 +50,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // date.............................................................................................................
 
     @Test
-    public void testTextToDateConvertFails() {
+    public void testTextToDateConvertInvalidStringToDateFails() {
         this.convertFails(
             SpreadsheetConverters.textToDate(
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
@@ -63,7 +63,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testTextToDateConvert() {
+    public void testTextToDateConvertStringToDate() {
         this.convertAndCheck(
             SpreadsheetConverters.textToDate(
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
@@ -92,7 +92,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testTextToDateTimeConvert() {
+    public void testTextToDateTimeConvertStringToDateTime() {
         this.convertAndCheck(
             SpreadsheetConverters.textToDateTime(
                 SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm")
@@ -108,7 +108,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // time.............................................................................................................
 
     @Test
-    public void testTextToTimeConvertFails() {
+    public void testTextToTimeConvertInvalidStringToTimeFails() {
         this.convertFails(
             SpreadsheetConverters.textToTime(
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm")
@@ -121,7 +121,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testTextToTimeConvert() {
+    public void testTextToTimeConvertStringToTime() {
         this.convertAndCheck(
             SpreadsheetConverters.textToTime(
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm")
@@ -171,7 +171,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // textToNumber.....................................................................................................
 
     @Test
-    public void testTextToNumberConvertFails() {
+    public void testTextToNumberConvertInvalidStringPatternToExpressionNumberFails() {
         this.convertFails(
             SpreadsheetConverters.textToNumber(
                 SpreadsheetPattern.parseNumberParsePattern("0.00")
