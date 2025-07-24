@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -1935,7 +1936,15 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         return SpreadsheetConverterContexts.basic(
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            SpreadsheetConverters.basic(),
+            SpreadsheetConverters.collection(
+                Lists.of(
+                    Converters.simple(),
+                    SpreadsheetConverters.textToText(),
+                    SpreadsheetConverters.numberToNumber(),
+                    Converters.localDateToLocalDateTime(),
+                    Converters.localTimeToLocalDateTime()
+                )
+            ),
             labelNameResolver,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(

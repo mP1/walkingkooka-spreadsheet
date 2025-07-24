@@ -17,14 +17,18 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.color.convert.ColorConverters;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.convert.NetConverters;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
@@ -54,20 +58,49 @@ import java.util.function.Function;
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
-     * A basic {@link Converter} that supports number -> number, date -> datetime, time -> datetime.
+     * A {@link Converter} that supports most of the provider conversions and will be used as the system converter for
+     * the system {@link ProviderContext}.
      */
     public static Converter<SpreadsheetConverterContext> basic() {
         return BASIC_CONVERTER;
     }
 
-    private final static Converter<SpreadsheetConverterContext> BASIC_CONVERTER = Converters.collection(
-        Lists.of(
-            Converters.simple(),
-            textToText(),
-            numberToNumber(),
-            Converters.localDateToLocalDateTime(),
-            Converters.localTimeToLocalDateTime()
-        )
+    private static Converter<SpreadsheetConverterContext> generalConverter() {
+        return general(
+            SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
+                .formatter(),
+            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                .parser(),
+            SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
+                .formatter(),
+            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
+                .parser(),
+            SpreadsheetPattern.parseNumberFormatPattern("0.##")
+                .formatter(),
+            SpreadsheetPattern.parseNumberParsePattern("0.##;#0;")
+                .parser(),
+            SpreadsheetFormatters.defaultText(),
+            SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
+                .formatter(),
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                .parser()
+        );
+    }
+
+    private final static Converter<SpreadsheetConverterContext> BASIC_GENERAL = generalConverter();
+
+    private final static Converter<SpreadsheetConverterContext> BASIC_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+        (ProviderContext context) -> BASIC_GENERAL
+    ).converter(
+        ConverterSelector.parse(
+            "collection(number-to-number, text-to-text, error-to-number, \n" +
+            "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
+            "  text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
+            "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
+            "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
+            "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"
+        ),
+        ProviderContexts.fake()
     );
 
     /**
