@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
@@ -234,27 +233,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             }
 
             if (null == this.spreadsheetConverterContext) {
-                final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
-
-                if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
-                    converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
-                } else {
-                    if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
-                        converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
-                    } else {
-                        if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
-                            converterSelector = SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER;
-                        } else {
-                            // Missing ConverterSelector for $functionAliases
-                            throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for " + functionAliases);
-                        }
-                    }
-                }
-
                 this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
                     cell,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                    converterSelector,
+                    functionAliases.toConverterSelector(),
                     this, // SpreadsheetLabelNameResolver,
                     spreadsheetProvider, // SpreadsheetConverterProvider
                     this, // LocaleContext
