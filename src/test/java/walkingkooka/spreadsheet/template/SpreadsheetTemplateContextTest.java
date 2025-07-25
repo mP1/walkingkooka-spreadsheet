@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
-import walkingkooka.template.TemplateContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
@@ -309,10 +308,5 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     @Override
     public Class<SpreadsheetTemplateContext> type() {
         return SpreadsheetTemplateContext.class;
-    }
-
-    @Override
-    public String typeNameSuffix() {
-        return TemplateContext.class.getSimpleName();
     }
 }
