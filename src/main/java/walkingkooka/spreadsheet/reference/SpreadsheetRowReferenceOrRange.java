@@ -32,7 +32,8 @@ public abstract class SpreadsheetRowReferenceOrRange extends SpreadsheetColumnOr
         }
     }
 
-    @Override final boolean testColumnNonNull(final SpreadsheetColumnReference column) {
+    @Override //
+    final boolean testColumnNonNull(final SpreadsheetColumnReference column) {
         return false;
     }
 
