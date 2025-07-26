@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
+import walkingkooka.color.RgbColor;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.FakeEnvironmentContext;
@@ -25,6 +27,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
@@ -49,11 +52,13 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             MathContext.DECIMAL32
         )
     );
+
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = new FakeEnvironmentContext() {
 
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
             Objects.requireNonNull(name, "name");
+
             throw new UnsupportedOperationException();
         }
 
@@ -124,6 +129,28 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             LOCALE,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             ENVIRONMENT_CONTEXT
+        );
+    }
+
+    // convert..........................................................................................................
+
+    @Test
+    public void testConvertStringToColor() {
+        final String text = "#123";
+        this.convertAndCheck(
+            text,
+            RgbColor.class,
+            Color.parseRgb(text)
+        );
+    }
+
+    @Test
+    public void testConvertStringToExpressionNumber() {
+        final String text = "123";
+        this.convertAndCheck(
+            text,
+            ExpressionNumber.class,
+            ExpressionNumber.with(123)
         );
     }
 
