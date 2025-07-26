@@ -53,11 +53,21 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         )
     );
 
+    private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with("Hello");
+
+    private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
+
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = new FakeEnvironmentContext() {
 
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
             Objects.requireNonNull(name, "name");
+
+            if(ENVIRONMENT_VALUE_NAME.equals(name)) {
+                return Optional.of(
+                    (T)ENVIRONMENT_VALUE
+                );
+            }
 
             throw new UnsupportedOperationException();
         }
@@ -151,6 +161,16 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             text,
             ExpressionNumber.class,
             ExpressionNumber.with(123)
+        );
+    }
+
+    // environment......................................................................................................
+
+    @Test
+    public void testEnvironment() {
+        this.environmentValueAndCheck(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
         );
     }
 
