@@ -605,7 +605,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Parses the text into a {@link SpreadsheetRowReference} or {@link SpreadsheetRowRangeReference}.
      */
-    public static SpreadsheetSelection parseRowOrRowRange(final String text) {
+    public static SpreadsheetRowReferenceOrRange parseRowOrRowRange(final String text) {
         final SpreadsheetRowRangeReference range = parseRowRange(text);
         return range.isUnit() ?
             range.begin() :
