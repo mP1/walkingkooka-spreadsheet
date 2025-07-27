@@ -80,6 +80,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,6 +96,15 @@ import java.util.TreeSet;
  * unimplemented methods.
  */
 final class MissingConverterVerifier {
+
+    private final static LocalDateTime DATE_TIME = LocalDateTime.of(
+        1999,
+        12,
+        31,
+        12,
+        58,
+        59
+    );
 
     private final static List<Class<?>> NUMBER_TYPES = Lists.of(
         ExpressionNumber.class,
@@ -118,6 +128,20 @@ final class MissingConverterVerifier {
     }
 
     private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
+
+    static {
+        final List<Class<?>> types = Lists.array();
+        types.add(Boolean.class);
+        types.add(LocalDateTime.class);
+        types.addAll(NUMBER_TYPES);
+        types.remove(Byte.class);
+        types.remove(Short.class);
+        types.add(String.class);
+
+        DATE_TO_TYPES = types;
+    }
+
+    private static final List<Class<?>> DATE_TO_TYPES;
 
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
@@ -238,10 +262,26 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.GENERAL
             );
 
+            finder.addIfConversionFail(
+                Lists.of(
+                    "true",
+                    "false"
+                ),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
             // general numbers
             finder.addIfConversionFail(
                 kind.one(),
                 NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
+            // date -> dateTime & number & text & time
+            finder.addIfConversionFail(
+                DATE_TIME.toLocalDate(), // date
+                DATE_TO_TYPES,
                 SpreadsheetConvertersConverterProvider.GENERAL
             );
 
