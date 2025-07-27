@@ -340,6 +340,34 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.GENERAL
             );
 
+            // text -> number
+            finder.addIfConversionFail(
+                "123",
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
+            // text -> date
+            finder.addIfConversionFail(
+                "1999/12/31",
+                LocalDate.class,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
+            // text -> dateTime
+            finder.addIfConversionFail(
+                "1999/12/31 12:58",
+                LocalDateTime.class,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
+            // text -> time
+            finder.addIfConversionFail(
+                "12:58:59",
+                LocalTime.class,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
             // SpreadsheetSelection
             finder.addIfConversionFail(
                 Lists.of(
