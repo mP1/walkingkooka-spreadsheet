@@ -34,6 +34,13 @@ public final class SpreadsheetExpressionReferenceLoaders implements PublicStatic
     }
 
     /**
+     * {@see EmptySpreadsheetExpressionReferenceLoader}
+     */
+    public static SpreadsheetExpressionReferenceLoader empty() {
+        return EmptySpreadsheetExpressionReferenceLoader.INSTANCE;
+    }
+
+    /**
      * {@see FakeSpreadsheetExpressionReferenceLoader}
      */
     public static SpreadsheetExpressionReferenceLoader fake() {
