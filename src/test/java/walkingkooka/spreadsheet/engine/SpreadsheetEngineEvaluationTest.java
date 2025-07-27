@@ -21,12 +21,47 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
-    JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation> {
+    JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation>,
+    ParseStringTesting<SpreadsheetEngineEvaluation> {
+
+    // parse............................................................................................................
+
+    @Test
+    public void testParseWithComputeIfNecessary() {
+        this.parseStringAndCheck(
+            "compute-if-necessary",
+            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY
+        );
+    }
+
+    @Test
+    public void testParseWithForceRecompute() {
+        this.parseStringAndCheck(
+            "force-recompute",
+            SpreadsheetEngineEvaluation.FORCE_RECOMPUTE
+        );
+    }
+
+    @Override
+    public SpreadsheetEngineEvaluation parseString(final String text) {
+        return SpreadsheetEngineEvaluation.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
+    }
 
     // JsonNodeMarshallingTesting.......................................................................................
 
