@@ -300,10 +300,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 .aliasSet()
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector()
+            SpreadsheetPattern.parseNumberFormatPattern("0.#;0.#;0").spreadsheetFormatterSelector()
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-            SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector()
+            SpreadsheetPattern.parseNumberParsePattern("0.#;0.#;0").spreadsheetParserSelector()
         ).set(
             SpreadsheetMetadataPropertyName.PARSERS,
             SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
