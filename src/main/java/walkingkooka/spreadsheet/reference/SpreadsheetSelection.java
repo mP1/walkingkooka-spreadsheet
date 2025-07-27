@@ -511,9 +511,10 @@ public abstract class SpreadsheetSelection implements HasText,
 
 
     /**
-     * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnRangeReference}.
+     * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnRangeReference} returning a
+     * common base class {@link SpreadsheetColumnReferenceOrRange}.
      */
-    public static SpreadsheetColumnOrRowReferenceOrRange parseColumnOrColumnRange(final String text) {
+    public static SpreadsheetColumnReferenceOrRange parseColumnOrColumnRange(final String text) {
         final SpreadsheetColumnRangeReference range = parseColumnRange(text);
         return range.isUnit() ?
             range.begin() :
