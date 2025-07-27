@@ -22,6 +22,7 @@ import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.text.CaseKind;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -160,6 +161,19 @@ public enum SpreadsheetEngineEvaluation {
                                        final SpreadsheetCell cell,
                                        final SpreadsheetExpressionReferenceLoader loader,
                                        final SpreadsheetEngineContext context);
+
+    // parse............................................................................................................
+
+    public static SpreadsheetEngineEvaluation parse(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+
+        return SpreadsheetEngineEvaluation.valueOf(
+            CaseKind.KEBAB.change(
+                text,
+                CaseKind.SNAKE
+            )
+        );
+    }
 
     // LinkRelation.....................................................................................................
 
