@@ -80,7 +80,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -96,15 +98,6 @@ import java.util.TreeSet;
  * unimplemented methods.
  */
 final class MissingConverterVerifier {
-
-    private final static LocalDateTime DATE_TIME = LocalDateTime.of(
-        1999,
-        12,
-        31,
-        12,
-        58,
-        59
-    );
 
     private final static List<Class<?>> NUMBER_TYPES = Lists.of(
         ExpressionNumber.class,
@@ -129,6 +122,12 @@ final class MissingConverterVerifier {
 
     private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
 
+    private final static LocalDate DATE = LocalDate.of(
+        1999,
+        12,
+        31
+    );
+
     static {
         final List<Class<?>> types = Lists.array();
         types.add(Boolean.class);
@@ -142,6 +141,31 @@ final class MissingConverterVerifier {
     }
 
     private static final List<Class<?>> DATE_TO_TYPES;
+
+    // time component must be zero otherwise DateTime -> integer types like BigInteger will fail
+    private final static LocalDateTime DATE_TIME = LocalDateTime.of(
+        1999,
+        12,
+        31,
+        0,
+        0,
+        0
+    );
+
+    static {
+        final List<Class<?>> types = Lists.array();
+        types.add(Boolean.class);
+        types.add(LocalDate.class);
+        types.add(LocalTime.class);
+        types.addAll(NUMBER_TYPES);
+        types.remove(Byte.class);
+        types.remove(Short.class);
+        types.add(String.class);
+
+        DATE_TIME_TO_TYPES = types;
+    }
+
+    private static final List<Class<?>> DATE_TIME_TO_TYPES;
 
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
@@ -280,8 +304,15 @@ final class MissingConverterVerifier {
 
             // date -> dateTime & number & text & time
             finder.addIfConversionFail(
-                DATE_TIME.toLocalDate(), // date
+                DATE, // date
                 DATE_TO_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
+            // datetime ->
+            finder.addIfConversionFail(
+                DATE_TIME, // date
+                DATE_TIME_TO_TYPES,
                 SpreadsheetConvertersConverterProvider.GENERAL
             );
 
