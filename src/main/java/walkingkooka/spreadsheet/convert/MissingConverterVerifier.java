@@ -167,6 +167,23 @@ final class MissingConverterVerifier {
 
     private static final List<Class<?>> DATE_TIME_TO_TYPES;
 
+
+    private final static LocalTime TIME = DATE_TIME.toLocalTime();
+
+    static {
+        final List<Class<?>> types = Lists.array();
+        types.add(Boolean.class);
+        types.add(LocalDateTime.class);
+        types.addAll(NUMBER_TYPES);
+        types.remove(Byte.class);
+        types.remove(Short.class);
+        types.add(String.class);
+
+        TIME_TO_TYPES = types;
+    }
+
+    private static final List<Class<?>> TIME_TO_TYPES;
+
     /**
      * Note no tests actually involve converting {@link CharSequence} to something else, because marshalling
      * does not support the {@link CharSequence} interface types like {@link StringBuilder} etc.
@@ -313,6 +330,13 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 DATE_TIME, // date
                 DATE_TIME_TO_TYPES,
+                SpreadsheetConvertersConverterProvider.GENERAL
+            );
+
+            // time ->
+            finder.addIfConversionFail(
+                TIME,
+                TIME_TO_TYPES,
                 SpreadsheetConvertersConverterProvider.GENERAL
             );
 
