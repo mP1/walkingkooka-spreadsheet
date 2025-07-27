@@ -111,6 +111,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -830,6 +831,21 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             mathContext
         );
     }
+
+    /**
+     * Returns a {@link JsonNodeMarshallUnmarshallContext} build using properties from this metadata.
+     */
+    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
+        if(null == this.jsonNodeMarshallUnmarshallContext) {
+            this.jsonNodeMarshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.basic(
+                this.jsonNodeMarshallContext(),
+                this.jsonNodeUnmarshallContext()
+            );
+        }
+        return this.jsonNodeMarshallUnmarshallContext;
+    }
+
+    private JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
     // loadFromLocale...................................................................................................
 
