@@ -1060,7 +1060,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
@@ -1102,7 +1102,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
@@ -1151,7 +1151,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
@@ -1282,7 +1282,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1328,7 +1328,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1455,7 +1455,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.GENERAL,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1483,7 +1483,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.GENERAL,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1646,7 +1646,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1721,7 +1721,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1816,7 +1816,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
@@ -1832,7 +1832,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
@@ -1860,7 +1860,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
@@ -1878,7 +1878,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
@@ -1948,7 +1948,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -1987,7 +1987,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -2021,7 +2021,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
-            spreadsheetFormatterSamplesAndCheck(
+            context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
@@ -2107,7 +2107,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
-    private static SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterSamplesAndCheck(final Optional<Object> value) {
+    private static SpreadsheetFormatterProviderSamplesContext context(final Optional<Object> value) {
         return METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
             Optional.of(
                 SpreadsheetSelection.A1.setFormula(
