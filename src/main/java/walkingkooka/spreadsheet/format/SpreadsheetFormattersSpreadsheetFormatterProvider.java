@@ -23,6 +23,7 @@ import walkingkooka.color.WebColorName;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -828,7 +829,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             .flatMap(c -> c.formula().value())
             .orElse(null);
 
-        if(null == value) {
+        if(null == value || value instanceof SpreadsheetError) {
             value = defaultValue.get();
         }
 
