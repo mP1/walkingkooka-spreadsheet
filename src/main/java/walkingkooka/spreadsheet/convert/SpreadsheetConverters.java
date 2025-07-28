@@ -89,17 +89,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> BASIC_GENERAL = generalConverter();
 
-    private final static Converter<SpreadsheetConverterContext> BASIC_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-        (ProviderContext context) -> BASIC_GENERAL
-    ).converter(
-        ConverterSelector.parse(
-            "collection(number-to-number, text-to-text, error-to-number, \n" +
+    // @VisibleForTesting
+    final static ConverterSelector BASIC_CONVERTER_SELECTOR = ConverterSelector.parse(
+        "collection(number-to-number, text-to-text, error-to-number, \n" +
             "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
             "  text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
             "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
             "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
             "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"
-        ),
+    );
+
+    private final static Converter<SpreadsheetConverterContext> BASIC_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+        (ProviderContext context) -> BASIC_GENERAL
+    ).converter(
+        BASIC_CONVERTER_SELECTOR,
         ProviderContexts.fake()
     );
 

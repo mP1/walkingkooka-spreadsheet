@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
@@ -97,28 +98,28 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     @Test
-    public void testVerifyAndCheckWithWithFindConverter() {
+    public void testVerifyAndCheckWithWithFindConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FIND_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithFormulaConverter() {
+    public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithFormattingConverter() {
+    public void testVerifyAndCheckWithWithFormattingConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER
         );
     }
 
     @Test
-    public void testVerifyAndCheckWithWithSortConverter() {
+    public void testVerifyAndCheckWithWithSortConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER
         );
@@ -131,23 +132,36 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
     }
 
+    @Test
+    public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingSpreadsheetProvider() {
+        this.verifyAndCheck(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            SpreadsheetConverters.BASIC_CONVERTER_SELECTOR,
+            SpreadsheetMetadataTesting.CONVERTER_PROVIDER
+        );
+    }
+
     private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                 final MissingConverter... expected) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
-        final ConverterSelector selector = metadata.getOrFail(propertyName);
+        this.verifyAndCheck(
+            propertyName,
+            metadata.getOrFail(propertyName),
+            SpreadsheetMetadataTesting.CONVERTER_PROVIDER,
+            expected
+        );
+    }
 
+    private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
+                                final ConverterSelector converterSelector,
+                                final ConverterProvider converterProvider,
+                                final MissingConverter... expected) {
         // KEEP useful helps to update SpreadsheetMetadataDefaultTextResource.json
-        System.out.println(propertyName + "=" + selector);
+        System.out.println(propertyName + "=" + converterSelector);
 
         this.verifyAndCheck(
-            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                (ProviderContext p) -> metadata.generalConverter(
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER,
-                    p
-                )
-            ).converter(
-                selector,
+            converterProvider.converter(
+                converterSelector,
                 PROVIDER_CONTEXT
             ),
             propertyName,
