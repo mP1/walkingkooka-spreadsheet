@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 
@@ -50,7 +51,7 @@ final class EmptySpreadsheetExpressionReferenceLoader implements SpreadsheetExpr
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(context, "context");
 
-        return Set.of();
+        return Sets.of();
     }
 
     @Override
