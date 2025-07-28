@@ -26,6 +26,7 @@ import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -1134,7 +1135,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
-    public void testSpreadsheetFormatterSamplesDateFormatPatternNotEmptyWithCellValue() {
+    public void testSpreadsheetFormatterSamplesDateFormatPatternNotEmptyWithCellValueDate() {
         final LocalDate date = LocalDate.of(
             2000,
             1,
@@ -1178,6 +1179,47 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Sample",
                 selector,
                 TextNode.text("Hello 2000/01/Sun.")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesDateFormatPatternNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("\"Hello\" yyyy/mm/ddd");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d/m/yy"),
+                TextNode.text("31/12/99")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmm yyyy"),
+                TextNode.text("31 Dec. 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmmm yyyy"),
+                TextNode.text("31 December 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full",
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy"),
+                TextNode.text("Friday, 31 December 1999")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Sample",
+                selector,
+                TextNode.text("Hello 1999/12/Fri.")
             )
         );
     }
