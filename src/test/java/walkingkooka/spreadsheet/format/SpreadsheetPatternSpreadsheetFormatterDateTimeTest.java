@@ -73,7 +73,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDateFails() {
+    public void testFormatWithDateFails() {
         this.formatAndCheck(
             this.createFormatter("dd/mm/yyyy"),
             LocalDate.of(
@@ -85,7 +85,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatTimeFails() {
+    public void testFormatWithTimeFails() {
         this.formatAndCheck(
             this.createFormatter("hh:mm:ss"),
             LocalTime.of(
@@ -99,12 +99,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // year.............................................................................................................
 
     @Test
-    public void testFormatYear2000() {
+    public void testFormatDateTimeYear2000() {
         this.parseFormatAndCheck("y", this.text(), "00");
     }
 
     @Test
-    public void testFormatYear1999() {
+    public void testFormatDateTimeYear1999() {
         this.parseFormatAndCheck(
             "y",
             "1999-12-31T15:58:59.000",
@@ -113,7 +113,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYear2000() {
+    public void testFormatDateTimeYearYear2000() {
         this.parseFormatAndCheck(
             "yy",
             this.text(),
@@ -122,7 +122,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYear1999() {
+    public void testFormatDateTimeYearYear1999() {
         this.parseFormatAndCheck(
             "yy",
             "1999-12-31T15:58:59.000",
@@ -131,7 +131,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYearYear000() {
+    public void testFormatDateTimeYearYearYear000() {
         this.parseFormatAndCheck(
             "yyy",
             this.text(),
@@ -140,7 +140,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYearYear1999() {
+    public void testFormatDateTimeYearYearYear1999() {
         this.parseFormatAndCheck(
             "yyy",
             "1999-12-31T15:58:59.000",
@@ -149,7 +149,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYearYearYear2000() {
+    public void testFormatDateTimeYearYearYearYear2000() {
         this.parseFormatAndCheck(
             "yyyy",
             this.text(),
@@ -158,7 +158,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYearYearYear1999() {
+    public void testFormatDateTimeYearYearYearYear1999() {
         this.parseFormatAndCheck(
             "yyyy",
             "1999-12-31T15:58:59.000",
@@ -167,7 +167,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatYearYearYearYear789() {
+    public void testFormatDateTimeYearYearYearYear789() {
         this.parseFormatAndCheck(
             "yyyy",
             "0789-12-31T15:58:59.000",
@@ -178,7 +178,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // month............................................................................................................
 
     @Test
-    public void testFormatMonthDecember() {
+    public void testFormatDateTimeMonthDecember() {
         this.parseFormatAndCheck(
             "m",
             this.text(),
@@ -187,7 +187,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthJanuary() {
+    public void testFormatDateTimeMonthJanuary() {
         this.parseFormatAndCheck(
             "m",
             "1999-01-31T15:58:59.000",
@@ -196,7 +196,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthMonthDecember() {
+    public void testFormatDateTimeMonthMonthDecember() {
         this.parseFormatAndCheck(
             "mm",
             this.text(),
@@ -205,7 +205,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthMonthJanuary() {
+    public void testFormatDateTimeMonthMonthJanuary() {
         this.parseFormatAndCheck(
             "mm",
             "1999-01-31T15:58:59.000",
@@ -214,7 +214,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthMonthMonthDecember() {
+    public void testFormatDateTimeMonthMonthMonthDecember() {
         this.parseFormatAndCheckMMM(
             "2000-12-31T15:58:59.000",
             11,
@@ -223,7 +223,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthMonthMonthJanuary() {
+    public void testFormatDateTimeMonthMonthMonthJanuary() {
         this.parseFormatAndCheckMMM(
             "1999-01-31T15:58:59.000",
             0,
@@ -249,7 +249,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthMonthMonthMonthDecember() {
+    public void testFormatDateTimeMonthMonthMonthMonthDecember() {
         this.parseFormatAndCheckMMMM(
             "2000-12-31T15:58:59.000",
             11,
@@ -258,7 +258,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthMonthMonthMonthJanuary() {
+    public void testFormatDateTimeMonthMonthMonthMonthJanuary() {
         this.parseFormatAndCheckMMMM(
             "1999-01-31T15:58:59.000",
             0, "" +
@@ -286,7 +286,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // day..............................................................................................................
 
     @Test
-    public void testFormatDay31() {
+    public void testFormatDateTimeDay31() {
         this.parseFormatAndCheck(
             "d",
             this.text(),
@@ -295,7 +295,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDay1() {
+    public void testFormatDateTimeDay1() {
         this.parseFormatAndCheck(
             "d",
             "1999-12-01T15:58:59.000",
@@ -304,7 +304,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDayDay31() {
+    public void testFormatDateTimeDayDay31() {
         this.parseFormatAndCheck(
             "dd",
             this.text(),
@@ -313,7 +313,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDayDay1() {
+    public void testFormatDateTimeDayDay1() {
         this.parseFormatAndCheck(
             "dd",
             "2000-12-01T15:58:59.000",
@@ -322,7 +322,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDayDayDay31() {
+    public void testFormatDateTimeDayDayDay31() {
         this.parseFormatAndCheckDDD(
             "2000-12-31T15:58:59.000",
             0,
@@ -331,7 +331,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDayDayDay1() {
+    public void testFormatDateTimeDayDayDay1() {
         this.parseFormatAndCheckDDD(
             "1999-12-01T15:58:59.000",
             3,
@@ -357,7 +357,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDayDayDayDay31() {
+    public void testFormatDateTimeDayDayDayDay31() {
         this.parseFormatAndCheckDDDD(
             "2000-12-31T15:58:59.000",
             0,
@@ -366,7 +366,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDayDayDayDay1() {
+    public void testFormatDateTimeDayDayDayDay1() {
         this.parseFormatAndCheckDDDD(
             "1999-12-01T15:58:59.000",
             3,
@@ -391,10 +391,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         );
     }
 
-    // day month year..................................................................................................
+    // day month year...................................................................................................
 
     @Test
-    public void testFormatYearYearMonthDay() {
+    public void testFormatDateTimeYearYearMonthDay() {
         this.parseFormatAndCheck(
             "yymd",
             "1999-12-31T01:58:59.000",
@@ -403,7 +403,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatMonthDayYearYear() {
+    public void testFormatDateTimeMonthDayYearYear() {
         this.parseFormatAndCheck(
             "mdyy",
             "1999-12-31T01:58:59.000",
@@ -414,7 +414,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // hour.............................................................................................................
 
     @Test
-    public void testFormatHour12() {
+    public void testFormatDateTimeHour12() {
         this.parseFormatAndCheck(
             "h",
             "2000-06-29T12:58:59.000",
@@ -423,7 +423,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHour1() {
+    public void testFormatDateTimeHour1() {
         this.parseFormatAndCheck(
             "h",
             "2000-06-29T01:58:59.000",
@@ -432,7 +432,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHour15() {
+    public void testFormatDateTimeHour15() {
         this.parseFormatAndCheck(
             "h",
             "2000-06-01T15:58:59.000",
@@ -441,7 +441,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHour1Ampm() {
+    public void testFormatDateTimeHour1Ampm() {
         this.parseHourFormatAndCheck(
             "hAM/PM",
             "2000-06-29T01:58:59.000",
@@ -452,7 +452,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHour12Ampm() {
+    public void testFormatDateTimeHour12Ampm() {
         this.parseHourFormatAndCheck(
             "hAM/PM",
             "2000-06-29T12:58:59.000",
@@ -463,7 +463,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHour15Ampm() {
+    public void testFormatDateTimeHour15Ampm() {
         this.parseHourFormatAndCheck(
             "hAM/PM",
             "2000-06-01T15:58:59.000",
@@ -474,7 +474,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHour23Ampm() {
+    public void testFormatDateTimeHour23Ampm() {
         this.parseHourFormatAndCheck(
             "hAM/PM",
             "2000-06-01T23:58:59.000",
@@ -485,7 +485,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHour1Ampm() {
+    public void testFormatDateTimeHourHour1Ampm() {
         this.parseHourFormatAndCheck(
             "hhAM/PM",
             "2000-06-29T01:58:59.000",
@@ -496,7 +496,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHour12Ampm() {
+    public void testFormatDateTimeHourHour12Ampm() {
         this.parseHourFormatAndCheck(
             "hhAM/PM",
             "2000-06-29T12:58:59.000",
@@ -507,7 +507,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHour15Ampm() {
+    public void testFormatDateTimeHourHour15Ampm() {
         this.parseHourFormatAndCheck(
             "hhAM/PM",
             "2000-06-01T15:58:59.000",
@@ -518,7 +518,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHour23Ampm() {
+    public void testFormatDateTimeHourHour23Ampm() {
         this.parseHourFormatAndCheck(
             "hhAM/PM",
             "2000-06-01T23:58:59.000",
@@ -529,7 +529,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourHour1() {
+    public void testFormatDateTimeHourHourHour1() {
         this.parseFormatAndCheck(
             "hhh",
             "2000-06-29T01:58:59.000",
@@ -538,7 +538,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourHour15() {
+    public void testFormatDateTimeHourHourHour15() {
         this.parseFormatAndCheck(
             "hhh",
             "2000-06-01T15:58:59.000",
@@ -547,7 +547,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourHour1Ampm() {
+    public void testFormatDateTimeHourHourHour1Ampm() {
         this.parseHourFormatAndCheck(
             "hhhAM/PM",
             "2000-06-29T01:58:59.000",
@@ -558,7 +558,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourHour12Ampm() {
+    public void testFormatDateTimeHourHourHour12Ampm() {
         this.parseHourFormatAndCheck(
             "hhhAM/PM",
             "2000-06-29T12:58:59.000",
@@ -571,7 +571,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // minute...........................................................................................................
 
     @Test
-    public void testFormatHourMinute1() {
+    public void testFormatDateTimeHourMinute1() {
         this.parseFormatAndCheck(
             "hm",
             "2000-06-29T12:01:59.000",
@@ -580,7 +580,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourMinute58() {
+    public void testFormatDateTimeHourMinute58() {
         this.parseFormatAndCheck(
             "hm",
             "2000-06-30T12:58:59.000",
@@ -589,7 +589,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourMinuteMinute1() {
+    public void testFormatDateTimeHourMinuteMinute1() {
         this.parseFormatAndCheck(
             "hmm",
             "2000-06-29T12:01:59.000",
@@ -598,7 +598,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourMinuteMinute58() {
+    public void testFormatDateTimeHourMinuteMinute58() {
         this.parseFormatAndCheck(
             "hmm",
             "2000-06-30T12:58:59.000",
@@ -607,7 +607,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourMinuteMinuteMinute1() {
+    public void testFormatDateTimeHourMinuteMinuteMinute1() {
         this.parseFormatAndCheck(
             "hmmm",
             "2000-06-29T12:01:59.000",
@@ -616,7 +616,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourMinuteMinuteMinute58() {
+    public void testFormatDateTimeHourMinuteMinuteMinute58() {
         this.parseFormatAndCheck(
             "hmmm",
             "2000-06-30T12:58:59.000",
@@ -627,7 +627,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // second...........................................................................................................
 
     @Test
-    public void testFormatSecond1() {
+    public void testFormatDateTimeSecond1() {
         this.parseFormatAndCheck(
             "s",
             "2000-06-29T12:58:01.000",
@@ -636,7 +636,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecond59() {
+    public void testFormatDateTimeSecond59() {
         this.parseFormatAndCheck(
             "s",
             "2000-06-30T12:58:59.000",
@@ -645,7 +645,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondSecond1() {
+    public void testFormatDateTimeSecondSecond1() {
         this.parseFormatAndCheck(
             "ss",
             "2000-06-29T12:58:01.000",
@@ -654,7 +654,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondSecond59() {
+    public void testFormatDateTimeSecondSecond59() {
         this.parseFormatAndCheck(
             "ss",
             "2000-06-30T12:58:59.000",
@@ -663,7 +663,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondSecondSecond1() {
+    public void testFormatDateTimeSecondSecondSecond1() {
         this.parseFormatAndCheck(
             "sss",
             "2000-06-29T12:58:01.000",
@@ -672,7 +672,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondSecondSecond59() {
+    public void testFormatDateTimeSecondSecondSecond59() {
         this.parseFormatAndCheck(
             "sss",
             "2000-06-30T12:58:59.000",
@@ -683,7 +683,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // milli............................................................................................................
 
     @Test
-    public void testFormatSecondMillis1() {
+    public void testFormatDateTimeSecondMillis1() {
         this.parseFormatAndCheck2(
             "s.0",
             "59D1"
@@ -691,7 +691,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis2() {
+    public void testFormatDateTimeSecondMillis2() {
         this.parseFormatAndCheck2(
             "s.00",
             "59D12"
@@ -699,7 +699,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis3() {
+    public void testFormatDateTimeSecondMillis3() {
         this.parseFormatAndCheck2(
             "s.000",
             "59D123"
@@ -707,7 +707,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis4() {
+    public void testFormatDateTimeSecondMillis4() {
         this.parseFormatAndCheck2(
             "s.0000",
             "59D1235"
@@ -715,7 +715,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis5() {
+    public void testFormatDateTimeSecondMillis5() {
         this.parseFormatAndCheck2(
             "s.00000",
             "59D12346"
@@ -723,7 +723,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis6() {
+    public void testFormatDateTimeSecondMillis6() {
         this.parseFormatAndCheck2(
             "s.000000",
             "59D123457"
@@ -731,7 +731,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis7() {
+    public void testFormatDateTimeSecondMillis7() {
         this.parseFormatAndCheck2(
             "s.0000000",
             "59D1234568"
@@ -739,7 +739,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis8() {
+    public void testFormatDateTimeSecondMillis8() {
         this.parseFormatAndCheck2(
             "s.00000000",
             "59D12345679"
@@ -747,7 +747,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatSecondMillis9() {
+    public void testFormatDateTimeSecondMillis9() {
         this.parseFormatAndCheck2(
             "s.000000000",
             "59D123456789"
@@ -774,7 +774,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // hour minute second...............................................................................................
 
     @Test
-    public void testFormatHourHourMinuteMinuteSecondSecond125801() {
+    public void testFormatDateTimeHourHourMinuteMinuteSecondSecond125801() {
         this.parseHourFormatAndCheck(
             "hhmmss",
             "2000-06-29T12:58:01.000",
@@ -785,7 +785,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourMinuteMinuteSecondSecondAm125801() {
+    public void testFormatDateTimeHourHourMinuteMinuteSecondSecondAm125801() {
         this.parseHourFormatAndCheck(
             "hhmmssAM/PM",
             "2000-06-29T12:58:01.000",
@@ -796,7 +796,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourMinuteMinuteSecondSecondDayDayMonthMonthYearYearYearYear() {
+    public void testFormatDateTimeHourHourMinuteMinuteSecondSecondDayDayMonthMonthYearYearYearYear() {
         this.parseHourFormatAndCheck(
             "hhmmssAM/PMddmmyyyy",
             "2000-06-29T12:58:01.000",
@@ -807,7 +807,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatHourHourMinuteMinuteSecondSecondDayDayMonthMonthYearYearYearYearAmPm() {
+    public void testFormatDateTimeHourHourMinuteMinuteSecondSecondDayDayMonthMonthYearYearYearYearAmPm() {
         this.parseHourFormatAndCheck(
             "hhmmssAM/PMddmmyyyy",
             "2000-06-29T15:58:01.000",
@@ -838,7 +838,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // literals..........................................................................................................
 
     @Test
-    public void testFormatEscaped() {
+    public void testFormatDateTimeEscaped() {
         this.parseEscapedOrLiteralFormatAndCheck(
             "\\A",
             "A"
@@ -846,42 +846,42 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatCurrency() {
+    public void testFormatDateTimeCurrency() {
         this.parseEscapedOrLiteralFormatAndCheck("$");
     }
 
     @Test
-    public void testFormatMinus() {
+    public void testFormatDateTimeMinus() {
         this.parseEscapedOrLiteralFormatAndCheck("-");
     }
 
     @Test
-    public void testFormatPlus() {
+    public void testFormatDateTimePlus() {
         this.parseEscapedOrLiteralFormatAndCheck("-");
     }
 
     @Test
-    public void testFormatSlash() {
+    public void testFormatDateTimeSlash() {
         this.parseEscapedOrLiteralFormatAndCheck("/");
     }
 
     @Test
-    public void testFormatOpenParens() {
+    public void testFormatDateTimeOpenParens() {
         this.parseEscapedOrLiteralFormatAndCheck("(");
     }
 
     @Test
-    public void testFormatCloseParens() {
+    public void testFormatDateTimeCloseParens() {
         this.parseEscapedOrLiteralFormatAndCheck(")");
     }
 
     @Test
-    public void testFormatColon() {
+    public void testFormatDateTimeColon() {
         this.parseEscapedOrLiteralFormatAndCheck(":");
     }
 
     @Test
-    public void testFormatSpace() {
+    public void testFormatDateTimeSpace() {
         this.parseEscapedOrLiteralFormatAndCheck(" ");
     }
 
@@ -903,7 +903,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatQuotedText() {
+    public void testFormatDateTimeQuotedText() {
         this.parseFormatAndCheck(
             "\"Hello\"",
             this.text(),
@@ -914,7 +914,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // mixed............................................................................................................
 
     @Test
-    public void testFormatDaySlashMonthSayYearSpaceHourColonMinuteColonSecond() {
+    public void testFormatDateTimeDaySlashMonthSayYearSpaceHourColonMinuteColonSecond() {
         this.parseFormatAndCheck(
             "d/m/yyyy h:m:s",
             "2000-12-31T15:58:59.000",
@@ -923,7 +923,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecond() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecond() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:s",
             "2000-12-31T15:58:59.000",
@@ -932,7 +932,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecond2() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecond2() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:s",
             "2000-12-31T15:58:01.000",
@@ -941,7 +941,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondSecond() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondSecond() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss",
             "2000-12-31T15:58:59.000",
@@ -950,7 +950,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondSecondRounding() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondSecondRounding() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:mm:ss",
             "2000-12-31T15:58:03.678",
@@ -959,7 +959,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillis() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillis() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.0",
             "2000-12-31T15:58:04.100",
@@ -968,7 +968,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.0",
             "2000-12-31T15:58:04.167",
@@ -977,7 +977,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding2() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding2() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.00",
             "2000-12-31T15:58:04.167",
@@ -986,7 +986,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding3() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding3() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.000",
             "2000-12-31T15:58:04.167",
@@ -995,7 +995,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding4() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding4() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.0000",
             "2000-12-31T15:58:04.167",
@@ -1004,7 +1004,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding5() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding5() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.00000",
             "2000-12-31T15:58:04.167",
@@ -1013,7 +1013,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding6() {
+    public void testFormatDateTimeDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding6() {
         this.parseFormatAndCheck(
             "d/m/yyyy\\Th:m:ss.000000",
             "2000-12-31T15:58:04.167",
@@ -1022,7 +1022,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Test
-    public void testFormatWithColorName() {
+    public void testFormatDateTimeWithColorName() {
         this.formatAndCheck(
             this.createFormatter("[RED]hh/mm/ss"),
             LocalDateTime.of(
