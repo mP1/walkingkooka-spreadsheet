@@ -72,30 +72,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         );
     }
 
-    @Test
-    public void testFormatWithDateFails() {
-        this.formatAndCheck(
-            this.createFormatter("dd/mm/yyyy"),
-            LocalDate.of(
-                2000,
-                12,
-                31
-            )
-        );
-    }
-
-    @Test
-    public void testFormatWithTimeFails() {
-        this.formatAndCheck(
-            this.createFormatter("hh:mm:ss"),
-            LocalTime.of(
-                12,
-                58,
-                59
-            )
-        );
-    }
-
     // year.............................................................................................................
 
     @Test
@@ -1040,6 +1016,32 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         );
     }
 
+    @Test
+    public void testFormatDate() {
+        this.formatAndCheck(
+            this.createFormatter("yyyy/mm/dd hh/mm/ss"),
+            LocalDate.of(
+                1999,
+                12,
+                31
+            ),
+            SpreadsheetText.with("1999/12/31 12/00/00")
+        );
+    }
+
+    @Test
+    public void testFormatTime() {
+        this.formatAndCheck(
+            this.createFormatter("yyyy/mm/dd hh/mm/ss"),
+            LocalTime.of(
+                12,
+                58,
+                59
+            ),
+            SpreadsheetText.with("1970/01/01 12/58/59")
+        );
+    }
+
     // helpers..........................................................................................................
 
     private void parseFormatAndCheck(final String pattern,
@@ -1295,15 +1297,46 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> target) {
-            return value instanceof LocalDateTime && LocalDateTime.class == target;
+            return (value instanceof LocalDate ||
+                value instanceof LocalTime ||
+                value instanceof LocalDateTime) &&
+                LocalDateTime.class == target;
         }
 
         @Override
-        public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-            checkEquals(LocalDateTime.class, target, "target");
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            if (LocalDateTime.class == target) {
+                if (value instanceof LocalDate) {
+                    return this.successfulConversion(
+                        LocalDateTime.of(
+                            LocalDate.class.cast(value),
+                            LocalTime.NOON
+                        ),
+                        target
+                    );
+                } else {
+                    if (value instanceof LocalTime) {
+                        return this.successfulConversion(
+                            LocalDateTime.of(
+                                LocalDate.EPOCH,
+                                LocalTime.class.cast(value)
+                            ),
+                            target
+                        );
+                    } else {
+                        if (value instanceof LocalDateTime) {
+                            return this.successfulConversion(
+                                LocalDateTime.class.cast(value),
+                                target
+                            );
+                        }
+                    }
+                }
+            }
 
-            return this.successfulConversion(
-                target.cast(value),
+            return this.failConversion(
+                value,
                 target
             );
         }

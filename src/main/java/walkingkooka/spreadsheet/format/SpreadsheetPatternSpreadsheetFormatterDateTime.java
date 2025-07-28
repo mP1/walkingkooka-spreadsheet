@@ -70,8 +70,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
 
         final Object valueOrNull = value.orElse(null);
 
-        final Either<LocalDateTime, String> valueAsDateTime = null != valueOrNull &&
-            valueOrNull.getClass() == this.valueType ?
+        final Either<LocalDateTime, String> valueAsDateTime = null != valueOrNull ?
             context.convert(
                 valueOrNull,
                 LocalDateTime.class
