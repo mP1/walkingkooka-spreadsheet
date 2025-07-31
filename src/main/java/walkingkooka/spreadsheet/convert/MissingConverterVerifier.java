@@ -198,9 +198,9 @@ final class MissingConverterVerifier {
         final boolean find = SpreadsheetMetadataPropertyName.FIND_CONVERTER.equals(propertyName);
         final boolean formatting = SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER.equals(propertyName);
         final boolean formula = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER.equals(propertyName);
+        final boolean scripting = SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER.equals(propertyName);
         final boolean sort = SpreadsheetMetadataPropertyName.SORT_CONVERTER.equals(propertyName);
         final boolean validation = SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER.equals(propertyName);
-        final boolean terminal = false; // TODO later
 
         final MissingConverterVerifier finder = new MissingConverterVerifier(
             converter,
@@ -220,7 +220,7 @@ final class MissingConverterVerifier {
         SpreadsheetErrorKind.NAME.setMessage("Value");
 
         // color-to-color...............................................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             finder.addIfConversionFail(
                 Color.BLACK,
                 Lists.of(
@@ -233,7 +233,7 @@ final class MissingConverterVerifier {
         }
 
         // color-to-number...............................................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             finder.addIfConversionFail(
                 Color.BLACK,
                 NUMBER_TYPES_WITHOUT_BYTE_SHORT,
@@ -403,7 +403,7 @@ final class MissingConverterVerifier {
         }
 
         // null-to-number...............................................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             finder.addIfConversionFail(
                 (Object) null, // dont want List overload
                 NUMBER_TYPES,
@@ -454,7 +454,7 @@ final class MissingConverterVerifier {
         );
 
         // spreadsheet-cell-to..........................................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             final Locale locale = context.locale();
 
             final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
@@ -506,7 +506,7 @@ final class MissingConverterVerifier {
         }
 
         // text-to-color................................................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             finder.addIfConversionFail(
                 "#123456",
                 Color.class,
@@ -627,7 +627,7 @@ final class MissingConverterVerifier {
         }
 
         // text-to-spreadsheet-color-name...............................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             finder.addIfConversionFail(
                 SpreadsheetColorName.BLACK.value(),
                 SpreadsheetColorName.class,
@@ -636,7 +636,7 @@ final class MissingConverterVerifier {
         }
 
         // text-to-spreadsheet-formatter-selection......................................................................
-        if (formatting) {
+        if (formatting || scripting) {
             finder.addIfConversionFail(
                 SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
                 SpreadsheetFormatterSelector.class,
@@ -648,7 +648,7 @@ final class MissingConverterVerifier {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
 
         // will be enabled by terminal
-        if (terminal) {
+        if (scripting) {
             finder.addIfConversionFail(
                 spreadsheetId.toString(),
                 SpreadsheetId.class,
@@ -662,7 +662,7 @@ final class MissingConverterVerifier {
             spreadsheetId
         );
 
-        if (terminal) {
+        if (scripting) {
             finder.addIfConversionFail(
                 context.marshall(metadata)
                     .toString(),
@@ -685,7 +685,7 @@ final class MissingConverterVerifier {
         // text-to-spreadsheet-property-name............................................................................
         final SpreadsheetMetadataPropertyName<SpreadsheetName> spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
 
-        if (terminal) {
+        if (scripting) {
             finder.addIfConversionFail(
                 spreadsheetMetadataPropertyName.value(),
                 SpreadsheetMetadataPropertyName.class,
@@ -705,7 +705,7 @@ final class MissingConverterVerifier {
         // text-to-spreadsheet-name.....................................................................................
         final SpreadsheetName spreadsheetName = SpreadsheetName.with("SpreadsheetName123");
 
-        if (terminal) {
+        if (scripting) {
             finder.addIfConversionFail(
                 spreadsheetName.text(),
                 SpreadsheetName.class,

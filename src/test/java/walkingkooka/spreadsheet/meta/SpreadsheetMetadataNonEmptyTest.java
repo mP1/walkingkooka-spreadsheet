@@ -2731,6 +2731,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            ConverterSelector.parse("general")
+        );
+        properties.put(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
             ConverterSelector.parse("day-of-month")
         );

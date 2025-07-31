@@ -282,6 +282,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitScriptingConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitSortComparators(final SpreadsheetComparatorNameList comparatorNames) {
         throw new UnsupportedOperationException();
     }
