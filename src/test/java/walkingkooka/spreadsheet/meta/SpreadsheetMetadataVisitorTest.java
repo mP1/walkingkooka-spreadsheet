@@ -598,6 +598,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitScriptingConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitScriptingConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            ConverterSelector.parse("hello")
+        );
+    }
+    
+    @Test
     public void testVisitSortComparatorNames() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

@@ -318,6 +318,17 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
             RoundingMode.HALF_UP
         ).set(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            ConverterSelector.parse("collection(" +
+                "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, " +
+                "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
+                "text-to-selection, selection-to-selection, selection-to-text, " +
+                "spreadsheet-cell-to, " +
+                "has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, " +
+                "text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name," +
+                "general)"
+            )
+        ).set(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
             SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
         ).set(
