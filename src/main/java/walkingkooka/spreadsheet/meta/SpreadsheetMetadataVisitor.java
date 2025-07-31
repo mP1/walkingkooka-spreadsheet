@@ -279,6 +279,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitScriptingFunctions(final ExpressionFunctionAliasSet aliases) {
+        // nop
+    }
+
     protected void visitSortComparators(final SpreadsheetComparatorNameList comparatorNames) {
         // nop
     }

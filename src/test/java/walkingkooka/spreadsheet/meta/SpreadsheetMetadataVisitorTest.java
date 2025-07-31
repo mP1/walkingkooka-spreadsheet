@@ -609,7 +609,20 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             ConverterSelector.parse("hello")
         );
     }
-    
+
+    @Test
+    public void testVisitScriptingFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitScriptingFunctions(final ExpressionFunctionAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("hello")
+        );
+    }
+
     @Test
     public void testVisitSortComparatorNames() {
         new TestSpreadsheetMetadataVisitor() {

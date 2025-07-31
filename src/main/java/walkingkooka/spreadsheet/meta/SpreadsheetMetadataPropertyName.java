@@ -327,6 +327,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> SCRIPTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorScripting.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within a scripting environment.
+     */
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> SCRIPTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetScripting.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the current <code>sort comparators</code> {@link SpreadsheetViewport}.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorNameList> SORT_COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNameSortComparators.instance());
