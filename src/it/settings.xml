@@ -28,11 +28,11 @@
                     <url>@localRepositoryUrl@</url>
                     <releases>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </repository>
                 <repository>
@@ -40,11 +40,11 @@
                     <url>https://maven-repo-254709.appspot.com</url>
                     <releases>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </repository>
                 <repository>
@@ -52,11 +52,11 @@
                     <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
                     <releases>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </repository>
             </repositories>
@@ -76,11 +76,11 @@
                     <url>https://maven-repo-254709.appspot.com</url>
                     <releases>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>daily</updatePolicy>
+                        <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </pluginRepository>
             </pluginRepositories>
