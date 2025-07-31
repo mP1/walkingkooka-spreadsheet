@@ -2735,6 +2735,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             ConverterSelector.parse("general")
         );
         properties.put(
+            SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("hello")
+        );
+        properties.put(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
             ConverterSelector.parse("day-of-month")
         );
