@@ -21,25 +21,25 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameBooleanGridLinesTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanGridLines> {
+public final class SpreadsheetMetadataPropertyNameBooleanShowGridLinesTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanShowGridLines> {
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameBooleanGridLines.instance(),
-            "gridLines"
+            SpreadsheetMetadataPropertyNameBooleanShowGridLines.instance(),
+            "showGridLines"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameBooleanGridLines createName() {
-        return SpreadsheetMetadataPropertyNameBooleanGridLines.instance();
+    SpreadsheetMetadataPropertyNameBooleanShowGridLines createName() {
+        return SpreadsheetMetadataPropertyNameBooleanShowGridLines.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameBooleanGridLines> type() {
-        return SpreadsheetMetadataPropertyNameBooleanGridLines.class;
+    public Class<SpreadsheetMetadataPropertyNameBooleanShowGridLines> type() {
+        return SpreadsheetMetadataPropertyNameBooleanShowGridLines.class;
     }
 }

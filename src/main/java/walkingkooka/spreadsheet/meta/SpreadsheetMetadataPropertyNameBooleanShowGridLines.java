@@ -20,22 +20,22 @@ package walkingkooka.spreadsheet.meta;
 /**
  * When true the UI will show column and row headings. False hides the column and row headings.
  */
-final class SpreadsheetMetadataPropertyNameBooleanGridLines extends SpreadsheetMetadataPropertyNameBoolean {
+final class SpreadsheetMetadataPropertyNameBooleanShowGridLines extends SpreadsheetMetadataPropertyNameBoolean {
 
     /**
      * Getter rather than field to allow lazily creation.
      */
-    static SpreadsheetMetadataPropertyNameBooleanGridLines instance() {
-        return new SpreadsheetMetadataPropertyNameBooleanGridLines();
+    static SpreadsheetMetadataPropertyNameBooleanShowGridLines instance() {
+        return new SpreadsheetMetadataPropertyNameBooleanShowGridLines();
     }
 
-    private SpreadsheetMetadataPropertyNameBooleanGridLines() {
-        super("gridLines");
+    private SpreadsheetMetadataPropertyNameBooleanShowGridLines() {
+        super("showGridLines");
     }
 
     @Override
     void accept(final Boolean value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitGridLines(value);
+        visitor.visitShowGridLines(value);
     }
 }

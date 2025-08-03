@@ -650,6 +650,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitShowGridLines() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitShowGridLines(final boolean s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.SHOW_GRID_LINES,
+            true
+        );
+    }
+
+    @Test
     public void testVisitSortComparatorNames() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

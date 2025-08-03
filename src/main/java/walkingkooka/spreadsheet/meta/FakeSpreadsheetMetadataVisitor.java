@@ -226,11 +226,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitGridLines(final boolean show) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitHeadings(final boolean show) {
         throw new UnsupportedOperationException();
     }
@@ -303,6 +298,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitShowFormulas(final boolean show) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitShowGridLines(final boolean show) {
         throw new UnsupportedOperationException();
     }
 
