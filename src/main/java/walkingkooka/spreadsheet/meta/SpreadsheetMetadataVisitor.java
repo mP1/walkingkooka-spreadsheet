@@ -230,10 +230,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitShowGridLines(final boolean show) {
-        // nop
-    }
-
     protected void visitHeadings(final boolean show) {
         // nop
     }
@@ -292,6 +288,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitShowFormulas(final boolean show) {
+        // nop
+    }
+
+    protected void visitShowGridLines(final boolean show) {
         // nop
     }
 
