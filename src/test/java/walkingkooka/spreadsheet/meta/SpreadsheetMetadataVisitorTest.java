@@ -497,6 +497,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitHeadings() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitHeadings(final boolean s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.HEADINGS,
+            true
+        );
+    }
+
+    @Test
     public void testVisitLocale() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
