@@ -20,25 +20,25 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameBooleanHeadingsTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanHeadings> {
+public final class SpreadsheetMetadataPropertyNameBooleanShowHeadingsTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanShowHeadings> {
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameBooleanHeadings.instance(),
-            "headings"
+            SpreadsheetMetadataPropertyNameBooleanShowHeadings.instance(),
+            "showHeadings"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameBooleanHeadings createName() {
-        return SpreadsheetMetadataPropertyNameBooleanHeadings.instance();
+    SpreadsheetMetadataPropertyNameBooleanShowHeadings createName() {
+        return SpreadsheetMetadataPropertyNameBooleanShowHeadings.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameBooleanHeadings> type() {
-        return SpreadsheetMetadataPropertyNameBooleanHeadings.class;
+    public Class<SpreadsheetMetadataPropertyNameBooleanShowHeadings> type() {
+        return SpreadsheetMetadataPropertyNameBooleanShowHeadings.class;
     }
 }
