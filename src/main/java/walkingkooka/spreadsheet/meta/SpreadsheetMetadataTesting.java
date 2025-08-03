@@ -338,6 +338,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
+            SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
+            false
+        ).set(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
             SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
         ).set(
