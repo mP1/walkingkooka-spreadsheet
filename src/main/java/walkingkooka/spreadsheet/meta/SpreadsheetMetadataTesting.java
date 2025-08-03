@@ -295,6 +295,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
             8
         ).set(
+            SpreadsheetMetadataPropertyName.HEADINGS,
+            true
+        ).set(
             SpreadsheetMetadataPropertyName.IMPORTERS,
             SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
                 .aliasSet()
