@@ -332,6 +332,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> SCRIPTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetScripting.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>showFormulaEditor</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Boolean> SHOW_FORMULA_EDITOR = registerConstant(SpreadsheetMetadataPropertyNameBooleanShowFormulaEditor.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>showFormulas</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> SHOW_FORMULAS = registerConstant(SpreadsheetMetadataPropertyNameBooleanShowFormulas.instance());
