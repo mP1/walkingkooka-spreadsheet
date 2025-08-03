@@ -226,6 +226,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitGridLines(final boolean show) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitHeadings(final boolean show) {
         throw new UnsupportedOperationException();
     }
