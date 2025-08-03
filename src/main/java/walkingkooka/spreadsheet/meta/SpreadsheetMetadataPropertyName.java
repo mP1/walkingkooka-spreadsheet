@@ -35,7 +35,6 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlPathName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
@@ -52,9 +51,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
@@ -67,10 +64,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -85,7 +80,6 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -121,213 +115,213 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>created-by {@link AuditInfo}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>auditInfo</code>
      */
     public static final SpreadsheetMetadataPropertyName<AuditInfo> AUDIT_INFO = registerConstant(SpreadsheetMetadataPropertyNameAuditInfo.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>cellCharacterWidth</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetExporterAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>clipboardExporter</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>clipboardImporter</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> CLIPBOARD_IMPORTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>comparators</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorAliasSet> COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSetComparators.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>converters</code>
      */
     public static final SpreadsheetMetadataPropertyName<ConverterAliasSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNameConverterAliasSetConverters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateFormatter</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parser {@link String}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateParser</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link SpreadsheetFormatterSelector} for {@link LocalDateTime} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateTimeFormatter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateTimeOffset</code>
      */
     public static final SpreadsheetMetadataPropertyName<Long> DATE_TIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parser</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateTimeParser</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DateTimeSymbols}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimalNumberSymbols</code>
      */
     public static final SpreadsheetMetadataPropertyName<DateTimeSymbols> DATE_TIME_SYMBOLS = registerConstant(SpreadsheetMetadataPropertyNameDateTimeSymbols.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-number-symbols {@link DecimalNumberSymbols}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimalNumberSymbols</code>
      */
     public static final SpreadsheetMetadataPropertyName<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = registerConstant(SpreadsheetMetadataPropertyNameDecimalNumberSymbols.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerSelector}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>defaultFormHandler</code>..
      */
     public static final SpreadsheetMetadataPropertyName<FormHandlerSelector> DEFAULT_FORM_HANDLER = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerSelectorDefault.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>defaultYear</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>exporters</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetExporters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link ExpressionNumberKind}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>expressionNumberKind</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within a find expression.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FIND_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within find expressions.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findFunctions</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-highlighting {@link boolean}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findHighlighting</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellQuery}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findQuery</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formatters</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formattingConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMATTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormatting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will declare functions available within
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formattingFunctions</code>.
      * an expression while formatting.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMATTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormatting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formHandlers</code>
      */
     public static final SpreadsheetMetadataPropertyName<FormHandlerAliasSet> FORM_HANDLERS = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormHandlers.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an {@link SpreadsheetCell#formula()} expression.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formulaConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormula.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>formulaFunctions</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozenColumns</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetColumnRangeReference> FROZEN_COLUMNS = registerConstant(SpreadsheetMetadataPropertyNameFrozenColumns.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-rows {@link .SpreadsheetRow}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozenRows</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetRowRangeReference> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>functions</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>generalNumberFormatDigitCount</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>hide-zero-values {@link boolean}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>hideZeroValues</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> HIDE_ZERO_VALUES = registerConstant(SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetImporterAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>importers</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> IMPORTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetImporters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>locale</code>
      */
     public static final SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant(SpreadsheetMetadataPropertyNameLocale.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>numberFormatter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parser</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>numberParser</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> NUMBER_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserAliasSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>parsers</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserAliasSet> PARSERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetParsers.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link PluginNameSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>plugins</code>
      */
     public static final SpreadsheetMetadataPropertyName<PluginNameSet> PLUGINS = registerConstant(SpreadsheetMetadataPropertyNamePluginNameSet.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> PRECISION = registerConstant(SpreadsheetMetadataPropertyNameIntegerPrecision.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>roundingMode</code>
      */
     public static final SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant(SpreadsheetMetadataPropertyNameRoundingMode.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within a scripting environment
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>scriptingConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> SCRIPTING_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorScripting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within a scripting environment.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>scriptingFunctions</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> SCRIPTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetScripting.instance());
 
@@ -352,77 +346,77 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> SHOW_HEADINGS = registerConstant(SpreadsheetMetadataPropertyNameBooleanShowHeadings.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>sort comparators</code> {@link SpreadsheetViewport}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>sortComparators</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorNameList> SORT_COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNameSortComparators.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a sort.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> SORT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorSort.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheetId</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetId.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-name {@link SpreadsheetName}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheetName</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link TextStyle}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>style</code>
      */
     public static final SpreadsheetMetadataPropertyName<TextStyle> STYLE = registerConstant(SpreadsheetMetadataPropertyNameStyle.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link String} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>textFormatter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TEXT_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link LocalTime} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>timeFormatter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parser</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>timeParser</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserTime.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>twoDigitYear</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values by a {@link SpreadsheetCell#validator()}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>validationConverter</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATION_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidation.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within validator expressions.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>validationFunctions</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATION_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be the validator for the {@link SpreadsheetFormula#errorOrValue}
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>validationValidators</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATION_VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be used to pick available validators within {@link SpreadsheetCell#validator()}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>validators</code>.
      */
     public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidators.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>valueSeparator</code>.
      */
     public static final SpreadsheetMetadataPropertyName<Character> VALUE_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterValueSeparator.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewport</code> {@link SpreadsheetViewport}.
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewport</code>.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetViewport> VIEWPORT = registerConstant(SpreadsheetMetadataPropertyNameViewport.instance());
 
