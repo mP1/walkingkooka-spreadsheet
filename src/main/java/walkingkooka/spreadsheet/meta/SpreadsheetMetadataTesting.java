@@ -295,9 +295,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
             8
         ).set(
-            SpreadsheetMetadataPropertyName.GRID_LINES,
-            true
-        ).set(
             SpreadsheetMetadataPropertyName.HEADINGS,
             true
         ).set(
@@ -340,6 +337,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
         ).set(
             SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
             false
+        ).set(
+            SpreadsheetMetadataPropertyName.SHOW_GRID_LINES,
+            true
         ).set(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
             SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")

@@ -277,11 +277,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>grid-lines</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Boolean> GRID_LINES = registerConstant(SpreadsheetMetadataPropertyNameBooleanGridLines.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>headings</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> HEADINGS = registerConstant(SpreadsheetMetadataPropertyNameBooleanHeadings.instance());
@@ -345,6 +340,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>showFormulas</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> SHOW_FORMULAS = registerConstant(SpreadsheetMetadataPropertyNameBooleanShowFormulas.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>showGridLines</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Boolean> SHOW_GRID_LINES = registerConstant(SpreadsheetMetadataPropertyNameBooleanShowGridLines.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the current <code>sort comparators</code> {@link SpreadsheetViewport}.
