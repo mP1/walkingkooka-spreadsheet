@@ -2739,6 +2739,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
         properties.put(
+            SpreadsheetMetadataPropertyName.SHOW_FORMULA_EDITOR,
+            true
+        );
+        properties.put(
             SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
             false
         );

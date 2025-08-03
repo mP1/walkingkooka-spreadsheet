@@ -283,6 +283,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitShowFormulaEditor(final boolean show) {
+        // nop
+    }
+
     protected void visitShowFormulas(final boolean show) {
         // nop
     }

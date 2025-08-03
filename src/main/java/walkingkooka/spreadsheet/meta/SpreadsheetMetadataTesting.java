@@ -332,6 +332,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
+            SpreadsheetMetadataPropertyName.SHOW_FORMULA_EDITOR,
+            true
+        ).set(
             SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
             false
         ).set(
