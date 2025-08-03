@@ -295,6 +295,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
             8
         ).set(
+            SpreadsheetMetadataPropertyName.GRID_LINES,
+            true
+        ).set(
             SpreadsheetMetadataPropertyName.HEADINGS,
             true
         ).set(
