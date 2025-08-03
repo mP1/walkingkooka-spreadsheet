@@ -2711,8 +2711,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         );
         properties.put(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8);
-        properties.put(SpreadsheetMetadataPropertyName.SHOW_GRID_LINES, true);
-        properties.put(SpreadsheetMetadataPropertyName.HEADINGS, true);
         properties.put(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES, true);
         properties.put(
             SpreadsheetMetadataPropertyName.IMPORTERS,
@@ -2743,6 +2741,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
             SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
             false
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.SHOW_GRID_LINES,
+            true
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.SHOW_HEADINGS,
+            true
         );
         properties.put(
             SpreadsheetMetadataPropertyName.SORT_COMPARATORS,

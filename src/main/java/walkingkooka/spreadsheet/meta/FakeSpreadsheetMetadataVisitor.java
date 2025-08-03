@@ -226,7 +226,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitHeadings(final boolean show) {
+    protected void visitShowHeadings(final boolean show) {
         throw new UnsupportedOperationException();
     }
 

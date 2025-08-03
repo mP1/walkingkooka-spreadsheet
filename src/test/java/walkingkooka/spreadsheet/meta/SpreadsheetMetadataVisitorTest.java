@@ -497,19 +497,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitHeadings() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitHeadings(final boolean s) {
-                this.visited = s;
-            }
-        }.accept(
-            SpreadsheetMetadataPropertyName.HEADINGS,
-            true
-        );
-    }
-
-    @Test
     public void testVisitLocale() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -658,6 +645,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.SHOW_GRID_LINES,
+            true
+        );
+    }
+
+    @Test
+    public void testVisitShowHeadings() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitShowHeadings(final boolean s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.SHOW_HEADINGS,
             true
         );
     }

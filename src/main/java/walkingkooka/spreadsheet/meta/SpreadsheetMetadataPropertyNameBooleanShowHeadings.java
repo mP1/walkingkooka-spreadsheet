@@ -20,22 +20,22 @@ package walkingkooka.spreadsheet.meta;
 /**
  * When true the UI will show column and row headings. False hides the column and row headings.
  */
-final class SpreadsheetMetadataPropertyNameBooleanHeadings extends SpreadsheetMetadataPropertyNameBoolean {
+final class SpreadsheetMetadataPropertyNameBooleanShowHeadings extends SpreadsheetMetadataPropertyNameBoolean {
 
     /**
      * Getter rather than field to allow lazily creation.
      */
-    static SpreadsheetMetadataPropertyNameBooleanHeadings instance() {
-        return new SpreadsheetMetadataPropertyNameBooleanHeadings();
+    static SpreadsheetMetadataPropertyNameBooleanShowHeadings instance() {
+        return new SpreadsheetMetadataPropertyNameBooleanShowHeadings();
     }
 
-    private SpreadsheetMetadataPropertyNameBooleanHeadings() {
-        super("headings");
+    private SpreadsheetMetadataPropertyNameBooleanShowHeadings() {
+        super("showHeadings");
     }
 
     @Override
     void accept(final Boolean value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitHeadings(value);
+        visitor.visitShowHeadings(value);
     }
 }
