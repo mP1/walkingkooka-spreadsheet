@@ -342,6 +342,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> SCRIPTING_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetScripting.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>showFormulas</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Boolean> SHOW_FORMULAS = registerConstant(SpreadsheetMetadataPropertyNameBooleanShowFormulas.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the current <code>sort comparators</code> {@link SpreadsheetViewport}.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorNameList> SORT_COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNameSortComparators.instance());

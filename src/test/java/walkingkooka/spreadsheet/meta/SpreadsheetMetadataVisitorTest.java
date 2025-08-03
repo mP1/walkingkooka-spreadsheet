@@ -637,6 +637,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitShowFormulas() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitShowFormulas(final boolean s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.SHOW_FORMULAS,
+            true
+        );
+    }
+
+    @Test
     public void testVisitSortComparatorNames() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
