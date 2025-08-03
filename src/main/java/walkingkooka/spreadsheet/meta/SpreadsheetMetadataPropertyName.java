@@ -277,6 +277,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>grid-lines</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Boolean> GRID_LINES = registerConstant(SpreadsheetMetadataPropertyNameBooleanGridLines.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>headings</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> HEADINGS = registerConstant(SpreadsheetMetadataPropertyNameBooleanHeadings.instance());

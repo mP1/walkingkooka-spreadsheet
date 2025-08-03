@@ -1182,6 +1182,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"generalNumberFormatDigitCount\": 9,\n" +
+                "  \"gridLines\": true,\n" +
                 "  \"headings\": true,\n" +
                 "  \"hideZeroValues\": false,\n" +
                 "  \"importers\": \"collection, empty, json\",\n" +
@@ -1416,6 +1417,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"generalNumberFormatDigitCount\": 9,\n" +
+                "  \"gridLines\": true,\n" +
                 "  \"headings\": true,\n" +
                 "  \"hideZeroValues\": false,\n" +
                 "  \"importers\": \"collection, empty, json\",\n" +
