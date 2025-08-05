@@ -22,6 +22,8 @@ import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -65,7 +67,8 @@ import java.util.function.Supplier;
  */
 public final class SpreadsheetViewportNavigationList extends AbstractList<SpreadsheetViewportNavigation>
     implements ImmutableListDefaults<SpreadsheetViewportNavigationList, SpreadsheetViewportNavigation>,
-    HasText {
+    HasText,
+    HasUrlFragment {
 
     /**
      * Constant useful to separate navigations in a CSV.
@@ -561,6 +564,13 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             this,
             SpreadsheetViewportNavigation::text
         );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.with(this.text());
     }
 
     // Json.............................................................................................................

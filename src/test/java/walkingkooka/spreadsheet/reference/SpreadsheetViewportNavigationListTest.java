@@ -23,6 +23,7 @@ import walkingkooka.EndOfTextException;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
@@ -42,6 +43,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     TreePrintableTesting,
     ClassTesting<SpreadsheetViewportNavigationList>,
     HasTextTesting,
+    HasUrlFragmentTesting,
     JsonNodeMarshallingTesting<SpreadsheetViewportNavigationList> {
 
     @Test
@@ -764,6 +766,17 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     public SpreadsheetViewportNavigationList createJsonNodeMarshallingValue() {
         return Cast.to(
             SpreadsheetViewportNavigationList.parse("extend-left column,extend-right column,extend-up row,extend-down row")
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        final String text = "extend-left column,extend-right column,extend-up row,extend-down row";
+        this.urlFragmentAndCheck(
+            SpreadsheetViewportNavigationList.parse(text),
+            text
         );
     }
 
