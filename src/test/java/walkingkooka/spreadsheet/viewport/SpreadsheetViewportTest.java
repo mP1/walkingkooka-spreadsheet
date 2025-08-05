@@ -63,6 +63,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     private static final SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("B2");
     private static final SpreadsheetRowReference ROW = SpreadsheetSelection.parseRow("2");
 
+    private static final boolean INCLUDE_FROZEN_COLUMNS_ROWS = SpreadsheetViewport.DEFAULT_INCLUDE_FROZEN_COLUMNS_ROWS;
+
     private static final SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
     private static final SpreadsheetSelection SELECTION = CELL_RANGE;
     private static final SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.TOP_LEFT;
@@ -80,7 +82,49 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
-    // setSelection.....................................................................................................
+    // setIncludeFrozenColumnsRows......................................................................................
+
+    @Test
+    public void testSetIncludeFrozenColumnsRowsSame() {
+        final SpreadsheetViewport viewport = this.createObject();
+        assertSame(
+            viewport,
+            viewport.setIncludeFrozenColumnsRows(viewport.includeFrozenColumnsRows())
+        );
+    }
+
+    @Test
+    public void testSetIncludeFrozenColumnsRowsDifferent() {
+        final SpreadsheetViewport viewport = this.createObject();
+
+        final boolean differentIncludeFrozenColumnsRows = false == INCLUDE_FROZEN_COLUMNS_ROWS;
+
+        this.checkNotEquals(
+            viewport.includeFrozenColumnsRows(),
+            differentIncludeFrozenColumnsRows,
+            "different includeFrozenColumnsRows"
+        );
+
+        final SpreadsheetViewport different = viewport.setIncludeFrozenColumnsRows(differentIncludeFrozenColumnsRows);
+        assertNotSame(
+            viewport,
+            different
+        );
+        this.includeFrozenColumnsRowsAndCheck(
+            different,
+            differentIncludeFrozenColumnsRows
+        );
+        this.anchoredSelectionAndCheck(
+            different,
+            viewport.anchoredSelection()
+        );
+        this.navigationsAndCheck(
+            different,
+            viewport.navigations()
+        );
+    }
+    
+    // setAnchoredSelection.............................................................................................
 
     @Test
     public void testSetAnchoredSelectionNullFails() {
@@ -119,6 +163,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         assertNotSame(
             viewport,
             different
+        );
+        this.includeFrozenColumnsRowsAndCheck(
+            different,
+            INCLUDE_FROZEN_COLUMNS_ROWS
         );
         this.anchoredSelectionAndCheck(
             different,
@@ -167,6 +215,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             viewport,
             differentViewport
         );
+        this.includeFrozenColumnsRowsAndCheck(
+            differentViewport,
+            INCLUDE_FROZEN_COLUMNS_ROWS
+        );
         this.anchoredSelectionAndCheck(
             differentViewport,
             viewport.anchoredSelection()
@@ -174,6 +226,15 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.navigationsAndCheck(
             differentViewport,
             navigations
+        );
+    }
+
+    private void includeFrozenColumnsRowsAndCheck(final SpreadsheetViewport viewport,
+                                                  final boolean includeFrozenColumnsRows) {
+        this.checkEquals(
+            includeFrozenColumnsRows,
+            viewport.includeFrozenColumnsRows(),
+            "includeFrozenColumnsRows"
         );
     }
 
@@ -203,6 +264,19 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             SpreadsheetViewport.with(
                 SpreadsheetSelection.parseCell("Z99")
                     .viewportRectangle(99, 999),
+                INCLUDE_FROZEN_COLUMNS_ROWS,
+                SpreadsheetViewport.NO_ANCHORED_SELECTION,
+                NAVIGATIONS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentIncludeFrozenColumnsRows() {
+        this.checkNotEquals(
+            SpreadsheetViewport.with(
+                RECTANGLE,
+                false == INCLUDE_FROZEN_COLUMNS_ROWS,
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 NAVIGATIONS
             )
@@ -214,6 +288,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.checkNotEquals(
             SpreadsheetViewport.with(
                 RECTANGLE,
+                INCLUDE_FROZEN_COLUMNS_ROWS,
                 Optional.of(
                     SpreadsheetSelection.parseCell("Z9")
                         .setDefaultAnchor()
@@ -228,6 +303,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.checkNotEquals(
             SpreadsheetViewport.with(
                 RECTANGLE,
+                INCLUDE_FROZEN_COLUMNS_ROWS,
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 SpreadsheetViewportNavigationList.EMPTY.concat(
                     SpreadsheetViewportNavigation.rightColumn()
@@ -240,6 +316,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public SpreadsheetViewport createObject() {
         return SpreadsheetViewport.with(
             RECTANGLE,
+            INCLUDE_FROZEN_COLUMNS_ROWS,
             Optional.of(
                 SELECTION.setAnchor(ANCHOR)
             ),
@@ -281,6 +358,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
+                INCLUDE_FROZEN_COLUMNS_ROWS,
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 SpreadsheetViewport.NO_NAVIGATION
             ),
@@ -296,6 +374,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
+                INCLUDE_FROZEN_COLUMNS_ROWS,
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
@@ -319,6 +398,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.treePrintAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
+                INCLUDE_FROZEN_COLUMNS_ROWS,
                 Optional.of(
                     SpreadsheetSelection.parseRowRange("12:34")
                         .setAnchor(
@@ -431,6 +511,44 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     // json.............................................................................................................
 
     @Test
+    public void testJsonMarshall() {
+        this.marshallAndCheck(
+            this.createJsonNodeMarshallingValue(),
+            "{\n" +
+                "  \"rectangle\": \"A1:100.0:50.0\",\n" +
+                "  \"anchoredSelection\": {\n" +
+                "    \"selection\": {\n" +
+                "      \"type\": \"spreadsheet-cell-range-reference\",\n" +
+                "      \"value\": \"B2:C3\"\n" +
+                "    },\n" +
+                "    \"anchor\": \"TOP_LEFT\"\n" +
+                "  },\n" +
+                "  \"navigations\": \"left column\"\n" +
+                "}"
+        );
+    }
+
+    @Test
+    public void testJsonMarshallIncludeFrozenColumnsRowsTrue() {
+        this.marshallAndCheck(
+            this.createJsonNodeMarshallingValue()
+                .setIncludeFrozenColumnsRows(true),
+            "{\n" +
+                "  \"rectangle\": \"A1:100.0:50.0\",\n" +
+                "  \"includeFrozenColumnsRows\": true,\n" +
+                "  \"anchoredSelection\": {\n" +
+                "    \"selection\": {\n" +
+                "      \"type\": \"spreadsheet-cell-range-reference\",\n" +
+                "      \"value\": \"B2:C3\"\n" +
+                "    },\n" +
+                "    \"anchor\": \"TOP_LEFT\"\n" +
+                "  },\n" +
+                "  \"navigations\": \"left column\"\n" +
+                "}"
+        );
+    }
+
+    @Test
     public void testJsonMarshallCell() {
         this.marshallRoundTripTwiceAndCheck(
             HOME.viewportRectangle(WIDTH, HEIGHT)
@@ -536,7 +654,20 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 .setAnchoredSelection(
                     SpreadsheetViewport.NO_ANCHORED_SELECTION
                 ),
-            RECTANGLE.toString()
+            "home: A1 width: 100.0 height: 50.0"
+        );
+    }
+
+    @Test
+    public void testToStringIncludeFrozenColumnsRows() {
+        this.toStringAndCheck(
+            HOME.viewportRectangle(WIDTH, HEIGHT)
+                .viewport()
+                .setIncludeFrozenColumnsRows(true)
+                .setAnchoredSelection(
+                    SpreadsheetViewport.NO_ANCHORED_SELECTION
+                ),
+            "home: A1 width: 100.0 height: 50.0 includeFrozenColumnsRows: true"
         );
     }
 
@@ -550,7 +681,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                         CELL.setDefaultAnchor()
                     )
                 ),
-            RECTANGLE + " anchoredSelection: " + CELL
+            "home: A1 width: 100.0 height: 50.0 anchoredSelection: B2"
         );
     }
 
@@ -559,6 +690,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.toStringAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
+                INCLUDE_FROZEN_COLUMNS_ROWS,
                 Optional.of(
                     CELL_RANGE.setAnchor(ANCHOR)
                 ),
