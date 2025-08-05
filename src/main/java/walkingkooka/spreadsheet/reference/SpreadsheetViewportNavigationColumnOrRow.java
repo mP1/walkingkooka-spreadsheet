@@ -28,8 +28,9 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
         super();
     }
 
-    @Override final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                                final SpreadsheetViewportNavigationContext context) {
+    @Override //
+    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                      final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
 
         final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
@@ -57,7 +58,7 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
         return result;
     }
 
-    @Override
+    @Override //
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference cell,
                                                   final SpreadsheetViewportNavigationContext context) {
         return this.updateSelection(
