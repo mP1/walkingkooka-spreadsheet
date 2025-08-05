@@ -47,6 +47,8 @@ public final class SpreadsheetViewport implements HasUrlFragment,
      */
     public final static Optional<AnchoredSpreadsheetSelection> NO_ANCHORED_SELECTION = Optional.empty();
 
+    public final static boolean DEFAULT_INCLUDE_FROZEN_COLUMNS_ROWS = false;
+
     /**
      * No navigations
      */
@@ -65,6 +67,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
         return with(
             rectangle,
+            DEFAULT_INCLUDE_FROZEN_COLUMNS_ROWS,
             NO_ANCHORED_SELECTION,
             NO_NAVIGATION
         );
@@ -72,23 +75,29 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     // @VisibleForTesting
     static SpreadsheetViewport with(final SpreadsheetViewportRectangle rectangle,
+                                    final boolean includeFrozenColumnsRows,
                                     final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                                     final SpreadsheetViewportNavigationList navigations) {
         return new SpreadsheetViewport(
             rectangle,
+            includeFrozenColumnsRows,
             anchoredSelection,
             navigations
         );
     }
 
     private SpreadsheetViewport(final SpreadsheetViewportRectangle rectangle,
+                                final boolean includeFrozenColumnsRows,
                                 final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                                 final SpreadsheetViewportNavigationList navigations) {
         super();
         this.rectangle = rectangle;
+        this.includeFrozenColumnsRows = includeFrozenColumnsRows;
         this.anchoredSelection = anchoredSelection;
         this.navigations = navigations;
     }
+
+    // rectangle........................................................................................................
 
     public SpreadsheetViewportRectangle rectangle() {
         return this.rectangle;
@@ -101,12 +110,34 @@ public final class SpreadsheetViewport implements HasUrlFragment,
             this :
             new SpreadsheetViewport(
                 rectangle,
+                this.includeFrozenColumnsRows,
                 this.anchoredSelection,
                 this.navigations
             );
     }
 
     private final SpreadsheetViewportRectangle rectangle;
+
+    // includeFrozenColumnsRows.........................................................................................
+
+    public boolean includeFrozenColumnsRows() {
+        return this.includeFrozenColumnsRows;
+    }
+
+    public SpreadsheetViewport setIncludeFrozenColumnsRows(final boolean includeFrozenColumnsRows) {
+        return this.includeFrozenColumnsRows == includeFrozenColumnsRows ?
+            this :
+            new SpreadsheetViewport(
+                this.rectangle,
+                includeFrozenColumnsRows,
+                this.anchoredSelection,
+                this.navigations
+            );
+    }
+
+    private final boolean includeFrozenColumnsRows;
+
+    // anchoredSelection................................................................................................
 
     public Optional<AnchoredSpreadsheetSelection> anchoredSelection() {
         return this.anchoredSelection;
@@ -119,6 +150,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
             this :
             new SpreadsheetViewport(
                 this.rectangle,
+                this.includeFrozenColumnsRows,
                 anchoredSelection,
                 this.navigations
             );
@@ -137,6 +169,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
             this :
             new SpreadsheetViewport(
                 this.rectangle,
+                this.includeFrozenColumnsRows,
                 this.anchoredSelection,
                 navigations
             );
@@ -156,6 +189,10 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                 .printTree(printer);
         }
         printer.outdent();
+
+        if (this.includeFrozenColumnsRows) {
+            printer.println("includeFrozenColumnsRows: true");
+        }
 
         final Optional<AnchoredSpreadsheetSelection> anchoredSelection = this.anchoredSelection;
         if (anchoredSelection.isPresent()) {
@@ -190,6 +227,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     public int hashCode() {
         return Objects.hash(
             this.rectangle,
+            this.includeFrozenColumnsRows,
             this.anchoredSelection,
             this.navigations
         );
@@ -203,6 +241,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     private boolean equals0(final SpreadsheetViewport other) {
         return this.rectangle.equals(other.rectangle) &&
+            this.includeFrozenColumnsRows == other.includeFrozenColumnsRows &&
             this.anchoredSelection.equals(other.anchoredSelection) &&
             this.navigations.equals(other.navigations);
     }
@@ -216,6 +255,8 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     public void buildToString(final ToStringBuilder builder) {
         builder.labelSeparator(": ")
             .value(this.rectangle)
+            .label("includeFrozenColumnsRows")
+            .value(this.includeFrozenColumnsRows)
             .label("anchoredSelection")
             .value(this.anchoredSelection)
             .label("navigations")
@@ -246,6 +287,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     static SpreadsheetViewport unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
         SpreadsheetViewportRectangle rectangle = null;
+        boolean includeFrozenColumnsRows = false;
         Optional<AnchoredSpreadsheetSelection> anchoredSelection = NO_ANCHORED_SELECTION;
         SpreadsheetViewportNavigationList navigations = NO_NAVIGATION;
 
@@ -256,6 +298,12 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                     rectangle = context.unmarshall(
                         child,
                         SpreadsheetViewportRectangle.class
+                    );
+                    break;
+                case INCLUDE_FROZEN_COLUMNS_ROWS_PROPERTY_STRING:
+                    includeFrozenColumnsRows = context.unmarshall(
+                        child,
+                        Boolean.class
                     );
                     break;
                 case SELECTION_PROPERTY_STRING:
@@ -278,6 +326,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
         return new SpreadsheetViewport(
             rectangle,
+            includeFrozenColumnsRows,
             anchoredSelection,
             navigations
         );
@@ -292,6 +341,13 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                 RECTANGLE_PROPERTY,
                 context.marshall(this.rectangle)
             );
+
+        if(this.includeFrozenColumnsRows) {
+            object = object.set(
+                INCLUDE_FROZEN_COLUMNS_ROWS_PROPERTY,
+                context.marshall(this.includeFrozenColumnsRows)
+            );
+        }
 
         final Optional<AnchoredSpreadsheetSelection> anchoredSelection = this.anchoredSelection();
         if (anchoredSelection.isPresent()) {
@@ -313,12 +369,14 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     }
 
     private final static String RECTANGLE_PROPERTY_STRING = "rectangle";
+    private final static String INCLUDE_FROZEN_COLUMNS_ROWS_PROPERTY_STRING = "includeFrozenColumnsRows";
     private final static String SELECTION_PROPERTY_STRING = "anchoredSelection";
     private final static String NAVIGATION_PROPERTY_STRING = "navigations";
 
     // @VisibleForTesting
 
     final static JsonPropertyName RECTANGLE_PROPERTY = JsonPropertyName.with(RECTANGLE_PROPERTY_STRING);
+    final static JsonPropertyName INCLUDE_FROZEN_COLUMNS_ROWS_PROPERTY = JsonPropertyName.with(INCLUDE_FROZEN_COLUMNS_ROWS_PROPERTY_STRING);
     final static JsonPropertyName SELECTION_PROPERTY = JsonPropertyName.with(SELECTION_PROPERTY_STRING);
     final static JsonPropertyName NAVIGATION_PROPERTY = JsonPropertyName.with(NAVIGATION_PROPERTY_STRING);
 }
