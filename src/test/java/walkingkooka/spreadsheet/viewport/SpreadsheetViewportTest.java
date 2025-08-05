@@ -120,11 +120,11 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             viewport,
             different
         );
-        this.checkAnchoredSelection(
+        this.anchoredSelectionAndCheck(
             different,
             differentAnchoredSelection
         );
-        this.checkNavigations(
+        this.navigationsAndCheck(
             different,
             viewport.navigations()
         );
@@ -167,18 +167,18 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             viewport,
             differentViewport
         );
-        this.checkAnchoredSelection(
+        this.anchoredSelectionAndCheck(
             differentViewport,
             viewport.anchoredSelection()
         );
-        this.checkNavigations(
+        this.navigationsAndCheck(
             differentViewport,
             navigations
         );
     }
 
-    private void checkAnchoredSelection(final SpreadsheetViewport viewport,
-                                        final Optional<AnchoredSpreadsheetSelection> anchoredSelection) {
+    private void anchoredSelectionAndCheck(final SpreadsheetViewport viewport,
+                                           final Optional<AnchoredSpreadsheetSelection> anchoredSelection) {
         this.checkEquals(
             anchoredSelection,
             viewport.anchoredSelection(),
@@ -186,8 +186,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
-    private void checkNavigations(final SpreadsheetViewport viewport,
-                                  final List<SpreadsheetViewportNavigation> navigations) {
+    private void navigationsAndCheck(final SpreadsheetViewport viewport,
+                                     final List<SpreadsheetViewportNavigation> navigations) {
         this.checkEquals(
             navigations,
             viewport.navigations(),
@@ -233,6 +233,17 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                     SpreadsheetViewportNavigation.rightColumn()
                 )
             )
+        );
+    }
+
+    @Override
+    public SpreadsheetViewport createObject() {
+        return SpreadsheetViewport.with(
+            RECTANGLE,
+            Optional.of(
+                SELECTION.setAnchor(ANCHOR)
+            ),
+            NAVIGATIONS
         );
     }
 
@@ -501,6 +512,20 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         );
     }
 
+    @Override
+    public SpreadsheetViewport unmarshall(final JsonNode json,
+                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetViewport.unmarshall(
+            json,
+            context
+        );
+    }
+
+    @Override
+    public SpreadsheetViewport createJsonNodeMarshallingValue() {
+        return this.createObject();
+    }
+
     // toString.........................................................................................................
 
     @Test
@@ -553,31 +578,5 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // equals...........................................................................................................
-
-    @Override
-    public SpreadsheetViewport createObject() {
-        return SpreadsheetViewport.with(
-            RECTANGLE,
-            Optional.of(
-                SELECTION.setAnchor(ANCHOR)
-            ),
-            NAVIGATIONS
-        );
-    }
-
-    // Json.............................................................................................................
-
-    @Override
-    public SpreadsheetViewport unmarshall(final JsonNode from,
-                                          final JsonNodeUnmarshallContext context) {
-        return SpreadsheetViewport.unmarshall(from, context);
-    }
-
-    @Override
-    public SpreadsheetViewport createJsonNodeMarshallingValue() {
-        return this.createObject();
     }
 }
