@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 
 import java.util.Locale;
 import java.util.Optional;

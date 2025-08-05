@@ -32,7 +32,6 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
@@ -43,6 +42,10 @@ import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
@@ -1246,7 +1249,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Checks and complains if this {@link SpreadsheetSelection} and then given {@link SpreadsheetViewportAnchor}
      * is invalid.
      */
-    final void checkAnchor(final SpreadsheetViewportAnchor anchor) {
+    public final void checkAnchor(final SpreadsheetViewportAnchor anchor) {
         Objects.requireNonNull(anchor, "anchor");
 
         if (false == this.isLabelName()) {
@@ -1295,7 +1298,7 @@ public abstract class SpreadsheetSelection implements HasText,
         );
     }
 
-    final AnchoredSpreadsheetSelection setAnchorOrDefault(final SpreadsheetViewportAnchor anchor) {
+    public final AnchoredSpreadsheetSelection setAnchorOrDefault(final SpreadsheetViewportAnchor anchor) {
         return this.setAnchor(
             this instanceof HasRange ?
                 anchor :
@@ -1327,7 +1330,7 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
                                      final Predicate<SpreadsheetRowReference> hiddenRowTester);
 
-    final boolean isHidden(final SpreadsheetViewportNavigationContext context) {
+    public final boolean isHidden(final SpreadsheetViewportNavigationContext context) {
         return this.isHidden(
             context::isColumnHidden,
             context::isRowHidden
@@ -1348,64 +1351,66 @@ public abstract class SpreadsheetSelection implements HasText,
                 end.isHidden(hiddenColumnTester, hiddenRowTester));
     }
 
-    abstract Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
-                                                       final SpreadsheetViewportNavigationContext context);
+    // navigation.......................................................................................................
 
-    abstract Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
-                                                       final int count,
-                                                       final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
+                                                              final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
-                                                  final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
+                                                              final int count,
+                                                              final SpreadsheetViewportNavigationContext context);
 
-
-    abstract Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
-                                                     final int count,
-                                                     final SpreadsheetViewportNavigationContext context);
-
-    abstract Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
-                                                        final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
+                                                         final SpreadsheetViewportNavigationContext context);
 
 
-    abstract Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
-                                                        final int count,
-                                                        final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
+                                                            final int count,
+                                                            final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
-                                                    final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
+                                                               final SpreadsheetViewportNavigationContext context);
 
 
-    abstract Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
-                                                       final int count,
-                                                       final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
+                                                               final int count,
+                                                               final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
-                                                                     final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
+                                                           final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendLeftPixels(final SpreadsheetViewportAnchor anchor,
-                                                                     final int count,
-                                                                     final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendUpRow(final SpreadsheetViewportAnchor anchor,
-                                                                final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
+                                                              final int count,
+                                                              final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendUpPixels(final SpreadsheetViewportAnchor anchor,
-                                                                   final int count,
-                                                                   final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<AnchoredSpreadsheetSelection> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
+                                                                            final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendRightColumn(final SpreadsheetViewportAnchor anchor,
-                                                                      final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<AnchoredSpreadsheetSelection> extendLeftPixels(final SpreadsheetViewportAnchor anchor,
+                                                                            final int count,
+                                                                            final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendRightPixels(final SpreadsheetViewportAnchor anchor,
-                                                                      final int count,
-                                                                      final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<AnchoredSpreadsheetSelection> extendUpRow(final SpreadsheetViewportAnchor anchor,
+                                                                       final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendDownRow(final SpreadsheetViewportAnchor anchor,
-                                                                  final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<AnchoredSpreadsheetSelection> extendUpPixels(final SpreadsheetViewportAnchor anchor,
+                                                                          final int count,
+                                                                          final SpreadsheetViewportNavigationContext context);
 
-    abstract Optional<AnchoredSpreadsheetSelection> extendDownPixels(final SpreadsheetViewportAnchor anchor,
-                                                                     final int count,
-                                                                     final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<AnchoredSpreadsheetSelection> extendRightColumn(final SpreadsheetViewportAnchor anchor,
+                                                                             final SpreadsheetViewportNavigationContext context);
+
+    public abstract Optional<AnchoredSpreadsheetSelection> extendRightPixels(final SpreadsheetViewportAnchor anchor,
+                                                                             final int count,
+                                                                             final SpreadsheetViewportNavigationContext context);
+
+    public abstract Optional<AnchoredSpreadsheetSelection> extendDownRow(final SpreadsheetViewportAnchor anchor,
+                                                                         final SpreadsheetViewportNavigationContext context);
+
+    public abstract Optional<AnchoredSpreadsheetSelection> extendDownPixels(final SpreadsheetViewportAnchor anchor,
+                                                                            final int count,
+                                                                            final SpreadsheetViewportNavigationContext context);
 
     /**
      * Factory that creates or extends a {@link SpreadsheetSelection} into a range. Note the other is either a
@@ -1514,13 +1519,10 @@ public abstract class SpreadsheetSelection implements HasText,
      * </pre>
      */
     @Override final public void printTree(final IndentingPrinter printer) {
-        printer.println(this.treeString());
+        printer.println(this.selectionTypeName() + " " + this);
     }
 
     // only called by SpreadsheetViewport
-    final String treeString() {
-        return this.selectionTypeName() + " " + this;
-    }
 
     /**
      * Getter that returns the selection tyoe name, a unique selection type name identifier in kebab-case form.

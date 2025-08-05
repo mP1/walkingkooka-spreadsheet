@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 
 import java.util.Optional;
 
