@@ -2003,18 +2003,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // WINDOW...........................................................................................................
 
     @Override
-    public SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
-                                             final boolean includeFrozenColumnsRows,
-                                             final Optional<SpreadsheetSelection> selection,
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
                                              final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(viewportRectangle, "viewportRectangle");
-        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(context, "context");
 
         return this.windowNonLabelSelection(
-            viewportRectangle,
-            includeFrozenColumnsRows,
-            selection.map(context::resolveIfLabelOrFail),
+            viewport.rectangle(),
+            viewport.includeFrozenColumnsRows(),
+            viewport.anchoredSelection()
+                .map(a -> context.resolveIfLabelOrFail(a.selection())),
             context
         );
     }
@@ -2487,7 +2485,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 (c) -> this.columnWidth(c, context),
                 repository.rows()::isHidden,
                 (r) -> this.rowHeight(r, context),
-                (r, i, s) -> this.window(r, i, s, context)
+                (v) -> this.window(v, context)
             )
         );
     }

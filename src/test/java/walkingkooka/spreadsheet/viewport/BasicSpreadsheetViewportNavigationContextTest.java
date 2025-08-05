@@ -49,7 +49,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         throw new UnsupportedOperationException();
     };
 
-    private final static SpreadsheetViewportWindowsFunction WINDOWS_FUNCTION = (v, i, s) -> {
+    private final static Function<SpreadsheetViewport, SpreadsheetViewportWindows> WINDOWS_FUNCTION = (v) -> {
         throw new UnsupportedOperationException();
     };
 

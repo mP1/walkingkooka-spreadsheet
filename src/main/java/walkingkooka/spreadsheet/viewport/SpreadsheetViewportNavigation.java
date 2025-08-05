@@ -222,9 +222,8 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
         // check if moved selection is within the original viewport
         final SpreadsheetViewportWindows windows = context.windows(
-            rectangle,
-            true, //includeFrozenColumnsRows
-            SpreadsheetViewportWindowsFunction.NO_SELECTION
+            SpreadsheetViewport.with(rectangle)
+                .setIncludeFrozenColumnsRows(true)
         );
 
         if (

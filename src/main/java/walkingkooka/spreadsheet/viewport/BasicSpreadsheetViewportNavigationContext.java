@@ -32,7 +32,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
                                                           final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                           final Predicate<SpreadsheetRowReference> rowHidden,
                                                           final Function<SpreadsheetRowReference, Double> rowHeights,
-                                                          final SpreadsheetViewportWindowsFunction windows) {
+                                                          final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
         return new BasicSpreadsheetViewportNavigationContext(
             Objects.requireNonNull(columnHidden, "columnHidden"),
             Objects.requireNonNull(columnWidths, "columnWidths"),
@@ -46,7 +46,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
                                                       final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                       final Predicate<SpreadsheetRowReference> rowHidden,
                                                       final Function<SpreadsheetRowReference, Double> rowHeights,
-                                                      final SpreadsheetViewportWindowsFunction windows) {
+                                                      final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
         this.columnHidden = columnHidden;
         this.columnWidths = columnWidths;
         this.rowHidden = rowHidden;
@@ -260,17 +260,11 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     }
 
     @Override
-    public SpreadsheetViewportWindows windows(final SpreadsheetViewportRectangle viewportRectangle,
-                                              final boolean includeFrozenColumnsRows,
-                                              final Optional<SpreadsheetSelection> selection) {
-        return this.windows.windows(
-            viewportRectangle,
-            includeFrozenColumnsRows,
-            selection
-        );
+    public SpreadsheetViewportWindows windows(final SpreadsheetViewport viewport) {
+        return this.windows.apply(viewport);
     }
 
-    private final SpreadsheetViewportWindowsFunction windows;
+    private final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows;
 
     @Override
     public String toString() {

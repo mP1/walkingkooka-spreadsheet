@@ -33,7 +33,7 @@ public final class SpreadsheetViewportNavigationContexts implements PublicStatic
                                                              final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                              final Predicate<SpreadsheetRowReference> rowHidden,
                                                              final Function<SpreadsheetRowReference, Double> rowHeights,
-                                                             final SpreadsheetViewportWindowsFunction windows) {
+                                                             final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
         return BasicSpreadsheetViewportNavigationContext.with(
             columnHidden,
             columnWidths,

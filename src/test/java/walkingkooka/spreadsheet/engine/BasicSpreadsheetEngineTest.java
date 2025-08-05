@@ -21325,9 +21325,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            viewportRectangle,
-            false, // includeFrozenColumnsRows
-            SpreadsheetEngine.NO_SELECTION,
+            SpreadsheetViewport.with(viewportRectangle),
             context,
             "A1:D2"
         );
@@ -21349,9 +21347,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            viewportRectangle,
-            false, // includeFrozenColumnsRows
-            SpreadsheetEngine.NO_SELECTION,
+            SpreadsheetViewport.with(viewportRectangle),
             context,
             "A1:F2"
         );
@@ -21370,9 +21366,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            viewportRectangle,
-            false, // includeFrozenColumnsRows
-            SpreadsheetEngine.NO_SELECTION,
+            SpreadsheetViewport.with(viewportRectangle),
             context,
             "A1:D2"
         );
@@ -21394,9 +21388,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            viewportRectangle,
-            false, // includeFrozenColumnsRows
-            SpreadsheetEngine.NO_SELECTION,
+            SpreadsheetViewport.with(viewportRectangle),
             context,
             "A1:D4"
         );
@@ -21438,13 +21430,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 final String range) {
         this.windowAndCheck(
             this.createSpreadsheetEngine(),
+            SpreadsheetViewport.with(
             SpreadsheetSelection.parseCell(cell)
                 .viewportRectangle(
                     width,
                     height
-                ),
-            false, // includeFrozenColumnsAndRows
-            selection,
+                )
+            ).setAnchoredSelection(
+                selection.map(SpreadsheetSelection::setDefaultAnchor)
+            ),
             this.createContext(),
             range
         );
@@ -22174,13 +22168,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             this.createSpreadsheetEngine(),
+            SpreadsheetViewport.with(
             SpreadsheetSelection.parseCell(cell)
                 .viewportRectangle(
                     width,
                     height
+                )
+            ).setIncludeFrozenColumnsRows(true)
+                .setAnchoredSelection(
+                    selection.map(SpreadsheetSelection::setDefaultAnchor)
                 ),
-            true, // includeFrozenColumnsAndRows
-            selection,
             this.createContext(metadata),
             window
         );
@@ -22201,12 +22198,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            home.viewportRectangle(
-                COLUMN_WIDTH * 3,
-                ROW_HEIGHT * 3
+            SpreadsheetViewport.with(
+                home.viewportRectangle(
+                    COLUMN_WIDTH * 3,
+                    ROW_HEIGHT * 3
+                )
+            ).setAnchoredSelection(
+                Optional.of(LABEL.setDefaultAnchor())
             ), // viewport
-            false, // includeFrozenColumnsRows
-            Optional.of(LABEL), // selection
             context,
             "B2:D4"
         );
@@ -22227,12 +22226,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            home.viewportRectangle(
-                COLUMN_WIDTH * 3,
-                ROW_HEIGHT * 3
-            ), // viewport
-            false, // includeFrozenColumnsRows
-            Optional.of(LABEL), // selection
+            SpreadsheetViewport.with(
+                home.viewportRectangle(
+                    COLUMN_WIDTH * 3,
+                    ROW_HEIGHT * 3
+                )
+            ).setAnchoredSelection(
+                Optional.of(LABEL.setDefaultAnchor())
+            ), // selection
             context,
             "B2:D4"
         );
@@ -22253,12 +22254,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.windowAndCheck(
             engine,
-            home.viewportRectangle(
-                COLUMN_WIDTH * 3,
-                ROW_HEIGHT * 3
-            ), // viewport
-            false, // includeFrozenColumnsRows
-            Optional.of(LABEL), // selection
+            SpreadsheetViewport.with(
+                home.viewportRectangle(
+                    COLUMN_WIDTH * 3,
+                    ROW_HEIGHT * 3
+                )
+            ).setAnchoredSelection(
+                Optional.of(
+                    LABEL.setDefaultAnchor()
+                )
+            ),
             context,
             "B2:D4"
         );

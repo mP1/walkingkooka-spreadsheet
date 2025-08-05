@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
@@ -289,9 +288,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
-                                             final boolean includeFrozenColumnsRows,
-                                             final Optional<SpreadsheetSelection> selection,
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
                                              final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }

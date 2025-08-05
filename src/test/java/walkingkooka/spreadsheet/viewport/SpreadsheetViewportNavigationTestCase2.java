@@ -207,9 +207,17 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
                     COLUMN_TO_WIDTH,
                     hiddenRows,
                     ROW_TO_HEIGHT,
-                    (r, i, s) -> {
-                        checkEquals(true, i, "includeFrozenColumnsRows");
-                        checkEquals(SpreadsheetViewportWindowsFunction.NO_SELECTION, s, "selection");
+                    (SpreadsheetViewport v) -> {
+                        checkEquals(
+                            true,
+                            v.includeFrozenColumnsRows(),
+                            "includeFrozenColumnsRows"
+                        );
+                        checkEquals(
+                            SpreadsheetViewport.NO_ANCHORED_SELECTION,
+                            v.anchoredSelection(),
+                            "selection"
+                        );
                         return windows;
                     }
                 )
