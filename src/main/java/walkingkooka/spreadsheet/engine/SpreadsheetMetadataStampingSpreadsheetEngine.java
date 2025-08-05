@@ -36,7 +36,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.validation.ValidationValueTypeName;
@@ -436,14 +435,10 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
-                                             final boolean includeFrozenColumnsRows,
-                                             final Optional<SpreadsheetSelection> selection,
+    public SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
                                              final SpreadsheetEngineContext context) {
         return this.engine.window(
-            viewportRectangle,
-            includeFrozenColumnsRows,
-            selection,
+            viewport,
             context
         );
     }

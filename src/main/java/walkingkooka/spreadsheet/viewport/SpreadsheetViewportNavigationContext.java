@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * The {@link Context} that accompanies a {@link SpreadsheetViewportNavigation#update(SpreadsheetViewport, SpreadsheetViewportNavigationContext)}
  */
-public interface SpreadsheetViewportNavigationContext extends Context, SpreadsheetViewportWindowsFunction {
+public interface SpreadsheetViewportNavigationContext extends Context {
 
     /**
      * Returns true if the {@link SpreadsheetColumnReference} is hidden.
@@ -113,4 +113,9 @@ public interface SpreadsheetViewportNavigationContext extends Context, Spreadshe
      */
     Optional<SpreadsheetRowReference> downPixels(final SpreadsheetRowReference reference,
                                                  final int count);
+
+    /**
+     * Computes the {@link SpreadsheetViewportWindows} for the given {@link SpreadsheetViewport}.
+     */
+    SpreadsheetViewportWindows windows(final SpreadsheetViewport viewport);
 }

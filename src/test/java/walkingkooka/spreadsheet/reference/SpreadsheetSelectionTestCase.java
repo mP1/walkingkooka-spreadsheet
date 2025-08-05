@@ -34,11 +34,10 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindowsFunction;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindowsFunctions;
 import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -73,7 +72,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     ToStringTesting<S>,
     TreePrintableTesting {
 
-    private final static SpreadsheetViewportWindowsFunction WINDOWS_FUNCTION = SpreadsheetViewportWindowsFunctions.fake();
+    private final static Function<SpreadsheetViewport, SpreadsheetViewportWindows> WINDOWS_FUNCTION = (SpreadsheetViewport v) -> {
+        throw new UnsupportedOperationException();
+    };
 
     SpreadsheetSelectionTestCase() {
         super();

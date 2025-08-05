@@ -2733,31 +2733,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     // window...........................................................................................................
 
     @Test
-    default void testWindowWithNullRectangleFails() {
+    default void testWindowWithNullSpreadsheetViewportFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSpreadsheetEngine()
                 .window(
-                    null,
-                    false,
-                    SpreadsheetEngine.NO_SELECTION,
-                    SpreadsheetEngineContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    default void testWindowWithNullSelectionFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetEngine()
-                .window(
-                    SpreadsheetViewportRectangle.with(
-                        SpreadsheetSelection.A1,
-                        1, // width
-                        2 // height
-                    ),
-                    false,
                     null,
                     SpreadsheetEngineContexts.fake()
                 )
@@ -2770,13 +2750,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             NullPointerException.class,
             () -> this.createSpreadsheetEngine()
                 .window(
-                    SpreadsheetViewportRectangle.with(
-                        SpreadsheetSelection.A1,
-                        1, // width
-                        2 // height
+                    SpreadsheetViewport.with(
+                        SpreadsheetViewportRectangle.with(
+                            SpreadsheetSelection.A1,
+                            1, // width
+                            2 // height
+                        )
                     ),
-                    false,
-                    SpreadsheetEngine.NO_SELECTION,
                     null
                 )
         );
@@ -2784,16 +2764,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void windowAndCheck(
         final SpreadsheetEngine engine,
-        final SpreadsheetViewportRectangle viewport,
-        final boolean includeFrozenColumnsRows,
-        final Optional<SpreadsheetSelection> selection,
+        final SpreadsheetViewport viewport,
         final SpreadsheetEngineContext context,
         final String window) {
         this.windowAndCheck(
             engine,
             viewport,
-            includeFrozenColumnsRows,
-            selection,
             context,
             SpreadsheetViewportWindows.parse(window)
         );
@@ -2801,16 +2777,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void windowAndCheck(
         final SpreadsheetEngine engine,
-        final SpreadsheetViewportRectangle viewport,
-        final boolean includeFrozenColumnsRows,
-        final Optional<SpreadsheetSelection> selection,
+        final SpreadsheetViewport viewport,
         final SpreadsheetEngineContext context,
         final SpreadsheetCellRangeReference... window) {
         this.windowAndCheck(
             engine,
             viewport,
-            includeFrozenColumnsRows,
-            selection,
             context,
             SpreadsheetViewportWindows.with(
                 Sets.of(window)
@@ -2820,22 +2792,16 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default void windowAndCheck(
         final SpreadsheetEngine engine,
-        final SpreadsheetViewportRectangle viewport,
-        final boolean includeFrozenColumnsRows,
-        final Optional<SpreadsheetSelection> selection,
+        final SpreadsheetViewport viewport,
         final SpreadsheetEngineContext context,
         final SpreadsheetViewportWindows window) {
         this.checkEquals(
             window,
             engine.window(
                 viewport,
-                includeFrozenColumnsRows,
-                selection,
                 context
             ),
-            () -> "window " + viewport +
-                (includeFrozenColumnsRows ? " includeFrozenColumnsRows" : "") +
-                selection.orElse(null)
+            () -> "window " + viewport
         );
     }
 

@@ -358,9 +358,7 @@ public interface SpreadsheetEngine {
      * </ul>
      * If the selection is a {@link SpreadsheetLabelName} it will be resolved into a non label before continuing.
      */
-    SpreadsheetViewportWindows window(final SpreadsheetViewportRectangle viewportRectangle,
-                                      final boolean includeFrozenColumnsRows,
-                                      final Optional<SpreadsheetSelection> selection,
+    SpreadsheetViewportWindows window(final SpreadsheetViewport viewport,
                                       final SpreadsheetEngineContext context);
 
     /**

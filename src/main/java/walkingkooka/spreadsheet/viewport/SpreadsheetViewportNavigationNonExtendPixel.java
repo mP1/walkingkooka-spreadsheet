@@ -31,9 +31,8 @@ abstract class SpreadsheetViewportNavigationNonExtendPixel extends SpreadsheetVi
                                                                          final SpreadsheetViewportNavigationContext context) {
         // check if original selection is within the moved viewport
         final SpreadsheetViewportWindows windows = context.windows(
-            rectangle,
-            true, //includeFrozenColumnsRows
-            SpreadsheetViewportWindowsFunction.NO_SELECTION
+            SpreadsheetViewport.with(rectangle)
+                .setIncludeFrozenColumnsRows(true)
         );
 
         return windows.test(
