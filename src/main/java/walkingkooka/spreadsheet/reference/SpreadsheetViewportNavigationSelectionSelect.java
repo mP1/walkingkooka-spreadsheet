@@ -28,8 +28,9 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
         super(selection);
     }
 
-    @Override final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                                final SpreadsheetViewportNavigationContext context) {
+    @Override //
+    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                      final SpreadsheetViewportNavigationContext context) {
         return this.updateViewport(
             this.selection.setDefaultAnchor(),
             viewport,
@@ -37,22 +38,25 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
         );
     }
 
-    @Override final Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
-                                                                           final SpreadsheetViewportAnchor anchor,
-                                                                           final SpreadsheetViewportNavigationContext context) {
+    @Override //
+    final Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
+                                                                 final SpreadsheetViewportAnchor anchor,
+                                                                 final SpreadsheetViewportNavigationContext context) {
         return Optional.of(
             this.selection.setDefaultAnchor()
         );
     }
 
-    @Override final Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
-                                                                  final SpreadsheetViewportNavigationContext context) {
+    @Override //
+    final Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
+                                                        final SpreadsheetViewportNavigationContext context) {
         return Optional.of(
             this.selection.toCell()
         );
     }
 
-    @Override final String textPrefix() {
+    @Override //
+    final String textPrefix() {
         return SELECT_SPACE;
     }
 }
