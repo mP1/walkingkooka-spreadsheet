@@ -65,13 +65,13 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     }
 
     // isExtend.........................................................................................................
-    @Test
-    public final void testIsExtend() {
+
+    final void isExtendAndCheck(final T navigation,
+                                final boolean expected) {
         this.checkEquals(
-            this.type()
-                .getName()
-                .contains("Extend"),
-            this.createSpreadsheetViewportNavigation().isExtend()
+            expected,
+            navigation.isExtend(),
+            navigation::toString
         );
     }
 

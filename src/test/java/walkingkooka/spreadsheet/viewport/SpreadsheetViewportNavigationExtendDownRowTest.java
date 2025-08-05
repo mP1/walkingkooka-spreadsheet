@@ -48,6 +48,16 @@ public final class SpreadsheetViewportNavigationExtendDownRowTest extends Spread
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            true
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationExtendDownRow createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendDownRow.INSTANCE;

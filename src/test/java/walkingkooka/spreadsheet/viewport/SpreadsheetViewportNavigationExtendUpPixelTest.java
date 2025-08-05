@@ -115,6 +115,16 @@ public final class SpreadsheetViewportNavigationExtendUpPixelTest extends Spread
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            true
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationExtendUpPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendUpPixel.with(2 * ROW_HEIGHT - 1);
