@@ -33,8 +33,9 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         super(selection);
     }
 
-    @Override final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                                final SpreadsheetViewportNavigationContext context) {
+    @Override //
+    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                      final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
 
         final T selection = this.selection;
@@ -71,7 +72,8 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         return result;
     }
 
-    @Override final String textPrefix() {
+    @Override //
+    final String textPrefix() {
         return EXTEND_SPACE;
     }
 
