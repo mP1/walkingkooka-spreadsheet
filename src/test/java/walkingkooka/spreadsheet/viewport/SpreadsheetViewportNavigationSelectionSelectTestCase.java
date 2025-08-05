@@ -18,11 +18,22 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public abstract class SpreadsheetViewportNavigationSelectionSelectTestCase<T extends SpreadsheetViewportNavigationSelectionSelect<S>, S extends SpreadsheetSelection>
     extends SpreadsheetViewportNavigationSelectionTestCase<T, S> {
 
     SpreadsheetViewportNavigationSelectionSelectTestCase() {
+    }
+
+    // isExtend.........................................................................................................
+
+    @Test
+    public final void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            false
+        );
     }
 }

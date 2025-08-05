@@ -45,6 +45,16 @@ public final class SpreadsheetViewportNavigationRightColumnTest extends Spreadsh
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            false
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationRightColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationRightColumn.INSTANCE;

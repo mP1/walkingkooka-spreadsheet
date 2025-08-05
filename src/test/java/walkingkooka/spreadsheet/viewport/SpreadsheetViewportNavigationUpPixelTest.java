@@ -120,6 +120,16 @@ public final class SpreadsheetViewportNavigationUpPixelTest extends SpreadsheetV
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            false
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationUpPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationUpPixel.with(2 * ROW_HEIGHT - 1);

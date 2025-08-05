@@ -104,6 +104,16 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            false
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationLeftPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationLeftPixel.with(2 * COLUMN_WIDTH - 1);

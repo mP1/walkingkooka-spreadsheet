@@ -276,10 +276,11 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     abstract boolean isOpposite(final SpreadsheetViewportNavigation other);
 
     /**
-     * Returns true if an extend {@link SpreadsheetViewportNavigation}.
+     * Returns true if this is an extend {@link SpreadsheetViewportNavigation}.
      */
     public final boolean isExtend() {
-        return this.getClass().getSimpleName().contains("Extend");
+        return this.getClass().getSimpleName()
+            .contains("NavigationExtend");
     }
 
     /**

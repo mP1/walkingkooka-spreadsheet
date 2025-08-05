@@ -115,6 +115,16 @@ public final class SpreadsheetViewportNavigationDownPixelTest extends Spreadshee
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            false
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationDownPixel createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationDownPixel.with(

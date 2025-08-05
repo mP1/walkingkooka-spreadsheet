@@ -46,6 +46,16 @@ public final class SpreadsheetViewportNavigationExtendLeftColumnTest extends Spr
         );
     }
 
+    // isExtend.........................................................................................................
+
+    @Test
+    public void testIsExtend() {
+        this.isExtendAndCheck(
+            this.createSpreadsheetViewportNavigation(),
+            true
+        );
+    }
+
     @Override
     SpreadsheetViewportNavigationExtendLeftColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendLeftColumn.INSTANCE;
