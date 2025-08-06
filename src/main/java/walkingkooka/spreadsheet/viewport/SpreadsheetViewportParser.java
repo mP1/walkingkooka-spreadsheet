@@ -90,32 +90,27 @@ final class SpreadsheetViewportParser {
     void homeToken() {
         this.parseTokenOrFail(
             HOME_TOKEN_PARSER,
-            HOME_TOKEN
+            SpreadsheetViewportRectangle.HOME_STRING
         );
     }
 
     void widthToken() {
         this.parseTokenOrFail(
             WIDTH_TOKEN_PARSER,
-            WIDTH_TOKEN
+            SpreadsheetViewportRectangle.WIDTH_STRING
         );
     }
 
     void heightToken() {
         this.parseTokenOrFail(
             HEIGHT_TOKEN_PARSER,
-            HEIGHT_TOKEN
+            SpreadsheetViewportRectangle.HEIGHT_STRING
         );
     }
 
-    private final static String HOME_TOKEN = "home";
-    private final static Parser<SpreadsheetParserContext> HOME_TOKEN_PARSER = Parsers.string(HOME_TOKEN, CaseSensitivity.SENSITIVE);
-
-    private final static String WIDTH_TOKEN = "width";
-    private final static Parser<SpreadsheetParserContext> WIDTH_TOKEN_PARSER = Parsers.string(WIDTH_TOKEN, CaseSensitivity.SENSITIVE);
-
-    private final static String HEIGHT_TOKEN = "height";
-    private final static Parser<SpreadsheetParserContext> HEIGHT_TOKEN_PARSER = Parsers.string(HEIGHT_TOKEN, CaseSensitivity.SENSITIVE);
+    private final static Parser<SpreadsheetParserContext> HOME_TOKEN_PARSER = parserStringToken(SpreadsheetViewportRectangle.HOME_STRING);
+    private final static Parser<SpreadsheetParserContext> WIDTH_TOKEN_PARSER = parserStringToken(SpreadsheetViewportRectangle.WIDTH_STRING);
+    private final static Parser<SpreadsheetParserContext> HEIGHT_TOKEN_PARSER = parserStringToken(SpreadsheetViewportRectangle.HEIGHT_STRING);
 
     private void parseTokenOrFail(final Parser<SpreadsheetParserContext> parser,
                                   final String label) {
@@ -135,11 +130,11 @@ final class SpreadsheetViewportParser {
     }
 
     double width() {
-        return this.parseDoubleOrFail(WIDTH_TOKEN);
+        return this.parseDoubleOrFail(SpreadsheetViewportRectangle.WIDTH_STRING);
     }
 
     double height() {
-        return this.parseDoubleOrFail(HEIGHT_TOKEN);
+        return this.parseDoubleOrFail(SpreadsheetViewportRectangle.HEIGHT_STRING);
     }
 
     /**
@@ -153,6 +148,13 @@ final class SpreadsheetViewportParser {
             ).orElseThrow(() -> new IllegalArgumentException("Missing " + label))
             .cast(DoubleParserToken.class)
             .value();
+    }
+
+    private static Parser<SpreadsheetParserContext> parserStringToken(final String token) {
+        return Parsers.string(
+            token,
+            CaseSensitivity.SENSITIVE
+        );
     }
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
