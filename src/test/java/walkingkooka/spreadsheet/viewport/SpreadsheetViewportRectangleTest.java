@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -397,6 +398,158 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // parseUrlFragment.................................................................................................
+
+    @Test
+    public void testFromUrlFragmentWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetViewportRectangle.fromUrlFragment(null)
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithEmptyFails() {
+        this.fromUrlFragmentFails(
+            "",
+            "Missing home"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithMissingLeadingSlashFails() {
+        this.fromUrlFragmentFails(
+            "home/A1",
+            "Invalid character 'h' at 0 expected \"/\""
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentMissingHomeFails() {
+        this.fromUrlFragmentFails(
+            "/missing-home",
+            "Missing home"
+        );
+    }
+    
+    @Test
+    public void testFromUrlFragmentWithInvalidHomeFails() {
+        this.fromUrlFragmentFails(
+            "/home/!InvalidHome",
+            "Missing home"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithOnlyHomeFails() {
+        this.fromUrlFragmentFails(
+            "/home/A1",
+            "Missing width"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentMissingWidthFails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/",
+            "Missing width"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentMissingWidth2Fails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/not-width",
+            "Missing width"
+        );
+    }
+    
+    @Test
+    public void testFromUrlFragmentWithInvalidWidthFails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/width/!InvalidHome",
+            "Missing width"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithOnlyHomeAndWidthFails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/width/200",
+            "Missing height"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentMissingHeightFails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/width/200/",
+            "Missing height"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentMissingHeight2Fails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/width/200/not-height",
+            "Missing height"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithInvalidHeightFails() {
+        this.fromUrlFragmentFails(
+            "/home/A1/width/200/height/!InvalidHome",
+            "Missing height"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithHomeWidthHeight() {
+        this.fromUrlFragmentAndCheck(
+            "/home/A1/width/200/height/300",
+            "A1:200:300"
+        );
+    }
+
+
+    private void fromUrlFragmentFails(final String urlFragment,
+                                      final String expected) {
+        this.fromUrlFragmentFails(
+            UrlFragment.parse(urlFragment),
+            new IllegalArgumentException(expected)
+        );
+    }
+
+    private void fromUrlFragmentFails(final UrlFragment urlFragment,
+                                      final IllegalArgumentException expected) {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetViewportRectangle.fromUrlFragment(urlFragment)
+        );
+
+        this.checkEquals(
+            expected.getMessage(),
+            thrown.getMessage()
+        );
+    }
+
+    private void fromUrlFragmentAndCheck(final String urlFragment,
+                                         final String expected) {
+        this.fromUrlFragmentAndCheck(
+            UrlFragment.parse(urlFragment),
+            SpreadsheetViewportRectangle.parse(expected)
+        );
+    }
+
+    private void fromUrlFragmentAndCheck(final UrlFragment urlFragment,
+                                         final SpreadsheetViewportRectangle expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetViewportRectangle.fromUrlFragment(urlFragment)
+        );
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
