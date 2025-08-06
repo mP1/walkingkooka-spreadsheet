@@ -124,7 +124,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             viewport.navigations()
         );
     }
-    
+
     // setAnchoredSelection.............................................................................................
 
     @Test
