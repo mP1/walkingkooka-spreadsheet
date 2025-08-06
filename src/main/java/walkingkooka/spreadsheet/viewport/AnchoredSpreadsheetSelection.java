@@ -106,16 +106,21 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
 
     // HasUrlFragment...................................................................................................
 
+    // /A1
+    // /A2:B3/top-left
+
     @Override
     public UrlFragment urlFragment() {
         final UrlFragment selection = this.selection()
             .urlFragment();
         final SpreadsheetViewportAnchor anchor = this.anchor();
 
-        return SpreadsheetViewportAnchor.NONE != anchor ?
-            selection.append(UrlFragment.SLASH)
-                .append(anchor.urlFragment()) :
-            selection;
+        return UrlFragment.SLASH.append(
+            SpreadsheetViewportAnchor.NONE != anchor ?
+                selection.append(UrlFragment.SLASH)
+                    .append(anchor.urlFragment()) :
+                selection
+        );
     }
 
     // Object..........................................................................................................
