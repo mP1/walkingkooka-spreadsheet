@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationList;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -101,6 +103,31 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
         this.extractLocaleValueAwareAndCheck(
             LocaleContexts.jre(Locale.ENGLISH),
             null
+        );
+    }
+
+    @Test
+    public void testParseUrlFragmentSaveValue2() {
+        final SpreadsheetViewport viewport = SpreadsheetViewportRectangle.with(
+                SpreadsheetSelection.A1,
+                200,
+                300
+            ).viewport()
+            .setIncludeFrozenColumnsRows(true)
+            .setAnchoredSelection(
+                Optional.of(
+                    SpreadsheetSelection.parseCellRange("B2:C3")
+                        .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                )
+            ).setNavigations(
+                SpreadsheetViewportNavigationList.parse("right 400px")
+            );
+
+        this.parseUrlFragmentSaveValueAndCheck(
+            SpreadsheetMetadataPropertyNameViewport.instance(),
+            viewport.urlFragment()
+                .value(),
+            viewport
         );
     }
 

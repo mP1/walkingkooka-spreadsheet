@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 
@@ -77,6 +78,8 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
 
     @Override
     SpreadsheetViewport parseUrlFragmentSaveValueNonNull(final String value) {
-        return this.failParseUrlFragmentSaveValueUnsupported();
+        return SpreadsheetViewport.fromUrlFragment(
+            UrlFragment.parse(value)
+        );
     }
 }
