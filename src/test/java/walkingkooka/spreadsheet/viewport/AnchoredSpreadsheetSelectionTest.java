@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.net.UrlFragment;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -36,7 +36,8 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     HashCodeEqualsDefinedTesting2<AnchoredSpreadsheetSelection>,
     ToStringTesting<AnchoredSpreadsheetSelection>,
     JsonNodeMarshallingTesting<AnchoredSpreadsheetSelection>,
-    TreePrintableTesting {
+    TreePrintableTesting,
+    HasUrlFragmentTesting {
 
     private final static SpreadsheetSelection SELECTION = SpreadsheetSelection.parseCellRange("A1:B2");
     private final static SpreadsheetViewportAnchor ANCHOR = SpreadsheetViewportAnchor.BOTTOM_RIGHT;
@@ -202,21 +203,30 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     }
 
     // HasUrlFragment...................................................................................................
+
     @Test
-    public void testHasUrlFragmentCell() {
-        this.checkEquals(
-            UrlFragment.parse("A1"),
-            SpreadsheetSelection.A1
-                .urlFragment()
+    public void testUrlFragmentCellWithCell() {
+        this.urlFragmentAndCheck(
+            SpreadsheetSelection.A1.setDefaultAnchor(),
+            "/A1"
         );
     }
 
     @Test
-    public void testHasUrlFragmentCellRange() {
-        this.checkEquals(
-            UrlFragment.parse("A1:B2/bottom-right"),
-            this.createObject()
-                .urlFragment()
+    public void testUrlFragmentCellWithCellRange() {
+        this.urlFragmentAndCheck(
+            SpreadsheetSelection.parseCellRange("B2:C3")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+            "/B2:C3/top-left"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentCellWithLabel() {
+        this.urlFragmentAndCheck(
+            SpreadsheetSelection.labelName("Label123")
+                .setDefaultAnchor(),
+            "/Label123"
         );
     }
 
