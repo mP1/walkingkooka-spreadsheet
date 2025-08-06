@@ -433,7 +433,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
             "Missing home"
         );
     }
-    
+
     @Test
     public void testFromUrlFragmentWithInvalidHomeFails() {
         this.fromUrlFragmentFails(
@@ -465,7 +465,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
             "Missing width"
         );
     }
-    
+
     @Test
     public void testFromUrlFragmentWithInvalidWidthFails() {
         this.fromUrlFragmentFails(
