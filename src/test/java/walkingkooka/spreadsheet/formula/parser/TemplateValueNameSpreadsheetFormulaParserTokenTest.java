@@ -126,4 +126,9 @@ public final class TemplateValueNameSpreadsheetFormulaParserTokenTest extends No
             this.value()
         );
     }
+
+    @Override
+    public void testPropertiesNeverReturnNull() {
+        throw new UnsupportedOperationException();
+    }
 }

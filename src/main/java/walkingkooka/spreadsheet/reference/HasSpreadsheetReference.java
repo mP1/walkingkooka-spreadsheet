@@ -33,6 +33,19 @@ public interface HasSpreadsheetReference<R extends Comparable<R>> {
     }
 
     /**
+     * Helper that attempts to cast the {@link walkingkooka.tree.expression.ExpressionReference} to
+     * {@link SpreadsheetSelection} if possible or throwing a {@link IllegalArgumentException}.
+     */
+    default SpreadsheetSelection toSpreadsheetSelection() {
+        final R reference = this.reference();
+        if(reference instanceof SpreadsheetSelection) {
+            return (SpreadsheetSelection) reference;
+        }
+
+        throw new IllegalArgumentException("Not a " + SpreadsheetSelection.class.getSimpleName() + ": " + reference);
+    }
+
+    /**
      * Returns the reference for the spreadsheet unit.
      */
     R reference();
