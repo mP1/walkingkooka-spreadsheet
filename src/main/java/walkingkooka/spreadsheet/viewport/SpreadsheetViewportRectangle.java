@@ -338,7 +338,12 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
             toString;
     }
 
-    private final static UrlFragment HOME = UrlFragment.with("home");
-    private final static UrlFragment WIDTH = UrlFragment.with("width");
-    private final static UrlFragment HEIGHT = UrlFragment.with("height");
+    final static String HOME_STRING = "home";
+    private final static UrlFragment HOME = UrlFragment.with(HOME_STRING);
+
+    final static String WIDTH_STRING = "width";
+    private final static UrlFragment WIDTH = UrlFragment.with(WIDTH_STRING);
+
+    final static String HEIGHT_STRING = "height";
+    private final static UrlFragment HEIGHT = UrlFragment.with(HEIGHT_STRING);
 }
