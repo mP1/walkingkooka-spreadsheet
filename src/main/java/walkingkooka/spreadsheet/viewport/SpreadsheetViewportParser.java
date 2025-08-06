@@ -183,8 +183,6 @@ final class SpreadsheetViewportParser {
     }
 
     SpreadsheetSelection spreadsheetSelection() {
-        SpreadsheetSelection spreadsheetSelection = null;
-
         final SpreadsheetFormulaParserToken token = SpreadsheetFormulaParsers.cellOrCellRangeOrLabel()
             .parse(
                 this.cursor,
