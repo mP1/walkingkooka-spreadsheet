@@ -17,16 +17,21 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.CellSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.DoubleParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -36,6 +41,7 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.util.Optional;
 
 /**
  * A {@link Parser} that includes helpers to expect and parse individual tokens.
@@ -76,11 +82,24 @@ final class SpreadsheetViewportParser {
             height
         );
     }
-    
+
     // helpers...........................................................................................................
 
+    boolean optionalSlash() {
+        return OPTIONAL_SLASH_PARSER.parse(
+            this.cursor,
+            PARSER_CONTEXT
+        ).isPresent();
+    }
+
+    private final static Parser<SpreadsheetParserContext> OPTIONAL_SLASH_PARSER = Parsers.string("/", CaseSensitivity.SENSITIVE)
+        .cast();
+
     void slash() {
-        SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
+        SLASH_PARSER.parse(
+            this.cursor,
+            PARSER_CONTEXT
+        );
     }
 
     private final static Parser<SpreadsheetParserContext> SLASH_PARSER = Parsers.string("/", CaseSensitivity.SENSITIVE)
@@ -112,11 +131,115 @@ final class SpreadsheetViewportParser {
     private final static Parser<SpreadsheetParserContext> WIDTH_TOKEN_PARSER = parserStringToken(SpreadsheetViewportRectangle.WIDTH_STRING);
     private final static Parser<SpreadsheetParserContext> HEIGHT_TOKEN_PARSER = parserStringToken(SpreadsheetViewportRectangle.HEIGHT_STRING);
 
+    boolean includeFrozenColumnsRowsToken() {
+        return this.parseToken(INCLUDE_FROZEN_COLUMNS_ROW_TOKEN_PARSER);
+    }
+
+    boolean includeFrozenColumnsRowsValue() {
+        boolean includeFrozenColumnsRows = false;
+
+        final TextCursor cursor = this.cursor;
+        final TextCursorSavePoint save = cursor.save();
+        final String token = this.readToken();
+
+        switch (token) {
+            case "true":
+                includeFrozenColumnsRows = true;
+                break;
+            case "false":
+                includeFrozenColumnsRows = false;
+                break;
+            default:
+                save.restore();
+
+                throw new InvalidCharacterException(
+                    cursor.text(),
+                    cursor.lineInfo().textOffset()
+                );
+        }
+
+        return includeFrozenColumnsRows;
+    }
+
+    private final static Parser<SpreadsheetParserContext> INCLUDE_FROZEN_COLUMNS_ROW_TOKEN_PARSER = parserStringToken(SpreadsheetViewport.INCLUDE_FROZEN_COLUMNS_ROWS_STRING);
+
+    boolean selectionToken() {
+        return this.parseToken(SELECTION_TOKEN_PARSER);
+    }
+
+    private final static Parser<SpreadsheetParserContext> SELECTION_TOKEN_PARSER = parserStringToken(SpreadsheetViewport.SELECTION_STRING);
+
+    boolean navigationToken() {
+        return this.parseToken(NAVIGATION_TOKEN_PARSER);
+    }
+
+    private final static Parser<SpreadsheetParserContext> NAVIGATION_TOKEN_PARSER = parserStringToken(SpreadsheetViewport.NAVIGATIONS_STRING);
+
     private void parseTokenOrFail(final Parser<SpreadsheetParserContext> parser,
                                   final String label) {
-        if(false == parser.parse(this.cursor, PARSER_CONTEXT).isPresent()) {
+        if (false == parser.parse(this.cursor, PARSER_CONTEXT).isPresent()) {
             throw new IllegalArgumentException("Missing " + label);
         }
+    }
+
+    SpreadsheetSelection spreadsheetSelection() {
+        SpreadsheetSelection spreadsheetSelection = null;
+
+        final SpreadsheetFormulaParserToken token = SpreadsheetFormulaParsers.cellOrCellRangeOrLabel()
+            .parse(
+                this.cursor,
+                PARSER_CONTEXT
+            ).orElseThrow(() -> new IllegalArgumentException("Missing selection"))
+            .cast(SpreadsheetFormulaParserToken.class);
+        return ((HasSpreadsheetReference<?>) token).toSpreadsheetSelection();
+    }
+
+    Optional<SpreadsheetViewportAnchor> anchor() {
+        SpreadsheetViewportAnchor anchor = null;
+
+        final TextCursorSavePoint save = this.cursor.save();
+        final String token = this.readToken();
+        if (false == token.isEmpty()) {
+            for (final SpreadsheetViewportAnchor possible : SpreadsheetViewportAnchor.values()) {
+                if (possible == SpreadsheetViewportAnchor.NONE) {
+                    continue;
+                }
+
+                if (token.equals(possible.kebabText())) {
+                    anchor = possible;
+                    break;
+                }
+            }
+        }
+
+        if (null == anchor) {
+            save.restore();
+        }
+
+        return Optional.ofNullable(anchor);
+    }
+
+    private String readToken() {
+        final StringBuilder b = new StringBuilder();
+
+        final TextCursor cursor = this.cursor;
+
+        while (cursor.isNotEmpty()) {
+            final char c = cursor.at();
+            if ('-' == c || Character.isLetter(c)) {
+                b.append(c);
+                cursor.next();
+                continue;
+            }
+            break;
+        }
+
+        return b.toString();
+    }
+
+    private boolean parseToken(final Parser<SpreadsheetParserContext> parser) {
+        return parser.parse(this.cursor, PARSER_CONTEXT)
+            .isPresent();
     }
 
     SpreadsheetCellReference homeCellReference() {
@@ -166,6 +289,18 @@ final class SpreadsheetViewportParser {
         ),
         ';' // not actually used/
     );
+
+    SpreadsheetViewportNavigationList navigations() {
+        final TextCursor cursor = this.cursor;
+
+        final TextCursorSavePoint save = cursor.save();
+        cursor.end();
+
+        return SpreadsheetViewportNavigationList.parse(
+            save.textBetween()
+                .toString()
+        );
+    }
 
     final TextCursor cursor;
 

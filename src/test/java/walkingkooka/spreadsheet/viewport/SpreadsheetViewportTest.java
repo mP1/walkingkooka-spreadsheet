@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -716,6 +717,259 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 NAVIGATIONS
             ),
             RECTANGLE + " anchoredSelection: " + CELL_RANGE + " " + ANCHOR + " navigations: " + NAVIGATIONS.iterator().next()
+        );
+    }
+
+    // fromUrlFragment..................................................................................................
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndInvalidTokenFails() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentFails(
+            rectangle.urlFragment() + "/abc",
+            "Invalid character 'a' at 30 expected \"/\""
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangle() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment(),
+            rectangle.viewport()
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndInvalidIncludesFrozenColumnsRowsFails() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentFails(
+            rectangle.urlFragment() + "/includeFrozenColumnsRows/!invalid",
+            "Invalid character '!' at 55"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndIncludesFrozenColumnsRowsFalse() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/includeFrozenColumnsRows/false",
+            rectangle.viewport()
+                .setIncludeFrozenColumnsRows(false)
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndIncludesFrozenColumnsRowsTrue() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/includeFrozenColumnsRows/true",
+            rectangle.viewport()
+                .setIncludeFrozenColumnsRows(true)
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndInvalidSelectionFails() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentFails(
+            rectangle.urlFragment() + "/selection/!Invalid",
+            "Missing selection"
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndCell() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/selection/B2",
+            rectangle.viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCell("B2")
+                            .setDefaultAnchor()
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndCellRange() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/selection/C3:D4",
+            rectangle.viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCellRange("C3:D4")
+                            .setDefaultAnchor()
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndCellRangeAndTopLeft() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/selection/C3:D4/top-left",
+            rectangle.viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCellRange("C3:D4")
+                            .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndLabel() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/selection/Label123",
+            rectangle.viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.labelName("Label123")
+                            .setDefaultAnchor()
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndCellAndNavigations() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/selection/B2/navigations/right 400px",
+            rectangle.viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCell("B2")
+                            .setDefaultAnchor()
+                    )
+                ).setNavigations(
+                    SpreadsheetViewportNavigationList.parse("right 400px")
+                )
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndCellRangeAnchorAndNavigations() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/selection/C3:D4/top-left/navigations/right 400px",
+            rectangle.viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCellRange("C3:D4")
+                            .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                    )
+                ).setNavigations(
+                    SpreadsheetViewportNavigationList.parse("right 400px")
+                )
+        );
+    }
+
+    @Test
+    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndNavigations() {
+        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
+            SpreadsheetSelection.A1,
+            200,
+            300
+        );
+        this.fromUrlFragmentAndCheck(
+            rectangle.urlFragment() + "/navigations/right 555px",
+            rectangle.viewport()
+                .setNavigations(
+                    SpreadsheetViewportNavigationList.parse("right 555px")
+                )
+        );
+    }
+
+    private void fromUrlFragmentFails(final String urlFragment,
+                                      final String expected) {
+        this.fromUrlFragmentFails(
+            UrlFragment.parse(urlFragment),
+            new IllegalArgumentException(expected)
+        );
+    }
+
+    private void fromUrlFragmentFails(final UrlFragment urlFragment,
+                                      final IllegalArgumentException expected) {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetViewport.fromUrlFragment(urlFragment)
+        );
+
+        this.checkEquals(
+            expected.getMessage(),
+            thrown.getMessage()
+        );
+    }
+
+    private void fromUrlFragmentAndCheck(final String urlFragment,
+                                         final SpreadsheetViewport expected) {
+        this.fromUrlFragmentAndCheck(
+            UrlFragment.parse(urlFragment),
+            expected
+        );
+    }
+
+    private void fromUrlFragmentAndCheck(final UrlFragment urlFragment,
+                                         final SpreadsheetViewport expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetViewport.fromUrlFragment(urlFragment)
         );
     }
 

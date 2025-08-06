@@ -17,12 +17,15 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -58,6 +61,92 @@ public final class SpreadsheetViewport implements HasUrlFragment,
      * Constant useful to separate navigations in a CSV.
      */
     public final static CharacterConstant SEPARATOR = CharacterConstant.COMMA;
+
+    /**
+     * Accepts a {@link UrlFragment} that contains encoded within it a {@link SpreadsheetViewport}.
+     * <pre>
+     * /home/A1/width/200/height/300/navigations/left 400
+     * /home/A1/width/200/height/300/includeFrozenColumnsRows/true
+     * /home/A1/width/200/height/300/includeFrozenColumnsRows/true/selection/A1
+     * /home/A1/width/200/height/300/includeFrozenColumnsRows/true/selection/A1/navigations/left 400
+     * /home/A1/width/200/height/300/selection/A1
+     * /home/A1/width/200/height/300/navigations/left 400
+     * </pre>
+     */
+    public static SpreadsheetViewport fromUrlFragment(final UrlFragment urlFragment) {
+        Objects.requireNonNull(urlFragment, "urlFragment");
+
+        final String text = urlFragment.value();
+        final TextCursor cursor = TextCursors.charSequence(text);
+        final SpreadsheetViewportParser parser = SpreadsheetViewportParser.with(cursor);
+
+        SpreadsheetViewport viewport = parser.parseSpreadsheetViewportRectangle()
+            .viewport();
+
+        boolean gotSlash = false;
+
+        // /includeFrozenColumnsRows/true
+        // /includeFrozenColumnsRows/false
+        if(parser.optionalSlash()) {
+            gotSlash = true;
+
+            if(parser.includeFrozenColumnsRowsToken()) {
+                parser.slash();
+
+                viewport = viewport.setIncludeFrozenColumnsRows(
+                    parser.includeFrozenColumnsRowsValue()
+                );
+
+                gotSlash = false;
+            }
+        }
+
+        if(cursor.isNotEmpty() && (gotSlash || parser.optionalSlash())) {
+            if(parser.selectionToken()) {
+                parser.slash();
+
+                final SpreadsheetSelection selection = parser.spreadsheetSelection();
+                AnchoredSpreadsheetSelection anchoredSpreadsheetSelection = null;
+
+                SpreadsheetViewportAnchor anchor = null;
+                if(parser.optionalSlash()) {
+                    anchor = parser.anchor()
+                        .orElse(null);
+                }
+
+                if(null == anchor) {
+                    anchoredSpreadsheetSelection = selection.setDefaultAnchor();
+                    gotSlash = true;
+                } else {
+                    anchoredSpreadsheetSelection = selection.setAnchor(anchor);
+                    gotSlash = false;
+                }
+
+                viewport = viewport.setAnchoredSelection(
+                    Optional.ofNullable(anchoredSpreadsheetSelection)
+                );
+            }
+        }
+
+        if (cursor.isNotEmpty() && (gotSlash || parser.optionalSlash())) {
+            parser.navigationToken();
+            parser.slash();
+
+            viewport = viewport.setNavigations(
+                parser.navigations()
+            );
+        }
+
+        if(cursor.isNotEmpty()) {
+            throw new InvalidCharacterException(
+                text,
+                cursor.lineInfo()
+                    .textOffset()
+            );
+        }
+
+        return viewport;
+    }
 
     /**
      * Factory that creates a {@link SpreadsheetViewport} with the given cell home.
@@ -242,11 +331,15 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         return urlFragment;
     }
 
-    private final static UrlFragment INCLUDE_FROZEN_COLUMNS_ROWS = UrlFragment.with("includeFrozenColumnsRows/true");
+    final static String INCLUDE_FROZEN_COLUMNS_ROWS_STRING = "includeFrozenColumnsRows";
+    private final static UrlFragment INCLUDE_FROZEN_COLUMNS_ROWS = UrlFragment.with(INCLUDE_FROZEN_COLUMNS_ROWS_STRING + "/true");
 
-    private final static UrlFragment SELECTION = UrlFragment.with("selection");
+    final static String SELECTION_STRING = "selection";
+    private final static UrlFragment SELECTION = UrlFragment.with(SELECTION_STRING);
 
-    private final static UrlFragment NAVIGATIONS = UrlFragment.with("navigations");
+    final static String NAVIGATIONS_STRING = "navigations";
+
+    private final static UrlFragment NAVIGATIONS = UrlFragment.with(NAVIGATIONS_STRING);
 
     // Object...........................................................................................................
 
