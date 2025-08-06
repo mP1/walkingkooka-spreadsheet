@@ -182,30 +182,39 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     public final void testParseUrlFragmentSaveValue() {
         final SpreadsheetMetadataPropertyName<V> propertyName = this.createName();
 
-        final String text;
+        if (false == propertyName instanceof SpreadsheetMetadataPropertyNameAuditInfo &&
+            false == propertyName instanceof SpreadsheetMetadataPropertyNameSpreadsheetId &&
+            false == propertyName instanceof SpreadsheetMetadataPropertyNameStyle) {
+            final String text;
 
-        final V value = this.propertyValue();
-        if (value instanceof HasUrlFragment) {
-            final HasUrlFragment has = (HasUrlFragment) value;
-            text = has.urlFragment().value();
-        } else {
-            if (value instanceof HasText) {
-                final HasText has = (HasText) value;
-                text = has.text();
+            final V value = this.propertyValue();
+            if (value instanceof HasUrlFragment) {
+                final HasUrlFragment has = (HasUrlFragment) value;
+                text = has.urlFragment().value();
             } else {
-                text = String.valueOf(value);
+                if (value instanceof HasText) {
+                    final HasText has = (HasText) value;
+                    text = has.text();
+                } else {
+                    text = String.valueOf(value);
+                }
             }
-        }
 
-        try {
-            this.checkEquals(
-                value,
-                propertyName.parseUrlFragmentSaveValue(text),
-                () -> "parseUrlFragmentSaveValue " + CharSequences.quoteAndEscape(text)
+            this.parseUrlFragmentSaveValueAndCheck(
+                propertyName,
+                text,
+                value
             );
-        } catch (final UnsupportedOperationException ignore) {
-
         }
+    }
+
+    final void parseUrlFragmentSaveValueAndCheck(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                                 final String urlFragment,
+                                                 final V value) {
+        this.checkEquals(
+            value,
+            propertyName.parseUrlFragmentSaveValue(urlFragment)
+        );
     }
 
     // isConverterSelector...................................................................................
