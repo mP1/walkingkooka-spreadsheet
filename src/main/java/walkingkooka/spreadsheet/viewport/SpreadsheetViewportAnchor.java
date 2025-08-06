@@ -48,7 +48,14 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     RIGHT;
 
     SpreadsheetViewportAnchor() {
-        this.kebabText = CaseKind.kebabEnumName(this);
+        final String kebabText = CaseKind.SNAKE.change(
+            this.name(),
+            CaseKind.KEBAB
+        );
+        this.kebabText = kebabText;
+        this.urlFragment = kebabText.equals("none") ?
+            UrlFragment.EMPTY :
+            UrlFragment.with(kebabText);
     }
 
     public String kebabText() {
@@ -221,13 +228,10 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
 
     @Override
     public UrlFragment urlFragment() {
-        return UrlFragment.with(
-            CaseKind.SNAKE.change(
-                this.name(),
-                CaseKind.KEBAB
-            )
-        );
+        return this.urlFragment;
     }
+
+    private final UrlFragment urlFragment;
 
     public final static SpreadsheetViewportAnchor CELL = NONE;
     public final static SpreadsheetViewportAnchor COLUMN = NONE;

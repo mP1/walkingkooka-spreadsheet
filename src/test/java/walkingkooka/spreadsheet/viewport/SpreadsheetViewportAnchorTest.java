@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.viewport;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.HasUrlFragmentTesting;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -33,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportAnchorTest implements ClassTesting<SpreadsheetViewportAnchor>,
-    ParseStringTesting<SpreadsheetViewportAnchor> {
+    ParseStringTesting<SpreadsheetViewportAnchor>,
+    HasUrlFragmentTesting {
 
     // constants........................................................................................................
 
@@ -106,33 +109,6 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         assertSame(
             expected,
             anchor.opposite()
-        );
-    }
-
-    // kebabText........................................................................................................
-
-    @Test
-    public void testKebabTextLeft() {
-        this.kebabTextAndCheck(
-            SpreadsheetViewportAnchor.LEFT,
-            "left"
-        );
-    }
-
-    @Test
-    public void testKebabTextTopRight() {
-        this.kebabTextAndCheck(
-            SpreadsheetViewportAnchor.TOP_RIGHT,
-            "top-right"
-        );
-    }
-
-    private void kebabTextAndCheck(final SpreadsheetViewportAnchor anchor,
-                                   final String expected) {
-        this.checkEquals(
-            expected,
-            anchor.kebabText(),
-            () -> anchor + " kebabText"
         );
     }
 
@@ -918,6 +894,32 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
             expected,
             anchor.toRowOrRowRangeAnchor(),
             anchor::toString
+        );
+    }
+
+    // HasUrlFragment...................................................................................................
+
+    @Test
+    public void testUrlFragmentNone() {
+        this.urlFragmentAndCheck(
+            SpreadsheetViewportAnchor.NONE,
+            UrlFragment.EMPTY
+        );
+    }
+
+    @Test
+    public void testUrlFragmentTopLeft() {
+        this.urlFragmentAndCheck(
+            SpreadsheetViewportAnchor.TOP_LEFT,
+            "top-left"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentLeft() {
+        this.urlFragmentAndCheck(
+            SpreadsheetViewportAnchor.LEFT,
+            "left"
         );
     }
 
