@@ -71,11 +71,4 @@ public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTes
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }
-
-    // TypeNameTesting...................................................................................................
-
-    @Override
-    public String typeNamePrefix() {
-        return SpreadsheetMetadata.class.getSimpleName();
-    }
 }

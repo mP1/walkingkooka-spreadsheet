@@ -23,7 +23,9 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -41,8 +43,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> extends SpreadsheetMetadataTestCase2<N>
-    implements ToStringTesting<N> {
+public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
+    TypeNameTesting<N>,
+    ToStringTesting<N> {
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -272,7 +275,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 
-    // TypeNameTesting...................................................................................................
+    // TypeNameTesting..................................................................................................
 
     @Override
     public final String typeNamePrefix() {
