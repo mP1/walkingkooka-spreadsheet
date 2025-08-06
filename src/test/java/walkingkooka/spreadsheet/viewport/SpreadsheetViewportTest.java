@@ -427,7 +427,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testUrlFragmentCell() {
         this.urlFragmentAndCheck(
             SpreadsheetSelection.A1.setDefaultAnchor(),
-            "/A1"
+            "/home/A1/width/100/height/50/selection/A1"
         );
     }
 
@@ -436,7 +436,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseCellRange("B2:C3")
                 .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
-            "/B2:C3/top-left"
+            "/home/A1/width/100/height/50/selection/B2:C3/top-left"
         );
     }
 
@@ -445,7 +445,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseCellRange("B2:C3")
                 .setAnchor(SpreadsheetViewportAnchor.TOP_RIGHT),
-            "/B2:C3/top-right"
+            "/home/A1/width/100/height/50/selection/B2:C3/top-right"
         );
     }
 
@@ -454,7 +454,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseColumn("Z")
                 .setDefaultAnchor(),
-            "/Z"
+            "/home/A1/width/100/height/50/selection/Z"
         );
     }
 
@@ -463,7 +463,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseColumnRange("X:Y")
                 .setAnchor(SpreadsheetViewportAnchor.LEFT),
-            "/X:Y/left"
+            "/home/A1/width/100/height/50/selection/X:Y/left"
         );
     }
 
@@ -472,7 +472,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseColumnRange("X:Y")
                 .setAnchor(SpreadsheetViewportAnchor.RIGHT),
-            "/X:Y/right"
+            "/home/A1/width/100/height/50/selection/X:Y/right"
         );
     }
 
@@ -481,7 +481,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseCellOrLabel("Label123")
                 .setDefaultAnchor(),
-            "/Label123"
+            "/home/A1/width/100/height/50/selection/Label123"
         );
     }
 
@@ -490,7 +490,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.urlFragmentAndCheck(
             SpreadsheetSelection.parseCellOrLabel("Label123")
                 .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT),
-            "/Label123/bottom-right"
+            "/home/A1/width/100/height/50/selection/Label123/bottom-right"
         );
     }
 
@@ -505,6 +505,25 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                     )
                 ),
             expected
+        );
+    }
+
+    @Test
+    public void testUrlFragmentIncludeFrozenColumnsRowsTrueAndWithoutSelection() {
+        this.urlFragmentAndCheck(
+            HOME.viewportRectangle(111, 222)
+                .viewport()
+                .setIncludeFrozenColumnsRows(true)
+                .setNavigations(SpreadsheetViewportNavigationList.parse("right 99px,down 999px")),
+            "/home/A1/width/111/height/222/includeFrozenColumnsRows/true/selection/navigations/right%2099px,down%20999px"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentAllProperties() {
+        this.urlFragmentAndCheck(
+            this.createObject(),
+            "/home/A1/width/100/height/50/selection/B2:C3/top-left/navigations/left%20column"
         );
     }
 

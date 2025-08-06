@@ -215,11 +215,38 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     // HasUrlFragment...................................................................................................
 
+    // /home/A1/width/200/height/300/includeFrozenColumnsRows/true/selection/B2/top-left/navigations/right 400px
     @Override
     public UrlFragment urlFragment() {
-        return this.anchoredSelection.map(HasUrlFragment::urlFragment)
-            .orElse(UrlFragment.EMPTY);
+        UrlFragment urlFragment = this.rectangle.urlFragment();
+
+        if(this.includeFrozenColumnsRows) {
+            urlFragment = urlFragment.appendSlashThen(INCLUDE_FROZEN_COLUMNS_ROWS);
+        }
+
+        urlFragment = urlFragment.appendSlashThen(SELECTION);
+
+        final AnchoredSpreadsheetSelection selection = this.anchoredSelection.orElse(null);
+        if(null != selection) {
+            urlFragment = urlFragment.append(
+                selection.urlFragment()
+            );
+        }
+
+        final SpreadsheetViewportNavigationList navigations = this.navigations;
+        if(navigations.isNotEmpty()) {
+            urlFragment = urlFragment.appendSlashThen(NAVIGATIONS)
+                .appendSlashThen(this.navigations.urlFragment());
+        }
+
+        return urlFragment;
     }
+
+    private final static UrlFragment INCLUDE_FROZEN_COLUMNS_ROWS = UrlFragment.with("includeFrozenColumnsRows/true");
+
+    private final static UrlFragment SELECTION = UrlFragment.with("selection");
+
+    private final static UrlFragment NAVIGATIONS = UrlFragment.with("navigations");
 
     // Object...........................................................................................................
 
