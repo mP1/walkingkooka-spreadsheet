@@ -26,4 +26,9 @@ public abstract class SpreadsheetMetadataTestCase2<T> implements ClassTesting2<T
     SpreadsheetMetadataTestCase2() {
         super();
     }
+
+    @Override
+    public final String typeNamePrefix() {
+        return SpreadsheetMetadata.class.getSimpleName();
+    }
 }

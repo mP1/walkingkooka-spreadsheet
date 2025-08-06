@@ -75,12 +75,7 @@ public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetad
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 
-    // TypeNameTesting...................................................................................................
-
-    @Override
-    public String typeNamePrefix() {
-        return SpreadsheetMetadata.class.getSimpleName();
-    }
+    // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNameSuffix() {
