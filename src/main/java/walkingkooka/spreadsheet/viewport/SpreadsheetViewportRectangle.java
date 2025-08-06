@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import walkingkooka.net.HasUrlFragment;
+import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -36,7 +38,8 @@ import java.util.Objects;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetViewportRectangle implements Comparable<SpreadsheetViewportRectangle>,
-    TreePrintable {
+    TreePrintable,
+    HasUrlFragment {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -278,4 +281,38 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         printer.print("height: ");
         printer.println(String.valueOf(this.height));
     }
+
+    // UrlFragment......................................................................................................
+
+    // /home/A1/width/200/height/300
+    @Override
+    public UrlFragment urlFragment() {
+        return UrlFragment.SLASH.append(HOME)
+            .appendSlashThen(this.home.urlFragment())
+            .appendSlashThen(WIDTH)
+            .appendSlashThen(
+                UrlFragment.with(
+                    toStringWithoutExtraTrailingZero(this.width)
+                )
+            ).appendSlashThen(HEIGHT)
+            .appendSlashThen(
+                UrlFragment.with(
+                    toStringWithoutExtraTrailingZero(this.height)
+                )
+            );
+    }
+
+    private static String toStringWithoutExtraTrailingZero(final double value) {
+        final String toString = String.valueOf(value);
+        return toString.endsWith(".0") ?
+            toString.substring(
+                0,
+                toString.length() - 2
+            ) :
+            toString;
+    }
+
+    private final static UrlFragment HOME = UrlFragment.with("home");
+    private final static UrlFragment WIDTH = UrlFragment.with("width");
+    private final static UrlFragment HEIGHT = UrlFragment.with("height");
 }
