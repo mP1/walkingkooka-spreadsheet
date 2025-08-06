@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -39,7 +40,8 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     JsonNodeMarshallingTesting<SpreadsheetViewportRectangle>,
     ParseStringTesting<SpreadsheetViewportRectangle>,
     ToStringTesting<SpreadsheetViewportRectangle>,
-    TreePrintableTesting {
+    TreePrintableTesting,
+    HasUrlFragmentTesting {
 
     private final static double WIDTH = 50;
     private final static double HEIGHT = 30;
@@ -401,6 +403,28 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
             "home: B9" + EOL +
                 "width: 50.0" + EOL +
                 "height: 30.0" + EOL
+        );
+    }
+
+    // UrlFragment......................................................................................................
+
+    @Test
+    public void testUrlFragment() {
+        this.urlFragmentAndCheck(
+            this.createObject(),
+            "/home/B9/width/50/height/30"
+        );
+    }
+
+    @Test
+    public void testUrlFragment2() {
+        this.urlFragmentAndCheck(
+            SpreadsheetViewportRectangle.with(
+                this.home(),
+                30.5,
+                40.5
+            ),
+            "/home/B9/width/30.5/height/40.5"
         );
     }
 
