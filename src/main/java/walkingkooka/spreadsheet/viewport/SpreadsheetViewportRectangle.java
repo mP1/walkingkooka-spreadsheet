@@ -17,37 +17,23 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
-import walkingkooka.spreadsheet.formula.parser.CellSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.DoubleParserToken;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.math.MathContext;
 import java.util.Objects;
 
 /**
@@ -108,182 +94,26 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         }
     }
 
-    /**
-     * Parses the width and height parse text in the following format.
-     * <pre>
-     * /home/A1/width/200/height/300
-     * </pre>
-     * Where width and height are decimal numbers.
-     */
     public static SpreadsheetViewportRectangle fromUrlFragment(final UrlFragment urlFragment) {
         Objects.requireNonNull(urlFragment, "urlFragment");
 
         final String text = urlFragment.value();
-        final TextCursor cursor = TextCursors.charSequence(text);
-        
-        SpreadsheetCellReference home = null;
-        double width = 0;
-        double height = 0;
+        final SpreadsheetViewportParser parser = SpreadsheetViewportParser.with(
+            TextCursors.charSequence(text)
+        );
 
-        final int MODE_SLASH_BEFORE_HOME_TOKEN = 1;
-        final int MODE_HOME_TOKEN = 2;
-        final int MODE_SLASH_BEFORE_CELL_REFERENCE = 3;
-        final int MODE_HOME_TOKEN_CELL_REFERENCE = 4;
-
-        final int MODE_SLASH_BEFORE_WIDTH_TOKEN = 5;
-        final int MODE_WIDTH_TOKEN = 6;
-        final int MODE_SLASH_BEFORE_WIDTH_VALUE = 7;
-        final int MODE_WIDTH_VALUE = 8;
-
-        final int MODE_SLASH_BEFORE_HEIGHT_TOKEN = 9;
-        final int MODE_HEIGHT_TOKEN = 10;
-        final int MODE_SLASH_BEFORE_HEIGHT_VALUE = 11;
-        final int MODE_HEIGHT_VALUE = 12;
-
-        final int MODE_FINISHED = 13;
-        
-        int mode = MODE_SLASH_BEFORE_HOME_TOKEN;
-        while (cursor.isNotEmpty()) {
-            switch (mode) {
-                case MODE_SLASH_BEFORE_HOME_TOKEN:
-                    SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
-                    mode = MODE_HOME_TOKEN;
-                    break;
-                case MODE_HOME_TOKEN:
-                    parseTokenOrFail(cursor, HOME_TOKEN_PARSER, HOME_TOKEN);
-                    mode = MODE_SLASH_BEFORE_CELL_REFERENCE;
-                    break;
-                case MODE_SLASH_BEFORE_CELL_REFERENCE:
-                    SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
-                    mode = MODE_HOME_TOKEN_CELL_REFERENCE;
-                    break;
-                case MODE_HOME_TOKEN_CELL_REFERENCE:
-                    home = SpreadsheetFormulaParsers.cell()
-                        .parse(
-                            cursor,
-                            PARSER_CONTEXT
-                        ).orElseThrow(() -> new IllegalArgumentException("Missing home"))
-                        .cast(CellSpreadsheetFormulaParserToken.class)
-                        .cell();
-                    mode = MODE_SLASH_BEFORE_WIDTH_TOKEN;
-                    break;
-
-                case MODE_SLASH_BEFORE_WIDTH_TOKEN:
-                    SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
-                    mode = MODE_WIDTH_TOKEN;
-                    break;
-                case MODE_WIDTH_TOKEN:
-                    parseTokenOrFail(cursor, WIDTH_TOKEN_PARSER, WIDTH_TOKEN);
-                    mode = MODE_SLASH_BEFORE_WIDTH_VALUE;
-                    break;
-                case MODE_SLASH_BEFORE_WIDTH_VALUE:
-                    SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
-                    mode = MODE_WIDTH_VALUE;
-                    break;
-                case MODE_WIDTH_VALUE:
-                    width = parseDoubleOrFail(
-                        cursor,
-                        WIDTH_TOKEN
-                    );
-                    mode = MODE_SLASH_BEFORE_HEIGHT_TOKEN;
-                    break;
-
-                case MODE_SLASH_BEFORE_HEIGHT_TOKEN:
-                    SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
-                    mode = MODE_HEIGHT_TOKEN;
-                    break;
-                case MODE_HEIGHT_TOKEN:
-                    parseTokenOrFail(cursor, HEIGHT_TOKEN_PARSER, HEIGHT_TOKEN);
-                    mode = MODE_SLASH_BEFORE_HEIGHT_VALUE;
-                    break;
-                case MODE_SLASH_BEFORE_HEIGHT_VALUE:
-                    SLASH_PARSER.parse(cursor, PARSER_CONTEXT);
-                    mode = MODE_HEIGHT_VALUE;
-                    break;
-                case MODE_HEIGHT_VALUE:
-                    height = parseDoubleOrFail(
-                        cursor,
-                        HEIGHT_TOKEN
-                    );
-                    mode = MODE_FINISHED;
-                    break;
-
-                default:
-                    throw new IllegalArgumentException("Invalid mode: " + mode);
-            }
+        final SpreadsheetViewportRectangle rectangle = parser.parseSpreadsheetViewportRectangle();
+        final TextCursor cursor = parser.cursor;
+        if(cursor.isNotEmpty()) {
+            throw new InvalidCharacterException(
+                text,
+                cursor.lineInfo()
+                    .textOffset()
+            );
         }
 
-        switch (mode) {
-            case MODE_SLASH_BEFORE_HOME_TOKEN:
-            case MODE_HOME_TOKEN:
-            case MODE_SLASH_BEFORE_CELL_REFERENCE:
-                throw new IllegalArgumentException("Missing home");
-            case MODE_HOME_TOKEN_CELL_REFERENCE:
-            case MODE_SLASH_BEFORE_WIDTH_TOKEN:
-            case MODE_WIDTH_TOKEN:
-            case MODE_SLASH_BEFORE_WIDTH_VALUE:
-                throw new IllegalArgumentException("Missing width");
-            case MODE_WIDTH_VALUE:
-            case MODE_SLASH_BEFORE_HEIGHT_TOKEN:
-            case MODE_HEIGHT_TOKEN:
-            case MODE_SLASH_BEFORE_HEIGHT_VALUE:
-            case MODE_HEIGHT_VALUE:
-                throw new IllegalArgumentException("Missing height");
-            case MODE_FINISHED:
-                return with(
-                    home,
-                    width,
-                    height
-                );
-            default:
-                throw new IllegalArgumentException("Invalid mode: " + mode);
-        }
+        return rectangle;
     }
-
-    private final static Parser<SpreadsheetParserContext> SLASH_PARSER = Parsers.string("/", CaseSensitivity.SENSITIVE)
-        .orReport(ParserReporters.basic())
-        .cast();
-
-    private final static String HOME_TOKEN = "home";
-    private final static Parser<SpreadsheetParserContext> HOME_TOKEN_PARSER = Parsers.string(HOME_TOKEN, CaseSensitivity.SENSITIVE);
-
-    private final static String WIDTH_TOKEN = "width";
-    private final static Parser<SpreadsheetParserContext> WIDTH_TOKEN_PARSER = Parsers.string(WIDTH_TOKEN, CaseSensitivity.SENSITIVE);
-
-    private final static String HEIGHT_TOKEN = "height";
-    private final static Parser<SpreadsheetParserContext> HEIGHT_TOKEN_PARSER = Parsers.string(HEIGHT_TOKEN, CaseSensitivity.SENSITIVE);
-
-    private static void parseTokenOrFail(final TextCursor cursor,
-                                         final Parser<SpreadsheetParserContext> parser,
-                                         final String label) {
-        if(false == parser.parse(cursor, PARSER_CONTEXT).isPresent()) {
-            throw new IllegalArgumentException("Missing " + label);
-        }
-    }
-
-    /**
-     * Used to parse the width or height values within a {@link UrlFragment}.
-     */
-    private static double parseDoubleOrFail(final TextCursor cursor,
-                                            final String label) {
-        return Parsers.doubleParser()
-            .parse(
-                cursor,
-                PARSER_CONTEXT
-            ).orElseThrow(() -> new IllegalArgumentException("Missing " + label))
-            .cast(DoubleParserToken.class)
-            .value();
-    }
-
-    private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
-        InvalidCharacterExceptionFactory.POSITION_EXPECTED,
-        DateTimeContexts.fake(),
-        ExpressionNumberContexts.basic(
-            ExpressionNumberKind.BIG_DECIMAL,
-            DecimalNumberContexts.american(MathContext.DECIMAL32)
-        ),
-        ';' // not actually used/
-    );
 
     /**
      * Factory that creates a new {@link SpreadsheetViewportRectangle}.
