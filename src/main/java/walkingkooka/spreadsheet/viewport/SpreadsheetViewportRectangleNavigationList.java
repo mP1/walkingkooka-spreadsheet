@@ -172,7 +172,7 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
 
     // HasUrlFragment...................................................................................................
 
-    // /home/A1/width/200/height/300/includeFrozenColumnsRows/true/selection/B2/top-left/navigations/right 400px
+    // /home/A1/width/200/height/300/navigations/right 400px
     @Override
     public UrlFragment urlFragment() {
         UrlFragment urlFragment = this.rectangle.urlFragment();
