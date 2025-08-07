@@ -35,22 +35,13 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetViewportRectangleNavigationListTest implements ClassTesting<SpreadsheetViewportRectangleNavigationList>,
+public final class SpreadsheetViewportHomeNavigationListTest implements ClassTesting<SpreadsheetViewportHomeNavigationList>,
     HasUrlFragmentTesting,
-    HashCodeEqualsDefinedTesting2<SpreadsheetViewportRectangleNavigationList>,
-    ToStringTesting<SpreadsheetViewportRectangleNavigationList>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetViewportHomeNavigationList>,
+    ToStringTesting<SpreadsheetViewportHomeNavigationList>,
     TreePrintableTesting {
 
     private final static SpreadsheetCellReference HOME = SpreadsheetSelection.A1;
-
-    private final static int WIDTH = 100;
-
-    private final static int HEIGHT = 50;
-
-    private static final SpreadsheetViewportRectangle RECTANGLE = HOME.viewportRectangle(
-        WIDTH,
-        HEIGHT
-    );
 
     private static final SpreadsheetViewportNavigationList NAVIGATIONS = SpreadsheetViewportNavigationList.EMPTY
         .concat(
@@ -58,10 +49,10 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
         );
 
     @Test
-    public void testWithNullRectangleFails() {
+    public void testWithNullHomeFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetViewportRectangleNavigationList.with(null)
+            () -> SpreadsheetViewportHomeNavigationList.with(null)
         );
     }
 
@@ -69,7 +60,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
 
     @Test
     public void testSetNavigationsNullFails() {
-        final SpreadsheetViewportRectangleNavigationList selection = this.createObject();
+        final SpreadsheetViewportHomeNavigationList selection = this.createObject();
         assertThrows(
             NullPointerException.class,
             () -> selection.setNavigations(null)
@@ -78,7 +69,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
 
     @Test
     public void testSetNavigationsSame() {
-        final SpreadsheetViewportRectangleNavigationList selection = this.createObject();
+        final SpreadsheetViewportHomeNavigationList selection = this.createObject();
         assertSame(
             selection,
             selection.setNavigations(selection.navigations())
@@ -87,7 +78,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
 
     @Test
     public void testSetNavigationsDifferent() {
-        final SpreadsheetViewportRectangleNavigationList viewport = this.createObject();
+        final SpreadsheetViewportHomeNavigationList viewport = this.createObject();
         final SpreadsheetViewportNavigationList navigations = SpreadsheetViewportNavigationList.EMPTY.concat(
             SpreadsheetViewportNavigation.extendRightColumn()
         );
@@ -97,7 +88,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
             "different navigations"
         );
 
-        final SpreadsheetViewportRectangleNavigationList differentViewport = viewport.setNavigations(navigations);
+        final SpreadsheetViewportHomeNavigationList differentViewport = viewport.setNavigations(navigations);
         assertNotSame(
             viewport,
             differentViewport
@@ -108,7 +99,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
         );
     }
 
-    private void navigationsAndCheck(final SpreadsheetViewportRectangleNavigationList viewport,
+    private void navigationsAndCheck(final SpreadsheetViewportHomeNavigationList viewport,
                                      final List<SpreadsheetViewportNavigation> navigations) {
         this.checkEquals(
             navigations,
@@ -120,11 +111,10 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     // equals...........................................................................................................
 
     @Test
-    public void testEqualsDifferentRectangle() {
+    public void testEqualsDifferentHome() {
         this.checkNotEquals(
-            SpreadsheetViewportRectangleNavigationList.with(
-                SpreadsheetSelection.parseCell("Z99")
-                    .viewportRectangle(99, 999),
+            SpreadsheetViewportHomeNavigationList.with(
+                SpreadsheetSelection.parseCell("Z99"),
                 NAVIGATIONS
             )
         );
@@ -133,8 +123,8 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     @Test
     public void testEqualsDifferentNavigations() {
         this.checkNotEquals(
-            SpreadsheetViewportRectangleNavigationList.with(
-                RECTANGLE,
+            SpreadsheetViewportHomeNavigationList.with(
+                HOME,
                 SpreadsheetViewportNavigationList.EMPTY.concat(
                     SpreadsheetViewportNavigation.rightColumn()
                 )
@@ -143,9 +133,9 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     }
 
     @Override
-    public SpreadsheetViewportRectangleNavigationList createObject() {
-        return SpreadsheetViewportRectangleNavigationList.with(
-            RECTANGLE,
+    public SpreadsheetViewportHomeNavigationList createObject() {
+        return SpreadsheetViewportHomeNavigationList.with(
+            HOME,
             NAVIGATIONS
         );
     }
@@ -153,10 +143,10 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     // TreePrintable....................................................................................................
 
     @Test
-    public void testTreePrintRectangleAndNavigations() {
+    public void testTreePrintHomeAndNavigations() {
         this.treePrintAndCheck(
-            SpreadsheetViewportRectangleNavigationList.with(
-                RECTANGLE,
+            SpreadsheetViewportHomeNavigationList.with(
+                HOME,
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
                         SpreadsheetViewportNavigation.leftColumn(),
@@ -164,12 +154,9 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
                     )
                 )
             ),
-            "SpreadsheetViewportRectangleNavigationList\n" +
-                "  rectangle:\n" +
-                "    SpreadsheetViewportRectangle\n" +
-                "      home: A1\n" +
-                "      width: 100.0\n" +
-                "      height: 50.0\n" +
+            "SpreadsheetViewportHomeNavigationList\n" +
+                "  home:\n" +
+                "    cell A1\n" +
                 "  navigations:\n" +
                 "    left column\n" +
                 "    up row\n"
@@ -179,86 +166,69 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     // HasUrlFragment...................................................................................................
 
     @Test
-    public void testUrlFragmentOnlySpreadsheetViewportRectangle() {
+    public void testUrlFragmentOnlyHome() {
         this.urlFragmentAndCheck(
-            SpreadsheetViewportRectangleNavigationList.with(RECTANGLE),
-            RECTANGLE.urlFragment()
+            SpreadsheetViewportHomeNavigationList.with(HOME),
+            "/" + HOME.urlFragment()
         );
     }
 
     @Test
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
-            SpreadsheetViewportRectangleNavigationList.with(
-                RECTANGLE,
+            SpreadsheetViewportHomeNavigationList.with(
+                HOME,
                 NAVIGATIONS
             ),
-            "/home/A1/width/100/height/50/navigations/left%20column"
+            "/A1/left%20column"
         );
     }
 
     // toString.........................................................................................................
 
     @Test
-    public void testToStringOnlySpreadsheetViewportRectangle() {
+    public void testToStringOnlyHome() {
         this.toStringAndCheck(
-            SpreadsheetViewportRectangleNavigationList.with(
-                RECTANGLE
-            ),
-            "home: A1 width: 100.0 height: 50.0"
+            SpreadsheetViewportHomeNavigationList.with(HOME),
+            "A1"
         );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetViewportRectangleNavigationList.with(
-                RECTANGLE,
+            SpreadsheetViewportHomeNavigationList.with(
+                HOME,
                 NAVIGATIONS
             ),
-            RECTANGLE + " navigations: " + NAVIGATIONS.iterator().next()
+            "A1 left column"
         );
     }
 
     // fromUrlFragment..................................................................................................
 
     @Test
-    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndInvalidNavigationFails() {
-        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
-            SpreadsheetSelection.A1,
-            200,
-            300
-        );
+    public void testFromUrlFragmentWithInvalidCellFails() {
         this.fromUrlFragmentFails(
-            rectangle.urlFragment() + "/abc",
-            "Invalid character 'a' at 30 expected \"/\""
+            "/!invalid",
+            "Missing home"
         );
     }
 
     @Test
-    public void testFromUrlFragmentWithSpreadsheetViewportRectangle() {
-        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
-            SpreadsheetSelection.A1,
-            200,
-            300
-        );
-        this.fromUrlFragmentAndCheck(
-            rectangle.urlFragment(),
-            SpreadsheetViewportRectangleNavigationList.with(rectangle)
+    public void testFromUrlFragmentWithInvalidNavigationsFails() {
+        this.fromUrlFragmentFails(
+            "/A1/XYZ",
+            "Invalid character 'X' at 4"
         );
     }
 
     @Test
-    public void testFromUrlFragmentWithSpreadsheetViewportRectangleAndNavigations() {
-        final SpreadsheetViewportRectangle rectangle = SpreadsheetViewportRectangle.with(
-            SpreadsheetSelection.A1,
-            200,
-            300
-        );
+    public void testFromUrlFragmentWithCellAndNavigations() {
         this.fromUrlFragmentAndCheck(
-            rectangle.urlFragment() + "/navigations/right 555px",
-            SpreadsheetViewportRectangleNavigationList.with(
-                rectangle,
+            "/" + HOME.urlFragment() + "/right 555px",
+            SpreadsheetViewportHomeNavigationList.with(
+                HOME,
                 SpreadsheetViewportNavigationList.parse("right 555px")
             )
         );
@@ -276,7 +246,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
                                       final IllegalArgumentException expected) {
         final IllegalArgumentException thrown = assertThrows(
             IllegalArgumentException.class,
-            () -> SpreadsheetViewportRectangleNavigationList.fromUrlFragment(urlFragment)
+            () -> SpreadsheetViewportHomeNavigationList.fromUrlFragment(urlFragment)
         );
 
         this.checkEquals(
@@ -286,7 +256,7 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     }
 
     private void fromUrlFragmentAndCheck(final String urlFragment,
-                                         final SpreadsheetViewportRectangleNavigationList expected) {
+                                         final SpreadsheetViewportHomeNavigationList expected) {
         this.fromUrlFragmentAndCheck(
             UrlFragment.parse(urlFragment),
             expected
@@ -294,18 +264,18 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
     }
 
     private void fromUrlFragmentAndCheck(final UrlFragment urlFragment,
-                                         final SpreadsheetViewportRectangleNavigationList expected) {
+                                         final SpreadsheetViewportHomeNavigationList expected) {
         this.checkEquals(
             expected,
-            SpreadsheetViewportRectangleNavigationList.fromUrlFragment(urlFragment)
+            SpreadsheetViewportHomeNavigationList.fromUrlFragment(urlFragment)
         );
     }
 
     // helpers..........................................................................................................
 
     @Override
-    public Class<SpreadsheetViewportRectangleNavigationList> type() {
-        return SpreadsheetViewportRectangleNavigationList.class;
+    public Class<SpreadsheetViewportHomeNavigationList> type() {
+        return SpreadsheetViewportHomeNavigationList.class;
     }
 
     @Override
