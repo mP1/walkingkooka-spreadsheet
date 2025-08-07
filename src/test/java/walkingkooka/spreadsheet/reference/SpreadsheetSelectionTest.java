@@ -80,6 +80,22 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
+    @Test
+    public void testMaxColumn() {
+        this.checkNotEquals(
+            0,
+            SpreadsheetSelection.MAX_COLUMN
+        );
+    }
+
+    @Test
+    public void testMaxRow() {
+        this.checkNotEquals(
+            0,
+            SpreadsheetSelection.MAX_ROW
+        );
+    }
+
     // isCellText........................................................................................................
 
     @Test

@@ -93,6 +93,10 @@ public abstract class SpreadsheetSelection implements HasText,
     TreePrintable,
     UsesToStringBuilder {
 
+    public final static int MAX_COLUMN = SpreadsheetColumnReference.MAX_VALUE;
+
+    public final static int MAX_ROW = SpreadsheetRowReference.MAX_VALUE;
+
     /**
      * All columns and labels are case-insensitive
      */
