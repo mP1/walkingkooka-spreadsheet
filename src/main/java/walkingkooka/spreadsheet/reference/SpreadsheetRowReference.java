@@ -43,9 +43,9 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     SpreadsheetColumnOrRowReference{
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    public final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
+    final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
 
-    public final static int RADIX = 10;
+    final static int RADIX = 10;
 
     static SpreadsheetRowReference[] absoluteCache() {
         if (null == ABSOLUTE_CACHE) {

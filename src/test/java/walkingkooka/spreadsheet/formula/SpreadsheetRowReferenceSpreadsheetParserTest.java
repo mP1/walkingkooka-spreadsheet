@@ -22,7 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetRowReferenceSpreadsheetParserTest extends SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<SpreadsheetRowReferenceSpreadsheetParser> {
 
@@ -97,13 +97,16 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
 
     @Test
     public void testParseRelativeReferenceInvalid() {
-        final int value = SpreadsheetRowReference.MAX_VALUE + 1 + 1;
-        this.parseThrows("" + value, "Invalid row=1048576 not between 0 and 1048576");
+        final int value = SpreadsheetSelection.MAX_ROW + 1 + 1;
+        this.parseThrows(
+            "" + value,
+            "Invalid row=1048576 not between 0 and 1048576"
+        );
     }
 
     @Test
     public void testParseAbsoluteReferenceInvalid() {
-        final int value = SpreadsheetRowReference.MAX_VALUE + 1 + 1;
+        final int value = SpreadsheetSelection.MAX_ROW + 1 + 1;
         this.parseThrows("$" + value, "Invalid row=1048576 not between 0 and 1048576");
     }
 
@@ -114,7 +117,11 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
 
     @Test
     public void testParseMaxValue() {
-        this.parseAndCheck2("1048576", SpreadsheetReferenceKind.RELATIVE, SpreadsheetRowReference.MAX_VALUE);
+        this.parseAndCheck2(
+            "1048576",
+            SpreadsheetReferenceKind.RELATIVE,
+            SpreadsheetSelection.MAX_ROW
+        );
     }
 
     private void parseAndCheck2(final String text,
