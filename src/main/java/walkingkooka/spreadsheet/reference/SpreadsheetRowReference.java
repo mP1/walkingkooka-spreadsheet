@@ -39,7 +39,8 @@ import java.util.function.Predicate;
  */
 public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRange
     implements Value<Integer>,
-    Comparable<SpreadsheetRowReference> {
+    Comparable<SpreadsheetRowReference>,
+    SpreadsheetColumnOrRowReference{
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
     public final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
