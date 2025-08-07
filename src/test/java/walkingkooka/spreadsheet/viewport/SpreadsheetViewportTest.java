@@ -425,6 +425,14 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     // HasUrlFragment...................................................................................................
 
     @Test
+    public void testUrlFragmentSpreadsheetViewportRectangleOnly() {
+        this.urlFragmentAndCheck(
+            SpreadsheetViewport.with(RECTANGLE),
+            "/home/A1/width/100/height/50"
+        );
+    }
+
+    @Test
     public void testUrlFragmentCell() {
         this.urlFragmentAndCheck(
             SpreadsheetSelection.A1.setDefaultAnchor(),
@@ -516,7 +524,17 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 .viewport()
                 .setIncludeFrozenColumnsRows(true)
                 .setNavigations(SpreadsheetViewportNavigationList.parse("right 99px,down 999px")),
-            "/home/A1/width/111/height/222/includeFrozenColumnsRows/true/selection/navigations/right%2099px,down%20999px"
+            "/home/A1/width/111/height/222/includeFrozenColumnsRows/true/navigations/right%2099px,down%20999px"
+        );
+    }
+
+    @Test
+    public void testUrlFragmentMissingSelection() {
+        this.urlFragmentAndCheck(
+            HOME.viewportRectangle(111, 222)
+                .viewport()
+                .setNavigations(NAVIGATIONS),
+            "/home/A1/width/111/height/222/navigations/left%20column"
         );
     }
 
