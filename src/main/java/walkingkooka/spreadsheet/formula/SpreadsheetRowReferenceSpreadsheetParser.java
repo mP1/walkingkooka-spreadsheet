@@ -49,12 +49,12 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
 
     @Override
     int valueFromDigit(final char c) {
-        return Character.digit(c, SpreadsheetRowReference.RADIX);
+        return Character.digit(c, 10);
     }
 
     @Override
     int radix() {
-        return SpreadsheetRowReference.RADIX;
+        return 10;
     }
 
     @Override

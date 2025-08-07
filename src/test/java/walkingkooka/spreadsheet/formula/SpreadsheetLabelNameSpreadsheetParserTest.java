@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetLabelNameSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameSpreadsheetParser>,
@@ -65,7 +64,9 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     @Test
     public void testParseMaxColumn() {
         // A1 column+row
-        this.parseAndCheck2("A" + SpreadsheetRowReference.MAX_VALUE + 1);
+        this.parseAndCheck2(
+            "A" + SpreadsheetSelection.MAX_ROW + 1
+        );
     }
 
     @Test

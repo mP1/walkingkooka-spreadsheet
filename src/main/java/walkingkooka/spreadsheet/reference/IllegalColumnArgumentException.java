@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 /**
- * This exception is thrown to denote an invalid column value, eg negative or greater than {@link SpreadsheetColumnReference#MAX_VALUE}.
+ * This exception is thrown to denote an invalid column value, eg negative or greater than {@link SpreadsheetSelection#MAX_COLUMN}.
  */
 public final class IllegalColumnArgumentException extends IllegalColumnOrRowArgumentException {
 
