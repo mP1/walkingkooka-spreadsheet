@@ -160,7 +160,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             final SpreadsheetViewportNavigation navigation;
 
             if (isMatch(LEFT, cursor)) {
-                navigation = parseSpaceColorRowOrPixels(
+                navigation = parseSpaceColumnOrRowOrPixels(
                     cursor,
                     COLUMN,
                     SpreadsheetViewportNavigation::leftColumn,
@@ -168,7 +168,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                 );
             } else {
                 if (isMatch(RIGHT, cursor)) {
-                    navigation = parseSpaceColorRowOrPixels(
+                    navigation = parseSpaceColumnOrRowOrPixels(
                         cursor,
                         COLUMN,
                         SpreadsheetViewportNavigation::rightColumn,
@@ -176,7 +176,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                     );
                 } else {
                     if (isMatch(UP, cursor)) {
-                        navigation = parseSpaceColorRowOrPixels(
+                        navigation = parseSpaceColumnOrRowOrPixels(
                             cursor,
                             ROW,
                             SpreadsheetViewportNavigation::upRow,
@@ -184,7 +184,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                         );
                     } else {
                         if (isMatch(DOWN, cursor)) {
-                            navigation = parseSpaceColorRowOrPixels(
+                            navigation = parseSpaceColumnOrRowOrPixels(
                                 cursor,
                                 ROW,
                                 SpreadsheetViewportNavigation::downRow,
@@ -192,7 +192,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                             );
                         } else {
                             if (isMatch(EXTEND_LEFT, cursor)) {
-                                navigation = parseSpaceColorRowOrPixels(
+                                navigation = parseSpaceColumnOrRowOrPixels(
                                     cursor,
                                     COLUMN,
                                     SpreadsheetViewportNavigation::extendLeftColumn,
@@ -200,7 +200,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                                 );
                             } else {
                                 if (isMatch(EXTEND_RIGHT, cursor)) {
-                                    navigation = parseSpaceColorRowOrPixels(
+                                    navigation = parseSpaceColumnOrRowOrPixels(
                                         cursor,
                                         COLUMN,
                                         SpreadsheetViewportNavigation::extendRightColumn,
@@ -208,7 +208,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                                     );
                                 } else {
                                     if (isMatch(EXTEND_UP, cursor)) {
-                                        navigation = parseSpaceColorRowOrPixels(
+                                        navigation = parseSpaceColumnOrRowOrPixels(
                                             cursor,
                                             ROW,
                                             SpreadsheetViewportNavigation::extendUpRow,
@@ -216,7 +216,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                                         );
                                     } else {
                                         if (isMatch(EXTEND_DOWN, cursor)) {
-                                            navigation = parseSpaceColorRowOrPixels(
+                                            navigation = parseSpaceColumnOrRowOrPixels(
                                                 cursor,
                                                 ROW,
                                                 SpreadsheetViewportNavigation::extendDownRow,
@@ -306,10 +306,10 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      * left 123px
      * </pre>
      */
-    private static SpreadsheetViewportNavigation parseSpaceColorRowOrPixels(final TextCursor cursor,
-                                                                            final Parser<ParserContext> columnOrRowParser,
-                                                                            final Supplier<SpreadsheetViewportNavigation> columnOrRowNavigation,
-                                                                            final IntFunction<SpreadsheetViewportNavigation> columnOrRowPixel) {
+    private static SpreadsheetViewportNavigation parseSpaceColumnOrRowOrPixels(final TextCursor cursor,
+                                                                               final Parser<ParserContext> columnOrRowParser,
+                                                                               final Supplier<SpreadsheetViewportNavigation> columnOrRowNavigation,
+                                                                               final IntFunction<SpreadsheetViewportNavigation> columnOrRowPixel) {
         parseSpace(cursor);
 
         final SpreadsheetViewportNavigation navigation;
