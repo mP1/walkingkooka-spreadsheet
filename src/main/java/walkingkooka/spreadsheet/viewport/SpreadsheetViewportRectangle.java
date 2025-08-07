@@ -298,14 +298,19 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
     // TreePrintable....................................................................................................
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.print("home: ");
-        printer.println(this.home.toString());
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            printer.print("home: ");
+            printer.println(this.home.toString());
 
-        printer.print("width: ");
-        printer.println(String.valueOf(this.width));
+            printer.print("width: ");
+            printer.println(String.valueOf(this.width));
 
-        printer.print("height: ");
-        printer.println(String.valueOf(this.height));
+            printer.print("height: ");
+            printer.println(String.valueOf(this.height));
+        }
+        printer.outdent();
     }
 
     // UrlFragment......................................................................................................

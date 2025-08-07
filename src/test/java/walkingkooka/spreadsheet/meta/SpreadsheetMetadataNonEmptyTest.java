@@ -2852,9 +2852,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "spreadsheetName: Untitled\n" +
                 "viewport: SpreadsheetViewport\n" +
                 "  rectangle:\n" +
-                "    home: D4\n" +
-                "    width: 100.0\n" +
-                "    height: 50.0\n" +
+                "    SpreadsheetViewportRectangle\n" +
+                "      home: D4\n" +
+                "      width: 100.0\n" +
+                "      height: 50.0\n" +
                 "  anchoredSelection:cell E5\n"
         );
     }

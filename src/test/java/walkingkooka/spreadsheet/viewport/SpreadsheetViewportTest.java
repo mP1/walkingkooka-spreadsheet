@@ -365,9 +365,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             ),
             "SpreadsheetViewport\n" +
                 "  rectangle:\n" +
-                "    home: A1\n" +
-                "    width: 100.0\n" +
-                "    height: 50.0\n"
+                "    SpreadsheetViewportRectangle\n" +
+                "      home: A1\n" +
+                "      width: 100.0\n" +
+                "      height: 50.0\n"
         );
     }
 
@@ -387,9 +388,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             ),
             "SpreadsheetViewport\n" +
                 "  rectangle:\n" +
-                "    home: A1\n" +
-                "    width: 100.0\n" +
-                "    height: 50.0\n" +
+                "    SpreadsheetViewportRectangle\n" +
+                "      home: A1\n" +
+                "      width: 100.0\n" +
+                "      height: 50.0\n" +
                 "  navigations:\n" +
                 "    left column\n" +
                 "    up row\n"
@@ -416,9 +418,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             ),
             "SpreadsheetViewport\n" +
                 "  rectangle:\n" +
-                "    home: A1\n" +
-                "    width: 100.0\n" +
-                "    height: 50.0\n" +
+                "    SpreadsheetViewportRectangle\n" +
+                "      home: A1\n" +
+                "      width: 100.0\n" +
+                "      height: 50.0\n" +
                 "  anchoredSelection:row-range 12:34 TOP\n" +
                 "  navigations:\n" +
                 "    left column\n"

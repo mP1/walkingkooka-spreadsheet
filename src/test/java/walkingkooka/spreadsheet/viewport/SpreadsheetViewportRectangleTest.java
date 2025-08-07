@@ -656,9 +656,10 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testTreePrint() {
         this.treePrintAndCheck(
             this.createObject(),
-            "home: A1" + EOL +
-                "width: 50.0" + EOL +
-                "height: 30.0" + EOL
+            "SpreadsheetViewportRectangle\n" +
+                "  home: A1\n" +
+                "  width: 50.0\n" +
+                "  height: 30.0\n"
         );
     }
 
