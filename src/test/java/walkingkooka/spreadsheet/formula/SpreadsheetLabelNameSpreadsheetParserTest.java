@@ -64,15 +64,15 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     @Test
     public void testParseMaxColumn() {
         // A1 column+row
-        this.parseAndCheck2(
-            "A" + SpreadsheetSelection.MAX_ROW + 1
-        );
+        this.parseAndCheck2("XFE1");
     }
 
     @Test
     public void testParseMaxRow() {
         // A1 column+row
-        this.parseAndCheck2("XFE1");
+        this.parseAndCheck2(
+            "A" + SpreadsheetSelection.MAX_ROW + 1
+        );
     }
 
     @Test
