@@ -598,6 +598,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     private final UrlFragment urlFragment;
 
+    // isUrlFragmentRemoveLeadingSlash..................................................................................
+
+    /**
+     * Suggests how parsing a {@link UrlFragment} should be performed, because some values require the leading slash
+     * others do not.
+     */
+    boolean isUrlFragmentRemoveLeadingSlash() {
+        return false == this instanceof SpreadsheetMetadataPropertyNameViewport;
+    }
 
     // parseUrlFragmentSaveValue........................................................................................
 
