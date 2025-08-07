@@ -355,7 +355,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     }
 
     @Test
-    public void testTreePrintRectangle() {
+    public void testTreePrintWithRectangle() {
         this.treePrintAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
@@ -363,15 +363,16 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 SpreadsheetViewport.NO_NAVIGATION
             ),
-            "rectangle:" + EOL +
-                "  home: A1" + EOL +
-                "  width: 100.0" + EOL +
-                "  height: 50.0" + EOL
+            "SpreadsheetViewport\n" +
+                "  rectangle:\n" +
+                "    home: A1\n" +
+                "    width: 100.0\n" +
+                "    height: 50.0\n"
         );
     }
 
     @Test
-    public void testTreePrintRectangleAndNavigations() {
+    public void testTreePrintWithRectangleAndNavigations() {
         this.treePrintAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
@@ -384,18 +385,19 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                     )
                 )
             ),
-            "rectangle:" + EOL +
-                "  home: A1" + EOL +
-                "  width: 100.0" + EOL +
-                "  height: 50.0" + EOL +
-                "navigations:" + EOL +
-                "  left column" + EOL +
-                "  up row" + EOL
+            "SpreadsheetViewport\n" +
+                "  rectangle:\n" +
+                "    home: A1\n" +
+                "    width: 100.0\n" +
+                "    height: 50.0\n" +
+                "  navigations:\n" +
+                "    left column\n" +
+                "    up row\n"
         );
     }
 
     @Test
-    public void testTreePrintRectangleAnchoredSelectionRowRangeNavigations() {
+    public void testTreePrintWithRectangleAnchoredSelectionRowRangeNavigations() {
         this.treePrintAndCheck(
             SpreadsheetViewport.with(
                 RECTANGLE,
@@ -412,13 +414,14 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                     )
                 )
             ),
-            "rectangle:" + EOL +
-                "  home: A1" + EOL +
-                "  width: 100.0" + EOL +
-                "  height: 50.0" + EOL +
-                "anchoredSelection: row-range 12:34 TOP" + EOL +
-                "navigations:" + EOL +
-                "  left column" + EOL
+            "SpreadsheetViewport\n" +
+                "  rectangle:\n" +
+                "    home: A1\n" +
+                "    width: 100.0\n" +
+                "    height: 50.0\n" +
+                "  anchoredSelection:row-range 12:34 TOP\n" +
+                "  navigations:\n" +
+                "    left column\n"
         );
     }
 

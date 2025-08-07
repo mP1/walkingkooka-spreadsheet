@@ -2850,11 +2850,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "frozenColumns: column-range A:C\n" +
                 "frozenRows: row-range 1:3\n" +
                 "spreadsheetName: Untitled\n" +
-                "viewport: rectangle:\n" +
-                "  home: D4\n" +
-                "  width: 100.0\n" +
-                "  height: 50.0\n" +
-                "anchoredSelection: cell E5\n"
+                "viewport: SpreadsheetViewport\n" +
+                "  rectangle:\n" +
+                "    home: D4\n" +
+                "    width: 100.0\n" +
+                "    height: 50.0\n" +
+                "  anchoredSelection:cell E5\n"
         );
     }
 
