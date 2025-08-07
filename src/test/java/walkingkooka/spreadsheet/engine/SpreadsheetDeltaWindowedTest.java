@@ -720,11 +720,12 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
             ),
             "SpreadsheetDelta\n" +
                 "  viewport:\n" +
-                "    rectangle:\n" +
-                "      home: A1\n" +
-                "      width: 100.0\n" +
-                "      height: 40.0\n" +
-                "    anchoredSelection: cell-range A1:B2 BOTTOM_RIGHT\n" +
+                "    SpreadsheetViewport\n" +
+                "      rectangle:\n" +
+                "        home: A1\n" +
+                "        width: 100.0\n" +
+                "        height: 40.0\n" +
+                "      anchoredSelection:cell-range A1:B2 BOTTOM_RIGHT\n" +
                 "  window:\n" +
                 "    A1:E5\n"
         );
@@ -1238,11 +1239,12 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
             ),
             "SpreadsheetDelta\n" +
                 "  viewport:\n" +
-                "    rectangle:\n" +
-                "      home: A1\n" +
-                "      width: 100.0\n" +
-                "      height: 40.0\n" +
-                "    anchoredSelection: cell-range A1:B2 BOTTOM_RIGHT\n" +
+                "    SpreadsheetViewport\n" +
+                "      rectangle:\n" +
+                "        home: A1\n" +
+                "        width: 100.0\n" +
+                "        height: 40.0\n" +
+                "      anchoredSelection:cell-range A1:B2 BOTTOM_RIGHT\n" +
                 "  cells:\n" +
                 "    Cell A1\n" +
                 "      Formula\n" +

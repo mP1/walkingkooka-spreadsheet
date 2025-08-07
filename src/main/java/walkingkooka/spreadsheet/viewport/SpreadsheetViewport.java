@@ -270,36 +270,41 @@ public final class SpreadsheetViewport implements HasUrlFragment,
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println("rectangle:");
-
+        printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            this.rectangle()
-                .printTree(printer);
-        }
-        printer.outdent();
+            printer.println("rectangle:");
 
-        if (this.includeFrozenColumnsRows) {
-            printer.println("includeFrozenColumnsRows: true");
-        }
-
-        final Optional<AnchoredSpreadsheetSelection> anchoredSelection = this.anchoredSelection;
-        if (anchoredSelection.isPresent()) {
-            printer.print("anchoredSelection: ");
-
-            anchoredSelection.get()
-                .printTree(printer);
-        }
-
-        final SpreadsheetViewportNavigationList navigations = this.navigations();
-        if (navigations.isNotEmpty()) {
-            printer.println("navigations:");
             printer.indent();
+            {
+                this.rectangle()
+                    .printTree(printer);
+            }
+            printer.outdent();
 
-            for (final SpreadsheetViewportNavigation navigation : navigations) {
-                printer.println(navigation.text());
+            if (this.includeFrozenColumnsRows) {
+                printer.println("includeFrozenColumnsRows: true");
+            }
+
+            final Optional<AnchoredSpreadsheetSelection> anchoredSelection = this.anchoredSelection;
+            if (anchoredSelection.isPresent()) {
+                printer.print("anchoredSelection:");
+
+                anchoredSelection.get()
+                    .printTree(printer);
+            }
+
+            final SpreadsheetViewportNavigationList navigations = this.navigations();
+            if (navigations.isNotEmpty()) {
+                printer.println("navigations:");
+                printer.indent();
+
+                for (final SpreadsheetViewportNavigation navigation : navigations) {
+                    printer.println(navigation.text());
+                }
             }
         }
+        printer.outdent();
     }
 
     // HasUrlFragment...................................................................................................
