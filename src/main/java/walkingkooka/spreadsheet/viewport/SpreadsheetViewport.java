@@ -313,13 +313,12 @@ public final class SpreadsheetViewport implements HasUrlFragment,
             urlFragment = urlFragment.appendSlashThen(INCLUDE_FROZEN_COLUMNS_ROWS);
         }
 
-        urlFragment = urlFragment.appendSlashThen(SELECTION);
-
         final AnchoredSpreadsheetSelection selection = this.anchoredSelection.orElse(null);
-        if(null != selection) {
-            urlFragment = urlFragment.append(
-                selection.urlFragment()
-            );
+        if (null != selection) {
+            urlFragment = urlFragment.appendSlashThen(SELECTION)
+                .append(
+                    selection.urlFragment()
+                );
         }
 
         final SpreadsheetViewportNavigationList navigations = this.navigations;
