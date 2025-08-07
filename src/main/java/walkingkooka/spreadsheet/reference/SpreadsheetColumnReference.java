@@ -39,7 +39,8 @@ import java.util.function.Predicate;
  */
 public final class SpreadsheetColumnReference extends SpreadsheetColumnReferenceOrRange
     implements Value<Integer>,
-    Comparable<SpreadsheetColumnReference> {
+    Comparable<SpreadsheetColumnReference>,
+    SpreadsheetColumnOrRowReference {
 
     /**
      * The maximum value, columns -1.
