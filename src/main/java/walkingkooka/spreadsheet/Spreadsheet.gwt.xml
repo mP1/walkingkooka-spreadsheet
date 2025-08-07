@@ -25,6 +25,7 @@
     <inherits name="walkingkooka.net.http.server.hateos.Hateos"/>
     <inherits name="walkingkooka.storage.expression.function.StorageExpressionFunction"/>
     <inherits name="walkingkooka.template.Template"/>
+    <inherits name="walkingkooka.terminal.Terminal"/>
     <inherits name="walkingkooka.tree.json.convert.WalkingkookaTreeJsonConvert"/>
     <inherits name="walkingkooka.tree.expression.function.provider.TreeExpressionFunctionProvider"/>
     <inherits name="walkingkooka.tree.text.Text"/>
