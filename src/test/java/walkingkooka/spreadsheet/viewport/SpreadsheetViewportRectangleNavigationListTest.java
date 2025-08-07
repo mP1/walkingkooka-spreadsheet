@@ -166,9 +166,10 @@ public final class SpreadsheetViewportRectangleNavigationListTest implements Cla
             ),
             "SpreadsheetViewportRectangleNavigationList\n" +
                 "  rectangle:\n" +
-                "    home: A1\n" +
-                "    width: 100.0\n" +
-                "    height: 50.0\n" +
+                "    SpreadsheetViewportRectangle\n" +
+                "      home: A1\n" +
+                "      width: 100.0\n" +
+                "      height: 50.0\n" +
                 "  navigations:\n" +
                 "    left column\n" +
                 "    up row\n"
