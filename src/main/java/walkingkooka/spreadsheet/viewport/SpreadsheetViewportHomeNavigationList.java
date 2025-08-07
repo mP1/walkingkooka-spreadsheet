@@ -22,7 +22,9 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -30,38 +32,47 @@ import walkingkooka.text.printer.TreePrintable;
 import java.util.Objects;
 
 /**
- * A value object that holds only a {@link SpreadsheetViewportRectangle} and {@link SpreadsheetViewportNavigationList}.
- * This is intended to be the missing parts when combined with a {@link AnchoredSpreadsheetSelection} to create a
- * {@link SpreadsheetViewport}.
+ * Holds the home and navigation list. This will appear within HistoryTokens, and merged with the {@link AnchoredSpreadsheetSelection}
+ * and viewport width and height to create a {@link SpreadsheetViewport}.
  */
-public final class SpreadsheetViewportRectangleNavigationList implements HasUrlFragment,
+public final class SpreadsheetViewportHomeNavigationList implements HasUrlFragment,
     TreePrintable,
     UsesToStringBuilder {
 
     /**
-     * Accepts a {@link UrlFragment} that contains encoded within it a {@link SpreadsheetViewport}.
+     * Accepts a {@link UrlFragment} that contains encoded within it a {@link SpreadsheetViewportHomeNavigationList}.
      * <pre>
-     * /home/A1/width/200/height/300/navigations/left 400
+     * /A1/left 400px
      * </pre>
      */
-    public static SpreadsheetViewportRectangleNavigationList fromUrlFragment(final UrlFragment urlFragment) {
+    public static SpreadsheetViewportHomeNavigationList fromUrlFragment(final UrlFragment urlFragment) {
         Objects.requireNonNull(urlFragment, "urlFragment");
 
         final String text = urlFragment.value();
         final TextCursor cursor = TextCursors.charSequence(text);
         final SpreadsheetViewportParser parser = SpreadsheetViewportParser.with(cursor);
 
-        SpreadsheetViewportRectangleNavigationList spreadsheetViewportRectangleNavigationList = with(
-            parser.parseSpreadsheetViewportRectangle()
+        parser.slash();
+
+        SpreadsheetViewportHomeNavigationList SpreadsheetViewportHomeNavigationList = with(
+            parser.homeCellReference()
         );
 
         if (parser.optionalSlash()) {
-            parser.navigationToken();
-            parser.slash();
+            final TextCursorSavePoint save = parser.cursor.save();
 
-            spreadsheetViewportRectangleNavigationList = spreadsheetViewportRectangleNavigationList.setNavigations(
-                parser.navigations()
-            );
+            try {
+                SpreadsheetViewportHomeNavigationList = SpreadsheetViewportHomeNavigationList.setNavigations(
+                    parser.navigations()
+                );
+            } catch (final InvalidCharacterException cause) {
+                throw cause.setTextAndPosition(
+                    text,
+                    save.lineInfo()
+                        .textOffset() +
+                        cause.position()
+                );
+            }
         }
 
         if (cursor.isNotEmpty()) {
@@ -72,55 +83,55 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
             );
         }
 
-        return spreadsheetViewportRectangleNavigationList;
+        return SpreadsheetViewportHomeNavigationList;
     }
 
     /**
      * Factory that creates a {@link SpreadsheetViewport} with the given cell home.
      */
-    public static SpreadsheetViewportRectangleNavigationList with(final SpreadsheetViewportRectangle rectangle) {
-        Objects.requireNonNull(rectangle, "rectangle");
+    public static SpreadsheetViewportHomeNavigationList with(final SpreadsheetCellReference home) {
+        Objects.requireNonNull(home, "home");
 
         return with(
-            rectangle,
+            home,
             SpreadsheetViewport.NO_NAVIGATION
         );
     }
 
     // @VisibleForTesting
-    static SpreadsheetViewportRectangleNavigationList with(final SpreadsheetViewportRectangle rectangle,
-                                                           final SpreadsheetViewportNavigationList navigations) {
-        return new SpreadsheetViewportRectangleNavigationList(
-            rectangle,
+    static SpreadsheetViewportHomeNavigationList with(final SpreadsheetCellReference home,
+                                                       final SpreadsheetViewportNavigationList navigations) {
+        return new SpreadsheetViewportHomeNavigationList(
+            home,
             navigations
         );
     }
 
-    private SpreadsheetViewportRectangleNavigationList(final SpreadsheetViewportRectangle rectangle,
-                                                       final SpreadsheetViewportNavigationList navigations) {
+    private SpreadsheetViewportHomeNavigationList(final SpreadsheetCellReference home,
+                                                   final SpreadsheetViewportNavigationList navigations) {
         super();
-        this.rectangle = rectangle;
+        this.home = home;
         this.navigations = navigations;
     }
 
-    // rectangle........................................................................................................
+    // home........................................................................................................
 
-    public SpreadsheetViewportRectangle rectangle() {
-        return this.rectangle;
+    public SpreadsheetCellReference home() {
+        return this.home;
     }
 
-    public SpreadsheetViewportRectangleNavigationList setRectangle(final SpreadsheetViewportRectangle rectangle) {
-        Objects.requireNonNull(rectangle, "rectangle");
+    public SpreadsheetViewportHomeNavigationList setHome(final SpreadsheetCellReference home) {
+        Objects.requireNonNull(home, "home");
 
-        return this.rectangle.equals(rectangle) ?
+        return this.home.equals(home) ?
             this :
-            new SpreadsheetViewportRectangleNavigationList(
-                rectangle,
+            new SpreadsheetViewportHomeNavigationList(
+                home,
                 this.navigations
             );
     }
 
-    private final SpreadsheetViewportRectangle rectangle;
+    private final SpreadsheetCellReference home;
 
     // navigations......................................................................................................
 
@@ -128,13 +139,13 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
         return this.navigations;
     }
 
-    public SpreadsheetViewportRectangleNavigationList setNavigations(final SpreadsheetViewportNavigationList navigations) {
+    public SpreadsheetViewportHomeNavigationList setNavigations(final SpreadsheetViewportNavigationList navigations) {
         Objects.requireNonNull(navigations, "navigations");
 
         return this.navigations.equals(navigations) ?
             this :
-            new SpreadsheetViewportRectangleNavigationList(
-                this.rectangle,
+            new SpreadsheetViewportHomeNavigationList(
+                this.home,
                 navigations
             );
     }
@@ -142,17 +153,17 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
     private final SpreadsheetViewportNavigationList navigations;
 
     // TreePrintable....................................................................................................
-
+    
     @Override
     public void printTree(final IndentingPrinter printer) {
         printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            printer.println("rectangle:");
+            printer.println("home:");
 
             printer.indent();
             {
-                this.rectangle()
+                this.home()
                     .printTree(printer);
             }
             printer.outdent();
@@ -175,27 +186,26 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
     // /home/A1/width/200/height/300/navigations/right 400px
     @Override
     public UrlFragment urlFragment() {
-        UrlFragment urlFragment = this.rectangle.urlFragment();
+        UrlFragment urlFragment = UrlFragment.SLASH.append(
+            this.home.urlFragment()
+        );
 
         final SpreadsheetViewportNavigationList navigations = this.navigations;
         if (navigations.isNotEmpty()) {
-            urlFragment = urlFragment.appendSlashThen(NAVIGATIONS)
-                .appendSlashThen(this.navigations.urlFragment());
+            urlFragment = urlFragment.appendSlashThen(
+                this.navigations.urlFragment()
+            );
         }
 
         return urlFragment;
     }
-
-    final static String NAVIGATIONS_STRING = "navigations";
-
-    private final static UrlFragment NAVIGATIONS = UrlFragment.with(NAVIGATIONS_STRING);
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
         return Objects.hash(
-            this.rectangle,
+            this.home,
             this.navigations
         );
     }
@@ -203,11 +213,11 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetViewportRectangleNavigationList && this.equals0((SpreadsheetViewportRectangleNavigationList) other);
+            other instanceof SpreadsheetViewportHomeNavigationList && this.equals0((SpreadsheetViewportHomeNavigationList) other);
     }
 
-    private boolean equals0(final SpreadsheetViewportRectangleNavigationList other) {
-        return this.rectangle.equals(other.rectangle) &&
+    private boolean equals0(final SpreadsheetViewportHomeNavigationList other) {
+        return this.home.equals(other.home) &&
             this.navigations.equals(other.navigations);
     }
 
@@ -219,8 +229,7 @@ public final class SpreadsheetViewportRectangleNavigationList implements HasUrlF
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.labelSeparator(": ")
-            .value(this.rectangle)
-            .label("navigations")
+            .value(this.home)
             .value(this.navigations);
     }
 }
