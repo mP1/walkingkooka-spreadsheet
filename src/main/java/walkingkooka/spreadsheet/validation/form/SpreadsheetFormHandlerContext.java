@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.Cast;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,6 +32,10 @@ import java.util.Comparator;
  * No new methods are added.
  */
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
+
+    @Override
+    <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                          final T value);
 
     /**
      * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}

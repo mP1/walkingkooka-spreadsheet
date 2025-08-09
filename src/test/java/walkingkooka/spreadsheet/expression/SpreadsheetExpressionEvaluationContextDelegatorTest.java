@@ -222,6 +222,14 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
+        public <T> TestSpreadsheetExpressionEvaluationContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                                           final T value) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public String toString() {
             return this.getClass().getSimpleName();
         }

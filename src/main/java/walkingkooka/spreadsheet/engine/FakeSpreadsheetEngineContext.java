@@ -181,6 +181,12 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
+    public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                            final T value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<EnvironmentValueName<?>> environmentValueNames() {
         throw new UnsupportedOperationException();
     }

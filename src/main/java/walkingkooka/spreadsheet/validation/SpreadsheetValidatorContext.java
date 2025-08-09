@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -25,6 +26,10 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 
 public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
+
+    @Override
+    <T> SpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                        final T value);
 
     /**
      * A named reference that may be used within {@link walkingkooka.tree.expression.Expression} executed within a {@link Validator}.

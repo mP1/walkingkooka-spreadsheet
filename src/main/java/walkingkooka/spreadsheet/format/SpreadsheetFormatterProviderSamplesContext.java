@@ -17,11 +17,16 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetFormatterContext,
     ProviderContext {
+
+    @Override
+    <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                       final T value);
 
     @Override
     SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);

@@ -27,6 +27,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
@@ -128,6 +129,16 @@ final class BasicProviderContext implements ProviderContext,
     @Override
     public LocalDateTime now() {
         return this.converterContext.now();
+    }
+
+    @Override
+    public <T> ProviderContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                   final T value) {
+        this.environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
     }
 
     @Override

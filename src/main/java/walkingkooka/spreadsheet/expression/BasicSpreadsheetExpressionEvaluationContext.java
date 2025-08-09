@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.CanConvert;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
@@ -137,6 +138,18 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.localeContext = localeContext;
         this.providerContext = providerContext;
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                          final T value) {
+        this.providerContext.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
@@ -27,6 +28,12 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
 
     public FakeSpreadsheetFormHandlerContext() {
         super();
+    }
+
+    @Override
+    public <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                 final T value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
@@ -160,6 +161,13 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     // ProviderContextDelegator.........................................................................................
+
+    @Override
+    public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                            final T value) {
+        this.spreadsheetEngineContext.setEnvironmentValue(name, value);
+        return this;
+    }
 
     @Override
     public ProviderContext providerContext() {

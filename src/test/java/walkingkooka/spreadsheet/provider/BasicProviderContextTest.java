@@ -73,6 +73,15 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         }
 
         @Override
+        public <T> EnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                          final T value) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(value, "value");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public Optional<EmailAddress> user() {
             return Optional.empty();
         }
