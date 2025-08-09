@@ -21,6 +21,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -66,6 +67,14 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         @Override
         public ConverterContext converterContext() {
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
+        }
+
+        @Override
+        public <T> TestSpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                       final T value) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
         }
 
         @Override

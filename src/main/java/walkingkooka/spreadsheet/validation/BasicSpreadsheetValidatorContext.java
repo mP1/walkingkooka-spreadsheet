@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.Cast;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContext;
@@ -40,6 +41,16 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
         super();
 
         this.context = context;
+    }
+
+    @Override
+    public <T> SpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                               final T value) {
+        this.context.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
     }
 
     @Override

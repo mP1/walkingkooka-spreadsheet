@@ -23,6 +23,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
@@ -359,6 +360,18 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public LocaleContext localeContext() {
         return this.context;
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                          final T value) {
+        this.context.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
     }
 
     // Object...........................................................................................................

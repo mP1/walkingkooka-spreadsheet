@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
@@ -156,4 +157,10 @@ public interface SpreadsheetEngineContext extends Context,
         return this.spreadsheetMetadata()
             .missingCellNumberValue();
     }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                     final T value);
 }

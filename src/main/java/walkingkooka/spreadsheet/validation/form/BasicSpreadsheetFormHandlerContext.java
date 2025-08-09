@@ -23,6 +23,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -236,6 +237,18 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     @Override
     public CanConvert canConvert() {
         return this.context;
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                 final T value) {
+        this.context.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
     }
 
     // EnvironmentContextDelegator......................................................................................

@@ -609,6 +609,16 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testSetEnvironmentValueNameWithNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetEnvironmentValueNameWithNullValueFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // ToString........................................................................................................
 
     @Test

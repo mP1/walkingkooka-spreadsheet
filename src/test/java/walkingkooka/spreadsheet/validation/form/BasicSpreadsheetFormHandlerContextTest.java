@@ -512,6 +512,16 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     }
 
     @Override
+    public void testSetEnvironmentValueNameWithNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetEnvironmentValueNameWithNullValueFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testUserNotNull() {
         throw new UnsupportedOperationException();
     }

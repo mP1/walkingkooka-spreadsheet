@@ -23,6 +23,7 @@ import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,6 +45,14 @@ public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsh
 
     @Override
     public <T> Optional<T> environmentValue(EnvironmentValueName<T> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> FakeSpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                                  final T value) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(value, "value");
         throw new UnsupportedOperationException();
     }
 

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.convert.CanConvert;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -99,6 +100,16 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
     private final SpreadsheetFormatterContext spreadsheetFormatterContext;
 
     // ProviderContext..................................................................................................
+
+    @Override
+    public <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                              final T value) {
+        this.providerContext.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
+    }
 
     @Override
     public ProviderContext providerContext() {

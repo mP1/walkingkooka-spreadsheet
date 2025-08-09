@@ -476,6 +476,18 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context;
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                          final T value) {
+        this.context.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override

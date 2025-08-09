@@ -16,6 +16,7 @@
  */
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContextDelegatorTest.TestSpreadsheetFormatterProviderSamplesContextDelegator;
@@ -24,6 +25,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.util.Objects;
 
 public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements SpreadsheetFormatterProviderSamplesContextTesting<TestSpreadsheetFormatterProviderSamplesContextDelegator>,
     SpreadsheetMetadataTesting,
@@ -47,6 +49,14 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
                 SPREADSHEET_FORMATTER_CONTEXT,
                 PROVIDER_CONTEXT
             );
+        }
+
+        @Override
+        public <T> TestSpreadsheetFormatterProviderSamplesContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                                               final T value) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
         }
     }
 

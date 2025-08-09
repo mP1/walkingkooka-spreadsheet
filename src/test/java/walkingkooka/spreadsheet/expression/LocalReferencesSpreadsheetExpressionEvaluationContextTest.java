@@ -487,6 +487,14 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                     Objects.requireNonNull(cell, "cell");
                     return super.spreadsheetFormatterContext(cell);
                 }
+
+                @Override
+                public <T> FakeSpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                                          final T value) {
+                    Objects.requireNonNull(name, "name");
+                    Objects.requireNonNull(value, "value");
+                    throw new UnsupportedOperationException();
+                }
             }
         );
     }
