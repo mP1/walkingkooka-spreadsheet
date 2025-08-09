@@ -70,6 +70,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -364,10 +365,18 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testShouldViewsRefreshSameIdPresent() {
-        final SpreadsheetMetadata metadata = this.metadata().set(
+        final SpreadsheetMetadata metadata = this.metadata()
+            .set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SpreadsheetId.with(1)
-        );
+        ).set(
+            SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetViewportRectangle.with(
+                    SpreadsheetSelection.A1,
+                    100,
+                    200
+                ).viewport()
+            );
 
         this.checkNotEquals(
             Optional.empty(),
@@ -423,6 +432,40 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             different,
             metadata,
             false
+        );
+    }
+
+    @Test
+    public void testShouldViewsRefreshSameDifferentHome() {
+        final SpreadsheetId id = SpreadsheetId.with(1);
+
+        final SpreadsheetMetadata metadata = this.metadata()
+            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
+            .set(
+                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetSelection.A1
+                    .viewportRectangle(100, 40)
+                    .viewport()
+            );
+        final SpreadsheetMetadata different = metadata.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            id
+        ).set(
+            SpreadsheetMetadataPropertyName.VIEWPORT,
+            SpreadsheetSelection.parseCell("Z99")
+                .viewportRectangle(100, 40)
+                .viewport()
+        );
+
+        this.checkNotEquals(
+            metadata,
+            different
+        );
+
+        this.shouldViewRefreshAndCheck(
+            different,
+            metadata,
+            true
         );
     }
 
