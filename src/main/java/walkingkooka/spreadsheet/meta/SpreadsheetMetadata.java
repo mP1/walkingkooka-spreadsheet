@@ -1468,7 +1468,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     case "modified-by":
                     case "modified-timestamp":
                     case "spreadsheet-name":
+                        break;
                     case "viewport":
+                        should = false == this.home()
+                            .equalsIgnoreReferenceKind(metadata.home());
                         break;
                     default:
                         should = false == this.get(name).equals(metadata.get(name));
@@ -1483,6 +1486,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         return should;
+    }
+
+    /**
+     * Assumes a viewport will always be present and returns the {@link SpreadsheetCellReference home}.
+     */
+    private SpreadsheetCellReference home() {
+        return this.getOrFail(SpreadsheetMetadataPropertyName.VIEWPORT)
+            .rectangle()
+            .home();
     }
 
     // Object...........................................................................................................
