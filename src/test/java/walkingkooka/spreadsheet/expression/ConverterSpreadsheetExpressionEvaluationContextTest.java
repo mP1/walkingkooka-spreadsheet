@@ -610,7 +610,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     }
 
     @Override
-    public void testSetEnvironmentValueNameWithNullNameFails() {
+    public void testSetEnvironmentValueWithNullNameFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -620,7 +620,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     }
 
     @Override
-    public void testSetEnvironmentValueNameWithNullValueFails() {
+    public void testSetEnvironmentValueWithNullValueFails() {
         throw new UnsupportedOperationException();
     }
 
