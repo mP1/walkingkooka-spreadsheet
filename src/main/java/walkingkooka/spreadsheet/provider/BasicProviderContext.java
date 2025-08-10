@@ -142,6 +142,12 @@ final class BasicProviderContext implements ProviderContext,
     }
 
     @Override
+    public ProviderContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.environmentContext.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
     public EnvironmentContext environmentContext() {
         return this.environmentContext;
     }

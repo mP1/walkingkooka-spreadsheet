@@ -163,4 +163,7 @@ public interface SpreadsheetEngineContext extends Context,
     @Override
     <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                      final T value);
+
+    @Override
+    SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name);
 }

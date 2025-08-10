@@ -78,6 +78,12 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
+        public TestSpreadsheetValidatorContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+            Objects.requireNonNull(name, "name");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public EnvironmentContext environmentContext() {
             return SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
         }

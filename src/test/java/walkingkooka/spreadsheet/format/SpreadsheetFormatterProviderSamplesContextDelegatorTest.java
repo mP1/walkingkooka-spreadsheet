@@ -58,6 +58,12 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
             Objects.requireNonNull(value, "value");
             throw new UnsupportedOperationException();
         }
+
+        @Override
+        public TestSpreadsheetFormatterProviderSamplesContextDelegator removeEnvironmentValue(final EnvironmentValueName<?> name) {
+            Objects.requireNonNull(name, "name");
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override

@@ -57,6 +57,12 @@ public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsh
     }
 
     @Override
+    public SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        Objects.requireNonNull(name, "name");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<EnvironmentValueName<?>> environmentValueNames() {
         throw new UnsupportedOperationException();
     }

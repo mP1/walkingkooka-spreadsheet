@@ -615,6 +615,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     }
 
     @Override
+    public void testRemoveEnvironmentValueWithNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetEnvironmentValueNameWithNullValueFails() {
         throw new UnsupportedOperationException();
     }

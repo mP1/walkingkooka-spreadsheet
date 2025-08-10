@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 
@@ -36,6 +37,13 @@ public interface SpreadsheetFormatterProviderSamplesContextDelegator extends Spr
     SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext();
 
     // ProviderContextDelegator.........................................................................................
+
+    @Override
+    default SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.spreadsheetFormatterProviderSamplesContext()
+            .removeEnvironmentValue(name);
+        return this;
+    }
 
     @Override
     default ProviderContext providerContext() {
