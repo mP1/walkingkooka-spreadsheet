@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -139,16 +138,6 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     }
 
     // EnvironmentContext...............................................................................................
-
-    @Override
-    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                          final T value) {
-        this.context.setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
 
     private final SpreadsheetExpressionEvaluationContext context;
 

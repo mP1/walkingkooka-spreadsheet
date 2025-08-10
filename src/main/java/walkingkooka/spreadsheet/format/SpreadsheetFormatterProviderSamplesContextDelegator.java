@@ -39,6 +39,17 @@ public interface SpreadsheetFormatterProviderSamplesContextDelegator extends Spr
     // ProviderContextDelegator.........................................................................................
 
     @Override
+    default <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                               final T value) {
+        this.environmentContext()
+            .setEnvironmentValue(
+                name,
+                value
+            );
+        return this;
+    }
+
+    @Override
     default SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.spreadsheetFormatterProviderSamplesContext()
             .removeEnvironmentValue(name);
