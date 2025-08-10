@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
@@ -148,6 +149,13 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     @Override
     default LocaleContext localeContext() {
         return this.spreadsheetEngineContext();
+    }
+
+    @Override
+    default SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.spreadsheetEngineContext()
+            .removeEnvironmentValue(name);
+        return this;
     }
 
     SpreadsheetEngineContext spreadsheetEngineContext();

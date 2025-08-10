@@ -112,6 +112,12 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
     }
 
     @Override
+    public SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.providerContext.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
     public ProviderContext providerContext() {
         return this.providerContext;
     }

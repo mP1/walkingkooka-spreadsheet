@@ -251,6 +251,12 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         return this;
     }
 
+    @Override
+    public SpreadsheetFormHandlerContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.context.removeEnvironmentValue(name);
+        return this;
+    }
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override

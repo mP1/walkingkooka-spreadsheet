@@ -485,6 +485,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
+    public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.providerContext.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
     public ProviderContext providerContext() {
         return this.providerContext;
     }

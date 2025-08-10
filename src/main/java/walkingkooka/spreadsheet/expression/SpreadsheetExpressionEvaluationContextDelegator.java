@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -93,6 +94,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
 
     // StorageExpressionEvaluationContextDelegator......................................................................
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {

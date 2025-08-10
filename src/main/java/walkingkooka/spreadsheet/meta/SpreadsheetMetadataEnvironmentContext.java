@@ -87,6 +87,14 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
     }
 
     @Override
+    public EnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        Objects.requireNonNull(name, "name");
+
+        this.context.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
     public Set<EnvironmentValueName<?>> environmentValueNames() {
         if (null == this.names) {
             final SpreadsheetMetadata metadata = this.metadata;

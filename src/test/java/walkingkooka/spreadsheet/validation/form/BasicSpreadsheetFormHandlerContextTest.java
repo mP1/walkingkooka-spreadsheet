@@ -23,9 +23,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -49,6 +51,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -501,6 +504,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                             SpreadsheetSelection.A1 :
                             null
                     );
+                }
+
+
+                @Override
+                public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+                    Objects.requireNonNull(name, "name");
+                    throw new UnsupportedOperationException();
                 }
             }
         );

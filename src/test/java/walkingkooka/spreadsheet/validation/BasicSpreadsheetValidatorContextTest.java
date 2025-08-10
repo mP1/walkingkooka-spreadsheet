@@ -58,6 +58,11 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
     }
 
     @Override
+    public void testRemoveEnvironmentValueWithNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public BasicSpreadsheetValidatorContext createContext() {
         return Cast.to(
             BasicSpreadsheetValidatorContext.with(

@@ -618,6 +618,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Override
+    public void testRemoveEnvironmentValueWithNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testLoadFormFieldValueWithNullFails() {
         throw new UnsupportedOperationException();
     }

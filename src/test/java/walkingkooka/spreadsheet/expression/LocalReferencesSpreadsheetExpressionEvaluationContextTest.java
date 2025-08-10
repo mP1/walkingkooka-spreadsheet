@@ -495,6 +495,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                     Objects.requireNonNull(value, "value");
                     throw new UnsupportedOperationException();
                 }
+
+                @Override
+                public FakeSpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+                    Objects.requireNonNull(name, "name");
+                    throw new UnsupportedOperationException();
+                }
             }
         );
     }
