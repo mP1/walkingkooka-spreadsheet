@@ -96,8 +96,21 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // StorageExpressionEvaluationContextDelegator......................................................................
 
     @Override
+    default <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                           final T value) {
+        this.spreadsheetExpressionEvaluationContext()
+            .setEnvironmentValue(
+                name,
+                value
+            );
+        return this;
+    }
+
+    @Override
     default SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        throw new UnsupportedOperationException();
+        this.spreadsheetExpressionEvaluationContext()
+            .removeEnvironmentValue(name);
+        return this;
     }
 
     @Override

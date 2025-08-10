@@ -17,14 +17,12 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting<SpreadsheetEngineContextDelegator> {
@@ -42,14 +40,6 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
 
         @Override
         public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public <T> TestSpreadsheetEngineContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                             final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
             throw new UnsupportedOperationException();
         }
     }

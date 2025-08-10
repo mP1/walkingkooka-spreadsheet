@@ -152,6 +152,17 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
+    default <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                             final T value) {
+        this.environmentContext()
+            .setEnvironmentValue(
+                name,
+                value
+            );
+        return this;
+    }
+
+    @Override
     default SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.spreadsheetEngineContext()
             .removeEnvironmentValue(name);
