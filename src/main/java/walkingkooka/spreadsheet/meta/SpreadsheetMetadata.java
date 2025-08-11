@@ -91,6 +91,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -341,12 +342,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName,
                                              final V value) {
+        Objects.requireNonNull(
+            propertyName,
+            "propertyName"
+        );
+        final V typedValue = propertyName.checkValue(value); // necessary because absolute references values are made relative
+        if (typedValue instanceof SpreadsheetViewport) {
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/7246
+            final SpreadsheetViewport viewport = (SpreadsheetViewport) typedValue;
+
+            if (viewport.navigations().isNotEmpty()) {
+                throw new SpreadsheetMetadataPropertyValueException(
+                    "Navigations not empty",
+                    propertyName,
+                    viewport
+                );
+            }
+        }
         return this.set0(
-            Objects.requireNonNull(
-                propertyName,
-                "propertyName"
-            ),
-            propertyName.checkValue(value) // necessary because absolute references values are made relative
+            propertyName,
+            typedValue
         );
     }
 

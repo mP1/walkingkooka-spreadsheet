@@ -70,6 +70,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationList;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -324,6 +325,32 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkEquals(
             locale,
             context.locale()
+        );
+    }
+
+    // set..............................................................................................................
+
+    @Test
+    public void testSetWithSpreadsheetViewportWithoutNavigations() {
+        SpreadsheetMetadata.EMPTY
+            .set(
+                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetViewportRectangle.parse("A1:100:200")
+                    .viewport()
+            );
+    }
+
+    @Test
+    public void testSetWithSpreadsheetViewportWithNavigationsFails() {
+        assertThrows(
+            SpreadsheetMetadataPropertyValueException.class,
+            () -> SpreadsheetMetadata.EMPTY
+                .set(
+                    SpreadsheetMetadataPropertyName.VIEWPORT,
+                    SpreadsheetViewportRectangle.parse("A1:100:200")
+                        .viewport()
+                        .setNavigations(SpreadsheetViewportNavigationList.parse("left 1px"))
+                )
         );
     }
 
