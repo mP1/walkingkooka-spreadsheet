@@ -226,7 +226,7 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         this.marshallAndCheck(
             SpreadsheetText.with(TEXT)
                 .setColor(COLOR),
-            "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}"
+            "{ \"color\": \"black\", \"text\":  \"1/1/2000\"}"
         );
     }
 
