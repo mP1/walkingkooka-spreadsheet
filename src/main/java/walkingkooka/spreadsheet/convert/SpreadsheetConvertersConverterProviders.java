@@ -62,6 +62,8 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
+    public final static ConverterAliasSet SCRIPTING = SpreadsheetConvertersConverterProvider.INFOS.aliasSet();
+
     public final static ConverterAliasSet SORT = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
