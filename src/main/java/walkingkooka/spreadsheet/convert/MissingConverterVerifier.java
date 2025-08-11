@@ -514,6 +514,16 @@ final class MissingConverterVerifier {
             );
         }
 
+        // text-to-environment-value-name...............................................................................
+
+        if (scripting) {
+            finder.addIfConversionFail(
+                error,
+                SpreadsheetError.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME
+            );
+        }
+
         // text-to-error................................................................................................
         finder.addIfConversionFail(
             error,

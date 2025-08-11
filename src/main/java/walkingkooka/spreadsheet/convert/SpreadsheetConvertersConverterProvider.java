@@ -173,6 +173,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToColor();
                 break;
+            case TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textToEnvironmentValueName();
+                break;
             case TEXT_TO_ERROR_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -409,6 +414,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
 
+    private final static String TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING = "text-to-environment-value-name";
+
+    final static ConverterName TEXT_TO_ENVIRONMENT_VALUE_NAME = ConverterName.with(TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING);
+
     private final static String TEXT_TO_ERROR_STRING = "text-to-error";
 
     final static ConverterName TEXT_TO_ERROR = ConverterName.with(TEXT_TO_ERROR_STRING);
@@ -551,6 +560,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SELECTION_TO_TEXT),
             converterInfo(SIMPLE),
             converterInfo(TEXT_TO_COLOR),
+            converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),
             converterInfo(TEXT_TO_EXPRESSION),
             converterInfo(TEXT_TO_FORM_NAME),

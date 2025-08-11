@@ -22,6 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.convert.EnvironmentConverters;
 import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -297,6 +298,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToExpression() {
         return SpreadsheetConverterTextToExpression.INSTANCE;
+    }
+
+    /**
+     * {@see EnvironmentConverters#textToEnvironmentValueName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToEnvironmentValueName() {
+        return EnvironmentConverters.textToEnvironmentValueName();
     }
 
     /**
