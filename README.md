@@ -124,6 +124,7 @@ eg
 - [simple](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/SimpleConverter.java)
 - [spreadsheet-cell-to](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetCell.java)
 - [text-to-color](https://github.com/mP1/walkingkooka-color/blob/master/src/main/java/walkingkooka/color/convert/TextToColorConverter.java)
+- [text-to-environment-value-name](https://github.com/mP1/walkingkooka-environment/blob/master/src/main/java/walkingkooka/environment/convert/EnvironmentConverterStringToEnvironmentValueName.java)
 - [text-to-error](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetError.java)
 - [text-to-expression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToExpression.java)
 - [text-to-form-name](https://github.com/mP1/walkingkooka-validation/blob/master/src/main/java/walkingkooka/validation/convert/TextToFormNameConverter.java)

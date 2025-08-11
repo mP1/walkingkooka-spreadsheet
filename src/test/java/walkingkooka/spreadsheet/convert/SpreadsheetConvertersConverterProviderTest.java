@@ -293,6 +293,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToEnvironmentValueName() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToEnvironmentValueName()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToExpression() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION + "",

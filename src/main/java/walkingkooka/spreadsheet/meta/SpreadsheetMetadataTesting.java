@@ -321,6 +321,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             ConverterSelector.parse("collection(" +
                 "null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-error, " +
+                "text-to-environment-value-name, " +
                 "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
                 "text-to-selection, selection-to-selection, selection-to-text, " +
                 "spreadsheet-cell-to, " +
