@@ -35,4 +35,19 @@ public interface SpreadsheetColumnOrRowReference {
     default boolean isRow() {
         return this instanceof SpreadsheetRowReference;
     }
+
+
+    default SpreadsheetColumnReference toColumn() {
+        return this.toSelection()
+            .toColumn();
+    }
+
+    default SpreadsheetRowReference toRow() {
+        return this.toSelection()
+            .toRow();
+    }
+
+    private SpreadsheetSelection toSelection() {
+        return (SpreadsheetSelection) this;
+    }
 }
