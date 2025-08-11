@@ -1031,22 +1031,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"cellCharacterWidth\": 1,\n" +
                 "  \"clipboardExporter\": \"json\",\n" +
                 "  \"clipboardImporter\": \"json\",\n" +
-                "  \"color1\": \"#000000\",\n" +
-                "  \"color2\": \"#ffffff\",\n" +
-                "  \"color3\": \"#ff0000\",\n" +
-                "  \"color4\": \"#00ff00\",\n" +
-                "  \"color5\": \"#0000ff\",\n" +
-                "  \"color6\": \"#ffff00\",\n" +
-                "  \"color7\": \"#ff00ff\",\n" +
-                "  \"color8\": \"#00ffff\",\n" +
-                "  \"color9\": \"#800000\",\n" +
-                "  \"color10\": \"#008000\",\n" +
-                "  \"color11\": \"#000080\",\n" +
-                "  \"color12\": \"#808000\",\n" +
-                "  \"color13\": \"#800080\",\n" +
-                "  \"color14\": \"#008080\",\n" +
-                "  \"color15\": \"#c0c0c0\",\n" +
-                "  \"color16\": \"#808080\",\n" +
+                "  \"color1\": \"black\",\n" +
+                "  \"color2\": \"white\",\n" +
+                "  \"color3\": \"red\",\n" +
+                "  \"color4\": \"lime\",\n" +
+                "  \"color5\": \"blue\",\n" +
+                "  \"color6\": \"yellow\",\n" +
+                "  \"color7\": \"magenta\",\n" +
+                "  \"color8\": \"cyan\",\n" +
+                "  \"color9\": \"maroon\",\n" +
+                "  \"color10\": \"green\",\n" +
+                "  \"color11\": \"navy\",\n" +
+                "  \"color12\": \"olive\",\n" +
+                "  \"color13\": \"purple\",\n" +
+                "  \"color14\": \"teal\",\n" +
+                "  \"color15\": \"silver\",\n" +
+                "  \"color16\": \"grey\",\n" +
                 "  \"color17\": \"#9999ff\",\n" +
                 "  \"color18\": \"#993366\",\n" +
                 "  \"color19\": \"#ffffcc\",\n" +
@@ -1055,14 +1055,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"color22\": \"#ff8080\",\n" +
                 "  \"color23\": \"#0066cc\",\n" +
                 "  \"color24\": \"#ccccff\",\n" +
-                "  \"color25\": \"#000080\",\n" +
-                "  \"color26\": \"#ff00ff\",\n" +
-                "  \"color27\": \"#ffff00\",\n" +
-                "  \"color28\": \"#00ffff\",\n" +
-                "  \"color29\": \"#800080\",\n" +
-                "  \"color30\": \"#800000\",\n" +
-                "  \"color31\": \"#008080\",\n" +
-                "  \"color32\": \"#0000ff\",\n" +
+                "  \"color25\": \"navy\",\n" +
+                "  \"color26\": \"magenta\",\n" +
+                "  \"color27\": \"yellow\",\n" +
+                "  \"color28\": \"cyan\",\n" +
+                "  \"color29\": \"purple\",\n" +
+                "  \"color30\": \"maroon\",\n" +
+                "  \"color31\": \"teal\",\n" +
+                "  \"color32\": \"blue\",\n" +
                 "  \"color33\": \"#00ccff\",\n" +
                 "  \"color34\": \"#ccffff\",\n" +
                 "  \"color35\": \"#ccffcc\",\n" +
