@@ -86,7 +86,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
-import walkingkooka.tree.text.BorderStyle;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.FontStyle;
@@ -141,28 +140,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
         this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET));
 
-        final Length<?> borderWidth = Length.pixel(1.0);
-        final Color borderColor = Color.BLACK;
-        final BorderStyle borderStyle = BorderStyle.SOLID;
         final Length<?> none = Length.none();
 
         final TextStyle style = TextStyle.EMPTY
-            .set(TextStylePropertyName.BORDER_LEFT_WIDTH, borderWidth)
-            .set(TextStylePropertyName.BORDER_LEFT_COLOR, borderColor)
-            .set(TextStylePropertyName.BORDER_LEFT_STYLE, borderStyle)
-
-            .set(TextStylePropertyName.BORDER_TOP_WIDTH, borderWidth)
-            .set(TextStylePropertyName.BORDER_TOP_COLOR, borderColor)
-            .set(TextStylePropertyName.BORDER_TOP_STYLE, borderStyle)
-
-            .set(TextStylePropertyName.BORDER_RIGHT_WIDTH, borderWidth)
-            .set(TextStylePropertyName.BORDER_RIGHT_COLOR, borderColor)
-            .set(TextStylePropertyName.BORDER_RIGHT_STYLE, borderStyle)
-
-            .set(TextStylePropertyName.BORDER_BOTTOM_WIDTH, borderWidth)
-            .set(TextStylePropertyName.BORDER_BOTTOM_COLOR, borderColor)
-            .set(TextStylePropertyName.BORDER_BOTTOM_STYLE, borderStyle)
-
             .set(TextStylePropertyName.MARGIN_LEFT, none)
             .set(TextStylePropertyName.MARGIN_TOP, none)
             .set(TextStylePropertyName.MARGIN_BOTTOM, none)
@@ -189,9 +169,37 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
             .set(TextStylePropertyName.HEIGHT, Length.pixel(30.0))
             .set(TextStylePropertyName.WIDTH, Length.pixel(100.0));
-        this.checkEquals(Optional.of(style), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE));
 
-        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH));
+        this.checkEquals(
+            Optional.of(style),
+            nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE)
+        );
+
+        TextStyle withoutBorders = style;
+        for (TextStylePropertyName<?> property : style.value().keySet()) {
+            if (property.value()
+                .toLowerCase()
+                .contains("border")) {
+                withoutBorders = withoutBorders.remove(property);
+            }
+        }
+
+        this.checkEquals(
+            withoutBorders,
+            style
+        );
+
+        this.checkEquals(
+            false,
+            style.toString()
+                .contains("border"),
+            "border properties should not be present\n" + style
+        );
+
+        this.checkNotEquals(
+            Optional.empty(),
+            nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH)
+        );
 
         this.checkNotEquals(
             Sets.empty(),
