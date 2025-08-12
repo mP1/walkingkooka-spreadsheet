@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -46,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
     ParserTesting,
     LocaleContextTesting2<C>,
+    ProviderContextTesting<C>,
     SpreadsheetProviderTesting<C>,
     SpreadsheetLabelNameResolverTesting<C> {
 
