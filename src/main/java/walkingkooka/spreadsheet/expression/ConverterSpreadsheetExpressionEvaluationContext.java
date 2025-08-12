@@ -44,6 +44,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.expression.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -85,7 +87,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     DecimalNumberContextDelegator,
     JsonNodeMarshallContextDelegator,
     JsonNodeUnmarshallContextDelegator,
-    LocaleContextDelegator {
+    LocaleContextDelegator,
+    TerminalContextDelegator {
 
     static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -284,6 +287,13 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public StorageStore storage() {
         return this.context.storage();
+    }
+
+    // TerminalContextDelegator.........................................................................................
+
+    @Override
+    public TerminalContext terminalContext() {
+        return this.context;
     }
 
     // EnvironmentContext...............................................................................................

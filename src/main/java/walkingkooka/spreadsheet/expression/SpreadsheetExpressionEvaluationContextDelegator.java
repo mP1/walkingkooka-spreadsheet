@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
@@ -36,6 +37,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.expression.TerminalContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -60,7 +63,8 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     SpreadsheetConverterContextDelegator,
     FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
     ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
-    StorageExpressionEvaluationContextDelegator {
+    StorageExpressionEvaluationContextDelegator,
+    TerminalContextDelegator {
 
     // SpreadsheetConverterContextDelegator.............................................................................
 
@@ -96,6 +100,19 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // StorageExpressionEvaluationContextDelegator......................................................................
 
     @Override
+    default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    // TerminalContextDelegator.........................................................................................
+
+    @Override
+    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        return this.spreadsheetExpressionEvaluationContext()
+            .environmentValue(name);
+    }
+
+    @Override
     default <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                            final T value) {
         this.spreadsheetExpressionEvaluationContext()
@@ -114,7 +131,19 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
+    default Set<EnvironmentValueName<?>> environmentValueNames() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .environmentValueNames();
+    }
+
+    @Override
+    default Optional<EmailAddress> user() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .user();
+    }
+
+    @Override
+    default TerminalContext terminalContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
 

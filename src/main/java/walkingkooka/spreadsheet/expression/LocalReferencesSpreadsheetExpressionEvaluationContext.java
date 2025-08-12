@@ -45,6 +45,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.expression.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -77,6 +79,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
+    TerminalContextDelegator,
     UsesToStringBuilder {
 
     static LocalReferencesSpreadsheetExpressionEvaluationContext with(
@@ -176,6 +179,13 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public StorageStore storage() {
         return this.context.storage();
+    }
+
+    // TerminalContextDelegator.........................................................................................
+
+    @Override
+    public TerminalContext terminalContext() {
+        return this.context;
     }
 
     // ExpressionEvaluationContext......................................................................................

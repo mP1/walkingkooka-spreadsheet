@@ -99,7 +99,8 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 FormHandlerContexts.fake(),
                 ExpressionFunctionProviders.fake(),
                 SpreadsheetMetadataTesting.LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_CONTEXT
             ),
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,

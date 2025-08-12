@@ -70,8 +70,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.FakeStorageStoreContext;
 import walkingkooka.storage.StorageStoreContext;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.test.Testing;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.printer.Printers;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -460,6 +464,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 ENVIRONMENT_CONTEXT
             )
         )
+    );
+
+    TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
+        Printers.sink(LineEnding.NONE)
     );
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
