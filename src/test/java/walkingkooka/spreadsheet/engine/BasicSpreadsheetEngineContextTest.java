@@ -40,6 +40,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
@@ -70,6 +71,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
@@ -112,6 +114,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -1071,6 +1074,72 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.environmentValueAndCheck(
             context,
             name
+        );
+    }
+
+    @Test
+    public void testExpressionEvaluationContextAndEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            this.createContext(environmentContext)
+                .spreadsheetExpressionEvaluationContext(
+                    SpreadsheetEngineContext.NO_CELL,
+                    SpreadsheetExpressionReferenceLoaders.fake()
+                ),
+            name,
+            value
+        );
+    }
+
+
+    @Test
+    public void testExpressionEvaluationContextAndNow() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final LocalDateTime now = context.now();
+
+        this.checkEquals(
+            context.spreadsheetExpressionEvaluationContext(
+                SpreadsheetEngineContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake()
+            ).now(),
+            now
+        );
+    }
+
+    @Test
+    public void testExpressionEvaluationContextAndUser() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final Optional<EmailAddress> user = context.user();
+        this.checkNotEquals(
+            Optional.empty(),
+            user
+        );
+
+        this.userAndCheck(
+            context.spreadsheetExpressionEvaluationContext(
+                SpreadsheetEngineContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake()
+            ),
+            user
         );
     }
 

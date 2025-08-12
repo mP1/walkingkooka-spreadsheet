@@ -23,9 +23,11 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
@@ -36,6 +38,7 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -83,6 +86,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_STORE_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.TERMINAL_CONTEXT;
@@ -590,7 +594,13 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 },
                 EXPRESSION_FUNCTION_PROVIDER,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT,
+                ProviderContexts.basic(
+                    ConverterContexts.fake(),
+                    EnvironmentContexts.map(
+                        ENVIRONMENT_CONTEXT
+                    ),
+                    PluginStores.fake()
+                ),
                 TERMINAL_CONTEXT
             )
         );

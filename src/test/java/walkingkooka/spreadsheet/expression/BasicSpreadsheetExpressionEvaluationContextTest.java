@@ -19,10 +19,17 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -562,9 +569,72 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
-    @Test
-    public void testUser() {
+    // environmentContext...............................................................................................
 
+    @Test
+    public void testEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            this.createContext(environmentContext),
+            name,
+            value
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+        context.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            name,
+            value
+        );
+    }
+
+    @Test
+    public void testRemoveEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+        context.removeEnvironmentValue(name);
+
+        this.environmentValueAndCheck(
+            context,
+            name
+        );
     }
 
     // ExpressionEvaluationContextTesting................................................................................
@@ -575,6 +645,25 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
+        return this.createContext(
+            spreadsheetExpressionReferenceLoader,
+            PROVIDER_CONTEXT
+        );
+    }
+
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
+        return this.createContext(
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            ProviderContexts.basic(
+                ConverterContexts.fake(),
+                environmentContext,
+                PluginStores.fake()
+            )
+        );
+    }
+
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             CELL,
             spreadsheetExpressionReferenceLoader,
@@ -586,7 +675,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             FORM_HANDLER_CONTEXT,
             EXPRESSION_FUNCTION_PROVIDER,
             LOCALE_CONTEXT,
-            PROVIDER_CONTEXT,
+            providerContext,
             TERMINAL_CONTEXT
         );
     }
