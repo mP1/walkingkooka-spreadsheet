@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.CanConvert;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -401,7 +402,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private final SpreadsheetConverterContext spreadsheetConverterContext;
 
-    // FormHandlerContext...............................................................................................
+    // FormHandlerContextDelegator......................................................................................
+
+    /**
+     * Replaces {@link FormHandlerContextDelegator#environmentContext()} because not all instances of this might have a form,
+     * and the {@link FormHandlerContext} could be a fake
+     */
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.providerContext;
+    }
 
     @Override
     public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
