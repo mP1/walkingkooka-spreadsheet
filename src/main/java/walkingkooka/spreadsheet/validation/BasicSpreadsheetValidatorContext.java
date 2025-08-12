@@ -54,6 +54,12 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     }
 
     @Override
+    public SpreadsheetValidatorContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.context.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
     public ValidatorContext<SpreadsheetExpressionReference> validatorContext() {
         return this.context;
     }

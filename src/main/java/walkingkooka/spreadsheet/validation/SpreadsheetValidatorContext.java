@@ -31,6 +31,9 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
     <T> SpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                         final T value);
 
+    @Override
+    SpreadsheetValidatorContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
     /**
      * A named reference that may be used within {@link walkingkooka.tree.expression.Expression} executed within a {@link Validator}.
      */
