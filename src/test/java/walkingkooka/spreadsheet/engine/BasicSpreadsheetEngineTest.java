@@ -4690,7 +4690,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 }
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -4809,7 +4810,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 }
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -4959,7 +4961,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 }
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -5109,7 +5112,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 }
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -16501,7 +16505,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         this.filterCellsAndCheck(
@@ -17611,7 +17616,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -23312,7 +23318,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -23352,7 +23359,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23436,7 +23444,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23544,7 +23553,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23667,7 +23677,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23817,7 +23828,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 }
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23960,7 +23972,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24103,7 +24116,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24177,7 +24191,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -24219,7 +24234,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24303,7 +24319,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final Form<SpreadsheetExpressionReference> form = Form.with(
@@ -24376,7 +24393,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
@@ -24510,7 +24528,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         context.storeRepository()
@@ -24616,7 +24635,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         context.storeRepository()
@@ -24742,7 +24762,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         context.storeRepository()
@@ -24879,7 +24900,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
 
         engine.saveCells(
@@ -25034,7 +25056,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_CONTEXT
         );
     }
 

@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -83,7 +84,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final LocaleContext localeContext,
                                               final SpreadsheetProvider spreadsheetProvider,
-                                              final ProviderContext providerContext) {
+                                              final ProviderContext providerContext,
+                                              final TerminalContext terminalContext) {
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -91,7 +93,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
-
+        Objects.requireNonNull(terminalContext, "terminalContext");
 
         return new BasicSpreadsheetEngineContext(
             serverUrl,
@@ -100,7 +102,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             functionAliases,
             localeContext,
             spreadsheetProvider,
-            providerContext
+            providerContext,
+            terminalContext
         );
     }
 
@@ -113,7 +116,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                           final LocaleContext localeContext,
                                           final SpreadsheetProvider spreadsheetProvider,
-                                          final ProviderContext providerContext) {
+                                          final ProviderContext providerContext,
+                                          final TerminalContext terminalContext) {
         super();
 
         this.serverUrl = serverUrl;
@@ -131,6 +135,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.localeContext = metadata.localeContext(localeContext);
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
+        this.terminalContext = terminalContext;
     }
 
     @Override
@@ -164,7 +169,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 functionAliases,
                 this.localeContext,
                 this.spreadsheetProvider,
-                this.providerContext
+                this.providerContext,
+                this.terminalContext
             );
     }
 
@@ -268,7 +274,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             this.formHandlerContext,
             this.expressionFunctionProvider,
             this.localeContext,
-            this // ProviderContext
+            this, // ProviderContext
+            this.terminalContext
         );
     }
 
@@ -288,6 +295,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
      */
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
+
+    private final TerminalContext terminalContext;
 
     @Override
     public boolean isPure(final ExpressionFunctionName function) {

@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
@@ -38,7 +39,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final LocaleContext localeContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
-                                                 final ProviderContext providerContext) {
+                                                 final ProviderContext providerContext,
+                                                 final TerminalContext terminalContext) {
         return BasicSpreadsheetEngineContext.with(
             serverUrl,
             metadata,
@@ -46,7 +48,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
             functionAliases,
             localeContext,
             spreadsheetProvider,
-            providerContext
+            providerContext,
+            terminalContext
         );
     }
 

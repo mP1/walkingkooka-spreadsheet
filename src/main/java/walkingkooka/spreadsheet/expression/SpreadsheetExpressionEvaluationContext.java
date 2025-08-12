@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
+import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -75,6 +76,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     HasSpreadsheetCell,
     HasSpreadsheetMetadata,
     FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
     /**

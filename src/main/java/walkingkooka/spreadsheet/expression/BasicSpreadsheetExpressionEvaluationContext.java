@@ -50,6 +50,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.expression.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -73,7 +75,8 @@ import java.util.function.Function;
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
     FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
     LocaleContextDelegator,
-    SpreadsheetConverterContextDelegator {
+    SpreadsheetConverterContextDelegator,
+    TerminalContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
@@ -85,7 +88,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                             final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                             final LocaleContext localeContext,
-                                                            final ProviderContext providerContext) {
+                                                            final ProviderContext providerContext,
+                                                            final TerminalContext terminalContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(serverUrl, "serverUrl");
@@ -97,6 +101,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(providerContext, "providerContext");
+        Objects.requireNonNull(terminalContext, "terminalContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
             cell,
@@ -109,7 +114,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
             formHandlerContext,
             expressionFunctionProvider,
             localeContext,
-            providerContext
+            providerContext,
+            terminalContext
         );
     }
 
@@ -123,7 +129,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                         final LocaleContext localeContext,
-                                                        final ProviderContext providerContext) {
+                                                        final ProviderContext providerContext,
+                                                        final TerminalContext terminalContext) {
         super();
         this.cell = cell;
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
@@ -138,6 +145,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.localeContext = localeContext;
         this.providerContext = providerContext;
+        this.terminalContext = terminalContext;
     }
 
     // EnvironmentContext...............................................................................................
@@ -157,6 +165,15 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.providerContext.removeEnvironmentValue(name);
         return this;
     }
+
+    // TerminalContextDelegator.........................................................................................
+
+    @Override
+    public TerminalContext terminalContext() {
+        return this.terminalContext;
+    }
+
+    private final TerminalContext terminalContext;
 
     // SpreadsheetExpressionEvaluationContext............................................................................
 
@@ -420,7 +437,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 this.formHandlerContext,
                 this.expressionFunctionProvider,
                 this.localeContext,
-                this.providerContext
+                this.providerContext,
+                this.terminalContext
             );
     }
 

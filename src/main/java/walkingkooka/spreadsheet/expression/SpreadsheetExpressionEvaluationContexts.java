@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -56,7 +57,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                                final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                final LocaleContext localeContext,
-                                                               final ProviderContext providerContext) {
+                                                               final ProviderContext providerContext,
+                                                               final TerminalContext terminalContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             cell,
             spreadsheetExpressionReferenceLoader,
@@ -68,7 +70,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
             formHandlerContext,
             expressionFunctionProvider,
             localeContext,
-            providerContext
+            providerContext,
+            terminalContext
         );
     }
 

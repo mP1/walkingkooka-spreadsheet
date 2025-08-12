@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -220,7 +221,8 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                         )
                     ),
                     LocaleContexts.fake(),
-                    ProviderContexts.fake()
+                    ProviderContexts.fake(),
+                    TerminalContexts.fake()
                 ).addLocalVariable(
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     value

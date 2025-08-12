@@ -285,7 +285,8 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     }
                 },
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_CONTEXT
             ),
             (t) -> {
                 if (t.equals(TEMPLATE_NAME_1)) {
