@@ -35,6 +35,11 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
     }
 
     @Override
+    public SpreadsheetValidatorContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
         throw new UnsupportedOperationException();
     }
