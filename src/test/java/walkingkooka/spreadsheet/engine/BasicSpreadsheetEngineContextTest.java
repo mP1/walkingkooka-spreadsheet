@@ -24,10 +24,14 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.FakeDateTimeContext;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.FakeLocaleContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -37,6 +41,8 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -1000,7 +1006,96 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    // environmentContext...............................................................................................
+
+    @Test
+    public void testEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            this.createContext(environmentContext),
+            name,
+            value
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        context.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            name,
+            value
+        );
+    }
+
+    @Test
+    public void testRemoveEnvironmentValue() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        context.removeEnvironmentValue(name);
+
+        this.environmentValueAndCheck(
+            context,
+            name
+        );
+    }
+
+    // createContext....................................................................................................
+
     private BasicSpreadsheetEngineContext createContext(final Locale locale) {
+        return this.createContext(
+            locale,
+            PROVIDER_CONTEXT
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final EnvironmentContext environmentContext) {
+        return this.createContext(
+            LOCALE,
+            ProviderContexts.basic(
+                ConverterContexts.fake(),
+                environmentContext,
+                PluginStores.fake()
+            )
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final Locale locale,
+                                                        final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
             SERVER_URL,
             METADATA.set(
@@ -1040,7 +1135,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ),
-            PROVIDER_CONTEXT,
+            providerContext,
             TERMINAL_CONTEXT
         );
     }
