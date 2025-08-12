@@ -374,6 +374,12 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         return this;
     }
 
+    @Override
+    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.context.removeEnvironmentValue(name);
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override
