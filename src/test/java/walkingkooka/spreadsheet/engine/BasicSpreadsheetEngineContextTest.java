@@ -1200,18 +1200,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                 "  \"style\": {\n" +
                 "    \"backgroundColor\": \"white\",\n" +
-                "    \"borderBottomColor\": \"black\",\n" +
-                "    \"borderBottomStyle\": \"SOLID\",\n" +
-                "    \"borderBottomWidth\": \"1px\",\n" +
-                "    \"borderLeftColor\": \"black\",\n" +
-                "    \"borderLeftStyle\": \"SOLID\",\n" +
-                "    \"borderLeftWidth\": \"1px\",\n" +
-                "    \"borderRightColor\": \"black\",\n" +
-                "    \"borderRightStyle\": \"SOLID\",\n" +
-                "    \"borderRightWidth\": \"1px\",\n" +
-                "    \"borderTopColor\": \"black\",\n" +
-                "    \"borderTopStyle\": \"SOLID\",\n" +
-                "    \"borderTopWidth\": \"1px\",\n" +
                 "    \"color\": \"black\",\n" +
                 "    \"fontFamily\": \"MS Sans Serif\",\n" +
                 "    \"fontSize\": 11,\n" +
@@ -1437,18 +1425,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"sortConverter\": \"collection(null-to-number, simple, number-to-number, text-to-text, error-to-number, error-throwing, text-to-expression, text-to-locale, text-to-selection, selection-to-selection, selection-to-text, general)\",\n" +
                 "  \"style\": {\n" +
                 "    \"backgroundColor\": \"white\",\n" +
-                "    \"borderBottomColor\": \"black\",\n" +
-                "    \"borderBottomStyle\": \"SOLID\",\n" +
-                "    \"borderBottomWidth\": \"1px\",\n" +
-                "    \"borderLeftColor\": \"black\",\n" +
-                "    \"borderLeftStyle\": \"SOLID\",\n" +
-                "    \"borderLeftWidth\": \"1px\",\n" +
-                "    \"borderRightColor\": \"black\",\n" +
-                "    \"borderRightStyle\": \"SOLID\",\n" +
-                "    \"borderRightWidth\": \"1px\",\n" +
-                "    \"borderTopColor\": \"black\",\n" +
-                "    \"borderTopStyle\": \"SOLID\",\n" +
-                "    \"borderTopWidth\": \"1px\",\n" +
                 "    \"color\": \"black\",\n" +
                 "    \"fontFamily\": \"MS Sans Serif\",\n" +
                 "    \"fontSize\": 11,\n" +
