@@ -432,7 +432,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 this.serverUrl,
                 this.spreadsheetMetadata,
                 this.spreadsheetStoreRepository,
-                after,
+                Objects.requireNonNull(
+                    after,
+                    "spreadsheetConverterContext.setProcessor returned null"
+                ),
                 this.spreadsheetFormatterContextFactory,
                 this.formHandlerContext,
                 this.expressionFunctionProvider,
