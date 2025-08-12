@@ -218,6 +218,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                    final T value);
 
+    @Override
     SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name);
 
     // validation.......................................................................................................
