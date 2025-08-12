@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -45,6 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
+    EnvironmentExpressionEvaluationContextTesting<C>,
     HasSpreadsheetCellTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
     ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
