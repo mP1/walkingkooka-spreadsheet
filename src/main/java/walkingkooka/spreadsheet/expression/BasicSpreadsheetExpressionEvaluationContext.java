@@ -152,6 +152,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this;
     }
 
+    @Override
+    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.providerContext.removeEnvironmentValue(name);
+        return this;
+    }
+
     // SpreadsheetExpressionEvaluationContext............................................................................
 
     @Override
