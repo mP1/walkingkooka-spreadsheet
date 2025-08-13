@@ -31,6 +31,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -665,6 +666,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             Integer.class,
             this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
             123
+        );
+    }
+
+    @Test
+    public void testConvertUrlToString() {
+        final String url = "http://www.example.com";
+        final SpreadsheetConverterContext context = this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL);
+
+        this.convertAndCheck(
+            context.converter(),
+            Url.parseAbsolute(url),
+            String.class,
+            context,
+            url
         );
     }
 
