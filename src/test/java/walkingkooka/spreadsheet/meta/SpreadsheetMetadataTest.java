@@ -700,6 +700,76 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    @Test
+    public void testConverterToStringPrefixedByPropertyNameWithFormulaConverter() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            .set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale
+            ).loadFromLocale(
+                LocaleContexts.jre(locale)
+            );
+
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.generalConverter(
+                    spreadsheetFormatterProvider(),
+                    spreadsheetParserProvider(),
+                    p
+                )
+            ),
+            PROVIDER_CONTEXT
+        );
+
+        this.toStringAndCheck(
+            converter,
+            "formulaConverter: collection(null-to-number, simple, number-to-number, text-to-text, " +
+                "error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, " +
+                "selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
+                "general)"
+        );
+    }
+
+    @Test
+    public void testConverterToStringPrefixedByPropertyNameWithFormatterConverter() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            .set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale
+            ).loadFromLocale(
+                LocaleContexts.jre(locale)
+            );
+
+        final Converter<SpreadsheetConverterContext> converter = metadata.converter(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.generalConverter(
+                    spreadsheetFormatterProvider(),
+                    spreadsheetParserProvider(),
+                    p
+                )
+            ),
+            PROVIDER_CONTEXT
+        );
+
+        this.toStringAndCheck(
+            converter,
+            "formattingConverter: collection(null-to-number, simple, number-to-number, text-to-text, " +
+                "error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, " +
+                "text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, " +
+                "selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, color-to-number, " +
+                "number-to-color, color-to-color, text-to-spreadsheet-color-name, " +
+                "text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, " +
+                "text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, " +
+                "url-to-hyperlink, url-to-image, general)"
+        );
+    }
+
     // ExpressionFunctionProvider.......................................................................................
 
     @Test
