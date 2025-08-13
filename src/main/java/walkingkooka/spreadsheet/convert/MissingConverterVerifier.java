@@ -747,7 +747,8 @@ final class MissingConverterVerifier {
         finder.addIfConversionFail(
             Lists.of(
                 'A',
-                "Text"
+                "Text",
+                Url.parseAbsolute("https://example.com/123")
             ),
             String.class,
             SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT
