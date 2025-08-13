@@ -780,7 +780,7 @@ final class MissingConverterVerifier {
         }
 
         // text-to-url..................................................................................................
-        Url url = Url.parse("https://example.com/123");
+        final Url url = Url.parse("https://example.com/123");
 
         if (formatting) {
             finder.addIfConversionFail(
