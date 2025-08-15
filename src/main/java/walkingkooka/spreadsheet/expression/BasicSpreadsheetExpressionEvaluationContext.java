@@ -363,6 +363,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                     this
                 );
             }
+        } else {
+            if (reference instanceof EnvironmentValueName) {
+                value = Optional.ofNullable(
+                    Cast.to(
+                        this.environmentValue(
+                            (EnvironmentValueName<?>) reference
+                        )
+                    )
+                );
+            }
         }
 
         return value;
