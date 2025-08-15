@@ -637,6 +637,27 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    @Test
+    public void testReferenceWithEnvironmentValueName() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.referenceAndCheck(
+            this.createContext(environmentContext),
+            name,
+            value
+        );
+    }
+
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
