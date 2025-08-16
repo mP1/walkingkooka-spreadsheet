@@ -1217,6 +1217,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             this.createContext(),
             "serverUrl=https://example.com/path123 \"\n" +
                 "\" metadata={\n" +
+                "  \"autoHideScrollbars\": false,\n" +
                 "  \"cellCharacterWidth\": 1,\n" +
                 "  \"clipboardExporter\": \"json\",\n" +
                 "  \"clipboardImporter\": \"json\",\n" +
@@ -1442,6 +1443,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             ),
             "serverUrl=https://example.com/path123 \"\n" +
                 "\" metadata={\n" +
+                "  \"autoHideScrollbars\": false,\n" +
                 "  \"cellCharacterWidth\": 1,\n" +
                 "  \"clipboardExporter\": \"json\",\n" +
                 "  \"clipboardImporter\": \"json\",\n" +

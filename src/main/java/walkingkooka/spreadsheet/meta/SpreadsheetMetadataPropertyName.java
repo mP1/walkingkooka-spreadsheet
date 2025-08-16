@@ -120,6 +120,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<AuditInfo> AUDIT_INFO = registerConstant(SpreadsheetMetadataPropertyNameAuditInfo.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>autoHideScrollbars</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Boolean> AUTO_HIDE_SCROLLBARS = registerConstant(SpreadsheetMetadataPropertyNameBooleanAutoHideScrollbars.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>cellCharacterWidth</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());

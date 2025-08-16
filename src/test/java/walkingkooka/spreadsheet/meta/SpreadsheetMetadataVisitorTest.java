@@ -153,6 +153,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitAutoHideScrollbars() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitAutoHideScrollbars(final boolean b) {
+                this.visited = b;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
+            true
+        );
+    }
+
+    @Test
     public void testVisitCellCharacterWidth() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

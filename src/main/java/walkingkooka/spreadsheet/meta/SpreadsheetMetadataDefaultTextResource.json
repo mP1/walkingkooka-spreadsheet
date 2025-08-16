@@ -1,4 +1,5 @@
 {
+  "autoHideScrollbars": false,
   "cellCharacterWidth": 1,
   "clipboardExporter": "json",
   "clipboardImporter": "json",

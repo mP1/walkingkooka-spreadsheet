@@ -81,6 +81,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitAutoHideScrollbars(final boolean autoHideScrollbars) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitCellCharacterWidth(final int value) {
         throw new UnsupportedOperationException();
     }
