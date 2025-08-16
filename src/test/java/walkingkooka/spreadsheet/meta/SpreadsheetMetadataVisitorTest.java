@@ -135,7 +135,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitCreatedBy() {
+    public void testVisitAuditInfo() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitAuditInfo(final AuditInfo a) {
