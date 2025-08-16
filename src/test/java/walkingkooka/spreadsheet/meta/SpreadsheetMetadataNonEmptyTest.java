@@ -2626,6 +2626,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LocalDateTime.MAX
             )
         );
+        properties.put(
+            SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
+            false
+        );
         properties.put(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 0);
         properties.put(
             SpreadsheetMetadataPropertyName.CLIPBOARD_EXPORTER,

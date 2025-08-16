@@ -110,6 +110,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitAutoHideScrollbars(final boolean autoHideScrollbars) {
+
+    }
+
     protected void visitCellCharacterWidth(final int value) {
         // nop
     }
