@@ -205,6 +205,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 NOW.now()
             )
         ).set(
+            SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
+            false
+        ).set(
             SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH,
             1
         ).set(
