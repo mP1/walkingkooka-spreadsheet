@@ -39,6 +39,6 @@ final class SpreadsheetMetadataPropertyNameValidatorAliasSetValidationValidators
     @Override
     void accept(final ValidatorAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitvalidationValidators(aliases);
+        visitor.visitValidationValidators(aliases);
     }
 }

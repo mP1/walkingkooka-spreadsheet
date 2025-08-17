@@ -45,6 +45,6 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidation 
     @Override
     void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitvalidationFunctions(aliases);
+        visitor.visitValidationFunctions(aliases);
     }
 }

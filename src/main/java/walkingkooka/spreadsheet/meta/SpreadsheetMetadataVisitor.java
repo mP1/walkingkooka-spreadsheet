@@ -347,11 +347,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitvalidationFunctions(final ExpressionFunctionAliasSet aliases) {
+    protected void visitValidationFunctions(final ExpressionFunctionAliasSet aliases) {
         // nop
     }
 
-    protected void visitvalidationValidators(final ValidatorAliasSet aliases) {
+    protected void visitValidationValidators(final ValidatorAliasSet aliases) {
         // nop
     }
 

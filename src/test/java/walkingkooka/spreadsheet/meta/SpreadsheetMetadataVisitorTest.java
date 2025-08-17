@@ -859,10 +859,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitvalidationFunctions() {
+    public void testVisitValidationFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitvalidationFunctions(final ExpressionFunctionAliasSet a) {
+            protected void visitValidationFunctions(final ExpressionFunctionAliasSet a) {
                 this.visited = a;
             }
         }.accept(
@@ -872,10 +872,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitvalidationValidators() {
+    public void testVisitValidationValidators() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitvalidationValidators(final ValidatorAliasSet a) {
+            protected void visitValidationValidators(final ValidatorAliasSet a) {
                 this.visited = a;
             }
         }.accept(
