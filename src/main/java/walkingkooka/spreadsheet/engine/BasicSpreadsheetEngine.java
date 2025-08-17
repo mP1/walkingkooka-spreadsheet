@@ -1801,12 +1801,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext =
             (final Object v,
              final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
-                    Optional.of(cell),
-                    loader
-                ).addLocalVariable(
-                    SpreadsheetValidatorContext.VALUE,
-                    value
-                );
+                Optional.of(cell),
+                loader
+            ).addLocalVariable(
+                SpreadsheetValidatorContext.VALUE,
+                value
+            );
 
         return cell.setFormula(
             formula.setError(
@@ -1930,7 +1930,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Optional<SpreadsheetColumn> column = repo.columns()
             .load(columnReference);
 
-        if (!column.isPresent() || !column.get().hidden()) {
+        if (false == column.isPresent() || false == column.get().hidden()) {
             columnWidth = context.storeRepository()
                 .cells()
                 .maxColumnWidth(columnReference);
@@ -1957,7 +1957,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Optional<SpreadsheetRow> row = repo.rows()
             .load(rowReference);
 
-        if (!row.isPresent() || !row.get().hidden()) {
+        if (false == row.isPresent() || false == row.get().hidden()) {
             rowHeight = context.storeRepository()
                 .cells()
                 .maxRowHeight(rowReference);
@@ -2012,7 +2012,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             viewport.rectangle(),
             viewport.includeFrozenColumnsRows(),
             viewport.anchoredSelection()
-                .map(a -> context.resolveIfLabelOrFail(a.selection())),
+                .map(a -> context.resolveIfLabelOrFail(
+                        a.selection()
+                    )
+                ),
             context
         );
     }
@@ -2050,7 +2053,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         break;
                     }
                     rightColumn = rightColumn.addSaturated(1);
-                } while (!rightColumn.isLast());
+                } while (false == rightColumn.isLast());
 
                 frozenColumns = leftColumn.columnRange(rightColumn);
             }
@@ -2076,7 +2079,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         break;
                     }
                     bottomRow = bottomRow.addSaturated(1);
-                } while (!bottomRow.isLast());
+                } while (false == bottomRow.isLast());
 
                 frozenRows = topRow.rowRange(bottomRow);
             }
@@ -2089,13 +2092,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (null != frozenColumns) {
             final SpreadsheetColumnReference right = frozenColumns.end();
             if (right.compareTo(nonFrozenHome.column()) >= 0) {
-                nonFrozenHome = nonFrozenHome.setColumn(right.addSaturated(+1));
+                nonFrozenHome = nonFrozenHome.setColumn(
+                    right.addSaturated(+1)
+                );
             }
         }
         if (null != frozenRows) {
             final SpreadsheetRowReference right = frozenRows.end();
             if (right.compareTo(nonFrozenHome.row()) >= 0) {
-                nonFrozenHome = nonFrozenHome.setRow(right.addSaturated(+1));
+                nonFrozenHome = nonFrozenHome.setRow(
+                    right.addSaturated(+1)
+                );
             }
         }
 
@@ -2115,7 +2122,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 height,
                 selection,
                 context
-            ) : null;
+            ) :
+            null;
 
         final Set<SpreadsheetCellRangeReference> window = Sets.ordered();
 
@@ -2137,7 +2145,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             window.add(frozenColumnsRowsCells);
 
             skipPan = null != frozenColumnsRowsCells &&
-                selection.map(s -> s.testCellRange(frozenColumnsRowsCells)).orElse(false);
+                selection.map(s -> s.testCellRange(frozenColumnsRowsCells)
+                ).orElse(false);
         }
 
         if (null != frozenRows && null != nonFrozenColumns) {
@@ -2149,7 +2158,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             window.add(frozenRowsCells);
 
             skipPan = skipPan ||
-                selection.map(s -> s.testCellRange(frozenRowsCells)).orElse(false);
+                selection.map(s -> s.testCellRange(frozenRowsCells))
+                    .orElse(false);
         }
 
         if (null != frozenColumns && null != nonFrozenRows) {
@@ -2160,7 +2170,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             window.add(frozenColumnCells);
 
             skipPan = skipPan ||
-                selection.map(s -> s.testCellRange(frozenColumnCells)).orElse(false);
+                selection.map(s -> s.testCellRange(frozenColumnCells))
+                    .orElse(false);
         }
 
         if (null != nonFrozenCells) {
@@ -2168,7 +2179,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             if (selection.isPresent() && !skipPan) {
                 final SpreadsheetSelection spreadsheetSelection = selection.get();
 
-                if (!spreadsheetSelection.testCellRange(nonFrozenCells)) {
+                if (false == spreadsheetSelection.testCellRange(nonFrozenCells)) {
                     nonFrozenCells = BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor.pan(
                         nonFrozenCells,
                         nonFrozenHome.viewportRectangle(
@@ -2242,7 +2253,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         break;
                     }
                     if (x < 0) {
-                        if (!selection.isPresent() || !selection.get().testColumn(leftColumn)) {
+                        if (false == selection.isPresent() || false == selection.get()
+                            .testColumn(leftColumn)) {
                             break;
                         }
 
@@ -2254,7 +2266,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
 
                 if (xOffset < 0) {
-                    if (!leftColumn.isFirst()) {
+                    if (false == leftColumn.isFirst()) {
                         x = xOffset;
                         for (; ; ) {
                             leftColumn = leftColumn.addSaturated(-1);
@@ -2273,7 +2285,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 break;
             }
             if (x < 0) {
-                if (!selection.isPresent() || !selection.get().testColumn(rightColumn)) {
+                if (false == selection.isPresent() || false == selection.get()
+                    .testColumn(rightColumn)) {
                     break;
                 }
 
@@ -2341,7 +2354,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         break;
                     }
                     if (y < 0) {
-                        if (!selection.isPresent() || !selection.get().testRow(topRow)) {
+                        if (false == selection.isPresent() || false == selection.get().testRow(topRow)) {
                             break;
                         }
 
@@ -2353,7 +2366,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
 
                 if (yOffset < 0) {
-                    if (!topRow.isFirst()) {
+                    if (false == topRow.isFirst()) {
                         y = yOffset;
                         for (; ; ) {
                             topRow = topRow.addSaturated(-1);
@@ -2371,7 +2384,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 break;
             }
             if (y < 0) {
-                if (!selection.isPresent() || !selection.get().testRow(bottomRow)) {
+                if (false == selection.isPresent() || false == selection.get().testRow(bottomRow)) {
                     break;
                 }
 
@@ -2393,7 +2406,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         do {
             sum += this.columnWidth(column, context);
             column = column.addSaturated(1);
-        } while (!column.isLast() && column.compareTo(end) <= 0);
+        } while (false == column.isLast() && column.compareTo(end) <= 0);
 
         return sum;
     }
@@ -2407,7 +2420,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         do {
             sum += this.rowHeight(row, context);
             row = row.addSaturated(1);
-        } while (!row.isLast() && row.compareTo(end) <= 0);
+        } while (false == row.isLast() && row.compareTo(end) <= 0);
 
         return sum;
     }
