@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.EmptyTextException;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -412,6 +413,16 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 SpreadsheetSelection.parseColumn("A"),
                 SpreadsheetSelection.parseRow("1")
             )
+        );
+    }
+
+    @Test
+    public void testParseCellEmptyFails() {
+        final String text = "";
+
+        this.parseStringFails(
+            text,
+            new EmptyTextException("text")
         );
     }
 
