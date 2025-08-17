@@ -2040,7 +2040,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final SpreadsheetColumnReference lastFrozenColumn = maybeFrozenColumns.get()
                     .end();
 
-                SpreadsheetColumnReference leftColumn = SpreadsheetReferenceKind.RELATIVE.firstColumn();
+                final SpreadsheetColumnReference leftColumn = SpreadsheetReferenceKind.RELATIVE.firstColumn();
                 SpreadsheetColumnReference rightColumn = leftColumn;
 
                 do {
@@ -2066,7 +2066,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final SpreadsheetRowReference lastFrozenRow = maybeFrozenRows.get()
                     .end();
 
-                SpreadsheetRowReference topRow = SpreadsheetReferenceKind.RELATIVE.firstRow();
+                final SpreadsheetRowReference topRow = SpreadsheetReferenceKind.RELATIVE.firstRow();
                 SpreadsheetRowReference bottomRow = topRow;
 
                 do {
