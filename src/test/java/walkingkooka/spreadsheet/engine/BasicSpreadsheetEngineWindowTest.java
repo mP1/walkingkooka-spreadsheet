@@ -17,27 +17,18 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor> {
-    @Override
-    public BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor createVisitor() {
-        return new BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor(null, null, null, null);
-    }
+public final class BasicSpreadsheetEngineWindowTest implements ClassTesting<BasicSpreadsheetEngineWindow> {
 
     @Override
-    public Class<BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor> type() {
-        return BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor.class;
+    public Class<BasicSpreadsheetEngineWindow> type() {
+        return BasicSpreadsheetEngineWindow.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
-    public String typeNamePrefix() {
-        return BasicSpreadsheetEngine.class.getSimpleName();
     }
 }

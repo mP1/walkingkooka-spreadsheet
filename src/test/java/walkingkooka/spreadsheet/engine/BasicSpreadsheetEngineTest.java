@@ -457,9 +457,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return map;
     }
 
-    private final static double VIEWPORT_WIDTH = COLUMN_WIDTH * 5;
+    private final static int VIEWPORT_COLUMN_COUNT = 5;
 
-    private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * 5;
+    private final static double VIEWPORT_WIDTH = COLUMN_WIDTH * VIEWPORT_COLUMN_COUNT;
+
+    private final static int VIEWPORT_ROW_COUNT = 5;
+
+    private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * VIEWPORT_ROW_COUNT;
 
     private final static String TEST_NUMBER_PARAMETER = "BasicSpreadsheetEngineTestNumberParameter";
 
@@ -20432,7 +20436,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // widths top left .................................................................................................
 
     @Test
-    public void testWindowWithLeft() {
+    public void testWindowWithLeftMostHome() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20442,7 +20446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithLeft2() {
+    public void testWindowWithLeftMostHome2() {
         this.windowAndCheck(
             "A1",
             3 * COLUMN_WIDTH,
@@ -20452,7 +20456,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithLeft3() {
+    public void testWindowWithLeftMostHome3() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH - 1,
@@ -20462,7 +20466,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithLeft4() {
+    public void testWindowWithLeftMostHome4() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH + 1,
@@ -20472,7 +20476,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithLeft5() {
+    public void testWindowWithLeftMostHome5() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH * 4 - 1,
@@ -20482,7 +20486,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithLeft6() {
+    public void testWindowWithLeftMostHome6() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH * 4 + 1,
@@ -20492,7 +20496,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidX() {
+    public void testWindowWithCenterHome1() {
         this.windowAndCheck(
             "M1",
             COLUMN_WIDTH,
@@ -20502,7 +20506,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidX2() {
+    public void testWindowWithCenterHome2() {
         this.windowAndCheck(
             "M1",
             3 * COLUMN_WIDTH,
@@ -20512,7 +20516,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidX3() {
+    public void testWindowWithCenterHome3() {
         this.windowAndCheck(
             "M1",
             COLUMN_WIDTH - 1,
@@ -20522,7 +20526,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidX4() {
+    public void testWindowWithCenterHome4() {
         this.windowAndCheck(
             "M1",
             COLUMN_WIDTH + 1,
@@ -20532,7 +20536,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidX5() {
+    public void testWindowWithCenterHome5() {
         this.windowAndCheck(
             "M1",
             COLUMN_WIDTH * 4 - 1,
@@ -20542,7 +20546,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidX6() {
+    public void testWindowWithCenterHome6() {
         this.windowAndCheck(
             "M1",
             COLUMN_WIDTH * 4 + 1,
@@ -20554,7 +20558,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // widths top right .................................................................................................
 
     @Test
-    public void testWindowWithRight() {
+    public void testWindowWithRightMostHome() {
         this.windowAndCheck(
             "XFD1",
             COLUMN_WIDTH,
@@ -20564,7 +20568,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithRight2() {
+    public void testWindowWithRightMostHome2() {
         this.windowAndCheck(
             "XFD1",
             3 * COLUMN_WIDTH,
@@ -20574,7 +20578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithRight3() {
+    public void testWindowWithRightMostHome3() {
         this.windowAndCheck(
             "XFD1",
             COLUMN_WIDTH - 1,
@@ -20584,7 +20588,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithRight4() {
+    public void testWindowWithRightMostHome4() {
         this.windowAndCheck(
             "XFD1",
             COLUMN_WIDTH + 1,
@@ -20594,7 +20598,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithRight5() {
+    public void testWindowWithRightMostHome5() {
         this.windowAndCheck(
             "XFD1",
             COLUMN_WIDTH * 4 - 1,
@@ -20604,7 +20608,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithRight6() {
+    public void testWindowWithRightMostHome6() {
         this.windowAndCheck(
             "XFD1",
             COLUMN_WIDTH * 4 + 1,
@@ -20616,7 +20620,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // heights top left .................................................................................................
 
     @Test
-    public void testWindowWithTop() {
+    public void testWindowWithTopMostHome1() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20626,7 +20630,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithTop2() {
+    public void testWindowWithTopMostHome2() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20636,7 +20640,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithTop3() {
+    public void testWindowWithTopMostHome3() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20646,7 +20650,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithTop4() {
+    public void testWindowWithTopMostHome4() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20656,7 +20660,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithTop5() {
+    public void testWindowWithTopMostHome5() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20666,7 +20670,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithTop6() {
+    public void testWindowWithTopMostHome6() {
         this.windowAndCheck(
             "A1",
             COLUMN_WIDTH,
@@ -20676,7 +20680,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidY() {
+    public void testWindowWithMiddleHome1() {
         this.windowAndCheck(
             "A10",
             COLUMN_WIDTH,
@@ -20686,7 +20690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidY2() {
+    public void testWindowWithMiddleHome2() {
         this.windowAndCheck(
             "A10",
             COLUMN_WIDTH,
@@ -20696,7 +20700,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidY3() {
+    public void testWindowWithMiddleHome3() {
         this.windowAndCheck(
             "A10",
             COLUMN_WIDTH,
@@ -20706,7 +20710,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidY4() {
+    public void testWindowWithMiddleHome4() {
         this.windowAndCheck(
             "A10",
             COLUMN_WIDTH,
@@ -20716,7 +20720,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidY5() {
+    public void testWindowWithMiddleHome5() {
         this.windowAndCheck(
             "A10",
             COLUMN_WIDTH,
@@ -20726,7 +20730,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithMidY6() {
+    public void testWindowWithMiddleHome6() {
         this.windowAndCheck(
             "A10",
             COLUMN_WIDTH,
@@ -20735,10 +20739,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // heights top right .................................................................................................
+    // heights top right ...............................................................................................
 
     @Test
-    public void testWindowWithBottom() {
+    public void testWindowWithBottomMostHome() {
         this.windowAndCheck(
             "A1048576",
             COLUMN_WIDTH,
@@ -20748,7 +20752,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithBottom2() {
+    public void testWindowWithBottomMostHome2() {
         this.windowAndCheck(
             "A1048576",
             COLUMN_WIDTH,
@@ -20758,7 +20762,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithBottom3() {
+    public void testWindowWithBottomMostHome3() {
         this.windowAndCheck(
             "A1048576",
             COLUMN_WIDTH,
@@ -20768,7 +20772,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithBottom4() {
+    public void testWindowWithBottomMostHome4() {
         this.windowAndCheck(
             "A1048576",
             COLUMN_WIDTH,
@@ -20778,7 +20782,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithBottom5() {
+    public void testWindowWithBottomMostHome5() {
         this.windowAndCheck(
             "A1048576",
             COLUMN_WIDTH,
@@ -20788,7 +20792,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowWithBottom6() {
+    public void testWindowWithBottomMostHome6() {
         this.windowAndCheck(
             "A1048576",
             COLUMN_WIDTH,
@@ -20901,41 +20905,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // window Selection Outside..........................................................................................
 
     @Test
-    public void testWindowWithSelectionCellLeft() {
+    public void testWindowWithSelectionCellOutsideLeft() {
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("A2"),
-            "A2:C4"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellLeft2() {
+    public void testWindowWithSelectionCellOutsideLeft2() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("A3"),
-            "A3:C5"
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRight() {
+    public void testWindowWithSelectionCellOutsideRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("E2"),
-            "C2:E4"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRight2() {
+    public void testWindowWithSelectionCellOutsideRight2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -20943,47 +20947,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("F2"),
-            "D2:F4"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellTop() {
+    public void testWindowWithSelectionCellOutsideTop() {
         // BCD:234
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("B1"),
-            "B1:D3"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellTop2() {
+    public void testWindowWithSelectionCellOutsideTop2() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("C1"),
-            "C1:E3"
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellBottom() {
+    public void testWindowWithSelectionCellOutsideBottom() {
         // B2:D4 -> 1
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("B5"),
-            "B3:D5"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellBottom2() {
+    public void testWindowWithSelectionCellOutsideBottom2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -20991,70 +20995,70 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("B6"),
-            "B4:D6"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellTopLeft() {
+    public void testWindowWithSelectionCellOutsideTopLeft() {
         // C3:E5
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("A2"),
-            "A2:C4"
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellBottomRight() {
+    public void testWindowWithSelectionCellOutsideBottomRight() {
         // C3:E5
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCell("G6"),
-            "E4:G6"
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnLeft() {
+    public void testWindowWithSelectionColumnOutsideLeft() {
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseColumn("A"),
-            "A2:C4"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnLeft2() {
+    public void testWindowWithSelectionColumnOutsideLeft2() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseColumn("A"),
-            "A3:C5"
+            "C3:E5"////"A3:C5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnRight() {
+    public void testWindowWithSelectionColumnOutsideRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseColumn("E"),
-            "C2:E4"
+            "B2:D4"////"C2:E4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnRight2() {
+    public void testWindowWithSelectionColumnOutsideRight2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -21062,47 +21066,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseColumn("F"),
-            "D2:F4"
+            "B2:D4"////"D2:F4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionRowTop() {
+    public void testWindowWithSelectionRowOutsideTop() {
         // BCD:234
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseRow("1"),
-            "B1:D3"
+            "B2:D4"////"B1:D3"
         );
     }
 
     @Test
-    public void testWindowWithSelectionRowTop2() {
+    public void testWindowWithSelectionRowOutsideTop2() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseRow("1"),
-            "C1:E3"
+            "C3:E5"////"C1:E3"
         );
     }
 
     @Test
-    public void testWindowWithSelectionRowBottom() {
+    public void testWindowWithSelectionRowOutsideBottom() {
         // B2:D4 -> 1
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseRow("5"),
-            "B3:D5"
+            "B2:D4"////"B3:D5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionRowBottom2() {
+    public void testWindowWithSelectionRowOutsideBottom2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -21110,209 +21114,435 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseRow("6"),
-            "B4:D6"
+            "B2:D4"////"B4:D6"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnReferenceLeft() {
-        this.windowAndCheck(
-            "B2",
-            COLUMN_WIDTH * 3,
-            ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumnRange("A"),
-            "A2:C4"
-        );
-    }
-
-    @Test
-    public void testWindowWithSelectionColumnReferenceLeft2() {
+    public void testWindowWithSelectionColumnRangeOutsideLeft() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumn("A"),
-            "A3:C5"
+            SpreadsheetSelection.parseColumnRange("A:B"),
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnReferenceLeft3() {
+    public void testWindowWithSelectionColumnRangeOutsideLeft2() {
         this.windowAndCheck(
-            "C3",
+            "D4",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumn("B"),
-            "B3:D5"
+            SpreadsheetSelection.parseColumnRange("A:B"),
+            "D4:F6"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnReferenceReferenceRight() {
+    public void testWindowWithSelectionColumnRangeOutsideRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumn("E"),
-            "C2:E4"
+            SpreadsheetSelection.parseColumnRange("E:F"),
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionColumnReferenceReferenceRight2() {
-        // B2:D4 -> 1
-        this.windowAndCheck(
-            "B2",
-            COLUMN_WIDTH * 3,
-            ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumn("F"),
-            "D2:F4"
-        );
-    }
-
-    @Test
-    public void testWindowWithSelectionColumnReferenceReferenceRight3() {
-        // B2:D4 -> 2
-        // BCD:234
-        this.windowAndCheck(
-            "B2",
-            COLUMN_WIDTH * 3,
-            ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumn("F"),
-            "D2:F4"
-        );
-    }
-
-    @Test
-    public void testWindowWithSelectionColumnReferenceReferenceRight4() {
-        // B2:D4 -> 2
-        // BCD:234
-        this.windowAndCheck(
-            "B2",
-            COLUMN_WIDTH * 3,
-            ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseColumn("G"),
-            "E2:G4"
-        );
-    }
-
-    @Test
-    public void testWindowWithSelectionCellRangeLeft() {
-        this.windowAndCheck(
-            "B2",
-            COLUMN_WIDTH * 3,
-            ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("A2"),
-            "A2:C4"
-        );
-    }
-
-    @Test
-    public void testWindowWithSelectionCellRangeLeft2() {
+    public void testWindowWithSelectionColumnRangeOutsideRight2() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("A3"),
-            "A3:C5"
+            SpreadsheetSelection.parseColumnRange("F:G"),
+            "C3:E5"
+        );
+    }
+
+
+    @Test
+    public void testWindowWithSelectionCellRangeOutsideLeft() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCellRange("A1"),
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeRight() {
-        // B2:D4 -> 1
+    public void testWindowWithSelectionCellRangeOutsideLeft2() {
+        this.windowAndCheck(
+            "C3",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            "C3:E5"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellRangeOutsideRight() {
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCellRange("E2"),
-            "C2:E4"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeRight2() {
+    public void testWindowWithSelectionCellRangeOutsideRight2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("F2"),
-            "D2:F4"
+            SpreadsheetSelection.parseCellRange("E5:F6"),
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeTop() {
+    public void testWindowWithSelectionCellRangeOutsideTop() {
         // BCD:234
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCellRange("B1"),
-            "B1:D3"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeTop2() {
+    public void testWindowWithSelectionCellRangeOutsideTop2() {
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("C1"),
-            "C1:E3"
+            SpreadsheetSelection.parseCellRange("C1:C2"),
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeBottom() {
+    public void testWindowWithSelectionCellRangeOutsideBottom() {
         // B2:D4 -> 1
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
             SpreadsheetSelection.parseCellRange("B5"),
-            "B3:D5"
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeBottom2() {
+    public void testWindowWithSelectionCellRangeOutsideBottom2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
             "B2",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("B6"),
-            "B4:D6"
+            SpreadsheetSelection.parseCellRange("B6:C7"),
+            "B2:D4"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeTopLeft() {
+    public void testWindowWithSelectionCellRangeOutsideTopLeft() {
         // C3:E5
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("A2"),
-            "A2:C4"
+            SpreadsheetSelection.parseCellRange("A1:A2"),
+            "C3:E5"
         );
     }
 
     @Test
-    public void testWindowWithSelectionCellRangeBottomRight() {
+    public void testWindowWithSelectionCellRangeOutsideBottomRight() {
         // C3:E5
         this.windowAndCheck(
             "C3",
             COLUMN_WIDTH * 3,
             ROW_HEIGHT * 3,
-            SpreadsheetSelection.parseCellRange("G6"),
-            "E4:G6"
+            SpreadsheetSelection.parseCellRange("G6:H7"),
+            "C3:E5"
+        );
+    }
+
+    // testWindowSelection forces pan...................................................................................
+
+    @Test
+    public void testWindowWithSelectionCellInsideTopLeft() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.A1,
+            "A1:C3"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideTopLeft2() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.A1,
+            "A1:C3"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideTopRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCell("C1"),
+            "A1:C3"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideOutsideTopRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCell("C1"),
+            "B1:D3" // scroll right by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideOutsideTopRight2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCell("D2"),
+            "C2:E4" // scroll right by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideBottomLeft() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCell("A3"),
+            "A1:C3"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideBottomLeft2() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCell("A3"),
+            "A1:C3"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideBottomRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCell("C3"),
+            "A1:C3"
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideOutsideBottomRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseCell("C3"),
+            "A2:C4" // scroll down by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellInsideOutsideBottomRight2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseCell("D4"),
+            "B3:D5" // scroll down by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionColumnInsideOutsideRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseColumn("C"),
+            "B1:D3" // scroll right by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionColumnInsideOutsideRight2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseColumn("D"),
+            "C2:E4" // scroll right by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionRowInsideOutsideBottom() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseRow("3"),
+            "A2:C4" // scroll down by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionRowInsideOutsideBottom2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseRow("4"),
+            "B3:D5" // scroll down by 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellRangeInsideOutsideTopRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCellRange("A1:C3")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+            "B1:D3" // forced to scroll right 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellRangeInsideOutsideTopRight2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseCellRange("B2:D4")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+            "C2:E4" // forced to scroll right 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellRangeInsideOutsideBottomRight() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseCellRange("A1:C3")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+            "A2:C4" // forced to scroll down 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellRangeInsideOutsideBottomRight2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseCellRange("B2:D4")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+            "B3:D5" // forced to scroll down 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionCellRangeInsideOutsideBottomRigh3() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseCellRange("B2:D4")
+                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT),
+            "C3:E5" // forced to scroll right 1 and down 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionColumnRangeInsideOutside() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseColumnRange("A:C")
+                .setAnchor(SpreadsheetViewportAnchor.LEFT),
+            "B1:D3" // forced to scroll right 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionColumnRangeInsideOutside2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3 - 1,
+            ROW_HEIGHT * 3,
+            SpreadsheetSelection.parseColumnRange("A:D")
+                .setAnchor(SpreadsheetViewportAnchor.LEFT),
+            "C2:E4" // forced to scroll right 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionRowRangeInsideOutside() {
+        this.windowAndCheck(
+            "A1",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseRowRange("1:3")
+                .setAnchor(SpreadsheetViewportAnchor.TOP),
+            "A2:C4" // forced to scroll down 1
+        );
+    }
+
+    @Test
+    public void testWindowWithSelectionRowRangeInsideOutside2() {
+        this.windowAndCheck(
+            "B2",
+            COLUMN_WIDTH * 3,
+            ROW_HEIGHT * 3 - 1,
+            SpreadsheetSelection.parseRowRange("1:4")
+                .setAnchor(SpreadsheetViewportAnchor.TOP),
+            "B3:D5" // forced to scroll down 1
         );
     }
 
@@ -21400,53 +21630,81 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // window helpers....................................................................................................
+    // window helpers...................................................................................................
 
-    private void windowAndCheck(final String cellOrLabel,
+    private void windowAndCheck(final String home,
                                 final double width,
                                 final double height,
-                                final String range) {
+                                final String expected) {
         this.windowAndCheck(
-            cellOrLabel,
+            home,
             width,
             height,
             SpreadsheetEngine.NO_SELECTION,
-            range
+            expected
         );
     }
 
-    private void windowAndCheck(final String cellOrLabel,
+    private void windowAndCheck(final String home,
                                 final double width,
                                 final double height,
                                 final SpreadsheetSelection selection,
-                                final String range) {
+                                final String expected) {
         this.windowAndCheck(
-            cellOrLabel,
+            home,
             width,
             height,
             Optional.of(selection),
-            range
+            expected
         );
     }
 
-    private void windowAndCheck(final String cell,
+    private void windowAndCheck(final String home,
                                 final double width,
                                 final double height,
                                 final Optional<SpreadsheetSelection> selection,
-                                final String range) {
+                                final String expected) {
+        this.windowAndCheck2(
+            home,
+            width,
+            height,
+            selection.map(SpreadsheetSelection::setDefaultAnchor),
+            expected
+        );
+    }
+
+    private void windowAndCheck(final String home,
+                                final double width,
+                                final double height,
+                                final AnchoredSpreadsheetSelection anchoredSpreadsheetSelection,
+                                final String expected) {
+        this.windowAndCheck2(
+            home,
+            width,
+            height,
+            Optional.of(anchoredSpreadsheetSelection),
+            expected
+        );
+    }
+
+    private void windowAndCheck2(final String home,
+                                 final double width,
+                                 final double height,
+                                 final Optional<AnchoredSpreadsheetSelection> anchoredSpreadsheetSelection,
+                                 final String expected) {
         this.windowAndCheck(
             this.createSpreadsheetEngine(),
             SpreadsheetViewport.with(
-            SpreadsheetSelection.parseCell(cell)
-                .viewportRectangle(
-                    width,
-                    height
-                )
+                SpreadsheetSelection.parseCell(home)
+                    .viewportRectangle(
+                        width,
+                        height
+                    )
             ).setAnchoredSelection(
-                selection.map(SpreadsheetSelection::setDefaultAnchor)
+                anchoredSpreadsheetSelection
             ),
             this.createContext(),
-            range
+            expected
         );
     }
 
@@ -21913,20 +22171,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
 
-    private void windowAndCheck(final String cellOrLabel,
+    private void windowAndCheck(final String home,
                                 final double width,
                                 final double height,
                                 final int frozenColumns,
                                 final int frozenRows,
-                                final String range) {
+                                final String expected) {
         this.windowAndCheck(
-            cellOrLabel,
+            home,
             width,
             height,
             frozenColumns,
             frozenRows,
             SpreadsheetEngine.NO_SELECTION,
-            range
+            expected
         );
     }
 
@@ -22047,7 +22305,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             3, // frozenColumns
             3, // frozenRows
             SpreadsheetSelection.parseCell("F4"),
-            "A1:C3,D1:E3,A4:C5,E4:F5"
+            "A1:C3,D1:E3,A4:C5,D4:E5"
         );
     }
 
@@ -22060,7 +22318,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             3, // frozenColumns
             3, // frozenRows
             SpreadsheetSelection.parseCell("G4"),
-            "A1:C3,D1:E3,A4:C5,F4:G5"
+            "A1:C3,D1:E3,A4:C5,D4:E5"
         );
     }
 
@@ -22130,7 +22388,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void windowAndCheck(final String cell,
+    private void windowAndCheck(final String home,
                                 final double width,
                                 final double height,
                                 final int frozenColumns,
@@ -22138,7 +22396,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 final SpreadsheetSelection selection,
                                 final String window) {
         this.windowAndCheck(
-            cell,
+            home,
             width,
             height,
             frozenColumns,
@@ -22148,7 +22406,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void windowAndCheck(final String cell,
+    private void windowAndCheck(final String home,
                                 final double width,
                                 final double height,
                                 final int frozenColumns,
@@ -22175,12 +22433,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.windowAndCheck(
             this.createSpreadsheetEngine(),
             SpreadsheetViewport.with(
-            SpreadsheetSelection.parseCell(cell)
-                .viewportRectangle(
-                    width,
-                    height
-                )
-            ).setIncludeFrozenColumnsRows(true)
+                    SpreadsheetSelection.parseCell(home)
+                        .viewportRectangle(
+                            width,
+                            height
+                        )
+                ).setIncludeFrozenColumnsRows(true)
                 .setAnchoredSelection(
                     selection.map(SpreadsheetSelection::setDefaultAnchor)
                 ),
@@ -22278,7 +22536,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  navigate........................................................................................................
 
     @Test
-    public void testNavigateWithSelectionHiddenAndMissingNavigation() {
+    public void testNavigateWithCellSelectionHiddenAndMissingNavigation() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -22313,7 +22571,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateWithSelectionMissingNavigation() {
+    public void testNavigateWithCellSelectionMissingNavigation() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -22332,6 +22590,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             viewport,
             context,
             Optional.of(viewport)
+        );
+    }
+
+    @Test
+    public void testNavigateWithCellSelectionPartiallyOutsideAndMissingNavigationPans() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        final SpreadsheetViewportRectangle rectangle = cell.viewportRectangle(
+            VIEWPORT_WIDTH - 1,
+            VIEWPORT_HEIGHT
+        );
+
+        final SpreadsheetViewport viewport = rectangle.viewport()
+            .setAnchoredSelection(
+                Optional.of(
+                    cell.add(VIEWPORT_COLUMN_COUNT - 1, 0)
+                        .setDefaultAnchor()
+                )
+            );
+
+        this.navigateAndCheck(
+            engine,
+            viewport,
+            context,
+            viewport.setRectangle(
+                rectangle.setHome(
+                    cell.addColumn(1)
+                ).setWidth(VIEWPORT_WIDTH)
+            )
         );
     }
 
