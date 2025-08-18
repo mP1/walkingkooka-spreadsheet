@@ -1265,7 +1265,8 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Checks and complains if this {@link SpreadsheetSelection} and then given {@link SpreadsheetViewportAnchor}
-     * is invalid.
+     * is invalid.<br>
+     * Note {@link SpreadsheetLabelName} accepts any {@link SpreadsheetViewportAnchor}.
      */
     public final void checkAnchor(final SpreadsheetViewportAnchor anchor) {
         Objects.requireNonNull(anchor, "anchor");
