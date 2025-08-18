@@ -2033,6 +2033,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 "isFirst",
                 "isNotFirst",
                 "isLast",
+                "isNotLast",
                 "isHidden",
                 "isScalar",
                 "isCellOrCellRange",
