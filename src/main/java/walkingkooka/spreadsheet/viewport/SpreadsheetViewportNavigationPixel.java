@@ -84,7 +84,7 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
             // reset home
             result = result.setRectangle(
                 rectangle.setHome(home)
-            ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
+            ).clearAnchoredSelection();
         }
 
         return result;

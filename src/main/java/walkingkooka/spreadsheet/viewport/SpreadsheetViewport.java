@@ -245,6 +245,10 @@ public final class SpreadsheetViewport implements HasUrlFragment,
             );
     }
 
+    public SpreadsheetViewport clearAnchoredSelection() {
+        return this.setAnchoredSelection(NO_ANCHORED_SELECTION);
+    }
+
     private final Optional<AnchoredSpreadsheetSelection> anchoredSelection;
 
     public SpreadsheetViewportNavigationList navigations() {

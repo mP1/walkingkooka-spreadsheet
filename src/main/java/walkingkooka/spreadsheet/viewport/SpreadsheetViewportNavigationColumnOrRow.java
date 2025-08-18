@@ -53,7 +53,7 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
                     context
                 );
             } else {
-                result = viewport.setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
+                result = viewport.clearAnchoredSelection();
             }
         }
 
