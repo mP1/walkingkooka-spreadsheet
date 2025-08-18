@@ -2508,22 +2508,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         SpreadsheetViewport navigating = viewport;
 
-        // skip navigations if theres no selection.
-        AnchoredSpreadsheetSelection anchored = viewport.anchoredSelection()
-            .orElse(null);
-        if (null != anchored) {
-            for (final SpreadsheetViewportNavigation navigation : navigations) {
-                navigating = navigation.update(
-                    navigating,
-                    context
-                );
-            }
+        for (final SpreadsheetViewportNavigation navigation : navigations) {
+            navigating = navigation.update(
+                navigating,
+                context
+            );
         }
 
         final SpreadsheetCellReference home = viewport.rectangle()
             .home();
         if (false == context.isColumnHidden(home.column()) && false == context.isRowHidden(home.row())) {
-            anchored = viewport.anchoredSelection()
+            final AnchoredSpreadsheetSelection anchored = viewport.anchoredSelection()
                 .orElse(null);
             if (null != anchored) {
                 final SpreadsheetSelection selection = anchored.selection();
