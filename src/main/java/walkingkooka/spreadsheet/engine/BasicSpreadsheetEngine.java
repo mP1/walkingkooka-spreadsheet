@@ -2516,16 +2516,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
         }
 
-        final SpreadsheetCellReference home = viewport.rectangle()
+        final SpreadsheetCellReference home = navigating.rectangle()
             .home();
         if (false == context.isColumnHidden(home.column()) && false == context.isRowHidden(home.row())) {
-            final AnchoredSpreadsheetSelection anchored = viewport.anchoredSelection()
+            final AnchoredSpreadsheetSelection anchored = navigating.anchoredSelection()
                 .orElse(null);
             if (null != anchored) {
                 final SpreadsheetSelection selection = anchored.selection();
                 if (selection.isHidden(context::isColumnHidden, context::isRowHidden)) {
                     // selection is hidden clear it.
-                    navigating = viewport.clearAnchoredSelection();
+                    navigating = navigating.clearAnchoredSelection();
                 }
             }
         }
