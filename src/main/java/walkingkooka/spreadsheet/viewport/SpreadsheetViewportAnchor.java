@@ -106,7 +106,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
      * Returns the opposite anchor.
      */
     public SpreadsheetViewportAnchor opposite() {
-        SpreadsheetViewportAnchor opposite;
+        final SpreadsheetViewportAnchor opposite;
 
         switch (this) {
             case NONE:
@@ -138,6 +138,7 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
                 break;
             default:
                 opposite = NeverError.unhandledEnum(this, values());
+                break;
         }
 
         return opposite;
@@ -172,8 +173,8 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     public final SpreadsheetCellReference cell(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
-        final SpreadsheetColumnReference column = column(range.columnRange());
-        final SpreadsheetRowReference row = row(range.rowRange());
+        final SpreadsheetColumnReference column = this.column(range.columnRange());
+        final SpreadsheetRowReference row = this.row(range.rowRange());
 
         return column.setRow(row);
     }
