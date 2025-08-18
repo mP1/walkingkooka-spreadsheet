@@ -2031,6 +2031,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             Sets.of(
                 "isAll",
                 "isFirst",
+                "isNotFirst",
                 "isLast",
                 "isHidden",
                 "isScalar",
