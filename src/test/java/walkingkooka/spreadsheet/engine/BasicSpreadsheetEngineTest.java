@@ -22395,28 +22395,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateWithRightPixels() {
+    public void testNavigateWithRightPixelsMissingSelection() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
+        final SpreadsheetViewport viewport = SpreadsheetSelection.A1
+            .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+            .viewport();
+
         this.navigateAndCheck(
             engine,
-            SpreadsheetSelection.A1
-                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                .viewport()
-                .setNavigations(
-                    SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.rightPixel(
-                            3 * (int) COLUMN_WIDTH - 1
-                        )
+            viewport.setNavigations(
+                SpreadsheetViewportNavigationList.EMPTY.concat(
+                    SpreadsheetViewportNavigation.rightPixel(
+                        3 * (int) COLUMN_WIDTH - 1
                     )
-                ),
+                )
+            ),
             context,
-            SpreadsheetSelection.A1
-                .addColumn(3)
-                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                .viewport()
-
+            viewport
         );
     }
 
