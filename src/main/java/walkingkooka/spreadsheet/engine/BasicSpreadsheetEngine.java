@@ -2503,60 +2503,35 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private Optional<SpreadsheetViewport> navigateNonLabelSelection0(final SpreadsheetViewport viewport,
                                                                      final SpreadsheetViewportNavigationContext context) {
-        Optional<SpreadsheetViewport> result;
-
         final List<SpreadsheetViewportNavigation> navigations = viewport.navigations()
             .compact();
-        if (navigations.isEmpty()) {
-            result = this.navigateWithoutNavigation(
-                viewport,
+
+        SpreadsheetViewport navigating = viewport;
+
+        for (final SpreadsheetViewportNavigation navigation : navigations) {
+            navigating = navigation.update(
+                navigating,
                 context
-            );
-        } else {
-            SpreadsheetViewport navigating = viewport;
-
-            for (final SpreadsheetViewportNavigation navigation : navigations) {
-                navigating = navigation.update(
-                    navigating,
-                    context
-                );
-            }
-
-            result = Optional.of(
-                navigating.setNavigations(SpreadsheetViewport.NO_NAVIGATION)
             );
         }
 
-        return result;
-    }
-
-    /**
-     * Tests if the home is hidden, returning {@link SpreadsheetViewport#NO_NAVIGATION} then also tests the selection
-     * and if that is hidden clears it.
-     */
-    private Optional<SpreadsheetViewport> navigateWithoutNavigation(final SpreadsheetViewport viewport,
-                                                                    final SpreadsheetViewportNavigationContext context) {
-        SpreadsheetViewport result = null;
-
         final SpreadsheetCellReference home = viewport.rectangle()
             .home();
-        if (context.isColumnHidden(home.column()) || context.isRowHidden(home.row())) {
-            // home is hidden clear viewport
-            result = null;
-        } else {
+        if (false == context.isColumnHidden(home.column()) && false == context.isRowHidden(home.row())) {
             final AnchoredSpreadsheetSelection anchored = viewport.anchoredSelection()
                 .orElse(null);
             if (null != anchored) {
                 final SpreadsheetSelection selection = anchored.selection();
                 if (selection.isHidden(context::isColumnHidden, context::isRowHidden)) {
                     // selection is hidden clear it.
-                    result = viewport.clearAnchoredSelection();
-                } else {
-                    result = viewport;
+                    navigating = viewport.clearAnchoredSelection();
                 }
             }
         }
-        return Optional.ofNullable(result);
+
+        return Optional.of(
+            navigating.setNavigations(SpreadsheetViewport.NO_NAVIGATION)
+        );
     }
 
     // j2cl helpers....................................................................................................
