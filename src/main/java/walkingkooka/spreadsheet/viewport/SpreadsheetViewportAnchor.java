@@ -147,7 +147,9 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
     /**
      * Returns the {@link SpreadsheetSelection} for the given {@link SpreadsheetViewportAnchor}
      */
-    final SpreadsheetSelection selection(final SpreadsheetSelection selection) {
+    public final SpreadsheetSelection selection(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
+
         if (selection.isLabelName()) {
             throw new IllegalArgumentException("Label not supported: " + selection);
         }

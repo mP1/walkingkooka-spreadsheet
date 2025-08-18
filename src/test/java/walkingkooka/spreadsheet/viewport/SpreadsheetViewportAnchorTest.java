@@ -395,7 +395,28 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
         );
     }
 
-    // selection................................................................................................
+    // selection........................................................................................................
+
+    @Test
+    public void testSelectionWithNullFails() {
+        final NullPointerException thrown = assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetViewportAnchor.TOP.selection(null)
+        );
+    }
+
+    @Test
+    public void testSelectionWithLabelFails() {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetViewportAnchor.TOP.selection(SpreadsheetSelection.labelName("Label123"))
+        );
+
+        this.checkEquals(
+            "Label not supported: Label123",
+            thrown.getMessage()
+        );
+    }
 
     @Test
     public void testSelectionCell() {
