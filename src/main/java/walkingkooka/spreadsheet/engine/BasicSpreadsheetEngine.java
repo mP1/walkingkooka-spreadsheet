@@ -2508,6 +2508,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         SpreadsheetViewport navigating = viewport;
 
+        // always process navigations even when without selection
         for (final SpreadsheetViewportNavigation navigation : navigations) {
             navigating = navigation.update(
                 navigating,
