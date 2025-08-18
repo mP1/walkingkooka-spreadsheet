@@ -256,7 +256,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
             } else {
                 result = result.setRectangle(
                     rectangle.setHome(home)
-                ).setAnchoredSelection(SpreadsheetViewport.NO_ANCHORED_SELECTION);
+                ).clearAnchoredSelection();
             }
         }
         return result;
