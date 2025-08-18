@@ -97,18 +97,7 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
     // Object...........................................................................................................
 
     @Override
-    public final int hashCode() {
+    final Object value() {
         return this.value;
-    }
-
-    @Override
-    public final boolean equals(final Object other) {
-        return this == other ||
-            other instanceof SpreadsheetViewportNavigationPixel &&
-                this.equals0((SpreadsheetViewportNavigationPixel) other);
-    }
-
-    private boolean equals0(final SpreadsheetViewportNavigationPixel other) {
-        return this.getClass().equals(other.getClass()) && this.value == other.value;
     }
 }
