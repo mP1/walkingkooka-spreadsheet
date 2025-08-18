@@ -64,6 +64,23 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
+    @Override
+    public final List<T> parseString(final String string) {
+        return Cast.to(
+            SpreadsheetViewportNavigationList.parse(string)
+        );
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
+        return cause;
+    }
+
     // isExtend.........................................................................................................
 
     final void isExtendAndCheck(final T navigation,
@@ -253,23 +270,4 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     }
 
     abstract T createSpreadsheetViewportNavigation();
-
-    // ParseString......................................................................................................
-
-    @Override
-    public final List<T> parseString(final String string) {
-        return Cast.to(
-            SpreadsheetViewportNavigationList.parse(string)
-        );
-    }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
-        return type;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
 }
