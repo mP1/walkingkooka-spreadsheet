@@ -2032,13 +2032,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         if (includeFrozenColumnsRows) {
             final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
-
             // compute actual frozenColumns, metadata.FROZEN_COLUMNS might be higher than requested width...............
 
-            final Optional<SpreadsheetColumnRangeReference> maybeFrozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS);
-            if (maybeFrozenColumns.isPresent()) {
-                final SpreadsheetColumnReference lastFrozenColumn = maybeFrozenColumns.get()
-                    .end();
+            frozenColumns = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS)
+                .orElse(null);
+            if (null != frozenColumns) {
+                final SpreadsheetColumnReference lastFrozenColumn = frozenColumns.end();
 
                 final SpreadsheetColumnReference leftColumn = SpreadsheetReferenceKind.RELATIVE.firstColumn();
                 SpreadsheetColumnReference rightColumn = leftColumn;
@@ -2059,12 +2058,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             // compute actual frozenRows, metadata.FROZEN_ROWS might be higher than requested height....................
-            final Optional<SpreadsheetRowRangeReference> maybeFrozenRows = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_ROWS);
+            frozenRows = metadata.get(SpreadsheetMetadataPropertyName.FROZEN_ROWS)
+                .orElse(null);
 
-            if (maybeFrozenRows.isPresent()) {
-
-                final SpreadsheetRowReference lastFrozenRow = maybeFrozenRows.get()
-                    .end();
+            if (null != frozenRows) {
+                final SpreadsheetRowReference lastFrozenRow = frozenRows.end();
 
                 final SpreadsheetRowReference topRow = SpreadsheetReferenceKind.RELATIVE.firstRow();
                 SpreadsheetRowReference bottomRow = topRow;
