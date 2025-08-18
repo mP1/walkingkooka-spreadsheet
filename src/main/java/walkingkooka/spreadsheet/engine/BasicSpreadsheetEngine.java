@@ -2544,9 +2544,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // home is hidden clear viewport
             result = null;
         } else {
-            final Optional<AnchoredSpreadsheetSelection> maybeAnchored = viewport.anchoredSelection();
-            if (maybeAnchored.isPresent()) {
-                final AnchoredSpreadsheetSelection anchored = maybeAnchored.get();
+            final AnchoredSpreadsheetSelection anchored = viewport.anchoredSelection()
+                .orElse(null);
+            if (null != anchored) {
                 final SpreadsheetSelection selection = anchored.selection();
                 if (selection.isHidden(context::isColumnHidden, context::isRowHidden)) {
                     // selection is hidden clear it.
