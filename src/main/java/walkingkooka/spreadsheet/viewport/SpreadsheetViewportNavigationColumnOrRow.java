@@ -71,4 +71,11 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
             a -> a.selection().toCell()
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    final Object value() {
+        return null; // singletons have a value of null
+    }
 }

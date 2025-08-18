@@ -60,17 +60,7 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
     // Object...........................................................................................................
 
     @Override
-    public final int hashCode() {
-        return this.selection.hashCode();
-    }
-
-    @Override
-    public final boolean equals(final Object other) {
-        return this == other ||
-            other instanceof SpreadsheetViewportNavigationSelection && this.equals0((SpreadsheetViewportNavigationSelection<?>) other);
-    }
-
-    private boolean equals0(final SpreadsheetViewportNavigationSelection<?> other) {
-        return this.selection.equals(other.selection);
+    final Object value() {
+        return this.selection;
     }
 }

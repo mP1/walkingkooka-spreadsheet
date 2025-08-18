@@ -289,6 +289,33 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
         return this instanceof SpreadsheetViewportNavigationPixel;
     }
 
+    // Object...........................................................................................................
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(this.value()); // instances should never be added to a Set or Map
+    }
+
+    @Override
+    public final boolean equals(final Object other) {
+        return this == other ||
+            other instanceof SpreadsheetViewportNavigation &&
+                this.equals0((SpreadsheetViewportNavigation) other);
+    }
+
+    private boolean equals0(final SpreadsheetViewportNavigation other) {
+        return this.getClass().equals(other.getClass()) &&
+            Objects.equals(
+                this.value(),
+                other.value()
+            );
+    }
+
+    /**
+     * All sub-classes have a value which may be null.
+     */
+    abstract Object value();
+
     @Override
     public final String toString() {
         return this.text();
