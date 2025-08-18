@@ -1254,6 +1254,13 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public abstract boolean isLast();
 
+    /**
+     * The inverse of {@link #isLast()}.
+     */
+    public final boolean isNotLast() {
+        return false == this.isLast();
+    }
+    
     // SpreadsheetViewport.....................................................................................
 
     /**

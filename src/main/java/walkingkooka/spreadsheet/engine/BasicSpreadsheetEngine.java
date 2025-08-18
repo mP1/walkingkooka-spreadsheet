@@ -2052,7 +2052,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         break;
                     }
                     rightColumn = rightColumn.addSaturated(1);
-                } while (false == rightColumn.isLast());
+                } while (rightColumn.isNotLast());
 
                 frozenColumns = leftColumn.columnRange(rightColumn);
             }
@@ -2077,7 +2077,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         break;
                     }
                     bottomRow = bottomRow.addSaturated(1);
-                } while (false == bottomRow.isLast());
+                } while (bottomRow.isNotLast());
 
                 frozenRows = topRow.rowRange(bottomRow);
             }
@@ -2404,7 +2404,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         do {
             sum += this.columnWidth(column, context);
             column = column.addSaturated(1);
-        } while (false == column.isLast() && column.compareTo(end) <= 0);
+        } while (column.isNotLast() && column.compareTo(end) <= 0);
 
         return sum;
     }
@@ -2418,7 +2418,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         do {
             sum += this.rowHeight(row, context);
             row = row.addSaturated(1);
-        } while (false == row.isLast() && row.compareTo(end) <= 0);
+        } while (row.isNotLast() && row.compareTo(end) <= 0);
 
         return sum;
     }
