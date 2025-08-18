@@ -2264,7 +2264,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
 
                 if (xOffset < 0) {
-                    if (false == leftColumn.isFirst()) {
+                    if (leftColumn.isNotFirst()) {
                         x = xOffset;
                         for (; ; ) {
                             leftColumn = leftColumn.addSaturated(-1);
@@ -2364,7 +2364,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
 
                 if (yOffset < 0) {
-                    if (false == topRow.isFirst()) {
+                    if (topRow.isNotFirst()) {
                         y = yOffset;
                         for (; ; ) {
                             topRow = topRow.addSaturated(-1);

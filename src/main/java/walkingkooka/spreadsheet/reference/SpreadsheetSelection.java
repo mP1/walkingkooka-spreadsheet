@@ -1243,6 +1243,13 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract boolean isFirst();
 
     /**
+     * The inverse of {@link #isFirst()}.
+     */
+    public final boolean isNotFirst() {
+        return false == this.isFirst();
+    }
+
+    /**
      * Returns true if this selection is the last possible column, row or cell.
      */
     public abstract boolean isLast();
