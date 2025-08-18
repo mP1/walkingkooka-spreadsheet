@@ -56,7 +56,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public boolean isColumnHidden(final SpreadsheetColumnReference column) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
 
         return this.columnHidden.test(column);
     }
@@ -65,7 +65,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public boolean isRowHidden(final SpreadsheetRowReference row) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
 
         return this.rowHidden.test(row);
     }
@@ -74,7 +74,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
 
         return move(
             column,
@@ -86,7 +86,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
 
         return move(
             column,
@@ -98,7 +98,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
 
         return move(
             row,
@@ -110,7 +110,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public Optional<SpreadsheetRowReference> downRow(final SpreadsheetRowReference row) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
 
         return move(
             row,
@@ -144,7 +144,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     @Override
     public Optional<SpreadsheetColumnReference> leftPixels(final SpreadsheetColumnReference column,
                                                            final int pixels) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
 
         return movePixels(
             column,
@@ -159,7 +159,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     @Override
     public Optional<SpreadsheetColumnReference> rightPixels(final SpreadsheetColumnReference column,
                                                             final int pixels) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
 
         return movePixels(
             column,
@@ -176,7 +176,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     @Override
     public Optional<SpreadsheetRowReference> upPixels(final SpreadsheetRowReference row,
                                                       final int pixels) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
 
         return movePixels(
             row,
@@ -191,7 +191,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     @Override
     public Optional<SpreadsheetRowReference> downPixels(final SpreadsheetRowReference row,
                                                         final int pixels) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
 
         return movePixels(
             row,
@@ -249,14 +249,6 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         } while (true);
 
         return Optional.ofNullable(lastNotHidden);
-    }
-
-    private static void checkColumn(final SpreadsheetColumnReference column) {
-        Objects.requireNonNull(column, "column");
-    }
-
-    private static void checkRow(final SpreadsheetRowReference row) {
-        Objects.requireNonNull(row, "row");
     }
 
     @Override
