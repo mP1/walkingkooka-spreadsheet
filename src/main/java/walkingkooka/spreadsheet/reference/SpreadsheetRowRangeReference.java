@@ -22,6 +22,7 @@ import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
@@ -292,13 +293,15 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
     // SpreadsheetViewportNavigation...........................................................................
 
     @Override
-    Set<SpreadsheetViewportAnchor> anchors() {
+    public Set<SpreadsheetViewportAnchor> anchors() {
         return ANCHORS;
     }
 
-    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(
-        SpreadsheetViewportAnchor.TOP,
-        SpreadsheetViewportAnchor.BOTTOM
+    private final static Set<SpreadsheetViewportAnchor> ANCHORS = Sets.readOnly(
+        EnumSet.of(
+            SpreadsheetViewportAnchor.TOP,
+            SpreadsheetViewportAnchor.BOTTOM
+        )
     );
 
     @Override

@@ -161,7 +161,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     @Override
-    Set<SpreadsheetViewportAnchor> anchors() {
+    public Set<SpreadsheetViewportAnchor> anchors() {
         return NONE_ANCHORS;
     }
 

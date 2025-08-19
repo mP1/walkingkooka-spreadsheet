@@ -148,7 +148,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     }
 
     @Override
-    Set<SpreadsheetViewportAnchor> anchors() {
+    public Set<SpreadsheetViewportAnchor> anchors() {
         return NONE_ANCHORS;
     }
 

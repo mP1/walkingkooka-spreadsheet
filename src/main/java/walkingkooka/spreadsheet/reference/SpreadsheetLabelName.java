@@ -219,7 +219,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // anchors..........................................................................................................
 
     @Override
-    Set<SpreadsheetViewportAnchor> anchors() {
+    public Set<SpreadsheetViewportAnchor> anchors() {
         return NONE_ANCHORS;
     }
 
