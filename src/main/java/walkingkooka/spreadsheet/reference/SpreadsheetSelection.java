@@ -1329,12 +1329,14 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * The {@link SpreadsheetViewportAnchor} is ignored if this is a scalar and not a {@link SpreadsheetLabelName}.
-     * Scalar {@link SpreadsheetSelection#isScalar()} will use the {@link #defaultAnchor()}.
+     * The {@link SpreadsheetViewportAnchor} is ignored if anchor is invalid for this selection using the default instead.
      */
     public final AnchoredSpreadsheetSelection setAnchorOrDefault(final SpreadsheetViewportAnchor anchor) {
+        Objects.requireNonNull(anchor, "anchor");
+
         return this.setAnchor(
-            this.isLabelName() || false == this.isUnit() ?
+            this.anchors()
+                .contains(anchor) ?
                 anchor :
                 this.defaultAnchor()
         );
