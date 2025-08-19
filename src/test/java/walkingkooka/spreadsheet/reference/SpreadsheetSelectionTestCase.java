@@ -826,6 +826,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // setAnchorOrDefault...............................................................................................
+
+    @Test
+    public final void testSetAnchorOrDefaultWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSelection()
+                .setAnchorOrDefault(null)
+        );
+    }
+
     // cellColumnOrRowText..............................................................................................
 
     final void cellColumnOrRowTextAndCheck(final String text) {
