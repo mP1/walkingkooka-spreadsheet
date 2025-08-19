@@ -1207,6 +1207,15 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Returns true if this selection is a unit or has a count of 1.
+     * <ul>
+     *     <ol>{@link SpreadsheetCellReference} always returns true</ol>
+     *     <ol>{@link SpreadsheetColumnReference} always returns true</ol>
+     *     <ol>{@link SpreadsheetRowReference} always returns true</ol>
+     *     <ol>{@link SpreadsheetCellRangeReference} if it contains a single column and single row</ol>
+     *     <ol>{@link SpreadsheetColumnRangeReference} if it contains a single column</ol>
+     *     <ol>{@link SpreadsheetRowRangeReference} if it contains a single row</ol>
+     *     <ol>{@link SpreadsheetLabelName} always throws a {@link UnsupportedOperationException}</ol>
+     * </ul>}
      */
     public final boolean isUnit() {
         return this.count() == 1;
