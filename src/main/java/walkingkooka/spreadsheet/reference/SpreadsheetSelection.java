@@ -22,7 +22,6 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.ImmutableSortedSet;
@@ -1326,9 +1325,13 @@ public abstract class SpreadsheetSelection implements HasText,
         );
     }
 
+    /**
+     * The {@link SpreadsheetViewportAnchor} is ignored if this is a scalar and not a {@link SpreadsheetLabelName}.
+     * Scalar {@link SpreadsheetSelection#isScalar()} will use the {@link #defaultAnchor()}.
+     */
     public final AnchoredSpreadsheetSelection setAnchorOrDefault(final SpreadsheetViewportAnchor anchor) {
         return this.setAnchor(
-            this instanceof HasRange ?
+            this.isLabelName() || false == this.isUnit() ?
                 anchor :
                 this.defaultAnchor()
         );
