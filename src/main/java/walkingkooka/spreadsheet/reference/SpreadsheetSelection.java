@@ -25,6 +25,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.ImmutableSortedSet;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -1299,12 +1300,14 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Constant used by several scalar {@link SpreadsheetSelection}.
      */
-    final static Set<SpreadsheetViewportAnchor> NONE_ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
+    final static Set<SpreadsheetViewportAnchor> NONE_ANCHORS = Sets.readOnly(
+        EnumSet.of(SpreadsheetViewportAnchor.NONE)
+    );
 
     /**
      * Returns the possible or allowed {@link SpreadsheetViewportAnchor} for each type of {@link SpreadsheetSelection}.
      */
-    abstract Set<SpreadsheetViewportAnchor> anchors();
+    public abstract Set<SpreadsheetViewportAnchor> anchors();
 
     /**
      * Factory that creates a {@link AnchoredSpreadsheetSelection} using this selection and the given anchor.
