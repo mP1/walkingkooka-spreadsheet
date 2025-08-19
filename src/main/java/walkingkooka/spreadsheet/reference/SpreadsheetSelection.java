@@ -984,13 +984,13 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Tests if this selection is a scalar, note {@link SpreadsheetLabelName} returns false even if it might point to
-     * a single cell.
+     * Tests if this selection is a scalar aka a {@link SpreadsheetCellReference}, {@link SpreadsheetColumnReference},
+     * {@link SpreadsheetRowReference}. All other types including {@link SpreadsheetLabelName} even if they point to a
+     * single cell/column/row will return false.
      */
     public final boolean isScalar() {
         return this.isCell() || this.isColumn() || this.isRow();
     }
-
 
     /**
      * Returns the matching {@link SpreadsheetColumnOrRowReferenceKind} for this {@link SpreadsheetColumnReference} or
