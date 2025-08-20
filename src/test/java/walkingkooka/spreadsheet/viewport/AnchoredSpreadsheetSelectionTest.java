@@ -230,6 +230,38 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         );
     }
 
+    // equalsIgnoreReferenceKind........................................................................................
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameSelectionDifferentKind() {
+        this.checkEquals(
+            true,
+            SpreadsheetSelection.A1.toRelative()
+                .setDefaultAnchor()
+                .equalsIgnoreReferenceKind(
+                    SpreadsheetSelection.A1.toAbsolute()
+                        .setDefaultAnchor()
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameSelectionDifferentReference() {
+        this.checkEquals(
+            false,
+            SpreadsheetSelection.A1.setDefaultAnchor()
+                .equalsIgnoreReferenceKind(
+                    SpreadsheetSelection.parseCell("B2")
+                        .setDefaultAnchor()
+                )
+        );
+        this.checkNotEquals(
+            SpreadsheetSelection.A1.setDefaultAnchor(),
+            SpreadsheetSelection.parseCell("B2")
+                .setDefaultAnchor()
+        );
+    }
+
     // Object...........................................................................................................
 
     @Test
