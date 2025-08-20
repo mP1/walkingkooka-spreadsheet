@@ -58,9 +58,11 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
+import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -421,9 +423,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Character> VALUE_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterValueSeparator.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewport</code>.
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewportHome</code>.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetViewport> VIEWPORT = registerConstant(SpreadsheetMetadataPropertyNameViewport.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellReference> VIEWPORT_HOME = registerConstant(SpreadsheetMetadataPropertyNameViewportHome.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the current <code>viewportSelection</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<AnchoredSpreadsheetSelection> VIEWPORT_SELECTION = registerConstant(SpreadsheetMetadataPropertyNameViewportSelection.instance());
 
     /**
      * A read only view of all names, except for the {@link SpreadsheetMetadataPropertyName#namedColor(SpreadsheetColorName)} and {@link SpreadsheetMetadataPropertyName#numberedColor(int)}.
@@ -602,16 +609,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     private final UrlFragment urlFragment;
-
-    // isUrlFragmentRemoveLeadingSlash..................................................................................
-
-    /**
-     * Suggests how parsing a {@link UrlFragment} should be performed, because some values require the leading slash
-     * others do not.
-     */
-    public boolean isUrlFragmentRemoveLeadingSlash() {
-        return false == this instanceof SpreadsheetMetadataPropertyNameViewport;
-    }
 
     // parseUrlFragmentSaveValue........................................................................................
 

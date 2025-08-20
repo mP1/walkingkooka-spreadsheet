@@ -43,10 +43,11 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
@@ -908,17 +909,28 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitViewport() {
+    public void testVisitViewportHome() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitViewport(final SpreadsheetViewport selection) {
+            protected void visitViewportHome(final SpreadsheetCellReference home) {
+                this.visited = home;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.VIEWPORT_HOME,
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testVisitViewportSelection() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitViewportSelection(final AnchoredSpreadsheetSelection selection) {
                 this.visited = selection;
             }
         }.accept(
-            SpreadsheetMetadataPropertyName.VIEWPORT,
-            SpreadsheetSelection.parseCell("A2")
-                .viewportRectangle(100, 50)
-                .viewport()
+            SpreadsheetMetadataPropertyName.VIEWPORT_SELECTION,
+            SpreadsheetSelection.A1.setDefaultAnchor()
         );
     }
 

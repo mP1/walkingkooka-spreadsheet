@@ -19,67 +19,64 @@ package walkingkooka.spreadsheet.meta;
 
 
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 
 import java.util.Optional;
 
 /**
- * Holds the {@link SpreadsheetSelection}, which may be a cell, column, row, or range.
+ * Holds the {@link SpreadsheetCellReference} which is the top / left of the viewport
+ * but does not include any frozen columns/rows.
  */
-final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataPropertyName<SpreadsheetViewport> {
+final class SpreadsheetMetadataPropertyNameViewportHome extends SpreadsheetMetadataPropertyName<SpreadsheetCellReference> {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameViewport instance() {
-        return new SpreadsheetMetadataPropertyNameViewport();
+    static SpreadsheetMetadataPropertyNameViewportHome instance() {
+        return new SpreadsheetMetadataPropertyNameViewportHome();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameViewport() {
+    private SpreadsheetMetadataPropertyNameViewportHome() {
         super();
     }
 
-    /**
-     * After checking the type force the {@link SpreadsheetViewport}
-     */
     @Override
-    SpreadsheetViewport checkValueNonNull(final Object value) {
-        return this.checkValueType(value,
-            v -> v instanceof SpreadsheetViewport);
+    SpreadsheetCellReference checkValueNonNull(final Object value) {
+        return this.checkValueType(
+            value,
+            v -> v instanceof SpreadsheetCellReference
+        );
     }
 
     @Override
     String expected() {
-        return SpreadsheetViewport.class.getSimpleName();
+        return SpreadsheetCellReference.class.getSimpleName();
     }
 
     @Override
-    Optional<SpreadsheetViewport> extractLocaleAwareValue(final LocaleContext context) {
+    Optional<SpreadsheetCellReference> extractLocaleAwareValue(final LocaleContext context) {
         return Optional.empty();
     }
 
     @Override
-    public Class<SpreadsheetViewport> type() {
-        return SpreadsheetViewport.class;
+    public Class<SpreadsheetCellReference> type() {
+        return SpreadsheetCellReference.class;
     }
 
     @Override
-    void accept(final SpreadsheetViewport value,
+    void accept(final SpreadsheetCellReference value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitViewport(value);
+        visitor.visitViewportHome(value);
     }
 
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    SpreadsheetViewport parseUrlFragmentSaveValueNonNull(final String value) {
-        return SpreadsheetViewport.fromUrlFragment(
-            UrlFragment.parse(value)
-        );
+    SpreadsheetCellReference parseUrlFragmentSaveValueNonNull(final String value) {
+        return SpreadsheetSelection.parseCell(value);
     }
 }

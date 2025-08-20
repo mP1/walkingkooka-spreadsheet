@@ -1421,9 +1421,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                 "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
                 "  \"valueSeparator\": \",\",\n" +
-                "  \"viewport\": {\n" +
-                "    \"rectangle\": \"A1:100.0:100.0\"\n" +
-                "  }\n" +
+                "  \"viewportHome\": \"A1\"\n" +
                 "}"
         );
     }
@@ -1647,9 +1645,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                 "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
                 "  \"valueSeparator\": \",\",\n" +
-                "  \"viewport\": {\n" +
-                "    \"rectangle\": \"A1:100.0:100.0\"\n" +
-                "  }\n" +
+                "  \"viewportHome\": \"A1\"\n" +
                 "}"
         );
     }

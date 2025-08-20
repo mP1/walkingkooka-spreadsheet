@@ -999,7 +999,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             UnsupportedOperationException.class,
             () -> this.createObject()
                 .missingRequiredProperties()
-                .add(SpreadsheetMetadataPropertyName.VIEWPORT)
+                .add(SpreadsheetMetadataPropertyName.VIEWPORT_HOME)
         );
     }
 

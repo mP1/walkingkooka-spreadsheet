@@ -91,6 +91,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
+import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -1489,9 +1490,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     case "modified-timestamp":
                     case "spreadsheet-name":
                         break;
-                    case "viewport":
-                        should = false == this.home()
-                            .equalsIgnoreReferenceKind(metadata.home());
+                    case "viewportHome":
+                        should = false == this.getOrFail(SpreadsheetMetadataPropertyName.VIEWPORT_HOME)
+                            .equalsIgnoreReferenceKind(metadata.getOrFail(SpreadsheetMetadataPropertyName.VIEWPORT_HOME));
+                        break;
+                    case "viewportSelection":
+                        final AnchoredSpreadsheetSelection selection = this.get(SpreadsheetMetadataPropertyName.VIEWPORT_SELECTION)
+                            .orElse(null);
+                        final AnchoredSpreadsheetSelection otherSelection = metadata.get(SpreadsheetMetadataPropertyName.VIEWPORT_SELECTION)
+                            .orElse(null);
+                        should = false == (
+                            (null == selection && null == otherSelection) ||
+                                (null != selection && selection.equalsIgnoreReferenceKind(otherSelection))
+                        );
                         break;
                     default:
                         should = false == this.get(name).equals(metadata.get(name));
@@ -1506,15 +1517,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         return should;
-    }
-
-    /**
-     * Assumes a viewport will always be present and returns the {@link SpreadsheetCellReference home}.
-     */
-    private SpreadsheetCellReference home() {
-        return this.getOrFail(SpreadsheetMetadataPropertyName.VIEWPORT)
-            .rectangle()
-            .home();
     }
 
     // Object...........................................................................................................

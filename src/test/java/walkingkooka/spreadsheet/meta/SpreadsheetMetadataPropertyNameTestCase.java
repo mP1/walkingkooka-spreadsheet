@@ -187,7 +187,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
         if (false == propertyName instanceof SpreadsheetMetadataPropertyNameAuditInfo &&
             false == propertyName instanceof SpreadsheetMetadataPropertyNameSpreadsheetId &&
-            false == propertyName instanceof SpreadsheetMetadataPropertyNameStyle) {
+            false == propertyName instanceof SpreadsheetMetadataPropertyNameStyle &&
+            false == propertyName instanceof SpreadsheetMetadataPropertyNameViewportHome &&
+            false == propertyName instanceof SpreadsheetMetadataPropertyNameViewportSelection) {
             final String text;
 
             final V value = this.propertyValue();
