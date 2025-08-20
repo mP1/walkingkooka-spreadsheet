@@ -133,6 +133,7 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
         );
     }
 
+    @Override
     public boolean equals(final Object other) {
         return this == other ||
             other instanceof AnchoredSpreadsheetSelection && this.equals0((AnchoredSpreadsheetSelection) other);
