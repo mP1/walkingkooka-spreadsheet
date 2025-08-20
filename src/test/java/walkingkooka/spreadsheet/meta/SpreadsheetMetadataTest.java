@@ -70,8 +70,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationList;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -236,11 +234,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
 
         this.checkEquals(
-            Optional.of(
-                SpreadsheetSelection.A1.viewportRectangle(100, 100)
-                    .viewport()
-            ),
-            nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT)
+            Optional.of(SpreadsheetSelection.A1),
+            nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_HOME)
         );
     }
 
@@ -336,32 +331,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // set..............................................................................................................
-
-    @Test
-    public void testSetWithSpreadsheetViewportWithoutNavigations() {
-        SpreadsheetMetadata.EMPTY
-            .set(
-                SpreadsheetMetadataPropertyName.VIEWPORT,
-                SpreadsheetViewportRectangle.parse("A1:100:200")
-                    .viewport()
-            );
-    }
-
-    @Test
-    public void testSetWithSpreadsheetViewportWithNavigationsFails() {
-        assertThrows(
-            SpreadsheetMetadataPropertyValueException.class,
-            () -> SpreadsheetMetadata.EMPTY
-                .set(
-                    SpreadsheetMetadataPropertyName.VIEWPORT,
-                    SpreadsheetViewportRectangle.parse("A1:100:200")
-                        .viewport()
-                        .setNavigations(SpreadsheetViewportNavigationList.parse("left 1px"))
-                )
-        );
-    }
-
     // setOrRemove......................................................................................................
 
     @Test
@@ -402,15 +371,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameIdPresent() {
         final SpreadsheetMetadata metadata = this.metadata()
             .set(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-            SpreadsheetId.with(1)
-        ).set(
-            SpreadsheetMetadataPropertyName.VIEWPORT,
-                SpreadsheetViewportRectangle.with(
-                    SpreadsheetSelection.A1,
-                    100,
-                    200
-                ).viewport()
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(1)
+            ).set(
+                SpreadsheetMetadataPropertyName.VIEWPORT_HOME,
+                SpreadsheetSelection.A1
             );
 
         this.checkNotEquals(
@@ -477,19 +442,15 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetMetadata metadata = this.metadata()
             .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
             .set(
-                SpreadsheetMetadataPropertyName.VIEWPORT,
+                SpreadsheetMetadataPropertyName.VIEWPORT_HOME,
                 SpreadsheetSelection.A1
-                    .viewportRectangle(100, 40)
-                    .viewport()
             );
         final SpreadsheetMetadata different = metadata.set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             id
         ).set(
-            SpreadsheetMetadataPropertyName.VIEWPORT,
-            SpreadsheetSelection.parseCell("Z99")
-                .viewportRectangle(100, 40)
-                .viewport()
+            SpreadsheetMetadataPropertyName.VIEWPORT_HOME,
+            SpreadsheetSelection.parseCell("B2")
         );
 
         this.checkNotEquals(
@@ -508,10 +469,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameDifferentSelection() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
-            SpreadsheetMetadataPropertyName.VIEWPORT,
+            SpreadsheetMetadataPropertyName.VIEWPORT_SELECTION,
             SpreadsheetSelection.parseCell("Z99")
-                .viewportRectangle(100, 40)
-                .viewport()
+                .setDefaultAnchor()
         );
 
         this.checkNotEquals(

@@ -2794,10 +2794,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.VALIDATORS, ValidatorAliasSet.EMPTY);
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(
-            SpreadsheetMetadataPropertyName.VIEWPORT,
-            SpreadsheetSelection.parseCell("B99")
-                .viewportRectangle(100, 50)
-                .viewport());
+            SpreadsheetMetadataPropertyName.VIEWPORT_HOME,
+            SpreadsheetSelection.A1
+        );
+        properties.put(
+            SpreadsheetMetadataPropertyName.VIEWPORT_SELECTION,
+            SpreadsheetSelection.parseColumnRange("B:C")
+                .setDefaultAnchor()
+        );
 
         for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
             properties.put(
@@ -2841,26 +2845,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Untitled"))
                 .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:C"))
                 .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:3"))
-                .set(SpreadsheetMetadataPropertyName.VIEWPORT, SpreadsheetSelection.parseCell("D4")
-                    .viewportRectangle(100, 50)
-                    .viewport()
-                    .setAnchoredSelection(
-                        Optional.of(
-                            SpreadsheetSelection.parseCell("E5")
-                                .setDefaultAnchor()
-                        )
-                    )),
+                .set(SpreadsheetMetadataPropertyName.VIEWPORT_HOME, SpreadsheetSelection.parseCell("D4")),
             "spreadsheetId: 4d2\n" +
                 "frozenColumns: column-range A:C\n" +
                 "frozenRows: row-range 1:3\n" +
                 "spreadsheetName: Untitled\n" +
-                "viewport: SpreadsheetViewport\n" +
-                "  rectangle:\n" +
-                "    SpreadsheetViewportRectangle\n" +
-                "      home: D4\n" +
-                "      width: 100.0\n" +
-                "      height: 50.0\n" +
-                "  anchoredSelection:cell E5\n"
+                "viewportHome: cell D4\n"
         );
     }
 

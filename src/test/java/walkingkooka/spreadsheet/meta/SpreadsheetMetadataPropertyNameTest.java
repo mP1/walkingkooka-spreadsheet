@@ -476,9 +476,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionViewport() {
+    public void testSpreadsheetCellStoreActionViewportHome() {
         this.spreadsheetCellStoreActionAndCheck(
-            SpreadsheetMetadataPropertyName.VIEWPORT,
+            SpreadsheetMetadataPropertyName.VIEWPORT_HOME,
             SpreadsheetCellStoreAction.EVALUATE_AND_FORMAT
         );
     }

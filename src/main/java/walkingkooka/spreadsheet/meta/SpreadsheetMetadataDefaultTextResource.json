@@ -121,7 +121,5 @@
   "validationFunctions": "@",
   "validationValidators": "collection, expression, non-null, text-length",
   "validators": "",
-  "viewport": {
-    "rectangle": "A1:100:100"
-  }
+  "viewportHome": "A1"
 }
