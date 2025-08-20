@@ -294,6 +294,16 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         );
     }
 
+    @Override
+    public AnchoredSpreadsheetSelection createObject() {
+        return AnchoredSpreadsheetSelection.with(
+            SELECTION,
+            ANCHOR
+        );
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToStringNoneAnchor() {
         final SpreadsheetSelection selection = SpreadsheetSelection.A1;
@@ -391,13 +401,17 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
         );
     }
 
-    // HashCodeTesting.................................................................................................
+    @Override
+    public AnchoredSpreadsheetSelection createJsonNodeMarshallingValue() {
+        return this.createObject();
+    }
 
     @Override
-    public AnchoredSpreadsheetSelection createObject() {
-        return AnchoredSpreadsheetSelection.with(
-            SELECTION,
-            ANCHOR
+    public AnchoredSpreadsheetSelection unmarshall(final JsonNode jsonNode,
+                                                   final JsonNodeUnmarshallContext context) {
+        return AnchoredSpreadsheetSelection.unmarshall(
+            jsonNode,
+            context
         );
     }
 
@@ -411,21 +425,5 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // Json.............................................................................................................
-
-    @Override
-    public AnchoredSpreadsheetSelection createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    @Override
-    public AnchoredSpreadsheetSelection unmarshall(final JsonNode jsonNode,
-                                                   final JsonNodeUnmarshallContext context) {
-        return AnchoredSpreadsheetSelection.unmarshall(
-            jsonNode,
-            context
-        );
     }
 }
