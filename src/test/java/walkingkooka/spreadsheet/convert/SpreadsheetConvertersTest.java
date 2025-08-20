@@ -37,6 +37,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -704,6 +705,64 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     }
+
+    // text.............................................................................................................
+
+    @Test
+    public void testTextConvertCharacterToString() {
+        this.textConvertAndCheck(
+            'A',
+            String.class,
+            "A"
+        );
+    }
+
+    @Test
+    public void testTextConvertHasTextToString() {
+        final String string = "Hello123";
+
+        this.textConvertAndCheck(
+            new HasText() {
+                @Override
+                public String text() {
+                    return string;
+                }
+            },
+            String.class,
+            string
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToCharacter() {
+        this.textConvertAndCheck(
+            "Z",
+            Character.class,
+            'Z'
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToString() {
+        this.textConvertAndCheck(
+            "Hello",
+            String.class,
+            "Hello"
+        );
+    }
+
+    private <T> void textConvertAndCheck(final Object value,
+                                         final Class<T> type,
+                                         final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.text(),
+            value,
+            type,
+            SpreadsheetConverterContexts.fake(),
+            expected
+        );
+    }
+
 
     // PublicStaticHelperTesting........................................................................................
 

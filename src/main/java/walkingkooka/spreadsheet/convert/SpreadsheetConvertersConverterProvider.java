@@ -168,6 +168,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetCellTo();
                 break;
+            case TEXT_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.text();
+                break;
             case TEXT_TO_COLOR_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -410,6 +415,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_CELL_TO = ConverterName.with(SPREADSHEET_CELL_TO_STRING);
 
+    private final static String TEXT_STRING = "text";
+
+    final static ConverterName TEXT = ConverterName.with(TEXT_STRING);
+
     private final static String TEXT_TO_COLOR_STRING = "text-to-color";
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
@@ -559,6 +568,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SELECTION_TO_SELECTION),
             converterInfo(SELECTION_TO_TEXT),
             converterInfo(SIMPLE),
+            converterInfo(TEXT),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),

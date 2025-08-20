@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.convert.ColorConverters;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -257,6 +258,19 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> spreadsheetCellTo() {
         return SpreadsheetConverterSpreadsheetCell.INSTANCE;
     }
+
+    /**
+     * A {@link Converter} that handles converting basic text conversions.
+     */
+    public static Converter<SpreadsheetConverterContext> text() {
+        return TEXT;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
+        "TEXT",
+        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+        Converters.hasTextToString()
+    );
 
     /**
      * {@see ColorConverters#textToColor}
@@ -539,6 +553,16 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> urlToImage() {
         return TreeTextConverters.urlToImage();
+    }
+
+    @SafeVarargs
+    private static <C extends ConverterContext> Converter<C> namedCollection(final String toString,
+                                                                             final Converter<C>... converters) {
+        return collection(
+            Lists.of(
+                converters
+            )
+        ).setToString(toString);
     }
 
     /**
