@@ -153,6 +153,18 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
             selection.toStringMaybeStar() + " " + anchor;
     }
 
+    // equalsIgnoringKind...............................................................................................
+
+    public boolean equalsIgnoreReferenceKind(final Object other) {
+        return this == other ||
+            other instanceof AnchoredSpreadsheetSelection && this.equalsIgnoreReferenceKind0((AnchoredSpreadsheetSelection) other);
+    }
+
+    private boolean equalsIgnoreReferenceKind0(final AnchoredSpreadsheetSelection other) {
+        return this.selection.equalsIgnoreReferenceKind(other.selection) &&
+            this.anchor == other.anchor;
+    }
+
     // Json.............................................................................................................
 
     static {
