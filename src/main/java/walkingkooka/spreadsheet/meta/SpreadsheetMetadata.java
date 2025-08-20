@@ -1484,11 +1484,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
             for (final SpreadsheetMetadataPropertyName<?> name : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
                 switch (name.name) {
-                    case "creator":
-                    case "created-timestamp":
-                    case "modified-by":
-                    case "modified-timestamp":
-                    case "spreadsheet-name":
+                    case "auditInfo":
+                    case "spreadsheetName":
                         break;
                     case "viewportHome":
                         should = false == this.getOrFail(SpreadsheetMetadataPropertyName.VIEWPORT_HOME)
