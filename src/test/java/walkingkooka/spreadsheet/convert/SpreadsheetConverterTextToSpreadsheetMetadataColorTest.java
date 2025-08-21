@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -82,6 +84,22 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
         );
     }
 
+    @Test
+    public void testConvertStringColorNumberToRgbColor() {
+        this.convertAndCheck(
+            "[color10]",
+            COLOR
+        );
+    }
+
+    @Test
+    public void testConvertStringColorNumberToHsvColor() {
+        this.convertAndCheck(
+            "[color10]",
+            COLOR.toHsv()
+        );
+    }
+
     @Override
     public SpreadsheetConverterTextToSpreadsheetMetadataColor createConverter() {
         return SpreadsheetConverterTextToSpreadsheetMetadataColor.INSTANCE;
@@ -111,7 +129,12 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
                 );
             }
 
-            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
+            private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
+                Lists.of(
+                    SpreadsheetConverters.textToText(),
+                    SpreadsheetConverters.colorToColor()
+                )
+            );
 
             @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
