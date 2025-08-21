@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
@@ -48,8 +49,14 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStyle;
 
 import java.lang.reflect.Method;
@@ -60,6 +67,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     PublicStaticHelperTesting<SpreadsheetConverters>,
@@ -649,6 +657,125 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // json.............................................................................................................
+
+    @Test
+    @Disabled
+    public void testJsonConvertJsonToString() {
+        final JsonNode json = JsonNode.object()
+            .set(
+                JsonPropertyName.with("message"),
+                JsonNode.string("Hello World 123")
+            );
+
+        this.convertFails(
+            SpreadsheetConverters.json(),
+            json,
+            String.class,
+            JSON_CONVERTER_CONTEXT
+        );
+    }
+
+    private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
+        JsonNodeMarshallContexts.basic(),
+        JsonNodeUnmarshallContexts.basic(
+            EXPRESSION_NUMBER_KIND,
+            MathContext.DECIMAL32
+        )
+    );
+
+    @Test
+    public void testJsonConvertExpressionNumberToJsonNode() {
+        final ExpressionNumber number = EXPRESSION_NUMBER_KIND.create(123.5);
+        final JsonNode json = JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(number);
+
+        this.jsonConvertAndCheck(
+            number,
+            JsonNode.class,
+            json
+        );
+    }
+
+    @Test
+    public void testJsonConvertJsonToExpressionNumber() {
+        final ExpressionNumber number = EXPRESSION_NUMBER_KIND.create(123.5);
+        final JsonNode json = JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(number);
+
+        this.jsonConvertAndCheck(
+            json,
+            number
+        );
+    }
+
+    private void jsonConvertAndCheck(final Object value,
+                                     final Object expected) {
+        this.jsonConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void jsonConvertAndCheck(final Object value,
+                                          final Class<T> type,
+                                          final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.json(),
+            value,
+            type,
+            JSON_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext JSON_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+
+        @Override
+        public Optional<JsonString> typeName(final Class<?> type) {
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.typeName(type);
+        }
+
+        @Override
+        public JsonNode marshall(final Object object) {
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(object);
+        }
+
+        @Override
+        public <T> T unmarshall(final JsonNode json,
+                                final Class<T> type) {
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.unmarshall(
+                json,
+                type
+            );
+        }
+    };
+    
     // locale...........................................................................................................
 
     @Test
