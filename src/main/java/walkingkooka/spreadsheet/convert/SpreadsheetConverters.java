@@ -315,6 +315,21 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} data types.
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetMetadata() {
+        return SPREADSHEET_METADATA;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> SPREADSHEET_METADATA = namedCollection(
+        "spreadsheetMetadata",
+        textToSpreadsheetId(),
+        textToSpreadsheetMetadata(),
+        textToSpreadsheetMetadataPropertyName(),
+        textToSpreadsheetName()
+    );
+
+    /**
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {

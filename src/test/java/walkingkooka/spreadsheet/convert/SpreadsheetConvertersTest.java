@@ -38,6 +38,8 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -45,6 +47,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
@@ -856,6 +859,132 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     };
 
+    // spreadsheetMetadata..............................................................................................
+
+    @Test
+    public void testSpreadsheetMetadataConvertStringToSpreadsheetCellReferenceFails() {
+        this.convertFails(
+            SpreadsheetConverters.spreadsheetMetadata(),
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetCellReference.class,
+            SPREADSHEET_METADATA_CONVERTER_CONTEXT
+        );
+    }
+
+    private final static SpreadsheetMetadata SPREADSHEET_METADATA = SpreadsheetMetadata.EMPTY.set(
+        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+        SpreadsheetId.with(1)
+    );
+
+    @Test
+    public void testSpreadsheetMetadataConvertStringToSpreadsheetId() {
+        final SpreadsheetId id = SpreadsheetId.with(12345);
+
+        this.spreadsheetMetadataConvertAndCheck(
+            id.toString(),
+            id
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataConvertStringToSpreadsheetMetadata() {
+        this.spreadsheetMetadataConvertAndCheck(
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(SPREADSHEET_METADATA)
+                .toString(),
+            SPREADSHEET_METADATA
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataConvertStringToSpreadsheetMetadataPropertyName() {
+        final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
+
+        this.spreadsheetMetadataConvertAndCheck(
+            name.toString(),
+            name
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataConvertStringToSpreadsheetName() {
+        final SpreadsheetName name = SpreadsheetName.with("SpreadsheetName222");
+
+        this.spreadsheetMetadataConvertAndCheck(
+            name.toString(),
+            name
+        );
+    }
+
+    private void spreadsheetMetadataConvertAndCheck(final Object value,
+                                                    final Object expected) {
+        this.spreadsheetMetadataConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void spreadsheetMetadataConvertAndCheck(final Object value,
+                                                        final Class<T> type,
+                                                        final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.spreadsheetMetadata(),
+            value,
+            type,
+            SPREADSHEET_METADATA_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext SPREADSHEET_METADATA_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.json()
+            )
+        );
+
+        @Override
+        public Optional<JsonString> typeName(final Class<?> type) {
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.typeName(type);
+        }
+
+        @Override
+        public JsonNode marshall(final Object object) {
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.marshall(object);
+        }
+
+        @Override
+        public <T> T unmarshall(final JsonNode json,
+                                final Class<T> type) {
+            return JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT.unmarshall(
+                json,
+                type
+            );
+        }
+    };
+    
     // style............................................................................................................
 
     private final TextStyle STYLE = TextStyle.parse("background-color: red");

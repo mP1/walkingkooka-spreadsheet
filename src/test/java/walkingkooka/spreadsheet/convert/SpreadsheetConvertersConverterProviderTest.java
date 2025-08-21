@@ -310,6 +310,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithSpreadsheetMetadata() {
+        this.converterAndCheck(
+            "spreadsheet-metadata",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetMetadata()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",
