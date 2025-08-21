@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -43,22 +44,29 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColor extends Spreadshe
     public boolean isTargetType(final Object value,
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
-        return Color.class == type;
+        return Color.isColorClass(type);
     }
 
     @Override
     public Color parseText(final String text,
                            final Class<?> type,
                            final SpreadsheetConverterContext context) {
-        return SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatParserTokenVisitor.color(
-            SpreadsheetFormatParsers.color()
-                .parseText(
-                    text,
-                    SpreadsheetFormatParserContexts.basic(
-                        InvalidCharacterExceptionFactory.POSITION
-                    )
+        // convert to probably an RgbColor using the visitor then convert to the target Color type
+
+        return Cast.to(
+            context.convertOrFail(
+                SpreadsheetConverterTextToSpreadsheetMetadataColorSpreadsheetFormatParserTokenVisitor.color(
+                    SpreadsheetFormatParsers.color()
+                        .parseText(
+                            text,
+                            SpreadsheetFormatParserContexts.basic(
+                                InvalidCharacterExceptionFactory.POSITION
+                            )
+                        ),
+                    context
                 ),
-            context
+                type
+            )
         );
     }
 
