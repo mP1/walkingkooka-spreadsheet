@@ -291,7 +291,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-            throw new UnsupportedOperationException();
+            return Optional.empty();
         }
 
         @Override
