@@ -51,6 +51,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -214,6 +215,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> jsonTo() {
         return JsonNodeConverters.jsonNodeTo();
     }
+
+    /**
+     * A converter that involves {@link Locale} as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> locale() {
+        return LOCALE;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
+        "locale",
+        textToLocale()
+    );
 
     /**
      * {@see SpreadsheetConverterNullToNumber}
