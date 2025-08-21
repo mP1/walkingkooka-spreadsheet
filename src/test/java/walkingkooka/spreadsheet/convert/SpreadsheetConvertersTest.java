@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -35,7 +37,11 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
@@ -466,6 +472,183 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // color.............................................................................................................
+
+    @Test
+    public void testColorConvertColorToColor() {
+        final Color rgb = RgbColor.BLACK;
+
+        this.colorConvertAndCheck(
+            rgb,
+            rgb.toHsv()
+        );
+    }
+
+    @Test
+    public void testColorConvertColorToNumber() {
+        final RgbColor color = Color.parseRgb("#123456");
+
+        this.colorConvertAndCheck(
+            color,
+            color.value()
+        );
+    }
+
+    @Test
+    public void testColorConvertColorToString() {
+        final RgbColor color = Color.parseRgb("#123456");
+
+        this.colorConvertAndCheck(
+            color,
+            color.toString()
+        );
+    }
+
+    @Test
+    public void testColorConvertColorBlackToString() {
+        final RgbColor color = Color.BLACK;
+
+        this.colorConvertAndCheck(
+            color,
+            color.toString()
+        );
+    }
+
+    @Test
+    public void testColorConvertNumberToColor() {
+        final RgbColor color = Color.parseRgb("#123456");
+
+        this.colorConvertAndCheck(
+            color.value(),
+            color
+        );
+    }
+
+    @Test
+    public void testColorConvertStringToColor() {
+        final String text = "#123";
+
+        this.colorConvertAndCheck(
+            text,
+            Color.class,
+            Color.parseRgb(text)
+        );
+    }
+
+    @Test
+    public void testColorConvertStringToRgbColor() {
+        final String text = "#123";
+
+        this.colorConvertAndCheck(
+            text,
+            Color.parseRgb(text)
+        );
+    }
+
+    @Test
+    public void testColorConvertStringToSpreadsheetColorName() {
+        final SpreadsheetColorName name = SpreadsheetColorName.RED;
+
+        this.colorConvertAndCheck(
+            name.value(),
+            name
+        );
+    }
+
+    @Test
+    public void testColorConvertSpreadsheetColorNameToString() {
+        final SpreadsheetColorName name = SpreadsheetColorName.RED;
+
+        this.colorConvertAndCheck(
+            name,
+            name.value()
+        );
+    }
+
+    private final static String SPREADSHEET_COLOR_NAME = "HelloColor";
+    private final static Color COLOR10 = Color.parse("#101010");
+
+    @Test
+    public void testColorConvertSpreadsheetMetadataColorToString() {
+        this.colorConvertAndCheck(
+            "[" + SPREADSHEET_COLOR_NAME + "]",
+            COLOR10
+        );
+    }
+
+    @Test
+    public void testColorConvertStringToSpreadsheetMetadataColorName() {
+        this.colorConvertAndCheck(
+            SPREADSHEET_COLOR_NAME,
+            SpreadsheetColorName.with(SPREADSHEET_COLOR_NAME)
+        );
+    }
+
+    private void colorConvertAndCheck(final Object value,
+                                      final Object expected) {
+        this.colorConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void colorConvertAndCheck(final Object value,
+                                         final Class<T> type,
+                                         final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.color(),
+            value,
+            type,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                    Lists.of(
+                        SpreadsheetConverters.simple(),
+                        SpreadsheetConverters.text(),
+                        SpreadsheetConverters.numberToNumber()
+                    )
+                );
+
+                @Override
+                public SpreadsheetMetadata spreadsheetMetadata() {
+                    return SpreadsheetMetadataTesting.METADATA_EN_AU
+                        .set(
+                            SpreadsheetMetadataPropertyName.namedColor(
+                                SpreadsheetColorName.with(SPREADSHEET_COLOR_NAME)
+                            ),
+                            10
+                        ).set(
+                            SpreadsheetMetadataPropertyName.numberedColor(
+                                10
+                            ),
+                            COLOR10
+                        );
+                }
+            },
+            expected
+        );
+    }
+    
     // date.............................................................................................................
 
     @Test

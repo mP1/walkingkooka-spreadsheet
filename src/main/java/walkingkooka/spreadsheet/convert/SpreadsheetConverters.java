@@ -59,6 +59,12 @@ import java.util.function.Function;
  */
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
+    private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
+        "TEXT",
+        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+        Converters.hasTextToString()
+    );
+
     /**
      * A {@link Converter} that supports most of the provider conversions and will be used as the system converter for
      * the system {@link ProviderContext}.
@@ -116,6 +122,24 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             converters
         );
     }
+
+    /**
+     * A converter that involves color as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> color() {
+        return COLOR;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> COLOR = namedCollection(
+        "color",
+        text(),
+        colorToColor(),
+        colorToNumber(),
+        numberToColor(),
+        textToColor(),
+        textToSpreadsheetColorName(),
+        textToSpreadsheetMetadataColor()
+    );
 
     /**
      * {@see ColorConverters#colorToColor}
@@ -265,12 +289,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> text() {
         return TEXT;
     }
-
-    private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
-        "TEXT",
-        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-        Converters.hasTextToString()
-    );
 
     /**
      * {@see ColorConverters#textToColor}
