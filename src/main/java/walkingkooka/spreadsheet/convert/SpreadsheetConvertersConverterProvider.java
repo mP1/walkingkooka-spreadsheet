@@ -188,6 +188,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.style();
                 break;
+            case TEXT_NODE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.textNode();
+                break;
             case TEXT_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -455,6 +460,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT = ConverterName.with(TEXT_STRING);
 
+    private final static String TEXT_NODE_STRING = "text-node";
+
+    final static ConverterName TEXT_NODE = ConverterName.with(TEXT_NODE_STRING);
+
     private final static String TEXT_TO_COLOR_STRING = "text-to-color";
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
@@ -609,6 +618,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SIMPLE),
             converterInfo(STYLE),
             converterInfo(TEXT),
+            converterInfo(TEXT_NODE),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),

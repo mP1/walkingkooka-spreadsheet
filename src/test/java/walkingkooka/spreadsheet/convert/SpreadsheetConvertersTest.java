@@ -39,6 +39,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -59,6 +60,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.text.Image;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
@@ -916,6 +919,134 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private final static SpreadsheetConverterContext STYLE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+
+    // textNode.........................................................................................................
+
+    private final static String TEXT = "Hello World 123!";
+
+    private final static TextNode TEXTNODE = TextNode.text("Hello World 123!");
+
+    @Test
+    public void testTextNodeConvertStringToColorFails() {
+        this.convertFails(
+            SpreadsheetConverters.textNode(),
+            Color.BLACK.value(),
+            Color.class,
+            TEXT_NODE_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testTextNodeConvertStringToSpreadsheetText() {
+        this.textNodeConvertAndCheck(
+            TEXT,
+            SpreadsheetText.with(TEXT)
+        );
+    }
+
+    @Test
+    public void testTextNodeConvertStringToTextNode() {
+        this.textNodeConvertAndCheck(
+            TEXT,
+            TextNode.text(TEXT)
+        );
+    }
+
+    @Test
+    public void testTextNodeConvertSpreadsheetCellToTextNode() {
+        final TextNode textNode = TextNode.text(TEXT)
+            .setTextStyle(STYLE);
+
+        this.textNodeConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormattedValue(
+                    Optional.of(textNode)
+                ),
+            textNode
+        );
+    }
+
+    @Test
+    public void testTextNodeConvertUrlToTextNode() {
+        final Url url = Url.parseAbsolute("https://www.google.com");
+
+        this.textNodeConvertAndCheck(
+            url,
+            TextNode.class,
+            TextNode.text(url.value())
+        );
+    }
+
+    @Test
+    public void testTextNodeConvertUrlToHyperlink() {
+        final Url url = Url.parseAbsolute("https://www.google.com");
+
+        this.textNodeConvertAndCheck(
+            url,
+            TextNode.hyperlink(url)
+        );
+    }
+
+    @Test
+    public void testTextNodeConvertUrlToImage() {
+        final Url url = Url.parseAbsolute("https://www.google.com");
+
+        this.textNodeConvertAndCheck(
+            url,
+            Image.class,
+            TextNode.image(url)
+        );
+    }
+
+    private void textNodeConvertAndCheck(final Object value,
+                                         final Object expected) {
+        this.textNodeConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void textNodeConvertAndCheck(final Object value,
+                                             final Class<T> type,
+                                             final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.textNode(),
+            value,
+            type,
+            TEXT_NODE_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext TEXT_NODE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
