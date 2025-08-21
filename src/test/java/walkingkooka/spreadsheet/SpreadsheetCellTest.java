@@ -59,6 +59,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.HasTextNodeTesting;
 import walkingkooka.tree.text.HasTextStyleTesting;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
@@ -83,6 +84,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetCell>,
     CanReplaceReferencesTesting<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+    HasTextNodeTesting,
     HasTextStyleTesting,
     HasTextTesting,
     ParseStringTesting<SpreadsheetCell>,
@@ -93,6 +95,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     ToStringTesting<SpreadsheetCell>,
     TreePrintableTesting,
     SpreadsheetMetadataTesting {
+
     private final static SpreadsheetCellReference REFERENCE = SpreadsheetSelection.A1;
     private final static String FORMULA = "=1+2";
 
@@ -3244,6 +3247,29 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+    // HasTextNode......................................................................................................
+
+    @Test
+    public void testHasTextNode() {
+        final TextNode textNode = TextNode.text("Hello World 123");
+
+        this.toTextNodeAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormattedValue(
+                    Optional.of(textNode)
+                ),
+            textNode
+        );
+    }
+
+    @Test
+    public void testHasTextNodeWhenMissing() {
+        this.toTextNodeAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+            null
+        );
+    }
+    
     // HasTextStyle.....................................................................................................
 
     @Test
