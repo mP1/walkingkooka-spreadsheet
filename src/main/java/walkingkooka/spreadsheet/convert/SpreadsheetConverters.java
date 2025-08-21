@@ -43,6 +43,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
 import walkingkooka.tree.text.convert.TreeTextConverters;
 import walkingkooka.validation.convert.ValidatorConvertConverters;
@@ -208,6 +209,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> hasTextStyleToTextStyle() {
         return TreeTextConverters.hasTextStyleToTextStyle();
     }
+
+    /**
+     * A converter that involves {@link JsonNode} as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> json() {
+        return JSON;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> JSON = namedCollection(
+        "json",
+        textToJson(),
+        jsonTo(),
+        toJson()
+    );
 
     /**
      * {@see JsonNodeConverters#jsonNodeTo}

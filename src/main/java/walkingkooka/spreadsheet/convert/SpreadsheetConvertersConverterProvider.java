@@ -133,6 +133,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasTextStyleToTextStyle();
                 break;
+            case JSON_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.json();
+                break;
             case JSON_TO_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -397,6 +402,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_TEXT_STYLE_TO_STYLE = ConverterName.with(HAS_TEXT_STYLE_TO_STYLE_STRING);
 
+    private final static String JSON_STRING = "json";
+
+    final static ConverterName JSON = ConverterName.with(JSON_STRING);
+
     private final static String JSON_TO_STRING = "jsonTo";
 
     final static ConverterName JSON_TO = ConverterName.with(JSON_TO_STRING);
@@ -579,6 +588,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(GENERAL),
             converterInfo(HAS_TEXT_STYLE_TO_STYLE),
+            converterInfo(JSON),
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
             converterInfo(NULL_TO_NUMBER),
