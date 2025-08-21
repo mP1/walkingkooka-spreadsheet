@@ -319,6 +319,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithSpreadsheetValue() {
+        this.converterAndCheck(
+            "spreadsheet-value",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetValue()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",

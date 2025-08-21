@@ -330,6 +330,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A converter that involves spreadsheet values like {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection},
+     * but not basic types like number, date etc.
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetValue() {
+        return SPREADSHEET_VALUE;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> SPREADSHEET_VALUE = namedCollection(
+        "spreadsheetValue",
+        errorToNumber(),
+        nullToNumber(),
+        selectionToSelection(),
+        selectionToText(),
+        textToSelection(),
+        textToSpreadsheetError(),
+        textToValueType()
+    );
+
+    /**
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {
