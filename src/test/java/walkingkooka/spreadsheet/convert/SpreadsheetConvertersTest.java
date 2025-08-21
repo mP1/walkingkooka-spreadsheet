@@ -40,10 +40,12 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -58,6 +60,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -850,6 +853,97 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     };
 
+    // style............................................................................................................
+
+    private final TextStyle STYLE = TextStyle.parse("background-color: red");
+
+    @Test
+    public void testStyleConvertStringToColorFails() {
+        this.convertFails(
+            SpreadsheetConverters.style(),
+            Color.BLACK.value(),
+            Color.class,
+            STYLE_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testStyleConvertHasTextStyleToStyleWithSpreadsheetCell() {
+        this.styleConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setStyle(STYLE),
+            STYLE
+        );
+    }
+
+    @Test
+    public void testStyleConvertStringToTextStyle() {
+        this.styleConvertAndCheck(
+            STYLE.text(),
+            STYLE
+        );
+    }
+
+    @Test
+    public void testStyleConvertStringToTextStylePropertyName() {
+        final TextStylePropertyName<?> propertyName = TextStylePropertyName.COLOR;
+
+        this.styleConvertAndCheck(
+            propertyName.text(),
+            propertyName
+        );
+    }
+
+    private void styleConvertAndCheck(final Object value,
+                                      final Object expected) {
+        this.styleConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void styleConvertAndCheck(final Object value,
+                                          final Class<T> type,
+                                          final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.style(),
+            value,
+            type,
+            STYLE_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext STYLE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+    
     // date.............................................................................................................
 
     @Test

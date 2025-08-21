@@ -310,6 +310,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStyle() {
+        this.converterAndCheck(
+            "style",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.style()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithText() {
         this.converterAndCheck(
             "text",

@@ -183,6 +183,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetCellTo();
                 break;
+            case STYLE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.style();
+                break;
             case TEXT_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -442,6 +447,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_CELL_TO = ConverterName.with(SPREADSHEET_CELL_TO_STRING);
 
+    private final static String STYLE_STRING = "style";
+
+    final static ConverterName STYLE = ConverterName.with(STYLE_STRING);
+
     private final static String TEXT_STRING = "text";
 
     final static ConverterName TEXT = ConverterName.with(TEXT_STRING);
@@ -598,6 +607,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SELECTION_TO_SELECTION),
             converterInfo(SELECTION_TO_TEXT),
             converterInfo(SIMPLE),
+            converterInfo(STYLE),
             converterInfo(TEXT),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),

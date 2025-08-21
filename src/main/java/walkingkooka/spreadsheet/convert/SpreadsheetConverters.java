@@ -312,6 +312,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link JsonNode} as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> style() {
+        return STYLE;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> STYLE = namedCollection(
+        "style",
+        hasTextStyleToTextStyle(),
+        textToTextStyle(),
+        textToTextStylePropertyName()
+    );
+
+    /**
      * A {@link Converter} that handles converting basic text conversions.
      */
     public static Converter<SpreadsheetConverterContext> text() {
