@@ -328,6 +328,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextNode() {
+        this.converterAndCheck(
+            "text-node",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textNode()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToColor() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR + "",

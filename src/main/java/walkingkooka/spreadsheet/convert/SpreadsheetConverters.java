@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.convert.EnvironmentConverters;
+import walkingkooka.net.Url;
 import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -45,6 +46,7 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.convert.JsonNodeConverters;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.convert.TreeTextConverters;
 import walkingkooka.validation.convert.ValidatorConvertConverters;
@@ -332,6 +334,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> text() {
         return TEXT;
     }
+
+    /**
+     * A converter that involves {@link TextNode} as a source or destination.
+     * <br>
+     * To create a {@link walkingkooka.tree.text.Hyperlink} with a {@link Url} the target must be {@link walkingkooka.tree.text.Hyperlink}.
+     * To create a {@link walkingkooka.tree.text.Image} with a {@link Url} the target must be {@link walkingkooka.tree.text.Image}.
+     */
+    public static Converter<SpreadsheetConverterContext> textNode() {
+        return TEXT_NODE;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> TEXT_NODE = namedCollection(
+        "textNode",
+        textToSpreadsheetText(),
+        textToTextNode(),
+        toTextNode(),
+        urlToHyperlink(),
+        urlToImage()
+    );
 
     /**
      * {@see ColorConverters#textToColor}
