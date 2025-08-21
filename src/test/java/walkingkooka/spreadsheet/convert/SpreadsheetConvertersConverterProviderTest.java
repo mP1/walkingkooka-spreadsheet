@@ -235,6 +235,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+    @Test
+    public void testConverterSelectorWithLocale() {
+        this.converterAndCheck(
+            "locale",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.locale()
+        );
+    }
 
     @Test
     public void testConverterSelectorWithNumberToColor() {

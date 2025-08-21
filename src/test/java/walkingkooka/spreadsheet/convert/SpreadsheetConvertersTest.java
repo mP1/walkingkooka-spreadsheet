@@ -648,7 +648,81 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             expected
         );
     }
-    
+
+    // locale...........................................................................................................
+
+    @Test
+    public void testLocaleConvertLocaleToLocaleFails() {
+        final Locale locale = Locale.FRANCE;
+
+        this.convertFails(
+            SpreadsheetConverters.locale(),
+            locale,
+            Locale.class,
+            LOCALE_CONTEXT
+        );
+    }
+
+    @Test
+    public void testLocaleConvertStringToLocale() {
+        final Locale locale = Locale.FRANCE;
+
+        this.localeConvertAndCheck(
+            locale.toLanguageTag(),
+            locale
+        );
+    }
+
+    private void localeConvertAndCheck(final Object value,
+                                       final Object expected) {
+        this.localeConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void localeConvertAndCheck(final Object value,
+                                           final Class<T> type,
+                                           final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.locale(),
+            value,
+            type,
+            LOCALE_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext LOCALE_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+
     // date.............................................................................................................
 
     @Test
