@@ -1237,14 +1237,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"color14\": \"teal\",\n" +
                 "  \"color15\": \"silver\",\n" +
                 "  \"color16\": \"grey\",\n" +
-                "  \"color17\": \"#9999ff\",\n" +
-                "  \"color18\": \"#993366\",\n" +
-                "  \"color19\": \"#ffffcc\",\n" +
-                "  \"color20\": \"#ccffff\",\n" +
-                "  \"color21\": \"#660066\",\n" +
+                "  \"color17\": \"#99f\",\n" +
+                "  \"color18\": \"#936\",\n" +
+                "  \"color19\": \"#ffc\",\n" +
+                "  \"color20\": \"#cff\",\n" +
+                "  \"color21\": \"#606\",\n" +
                 "  \"color22\": \"#ff8080\",\n" +
-                "  \"color23\": \"#0066cc\",\n" +
-                "  \"color24\": \"#ccccff\",\n" +
+                "  \"color23\": \"#06c\",\n" +
+                "  \"color24\": \"#ccf\",\n" +
                 "  \"color25\": \"navy\",\n" +
                 "  \"color26\": \"magenta\",\n" +
                 "  \"color27\": \"yellow\",\n" +
@@ -1253,30 +1253,30 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"color30\": \"maroon\",\n" +
                 "  \"color31\": \"teal\",\n" +
                 "  \"color32\": \"blue\",\n" +
-                "  \"color33\": \"#00ccff\",\n" +
-                "  \"color34\": \"#ccffff\",\n" +
-                "  \"color35\": \"#ccffcc\",\n" +
-                "  \"color36\": \"#ffff99\",\n" +
-                "  \"color37\": \"#99ccff\",\n" +
-                "  \"color38\": \"#ff99cc\",\n" +
-                "  \"color39\": \"#cc99ff\",\n" +
-                "  \"color40\": \"#ffcc99\",\n" +
-                "  \"color41\": \"#3366ff\",\n" +
-                "  \"color42\": \"#33cccc\",\n" +
-                "  \"color43\": \"#99cc00\",\n" +
-                "  \"color44\": \"#ffcc00\",\n" +
-                "  \"color45\": \"#ff9900\",\n" +
-                "  \"color46\": \"#ff6600\",\n" +
-                "  \"color47\": \"#666699\",\n" +
+                "  \"color33\": \"#0cf\",\n" +
+                "  \"color34\": \"#cff\",\n" +
+                "  \"color35\": \"#cfc\",\n" +
+                "  \"color36\": \"#ff9\",\n" +
+                "  \"color37\": \"#9cf\",\n" +
+                "  \"color38\": \"#f9c\",\n" +
+                "  \"color39\": \"#c9f\",\n" +
+                "  \"color40\": \"#fc9\",\n" +
+                "  \"color41\": \"#36f\",\n" +
+                "  \"color42\": \"#3cc\",\n" +
+                "  \"color43\": \"#9c0\",\n" +
+                "  \"color44\": \"#fc0\",\n" +
+                "  \"color45\": \"#f90\",\n" +
+                "  \"color46\": \"#f60\",\n" +
+                "  \"color47\": \"#669\",\n" +
                 "  \"color48\": \"#969696\",\n" +
-                "  \"color49\": \"#003366\",\n" +
-                "  \"color50\": \"#339966\",\n" +
-                "  \"color51\": \"#003300\",\n" +
-                "  \"color52\": \"#333300\",\n" +
-                "  \"color53\": \"#993300\",\n" +
-                "  \"color54\": \"#993366\",\n" +
-                "  \"color55\": \"#333399\",\n" +
-                "  \"color56\": \"#333333\",\n" +
+                "  \"color49\": \"#036\",\n" +
+                "  \"color50\": \"#396\",\n" +
+                "  \"color51\": \"#030\",\n" +
+                "  \"color52\": \"#330\",\n" +
+                "  \"color53\": \"#930\",\n" +
+                "  \"color54\": \"#936\",\n" +
+                "  \"color55\": \"#339\",\n" +
+                "  \"color56\": \"#333\",\n" +
                 "  \"colorBlack\": 1,\n" +
                 "  \"colorBlue\": 5,\n" +
                 "  \"colorCyan\": 8,\n" +
@@ -1461,7 +1461,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"color14\": \"#00000e\",\n" +
                 "  \"color15\": \"#00000f\",\n" +
                 "  \"color16\": \"#000010\",\n" +
-                "  \"color17\": \"#000011\",\n" +
+                "  \"color17\": \"#001\",\n" +
                 "  \"color18\": \"#000012\",\n" +
                 "  \"color19\": \"#000013\",\n" +
                 "  \"color20\": \"#000014\",\n" +
@@ -1478,7 +1478,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"color31\": \"#00001f\",\n" +
                 "  \"color32\": \"#000020\",\n" +
                 "  \"color33\": \"#000021\",\n" +
-                "  \"color34\": \"#000022\",\n" +
+                "  \"color34\": \"#002\",\n" +
                 "  \"color35\": \"#000023\",\n" +
                 "  \"color36\": \"#000024\",\n" +
                 "  \"color37\": \"#000025\",\n" +
@@ -1495,7 +1495,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"color48\": \"#000030\",\n" +
                 "  \"color49\": \"#000031\",\n" +
                 "  \"color50\": \"#000032\",\n" +
-                "  \"color51\": \"#000033\",\n" +
+                "  \"color51\": \"#003\",\n" +
                 "  \"color52\": \"#000034\",\n" +
                 "  \"color53\": \"#000035\",\n" +
                 "  \"color54\": \"#000036\",\n" +

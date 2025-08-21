@@ -52,7 +52,7 @@ public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTes
                 ).set(SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233))
                 .set(SpreadsheetMetadataPropertyName.numberedColor(13), Color.fromRgb(0xffeedd))
         );
-        this.toStringAndCheck(visitor, "{12=#112233, 13=#ffeedd}");
+        this.toStringAndCheck(visitor, "{12=#123, 13=#fed}");
     }
 
     @Override
