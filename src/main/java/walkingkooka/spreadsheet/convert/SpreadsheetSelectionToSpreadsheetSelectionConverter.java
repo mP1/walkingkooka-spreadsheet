@@ -48,34 +48,42 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
-        return isCellOrCellRange(value, type) ||
-            isCellToCellRange(value, type) ||
-            isCellRangeToCell(value, type) ||
-            isExpressionReference(value, type) ||
-            isSelection(value, type);
+        boolean can = false;
+
+        if (value instanceof SpreadsheetSelection) {
+            final SpreadsheetSelection selection = (SpreadsheetSelection) value;
+
+            can = isCellOrCellRange(selection, type) ||
+                isCellToCellRange(selection, type) ||
+                isCellRangeToCell(selection, type) ||
+                isExpressionReference(selection, type) ||
+                isSelection(selection, type);
+        }
+
+        return can;
     }
 
     @Override
-    public Object tryConvertOrFail(final Object value,
-                                   final Class<?> type,
-                                   final SpreadsheetConverterContext context) {
-        final Object result;
+    public SpreadsheetSelection tryConvertOrFail(final Object value,
+                                                 final Class<?> type,
+                                                 final SpreadsheetConverterContext context) {
+        final SpreadsheetSelection result;
 
         final SpreadsheetSelection selection = (SpreadsheetSelection) value;
 
-        if (isCellToCellRange(value, type)) {
+        if (isCellToCellRange(selection, type)) {
             result = selection.toCellRange();
         } else {
-            if (isCellRangeToCell(value, type)) {
+            if (isCellRangeToCell(selection, type)) {
                 result = selection.toCell();
             } else {
-                if (isCellOrCellRange(value, type)) {
+                if (isCellOrCellRange(selection, type)) {
                     result = context.resolveIfLabelOrFail(selection);
                 } else {
-                    if (isExpressionReference(value, type)) {
+                    if (isExpressionReference(selection, type)) {
                         result = selection;
                     } else {
-                        if (isSelection(value, type)) {
+                        if (isSelection(selection, type)) {
                             result = selection;
                         } else {
                             throw new ConversionException(
@@ -92,7 +100,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
         return result;
     }
 
-    private static boolean isCellOrCellRange(final Object value,
+    private static boolean isCellOrCellRange(final SpreadsheetSelection value,
                                              final Class<?> type) {
         return value instanceof SpreadsheetSelection &&
             (
@@ -102,17 +110,17 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
             );
     }
 
-    private static boolean isCellToCellRange(final Object value,
+    private static boolean isCellToCellRange(final SpreadsheetSelection value,
                                              final Class<?> type) {
         return value instanceof SpreadsheetCellReference && SpreadsheetCellRangeReference.class == type;
     }
 
-    private static boolean isCellRangeToCell(final Object value,
+    private static boolean isCellRangeToCell(final SpreadsheetSelection value,
                                              final Class<?> type) {
         return value instanceof SpreadsheetCellRangeReference && SpreadsheetCellReference.class == type;
     }
 
-    private static boolean isExpressionReference(final Object value,
+    private static boolean isExpressionReference(final SpreadsheetSelection value,
                                                  final Class<?> type) {
         return value instanceof SpreadsheetExpressionReference && SpreadsheetExpressionReference.class == type;
     }
