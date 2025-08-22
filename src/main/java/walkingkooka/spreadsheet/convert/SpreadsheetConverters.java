@@ -78,29 +78,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return BASIC_CONVERTER;
     }
 
-    private static Converter<SpreadsheetConverterContext> generalConverter() {
-        return general(
-            SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
-                .formatter(),
-            SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                .parser(),
-            SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
-                .formatter(),
-            SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
-                .parser(),
-            SpreadsheetPattern.parseNumberFormatPattern("0.##")
-                .formatter(),
-            SpreadsheetPattern.parseNumberParsePattern("0.##;#0;")
-                .parser(),
-            SpreadsheetFormatters.defaultText(),
-            SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
-                .formatter(),
-            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
-                .parser()
-        );
-    }
-
-    private final static Converter<SpreadsheetConverterContext> BASIC_GENERAL = generalConverter();
+    private final static Converter<SpreadsheetConverterContext> BASIC_GENERAL = general(
+        SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
+            .formatter(),
+        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+            .parser(),
+        SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
+            .formatter(),
+        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
+            .parser(),
+        SpreadsheetPattern.parseNumberFormatPattern("0.##")
+            .formatter(),
+        SpreadsheetPattern.parseNumberParsePattern("0.##;#0;")
+            .parser(),
+        SpreadsheetFormatters.defaultText(),
+        SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
+            .formatter(),
+        SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+            .parser()
+    );
 
     // @VisibleForTesting
     final static ConverterSelector BASIC_CONVERTER_SELECTOR = ConverterSelector.parse(
