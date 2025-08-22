@@ -93,6 +93,27 @@ public abstract class SpreadsheetSelection implements HasText,
     TreePrintable,
     UsesToStringBuilder {
 
+    /**
+     * Returns true if the given {@link Class} is a {@link SpreadsheetSelection} or sub-class.
+     */
+    public static boolean isSelectionClass(final Class<?> type) {
+        return SpreadsheetSelection.class == type ||
+            SpreadsheetColumnOrRowReferenceOrRange.class == type ||
+            SpreadsheetColumnReferenceOrRange.class == type ||
+            SpreadsheetColumnRangeReference.class == type ||
+            SpreadsheetColumnReference.class == type ||
+            SpreadsheetRowReferenceOrRange.class == type ||
+            SpreadsheetRowRangeReference.class == type ||
+            SpreadsheetRowReference.class == type ||
+            SpreadsheetExpressionReference.class == type ||
+            SpreadsheetCellReferenceOrRange.class == type ||
+            SpreadsheetCellRangeReference.class == type ||
+            SpreadsheetCellReference.class == type ||
+            SpreadsheetLabelName.class == type;
+    }
+
+    // constants........................................................................................................
+
     public final static int MAX_COLUMN = SpreadsheetColumnReference.MAX_VALUE;
 
     public final static int MAX_ROW = SpreadsheetRowReference.MAX_VALUE;
