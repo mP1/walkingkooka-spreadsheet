@@ -63,8 +63,14 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Character":
                     this.visitCharacter();
                     break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange":
+                    this.visitColumnOrRowReferenceOrRange();
+                    break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetColumnReference":
                     this.visitColumnReference();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceOrRange":
+                    this.visitColumnReferenceOrRange();
                     break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference":
                     this.visitColumnRangeReference();
@@ -109,6 +115,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetRowReference":
                     this.visitRowReference();
+                    break;
+                case "walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceOrRange":
+                    this.visitRowReferenceOrRange();
                     break;
                 case "walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference":
                     this.visitRowRangeReference();
@@ -174,6 +183,14 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
+    protected void visitColumnOrRowReferenceOrRange() {
+
+    }
+
+    protected void visitColumnReferenceOrRange() {
+
+    }
+
     protected void visitColumnRangeReference() {
 
     }
@@ -223,6 +240,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitRowReference() {
+
+    }
+
+    protected void visitRowReferenceOrRange() {
 
     }
 
