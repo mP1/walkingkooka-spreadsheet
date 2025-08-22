@@ -38,8 +38,11 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -48,7 +51,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
@@ -67,6 +75,7 @@ import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationValueTypeName;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -982,6 +991,265 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 json,
                 type
             );
+        }
+    };
+
+    // spreadsheetValue.................................................................................................
+
+    @Test
+    public void testSpreadsheetValueConvertNullToNumber() {
+        this.spreadsheetValueConvertAndCheck(
+            null,
+            Number.class,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetCellReference() {
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.A1,
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetCellRangeReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            cell.toRange()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetColumnReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            cell.toColumn()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToSpreadsheetRowReference() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            cell.toRow()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetSelectionFails() {
+        this.convertFails(
+            SpreadsheetConverters.spreadsheetValue(),
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetSelection.class,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetCellReference() {
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReference() {
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.A1.text(),
+            SpreadsheetSelection.A1.toRange()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReferenceWithColumn() {
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.parseColumn("B"),
+            SpreadsheetSelection.parseColumnRange("B")
+                .setRowRange(SpreadsheetSelection.ALL_ROWS)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetCellRangeReferenceWithRow() {
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.parseRow("3"),
+            SpreadsheetSelection.parseRowRange("3")
+                .setColumnRange(SpreadsheetSelection.ALL_COLUMNS)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetColumnReference() {
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
+
+        this.spreadsheetValueConvertAndCheck(
+            column.toString(),
+            column
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetColumnRangeReference() {
+        final SpreadsheetColumnRangeReference column = SpreadsheetSelection.parseColumnRange("C:D");
+
+        this.spreadsheetValueConvertAndCheck(
+            column.toString(),
+            column
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetLabelName() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.spreadsheetValueConvertAndCheck(
+            label.toString(),
+            label
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetLabelNameWithRowFails() {
+        this.convertFails(
+            SpreadsheetConverters.spreadsheetValue(),
+            "2",
+            SpreadsheetLabelName.class,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetRowReference() {
+        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("5");
+
+        this.spreadsheetValueConvertAndCheck(
+            row.toString(),
+            row
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetRowRangeReference() {
+        final SpreadsheetRowRangeReference row = SpreadsheetSelection.parseRowRange("6:77");
+
+        this.spreadsheetValueConvertAndCheck(
+            row.toString(),
+            row
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToSpreadsheetError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Value error 123");
+
+        this.spreadsheetValueConvertAndCheck(
+            error.toString(),
+            error
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToString() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            "A1"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellReferenceToString2() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1.toAbsolute();
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            "$A$1"
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellRangeReferenceToString() {
+        final String text = "B2:C3";
+
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.parseCellRange(text),
+            text
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToValueType() {
+        final ValidationValueTypeName type = SpreadsheetValueType.NUMBER;
+
+        this.spreadsheetValueConvertAndCheck(
+            type.toString(),
+            type
+        );
+    }
+
+    private void spreadsheetValueConvertAndCheck(final Object value,
+                                                    final Object expected) {
+        this.spreadsheetValueConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void spreadsheetValueConvertAndCheck(final Object value,
+                                                        final Class<T> type,
+                                                        final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.spreadsheetValue(),
+            value,
+            type,
+            SPREADSHEET_VALUE_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext SPREADSHEET_VALUE_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.numberToNumber()
+            )
+        );
+
+        @Override
+        public ExpressionNumberKind expressionNumberKind() {
+            return EXPRESSION_NUMBER_KIND;
         }
     };
     

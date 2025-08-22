@@ -188,6 +188,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetMetadata();
                 break;
+            case SPREADSHEET_VALUE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.spreadsheetValue();
+                break;
             case STYLE_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -461,6 +466,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_METADATA = ConverterName.with(SPREADSHEET_METADATA_STRING);
 
+    private final static String SPREADSHEET_VALUE_STRING = "spreadsheet-value";
+
+    final static ConverterName SPREADSHEET_VALUE = ConverterName.with(SPREADSHEET_VALUE_STRING);
+
     private final static String STYLE_STRING = "style";
 
     final static ConverterName STYLE = ConverterName.with(STYLE_STRING);
@@ -626,6 +635,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SELECTION_TO_TEXT),
             converterInfo(SIMPLE),
             converterInfo(SPREADSHEET_METADATA),
+            converterInfo(SPREADSHEET_VALUE),
             converterInfo(STYLE),
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),
