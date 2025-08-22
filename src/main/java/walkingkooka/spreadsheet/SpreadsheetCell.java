@@ -59,6 +59,7 @@ import walkingkooka.tree.text.HasTextNode;
 import walkingkooka.tree.text.HasTextStyle;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.util.HasOptionalLocale;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -83,6 +84,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     Patchable<SpreadsheetCell>,
     HasOptionalDateTimeSymbols,
     HasOptionalDecimalNumberSymbols,
+    HasOptionalLocale,
     HasTextNode,
     HasTextStyle,
     HasText,
@@ -351,6 +353,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     // locale...........................................................................................................
 
+    @Override
     public Optional<Locale> locale() {
         return this.locale;
     }
