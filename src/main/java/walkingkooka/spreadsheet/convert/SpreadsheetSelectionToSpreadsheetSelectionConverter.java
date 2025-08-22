@@ -17,21 +17,24 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.TryingShortCircuitingConverter;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 /**
- * A {@link Converter} that only handles the following selection to selection conversions.
- * <ul>
- *     <li>{@link SpreadsheetCellRangeReference} to {@link SpreadsheetCellReference}</li>
- *     <li>{@link SpreadsheetCellReference} to {@link SpreadsheetCellRangeReference}</li>
- * </ul>
+ * A {@link Converter} that only handles most selection to selection conversions, that make sense.
+ * A {@link SpreadsheetColumnReference} to {@link SpreadsheetCellRangeReference} is supported, A -> A1:A1048576.
+ * Other conversions for example are not supported, eg: column to a row
  */
 final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
@@ -51,83 +54,57 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
         boolean can = false;
 
         if (value instanceof SpreadsheetSelection) {
-            final SpreadsheetSelection selection = (SpreadsheetSelection) value;
-
-            can = isCellOrCellRange(selection, type) ||
-                isCellToCellRange(selection, type) ||
-                isCellRangeToCell(selection, type) ||
-                isExpressionReference(selection, type) ||
-                isSelection(selection, type);
-        }
-
-        return can;
-    }
-
-    @Override
-    public SpreadsheetSelection tryConvertOrFail(final Object value,
-                                                 final Class<?> type,
-                                                 final SpreadsheetConverterContext context) {
-        final SpreadsheetSelection result;
-
-        final SpreadsheetSelection selection = (SpreadsheetSelection) value;
-
-        if (isCellToCellRange(selection, type)) {
-            result = selection.toCellRange();
-        } else {
-            if (isCellRangeToCell(selection, type)) {
-                result = selection.toCell();
-            } else {
-                if (isCellOrCellRange(selection, type)) {
-                    result = context.resolveIfLabelOrFail(selection);
+            if (SpreadsheetLabelName.class != type) {
+                if (SpreadsheetSelection.class == type) {
+                    can = true;
                 } else {
-                    if (isExpressionReference(selection, type)) {
-                        result = selection;
+                    final SpreadsheetSelection selection = (SpreadsheetSelection) value;
+                    if (selection.isExternalReference()) {
+                        can = true;
                     } else {
-                        if (isSelection(selection, type)) {
-                            result = selection;
+                        if (selection.isColumnOrColumnRange()) {
+                            can = isCellRange(type) || isColumn(type);
                         } else {
-                            throw new ConversionException(
-                                "Cant convert " + value + " to " + type.getName(),
-                                value,
-                                type
-                            );
+                            if (selection.isRowOrRowRange()) {
+                                can = isCellRange(type) || isRow(type);
+                            }
                         }
                     }
                 }
             }
         }
 
-        return result;
+        return can;
     }
 
-    private static boolean isCellOrCellRange(final SpreadsheetSelection value,
-                                             final Class<?> type) {
-        return value instanceof SpreadsheetSelection &&
-            (
-                SpreadsheetCellReference.class == type ||
-                    SpreadsheetCellRangeReference.class == type ||
-                    SpreadsheetCellReferenceOrRange.class == type
-            );
+    private static boolean isCellRange(final Class<?> type) {
+        return SpreadsheetExpressionReference.class == type ||
+            SpreadsheetCellReferenceOrRange.class == type ||
+            SpreadsheetCellRangeReference.class == type;
     }
 
-    private static boolean isCellToCellRange(final SpreadsheetSelection value,
-                                             final Class<?> type) {
-        return value instanceof SpreadsheetCellReference && SpreadsheetCellRangeReference.class == type;
+    private static boolean isColumn(final Class<?> type) {
+        return SpreadsheetColumnReference.class == type ||
+            SpreadsheetColumnReferenceOrRange.class == type ||
+            SpreadsheetColumnRangeReference.class == type;
     }
 
-    private static boolean isCellRangeToCell(final SpreadsheetSelection value,
-                                             final Class<?> type) {
-        return value instanceof SpreadsheetCellRangeReference && SpreadsheetCellReference.class == type;
+    private static boolean isRow(final Class<?> type) {
+        return SpreadsheetRowReference.class == type ||
+            SpreadsheetRowReferenceOrRange.class == type ||
+            SpreadsheetRowRangeReference.class == type;
     }
 
-    private static boolean isExpressionReference(final SpreadsheetSelection value,
-                                                 final Class<?> type) {
-        return value instanceof SpreadsheetExpressionReference && SpreadsheetExpressionReference.class == type;
-    }
-
-    private static boolean isSelection(final Object value,
-                                       final Class<?> type) {
-        return value instanceof SpreadsheetSelection && SpreadsheetSelection.class == type;
+    @Override
+    public SpreadsheetSelection tryConvertOrFail(final Object value,
+                                                 final Class<?> type,
+                                                 final SpreadsheetConverterContext context) {
+        return SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor.convert(
+            context.resolveIfLabelOrFail(
+                (SpreadsheetSelection) value
+            ),
+            type
+        );
     }
 
     @Override

@@ -423,11 +423,7 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 Lists.of(
                     cell,
-                    cellRange,
-                    column,
-                    columnRange,
-                    row,
-                    rowRange
+                    cellRange
                 ),
                 SpreadsheetCellReference.class,
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
