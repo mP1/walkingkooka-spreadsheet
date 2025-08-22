@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.Url;
@@ -1983,7 +1984,8 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                     EXPRESSION_NUMBER_KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
-            )
+            ),
+            LocaleContexts.jre(locale)
         );
     }
 

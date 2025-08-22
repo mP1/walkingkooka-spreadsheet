@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -874,7 +875,8 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                     EXPRESSION_NUMBER_KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
-            )
+            ),
+            LocaleContexts.fake()
         );
     }
 

@@ -21,6 +21,8 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -30,30 +32,35 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
     JsonNodeConverterContextDelegator,
+    LocaleContextDelegator,
     UsesToStringBuilder {
 
     static BasicSpreadsheetConverterContext with(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetExpressionReference> validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                 final JsonNodeConverterContext context) {
+                                                 final JsonNodeConverterContext jsonNodeConverterContext,
+                                                 final LocaleContext localeContext) {
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
-        Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(jsonNodeConverterContext, "jsonNodeConverterContext");
+        Objects.requireNonNull(localeContext, "localeContext");
 
         return new BasicSpreadsheetConverterContext(
             spreadsheetMetadata,
             validationReference,
             converter,
             spreadsheetLabelNameResolver,
-            context
+            jsonNodeConverterContext,
+            localeContext
         );
     }
 
@@ -61,17 +68,19 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                              final Optional<SpreadsheetExpressionReference> validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                             final JsonNodeConverterContext context) {
+                                             final JsonNodeConverterContext jsonNodeConverterContext,
+                                             final LocaleContext localeContext) {
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
-        this.context = context;
+        this.jsonNodeConverterContext = jsonNodeConverterContext;
+        this.localeContext = localeContext;
     }
 
     @Override
     public SpreadsheetConverterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final JsonNodeConverterContext before = this.context;
+        final JsonNodeConverterContext before = this.jsonNodeConverterContext;
         final JsonNodeConverterContext after = before.setPreProcessor(processor);
         return before.equals(after) ?
             this :
@@ -80,7 +89,8 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.validationReference,
                 this.converter,
                 this.spreadsheetLabelNameResolver,
-                after
+                after,
+                this.localeContext
             );
     }
 
@@ -146,10 +156,24 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     @Override
     public JsonNodeConverterContext jsonNodeConverterContext() {
-        return this.context;
+        return this.jsonNodeConverterContext;
     }
 
-    private final JsonNodeConverterContext context;
+    private final JsonNodeConverterContext jsonNodeConverterContext;
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    public Locale locale() {
+        return this.localeContext.locale();
+    }
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    private final LocaleContext localeContext;
 
     // toString.........................................................................................................
 
@@ -164,6 +188,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.converter);
         builder.value(this.spreadsheetLabelNameResolver);
-        builder.value(this.context);
+        builder.value(this.jsonNodeConverterContext);
+        builder.value(this.localeContext);
     }
 }

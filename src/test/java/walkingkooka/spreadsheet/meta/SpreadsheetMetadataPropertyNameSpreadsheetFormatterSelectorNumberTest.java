@@ -153,7 +153,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         ExpressionNumberKind.DEFAULT
                     ),
                     JsonNodeMarshallUnmarshallContexts.fake()
-                )
+                ),
+                LocaleContexts.fake()
             ),
             SpreadsheetFormatterProviders.fake(),
             ProviderContexts.fake()

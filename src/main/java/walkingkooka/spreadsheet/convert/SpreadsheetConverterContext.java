@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.HasConverter;
+import walkingkooka.locale.convert.LocaleConverterContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -35,7 +36,8 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     HasConverter<SpreadsheetConverterContext>,
     HasSpreadsheetMetadata,
     SpreadsheetLabelNameResolver,
-    HasMissingCellNumberValue {
+    HasMissingCellNumberValue,
+    LocaleConverterContext {
 
     @Override
     default ExpressionNumber missingCellNumberValue() {

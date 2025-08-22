@@ -22,7 +22,8 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
@@ -40,7 +41,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
@@ -58,6 +58,12 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
+    private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
+
+    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
+
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
     // with.............................................................................................................
 
     @Test
@@ -69,7 +75,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 VALIDATION_REFERENCE,
                 CONVERTER,
                 LABEL_RESOLVER,
-                JsonNodeConverterContexts.fake()
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
             )
         );
     }
@@ -83,7 +90,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 VALIDATION_REFERENCE,
                 null,
                 LABEL_RESOLVER,
-                JsonNodeConverterContexts.fake()
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
             )
         );
     }
@@ -97,13 +105,14 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 VALIDATION_REFERENCE,
                 CONVERTER,
                 null,
-                JsonNodeConverterContexts.fake()
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullContextFails() {
+    public void testWithNullJsonNodeConverterContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetConverterContext.with(
@@ -111,6 +120,22 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 VALIDATION_REFERENCE,
                 CONVERTER,
                 LABEL_RESOLVER,
+                null,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                LABEL_RESOLVER,
+                JSON_NODE_CONVERTER_CONTEXT,
                 null
             )
         );
@@ -127,6 +152,16 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         );
     }
 
+    // locale...........................................................................................................
+
+    @Test
+    public void testLocale() {
+        this.localeAndCheck(
+            this.createContext(),
+            LOCALE_CONTEXT.locale()
+        );
+    }
+
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
@@ -134,7 +169,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             VALIDATION_REFERENCE,
             CONVERTER,
             LABEL_RESOLVER,
-            this.jsonNodeConverterContext()
+            this.jsonNodeConverterContext(),
+            LOCALE_CONTEXT
         );
     }
 
@@ -146,10 +182,9 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     Converters.fake(),
                     DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                            new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
-                        ),
-                        Locale.forLanguageTag("EN-AU"),
+                        LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
+                            .get(),
+                        LOCALE_CONTEXT.locale(),
                         1900,
                         20,
                         LocalDateTime::now

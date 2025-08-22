@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -40,13 +41,15 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
                                                     final Optional<SpreadsheetExpressionReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                    final JsonNodeConverterContext context) {
+                                                    final JsonNodeConverterContext jsonNodeConverterContext,
+                                                    final LocaleContext localeContext) {
         return BasicSpreadsheetConverterContext.with(
             spreadsheetMetadata,
             validationReference,
             converter,
             spreadsheetLabelNameResolver,
-            context
+            jsonNodeConverterContext,
+            localeContext
         );
     }
 

@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -319,7 +320,8 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                     KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
-            )
+            ),
+            LocaleContexts.jre(locale)
         );
     }
 

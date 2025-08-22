@@ -22,6 +22,8 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.HasSpreadsheetCell;
@@ -48,7 +50,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallContextDelegator,
-    JsonNodeUnmarshallContextDelegator {
+    JsonNodeUnmarshallContextDelegator,
+    LocaleContextDelegator {
 
     static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
@@ -189,6 +192,13 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         return before.equals(after) ?
             this :
             new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
+    }
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.context;
     }
 
     // HasSpreadsheetMetadata............................................................................................

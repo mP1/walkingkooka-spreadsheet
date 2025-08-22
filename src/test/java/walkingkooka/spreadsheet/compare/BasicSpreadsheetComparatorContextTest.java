@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
@@ -35,7 +36,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -84,7 +84,11 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         );
     }
 
-    private final SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
+        Locale.forLanguageTag("en-AU")
+    );
+
+    private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.objectToString(),
@@ -99,12 +103,9 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     Converters.objectToString(),
                     DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                            new DateFormatSymbols(
-                                Locale.forLanguageTag("EN-AU")
-                            )
-                        ),
-                        Locale.forLanguageTag("EN-AU"),
+                        LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE_CONTEXT.locale())
+                            .get(),
+                        LOCALE_CONTEXT.locale(),
                         1950, // default year
                         50, // two-digit-year
                         LocalDateTime::now
@@ -122,7 +123,8 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     MathContext.DECIMAL32
                 )
             )
-        )
+        ),
+        LOCALE_CONTEXT
     );
 
     @Override

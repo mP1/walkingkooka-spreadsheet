@@ -23,6 +23,8 @@ import walkingkooka.color.RgbColor;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.FakeEnvironmentContext;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
@@ -44,7 +46,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicProviderContextTest implements ProviderContextTesting<BasicProviderContext> {
 
     private final static PluginStore PLUGIN_STORE = PluginStores.fake();
-    private final static Locale LOCALE = Locale.ENGLISH;
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
         JsonNodeMarshallContexts.basic(),
         JsonNodeUnmarshallContexts.basic(
@@ -63,9 +64,9 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
             Objects.requireNonNull(name, "name");
 
-            if(ENVIRONMENT_VALUE_NAME.equals(name)) {
+            if (ENVIRONMENT_VALUE_NAME.equals(name)) {
                 return Optional.of(
-                    (T)ENVIRONMENT_VALUE
+                    (T) ENVIRONMENT_VALUE
                 );
             }
 
@@ -94,6 +95,8 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         }
     };
 
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
+
     // with.............................................................................................................
 
     @Test
@@ -102,22 +105,9 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             NullPointerException.class,
             () -> BasicProviderContext.with(
                 null,
-                LOCALE,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                ENVIRONMENT_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullLocaleFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicProviderContext.with(
-                PLUGIN_STORE,
-                null,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                ENVIRONMENT_CONTEXT
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT
             )
         );
     }
@@ -128,9 +118,9 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             NullPointerException.class,
             () -> BasicProviderContext.with(
                 PLUGIN_STORE,
-                LOCALE,
                 null,
-                ENVIRONMENT_CONTEXT
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT
             )
         );
     }
@@ -141,9 +131,9 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             NullPointerException.class,
             () -> BasicProviderContext.with(
                 PLUGIN_STORE,
-                LOCALE,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                null
+                null,
+                LOCALE_CONTEXT
             )
         );
     }
@@ -152,9 +142,9 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     public BasicProviderContext createContext() {
         return BasicProviderContext.with(
             PLUGIN_STORE,
-            LOCALE,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-            ENVIRONMENT_CONTEXT
+            ENVIRONMENT_CONTEXT,
+            LOCALE_CONTEXT
         );
     }
 

@@ -40,6 +40,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
@@ -1419,7 +1420,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         metadata.expressionNumberKind()
                     ),
                     JsonNodeMarshallUnmarshallContexts.fake()
-                )
+                ),
+                LocaleContexts.jre(locale)
             )
         );
     }
