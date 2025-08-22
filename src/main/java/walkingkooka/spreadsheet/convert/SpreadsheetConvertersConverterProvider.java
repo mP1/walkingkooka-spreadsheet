@@ -123,6 +123,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     copy.get(0).toString()
                 );
                 break;
+            case FORM_AND_VALIDATION_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.formAndValidation();
+                break;
             case GENERAL_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -419,6 +424,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName FORMAT_PATTERN_TO_STRING = ConverterName.with(FORMAT_PATTERN_TO_STRING_STRING);
 
+    private final static String FORM_AND_VALIDATION_STRING = "form-and-validation";
+
+    final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
+
     private final static String GENERAL_STRING = "general";
 
     final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
@@ -631,6 +640,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(FORMAT_PATTERN_TO_STRING),
+            converterInfo(FORM_AND_VALIDATION),
             converterInfo(GENERAL),
             converterInfo(HAS_TEXT_STYLE_TO_STYLE),
             converterInfo(JSON),
