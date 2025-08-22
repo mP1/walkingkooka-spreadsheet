@@ -25,6 +25,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -79,6 +80,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasSpreadsheetReference<SpreadsheetCellReference>,
     HateosResource<SpreadsheetCellReference>,
     Patchable<SpreadsheetCell>,
+    HasOptionalDateTimeSymbols,
     HasTextNode,
     HasTextStyle,
     HasText,
@@ -271,6 +273,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     // dateTimeSymbols..................................................................................................
 
+    @Override
     public Optional<DateTimeSymbols> dateTimeSymbols() {
         return this.dateTimeSymbols;
     }
