@@ -263,6 +263,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // toCell...........................................................................................................
 
+    final void toCellFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createSelection()
+                .toCell()
+        );
+    }
+
     final void toCellAndCheck(final String selection,
                               final String expected) {
         this.toCellAndCheck(
@@ -313,6 +321,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(
             expected,
             selection.toCellRange(),
+            selection::toString
+        );
+    }
+
+    // toCellOrCellRange................................................................................................
+
+    final void toCellOrCellRangeAndCheck(final String selection,
+                                         final String expected) {
+        this.toCellOrCellRangeAndCheck(
+            this.parseString(selection),
+            SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    final void toCellOrCellRangeAndCheck(final SpreadsheetSelection selection,
+                                         final SpreadsheetCellRangeReference expected) {
+        this.checkEquals(
+            expected,
+            selection.toCellOrCellRange(),
             selection::toString
         );
     }

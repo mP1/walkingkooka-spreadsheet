@@ -258,7 +258,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
         );
     }
 
-    // toCellRangeResolvingLabels........................................................................................
+    // toCellRange......................................................................................................
 
     @Test
     public void testToCellRange() {
@@ -282,7 +282,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testToColumn() {
         this.toColumnAndCheck(
             SpreadsheetSelection.A1,
-            SpreadsheetSelection.parseColumn("A")
+            SpreadsheetSelection.A1.toColumn()
         );
     }
 

@@ -710,18 +710,35 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // toCell...........................................................................................................
 
     @Test
-    public void testToCell() {
-        this.toCellAndCheck(
+    public void testToCellFails() {
+        this.toCellFails();
+    }
+
+    // toCellRange......................................................................................................
+
+    @Test
+    public void testToCellRange() {
+        this.toCellRangeAndCheck(
             "1",
-            "A1"
+            "A1:" + SpreadsheetColumnOrRowReferenceKind.COLUMN.lastRelative() + "1"
         );
     }
 
     @Test
-    public void testToCell2() {
-        this.toCellAndCheck(
+    public void testToCellRange2() {
+        this.toCellRangeAndCheck(
             "2",
-            "A2"
+            "A2:" + SpreadsheetColumnOrRowReferenceKind.COLUMN.lastRelative() + "2"
+        );
+    }
+
+    // toCellOrCellRange................................................................................................
+
+    @Test
+    public void testToCellOrCellRange() {
+        this.toCellOrCellRangeAndCheck(
+            "1",
+            "A1:" + SpreadsheetColumnOrRowReferenceKind.COLUMN.lastRelative() + "1"
         );
     }
 

@@ -292,15 +292,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
         return this.equalsIgnoreReferenceKind(column);
     }
 
-    // toCell............................................................................................................
-
-    @Override
-    public SpreadsheetCellReference toCell() {
-        return this.setRow(
-            SpreadsheetReferenceKind.RELATIVE.firstRow()
-        );
-    }
-
     // toRelative.......................................................................................................
 
     @Override
