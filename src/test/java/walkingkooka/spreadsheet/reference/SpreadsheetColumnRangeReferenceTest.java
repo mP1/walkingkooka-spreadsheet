@@ -1349,6 +1349,14 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    @Test
+    public void testToCellOrCellRange3() {
+        this.toCellRangeAndCheck(
+            "B:C",
+            "B1:C" + SpreadsheetColumnOrRowReferenceKind.ROW.lastRelative()
+        );
+    }
+
     // IterableTesting..................................................................................................
 
     @Test
