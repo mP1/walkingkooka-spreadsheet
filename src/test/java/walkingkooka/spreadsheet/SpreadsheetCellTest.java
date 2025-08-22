@@ -27,6 +27,7 @@ import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -86,6 +87,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     CanReplaceReferencesTesting<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
     HasOptionalDateTimeSymbolsTesting,
+    HasOptionalDecimalNumberSymbolsTesting,
     HasTextNodeTesting,
     HasTextStyleTesting,
     HasTextTesting,
@@ -537,15 +539,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.decimalNumberSymbolsAndCheck(
             cell,
             this.decimalNumberSymbols()
-        );
-    }
-
-    private void decimalNumberSymbolsAndCheck(final SpreadsheetCell cell,
-                                              final Optional<DecimalNumberSymbols> decimalNumberSymbols) {
-        this.checkEquals(
-            decimalNumberSymbols,
-            cell.decimalNumberSymbols(),
-            "decimalNumberSymbols"
         );
     }
 
