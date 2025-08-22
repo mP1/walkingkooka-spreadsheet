@@ -25,4 +25,12 @@ public abstract class SpreadsheetColumnOrRowReferenceOrRange extends Spreadsheet
     SpreadsheetColumnOrRowReferenceOrRange() {
         super();
     }
+
+    /**
+     * Attempts to convert a column or row to a cell will fail.
+     */
+    @Override
+    public final SpreadsheetCellReference toCell() {
+        throw new UnsupportedOperationException(this.toString());
+    }
 }

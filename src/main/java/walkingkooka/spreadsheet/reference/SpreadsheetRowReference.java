@@ -334,13 +334,6 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     // toXXX............................................................................................................
 
     @Override
-    public SpreadsheetCellReference toCell() {
-        return this.setColumn(
-            SpreadsheetReferenceKind.RELATIVE.firstColumn()
-        );
-    }
-
-    @Override
     public SpreadsheetRowReference toRow() {
         return this;
     }

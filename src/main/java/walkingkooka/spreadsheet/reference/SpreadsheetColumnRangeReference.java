@@ -242,12 +242,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
     // toXXX............................................................................................................
 
     @Override
-    public SpreadsheetCellReference toCell() {
-        return this.toScalar()
-            .toCell();
-    }
-
-    @Override
     public SpreadsheetColumnReference toColumn() {
         return this.begin();
     }

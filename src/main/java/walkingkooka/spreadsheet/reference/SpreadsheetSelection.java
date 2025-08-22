@@ -1056,8 +1056,8 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetCellReference toCell();
 
     /**
-     * Attempts to convert this selection to a {@link SpreadsheetCellRangeReference} throwing a {@link UnsupportedOperationException}
-     * if the selection is a label.
+     * Attempts to convert this selection to a {@link SpreadsheetCellRangeReference}.
+     * {@link SpreadsheetColumnReference} such as "A" will become return a cell range that covers includes "A" and covers all rows.
      */
     public final SpreadsheetCellRangeReference toCellRange() {
         return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
@@ -1066,13 +1066,12 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * A cell or cell ranges will return this otherwise a {@link UnsupportedOperationException} will be thrown.
+     * If this is a {@link SpreadsheetCellReference} return this otherwise converts this selection to a {@link SpreadsheetCellRangeReference}.
      */
     public final SpreadsheetCellReferenceOrRange toCellOrCellRange() {
-        if (false == this.isCell() && false == this.isCellRange()) {
-            throw new UnsupportedOperationException(this.toString());
-        }
-        return (SpreadsheetCellReferenceOrRange) this;
+        return this.isCell() ?
+            this.toCell() :
+            this.toCellRange();
     }
 
     /**

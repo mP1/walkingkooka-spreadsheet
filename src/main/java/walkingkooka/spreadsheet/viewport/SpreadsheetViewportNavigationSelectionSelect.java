@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
@@ -53,8 +54,23 @@ abstract class SpreadsheetViewportNavigationSelectionSelect<T extends Spreadshee
     @Override //
     final Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                         final SpreadsheetViewportNavigationContext context) {
+        SpreadsheetSelection selection = this.selection;
+
+        if (selection.isColumn()) {
+            selection = selection.toColumn()
+                .setRow(
+                    SpreadsheetColumnOrRowReferenceKind.ROW.firstRelative().toRow()
+                );
+        }
+        if (selection.isRow()) {
+            selection = selection.toRow()
+                .setColumn(
+                    SpreadsheetColumnOrRowReferenceKind.COLUMN.firstRelative().toColumn()
+                );
+        }
+
         return Optional.of(
-            this.selection.toCell()
+            selection.toCell()
         );
     }
 
