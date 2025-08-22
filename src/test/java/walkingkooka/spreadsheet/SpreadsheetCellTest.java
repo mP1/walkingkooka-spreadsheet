@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -84,6 +85,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetCell>,
     CanReplaceReferencesTesting<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+    HasOptionalDateTimeSymbolsTesting,
     HasTextNodeTesting,
     HasTextStyleTesting,
     HasTextTesting,
@@ -470,15 +472,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.dateTimeSymbolsAndCheck(
             cell,
             this.dateTimeSymbols()
-        );
-    }
-
-    private void dateTimeSymbolsAndCheck(final SpreadsheetCell cell,
-                                         final Optional<DateTimeSymbols> dateTimeSymbols) {
-        this.checkEquals(
-            dateTimeSymbols,
-            cell.dateTimeSymbols(),
-            "dateTimeSymbols"
         );
     }
 
