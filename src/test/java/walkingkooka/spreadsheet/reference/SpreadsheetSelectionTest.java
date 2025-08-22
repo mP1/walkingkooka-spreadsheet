@@ -42,6 +42,143 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     HasNotFoundTextTesting,
     ParseStringTesting<SpreadsheetExpressionReference> {
 
+    // isSelectionClass.................................................................................................
+
+    @Test
+    public void testIsSelectionClassWithNull() {
+        this.isSelectionClassAndCheck(
+            null,
+            false
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithObject() {
+        this.isSelectionClassAndCheck(
+            Object.class,
+            false
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetSelection() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetSelection.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetColumnOrRowReferenceOrRange() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetColumnOrRowReferenceOrRange.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetColumnReferenceOrRange() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetColumnReferenceOrRange.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetColumnRangeReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetColumnRangeReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetColumnReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetColumnReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetRowRangeReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetRowRangeReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetRowReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetRowReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetExpressionReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetExpressionReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetCellReferenceOrRange() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetCellReferenceOrRange.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetCellRangeReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetCellRangeReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetCellReference() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetCellReference.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithSpreadsheetLabelName() {
+        this.isSelectionClassAndCheck(
+            SpreadsheetLabelName.class,
+            true
+        );
+    }
+
+    @Test
+    public void testIsSelectionClassWithThisTest() {
+        this.isSelectionClassAndCheck(
+            this.getClass(),
+            false
+        );
+    }
+
+    private void isSelectionClassAndCheck(final Class<?> type,
+                                          final boolean expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetSelection.isSelectionClass(type),
+            () -> null != type ? type.getName() : null
+        );
+
+        this.checkEquals(
+            expected,
+            null != type && SpreadsheetSelection.class.isAssignableFrom(type),
+            () -> null != type ? type.getName() : null
+        );
+    }
+
     // constants........................................................................................................
 
     @Test
