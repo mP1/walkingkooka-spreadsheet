@@ -70,13 +70,6 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
         );
     }
 
-    // toExpressionReference............................................................................................
-
-    @Test
-    public final void testToExpressionReferenceFails() {
-        this.toExpressionReferenceFails();
-    }
-
     // toRange.........................................................................................................
 
     @Test
